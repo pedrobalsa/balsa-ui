@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "name": "navbar",
+  "title": "Navbar",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Provide responsive application navigation with compact item-anchored desktop menus plus controllable material, layout, and scroll behavior without coupling to a router or store.",
+  "useFor": [
+    "Application shells",
+    "Grouped desktop navigation",
+    "Responsive primary navigation"
+  ],
+  "avoidFor": [
+    "In-page section navigation",
+    "Router-specific logic inside the primitive",
+    "Unstructured large link inventories"
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "bar",
+    "floating",
+    "minimal"
+  ],
+  "states": [
+    "compact desktop dropdown open",
+    "mobile menu open",
+    "mobile group expanded",
+    "static",
+    "fixed",
+    "revealed by default",
+    "hidden on downward scroll"
+  ],
+  "accessibility": [
+    "Uses labelled navigation landmarks and native links.",
+    "Expandable controls expose aria-expanded, aria-controls, and accessible names.",
+    "Escape closes an open desktop dropdown and all destinations remain available without hover."
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-foreground",
+    "--balsa-color-surface",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-muted",
+    "--balsa-color-focus-ring",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Coupling Navbar to a specific router.",
+    "Passing duplicate destination links.",
+    "Using the compact dropdown for a large unstructured navigation inventory.",
+    "Using fixed or reveal behavior without reserving space or scroll margin for page content.",
+    "Overriding Glassmorphism's floating glass treatment without a deliberate reason."
+  ],
+  "examples": [
+    "Application bar",
+    "Compact anchored desktop menu",
+    "Floating glass slab",
+    "Reveal-on-scroll navigation",
+    "Mobile accordion navigation"
+  ],
+  "publicApi": {
+    "props": [
+      "logo",
+      "items",
+      "variant",
+      "color",
+      "type",
+      "behavior",
+      "floatingLayout",
+      "floatingMaxWidth",
+      "contentMaxWidth",
+      "itemsAlignment",
+      "fixed",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "actions"
+    ],
+    "events": [
+      "navigate"
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "name": "separator",
+  "title": "Separator",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Separate related content visually or expose a meaningful structural boundary.",
+  "useFor": [
+    "Content-group boundaries",
+    "Toolbar divisions",
+    "Labelled section transitions"
+  ],
+  "avoidFor": [
+    "Creating spacing alone",
+    "Decorating every list row",
+    "Communicating status"
+  ],
+  "states": [
+    "decorative",
+    "semantic"
+  ],
+  "accessibility": [
+    "Decorative separators are removed from the accessibility tree.",
+    "Semantic separators expose role and orientation.",
+    "An optional accessible label names a meaningful boundary."
+  ],
+  "variants": [
+    "solid",
+    "dashed",
+    "dotted"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-border",
+    "border.width"
+  ],
+  "commonMistakes": [
+    "Using a semantic separator when the boundary is purely decorative.",
+    "Using vertical orientation without a containing height.",
+    "Adding label content to a vertical separator."
+  ],
+  "examples": [
+    "Horizontal rule",
+    "Labelled separator",
+    "Vertical toolbar divider"
+  ],
+  "publicApi": {
+    "props": [
+      "orientation",
+      "variant",
+      "size",
+      "align",
+      "decorative",
+      "label",
+      "accessibleLabel",
+      "theme"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

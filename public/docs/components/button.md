@@ -1,0 +1,11 @@
+# Button
+
+Use Button for immediate actions such as submit, confirm, or a primary page action; use a link for navigation and Badge for passive status. It supports `solid`/`outline`/`glass`, semantic `ActionColor` intent, `sm`/`md`/`lg`/`xl`, rounded/pill/FAB shapes, MDI icons, disabled, and loading states. Loading disables interaction and exposes `aria-busy`. Install with `npx balsa-ui@latest add button`. Dependencies: Vue, MDI, and the Balsa theme foundation. Canonical source: `src/components/ui/Button.vue`; interactive documentation: `/docs/components/button`; contract: `specs/components/button.json`.
+
+Button inherits the nearest `data-theme` and accepts `theme?: ThemeInput` for a Modern Flat, Brutalism, or Glassmorphism override. In Brutalism, the default `rounded` shape resolves to `rounded-none`; use a consumer radius class or an explicit `pill`/FAB shape when the context requires an override. In Glassmorphism, a solid primary Button keeps the active palette's exact primary state colors. Choose `glass` for a lower-emphasis translucent action with a restrained semantic rim and denser hover and active material states. Choose `outline` when the action needs a deliberately visible semantic boundary.
+
+Use `shape="fab"` for an icon-only floating action. Its deliberately distinct `sm`, `md`, `lg`, and `xl` presets are 40px, 56px, 72px, and 96px with proportionally scaled icons. FABs are square and circular with no content padding; provide `aria-label`, and position them in the consumer layout. With `:size="null"`, provide equal width and height classes alongside the FAB shape.
+
+Use `prefixIcon` for a leading MDI icon and `suffixIcon` for a trailing one. The playground exposes both independently; its prefix choices include Chevron down, and generated source uses `prefix-icon` and `suffix-icon` only when selected.
+
+Consumer classes are merged after Button defaults, so normal width, height, padding, typography, radius, and layout utilities can replace preset values. Use `:size="null"` when supplying a complete custom size; consumer `style` attributes are forwarded to the native button.

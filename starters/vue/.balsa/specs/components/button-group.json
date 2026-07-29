@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "name": "button-group",
+  "title": "ButtonGroup",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present a connected set of mutually exclusive actions with one selected item.",
+  "useFor": [
+    "View switching",
+    "Compact mode selection",
+    "Related mutually exclusive actions"
+  ],
+  "avoidFor": [
+    "Independent actions",
+    "Multiple simultaneous selections",
+    "Long or wrapping option labels"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "glass",
+    "code"
+  ],
+  "states": [
+    "theme-aware default",
+    "selected",
+    "compact labels",
+    "rounded or pill shape"
+  ],
+  "composition": {
+    "dependency": "Button",
+    "selection": "Exactly one option id is represented by modelValue and aria-pressed. An omitted variant resolves from surface to glass under the nearest Glassmorphism theme. The default rounded shape resolves to rounded-none in Brutalism.",
+    "codeSurface": "The code variant provides the compact code-foreground treatment used by CodeBlock header actions, with a compact control radius in every design theme."
+  },
+  "accessibility": [
+    "Provide an accessible group label.",
+    "Expose the selected option with aria-pressed.",
+    "Retain accessible button names when collapseLabels hides visible labels."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border-strong",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-code-control-radius",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using ButtonGroup for unrelated actions.",
+    "Providing duplicate option ids.",
+    "Omitting the group label.",
+    "Reaching through the group with nested important selectors instead of using its typed code variant."
+  ],
+  "examples": [
+    "Preview and code switcher",
+    "Responsive viewport selector",
+    "Package-manager selector"
+  ],
+  "publicApi": {
+    "model": "string",
+    "props": [
+      "options",
+      "label",
+      "color",
+      "size",
+      "variant",
+      "shape",
+      "collapseLabels",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ]
+  }
+}

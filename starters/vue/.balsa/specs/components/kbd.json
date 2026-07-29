@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "name": "kbd",
+  "title": "Kbd",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present one keyboard key or a complete key chord as compact semantic input notation with a soft default material.",
+  "useFor": [
+    "Keyboard shortcuts",
+    "Command hints",
+    "Key instructions inside actions or text"
+  ],
+  "avoidFor": [
+    "Clickable controls",
+    "Generic metadata labels",
+    "Status communication"
+  ],
+  "states": [
+    "single key",
+    "key chord"
+  ],
+  "accessibility": [
+    "Uses the semantic kbd element.",
+    "An accessible label can expand symbolic chords.",
+    "Separators between supplied keys are decorative."
+  ],
+  "variants": [
+    "raised",
+    "outline",
+    "soft"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-muted",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using Kbd as a clickable button.",
+    "Showing a shortcut the application does not implement.",
+    "Leaving a symbolic chord ambiguous to assistive technology."
+  ],
+  "examples": [
+    "Single key",
+    "Modifier chord",
+    "Inline instruction"
+  ],
+  "publicApi": {
+    "props": [
+      "keys",
+      "separator",
+      "variant",
+      "size",
+      "rounded",
+      "accessibleLabel",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

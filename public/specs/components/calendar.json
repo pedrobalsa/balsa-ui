@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "name": "calendar",
+  "title": "Calendar",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose date-only values from a locale-aware keyboard grid.",
+  "useFor": [
+    "Date selection",
+    "Date ranges",
+    "Multiple date selection"
+  ],
+  "avoidFor": [
+    "Time selection",
+    "Ambiguous free-text dates",
+    "Scheduling time zones"
+  ],
+  "states": [
+    "single",
+    "multiple",
+    "range",
+    "disabled dates"
+  ],
+  "accessibility": [
+    "Uses grid, row, columnheader, and gridcell semantics.",
+    "One day owns roving focus.",
+    "Arrows, Home, End, PageUp, and PageDown move focus."
+  ],
+  "variants": [
+    "single",
+    "multiple",
+    "range"
+  ],
+  "sizes": [
+    "one or two months"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-selected",
+    "--balsa-color-focus-ring"
+  ],
+  "commonMistakes": [
+    "Passing time-bearing values without day normalization.",
+    "Using a visual disabled style without the predicate.",
+    "Adding a selection mode without complete model behavior."
+  ],
+  "examples": [
+    "Single date",
+    "Date range",
+    "Multiple dates",
+    "Disabled dates"
+  ],
+  "publicApi": {
+    "props": [
+      "modelValue",
+      "id",
+      "label",
+      "mode",
+      "locale",
+      "weekStartsOn",
+      "month",
+      "min",
+      "max",
+      "disabledDates",
+      "outsideDays",
+      "fixedWeeks",
+      "months",
+      "disabled",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "update:month",
+      "select"
+    ]
+  }
+}

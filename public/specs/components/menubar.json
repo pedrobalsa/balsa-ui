@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "name": "menubar",
+  "title": "Menubar",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present persistent top-level menus with coherent horizontal and menu keyboard navigation.",
+  "useFor": [
+    "Editor commands",
+    "Desktop application menus",
+    "Dense tool surfaces"
+  ],
+  "avoidFor": [
+    "Website primary navigation",
+    "Mobile-only actions",
+    "A single action menu"
+  ],
+  "types": [
+    "horizontal"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The root and triggers use menubar and menuitem semantics.",
+    "Left, Right, Home, and End move top-level roving focus.",
+    "An open menu transfers across adjacent triggers and restores focus on Escape."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-focus-ring",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using Menubar as a site Navbar.",
+    "Wrapping triggers into ambiguous rows.",
+    "Omitting keyboard-equivalent access to commands."
+  ],
+  "examples": [
+    "Editor menus",
+    "Disabled top-level menu",
+    "Checkable view menu",
+    "Submenu"
+  ],
+  "publicApi": {
+    "model": "string | null",
+    "props": [
+      "id",
+      "label",
+      "menus",
+      "variant",
+      "contained",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "select"
+    ],
+    "slots": []
+  }
+}

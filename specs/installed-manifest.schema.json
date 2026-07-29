@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://balsa-ui.dev/schemas/installed-manifest.json",
+  "title": "Balsa installed source manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "components"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "components": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["registry", "installedVersion", "sourceHash", "targetPath", "files"],
+        "properties": {
+          "registry": { "type": "string", "pattern": "^@balsa/" },
+          "installedVersion": { "type": "string" },
+          "sourceHash": { "type": "string", "pattern": "^sha256-[a-f0-9]{64}$" },
+          "targetPath": { "type": "string" },
+          "files": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    }
+  }
+}

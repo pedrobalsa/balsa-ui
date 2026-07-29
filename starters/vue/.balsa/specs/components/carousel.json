@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "name": "carousel",
+  "title": "Carousel",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Browse a typed collection through an accessible, draggable, snapping viewport with configurable presentation and navigation placement.",
+  "useFor": [
+    "Related media cards",
+    "Compact featured collections",
+    "Sequential visual browsing"
+  ],
+  "avoidFor": [
+    "Critical content available only through autoplay",
+    "Long textual lists",
+    "Primary navigation"
+  ],
+  "states": [
+    "empty",
+    "first",
+    "middle",
+    "last",
+    "paused autoplay"
+  ],
+  "accessibility": [
+    "The root is a labelled region and each item is a named slide group.",
+    "Previous, next, and indicator actions use native buttons.",
+    "Autoplay pauses for pointer, focus, and document visibility."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "typed slides per view and pixel gap"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border",
+    "--balsa-color-primary",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Autoplaying essential information too quickly.",
+    "Omitting concise slide labels.",
+    "Showing too many slides for the available width."
+  ],
+  "examples": [
+    "Card carousel",
+    "Multiple slides",
+    "Looping autoplay",
+    "Empty state"
+  ],
+  "publicApi": {
+    "props": [
+      "items",
+      "label",
+      "variant",
+      "orientation",
+      "align",
+      "loop",
+      "slidesPerView",
+      "gap",
+      "controls",
+      "arrowsPosition",
+      "indicators",
+      "indicatorsPosition",
+      "autoplay",
+      "rounded",
+      "emptyText",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "select"
+    ],
+    "slots": [
+      "item",
+      "empty"
+    ]
+  }
+}

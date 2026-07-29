@@ -1,0 +1,28 @@
+/* Balsa UI optional seven-color palette presets.
+ * Importing this file is inert until a data-palette selector is applied.
+ * All remaining roles are derived by balsa-foundation.css and stay overridable.
+ */
+
+[data-palette="dark"] {
+  color-scheme: dark;
+
+  --balsa-color-background: #0f1012;
+  --balsa-color-foreground: #f4f4f5;
+  --balsa-color-surface: #191a1c;
+  --balsa-color-muted: #2b2c2e;
+  --balsa-color-primary: #f4f4f5;
+  --balsa-color-secondary: #a1a1aa;
+  --balsa-color-accent: #cbd5e1;
+}
+
+[data-palette="light"] {
+  color-scheme: light;
+
+  --balsa-color-background: #fafafa;
+  --balsa-color-foreground: #18181b;
+  --balsa-color-surface: #f1f1f1;
+  --balsa-color-muted: #e0e0e1;
+  --balsa-color-primary: #18181b;
+  --balsa-color-secondary: #52525b;
+  --balsa-color-accent: #475569;
+}

@@ -1,0 +1,23 @@
+{
+  "name": "balsa-registry-smoke-fixture",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "@fontsource/noto-sans": "^5.2.10",
+    "@fontsource/space-grotesk": "^5.2.10",
+    "@mdi/font": "^7.4.47",
+    "balsa-ui": "file:../../..",
+    "three": "^0.185.1",
+    "vue": "^3.5.34"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/three": "^0.185.1",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "tailwindcss": "^4.3.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.5",
+    "vue-tsc": "^3.2.8"
+  }
+}

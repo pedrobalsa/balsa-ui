@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "name": "alert",
+  "title": "Alert",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Communicate important inline feedback or present a focused alert-dialog decision.",
+  "useFor": [
+    "System and form feedback",
+    "Warnings and success confirmation",
+    "Focused consequential decisions"
+  ],
+  "avoidFor": [
+    "Routine helper text",
+    "Unrelated page chrome",
+    "Transient feedback better served by Toast"
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "solid",
+    "glass"
+  ],
+  "types": [
+    "inline",
+    "dialog"
+  ],
+  "states": [
+    "hidden",
+    "visible",
+    "dismissed"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "Inline mode uses alert semantics and does not move focus.",
+    "Dialog mode uses native modal alertdialog semantics, labels, initial focus, Escape handling, and focus restoration.",
+    "Persistent alerts disable every built-in dismissal path while retaining a clear task-specific action.",
+    "Every icon is decorative because the visible title and description communicate status."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive",
+    "--balsa-color-overlay",
+    "radius.surface",
+    "shadow.surface",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using dialog mode for passive information.",
+    "Making a persistent dialog without a clear task-specific action.",
+    "Using success or warning color without matching content meaning."
+  ],
+  "examples": [
+    "Inline information",
+    "Success feedback",
+    "Dismissible warning",
+    "Destructive alert dialog"
+  ],
+  "publicApi": {
+    "model": "boolean | undefined",
+    "props": [
+      "id",
+      "title",
+      "description",
+      "mode",
+      "color",
+      "variant",
+      "size",
+      "rounded",
+      "icon",
+      "persistent",
+      "closeLabel",
+      "outsideDismiss",
+      "escapeDismiss",
+      "initialFocus",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "dismiss"
+    ],
+    "slots": [
+      "default",
+      "actions"
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "name": "footer",
+  "title": "Footer",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Close an application with brand context, grouped links, and optional contact or social information.",
+  "useFor": [
+    "Application shells",
+    "Documentation sites",
+    "Grouped secondary navigation"
+  ],
+  "avoidFor": [
+    "Primary task actions",
+    "Unconfirmed contact information",
+    "A second primary navigation experience"
+  ],
+  "states": [
+    "links only",
+    "with contacts",
+    "with social links",
+    "variable navigation sections"
+  ],
+  "accessibility": [
+    "Uses a semantic footer and labeled navigation landmark with native links.",
+    "External social links receive accessible names and noreferrer protection.",
+    "The linked brand image or text title requires a meaningful accessible name."
+  ],
+  "tokens": [
+    "--balsa-color-inverse",
+    "--balsa-color-inverse-foreground",
+    "--balsa-color-border-strong"
+  ],
+  "commonMistakes": [
+    "Hard-coding application data inside Footer.",
+    "Assuming the navigation always has exactly three sections.",
+    "Publishing placeholder contact information as real data.",
+    "Using decorative icon-only links without accessible names."
+  ],
+  "examples": [
+    "Documentation footer",
+    "Footer with editable navigation sections",
+    "Footer with contacts and social links"
+  ],
+  "publicApi": {
+    "props": [
+      "legalLogo",
+      "description",
+      "sections",
+      "copyright",
+      "contactGroups",
+      "socialLinks",
+      "leadTitle",
+      "navigationLabel",
+      "legalText",
+      "theme"
+    ]
+  }
+}

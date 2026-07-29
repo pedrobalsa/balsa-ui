@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "name": "gradient-background",
+  "title": "GradientBackground",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Render a deterministic, slowly animated procedural field behind application content without requiring image or video input.",
+  "useFor": [
+    "Page and hero backgrounds",
+    "Atmospheric depth behind Glassmorphism surfaces",
+    "Reproducible generated artwork exported from Background Studio"
+  ],
+  "avoidFor": [
+    "Motion-dependent information",
+    "Dense content without a protective surface",
+    "Multiple simultaneous full-viewport renderers"
+  ],
+  "variants": [
+    "custom colors",
+    "palette-aware colors"
+  ],
+  "states": [
+    "animated",
+    "paused",
+    "reduced motion",
+    "offscreen",
+    "document hidden",
+    "WebGL fallback",
+    "context lost"
+  ],
+  "composition": {
+    "renderer": "One Three.js WebGLRenderer, orthographic camera, full-screen plane, and Balsa-owned single-pass ShaderMaterial.",
+    "configuration": "Versioned schema-two BalsaBackgroundConfig with automatic schema-one migration, preset defaults, configuration overrides, and direct prop overrides in that order.",
+    "noiseSeparation": "Structural field octaves and frequency shape waves independently from visible noise amount, octaves, and frequency; fine grain remains a separate final texture treatment.",
+    "seedSafety": "The renderer maps full-range configuration seeds into a small deterministic shader-safe range before hashing so floating-point precision cannot collapse procedural noise.",
+    "studioSimulations": "Background Studio compares structurally distinct Storefront, Dashboard, and Editorial shells; every simulated label, metric, byline, and content string is explicit placeholder or lorem-ipsum copy rather than plausible live content.",
+    "studioHandoff": "Background Studio groups project export into Balsa CLI, Manual, and Prompt disclosures; CLI is initially expanded, encodes the exact current configuration into one shell-safe background create --config command with no intermediate download, and shows the generated Vue import/template usage; Prompt explicitly obtains GradientBackground through the public add command; PNG capture remains separate.",
+    "presets": [
+      "obsidian-fold",
+      "silver-dunes",
+      "cloud-dancer",
+      "holographic-flow",
+      "liquid-metal",
+      "smoke-field",
+      "iridescent-flow",
+      "void-ribbon",
+      "black-silk",
+      "palette-flow"
+    ]
+  },
+  "accessibility": [
+    "The canvas is decorative, aria-hidden, non-interactive, and pointer-transparent.",
+    "Reduced-motion users receive one static rendered frame.",
+    "Forced-colors users receive a system-color fallback.",
+    "No meaning or control state depends on background motion."
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent"
+  ],
+  "commonMistakes": [
+    "Placing readable content directly over high-contrast forms without a surface.",
+    "Running several full-viewport instances when one shared background is enough.",
+    "Coupling the primitive to an application palette or theme store.",
+    "Using more than six or fewer than two color stops."
+  ],
+  "examples": [
+    "Obsidian fold page background",
+    "Palette-aware generated field",
+    "Glassmorphism content over iridescent flow",
+    "Background Studio export"
+  ],
+  "publicApi": {
+    "props": [
+      "preset",
+      "config",
+      "seed",
+      "colorMode",
+      "colors",
+      "speed",
+      "scale",
+      "warp",
+      "wave",
+      "softness",
+      "grain",
+      "grainSize",
+      "contrast",
+      "brightness",
+      "direction",
+      "fieldOctaves",
+      "fieldFrequency",
+      "noiseAmount",
+      "noiseOctaves",
+      "noiseFrequency",
+      "warpFrequency",
+      "ribbonDensity",
+      "quality",
+      "paused",
+      "theme"
+    ],
+    "exposed": [
+      "capturePng",
+      "renderStill"
+    ]
+  }
+}

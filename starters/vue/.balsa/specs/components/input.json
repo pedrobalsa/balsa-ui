@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "name": "input",
+  "title": "Input",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Collect a short text, email, number, date, phone, monetary, or percentage value with an associated label.",
+  "useFor": [
+    "Short free-form values",
+    "Email addresses",
+    "Numeric values",
+    "Native date entry",
+    "Masked phone numbers",
+    "Monetary amounts",
+    "Percentage values"
+  ],
+  "avoidFor": [
+    "Long-form text",
+    "Choosing from a fixed option list",
+    "Custom autocomplete behavior"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "masked"
+  ],
+  "composition": {
+    "model": "string | number",
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "masking": "Use a custom mask with # digit placeholders, type=phone for the built-in phone mask, type=monetary for localized currency display, or type=percentage for an editable numeric value with a persistent percent suffix. Monetary and percentage models remain numeric.",
+    "styling": "Consumer class and style attributes merge onto the native input while shared helpers preserve the Balsa field language.",
+    "feedback": "Hint and validation error are associated with aria-describedby."
+  },
+  "accessibility": [
+    "Always provide a unique id and visible label.",
+    "Invalid feedback exposes aria-invalid and role alert.",
+    "Loading disables the native control and exposes aria-busy."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-success",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-disabled",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Omitting the id or label.",
+    "Using placeholder text as the only label.",
+    "Using error color without a text message."
+  ],
+  "examples": [
+    "Text input",
+    "Masked phone input",
+    "Monetary input",
+    "Percentage input",
+    "Required email input",
+    "Loading input",
+    "Invalid input"
+  ],
+  "publicApi": {
+    "model": "string | number",
+    "props": [
+      "id",
+      "label",
+      "type",
+      "size",
+      "rounded",
+      "placeholder",
+      "hint",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "required",
+      "min",
+      "max",
+      "step",
+      "autocomplete",
+      "mask",
+      "currency",
+      "locale",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": []
+  }
+}

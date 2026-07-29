@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Show the current location in a compact hierarchy while linking every applicable ancestor.",
+  "useFor": [
+    "Documentation hierarchies",
+    "Nested application locations",
+    "Contextual path navigation"
+  ],
+  "avoidFor": [
+    "Primary navigation",
+    "Long unstructured tags",
+    "Several unrelated destinations"
+  ],
+  "variants": [
+    "chevron separator",
+    "slash separator",
+    "dot separator"
+  ],
+  "states": [
+    "linked ancestor",
+    "current page",
+    "external ancestor"
+  ],
+  "accessibility": [
+    "Renders a labelled navigation landmark and ordered list.",
+    "The resolved current item exposes aria-current=page.",
+    "Separators are hidden from assistive technology."
+  ],
+  "tokens": [
+    "--balsa-color-foreground",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Making the current page an active link.",
+    "Using Breadcrumb as a substitute for primary navigation.",
+    "Adding visible separators to assistive-technology output."
+  ],
+  "examples": [
+    "Documentation path",
+    "Mixed linked and plain hierarchy",
+    "Slash-separated location"
+  ],
+  "publicApi": {
+    "props": [
+      "items",
+      "separator",
+      "size",
+      "ariaLabel",
+      "theme"
+    ],
+    "slots": []
+  }
+}

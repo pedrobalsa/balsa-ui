@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "name": "attachment",
+  "title": "Attachment",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Select and review local files through a labelled, validated native input.",
+  "useFor": [
+    "File selection",
+    "Upload preparation",
+    "Attachment lists"
+  ],
+  "avoidFor": [
+    "Automatic network uploads",
+    "Remote file browsing",
+    "Decorative file metadata"
+  ],
+  "states": [
+    "empty",
+    "selected",
+    "dragging",
+    "loading",
+    "disabled",
+    "unvalidated"
+  ],
+  "accessibility": [
+    "Uses a labelled native file input.",
+    "Validation errors use explicit alert text.",
+    "Every selected file has a named remove action."
+  ],
+  "variants": [
+    "single",
+    "multiple"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Uploading automatically inside the primitive.",
+    "Relying only on accept without validating selected files.",
+    "Removing a file through an unnamed icon action."
+  ],
+  "examples": [
+    "Single document",
+    "Multiple files",
+    "Validation error",
+    "Loading selection"
+  ],
+  "publicApi": {
+    "props": [
+      "modelValue",
+      "id",
+      "label",
+      "multiple",
+      "accept",
+      "maxSize",
+      "maxFiles",
+      "required",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "hint",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "reject",
+      "remove"
+    ]
+  }
+}

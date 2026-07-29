@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "name": "code-block",
+  "title": "Code block",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present source code or commands with accessible compact text actions and icon-only copy.",
+  "useFor": [
+    "Installation commands",
+    "Short source examples",
+    "Configuration snippets"
+  ],
+  "avoidFor": [
+    "Editable code input",
+    "Rich syntax-editor workflows",
+    "Prose quotations"
+  ],
+  "states": [
+    "idle",
+    "copied",
+    "wrapped",
+    "scrollable",
+    "numbered",
+    "highlighted",
+    "collapsed",
+    "expanded"
+  ],
+  "accessibility": [
+    "Uses preformatted code semantics.",
+    "Syntax color supplements rather than replaces the source text.",
+    "Optional line numbers are hidden from assistive technology and excluded from copied source.",
+    "Collapsed previews retain the complete source in the document and expose keyboard-accessible See more and Show less actions.",
+    "The copy result is announced through a polite live region.",
+    "The icon-only copy control has a stable accessible name.",
+    "Header actions retain their own accessible group names.",
+    "The Glassmorphism material remains dark, gives labels and outline header actions an explicit code-surface contrast context, and restores an opaque code surface for increased contrast or reduced transparency."
+  ],
+  "tokens": [
+    "--balsa-color-code",
+    "--balsa-color-code-foreground",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using it as an editable editor.",
+    "Putting unexplained secrets in examples.",
+    "Forcing wrapping for long commands that must remain exact.",
+    "Making the Glassmorphism surface so transparent that it no longer reads as a consistently dark code surface."
+  ],
+  "examples": [
+    "Install command with package-manager actions",
+    "Highlighted Vue source example",
+    "Wrapped configuration"
+  ],
+  "publicApi": {
+    "props": [
+      "code",
+      "language",
+      "label",
+      "copyable",
+      "wrap",
+      "lineNumbers",
+      "collapsedLines",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "actions"
+    ]
+  }
+}

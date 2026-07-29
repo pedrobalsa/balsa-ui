@@ -1,0 +1,1890 @@
+{
+  "schemaVersion": 1,
+  "framework": "vue",
+  "generatedFrom": [
+    "registry.json",
+    "specs/components/*.json"
+  ],
+  "items": [
+    {
+      "name": "button",
+      "title": "Button",
+      "category": "component",
+      "description": "Typed action control with solid, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and MDI icons.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/button",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-primary-hover",
+        "--balsa-color-primary-active",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "spacing.control-inline"
+      ],
+      "documentation": "docs/components/button.md",
+      "example": "docs/components/button.md",
+      "source": [
+        "src/components/ui/Button.vue",
+        "src/components/ui/types.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "button-group",
+      "title": "ButtonGroup",
+      "category": "component",
+      "description": "Connected mutually exclusive actions with semantic color, a Glassmorphism-aware surface-to-glass default, explicit surface, solid, outline, glass, and compact code treatments; rounded or pill outer shapes; four shared sizes; responsive labels; and accessible pressed state.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/button-group",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-border-strong",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-focus-ring",
+        "--balsa-code-control-radius",
+        "radius.control"
+      ],
+      "documentation": "docs/components/button-group.md",
+      "example": "docs/components/button-group.md",
+      "source": [
+        "src/components/ui/ButtonGroup.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "category": "component",
+      "description": "Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; phone, monetary, and percentage presets; validation feedback; and loading states.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/input",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-focus-ring",
+        "--balsa-color-success",
+        "--balsa-color-info",
+        "--balsa-color-destructive",
+        "--balsa-color-disabled",
+        "radius.control"
+      ],
+      "documentation": "docs/components/input.md",
+      "example": "docs/components/input.md",
+      "source": [
+        "src/components/ui/Input.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "input-group",
+      "title": "Input Group",
+      "category": "component",
+      "description": "One labelled native text input with typed start/end text or MDI addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/input-group",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-focus-ring",
+        "--balsa-color-success",
+        "--balsa-color-destructive",
+        "radius.control"
+      ],
+      "documentation": "docs/components/input-group.md",
+      "example": "docs/components/input-group.md",
+      "source": [
+        "src/components/ui/InputGroup.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "input-otp",
+      "title": "Input OTP",
+      "category": "component",
+      "description": "One accessible fixed-length native verification-code input with semantic-colored visual cells, numeric or alphanumeric filtering, paste and caret editing, optional masking and grouping, surface/outline/soft/solid/glass materials, completion events, and shared form states.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/input-otp",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-focus-ring",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-info",
+        "--balsa-color-destructive",
+        "radius.control"
+      ],
+      "documentation": "docs/components/input-otp.md",
+      "example": "docs/components/input-otp.md",
+      "source": [
+        "src/components/ui/InputOTP.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "radio-group",
+      "title": "Radio Group",
+      "category": "component",
+      "description": "Accessible native mutually exclusive choices with typed options, a default column layout, semantic selected colors, row and selected-card layouts, shared form validation, sizing, geometry, and loading behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/radio-group",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-border",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-info",
+        "--balsa-color-destructive",
+        "--balsa-color-focus-ring",
+        "radius.control"
+      ],
+      "documentation": "docs/components/radio-group.md",
+      "example": "docs/components/radio-group.md",
+      "source": [
+        "src/components/ui/RadioGroup.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "category": "component",
+      "description": "Single-value and independently draggable bounded-range native sliders with horizontal and vertical orientation, formatted output, three sizes, minimum thumb gaps, keyboard, pointer, touch, and form behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/slider",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-muted",
+        "--balsa-color-primary",
+        "--balsa-color-input",
+        "--balsa-color-focus-ring",
+        "--balsa-color-disabled",
+        "radius.control"
+      ],
+      "documentation": "docs/components/slider.md",
+      "example": "docs/components/slider.md",
+      "source": [
+        "src/components/ui/Slider.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "popup",
+      "title": "Popup",
+      "category": "component",
+      "description": "Collision-aware interactive rich content anchored to a native button with portal or contained rendering, focus entry/restoration, dismissal, typed materials, sizing, and geometry.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/popup",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface-elevated",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/popup.md",
+      "example": "docs/components/popup.md",
+      "source": [
+        "src/components/ui/Popup.vue",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "hover-card",
+      "title": "Hover Card",
+      "category": "component",
+      "description": "Delayed pointer-hover and keyboard-focus previews that preserve focus, bridge pointer movement, collision-flip, escape clipping, and inherit Balsa materials and geometry.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/hover-card",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface-elevated",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/hover-card.md",
+      "example": "docs/components/hover-card.md",
+      "source": [
+        "src/components/ui/HoverCard.vue",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "category": "component",
+      "description": "Collision-aware non-interactive supplementary descriptions for pointer hover and keyboard focus, with typed timing, materials, geometry, portal or contained rendering, and theme inheritance.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/tooltip",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface-elevated",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/tooltip.md",
+      "example": "docs/components/tooltip.md",
+      "source": [
+        "src/components/ui/Tooltip.vue",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "dropdown-menu",
+      "title": "Dropdown Menu",
+      "category": "component",
+      "description": "Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/dropdown-menu",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-selected",
+        "--balsa-color-selected-foreground",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-destructive",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/dropdown-menu.md",
+      "example": "docs/components/dropdown-menu.md",
+      "source": [
+        "src/components/ui/DropdownMenu.vue",
+        "src/components/ui/MenuList.vue",
+        "src/components/ui/menu.ts",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "context-menu",
+      "title": "Context Menu",
+      "category": "component",
+      "description": "Pointer- and keyboard-positioned typed context actions with viewport collision handling and the complete shared Balsa menu semantics.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/context-menu",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-selected",
+        "--balsa-color-selected-foreground",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-destructive",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/context-menu.md",
+      "example": "docs/components/context-menu.md",
+      "source": [
+        "src/components/ui/ContextMenu.vue",
+        "src/components/ui/MenuList.vue",
+        "src/components/ui/menu.ts",
+        "src/components/ui/form.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "menubar",
+      "title": "Menubar",
+      "category": "component",
+      "description": "Persistent application menus with horizontal roving focus, open-menu transfer, typed shared menu content, portals, and complete keyboard behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/menubar",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-selected",
+        "--balsa-color-selected-foreground",
+        "--balsa-color-focus-ring",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/menubar.md",
+      "example": "docs/components/menubar.md",
+      "source": [
+        "src/components/ui/Menubar.vue",
+        "src/components/ui/MenuList.vue",
+        "src/components/ui/menu.ts",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "command-menu",
+      "title": "Command Menu",
+      "category": "component",
+      "description": "Inline dropdown or on-demand dialog grouped command filtering with combobox/listbox semantics, active-descendant navigation, hotkey opening, loading, empty states, and typed sizing.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/command-menu",
+      "registryDependencies": [
+        "@balsa/modal",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-selected",
+        "--balsa-color-selected-foreground",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/command-menu.md",
+      "example": "docs/components/command-menu.md",
+      "source": [
+        "src/components/ui/CommandMenu.vue",
+        "src/components/ui/CommandList.vue",
+        "src/components/ui/command.ts",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "category": "component",
+      "description": "Native modal edge panel with four sides, three extents, scrollable slots, focus/scroll management, dismissal policy, handle drag, and contained previews.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/drawer",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-overlay",
+        "--balsa-color-surface-elevated",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/drawer.md",
+      "example": "docs/components/drawer.md",
+      "source": [
+        "src/components/ui/Drawer.vue",
+        "src/components/ui/anchored-layer.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "color-picker",
+      "title": "ColorPicker",
+      "category": "component",
+      "description": "Accessible contrast-safe outline, surface, soft, or glass color field or grouped palette trigger with a custom saturation, hue, and editable HEX, RGB, or HSL color-code popover.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/color-picker",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/input",
+        "@balsa/select",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-surface-elevated",
+        "--balsa-color-surface-elevated-foreground",
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "--balsa-color-disabled",
+        "radius.control",
+        "radius.surface",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/color-picker.md",
+      "example": "docs/components/color-picker.md",
+      "source": [
+        "src/components/ui/ColorPicker.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "modal",
+      "title": "Modal",
+      "category": "component",
+      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and scroll locking.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/modal",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-overlay",
+        "--balsa-color-background",
+        "--balsa-color-surface",
+        "--balsa-color-surface-elevated",
+        "--balsa-color-surface-elevated-foreground",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-secondary",
+        "--balsa-color-secondary-foreground",
+        "--balsa-color-accent",
+        "--balsa-color-accent-foreground",
+        "--balsa-color-destructive",
+        "--balsa-color-destructive-foreground",
+        "--balsa-color-focus-ring",
+        "radius.surface",
+        "shadow.surface"
+      ],
+      "documentation": "docs/components/modal.md",
+      "example": "docs/components/modal.md",
+      "source": [
+        "src/components/ui/Modal.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "category": "component",
+      "description": "Accessible multi-line input with outline, surface, soft, and glass materials; typed size and radius; rows; auto expansion; capped height; resize behavior; and validation feedback.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/textarea",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-focus-ring",
+        "--balsa-color-success",
+        "--balsa-color-info",
+        "--balsa-color-destructive",
+        "--balsa-color-disabled",
+        "radius.control"
+      ],
+      "documentation": "docs/components/textarea.md",
+      "example": "docs/components/textarea.md",
+      "source": [
+        "src/components/ui/Textarea.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "breadcrumb",
+      "title": "Breadcrumb",
+      "category": "component",
+      "description": "Typed compact hierarchy navigation with linked ancestors, a current-page state, selectable separators, and accessible ordered-list semantics.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/breadcrumb",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-foreground",
+        "--balsa-color-muted",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-focus-ring",
+        "radius.control"
+      ],
+      "documentation": "docs/components/breadcrumb.md",
+      "example": "docs/components/breadcrumb.md",
+      "source": [
+        "src/components/ui/Breadcrumb.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "link",
+      "title": "Link",
+      "category": "component",
+      "description": "Typed sized navigation link with text, solid, and outline presentations, optional square geometry, and safe external-link behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/link",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-accent",
+        "--balsa-color-accent-hover",
+        "--balsa-color-primary",
+        "--balsa-color-focus-ring",
+        "radius.control"
+      ],
+      "documentation": "docs/components/link.md",
+      "example": "docs/components/link.md",
+      "source": [
+        "src/components/ui/Link.vue",
+        "src/components/ui/types.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "category": "component",
+      "description": "Compact status, category, and metadata label with solid, soft, outline, and low-rim translucent glass styles, three sizes, and optional square geometry.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/badge",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-success",
+        "--balsa-color-info"
+      ],
+      "documentation": "docs/components/badge.md",
+      "example": "docs/components/badge.md",
+      "source": [
+        "src/components/ui/Badge.vue",
+        "src/components/ui/types.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "card",
+      "title": "Card",
+      "category": "component",
+      "description": "Consistent semantic surface with six variants, typed action-intent color, configurable corners, size or padding, and shadow for grouping related content and actions.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/card",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-surface-foreground",
+        "--balsa-color-surface-elevated",
+        "--balsa-color-muted",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-destructive",
+        "radius.surface",
+        "shadow.surface"
+      ],
+      "documentation": "docs/components/card.md",
+      "example": "docs/components/card.md",
+      "source": [
+        "src/components/ui/Card.vue",
+        "src/components/ui/types.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "category": "component",
+      "description": "Keyboard-accessible outline, surface, soft, or glass single or multiple selection with compact sizing, configurable corners, fixed-height gapped options, and an overflow-safe top-layer listbox.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/select",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-focus-ring",
+        "--balsa-color-selected",
+        "--balsa-color-destructive",
+        "radius.control"
+      ],
+      "documentation": "docs/components/select.md",
+      "example": "docs/components/select.md",
+      "source": [
+        "src/components/ui/Select.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "autocomplete",
+      "title": "Autocomplete",
+      "category": "component",
+      "description": "Editable outline, surface, soft, or glass single- or multiple-value combobox with shared field sizing, configurable corners, removable selected suggestions, and an overflow-safe suggestion list.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/autocomplete",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-foreground",
+        "--balsa-color-input-border",
+        "--balsa-color-focus-ring",
+        "--balsa-color-selected",
+        "--balsa-color-destructive",
+        "radius.control",
+        "shadow.surface"
+      ],
+      "documentation": "docs/components/autocomplete.md",
+      "example": "docs/components/autocomplete.md",
+      "source": [
+        "src/components/ui/Autocomplete.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "category": "component",
+      "description": "Native binary form selection with outline, surface, soft, and glass unchecked-control treatments, associated label, hint, three sizes, and configurable corners.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/checkbox",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-border",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-focus-ring",
+        "--balsa-color-disabled",
+        "radius.control"
+      ],
+      "documentation": "docs/components/checkbox.md",
+      "example": "docs/components/checkbox.md",
+      "source": [
+        "src/components/ui/Checkbox.vue",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "category": "component",
+      "description": "Native boolean setting control with switch semantics, typed materials, three sizes, configurable corners, form naming, required state, and associated guidance.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/switch",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-border",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-focus-ring",
+        "--balsa-color-disabled",
+        "radius.control",
+        "shadow.control"
+      ],
+      "documentation": "docs/components/switch.md",
+      "example": "docs/components/switch.md",
+      "source": [
+        "src/components/ui/Switch.vue",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "toggle",
+      "title": "Toggle",
+      "category": "component",
+      "description": "Accessible pressed-state action with typed surface, solid, outline, glass, and outline-to-solid icon treatments; semantic action colors; four sizes; and configurable corners.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/toggle",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-foreground",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-focus-ring",
+        "--balsa-color-disabled",
+        "radius.control",
+        "shadow.control"
+      ],
+      "documentation": "docs/components/toggle.md",
+      "example": "docs/components/toggle.md",
+      "source": [
+        "src/components/ui/Toggle.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "toggle-group",
+      "title": "ToggleGroup",
+      "category": "component",
+      "description": "Connected single or multiple pressed-state actions with typed options, orientation, disabled items, immutable models, and complete roving keyboard focus.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/toggle-group",
+      "registryDependencies": [
+        "@balsa/toggle",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-border-strong",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-focus-ring",
+        "radius.control",
+        "shadow.control"
+      ],
+      "documentation": "docs/components/toggle-group.md",
+      "example": "docs/components/toggle-group.md",
+      "source": [
+        "src/components/ui/ToggleGroup.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "collapsible",
+      "title": "Collapsible",
+      "category": "component",
+      "description": "Single controlled underline-default disclosure with native semantics, fully retracted inert closed content, typed materials, natural-height motion, sizing, configurable corners, disabled state, and semantic headings.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/collapsible",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-muted",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-focus-ring",
+        "radius.surface",
+        "shadow.control"
+      ],
+      "documentation": "docs/components/collapsible.md",
+      "example": "docs/components/collapsible.md",
+      "source": [
+        "src/components/ui/Collapsible.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "category": "component",
+      "description": "Connected options-driven disclosure collection with single or multiple models, semantic headings, disabled items, complete vertical keyboard navigation, and shared typed materials.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/accordion",
+      "registryDependencies": [
+        "@balsa/collapsible",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-muted",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-focus-ring",
+        "radius.surface",
+        "shadow.control"
+      ],
+      "documentation": "docs/components/accordion.md",
+      "example": "docs/components/accordion.md",
+      "source": [
+        "src/components/ui/Accordion.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "kbd",
+      "title": "Kbd",
+      "category": "component",
+      "description": "Semantic single-key and chord notation with individually rendered soft-default key caps, typed materials and sizes, configurable geometry, and accessible symbolic labels.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/kbd",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface-elevated",
+        "--balsa-color-border-strong",
+        "--balsa-color-muted",
+        "radius.control",
+        "shadow.control"
+      ],
+      "documentation": "docs/components/kbd.md",
+      "example": "docs/components/kbd.md",
+      "source": [
+        "src/components/ui/Kbd.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "category": "component",
+      "description": "Resilient labelled identity image with deterministic or custom fallback, image lifecycle state, delayed fallback, typed shapes and four sizes.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/avatar",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-muted",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-border",
+        "radius.control"
+      ],
+      "documentation": "docs/components/avatar.md",
+      "example": "docs/components/avatar.md",
+      "source": [
+        "src/components/ui/Avatar.vue",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "pagination",
+      "title": "Pagination",
+      "category": "component",
+      "description": "Clamped result navigation with bounded siblings, semantic ellipses, action-label or icon-only controls, localization, sizing, geometry, and native accessibility.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/pagination",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-primary",
+        "--balsa-color-primary-foreground",
+        "--balsa-color-focus-ring",
+        "radius.control"
+      ],
+      "documentation": "docs/components/pagination.md",
+      "example": "docs/components/pagination.md",
+      "source": [
+        "src/components/ui/Pagination.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "resizable",
+      "title": "Resizable",
+      "category": "component",
+      "description": "Two-panel pointer and keyboard resize group with controlled percentage, horizontal or vertical orientation, safe limits, typed materials, handle sizes, and geometry.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/resizable",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/resizable.md",
+      "example": "docs/components/resizable.md",
+      "source": [
+        "src/components/ui/Resizable.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "scroll-area",
+      "title": "Scroll Area",
+      "category": "component",
+      "description": "Labelled native scroll viewport with typed axes, scrollbar visibility and width, optional edge fades, geometry, native events, and exposed scroll methods.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/scroll-area",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-border",
+        "--balsa-color-border-strong",
+        "--balsa-color-focus-ring",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/scroll-area.md",
+      "example": "docs/components/scroll-area.md",
+      "source": [
+        "src/components/ui/ScrollArea.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "preview",
+      "title": "Preview",
+      "category": "component",
+      "description": "Isolated natural or exact logical viewport with fit scaling, synchronized design context, accessible iframe title, and chromeless fullscreen review.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/preview",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-background",
+        "--balsa-color-foreground",
+        "--balsa-color-border",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/preview.md",
+      "example": "docs/components/preview.md",
+      "source": [
+        "src/components/ui/Preview.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "carousel",
+      "title": "Carousel",
+      "category": "component",
+      "description": "Typed accessible Embla-backed drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/carousel",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "embla-carousel-vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-border",
+        "--balsa-color-primary",
+        "--balsa-color-focus-ring",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/carousel.md",
+      "example": "docs/components/carousel.md",
+      "source": [
+        "src/components/ui/Carousel.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "sidebar",
+      "title": "Sidebar",
+      "category": "component",
+      "description": "Typed grouped application navigation with active state, nested items, expanded/rail/offcanvas desktop modes, shortcut, slots, and Drawer-backed mobile behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/sidebar",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/drawer",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-selected",
+        "--balsa-color-selected-foreground",
+        "--balsa-color-border",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/sidebar.md",
+      "example": "docs/components/sidebar.md",
+      "source": [
+        "src/components/ui/Sidebar.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "attachment",
+      "title": "Attachment",
+      "category": "component",
+      "description": "Labelled native file selection with drag/drop, immutable single or multiple models, type/size/count validation, loading/error states, metadata, and accessible removal.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/attachment",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-border",
+        "--balsa-color-destructive",
+        "--balsa-color-focus-ring",
+        "radius.control"
+      ],
+      "documentation": "docs/components/attachment.md",
+      "example": "docs/components/attachment.md",
+      "source": [
+        "src/components/ui/Attachment.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "table",
+      "title": "Table",
+      "category": "component",
+      "description": "Responsive slot-first semantic table with typed materials, density, independently configurable header and row colors, stripes, hover, gridlines, sticky header, geometry, and valid loading or empty rows.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/table",
+      "registryDependencies": [
+        "@balsa/spinner",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-border",
+        "--balsa-color-selected",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-info",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-destructive",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/table.md",
+      "example": "docs/components/table.md",
+      "source": [
+        "src/components/ui/Table.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "calendar",
+      "title": "Calendar",
+      "category": "component",
+      "description": "Locale-aware single, multiple, and range date-only selection with disabled rules, one or two months, fixed weeks, outside days, and complete grid keyboard navigation.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/calendar",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-primary",
+        "--balsa-color-selected",
+        "--balsa-color-focus-ring"
+      ],
+      "documentation": "docs/components/calendar.md",
+      "example": "docs/components/calendar.md",
+      "source": [
+        "src/components/ui/Calendar.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "date-picker",
+      "title": "DatePicker",
+      "category": "component",
+      "description": "Labelled locale-formatted single or range date field composing Calendar and collision-safe Popup with validation, disabled dates, clear action, dismissal, focus restoration, and Glassmorphism backdrop blur.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/date-picker",
+      "registryDependencies": [
+        "@balsa/calendar",
+        "@balsa/popup",
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-input",
+        "--balsa-color-input-border",
+        "--balsa-color-destructive",
+        "--balsa-color-focus-ring"
+      ],
+      "documentation": "docs/components/date-picker.md",
+      "example": "docs/components/date-picker.md",
+      "source": [
+        "src/components/ui/DatePicker.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "data-table",
+      "title": "DataTable",
+      "category": "component",
+      "description": "Typed columns and rows with render slots, controlled sorting, bottom quick field and advanced filters, pagination, selection, visibility, independent header and row colors, density, loading, empty state, and responsive semantic markup.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/data-table",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/input",
+        "@balsa/select",
+        "@balsa/table",
+        "@balsa/pagination",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-selected",
+        "--balsa-color-input",
+        "--balsa-color-focus-ring",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-info",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-destructive"
+      ],
+      "documentation": "docs/components/data-table.md",
+      "example": "docs/components/data-table.md",
+      "source": [
+        "src/components/ui/DataTable.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "charts",
+      "title": "Charts",
+      "category": "component",
+      "description": "Typed responsive line, bar, and doughnut charts with configurable semantic palettes, element roundness, loading/empty/error surfaces, reduced motion, figure labels, and complete semantic table alternatives.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/charts",
+      "registryDependencies": [
+        "@balsa/spinner",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "chart.js",
+        "vue-chartjs",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-info",
+        "--balsa-color-destructive",
+        "--balsa-color-foreground",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-border",
+        "--balsa-color-surface"
+      ],
+      "documentation": "docs/components/charts.md",
+      "example": "docs/components/charts.md",
+      "source": [
+        "src/components/ui/Charts.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "separator",
+      "title": "Separator",
+      "category": "component",
+      "description": "Decorative or semantic horizontal and vertical separation with typed line styles, thicknesses, orientation, and optional aligned horizontal label content.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/separator",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-border",
+        "border.width"
+      ],
+      "documentation": "docs/components/separator.md",
+      "example": "docs/components/separator.md",
+      "source": [
+        "src/components/ui/Separator.vue",
+        "src/components/ui/classes.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "skeleton",
+      "title": "Skeleton",
+      "category": "component",
+      "description": "Screen-reader-hidden text, rectangle, and circle loading placeholders with typed materials, sizing, geometry, pulse or wave motion, and reduced-motion fallback.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/skeleton",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-muted",
+        "--balsa-color-primary",
+        "--balsa-color-surface",
+        "radius.surface",
+        "motion.duration"
+      ],
+      "documentation": "docs/components/skeleton.md",
+      "example": "docs/components/skeleton.md",
+      "source": [
+        "src/components/ui/Skeleton.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "spinner",
+      "title": "Spinner",
+      "category": "component",
+      "description": "Accessible indeterminate loading status with five sizes, semantic color, three speeds, hidden or visible label placement, and reduced-motion fallback.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/spinner",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-info",
+        "--balsa-color-foreground",
+        "motion.duration"
+      ],
+      "documentation": "docs/components/spinner.md",
+      "example": "docs/components/spinner.md",
+      "source": [
+        "src/components/ui/Spinner.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "category": "component",
+      "description": "Labelled determinate or indeterminate task completion with safe value normalization, formatted value text, typed variants, semantic colors, sizing, geometry, and reduced-motion behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/progress",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-info",
+        "--balsa-color-muted",
+        "--balsa-color-foreground",
+        "radius.control",
+        "motion.duration"
+      ],
+      "documentation": "docs/components/progress.md",
+      "example": "docs/components/progress.md",
+      "source": [
+        "src/components/ui/Progress.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "category": "component",
+      "description": "Typed inline feedback and native top-layer alert-dialog presentation with five statuses, five materials, persistent dismissal policy, focus restoration, sizing, geometry, and theme inheritance.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/alert",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-info",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-destructive",
+        "--balsa-color-overlay",
+        "radius.surface",
+        "shadow.surface",
+        "motion.duration"
+      ],
+      "documentation": "docs/components/alert.md",
+      "example": "docs/components/alert.md",
+      "source": [
+        "src/components/ui/Alert.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "category": "component",
+      "description": "Declarative viewport-level notification stack with primary-by-default typed items, custom icons, bounded rendering, semantic live regions, timed and sticky lifetimes, pause/resume policies, actions, Escape dismissal, position-aware transitions, responsive placement, and teleported theme inheritance.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/toast",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font",
+        "tailwind-merge"
+      ],
+      "tokens": [
+        "--balsa-color-surface-elevated",
+        "--balsa-color-primary",
+        "--balsa-color-info",
+        "--balsa-color-success",
+        "--balsa-color-warning",
+        "--balsa-color-destructive",
+        "radius.surface",
+        "shadow.surface",
+        "motion.duration"
+      ],
+      "documentation": "docs/components/toast.md",
+      "example": "docs/components/toast.md",
+      "source": [
+        "src/components/ui/Toast.vue",
+        "src/components/ui/ToastViewport.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "category": "component",
+      "description": "Keyboard-accessible local panel switching with surface, outline, soft, and glass materials; segmented, square-underline, pill, and icon-tile layouts; and an optional bare content panel.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/tabs",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-surface",
+        "--balsa-color-muted",
+        "--balsa-color-muted-foreground",
+        "--balsa-color-primary",
+        "--balsa-color-selected",
+        "--balsa-color-selected-foreground",
+        "--balsa-color-focus-ring",
+        "radius.control"
+      ],
+      "documentation": "docs/components/tabs.md",
+      "example": "docs/components/tabs.md",
+      "source": [
+        "src/components/ui/Tabs.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "code-block",
+      "title": "Code block",
+      "category": "component",
+      "description": "Theme-aware sized dark source and command presentation with configurable corners, text-style expansion controls, and accessible icon-only copy.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/code-block",
+      "registryDependencies": [
+        "@balsa/button",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "highlight.js"
+      ],
+      "tokens": [
+        "--balsa-color-code",
+        "--balsa-color-code-foreground",
+        "radius.control"
+      ],
+      "documentation": "docs/components/code-block.md",
+      "example": "docs/components/code-block.md",
+      "source": [
+        "src/components/ui/CodeBlock.vue"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "dropdown",
+      "title": "Dropdown",
+      "category": "component",
+      "description": "Compact anchored panel for a small group of related links or actions, with typed semantic color, surface, outline, soft, and glass materials, configurable width and geometry, and safe alignment.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/dropdown",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [
+        "--balsa-color-background",
+        "--balsa-color-foreground",
+        "--balsa-color-surface-elevated",
+        "--balsa-color-surface-elevated-foreground",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-destructive",
+        "--balsa-color-muted",
+        "--balsa-color-focus-ring",
+        "radius.surface"
+      ],
+      "documentation": "docs/components/dropdown.md",
+      "example": "docs/components/dropdown.md",
+      "source": [
+        "src/components/ui/Dropdown.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/types.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "navbar",
+      "title": "Navbar",
+      "category": "component",
+      "description": "Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/navbar",
+      "registryDependencies": [
+        "@balsa/dropdown",
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-background",
+        "--balsa-color-foreground",
+        "--balsa-color-surface",
+        "--balsa-color-surface-elevated",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent",
+        "--balsa-color-destructive",
+        "--balsa-color-muted",
+        "--balsa-color-focus-ring",
+        "shadow.panel"
+      ],
+      "documentation": "docs/components/navbar.md",
+      "example": "docs/components/navbar.md",
+      "source": [
+        "src/components/ui/Navbar.vue",
+        "src/components/ui/NavbarExpandableItem.vue",
+        "src/components/ui/navigation.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "category": "component",
+      "description": "Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/footer",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "@mdi/font"
+      ],
+      "tokens": [
+        "--balsa-color-inverse",
+        "--balsa-color-inverse-foreground",
+        "--balsa-color-border-strong"
+      ],
+      "documentation": "docs/components/footer.md",
+      "example": "docs/components/footer.md",
+      "source": [
+        "src/components/ui/Footer.vue",
+        "src/components/ui/navigation.ts"
+      ],
+      "framework": "vue"
+    },
+    {
+      "name": "gradient-background",
+      "title": "GradientBackground",
+      "category": "component",
+      "description": "Deterministic single-pass procedural backgrounds with typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/gradient-background",
+      "registryDependencies": [
+        "@balsa/balsa-theme"
+      ],
+      "npmDependencies": [
+        "vue",
+        "three",
+        "@types/three"
+      ],
+      "tokens": [
+        "--balsa-color-background",
+        "--balsa-color-surface",
+        "--balsa-color-primary",
+        "--balsa-color-secondary",
+        "--balsa-color-accent"
+      ],
+      "documentation": "docs/components/gradient-background.md",
+      "example": "docs/components/gradient-background.md",
+      "source": [
+        "src/components/ui/GradientBackground.vue",
+        "src/components/ui/gradient-background.ts",
+        "src/components/ui/gradient-background-renderer.ts",
+        "src/components/ui/gradient-background-shader.ts",
+        "src/components/ui/gradient-background-presets.json"
+      ],
+      "framework": "vue"
+    }
+  ]
+}

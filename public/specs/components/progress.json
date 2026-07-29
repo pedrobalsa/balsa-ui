@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "name": "progress",
+  "title": "Progress",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Communicate determinate task completion or a labelled indeterminate process.",
+  "useFor": [
+    "Uploads and imports",
+    "Multi-step completion",
+    "Measurable background tasks"
+  ],
+  "avoidFor": [
+    "Instant actions",
+    "Values that are not task completion",
+    "Interactive range selection"
+  ],
+  "states": [
+    "loading",
+    "complete",
+    "indeterminate"
+  ],
+  "accessibility": [
+    "Uses progressbar semantics with min, max, current value, and value text.",
+    "Indeterminate state omits aria-valuenow.",
+    "A required visible label names the process."
+  ],
+  "variants": [
+    "solid",
+    "soft",
+    "striped"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-info",
+    "--balsa-color-muted",
+    "--balsa-color-foreground",
+    "radius.control",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Passing a non-positive max.",
+    "Using Progress as an interactive Slider.",
+    "Showing a percentage when the operation is indeterminate."
+  ],
+  "examples": [
+    "Determinate upload",
+    "Completed task",
+    "Indeterminate process",
+    "Formatted value"
+  ],
+  "publicApi": {
+    "props": [
+      "label",
+      "value",
+      "max",
+      "showValue",
+      "formatValue",
+      "indeterminateLabel",
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "theme"
+    ]
+  }
+}

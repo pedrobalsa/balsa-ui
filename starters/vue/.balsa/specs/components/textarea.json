@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "name": "textarea",
+  "title": "Textarea",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Collect multi-line text with a visible label, validation feedback, and deliberate editing geometry.",
+  "useFor": [
+    "Notes and descriptions",
+    "Messages",
+    "Multi-line configuration",
+    "Longer free-form responses"
+  ],
+  "avoidFor": [
+    "Short values",
+    "Selecting fixed options",
+    "Rich-text editing"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "auto-expanding"
+  ],
+  "composition": {
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "rounded": [
+      "none",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+      "2xl",
+      "3xl",
+      "full"
+    ],
+    "sizing": "rows supplies the native initial height. autoExpand grows to content and, when maxHeight is reached, scrolls internally. resizable selects none, vertical, or both-axis manual resizing."
+  },
+  "accessibility": [
+    "Always provide a unique id and visible label.",
+    "Invalid feedback exposes aria-invalid and role alert.",
+    "Loading disables editing and exposes aria-busy.",
+    "Auto expansion does not move focus or replace native textarea semantics."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-success",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-disabled",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using a textarea for short values that fit Input.",
+    "Enabling autoExpand without a maxHeight for unbounded user-generated content.",
+    "Using both-axis resizing in constrained layouts.",
+    "Using placeholder text as the only label."
+  ],
+  "examples": [
+    "Default textarea",
+    "Auto-expanding notes",
+    "Capped auto expansion",
+    "Validation feedback"
+  ],
+  "publicApi": {
+    "model": "string",
+    "props": [
+      "id",
+      "label",
+      "size",
+      "rounded",
+      "rows",
+      "autoExpand",
+      "maxHeight",
+      "resizable",
+      "placeholder",
+      "hint",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "required",
+      "name",
+      "autocomplete",
+      "maxlength",
+      "minlength",
+      "readonly",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "name": "collapsible",
+  "title": "Collapsible",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Reveal or hide one supporting content region without leaving the current context, using an underline disclosure by default.",
+  "useFor": [
+    "Optional details",
+    "Progressive disclosure",
+    "Compact supporting content"
+  ],
+  "avoidFor": [
+    "Several coordinated panels",
+    "Primary page navigation",
+    "Content that must always be compared"
+  ],
+  "states": [
+    "open",
+    "closed",
+    "disabled"
+  ],
+  "accessibility": [
+    "Uses a native button with aria-expanded and aria-controls.",
+    "The content region is labelled by its trigger.",
+    "Closed retained content is inert and hidden from assistive technology."
+  ],
+  "variants": [
+    "underline",
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-focus-ring",
+    "radius.surface",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using Collapsible for a multi-item accordion.",
+    "Omitting a stable id or meaningful visible title.",
+    "Placing required task content only inside the closed region."
+  ],
+  "examples": [
+    "Open details",
+    "Disabled disclosure",
+    "Custom trigger slot"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "title",
+      "variant",
+      "size",
+      "rounded",
+      "headingLevel",
+      "disabled",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "trigger",
+      "default"
+    ]
+  }
+}

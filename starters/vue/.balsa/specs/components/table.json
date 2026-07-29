@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "name": "table",
+  "title": "Table",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present consumer-authored semantic tabular markup in a responsive Balsa surface with independently configurable header and row colors.",
+  "useFor": [
+    "Comparison data",
+    "Financial and metric rows",
+    "Semantic tabular content"
+  ],
+  "avoidFor": [
+    "Layout-only grids",
+    "Interactive data exploration requiring DataTable",
+    "Card collections"
+  ],
+  "states": [
+    "content",
+    "loading",
+    "empty"
+  ],
+  "accessibility": [
+    "Requires an accessible caption.",
+    "Consumer th elements retain explicit scope ownership.",
+    "Loading and empty states remain valid table rows."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "compact",
+    "default",
+    "comfortable"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border",
+    "--balsa-color-selected",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Using tables for page layout.",
+    "Omitting header scope.",
+    "Hiding the caption without providing the caption prop."
+  ],
+  "examples": [
+    "Semantic table",
+    "Striped rows",
+    "Loading",
+    "Empty"
+  ],
+  "publicApi": {
+    "props": [
+      "caption",
+      "variant",
+      "density",
+      "headerColor",
+      "rowColor",
+      "striped",
+      "hover",
+      "gridlines",
+      "stickyHeader",
+      "loading",
+      "empty",
+      "emptyText",
+      "columnCount",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "header",
+      "default",
+      "footer",
+      "empty"
+    ]
+  }
+}

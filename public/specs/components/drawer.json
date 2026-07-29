@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "name": "drawer",
+  "title": "Drawer",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present modal, scrollable task content from a viewport edge with native dialog semantics.",
+  "useFor": [
+    "Mobile task panels",
+    "Filters and settings",
+    "Secondary workflows"
+  ],
+  "avoidFor": [
+    "Tiny contextual content",
+    "Non-modal persistent navigation",
+    "Unbounded nested drawers"
+  ],
+  "types": [
+    "left",
+    "right",
+    "top",
+    "bottom"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "dragging",
+    "disabled-dismissal"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "Native modal dialog makes background content inert.",
+    "The title and optional description label the drawer.",
+    "Focus enters, traps, and restores; Escape/backdrop obey the dismissible policy."
+  ],
+  "tokens": [
+    "--balsa-color-overlay",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using Drawer when Popup is sufficient.",
+    "Omitting a title.",
+    "Putting the only close path behind a non-dismissible policy."
+  ],
+  "examples": [
+    "Bottom task",
+    "Right filters",
+    "Scrollable content",
+    "Contained preview"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "title",
+      "description",
+      "side",
+      "size",
+      "variant",
+      "rounded",
+      "contained",
+      "dismissible",
+      "showHandle",
+      "closeLabel",
+      "initialFocus",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": [
+      "default",
+      "footer"
+    ]
+  }
+}

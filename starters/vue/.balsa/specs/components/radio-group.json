@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "name": "radio-group",
+  "title": "Radio Group",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose exactly one value from a visible, labelled set of mutually exclusive options with semantic selected color treatment.",
+  "useFor": [
+    "Short mutually exclusive choices",
+    "Plans or delivery methods",
+    "Settings with descriptions"
+  ],
+  "avoidFor": [
+    "Zero-or-more choices",
+    "Immediate binary settings",
+    "Long searchable option collections"
+  ],
+  "types": [
+    "column",
+    "row",
+    "cards"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "required"
+  ],
+  "sizes": [
+    "sm",
+    "md"
+  ],
+  "accessibility": [
+    "A native fieldset and legend name the group.",
+    "Native radio inputs preserve Arrow-key selection and one Tab stop for the checked option.",
+    "Hints and explicit errors are associated with every choice."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using cards without a visible legend.",
+    "Using radio choices when multiple values may be selected.",
+    "Removing native focus behavior from visually customized indicators."
+  ],
+  "examples": [
+    "Column choices",
+    "Inline choices",
+    "Descriptive cards",
+    "Invalid required group"
+  ],
+  "publicApi": {
+    "model": "string",
+    "props": [
+      "id",
+      "label",
+      "options",
+      "name",
+      "layout",
+      "color",
+      "size",
+      "rounded",
+      "hint",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "required",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": []
+  }
+}

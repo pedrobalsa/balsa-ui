@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "name": "select",
+  "title": "Select",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose one or more values from a finite, typed option list.",
+  "useFor": [
+    "Short finite option lists",
+    "Single or multiple selection",
+    "Forms requiring styled listbox behavior"
+  ],
+  "avoidFor": [
+    "Free-form input",
+    "Very large searchable datasets"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated"
+  ],
+  "composition": {
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "styling": "Consumer class and style attributes merge onto the combobox trigger while shared helpers preserve the Balsa field language.",
+    "popup": "The listbox uses the browser top layer when available so overflow containers do not clip it. Its option rows retain one fixed height with a small gap between rows; selected material uses 80% opacity without changing row geometry.",
+    "multiple": "Set multiple to keep the listbox open while selected options are toggled and emit an array model.",
+    "customContent": "Typed selected and option slots can add concise visual context while the option label remains the accessible selection identity."
+  },
+  "accessibility": [
+    "Associates its label, hint, and validation feedback with the trigger.",
+    "Implements combobox and listbox keyboard behavior.",
+    "Multiple mode exposes aria-multiselectable and keeps the listbox open while Enter or Space toggles the active option.",
+    "Invalid state exposes aria-invalid and an alert message.",
+    "The top-layer listbox remains structurally associated with its trigger."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-selected",
+    "--balsa-color-destructive",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Providing duplicate option values.",
+    "Using Select when Autocomplete is needed.",
+    "Omitting a stable id and visible label."
+  ],
+  "examples": [
+    "Basic selection",
+    "Multiple selection",
+    "Rich option content",
+    "Selection with disabled option",
+    "Unvalidated selection"
+  ],
+  "publicApi": {
+    "model": "string | readonly string[]",
+    "props": [
+      "id",
+      "label",
+      "options",
+      "multiple",
+      "size",
+      "rounded",
+      "placeholder",
+      "hint",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "required",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "selected",
+      "option"
+    ]
+  }
+}

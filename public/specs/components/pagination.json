@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "name": "pagination",
+  "title": "Pagination",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Move through a finite result set with bounded pages, labelled adjacent actions, or icon-only adjacent actions.",
+  "useFor": [
+    "Search results",
+    "Tables",
+    "Long server-backed collections"
+  ],
+  "avoidFor": [
+    "Short collections",
+    "Continuous feeds",
+    "Progress through a form workflow"
+  ],
+  "states": [
+    "first page",
+    "middle page",
+    "last page",
+    "disabled"
+  ],
+  "accessibility": [
+    "Uses a labelled nav landmark and native buttons.",
+    "The active page exposes aria-current.",
+    "Boundary actions use native disabled semantics and every icon-only control has an accessible label."
+  ],
+  "variants": [
+    "bounded pages with semantic ellipses",
+    "action labels only",
+    "icons only"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using zero-based public page numbers.",
+    "Changing result density inside pagination without an explicit page-size control.",
+    "Removing accessible names from icon-only controls."
+  ],
+  "examples": [
+    "Default range",
+    "Action labels only",
+    "Icons only",
+    "Without edge controls",
+    "Disabled pagination"
+  ],
+  "publicApi": {
+    "props": [
+      "modelValue",
+      "total",
+      "pageSize",
+      "siblingCount",
+      "presentation",
+      "showEdges",
+      "showLabels",
+      "disabled",
+      "label",
+      "previousLabel",
+      "nextLabel",
+      "firstLabel",
+      "lastLabel",
+      "pageLabel",
+      "size",
+      "rounded",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "change"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "name": "preview",
+  "title": "Preview",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Render Vue content in a natural or exact logical viewport that scales to a bounded workbench.",
+  "useFor": [
+    "Responsive component demonstrations",
+    "Device-size simulations",
+    "Fullscreen design review"
+  ],
+  "avoidFor": [
+    "Untrusted remote documents",
+    "Application navigation",
+    "Content that depends on the parent document DOM"
+  ],
+  "states": [
+    "responsive",
+    "fixed scaled",
+    "fullscreen"
+  ],
+  "accessibility": [
+    "The isolated frame has a required title.",
+    "Fullscreen is a labelled chromeless dialog with one close action.",
+    "Palette and theme state synchronize into the frame document."
+  ],
+  "variants": [
+    "responsive",
+    "fixed"
+  ],
+  "sizes": [
+    "consumer-defined logical width and height"
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-foreground",
+    "--balsa-color-border",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Treating CSS transform scale as logical viewport width without iframe isolation.",
+    "Omitting a descriptive frame title.",
+    "Placing essential controls only in fullscreen."
+  ],
+  "examples": [
+    "Responsive canvas",
+    "Desktop viewport",
+    "Mobile viewport"
+  ],
+  "publicApi": {
+    "props": [
+      "title",
+      "viewport",
+      "width",
+      "height",
+      "maxHeight",
+      "fit",
+      "edgeToEdge",
+      "fullscreen",
+      "fullscreenLabel",
+      "closeLabel",
+      "theme"
+    ],
+    "slots": [
+      "default",
+      "fullscreen"
+    ]
+  }
+}

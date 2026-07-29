@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "name": "skeleton",
+  "title": "Skeleton",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Reserve the shape of pending content without exposing placeholder noise to assistive technology.",
+  "useFor": [
+    "Initial content loading",
+    "Layout-preserving card placeholders",
+    "Text, media, and avatar placeholders"
+  ],
+  "avoidFor": [
+    "Unknown-duration blocking operations",
+    "Short button actions",
+    "Replacing useful loading labels"
+  ],
+  "states": [
+    "pulse",
+    "wave",
+    "static"
+  ],
+  "accessibility": [
+    "Skeleton output is aria-hidden.",
+    "The owning content region should expose aria-busy.",
+    "Motion stops when reduced motion is requested."
+  ],
+  "variants": [
+    "muted",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "text",
+    "rect",
+    "circle"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-muted",
+    "--balsa-color-primary",
+    "--balsa-color-surface",
+    "radius.surface",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using Skeleton without aria-busy on the owning region.",
+    "Showing a placeholder shape unlike the final content.",
+    "Animating already-loaded content."
+  ],
+  "examples": [
+    "Text lines",
+    "Media rectangle",
+    "Avatar circle",
+    "Glass placeholder"
+  ],
+  "publicApi": {
+    "props": [
+      "shape",
+      "variant",
+      "size",
+      "rounded",
+      "animation",
+      "lines",
+      "theme"
+    ]
+  }
+}

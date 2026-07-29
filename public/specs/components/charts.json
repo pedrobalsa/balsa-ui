@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "name": "charts",
+  "title": "Charts",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Visualize typed series with configurable semantic palette-aware responsive canvases and a semantic data alternative.",
+  "useFor": [
+    "Trends",
+    "Category comparisons",
+    "Part-to-whole summaries"
+  ],
+  "avoidFor": [
+    "Data without an accessible table",
+    "Unsupported custom chart engines",
+    "Decorative unlabeled canvases"
+  ],
+  "states": [
+    "data",
+    "loading",
+    "empty",
+    "error"
+  ],
+  "accessibility": [
+    "Figure caption names the chart.",
+    "Canvas is hidden from assistive technology.",
+    "A semantic table always provides the complete data alternative."
+  ],
+  "variants": [
+    "line",
+    "bar",
+    "doughnut"
+  ],
+  "sizes": [
+    "responsive canvas with optional width and height"
+  ],
+  "tokens": [
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-foreground",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "--balsa-color-surface"
+  ],
+  "commonMistakes": [
+    "Relying on canvas alone.",
+    "Using arbitrary raw colors.",
+    "Animating despite reduced-motion preference."
+  ],
+  "examples": [
+    "Bar comparison",
+    "Line trend",
+    "Doughnut summary",
+    "Loading and error"
+  ],
+  "publicApi": {
+    "props": [
+      "title",
+      "description",
+      "type",
+      "labels",
+      "series",
+      "colors",
+      "loading",
+      "error",
+      "emptyText",
+      "showLegend",
+      "showTable",
+      "responsive",
+      "width",
+      "height",
+      "rounded",
+      "theme"
+    ]
+  }
+}

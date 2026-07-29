@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "name": "dropdown-menu",
+  "title": "Dropdown Menu",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Expose a button-triggered set of typed actions, states, submenus, semantic color, and configurable geometry.",
+  "useFor": [
+    "Action menus",
+    "Checkable settings",
+    "Compact exclusive choices"
+  ],
+  "avoidFor": [
+    "Site navigation already served by Dropdown",
+    "Arbitrary rich content",
+    "Form selection"
+  ],
+  "types": [
+    "action",
+    "checkbox",
+    "radio",
+    "submenu"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled",
+    "checked",
+    "highlighted"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The button owns menu popup state and focus restoration.",
+    "Menu items use roving focus, arrows, Home, End, typeahead, and Escape.",
+    "Checked, radio, disabled, and submenu state use native ARIA menu roles."
+  ],
+  "tokens": [
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using a menu for ordinary navigation.",
+    "Mutating item data inside the component.",
+    "Omitting labels for icon actions."
+  ],
+  "examples": [
+    "Actions",
+    "Checkbox items",
+    "Radio items",
+    "Submenu"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "items",
+      "side",
+      "align",
+      "sideOffset",
+      "variant",
+      "color",
+      "rounded",
+      "contained",
+      "disabled",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "select"
+    ],
+    "slots": [
+      "trigger"
+    ]
+  }
+}

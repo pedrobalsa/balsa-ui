@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "name": "button",
+  "title": "Button",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Trigger an immediate user action.",
+  "useFor": [
+    "Form submission",
+    "Confirming an action",
+    "Primary or secondary page actions",
+    "Icon-only floating actions"
+  ],
+  "avoidFor": [
+    "Navigation between pages",
+    "Passive status display",
+    "Icon-only actions without an accessible name"
+  ],
+  "variants": [
+    "solid",
+    "outline",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "custom"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading"
+  ],
+  "composition": {
+    "iconPosition": [
+      "prefix",
+      "suffix",
+      "both"
+    ],
+    "shapes": [
+      "rounded",
+      "pill",
+      "fab"
+    ],
+    "brutalismGeometry": "The default rounded shape resolves to rounded-none in Brutalism; pill, FAB, and consumer radius classes remain deliberate overrides.",
+    "fabBehavior": "Render a square, circular, padding-free icon action at deliberately distinct 40px, 56px, 72px, and 96px presets with proportionally scaled icons; consumers own floating placement and must provide an accessible name.",
+    "loadingBehavior": "Disable interaction, expose aria-busy, and replace the leading icon with a spinner."
+  },
+  "accessibility": [
+    "Use native button semantics.",
+    "Provide visible text or an accessible name.",
+    "FAB-shaped icon-only actions require an accessible name.",
+    "Loading and disabled states must block interaction and not rely only on color."
+  ],
+  "tokens": [
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-primary-hover",
+    "--balsa-color-primary-active",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "spacing.control-inline"
+  ],
+  "commonMistakes": [
+    "Creating a clickable div instead of Button.",
+    "Using Button for navigation.",
+    "Adding unregistered colors or variants.",
+    "Using outline when a lower-contrast translucent glass action is intended.",
+    "Putting visible text inside a FAB-shaped button or omitting its accessible name."
+  ],
+  "examples": [
+    "Basic button",
+    "Button with leading icon",
+    "Outline button",
+    "Glass button",
+    "Floating action button",
+    "Loading button"
+  ],
+  "publicApi": {
+    "model": null,
+    "props": [
+      "variant",
+      "color",
+      "size",
+      "shape",
+      "prefixIcon",
+      "suffixIcon",
+      "disabled",
+      "loading",
+      "type",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "click"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

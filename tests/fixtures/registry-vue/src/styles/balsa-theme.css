@@ -1,0 +1,1096 @@
+/* Balsa UI public design-theme contract. Import after balsa-foundation.css. */
+
+@theme inline {
+  --font-balsa-title: var(--balsa-font-title);
+  --font-balsa-body: var(--balsa-font-body);
+  --radius-balsa-control: var(--balsa-radius-control);
+  --radius-balsa-surface: var(--balsa-radius-surface);
+  --radius-balsa-panel: var(--balsa-radius-panel);
+  --spacing-balsa-control-inline: var(--balsa-spacing-control-inline);
+  --spacing-balsa-density-compact: var(--balsa-spacing-density-compact);
+  --spacing-balsa-density-default: var(--balsa-spacing-density-default);
+  --spacing-balsa-density-comfortable: var(--balsa-spacing-density-comfortable);
+  --shadow-balsa-control: var(--balsa-shadow-control);
+  --shadow-balsa-surface: var(--balsa-shadow-surface);
+  --shadow-balsa-panel: var(--balsa-shadow-panel);
+  --shadow-balsa-sm: var(--balsa-shadow-sm);
+  --shadow-balsa-md: var(--balsa-shadow-md);
+  --shadow-balsa-lg: var(--balsa-shadow-lg);
+  --shadow-balsa-detail: var(--balsa-shadow-detail);
+}
+
+:root,
+[data-theme="modern-flat"],
+[data-theme-base="modern-flat"] {
+  --balsa-font-title: "Space Grotesk", sans-serif;
+  --balsa-font-body: "Noto Sans", sans-serif;
+  --balsa-title-letter-spacing: 0px;
+  --balsa-title-text-transform: none;
+  --balsa-radius-control: 0.5rem;
+  --balsa-code-control-radius: 0.5rem;
+  --balsa-radius-surface: 1rem;
+  --balsa-radius-panel: 1.5rem;
+  --balsa-radius-badge: 9999px;
+  --balsa-radius-toggle: 9999px;
+  --balsa-spacing-control-inline: 1.25rem;
+  --balsa-spacing-density-compact: 0.5rem;
+  --balsa-spacing-density-default: 0.75rem;
+  --balsa-spacing-density-comfortable: 1rem;
+  --balsa-border-width: 1px;
+  --balsa-outline-border-width: 1px;
+  --balsa-solid-border-width: 0px;
+  --balsa-border-style: solid;
+  --balsa-shadow-sm: none;
+  --balsa-shadow-md: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 8%, transparent), 0 12px 32px color-mix(in oklab, var(--balsa-color-foreground) 8%, transparent);
+  --balsa-shadow-lg: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 6%, transparent), 0 12px 32px color-mix(in oklab, var(--balsa-color-foreground) 7%, transparent);
+  --balsa-shadow-detail: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 10%, transparent);
+  --balsa-shadow-control: var(--balsa-shadow-sm);
+  --balsa-shadow-surface: var(--balsa-shadow-md);
+  --balsa-shadow-panel: var(--balsa-shadow-lg);
+  --balsa-shadow-playground: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 4%, transparent), 0 10px 28px color-mix(in oklab, var(--balsa-color-foreground) 6%, transparent);
+  --balsa-motion-fast: 160ms;
+  --balsa-motion-normal: 260ms;
+  --balsa-motion-slow: 420ms;
+  --balsa-motion-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --balsa-control-hover-transform: translateY(-1px);
+  --balsa-control-active-transform: translateY(0);
+  --balsa-surface-hover-transform: none;
+  --balsa-control-text-transform: none;
+  --balsa-control-letter-spacing: 0;
+  --balsa-control-font-family: var(--balsa-font-body);
+  --balsa-control-font-weight: 700;
+  --balsa-backdrop-blur: 0px;
+  --balsa-backdrop-saturation: 1;
+  --balsa-overlay-blur: 4px;
+  --balsa-material-background: var(--balsa-color-background);
+  --balsa-material-foreground: var(--balsa-color-foreground);
+  --balsa-material-surface: var(--balsa-color-surface);
+  --balsa-material-surface-foreground: var(--balsa-color-surface-foreground);
+  --balsa-material-surface-elevated: var(--balsa-color-surface-elevated);
+  --balsa-material-surface-elevated-foreground: var(--balsa-color-surface-elevated-foreground);
+  --balsa-material-muted: var(--balsa-color-muted);
+  --balsa-material-muted-foreground: var(--balsa-color-muted-foreground);
+  --balsa-material-inverse: var(--balsa-color-inverse);
+  --balsa-material-inverse-foreground: var(--balsa-color-inverse-foreground);
+  --balsa-material-primary: var(--balsa-color-primary);
+  --balsa-material-primary-foreground: var(--balsa-color-primary-foreground);
+  --balsa-material-primary-hover: var(--balsa-color-primary-hover);
+  --balsa-material-primary-active: var(--balsa-color-primary-active);
+  --balsa-material-secondary: var(--balsa-color-secondary);
+  --balsa-material-secondary-foreground: var(--balsa-color-secondary-foreground);
+  --balsa-material-secondary-hover: var(--balsa-color-secondary-hover);
+  --balsa-material-secondary-active: var(--balsa-color-secondary-active);
+  --balsa-material-accent: var(--balsa-color-accent);
+  --balsa-material-accent-foreground: var(--balsa-color-accent-foreground);
+  --balsa-material-accent-hover: var(--balsa-color-accent-hover);
+  --balsa-material-accent-active: var(--balsa-color-accent-active);
+  --balsa-material-input: var(--balsa-color-input);
+  --balsa-material-input-border: var(--balsa-color-input-border);
+  --balsa-material-selected: var(--balsa-color-selected);
+  --balsa-material-border: var(--balsa-color-border);
+  --balsa-material-border-strong: var(--balsa-color-border-strong);
+  --balsa-material-code: var(--balsa-color-code);
+  --balsa-material-slider-thumb: var(--balsa-color-input);
+  --balsa-material-playground-workspace: var(--balsa-material-muted);
+  --balsa-material-playground-properties: var(--balsa-material-surface);
+  --balsa-material-outline-control: transparent;
+  --balsa-material-outline-control-hover: color-mix(in oklab, currentColor 15%, transparent);
+  --balsa-material-outline-control-active: color-mix(in oklab, currentColor 25%, transparent);
+  --balsa-material-outline-control-border: currentColor;
+  --balsa-material-glass-control: color-mix(in oklab, var(--balsa-color-surface-elevated) 78%, currentColor 3%);
+  --balsa-material-glass-control-hover: color-mix(in oklab, var(--balsa-color-surface-elevated) 80%, currentColor 8%);
+  --balsa-material-glass-control-active: color-mix(in oklab, var(--balsa-color-surface-elevated) 82%, currentColor 12%);
+  --balsa-material-glass-control-border: color-mix(in oklab, currentColor 18%, transparent);
+}
+
+[data-theme="brutalism"],
+[data-theme-base="brutalism"] {
+  --balsa-font-title: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --balsa-font-body: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --balsa-title-letter-spacing: -0.03em;
+  --balsa-title-text-transform: uppercase;
+  --balsa-radius-control: 0px;
+  --balsa-code-control-radius: 0px;
+  --balsa-radius-surface: 0px;
+  --balsa-radius-panel: 0px;
+  --balsa-radius-badge: 0px;
+  --balsa-radius-toggle: 0px;
+  --balsa-spacing-control-inline: 1rem;
+  --balsa-spacing-density-compact: 0.375rem;
+  --balsa-spacing-density-default: 0.625rem;
+  --balsa-spacing-density-comfortable: 0.875rem;
+  --balsa-border-width: 1px;
+  --balsa-outline-border-width: 1px;
+  --balsa-solid-border-width: 1px;
+  --balsa-border-style: solid;
+  --balsa-shadow-sm: 3px 3px 0 var(--balsa-color-foreground);
+  --balsa-shadow-md: 5px 5px 0 var(--balsa-color-foreground);
+  --balsa-shadow-lg: 6px 6px 0 var(--balsa-color-foreground);
+  --balsa-shadow-detail: 2px 2px 0 var(--balsa-color-foreground);
+  --balsa-shadow-control: var(--balsa-shadow-sm);
+  --balsa-shadow-surface: var(--balsa-shadow-md);
+  --balsa-shadow-panel: var(--balsa-shadow-lg);
+  --balsa-shadow-playground: var(--balsa-shadow-panel);
+  --balsa-motion-fast: 90ms;
+  --balsa-motion-normal: 140ms;
+  --balsa-motion-slow: 220ms;
+  --balsa-motion-easing: linear;
+  --balsa-control-hover-transform: translate(-2px, -2px);
+  --balsa-control-active-transform: translate(1px, 1px);
+  --balsa-surface-hover-transform: translate(-2px, -2px);
+  --balsa-control-text-transform: uppercase;
+  --balsa-control-letter-spacing: 0.06em;
+  --balsa-control-font-family: var(--balsa-font-body);
+  --balsa-control-font-weight: 800;
+  --balsa-backdrop-blur: 0px;
+  --balsa-backdrop-saturation: 1;
+  --balsa-overlay-blur: 0px;
+  --balsa-material-background: var(--balsa-color-background);
+  --balsa-material-foreground: var(--balsa-color-foreground);
+  --balsa-material-surface: var(--balsa-color-background);
+  --balsa-material-surface-foreground: var(--balsa-color-foreground);
+  --balsa-material-surface-elevated: var(--balsa-color-background);
+  --balsa-material-surface-elevated-foreground: var(--balsa-color-foreground);
+  --balsa-material-muted: color-mix(in oklab, var(--balsa-color-background) 88%, var(--balsa-color-foreground));
+  --balsa-material-muted-foreground: var(--balsa-color-muted-foreground);
+  --balsa-material-inverse: var(--balsa-color-inverse);
+  --balsa-material-inverse-foreground: var(--balsa-color-inverse-foreground);
+  --balsa-material-primary: var(--balsa-color-primary);
+  --balsa-material-primary-foreground: var(--balsa-color-primary-foreground);
+  --balsa-material-primary-hover: var(--balsa-color-primary-hover);
+  --balsa-material-primary-active: var(--balsa-color-primary-active);
+  --balsa-material-secondary: var(--balsa-color-secondary);
+  --balsa-material-secondary-foreground: var(--balsa-color-secondary-foreground);
+  --balsa-material-secondary-hover: var(--balsa-color-secondary-hover);
+  --balsa-material-secondary-active: var(--balsa-color-secondary-active);
+  --balsa-material-accent: var(--balsa-color-accent);
+  --balsa-material-accent-foreground: var(--balsa-color-accent-foreground);
+  --balsa-material-accent-hover: var(--balsa-color-accent-hover);
+  --balsa-material-accent-active: var(--balsa-color-accent-active);
+  --balsa-material-input: var(--balsa-color-background);
+  --balsa-material-input-border: var(--balsa-color-input-border);
+  --balsa-material-selected: var(--balsa-color-selected);
+  --balsa-material-border: var(--balsa-color-border);
+  --balsa-material-border-strong: var(--balsa-color-border-strong);
+  --balsa-material-code: var(--balsa-color-code);
+  --balsa-material-slider-thumb: var(--balsa-color-input);
+  --balsa-material-playground-workspace: var(--balsa-material-muted);
+  --balsa-material-playground-properties: var(--balsa-material-surface);
+  --balsa-material-outline-control: transparent;
+  --balsa-material-outline-control-hover: color-mix(in oklab, currentColor 15%, transparent);
+  --balsa-material-outline-control-active: color-mix(in oklab, currentColor 25%, transparent);
+  --balsa-material-outline-control-border: currentColor;
+  --balsa-material-glass-control: color-mix(in oklab, var(--balsa-color-background) 78%, currentColor 3%);
+  --balsa-material-glass-control-hover: color-mix(in oklab, var(--balsa-color-background) 80%, currentColor 8%);
+  --balsa-material-glass-control-active: color-mix(in oklab, var(--balsa-color-background) 82%, currentColor 12%);
+  --balsa-material-glass-control-border: color-mix(in oklab, currentColor 18%, transparent);
+}
+
+[data-theme="glassmorphism"],
+[data-theme-base="glassmorphism"] {
+  --balsa-font-title: "Space Grotesk", sans-serif;
+  --balsa-font-body: "Noto Sans", sans-serif;
+  --balsa-title-letter-spacing: 0px;
+  --balsa-title-text-transform: none;
+  --balsa-radius-control: 0.875rem;
+  --balsa-code-control-radius: 0.5rem;
+  --balsa-radius-surface: 1.375rem;
+  --balsa-radius-panel: 2rem;
+  --balsa-radius-badge: 9999px;
+  --balsa-radius-toggle: 9999px;
+  --balsa-spacing-control-inline: 1.25rem;
+  --balsa-spacing-density-compact: 0.5rem;
+  --balsa-spacing-density-default: 0.75rem;
+  --balsa-spacing-density-comfortable: 1rem;
+  --balsa-border-width: 1px;
+  --balsa-outline-border-width: 1px;
+  --balsa-solid-border-width: 1px;
+  --balsa-border-style: solid;
+  --balsa-shadow-sm: 0 6px 20px color-mix(in oklab, var(--balsa-color-foreground) 4%, transparent);
+  --balsa-shadow-md: 0 14px 36px color-mix(in oklab, var(--balsa-color-foreground) 5%, transparent);
+  --balsa-shadow-lg: 0 8px 24px color-mix(in oklab, var(--balsa-color-foreground) 5%, transparent);
+  --balsa-shadow-detail: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 8%, transparent);
+  --balsa-shadow-control: var(--balsa-shadow-sm);
+  --balsa-shadow-surface: var(--balsa-shadow-md);
+  --balsa-shadow-panel: var(--balsa-shadow-lg);
+  --balsa-shadow-playground: 0 12px 32px color-mix(in oklab, var(--balsa-color-foreground) 4%, transparent);
+  --balsa-motion-fast: 180ms;
+  --balsa-motion-normal: 320ms;
+  --balsa-motion-slow: 520ms;
+  --balsa-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --balsa-control-hover-transform: translateY(-1px) scale(1.01);
+  --balsa-control-active-transform: scale(0.98);
+  --balsa-surface-hover-transform: none;
+  --balsa-control-text-transform: none;
+  --balsa-control-letter-spacing: 0;
+  --balsa-control-font-family: var(--balsa-font-body);
+  --balsa-control-font-weight: 700;
+  --balsa-backdrop-blur: 14px;
+  --balsa-backdrop-saturation: 1.1;
+  --balsa-overlay-blur: 4px;
+  --balsa-material-background: var(--balsa-color-background);
+  --balsa-material-foreground: var(--balsa-color-foreground);
+  --balsa-material-surface: color-mix(in oklab, var(--balsa-color-surface) 60%, transparent);
+  --balsa-material-surface-foreground: var(--balsa-color-surface-foreground);
+  --balsa-material-surface-elevated: color-mix(in oklab, var(--balsa-color-surface-elevated) 64%, transparent);
+  --balsa-material-surface-elevated-foreground: var(--balsa-color-surface-elevated-foreground);
+  --balsa-material-muted: color-mix(in oklab, var(--balsa-color-muted) 60%, transparent);
+  --balsa-material-muted-foreground: var(--balsa-color-muted-foreground);
+  --balsa-material-inverse: color-mix(in oklab, var(--balsa-color-inverse) 88%, transparent);
+  --balsa-material-inverse-foreground: var(--balsa-color-inverse-foreground);
+  --balsa-material-primary: var(--balsa-color-primary);
+  --balsa-material-primary-foreground: var(--balsa-color-primary-foreground);
+  --balsa-material-primary-hover: var(--balsa-color-primary-hover);
+  --balsa-material-primary-active: var(--balsa-color-primary-active);
+  --balsa-material-secondary: color-mix(in oklab, var(--balsa-color-secondary) 92%, transparent);
+  --balsa-material-secondary-foreground: var(--balsa-color-secondary-foreground);
+  --balsa-material-secondary-hover: color-mix(in oklab, var(--balsa-color-secondary-hover) 94%, transparent);
+  --balsa-material-secondary-active: color-mix(in oklab, var(--balsa-color-secondary-active) 96%, transparent);
+  --balsa-material-accent: color-mix(in oklab, var(--balsa-color-accent) 92%, transparent);
+  --balsa-material-accent-foreground: var(--balsa-color-accent-foreground);
+  --balsa-material-accent-hover: color-mix(in oklab, var(--balsa-color-accent-hover) 94%, transparent);
+  --balsa-material-accent-active: color-mix(in oklab, var(--balsa-color-accent-active) 96%, transparent);
+  --balsa-material-input: color-mix(in oklab, var(--balsa-color-input) 76%, transparent);
+  --balsa-material-input-border: color-mix(in oklab, var(--balsa-color-foreground) 24%, transparent);
+  --balsa-material-selected: color-mix(in oklab, var(--balsa-color-selected) 88%, transparent);
+  --balsa-material-border: color-mix(in oklab, var(--balsa-color-foreground) 14%, transparent);
+  --balsa-material-border-strong: color-mix(in oklab, var(--balsa-color-foreground) 22%, transparent);
+  --balsa-material-code: color-mix(in oklab, var(--balsa-color-code) 88%, transparent);
+  --balsa-material-slider-thumb: color-mix(in oklab, var(--balsa-color-input) 94%, var(--balsa-color-background));
+  --balsa-material-playground-workspace: color-mix(in oklab, var(--balsa-color-muted) 32%, transparent);
+  --balsa-material-playground-properties: color-mix(in oklab, var(--balsa-color-surface) 40%, transparent);
+  --balsa-material-outline-control: color-mix(in oklab, var(--balsa-material-surface-elevated) 94%, currentColor 6%);
+  --balsa-material-outline-control-hover: color-mix(in oklab, var(--balsa-material-surface-elevated) 86%, currentColor 14%);
+  --balsa-material-outline-control-active: color-mix(in oklab, var(--balsa-material-surface-elevated) 78%, currentColor 22%);
+  --balsa-material-outline-control-border: color-mix(in oklab, currentColor 32%, transparent);
+  --balsa-material-glass-control: color-mix(in oklab, var(--balsa-color-surface-elevated) 50%, currentColor 4%);
+  --balsa-material-glass-control-hover: color-mix(in oklab, var(--balsa-color-surface-elevated) 58%, currentColor 8%);
+  --balsa-material-glass-control-active: color-mix(in oklab, var(--balsa-color-surface-elevated) 64%, currentColor 12%);
+  --balsa-material-glass-control-border: color-mix(in oklab, currentColor 16%, transparent);
+}
+
+/* Stable component recipes. Components provide data hooks; themes provide values.
+   Keeping recipes in the components layer lets consumer utilities make deliberate
+   local adjustments without specificity escalation. */
+@layer components {
+:where([data-balsa]) {
+  transition-duration: var(--balsa-motion-fast);
+  transition-timing-function: var(--balsa-motion-easing);
+}
+
+:where([data-balsa="button"], [data-balsa="link"], [data-balsa-control]) {
+  border-radius: var(--balsa-radius-control);
+  border-style: var(--balsa-border-style);
+  font-family: var(--balsa-control-font-family);
+  font-weight: var(--balsa-control-font-weight);
+  letter-spacing: var(--balsa-control-letter-spacing);
+  text-transform: var(--balsa-control-text-transform);
+  transition-duration: var(--balsa-motion-fast);
+  transition-timing-function: var(--balsa-motion-easing);
+}
+
+:where([data-balsa="button"], [data-balsa="link"])[data-variant="solid"] {
+  border-width: var(--balsa-solid-border-width);
+  box-shadow: var(--balsa-shadow-control);
+}
+
+:where([data-balsa="button"], [data-balsa="link"])[data-variant="outline"] {
+  border-width: var(--balsa-outline-border-width);
+  box-shadow: var(--balsa-shadow-control);
+}
+
+/* Glass buttons keep their material rim quieter than outline actions while
+   retaining the selected semantic color for text and interaction tint. */
+:where([data-balsa="button"])[data-variant="glass"] {
+  border-width: var(--balsa-border-width);
+  box-shadow: var(--balsa-shadow-control);
+}
+
+:where([data-balsa="button"])[data-variant="glass"]:not(:disabled) {
+  border-color: var(--balsa-material-glass-control-border);
+  background-color: var(--balsa-material-glass-control);
+}
+
+:where([data-balsa="button"])[data-variant="glass"]:hover:not(:disabled) {
+  background-color: var(--balsa-material-glass-control-hover);
+}
+
+:where([data-balsa="button"])[data-variant="glass"]:active:not(:disabled) {
+  background-color: var(--balsa-material-glass-control-active);
+}
+
+/* Theme-owned outline materials keep lower-emphasis actions transparent in
+   flat themes while retaining a semantic, deliberately visible boundary. */
+:where(
+  [data-balsa="button"],
+  [data-balsa="link"]
+)[data-variant="outline"]:not(:disabled) {
+  border-color: var(--balsa-material-outline-control-border);
+  background-color: var(--balsa-material-outline-control);
+}
+
+:where(
+  [data-balsa="button"],
+  [data-balsa="link"]
+)[data-variant="outline"]:hover:not(:disabled) {
+  background-color: var(--balsa-material-outline-control-hover);
+}
+
+:where(
+  [data-balsa="button"],
+  [data-balsa="link"]
+)[data-variant="outline"]:active:not(:disabled) {
+  background-color: var(--balsa-material-outline-control-active);
+}
+
+:where([data-balsa="button"], [data-balsa="link"]):hover:not(:disabled) {
+  transform: var(--balsa-control-hover-transform);
+}
+
+:where([data-balsa="button"], [data-balsa="link"]):active:not(:disabled) {
+  transform: var(--balsa-control-active-transform);
+}
+
+/* Connected buttons move and elevate as one control so their effects do not
+   expand the group's intentionally scrollable inline axis. */
+[data-balsa="button-group"] > [data-balsa="button"] {
+  box-shadow: none;
+  transform: none;
+}
+
+[data-balsa="button-group"] > [data-balsa="button"]:hover:not(:disabled),
+[data-balsa="button-group"] > [data-balsa="button"]:active:not(:disabled) {
+  transform: none;
+}
+
+:where([data-balsa="button"], [data-balsa="link"])[data-variant="text"] {
+  border-width: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+[data-balsa="badge"] {
+  border-radius: var(--balsa-radius-badge);
+  border-style: var(--balsa-border-style);
+  font-family: var(--balsa-control-font-family);
+  font-weight: var(--balsa-control-font-weight);
+  letter-spacing: var(--balsa-control-letter-spacing);
+  text-transform: var(--balsa-control-text-transform);
+}
+
+[data-balsa="badge"][data-variant="outline"] {
+  border-width: var(--balsa-outline-border-width);
+}
+
+[data-balsa="card"] {
+  border-radius: var(--balsa-radius-surface);
+  border-style: var(--balsa-border-style);
+  transition-property: transform, box-shadow, background-color, border-color;
+  transition-duration: var(--balsa-motion-normal);
+}
+
+[data-balsa="card"][data-variant="surface"] {
+  box-shadow: var(--balsa-shadow-surface);
+}
+
+[data-balsa="card"][data-variant="elevated"] {
+  box-shadow: var(--balsa-shadow-panel);
+}
+
+[data-balsa="card"][data-balsa-playground] {
+  box-shadow: var(--balsa-shadow-playground);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+[data-balsa="table"][data-density="compact"] {
+  --balsa-table-density: var(--balsa-spacing-density-compact);
+}
+
+[data-balsa="table"][data-density="default"] {
+  --balsa-table-density: var(--balsa-spacing-density-default);
+}
+
+[data-balsa="table"][data-density="comfortable"] {
+  --balsa-table-density: var(--balsa-spacing-density-comfortable);
+}
+
+[data-balsa="table"] :where(th, td) {
+  padding-block: var(--balsa-table-density);
+  padding-inline: calc(var(--balsa-table-density) + 0.25rem);
+}
+
+[data-balsa="card"][data-shadow="none"] {
+  box-shadow: none;
+}
+
+[data-balsa][data-shadow="none"] {
+  box-shadow: none;
+}
+
+[data-balsa][data-shadow="sm"] {
+  box-shadow: var(--balsa-shadow-sm);
+}
+
+[data-balsa][data-shadow="md"] {
+  box-shadow: var(--balsa-shadow-md);
+}
+
+[data-balsa][data-shadow="lg"] {
+  box-shadow: var(--balsa-shadow-lg);
+}
+
+[data-balsa="button-group"],
+[data-balsa="tabs-list"] {
+  border-radius: var(--balsa-radius-control);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+}
+
+[data-balsa="tabs-list"][data-type="underline"] {
+  border-radius: 0;
+  border-width: 0 0 var(--balsa-border-width);
+}
+
+[data-balsa="tabs-list"][data-type="pills"],
+[data-balsa="tabs-list"][data-type="tiles"] {
+  border-radius: 0;
+  border-width: 0;
+}
+
+[data-balsa="button-group"] {
+  box-shadow: var(--balsa-shadow-control);
+}
+
+[data-balsa="button-group"][data-variant="code"] {
+  border-radius: var(--balsa-code-control-radius);
+}
+
+[data-balsa="tabs-panel"][data-surface="true"],
+[data-balsa="color-picker-popover"],
+[data-balsa="select-popover"],
+[data-balsa="autocomplete-popover"] {
+  border-radius: var(--balsa-radius-surface);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  box-shadow: var(--balsa-shadow-surface);
+}
+
+[data-balsa="code-block"] {
+  border-radius: var(--balsa-radius-control);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  --balsa-code-syntax-comment: color-mix(in oklab, var(--balsa-color-code-foreground) 48%, transparent);
+  --balsa-code-syntax-keyword: color-mix(in oklab, var(--balsa-color-info) 64%, var(--balsa-color-code-foreground));
+  --balsa-code-syntax-string: color-mix(in oklab, var(--balsa-color-success) 68%, var(--balsa-color-code-foreground));
+  --balsa-code-syntax-number: color-mix(in oklab, var(--balsa-color-warning) 72%, var(--balsa-color-code-foreground));
+  --balsa-code-syntax-title: color-mix(in oklab, var(--balsa-color-accent) 62%, var(--balsa-color-code-foreground));
+  --balsa-code-syntax-variable: color-mix(in oklab, var(--balsa-color-destructive) 58%, var(--balsa-color-code-foreground));
+  --balsa-code-syntax-meta: color-mix(in oklab, var(--balsa-color-secondary) 58%, var(--balsa-color-code-foreground));
+  --balsa-code-label-color: color-mix(in oklab, var(--balsa-color-code-foreground) 65%, transparent);
+}
+
+[data-balsa="code-block"] [data-balsa-code-label] {
+  color: var(--balsa-code-label-color);
+}
+
+[data-balsa="card"][data-variant="glass"],
+[data-balsa="navbar-surface"][data-variant="glass"],
+[data-balsa="dropdown"][data-variant="glass"],
+[data-balsa="menu-list"][data-variant="glass"],
+[data-balsa="site-floating-panel"][data-variant="glass"] {
+  background-color: var(--balsa-material-glass-control);
+}
+
+[data-balsa="component-playground-workspace"] {
+  background-color: var(--balsa-material-playground-workspace);
+}
+
+[data-balsa="component-playground-properties"] {
+  background-color: var(--balsa-material-playground-properties);
+}
+
+[data-balsa="code-block"] :where(.hljs-comment, .hljs-quote) {
+  color: var(--balsa-code-syntax-comment);
+  font-style: italic;
+}
+
+[data-balsa="code-block"] :where(.hljs-keyword, .hljs-selector-tag, .hljs-attribute, .hljs-name) {
+  color: var(--balsa-code-syntax-keyword);
+}
+
+[data-balsa="code-block"] :where(.hljs-string, .hljs-doctag, .hljs-regexp, .hljs-addition) {
+  color: var(--balsa-code-syntax-string);
+}
+
+[data-balsa="code-block"] :where(.hljs-number, .hljs-literal, .hljs-symbol, .hljs-bullet) {
+  color: var(--balsa-code-syntax-number);
+}
+
+[data-balsa="code-block"] :where(.hljs-title, .hljs-section, .hljs-selector-id, .hljs-selector-class, .hljs-tag) {
+  color: var(--balsa-code-syntax-title);
+}
+
+[data-balsa="code-block"] :where(.hljs-variable, .hljs-template-variable, .hljs-deletion) {
+  color: var(--balsa-code-syntax-variable);
+}
+
+[data-balsa="code-block"] :where(.hljs-meta, .hljs-built_in, .hljs-type) {
+  color: var(--balsa-code-syntax-meta);
+}
+
+[data-balsa="code-block"] :where(.hljs-strong, .hljs-title, .hljs-section) {
+  font-weight: 700;
+}
+
+[data-balsa="code-block"] {
+  --balsa-code-label-color: color-mix(in oklab, var(--balsa-color-code-foreground) 82%, transparent);
+  --balsa-code-syntax-comment: color-mix(in oklab, var(--balsa-color-code-foreground) 64%, transparent);
+}
+
+[data-balsa="code-block"] :where(
+  [data-balsa="button"],
+  [data-balsa="link"]
+)[data-variant="outline"] {
+  --balsa-material-outline-control: color-mix(in oklab, var(--balsa-color-code-foreground) 8%, transparent);
+  --balsa-material-outline-control-hover: color-mix(in oklab, var(--balsa-color-code-foreground) 14%, transparent);
+  --balsa-material-outline-control-active: color-mix(in oklab, var(--balsa-color-code-foreground) 20%, transparent);
+  --balsa-material-outline-control-border: color-mix(in oklab, var(--balsa-color-code-foreground) 28%, transparent);
+}
+
+[data-balsa="modal-panel"] {
+  border-radius: var(--balsa-radius-panel);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  box-shadow: var(--balsa-shadow-panel);
+}
+
+[data-balsa="dropdown"] {
+  border-radius: var(--balsa-radius-surface);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+}
+
+[data-balsa="navbar-surface"],
+[data-balsa="dropdown"],
+[data-balsa="color-picker-popover"],
+[data-balsa="select-popover"],
+[data-balsa="autocomplete-popover"],
+:where([data-balsa="button"])[data-variant="glass"] {
+  backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+  -webkit-backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+}
+
+[data-balsa="modal-panel"][data-variant="glass"]:not([data-presentation="fullscreen"]) {
+  backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+  -webkit-backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+}
+
+[data-balsa="modal-backdrop"] {
+  backdrop-filter: blur(var(--balsa-overlay-blur));
+  -webkit-backdrop-filter: blur(var(--balsa-overlay-blur));
+}
+
+[data-balsa="checkbox-control"] {
+  border-radius: min(var(--balsa-radius-control), 0.25rem);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+}
+
+[data-balsa="switch-control"] {
+  border-radius: var(--balsa-radius-toggle);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  box-shadow: var(--balsa-shadow-control);
+}
+
+[data-balsa="switch-control"]::after {
+  border-radius: var(--balsa-radius-toggle);
+}
+
+[data-balsa="toggle"] {
+  border-style: var(--balsa-border-style);
+  box-shadow: var(--balsa-shadow-control);
+  font-family: var(--balsa-control-font-family);
+  font-weight: var(--balsa-control-font-weight);
+  letter-spacing: var(--balsa-control-letter-spacing);
+  text-transform: var(--balsa-control-text-transform);
+}
+
+[data-balsa="toggle"][data-variant="solid"] {
+  border-width: var(--balsa-solid-border-width);
+}
+
+[data-balsa="toggle"][data-variant="surface"],
+[data-balsa="toggle"][data-variant="outline"],
+[data-balsa="toggle"][data-variant="glass"] {
+  border-width: var(--balsa-outline-border-width);
+}
+
+[data-balsa="toggle"][data-variant="glass"][data-state="off"] {
+  backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
+  -webkit-backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
+}
+
+[data-balsa="toggle"]:hover:not(:disabled) {
+  transform: var(--balsa-control-hover-transform);
+}
+
+[data-balsa="toggle"]:active:not(:disabled) {
+  transform: var(--balsa-control-active-transform);
+}
+
+[data-balsa="toggle-group"] {
+  border-radius: var(--balsa-radius-control);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  box-shadow: var(--balsa-shadow-control);
+}
+
+[data-balsa="toggle-group"] > [data-balsa="toggle"],
+[data-balsa="toggle-group"] > [data-balsa="toggle"]:hover:not(:disabled),
+[data-balsa="toggle-group"] > [data-balsa="toggle"]:active:not(:disabled) {
+  box-shadow: none;
+  transform: none;
+}
+
+[data-balsa="collapsible"]:not([data-variant="underline"]),
+[data-balsa="accordion"]:not([data-variant="underline"]) {
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  box-shadow: var(--balsa-shadow-control);
+}
+
+[data-balsa="collapsible-trigger"] {
+  font-family: var(--balsa-control-font-family);
+  font-weight: var(--balsa-control-font-weight);
+  letter-spacing: var(--balsa-control-letter-spacing);
+}
+
+[data-balsa="accordion"] > [data-balsa="collapsible"] {
+  border-width: 0;
+  box-shadow: none;
+}
+
+[data-balsa="accordion"] > [data-balsa="collapsible"]:not(:first-child) {
+  border-top-width: var(--balsa-border-width);
+}
+
+[data-balsa="kbd"][data-group="false"],
+[data-balsa="kbd-key"] {
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+  font-family: var(--balsa-control-font-family);
+  letter-spacing: var(--balsa-control-letter-spacing);
+}
+
+[data-balsa="kbd"][data-variant="raised"][data-shadow="auto"][data-group="false"],
+[data-balsa="kbd"][data-variant="raised"][data-shadow="auto"] [data-balsa="kbd-key"] {
+  box-shadow: var(--balsa-shadow-detail);
+}
+
+[data-balsa="separator"] {
+  font-family: var(--balsa-font-body);
+}
+
+@keyframes balsa-skeleton-wave {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+:where(
+  [data-balsa="skeleton"][data-animation="wave"]:not([data-shape="text"]),
+  [data-balsa="skeleton-piece"][data-animation="wave"]
+)::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--balsa-color-foreground) 10%, transparent),
+    transparent
+  );
+  transform: translateX(-120%);
+  animation: balsa-skeleton-wave 1.5s var(--balsa-motion-easing) infinite;
+}
+
+[data-balsa="spinner"],
+[data-balsa="progress"],
+[data-balsa="alert"],
+[data-balsa="toast"],
+[data-balsa="toast-viewport"] {
+  font-family: var(--balsa-font-body);
+}
+
+@keyframes balsa-alert-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+dialog[data-balsa="alert"][open] {
+  animation: balsa-alert-dialog-enter 180ms var(--balsa-motion-easing);
+}
+
+@keyframes balsa-progress-indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes balsa-progress-stripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1rem 0;
+  }
+}
+
+[data-balsa="progress-indicator"][data-state="indeterminate"] {
+  animation: balsa-progress-indeterminate 1.4s var(--balsa-motion-easing) infinite;
+}
+
+[data-balsa="progress-indicator"][data-variant="striped"]::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--balsa-color-background) 18%, transparent) 25%,
+    transparent 25%,
+    transparent 50%,
+    color-mix(in oklab, var(--balsa-color-background) 18%, transparent) 50%,
+    color-mix(in oklab, var(--balsa-color-background) 18%, transparent) 75%,
+    transparent 75%
+  );
+  background-size: 1rem 1rem;
+  animation: balsa-progress-stripes 1s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    [data-balsa="skeleton"][data-animation="wave"]:not([data-shape="text"]),
+    [data-balsa="skeleton-piece"][data-animation="wave"]
+  )::after,
+  [data-balsa="progress-indicator"][data-state="indeterminate"],
+  [data-balsa="progress-indicator"][data-variant="striped"]::after,
+  dialog[data-balsa="alert"][open] {
+    animation: none;
+  }
+}
+
+[data-balsa="footer"],
+[data-balsa="textarea"],
+[data-balsa="modal"],
+[data-balsa="input"],
+[data-balsa="input-group"],
+[data-balsa="input-otp"],
+[data-balsa="radio-group"],
+[data-balsa="slider"],
+[data-balsa="popup"],
+[data-balsa="hover-card"],
+[data-balsa="tooltip"],
+[data-balsa="dropdown-menu"],
+[data-balsa="context-menu"],
+[data-balsa="menubar"],
+[data-balsa="command-menu"],
+[data-balsa="drawer"],
+[data-balsa="select"],
+[data-balsa="autocomplete"],
+[data-balsa="color-picker"] {
+  font-family: var(--balsa-font-body);
+}
+
+:is([data-theme], [data-theme-base]) :where(h1, h2, h3, h4, h5, h6) {
+  letter-spacing: var(--balsa-title-letter-spacing);
+  text-transform: var(--balsa-title-text-transform);
+}
+
+[data-balsa="card"]:hover {
+  transform: var(--balsa-surface-hover-transform);
+}
+
+/* Keep Dropdown ancestors out of this filter group. A filtered ancestor
+   becomes a Backdrop Root and prevents nested Dropdown glass from sampling
+   the page beneath it. Navbar uses a sibling surface; playground hosts stay
+   translucent but unfiltered. */
+:where(
+  [data-balsa="card"][data-variant="glass"]:not([data-balsa-playground]),
+  [data-balsa="button"],
+  [data-balsa="link"],
+  [data-balsa-control],
+  [data-balsa="button-group"],
+  [data-balsa="tabs-list"],
+  [data-balsa="tabs-panel"][data-surface="true"],
+  [data-balsa="collapsible"][data-variant="glass"],
+  [data-balsa="accordion"][data-variant="glass"],
+  [data-balsa="alert"][data-variant="glass"],
+  [data-balsa="toast"][data-variant="glass"],
+  [data-balsa="popup-panel"],
+  [data-balsa="hover-card-panel"][data-variant="glass"],
+  [data-balsa="menu-list"][data-variant="glass"],
+  [data-balsa="drawer-panel"][data-variant="glass"],
+  [data-balsa="code-block"],
+  [data-balsa="footer"],
+  [data-balsa="navbar-surface"],
+  [data-balsa="dropdown"],
+  [data-balsa="color-picker-popover"],
+  [data-balsa="select-popover"],
+  [data-balsa="autocomplete-popover"],
+  [data-balsa="component-playground-properties"],
+  [data-balsa="site-floating-panel"],
+  [data-balsa="site-selected"]
+) {
+  backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+  -webkit-backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+}
+
+[data-balsa="dropdown"][data-variant="glass"] {
+  backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
+  -webkit-backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
+}
+
+/* Native range inputs preserve keyboard and form behavior while the visible
+   thumbs own pointer dragging, so overlapping range inputs cannot block one
+   another. */
+[data-balsa="slider-native"] {
+  pointer-events: none;
+  touch-action: none;
+}
+
+[data-balsa="slider-native"]::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+[data-balsa="slider-native"]::-webkit-slider-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  appearance: none;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+[data-balsa="slider-native"]::-moz-range-track {
+  background: transparent;
+}
+
+[data-balsa="slider-native"]::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+[data-balsa="slider"][data-size="sm"] [data-balsa="slider-native"]::-webkit-slider-thumb {
+  width: 1rem;
+  height: 1rem;
+}
+
+[data-balsa="slider"][data-size="sm"] [data-balsa="slider-native"]::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+}
+
+[data-balsa="slider"][data-size="lg"] [data-balsa="slider-native"]::-webkit-slider-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+[data-balsa="slider"][data-size="lg"] [data-balsa="slider-native"]::-moz-range-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+[data-balsa="slider"] [data-balsa="slider-thumb"] {
+  background-color: var(--balsa-material-slider-thumb);
+}
+
+[data-balsa="scroll-area-viewport"] {
+  scrollbar-color: var(--balsa-color-border-strong) transparent;
+  scrollbar-width: auto;
+}
+
+[data-balsa="scroll-area"][data-size="thin"] [data-balsa="scroll-area-viewport"] {
+  scrollbar-width: thin;
+}
+
+[data-balsa="scroll-area-viewport"]::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+[data-balsa="scroll-area"][data-size="thin"] [data-balsa="scroll-area-viewport"]::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+[data-balsa="scroll-area-viewport"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-balsa="scroll-area-viewport"]::-webkit-scrollbar-thumb {
+  border: 0.1875rem solid transparent;
+  border-radius: var(--balsa-radius-control);
+  background: var(--balsa-color-border-strong);
+  background-clip: padding-box;
+}
+
+[data-balsa="scroll-area"][data-visibility="always"] [data-balsa="scroll-area-viewport"] {
+  scrollbar-gutter: stable;
+}
+
+[data-balsa="scroll-area"][data-visibility="hover"] [data-balsa="scroll-area-viewport"] {
+  scrollbar-color: transparent transparent;
+}
+
+[data-balsa="scroll-area"][data-visibility="hover"]:hover [data-balsa="scroll-area-viewport"],
+[data-balsa="scroll-area"][data-visibility="hover"]:focus-within [data-balsa="scroll-area-viewport"] {
+  scrollbar-color: var(--balsa-color-border-strong) transparent;
+}
+
+[data-balsa="scroll-area"][data-visibility="hover"] [data-balsa="scroll-area-viewport"]::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+[data-balsa="scroll-area"][data-visibility="hover"]:hover [data-balsa="scroll-area-viewport"]::-webkit-scrollbar-thumb,
+[data-balsa="scroll-area"][data-visibility="hover"]:focus-within [data-balsa="scroll-area-viewport"]::-webkit-scrollbar-thumb {
+  background-color: var(--balsa-color-border-strong);
+}
+
+[data-balsa="scroll-area"][data-edge-fade="true"][data-orientation="vertical"] [data-balsa="scroll-area-viewport"] {
+  mask-image: linear-gradient(to bottom, transparent, black 1rem, black calc(100% - 1rem), transparent);
+}
+
+[data-balsa="scroll-area"][data-edge-fade="true"][data-orientation="horizontal"] [data-balsa="scroll-area-viewport"] {
+  mask-image: linear-gradient(to right, transparent, black 1rem, black calc(100% - 1rem), transparent);
+}
+
+[data-balsa="scroll-area"][data-edge-fade="true"][data-orientation="both"] [data-balsa="scroll-area-viewport"] {
+  mask-image:
+    linear-gradient(to bottom, transparent, black 1rem, black calc(100% - 1rem), transparent),
+    linear-gradient(to right, transparent, black 1rem, black calc(100% - 1rem), transparent);
+  mask-composite: intersect;
+}
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  :where([data-balsa="button"])[data-variant="glass"]:not(:disabled) {
+    background-color: var(--balsa-color-surface-elevated);
+  }
+
+  :where([data-balsa="button"])[data-variant="glass"]:hover:not(:disabled) {
+    background-color: color-mix(in oklab, var(--balsa-color-surface-elevated) 90%, currentColor 10%);
+  }
+
+  :where([data-balsa="button"])[data-variant="glass"]:active:not(:disabled) {
+    background-color: color-mix(in oklab, var(--balsa-color-surface-elevated) 84%, currentColor 16%);
+  }
+
+  :is([data-theme], [data-theme-base]) {
+    --balsa-material-surface: var(--balsa-color-surface);
+    --balsa-material-surface-elevated: var(--balsa-color-surface-elevated);
+    --balsa-material-muted: var(--balsa-color-muted);
+    --balsa-material-input: var(--balsa-color-input);
+    --balsa-material-input-border: var(--balsa-color-input-border);
+    --balsa-material-selected: var(--balsa-color-selected);
+    --balsa-material-border: var(--balsa-color-border);
+    --balsa-material-border-strong: var(--balsa-color-border-strong);
+    --balsa-material-code: var(--balsa-color-code);
+    --balsa-material-playground-workspace: var(--balsa-color-muted);
+    --balsa-material-playground-properties: var(--balsa-color-surface);
+    --balsa-backdrop-blur: 0px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where([data-balsa="button"])[data-variant="glass"]:not(:disabled) {
+    border-color: currentColor;
+    background-color: var(--balsa-color-surface-elevated);
+  }
+
+  :is([data-theme], [data-theme-base]) {
+    --balsa-material-surface: var(--balsa-color-surface);
+    --balsa-material-surface-elevated: var(--balsa-color-surface-elevated);
+    --balsa-material-muted: var(--balsa-color-muted);
+    --balsa-material-input: var(--balsa-color-input);
+    --balsa-material-input-border: var(--balsa-color-input-border);
+    --balsa-material-selected: var(--balsa-color-selected);
+    --balsa-material-border: var(--balsa-color-border);
+    --balsa-material-border-strong: var(--balsa-color-border-strong);
+    --balsa-material-code: var(--balsa-color-code);
+    --balsa-material-playground-workspace: var(--balsa-color-muted);
+    --balsa-material-playground-properties: var(--balsa-color-surface);
+    --balsa-border-width: 2px;
+    --balsa-outline-border-width: 2px;
+    --balsa-material-outline-control-border: currentColor;
+    --balsa-backdrop-blur: 0px;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :where([data-balsa="button"])[data-variant="glass"]:not(:disabled) {
+    background-color: var(--balsa-color-surface-elevated);
+  }
+
+  :is([data-theme], [data-theme-base]) {
+    --balsa-material-surface: var(--balsa-color-surface);
+    --balsa-material-surface-elevated: var(--balsa-color-surface-elevated);
+    --balsa-material-muted: var(--balsa-color-muted);
+    --balsa-material-input: var(--balsa-color-input);
+    --balsa-material-input-border: var(--balsa-color-input-border);
+    --balsa-material-selected: var(--balsa-color-selected);
+    --balsa-material-border: var(--balsa-color-border);
+    --balsa-material-border-strong: var(--balsa-color-border-strong);
+    --balsa-material-code: var(--balsa-color-code);
+    --balsa-material-playground-workspace: var(--balsa-color-muted);
+    --balsa-material-playground-properties: var(--balsa-color-surface);
+    --balsa-backdrop-blur: 0px;
+    --balsa-overlay-blur: 0px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-balsa]),
+  :where([data-balsa])::before,
+  :where([data-balsa])::after {
+    scroll-behavior: auto;
+    /* Accessibility safeguard: component and third-party animation declarations
+       may otherwise outrank this user-preference override. */
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  [data-theme] {
+    --balsa-control-hover-transform: none;
+    --balsa-control-active-transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-theme] {
+    --balsa-shadow-control: none;
+    --balsa-shadow-surface: none;
+    --balsa-shadow-panel: none;
+    --balsa-shadow-playground: none;
+    --balsa-backdrop-blur: 0px;
+    --balsa-overlay-blur: 0px;
+    --balsa-border-width: 2px;
+  }
+}

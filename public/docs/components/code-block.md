@@ -1,0 +1,9 @@
+# Code block
+
+CodeBlock supports `sm`, `md`, and `lg` type and inset scales plus Tailwind-style `rounded` values from `none` through `full`.
+
+Use CodeBlock to present commands, source, or configuration on a compact, consistently dark code surface with an accessible icon-only copy action. Its `language` prop applies Highlight.js grammar coloring for shell, CSS, JSON, TypeScript, HTML, and Vue-oriented markup, with safe plain-text fallback. It supports line wrapping, optional visual line numbers, and an `actions` header slot for compact contextual controls such as a package-manager selector. Set `collapsedLines` to show a fixed-height preview with a bottom text-style See more action; expansion adds a text-style Show less action in the header before Copy while keeping the complete source copyable. Highlighting and line numbers never alter the exact copied source. Install with `npx balsa-ui@latest add code-block`. Canonical source: `src/components/ui/CodeBlock.vue`; interactive documentation: `/docs/components/code-block`; contract: `specs/components/code-block.json`.
+
+CodeBlock inherits the nearest `data-theme` and accepts `theme?: ThemeInput` for a local override. Its source surface stays consistently dark in every theme. Glassmorphism uses a dense dark translucent code material with blur; its subdued header text, comments, Copy action, and slotted outline actions resolve against the code foreground rather than the surrounding page palette. Unsupported backdrop filtering, increased contrast, and reduced transparency restore the opaque code color.
+
+CodeBlock normalizes Highlight.js output through ordinary utilities and stable theme hooks. Its root accepts normal consumer layout classes and styles, and its `actions` slot should use component APIs such as `ButtonGroup variant="code"` rather than descendant specificity overrides.

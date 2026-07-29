@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "components": {
+    "button": {
+      "registry": "@balsa/button",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-76e2613b80f92b499591c2479a4aeb9361f7ebd91358d47c5ffc1a427e254dba",
+      "targetPath": "src/components/ui/Button.vue",
+      "files": [
+        "src/components/ui/Button.vue",
+        "src/components/ui/types.ts",
+        "src/components/ui/classes.ts"
+      ]
+    },
+    "input": {
+      "registry": "@balsa/input",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-45be74207ba938488b2c1528b84e49066d0c38ecee0e5c8071986088667478f5",
+      "targetPath": "src/components/ui/Input.vue",
+      "files": [
+        "src/components/ui/Input.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ]
+    },
+    "modal": {
+      "registry": "@balsa/modal",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-cf70a01a0f99cbf2bb1c44bb2d5c0fc63ce2634ac5ac6dd916de5313c44e6c51",
+      "targetPath": "src/components/ui/Modal.vue",
+      "files": [
+        "src/components/ui/Modal.vue"
+      ]
+    },
+    "balsa-palette": {
+      "registry": "@balsa/balsa-palette",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-00f1ce68c3ac6892aa5d8ab8b9d545282c821419e19e8effb5640ab9946d5c73",
+      "targetPath": "src/styles/balsa-palette.css",
+      "files": [
+        "src/styles/balsa-palette.css"
+      ]
+    },
+    "textarea": {
+      "registry": "@balsa/textarea",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-e752ff334c178f93ead606bf307b1b125aa410f13dacdeef52d40599ad99ebc8",
+      "targetPath": "src/components/ui/Textarea.vue",
+      "files": [
+        "src/components/ui/Textarea.vue",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ]
+    },
+    "breadcrumb": {
+      "registry": "@balsa/breadcrumb",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-03bb9bbc7708a2358bf72621e32ee7936262a350111b3629da05d21b727bae13",
+      "targetPath": "src/components/ui/Breadcrumb.vue",
+      "files": [
+        "src/components/ui/Breadcrumb.vue"
+      ]
+    },
+    "collapsible": {
+      "registry": "@balsa/collapsible",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-c4e579678adcbd0ab0fe4a48c4def93a9805a41faa992f8319a8c7b2fc720194",
+      "targetPath": "src/components/ui/Collapsible.vue",
+      "files": [
+        "src/components/ui/Collapsible.vue",
+        "src/components/ui/classes.ts",
+        "src/components/ui/form.ts"
+      ]
+    },
+    "balsa-theme": {
+      "registry": "@balsa/balsa-theme",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-1a1f4a8b002a30332951baeda38eded2782b6fae6ec6d05e936d707402cc44fa",
+      "targetPath": "src/styles/balsa-theme.css",
+      "files": [
+        "src/styles/balsa-theme.css",
+        "src/components/ui/theme.ts",
+        "src/components/ui/theme-component-contracts.ts",
+        "src/components/ui/theme-context.ts",
+        "src/components/ui/BalsaThemeProvider.vue",
+        "src/theme/theme-store.ts"
+      ]
+    },
+    "balsa-foundation": {
+      "registry": "@balsa/balsa-foundation",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-a1a6465a8e76815d87674f9956c4267841bae1b69ec5cb3678e5e8c3c704bd3b",
+      "targetPath": "src/styles/balsa-foundation.css",
+      "files": [
+        "src/styles/balsa-foundation.css"
+      ]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "name": "modal",
+  "title": "Modal",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Temporarily focus attention on a short decision, task, or viewport simulation above the current page.",
+  "useFor": [
+    "Confirmations",
+    "Short focused tasks",
+    "Compact supporting details"
+  ],
+  "avoidFor": [
+    "Primary page content",
+    "Long multi-step flows",
+    "Notifications that do not require interaction"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "dialog",
+    "sheet",
+    "fullscreen"
+  ],
+  "states": [
+    "closed",
+    "open"
+  ],
+  "composition": {
+    "model": "boolean",
+    "slots": [
+      "default",
+      "eyebrow",
+      "footer"
+    ]
+  },
+  "accessibility": [
+    "A title is required and labels the dialog.",
+    "Escape and backdrop click close the modal.",
+    "Open full-page modals lock page scrolling.",
+    "Keyboard focus is trapped while open and returns to the triggering element after close."
+  ],
+  "tokens": [
+    "--balsa-color-overlay",
+    "--balsa-color-background",
+    "--balsa-color-surface",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-surface-elevated-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-secondary",
+    "--balsa-color-secondary-foreground",
+    "--balsa-color-accent",
+    "--balsa-color-accent-foreground",
+    "--balsa-color-destructive",
+    "--balsa-color-destructive-foreground",
+    "--balsa-color-focus-ring",
+    "radius.surface",
+    "shadow.surface"
+  ],
+  "commonMistakes": [
+    "Nesting a modal inside another modal.",
+    "Using a modal for lengthy page content.",
+    "Removing the visible close affordance."
+  ],
+  "examples": [
+    "Centered dialog",
+    "Mobile bottom sheet",
+    "Fullscreen viewport simulation",
+    "Dialog with footer actions"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "title",
+      "description",
+      "presentation",
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "contained",
+      "closeLabel",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": [
+      "default",
+      "eyebrow",
+      "footer"
+    ]
+  }
+}

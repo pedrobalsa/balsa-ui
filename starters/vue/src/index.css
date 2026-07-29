@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@import "./styles/balsa-foundation.css";
+@import "./styles/balsa-palette.css";
+@import "./styles/balsa-theme.css";
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-balsa-border);
+  }
+
+  body {
+    @apply m-0 min-w-80 antialiased;
+    background-color: var(--color-balsa-background);
+    color: var(--color-balsa-foreground);
+    font-family: var(--font-balsa-body);
+  }
+
+  h1 {
+    @apply text-4xl font-medium leading-tight tracking-tight md:text-5xl;
+    font-family: var(--font-balsa-title);
+  }
+}

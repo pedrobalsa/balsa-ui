@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "name": "badge",
+  "title": "Badge",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Display compact status, category, or metadata without implying interaction.",
+  "useFor": [
+    "Status labels",
+    "Categories",
+    "Short metadata"
+  ],
+  "avoidFor": [
+    "Clickable actions",
+    "Long sentences",
+    "Critical feedback that needs explanatory text"
+  ],
+  "variants": [
+    "solid",
+    "soft",
+    "outline",
+    "glass"
+  ],
+  "accessibility": [
+    "Renders readable text with no hidden interaction.",
+    "Do not communicate status through color alone.",
+    "Keep labels short and meaningful."
+  ],
+  "tokens": [
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-success",
+    "--balsa-color-info"
+  ],
+  "commonMistakes": [
+    "Adding click behavior to Badge.",
+    "Using color as the only status cue.",
+    "Putting paragraphs inside a badge."
+  ],
+  "examples": [
+    "Solid status",
+    "Soft category",
+    "Outline metadata",
+    "Glass metadata"
+  ],
+  "publicApi": {
+    "props": [
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "theme"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

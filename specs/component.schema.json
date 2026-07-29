@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://balsa-ui.dev/schemas/component.json",
+  "title": "Balsa UI component specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "name",
+    "title",
+    "category",
+    "status",
+    "version",
+    "purpose",
+    "useFor",
+    "avoidFor",
+    "accessibility",
+    "tokens",
+    "commonMistakes",
+    "examples"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "name": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "category": { "enum": ["component", "composition", "block"] },
+    "status": { "enum": ["experimental", "beta", "stable", "deprecated"] },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "purpose": { "type": "string", "minLength": 1 },
+    "useFor": { "$ref": "#/$defs/nonEmptyStrings" },
+    "avoidFor": { "$ref": "#/$defs/nonEmptyStrings" },
+    "variants": { "$ref": "#/$defs/strings" },
+    "types": { "$ref": "#/$defs/strings" },
+    "sizes": { "$ref": "#/$defs/strings" },
+    "states": { "$ref": "#/$defs/strings" },
+    "composition": { "type": "object" },
+    "accessibility": { "$ref": "#/$defs/nonEmptyStrings" },
+    "tokens": { "$ref": "#/$defs/nonEmptyStrings" },
+    "commonMistakes": { "$ref": "#/$defs/nonEmptyStrings" },
+    "examples": { "$ref": "#/$defs/nonEmptyStrings" },
+    "publicApi": { "type": "object" }
+  },
+  "$defs": {
+    "strings": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}

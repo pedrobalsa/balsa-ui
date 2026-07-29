@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "name": "toast",
+  "title": "Toast",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present transient, non-blocking notifications in a viewport-level managed stack.",
+  "useFor": [
+    "Background-operation feedback",
+    "Saved or completed confirmations",
+    "Recoverable errors with a concise action"
+  ],
+  "avoidFor": [
+    "Information required to complete a form",
+    "Consequential confirmation decisions",
+    "Persistent page-level guidance"
+  ],
+  "variants": [
+    "surface",
+    "soft",
+    "outline",
+    "glass"
+  ],
+  "types": [
+    "top-start",
+    "top-center",
+    "top-end",
+    "bottom-start",
+    "bottom-center",
+    "bottom-end"
+  ],
+  "states": [
+    "timed",
+    "sticky",
+    "paused",
+    "dismissed"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "Non-destructive items use polite status semantics while destructive items use assertive alert semantics.",
+    "The viewport never moves focus and Escape dismisses the newest dismissible toast.",
+    "Timers pause for hover, focus, window blur, and hidden documents so actions remain reachable."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-primary",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive",
+    "radius.surface",
+    "shadow.surface",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using Toast for feedback a user must retain.",
+    "Adding several unrelated actions to one toast.",
+    "Using a short duration for long descriptions or keyboard actions."
+  ],
+  "examples": [
+    "Success notification",
+    "Actionable information",
+    "Sticky destructive feedback",
+    "Top-center notification"
+  ],
+  "publicApi": {
+    "model": "readonly ToastItem[]",
+    "props": [
+      "label",
+      "position",
+      "limit",
+      "duration",
+      "pauseOnHover",
+      "pauseOnFocus",
+      "contained",
+      "teleportTo",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "action",
+      "dismiss"
+    ],
+    "slots": [
+      "action"
+    ],
+    "parts": [
+      "Toast",
+      "ToastViewport"
+    ]
+  }
+}

@@ -1,0 +1,219 @@
+<script setup lang="ts">
+import { computed, useAttrs } from "vue";
+import Button from "./Button.vue";
+import { mergeClasses, withoutClassAttribute } from "./classes";
+import { type Shadow, type ThemeInput } from "./theme";
+import { useComponentTheme } from "./theme-context";
+import type { ActionColor } from "./types";
+
+export interface ButtonGroupOption {
+  id: string;
+  label: string;
+  icon?: string;
+}
+
+type ButtonSize = "sm" | "md" | "lg" | "xl";
+type ButtonVariant = "solid" | "outline" | "glass";
+type ButtonGroupVariant = "surface" | "solid" | "outline" | "glass" | "code";
+type ButtonGroupShape = "rounded" | "pill";
+
+const solidColorClasses: Readonly<Record<ActionColor, string[]>> = {
+  primary: ["border-balsa-primary", "bg-balsa-primary", "text-balsa-primary-foreground"],
+  secondary: ["border-balsa-secondary", "bg-balsa-secondary", "text-balsa-secondary-foreground"],
+  accent: ["border-balsa-accent", "bg-balsa-accent", "text-balsa-accent-foreground"],
+  destructive: ["border-balsa-destructive", "bg-balsa-destructive", "text-balsa-destructive-foreground"],
+};
+
+const solidOptionClasses: Readonly<Record<ActionColor, { selected: string[]; idle: string[] }>> = {
+  primary: {
+    selected: ["bg-balsa-primary-foreground/20", "text-balsa-primary-foreground", "hover:bg-balsa-primary-foreground/20", "active:bg-balsa-primary-foreground/30"],
+    idle: ["text-balsa-primary-foreground/75", "hover:bg-balsa-primary-foreground/10", "active:bg-balsa-primary-foreground/20"],
+  },
+  secondary: {
+    selected: ["bg-balsa-secondary-foreground/20", "text-balsa-secondary-foreground", "hover:bg-balsa-secondary-foreground/20", "active:bg-balsa-secondary-foreground/30"],
+    idle: ["text-balsa-secondary-foreground/75", "hover:bg-balsa-secondary-foreground/10", "active:bg-balsa-secondary-foreground/20"],
+  },
+  accent: {
+    selected: ["bg-balsa-accent-foreground/20", "text-balsa-accent-foreground", "hover:bg-balsa-accent-foreground/20", "active:bg-balsa-accent-foreground/30"],
+    idle: ["text-balsa-accent-foreground/75", "hover:bg-balsa-accent-foreground/10", "active:bg-balsa-accent-foreground/20"],
+  },
+  destructive: {
+    selected: ["bg-balsa-destructive-foreground/20", "text-balsa-destructive-foreground", "hover:bg-balsa-destructive-foreground/20", "active:bg-balsa-destructive-foreground/30"],
+    idle: ["text-balsa-destructive-foreground/75", "hover:bg-balsa-destructive-foreground/10", "active:bg-balsa-destructive-foreground/20"],
+  },
+};
+
+const codeRootSizeClasses: Readonly<Record<ButtonSize, string>> = {
+  sm: "h-7",
+  md: "h-9",
+  lg: "h-10",
+  xl: "h-11",
+};
+
+const codeOptionSizeClasses: Readonly<Record<ButtonSize, string[]>> = {
+  sm: ["gap-1.5", "px-2.5", "text-xs"],
+  md: ["gap-2", "px-3", "text-sm"],
+  lg: ["gap-2.5", "px-3.5", "text-base"],
+  xl: ["gap-3", "px-4", "text-lg"],
+};
+
+const shapeClasses: Readonly<Record<ButtonGroupShape, string>> = {
+  rounded: "rounded-balsa-control",
+  pill: "rounded-full",
+};
+
+defineOptions({ inheritAttrs: false });
+
+const props = withDefaults(
+  defineProps<{
+    options: readonly ButtonGroupOption[];
+    label: string;
+    color?: ActionColor;
+    size?: ButtonSize;
+    variant?: ButtonGroupVariant;
+    shape?: ButtonGroupShape;
+    shadow?: Shadow;
+    collapseLabels?: boolean;
+    theme?: ThemeInput;
+  }>(),
+  {
+    color: "primary",
+    collapseLabels: false,
+  },
+);
+
+const attrs = useAttrs();
+const model = defineModel<string>({ required: true });
+const theme = useComponentTheme("button-group", "controls", () => props.theme);
+const resolvedSize = computed<ButtonSize>(() =>
+  theme.resolve("size", props.size, "sm")
+);
+const resolvedVariant = computed<ButtonGroupVariant>(() =>
+  theme.resolve(
+    "variant",
+    props.variant,
+    theme.resolved.value.base === "glassmorphism" ? "glass" : "surface",
+  )
+);
+const resolvedShape = computed<ButtonGroupShape>(() =>
+  theme.resolve("shape", props.shape, "rounded")
+);
+const resolvedShadow = computed<Shadow>(() =>
+  theme.resolve("shadow", props.shadow, "auto")
+);
+
+const buttonVariants = computed(() =>
+  Object.fromEntries(
+    props.options.map((item) => {
+      const selected = item.id === model.value;
+      const variant =
+        resolvedVariant.value === "code" || resolvedVariant.value === "solid"
+          ? "outline"
+          : selected
+            ? "solid"
+            : resolvedVariant.value === "glass"
+              ? "glass"
+              : "outline";
+
+      return [item.id, variant];
+    }),
+  ) as Record<string, ButtonVariant>,
+);
+
+const labelClasses = computed(() =>
+  Object.fromEntries(
+    props.options.map((item) => [
+      item.id,
+      props.collapseLabels && item.icon ? ["hidden"] : [],
+    ]),
+  ) as Record<string, string[]>,
+);
+
+const rootAttrs = computed(() => withoutClassAttribute(attrs));
+
+const rootClasses = computed(() => {
+  const variantClasses: Readonly<Record<ButtonGroupVariant, string[]>> = {
+    surface: ["border-balsa-border-strong", "bg-balsa-surface"],
+    solid: solidColorClasses[props.color],
+    outline: ["border-balsa-border-strong", "bg-transparent"],
+    glass: ["border-balsa-border", "bg-balsa-surface-elevated/70"],
+    code: [codeRootSizeClasses[resolvedSize.value], "border-balsa-code-foreground/20", "bg-transparent"],
+  };
+
+  return mergeClasses(
+    "inline-flex w-fit max-w-full shrink-0 overflow-x-auto border",
+    shapeClasses[resolvedShape.value],
+    variantClasses[resolvedVariant.value],
+    attrs.class,
+  );
+});
+
+const buttonSizes = computed(() =>
+  Object.fromEntries(
+    props.options.map((item) => [
+      item.id,
+      resolvedVariant.value === "code" ? null : resolvedSize.value,
+    ]),
+  ) as Record<string, ButtonSize | null>,
+);
+
+const buttonClasses = computed(() =>
+  Object.fromEntries(
+    props.options.map((item) => {
+      const selected = item.id === model.value;
+      const variantClasses: string[] =
+        resolvedVariant.value === "code"
+          ? [
+              "h-full border-balsa-code-foreground/20 bg-transparent text-balsa-code-foreground/65 shadow-none transform-none",
+              ...codeOptionSizeClasses[resolvedSize.value],
+              ...(selected
+                ? ["bg-balsa-code-foreground/10", "text-balsa-code-foreground", "hover:bg-balsa-code-foreground/10", "active:bg-balsa-code-foreground/10"]
+                : ["hover:bg-balsa-code-foreground/5", "active:bg-balsa-code-foreground/10"]),
+            ]
+          : resolvedVariant.value === "solid"
+            ? ["border-transparent", "shadow-none", "transform-none", ...(selected ? solidOptionClasses[props.color].selected : solidOptionClasses[props.color].idle)]
+            : [];
+
+      return [
+        item.id,
+        mergeClasses(
+          "shrink-0 rounded-none border-y-0 border-r-0 border-l border-balsa-border-strong first:border-l-0 focus-visible:relative focus-visible:z-10 focus-visible:outline-offset-[-2px]",
+          variantClasses,
+        ),
+      ];
+    }),
+  ) as Record<string, string>,
+);
+</script>
+
+<template>
+  <div
+    v-bind="rootAttrs"
+    data-balsa="button-group"
+    :data-theme="theme.explicitPresentation.value?.id"
+    :data-theme-base="theme.explicitPresentation.value?.base"
+    :data-variant="resolvedVariant"
+    :data-shape="resolvedShape"
+    :data-shadow="resolvedShadow"
+    role="group"
+    :aria-label="props.label"
+    :style="[attrs.style, theme.explicitPresentation.value?.style]"
+    :class="rootClasses"
+  >
+    <Button
+      v-for="item in props.options"
+      :key="item.id"
+      :variant="buttonVariants[item.id]"
+      :color="props.color"
+      :size="buttonSizes[item.id]"
+      :prefix-icon="item.icon"
+      :aria-label="item.label"
+      :aria-pressed="item.id === model"
+      :theme="props.theme"
+      :class="buttonClasses[item.id]"
+      @click="model = item.id"
+    >
+      <span :class="labelClasses[item.id]">{{ item.label }}</span>
+    </Button>
+  </div>
+</template>

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "name": "input-group",
+  "title": "Input Group",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Connect typed text or icon addons and contextual actions to one labelled text-like input.",
+  "useFor": [
+    "URLs and domains",
+    "Currency or unit affixes",
+    "Search fields with contextual actions"
+  ],
+  "avoidFor": [
+    "Unrelated controls",
+    "Multiple independently labelled inputs",
+    "Replacing helper or error text"
+  ],
+  "types": [
+    "inline",
+    "stacked"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated"
+  ],
+  "sizes": [
+    "sm",
+    "md"
+  ],
+  "accessibility": [
+    "A visible label is associated with the one native input.",
+    "The native control remains first in DOM focus order while addons may display before it.",
+    "Loading and validation reuse Balsa's shared busy, invalid, description, and error semantics."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-success",
+    "--balsa-color-destructive",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using addon text as the only input label.",
+    "Putting a full form inside an addon.",
+    "Using inline layout when long addon text needs a stacked row."
+  ],
+  "examples": [
+    "URL prefix",
+    "Currency suffix",
+    "Icon search",
+    "Stacked action row"
+  ],
+  "publicApi": {
+    "model": "string",
+    "props": [
+      "id",
+      "label",
+      "type",
+      "layout",
+      "startText",
+      "endText",
+      "startIcon",
+      "endIcon",
+      "size",
+      "rounded",
+      "placeholder",
+      "hint",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "required",
+      "name",
+      "autocomplete",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": [
+      "start",
+      "end"
+    ]
+  }
+}

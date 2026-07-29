@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "name": "date-picker",
+  "title": "DatePicker",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose a single date or range from a labelled field and collision-safe calendar popup.",
+  "useFor": [
+    "Form dates",
+    "Date ranges",
+    "Locale-formatted date fields"
+  ],
+  "avoidFor": [
+    "Time selection",
+    "Free-text parsing",
+    "Timezone conversion"
+  ],
+  "states": [
+    "empty",
+    "selected",
+    "range pending",
+    "disabled",
+    "unvalidated"
+  ],
+  "accessibility": [
+    "The visible label names the popup trigger.",
+    "Calendar supplies complete grid keyboard behavior.",
+    "Popup supplies Escape, outside dismissal, focus entry, and restoration, including Glassmorphism backdrop blur."
+  ],
+  "variants": [
+    "single",
+    "range"
+  ],
+  "sizes": [
+    "popup field"
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring"
+  ],
+  "commonMistakes": [
+    "Parsing locale-ambiguous text.",
+    "Omitting visible error feedback.",
+    "Using DatePicker for time values."
+  ],
+  "examples": [
+    "Single date",
+    "Date range",
+    "Disabled dates",
+    "Invalid field"
+  ],
+  "publicApi": {
+    "props": [
+      "modelValue",
+      "id",
+      "label",
+      "name",
+      "mode",
+      "locale",
+      "placeholder",
+      "required",
+      "disabled",
+      "status",
+      "statusMessage",
+      "min",
+      "max",
+      "disabledDates",
+      "clearable",
+      "rounded",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ]
+  }
+}

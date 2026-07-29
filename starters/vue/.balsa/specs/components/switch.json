@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "name": "switch",
+  "title": "Switch",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Control an immediately applied boolean setting with native form and switch semantics.",
+  "useFor": [
+    "Preferences",
+    "Feature switches",
+    "Immediately applied settings"
+  ],
+  "avoidFor": [
+    "Delayed form confirmation",
+    "Irreversible actions",
+    "Pressed toolbar actions"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "on",
+    "off",
+    "required",
+    "disabled"
+  ],
+  "composition": {
+    "control": "A native checkbox with role switch is associated with the visible label and optional hint.",
+    "migration": "This is the renamed former boolean Toggle. The toggle name now refers to a pressed-state button."
+  },
+  "accessibility": [
+    "Associate every switch with a stable id and visible label.",
+    "Keep supporting text connected through aria-describedby.",
+    "Preserve native required and disabled semantics."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using Switch for a delayed confirmation.",
+    "Hiding the visible label.",
+    "Importing the new Toggle as a compatibility alias."
+  ],
+  "examples": [
+    "Enabled preference",
+    "Required form setting",
+    "Disabled setting"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "hint",
+      "name",
+      "disabled",
+      "required",
+      "size",
+      "variant",
+      "rounded",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ]
+  }
+}

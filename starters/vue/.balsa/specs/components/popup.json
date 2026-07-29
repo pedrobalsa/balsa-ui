@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "name": "popup",
+  "title": "Popup",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Show interactive rich content in a collision-aware surface anchored to a button.",
+  "useFor": [
+    "Compact forms",
+    "Contextual settings",
+    "Rich interactive details"
+  ],
+  "avoidFor": [
+    "Action menus",
+    "Hover-only previews",
+    "Blocking decisions"
+  ],
+  "types": [
+    "top",
+    "right",
+    "bottom",
+    "left"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "trigger"
+  ],
+  "accessibility": [
+    "The native trigger exposes expanded, controls, and dialog popup semantics.",
+    "Opening may move focus into content; Escape and outside dismissal restore the trigger.",
+    "Teleported content retains the source theme and palette."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using Popup for a menu.",
+    "Omitting an accessible popup label.",
+    "Putting blocking confirmation in a non-modal popup."
+  ],
+  "examples": [
+    "Settings form",
+    "Aligned details",
+    "Trigger-width content",
+    "Contained preview"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "side",
+      "align",
+      "sideOffset",
+      "alignOffset",
+      "variant",
+      "size",
+      "rounded",
+      "contained",
+      "disabled",
+      "initialFocus",
+      "dismissOnOutside",
+      "triggerAriaLabelledby",
+      "triggerAriaDescribedby",
+      "triggerAriaInvalid",
+      "triggerAriaRequired",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": [
+      "trigger",
+      "default"
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "name": "tabs",
+  "title": "Tabs",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Switch between related local panels without navigating away, with compact navigation or visual-choice layouts and square underline geometry.",
+  "useFor": [
+    "Related peer views",
+    "Compact content segmentation",
+    "Local settings categories"
+  ],
+  "avoidFor": [
+    "Primary site navigation",
+    "Sequential steps",
+    "Content users need to compare simultaneously"
+  ],
+  "states": [
+    "active",
+    "inactive",
+    "disabled"
+  ],
+  "accessibility": [
+    "Implements tablist, tab, and tabpanel roles.",
+    "Arrow, Home, and End keys move focus among enabled tabs.",
+    "Each tab is linked to its labelled panel."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "segmented",
+    "underline",
+    "pills",
+    "tiles"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using Tabs as page navigation.",
+    "Hiding essential comparison content in separate panels.",
+    "Changing tab ids between renders."
+  ],
+  "examples": [
+    "Underline navigation",
+    "Connected choices",
+    "Pill choices",
+    "Icon tiles",
+    "Disabled tab"
+  ],
+  "publicApi": {
+    "model": "string",
+    "props": [
+      "id",
+      "items",
+      "label",
+      "variant",
+      "type",
+      "panelSurface",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "named panel slots"
+    ]
+  }
+}

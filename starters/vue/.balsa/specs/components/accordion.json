@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "name": "accordion",
+  "title": "Accordion",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Coordinate a vertical collection of heading disclosures with single or multiple expansion.",
+  "useFor": [
+    "Frequently asked questions",
+    "Grouped settings details",
+    "Progressive disclosure lists"
+  ],
+  "avoidFor": [
+    "Peer views that need tab semantics",
+    "Sequential workflows",
+    "Side-by-side comparison content"
+  ],
+  "states": [
+    "open",
+    "closed",
+    "disabled"
+  ],
+  "accessibility": [
+    "Composes labelled Collapsible regions under semantic headings.",
+    "ArrowUp and ArrowDown wrap focus among enabled triggers.",
+    "Home and End move to the first and last enabled trigger."
+  ],
+  "variants": [
+    "underline",
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "single",
+    "multiple"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-focus-ring",
+    "radius.surface",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using duplicate item ids.",
+    "Passing an array model to single mode or a string model to multiple mode.",
+    "Putting unrelated actions in disclosure headings."
+  ],
+  "examples": [
+    "Single collapsible FAQ",
+    "Multiple open sections",
+    "Disabled item",
+    "Named item slot"
+  ],
+  "publicApi": {
+    "model": "string | readonly string[]",
+    "props": [
+      "id",
+      "items",
+      "type",
+      "collapsible",
+      "label",
+      "variant",
+      "size",
+      "rounded",
+      "headingLevel",
+      "disabled",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "named item slots"
+    ]
+  }
+}

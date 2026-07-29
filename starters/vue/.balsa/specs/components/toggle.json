@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "name": "toggle",
+  "title": "Toggle",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Represent an independent two-state action as a pressed surface or an outline-to-solid icon.",
+  "useFor": [
+    "Formatting actions",
+    "Bookmark or pin state",
+    "Independent toolbar modes"
+  ],
+  "avoidFor": [
+    "Boolean form settings",
+    "Delayed form confirmation",
+    "Mutually exclusive collections"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "glass"
+  ],
+  "types": [
+    "button",
+    "icon"
+  ],
+  "states": [
+    "released",
+    "pressed",
+    "disabled"
+  ],
+  "composition": {
+    "semantic": "A native button exposes modelValue through aria-pressed.",
+    "icon": "Icon type uses paired outlined and filled bookmark, heart, star, pin, bell, or flag MDI glyphs without changing the control surface.",
+    "migration": "The former boolean Toggle moved to Switch; this component is intentionally not a compatibility alias."
+  },
+  "accessibility": [
+    "Keep visible text or provide an accessible name for icon type.",
+    "Preserve native button focus and Space/Enter activation.",
+    "Expose state with aria-pressed."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using Toggle for a boolean form setting.",
+    "Omitting an accessible name from an icon-only toggle.",
+    "Treating released state as disabled."
+  ],
+  "examples": [
+    "Pressed formatting action",
+    "Outline-to-solid bookmark",
+    "Disabled pressed action"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "prefixIcon",
+      "suffixIcon",
+      "icon",
+      "disabled",
+      "type",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ]
+  }
+}

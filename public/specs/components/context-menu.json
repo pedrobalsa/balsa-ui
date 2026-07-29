@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "name": "context-menu",
+  "title": "Context Menu",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Open typed actions at a pointer or keyboard context request on a target region, with collision-safe viewport or contained-target positioning, semantic color, and configurable panel geometry.",
+  "useFor": [
+    "Canvas actions",
+    "Row actions",
+    "Editor context operations"
+  ],
+  "avoidFor": [
+    "Primary actions",
+    "Hidden-only functionality",
+    "Native text editing commands"
+  ],
+  "types": [
+    "action",
+    "checkbox",
+    "radio",
+    "submenu"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled",
+    "checked",
+    "highlighted"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "Pointer context requests open at their coordinates and clamp to the viewport or contained target.",
+    "ContextMenu and Shift+F10 open against the focusable target.",
+    "The shared menu engine provides roles, roving focus, typeahead, dismissal, and restoration."
+  ],
+  "tokens": [
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Making actions available only through context click.",
+    "Overriding native text-field context menus.",
+    "Failing to label the target region."
+  ],
+  "examples": [
+    "Canvas region",
+    "Data row",
+    "Checkable context setting",
+    "Keyboard open"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "items",
+      "variant",
+      "color",
+      "rounded",
+      "contained",
+      "disabled",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "select"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

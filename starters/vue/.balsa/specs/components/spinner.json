@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "name": "spinner",
+  "title": "Spinner",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Announce and visualize an indeterminate operation with no measurable completion value.",
+  "useFor": [
+    "Short indeterminate operations",
+    "Inline action processing",
+    "Loading labels and overlays"
+  ],
+  "avoidFor": [
+    "Known completion percentages",
+    "Long content-loading layouts",
+    "Decorative motion"
+  ],
+  "states": [
+    "indeterminate"
+  ],
+  "accessibility": [
+    "Uses a polite status role with an accessible label.",
+    "Visible labels are hidden from duplicate announcement.",
+    "Animation stops under reduced motion while the ring remains visible."
+  ],
+  "sizes": [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "tokens": [
+    "--balsa-color-info",
+    "--balsa-color-foreground",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using Spinner for determinate progress.",
+    "Removing the accessible loading label.",
+    "Using several unrelated spinners in one compact region."
+  ],
+  "examples": [
+    "Icon-only loading",
+    "Inline loading label",
+    "Stacked loading label"
+  ],
+  "publicApi": {
+    "props": [
+      "label",
+      "labelPosition",
+      "color",
+      "size",
+      "speed",
+      "theme"
+    ]
+  }
+}

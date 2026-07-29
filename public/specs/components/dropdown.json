@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "name": "dropdown",
+  "title": "Dropdown",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Render a compact anchored panel with configurable width and geometry for a small, consumer-defined group of links or actions.",
+  "useFor": [
+    "Compact navigation menus",
+    "Contextual action groups",
+    "Small anchored link collections"
+  ],
+  "avoidFor": [
+    "Large mega menus",
+    "Long unstructured inventories",
+    "Modal confirmation flows"
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "open",
+    "closed",
+    "automatic edge collision handling"
+  ],
+  "accessibility": [
+    "Keeps its consumer-provided content in the document flow for keyboard navigation.",
+    "Marks a closed panel aria-hidden and prevents pointer interaction.",
+    "Consumers own trigger semantics, focus management, and any menu role appropriate to their content."
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-foreground",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-surface-elevated-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-muted",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Using Dropdown as a standalone trigger instead of placing it in a relative parent.",
+    "Using a fixed start or end alignment when the trigger can approach the opposite viewport edge; use auto instead.",
+    "Applying menu roles to normal navigation links.",
+    "Filling a compact dropdown with an unstructured large inventory."
+  ],
+  "examples": [
+    "Anchored link list",
+    "Contextual action panel",
+    "Compact Navbar submenu"
+  ],
+  "publicApi": {
+    "props": [
+      "open",
+      "variant",
+      "color",
+      "align",
+      "width",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

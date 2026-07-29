@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Compact status, category, and metadata label with solid, soft, outline, and low-rim translucent glass styles, three sizes, and optional square geometry.",
+  "dependencies": [
+    "vue",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/balsa-theme"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/Badge.vue",
+      "type": "registry:ui",
+      "target": "src/components/ui/Badge.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs } from \"vue\";\nimport { semanticColorClasses, type SemanticColor } from \"./types\";\nimport type { ThemeInput } from \"./theme\";\nimport { useResolvedThemeProps } from \"./theme-context\";\nimport { mergeClasses, withoutClassAttribute } from \"./classes\";\n\ntype BadgeVariant = \"solid\" | \"soft\" | \"outline\" | \"glass\";\ntype BadgeSize = \"sm\" | \"md\" | \"lg\";\ntype Rounded = \"none\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"2xl\" | \"3xl\" | \"full\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst rawProps = withDefaults(\n  defineProps<{\n    variant?: BadgeVariant;\n    color?: SemanticColor;\n    size?: BadgeSize;\n    rounded?: Rounded;\n    theme?: ThemeInput;\n  }>(),\n  {\n    color: \"accent\",\n  },\n);\n\nconst attrs = useAttrs();\nconst { props, theme } = useResolvedThemeProps(\n  \"badge\",\n  \"controls\",\n  rawProps,\n  { variant: \"solid\", size: \"md\", rounded: \"full\" } as const,\n);\n\nconst rootAttrs = computed(() => withoutClassAttribute(attrs));\n\nconst sizeClasses: Readonly<Record<BadgeSize, string>> = {\n  sm: \"px-2 py-0.5 text-xs\",\n  md: \"px-3 py-1 text-sm\",\n  lg: \"px-4 py-1.5 text-base\",\n};\nconst roundedClasses: Readonly<Record<Rounded, string>> = {\n  none: \"rounded-none\", sm: \"rounded-sm\", md: \"rounded-md\", lg: \"rounded-lg\",\n  xl: \"rounded-xl\", \"2xl\": \"rounded-2xl\", \"3xl\": \"rounded-3xl\", full: \"rounded-full\",\n};\n\nconst classes = computed(() =>\n  mergeClasses(\n    \"inline-flex font-bold\",\n    roundedClasses[props.rounded],\n    sizeClasses[props.size],\n    semanticColorClasses[props.color][props.variant],\n    props.variant === \"outline\" ? [\"border\", \"bg-transparent\"] : [],\n    props.variant === \"glass\" ? \"border\" : [],\n    attrs.class,\n  ),\n);\n</script>\n\n<template>\n  <span\n    v-bind=\"rootAttrs\"\n    data-balsa=\"badge\"\n    :data-theme=\"theme.explicitPresentation.value?.id\"\n    :data-theme-base=\"theme.explicitPresentation.value?.base\"\n    :data-variant=\"props.variant\"\n    :data-color=\"props.color\"\n    :data-size=\"props.size\"\n    :data-rounded=\"props.rounded\"\n    :style=\"[attrs.style, theme.explicitPresentation.value?.style]\"\n    :class=\"classes\"\n  >\n    <slot />\n  </span>\n</template>\n"
+    },
+    {
+      "path": "src/components/ui/types.ts",
+      "type": "registry:lib",
+      "target": "src/components/ui/types.ts",
+      "content": "export type ActionColor = \"primary\" | \"secondary\" | \"accent\" | \"destructive\";\nexport type StatusColor = \"success\" | \"warning\" | \"info\";\nexport type SemanticColor = ActionColor | StatusColor;\n\ninterface ActionColorClassSet {\n  solid: string[];\n  outline: string[];\n  glass: string[];\n  text: string[];\n}\n\ninterface SemanticColorClassSet {\n  solid: string[];\n  soft: string[];\n  outline: string[];\n  glass: string[];\n}\n\nexport const actionColorClasses: Readonly<Record<ActionColor, ActionColorClassSet>> = {\n  primary: {\n    solid: [\"bg-balsa-primary\", \"text-balsa-primary-foreground\", \"hover:bg-balsa-primary-hover\", \"active:bg-balsa-primary-active\"],\n    outline: [\"border-balsa-primary\", \"text-balsa-primary\", \"hover:bg-balsa-primary/15\", \"active:bg-balsa-primary/25\"],\n    glass: [\"text-balsa-primary\"],\n    text: [\"text-balsa-primary\", \"decoration-balsa-primary\", \"hover:text-balsa-primary-hover\", \"hover:decoration-balsa-primary-hover\"],\n  },\n  secondary: {\n    solid: [\"bg-balsa-secondary\", \"text-balsa-secondary-foreground\", \"hover:bg-balsa-secondary-hover\", \"active:bg-balsa-secondary-active\"],\n    outline: [\"border-balsa-secondary\", \"text-balsa-secondary\", \"hover:bg-balsa-secondary/15\", \"active:bg-balsa-secondary/25\"],\n    glass: [\"text-balsa-secondary\"],\n    text: [\"text-balsa-secondary\", \"decoration-balsa-secondary\", \"hover:text-balsa-secondary-hover\", \"hover:decoration-balsa-secondary-hover\"],\n  },\n  accent: {\n    solid: [\"bg-balsa-accent\", \"text-balsa-accent-foreground\", \"hover:bg-balsa-accent-hover\", \"active:bg-balsa-accent-active\"],\n    outline: [\"border-balsa-accent\", \"text-balsa-accent\", \"hover:bg-balsa-accent/15\", \"active:bg-balsa-accent/25\"],\n    glass: [\"text-balsa-accent\"],\n    text: [\"text-balsa-accent\", \"decoration-balsa-accent\", \"hover:text-balsa-accent-hover\", \"hover:decoration-balsa-accent-hover\"],\n  },\n  destructive: {\n    solid: [\"bg-balsa-destructive\", \"text-balsa-destructive-foreground\", \"hover:bg-balsa-destructive-hover\", \"active:bg-balsa-destructive-active\"],\n    outline: [\"border-balsa-destructive\", \"text-balsa-destructive\", \"hover:bg-balsa-destructive/15\", \"active:bg-balsa-destructive/25\"],\n    glass: [\"text-balsa-destructive\"],\n    text: [\"text-balsa-destructive\", \"decoration-balsa-destructive\", \"hover:text-balsa-destructive-hover\", \"hover:decoration-balsa-destructive-hover\"],\n  },\n};\n\nexport const semanticColorClasses: Readonly<Record<SemanticColor, SemanticColorClassSet>> = {\n  primary: {\n    solid: [\"bg-balsa-primary\", \"text-balsa-primary-foreground\"],\n    soft: [\"bg-balsa-primary/15\", \"text-balsa-primary\"],\n    outline: [\"border-balsa-primary\", \"text-balsa-primary\"],\n    glass: [\"border-balsa-primary/40\", \"bg-balsa-primary/10\", \"text-balsa-primary\", \"backdrop-blur-md\"],\n  },\n  secondary: {\n    solid: [\"bg-balsa-secondary\", \"text-balsa-secondary-foreground\"],\n    soft: [\"bg-balsa-secondary/15\", \"text-balsa-secondary\"],\n    outline: [\"border-balsa-secondary\", \"text-balsa-secondary\"],\n    glass: [\"border-balsa-secondary/40\", \"bg-balsa-secondary/10\", \"text-balsa-secondary\", \"backdrop-blur-md\"],\n  },\n  accent: {\n    solid: [\"bg-balsa-accent\", \"text-balsa-accent-foreground\"],\n    soft: [\"bg-balsa-accent/15\", \"text-balsa-accent\"],\n    outline: [\"border-balsa-accent\", \"text-balsa-accent\"],\n    glass: [\"border-balsa-accent/40\", \"bg-balsa-accent/10\", \"text-balsa-accent\", \"backdrop-blur-md\"],\n  },\n  destructive: {\n    solid: [\"bg-balsa-destructive\", \"text-balsa-destructive-foreground\"],\n    soft: [\"bg-balsa-destructive/15\", \"text-balsa-destructive\"],\n    outline: [\"border-balsa-destructive\", \"text-balsa-destructive\"],\n    glass: [\"border-balsa-destructive/40\", \"bg-balsa-destructive/10\", \"text-balsa-destructive\", \"backdrop-blur-md\"],\n  },\n  success: {\n    solid: [\"bg-balsa-success\", \"text-balsa-success-foreground\"],\n    soft: [\"bg-balsa-success/15\", \"text-balsa-success\"],\n    outline: [\"border-balsa-success\", \"text-balsa-success\"],\n    glass: [\"border-balsa-success/40\", \"bg-balsa-success/10\", \"text-balsa-success\", \"backdrop-blur-md\"],\n  },\n  warning: {\n    solid: [\"bg-balsa-warning\", \"text-balsa-warning-foreground\"],\n    soft: [\"bg-balsa-warning/15\", \"text-balsa-warning\"],\n    outline: [\"border-balsa-warning\", \"text-balsa-warning\"],\n    glass: [\"border-balsa-warning/40\", \"bg-balsa-warning/10\", \"text-balsa-warning\", \"backdrop-blur-md\"],\n  },\n  info: {\n    solid: [\"bg-balsa-info\", \"text-balsa-info-foreground\"],\n    soft: [\"bg-balsa-info/15\", \"text-balsa-info\"],\n    outline: [\"border-balsa-info\", \"text-balsa-info\"],\n    glass: [\"border-balsa-info/40\", \"bg-balsa-info/10\", \"text-balsa-info\", \"backdrop-blur-md\"],\n  },\n};\n"
+    },
+    {
+      "path": "src/components/ui/classes.ts",
+      "type": "registry:lib",
+      "target": "src/components/ui/classes.ts",
+      "content": "import { extendTailwindMerge, type ClassNameValue } from \"tailwind-merge\";\n\nconst twMerge = extendTailwindMerge({\n  extend: {\n    theme: {\n      radius: [\"balsa-control\", \"balsa-surface\", \"balsa-panel\"],\n      shadow: [\n        \"balsa-control\",\n        \"balsa-surface\",\n        \"balsa-panel\",\n        \"balsa-sm\",\n        \"balsa-md\",\n        \"balsa-lg\",\n        \"balsa-detail\",\n      ],\n    },\n  },\n});\n\nexport function mergeClasses(...inputs: unknown[]): string {\n  return twMerge(...(inputs as ClassNameValue[]));\n}\n\nexport function withoutClassAttribute(\n  attrs: Readonly<Record<string, unknown>>,\n): Record<string, unknown> {\n  return Object.fromEntries(\n    Object.entries(attrs).filter(([name]) => name !== \"class\"),\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/badge.json",
+    "documentation": "docs/components/badge.md",
+    "example": "docs/components/badge.md",
+    "tokens": [
+      "--balsa-color-primary",
+      "--balsa-color-primary-foreground",
+      "--balsa-color-success",
+      "--balsa-color-info"
+    ]
+  }
+}

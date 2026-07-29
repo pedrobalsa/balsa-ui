@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "name": "sidebar",
+  "title": "Sidebar",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present grouped application navigation as a persistent desktop sidebar and modal mobile drawer.",
+  "useFor": [
+    "Application navigation",
+    "Workspace sections",
+    "Dense tool destinations"
+  ],
+  "avoidFor": [
+    "Marketing-site primary navigation",
+    "One or two destinations",
+    "Content filters without navigation"
+  ],
+  "states": [
+    "expanded",
+    "rail",
+    "offcanvas",
+    "mobile drawer",
+    "nested group expanded"
+  ],
+  "accessibility": [
+    "Desktop navigation remains non-modal.",
+    "Rail items retain accessible labels and title cues.",
+    "Mobile mode composes Drawer focus, Escape, backdrop, and restoration behavior."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "consumer-defined expanded and rail width"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-border",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Coupling the primitive to a router or analytics.",
+    "Hiding labels without accessible names.",
+    "Using badges as decorative metadata rather than concise navigation counts."
+  ],
+  "examples": [
+    "Expanded navigation",
+    "Rail navigation",
+    "Nested destinations",
+    "Mobile drawer"
+  ],
+  "publicApi": {
+    "props": [
+      "modelValue",
+      "collapsed",
+      "mobileOpen",
+      "id",
+      "label",
+      "groups",
+      "side",
+      "variant",
+      "collapsible",
+      "width",
+      "railWidth",
+      "mobileBreakpointLabel",
+      "shortcut",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "update:collapsed",
+      "update:mobileOpen",
+      "select"
+    ],
+    "slots": [
+      "header",
+      "footer"
+    ]
+  }
+}

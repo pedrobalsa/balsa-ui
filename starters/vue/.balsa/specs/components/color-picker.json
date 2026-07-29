@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "name": "color-picker",
+  "title": "ColorPicker",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose a six-digit hex color through a labeled square field with configurable label position or palette trigger and an accessible custom multi-format editing popover.",
+  "useFor": [
+    "Palette colors",
+    "Brand color settings",
+    "Editable visual properties"
+  ],
+  "avoidFor": [
+    "Selecting a named semantic intent",
+    "Status-only color display",
+    "Color formats that require alpha"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "focus",
+    "open",
+    "invalid-color-code",
+    "disabled"
+  ],
+  "composition": {
+    "model": "six-digit hex string",
+    "trigger": "Field type uses one filled square with an outside left-aligned, non-truncating label by default; labelPosition='inside' centers the concise label inside with contrast-safe black or white text. Field sizes are sm (32px), md (40px), and lg (56px); palette type uses one full-width filled rectangle with its required label visually hidden for grouped palettes.",
+    "editor": "A smoothly anchored top-layer popover with separate saturation/brightness and hue controls plus a compact format Select beside an editable HEX, RGB, or HSL color-code field; the public model remains normalized six-digit hex."
+  },
+  "accessibility": [
+    "Provide a stable id and label; palette type keeps the label available to assistive technology.",
+    "Field labels remain visible outside by default, while inside labels choose black or white foreground from the color's contrast ratio.",
+    "The trigger exposes its current hex value, expanded state, popup relationship, and optional description.",
+    "The saturation and brightness field supports arrow-key changes without changing hue at achromatic edges, and the hue slider retains native range semantics.",
+    "The color-code format Select has an accessible name, and invalid drafts remain editable until Blur restores the last valid code.",
+    "Escape closes and restores focus to the trigger; contextual actions can close before moving focus elsewhere.",
+    "The editable color-code field provides explicit invalid feedback so the selection is not communicated by color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-surface-elevated-foreground",
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control",
+    "radius.surface",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Rendering a second inset square inside the trigger.",
+    "Opening the browser-native color dialog instead of the custom editor.",
+    "Hiding the selected hex value and relying only on color.",
+    "Passing rgb, alpha, or malformed values instead of a six-digit hex string."
+  ],
+  "examples": [
+    "Outside-label square field",
+    "Inside-label square field",
+    "Palette color group",
+    "Disabled color picker"
+  ],
+  "publicApi": {
+    "model": "string",
+    "events": [
+      "update:modelValue"
+    ],
+    "props": [
+      "id",
+      "label",
+      "accessibleLabel",
+      "description",
+      "name",
+      "disabled",
+      "shadow",
+      "theme",
+      "type",
+      "labelPosition",
+      "size",
+      "rounded"
+    ],
+    "slots": [
+      "actions"
+    ]
+  }
+}

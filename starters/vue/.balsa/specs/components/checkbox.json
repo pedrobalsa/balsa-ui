@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "name": "checkbox",
+  "title": "Checkbox",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Capture an explicit independent yes-or-no selection in a form.",
+  "useFor": [
+    "Terms acceptance",
+    "Independent multi-option selection",
+    "Explicit confirmation"
+  ],
+  "avoidFor": [
+    "Immediate settings changes",
+    "Mutually exclusive choices",
+    "Action triggers"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "checked",
+    "unchecked",
+    "disabled",
+    "unvalidated"
+  ],
+  "accessibility": [
+    "Uses a native checkbox with an associated visible label.",
+    "Hint text is linked with aria-describedby.",
+    "Required and disabled states retain native semantics and visible styling."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using Checkbox for a button action.",
+    "Omitting a stable id and visible label.",
+    "Using several checkboxes for mutually exclusive choices."
+  ],
+  "examples": [
+    "Agreement checkbox",
+    "Checked option",
+    "Required unvalidated checkbox"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "hint",
+      "size",
+      "rounded",
+      "disabled",
+      "required",
+      "theme"
+    ]
+  }
+}

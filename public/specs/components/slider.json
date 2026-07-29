@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "name": "slider",
+  "title": "Slider",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose one numeric value by default or a bounded numeric range through native keyboard, pointer, touch, and form behavior.",
+  "useFor": [
+    "Approximate numeric settings",
+    "Bounded ranges",
+    "Visual intensity or volume controls"
+  ],
+  "avoidFor": [
+    "Precise unconstrained entry",
+    "Values without meaningful bounds",
+    "Discrete choices that need labels"
+  ],
+  "types": [
+    "single",
+    "range",
+    "horizontal",
+    "vertical"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "required"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "Native range inputs preserve keyboard, pointer, touch, and form semantics.",
+    "Range thumbs expose explicit minimum and maximum accessible names and remain independently draggable.",
+    "Visible output can be formatted without changing the numeric model."
+  ],
+  "tokens": [
+    "--balsa-color-muted",
+    "--balsa-color-primary",
+    "--balsa-color-input",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using a slider when exact typed entry is required.",
+    "Omitting a visible label.",
+    "Creating a two-thumb range whose thumbs can cross or lose their minimum gap."
+  ],
+  "examples": [
+    "Single value",
+    "Bounded range",
+    "Formatted value",
+    "Vertical orientation"
+  ],
+  "publicApi": {
+    "model": "number | [number, number]",
+    "props": [
+      "id",
+      "label",
+      "min",
+      "max",
+      "step",
+      "minStepsBetweenThumbs",
+      "orientation",
+      "size",
+      "rounded",
+      "disabled",
+      "required",
+      "showValue",
+      "name",
+      "hint",
+      "formatValue",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": []
+  }
+}

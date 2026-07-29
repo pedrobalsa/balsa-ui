@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "name": "tooltip",
+  "title": "Tooltip",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Describe a focusable interface element with compact, non-interactive supplementary content on pointer hover or keyboard focus.",
+  "useFor": [
+    "Control descriptions",
+    "Abbreviations",
+    "Compact supplementary details"
+  ],
+  "avoidFor": [
+    "Interactive content",
+    "Essential instructions",
+    "Touch-only disclosure"
+  ],
+  "types": [
+    "top",
+    "right",
+    "bottom",
+    "left"
+  ],
+  "states": [
+    "closed",
+    "opening",
+    "open",
+    "closing",
+    "disabled"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The focusable trigger references the visible tooltip with aria-describedby.",
+    "Tooltip content never receives focus or pointer interaction.",
+    "Escape and blur dismiss the tooltip without changing trigger focus."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Putting interactive controls inside a tooltip.",
+    "Using a tooltip as the only source of essential instructions.",
+    "Making touch access depend on hover alone."
+  ],
+  "examples": [
+    "Control description",
+    "Abbreviation",
+    "Quick hint",
+    "Collision correction"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "side",
+      "align",
+      "sideOffset",
+      "openDelay",
+      "closeDelay",
+      "variant",
+      "rounded",
+      "contained",
+      "disabled",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": [
+      "trigger",
+      "default"
+    ]
+  }
+}

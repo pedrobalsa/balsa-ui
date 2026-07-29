@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "name": "command-menu",
+  "title": "Command Menu",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Filter and invoke grouped commands through an inline query with an anchored dropdown or on-demand dialog.",
+  "useFor": [
+    "Application command palettes",
+    "Fast navigation",
+    "Grouped searchable actions"
+  ],
+  "avoidFor": [
+    "Free-form search results",
+    "Data entry",
+    "Hidden-only critical actions"
+  ],
+  "types": [
+    "inline",
+    "dialog"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "loading",
+    "empty",
+    "filtered"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "The inline query opens its anchored dropdown on focus, click, typing, or arrow navigation and closes on selection, Escape, Tab, or outside press.",
+    "The query uses combobox and active-descendant semantics against one listbox.",
+    "Dialog mode uses the established modal focus, scroll, and restoration contract."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using labels as unique identifiers.",
+    "Hiding critical commands only behind a hotkey.",
+    "Changing the command model during internal filtering."
+  ],
+  "examples": [
+    "Inline commands",
+    "Dialog palette",
+    "Loading state",
+    "Empty query result"
+  ],
+  "publicApi": {
+    "model": "boolean; query model: string",
+    "props": [
+      "id",
+      "label",
+      "groups",
+      "mode",
+      "title",
+      "description",
+      "placeholder",
+      "loading",
+      "variant",
+      "size",
+      "rounded",
+      "hotkey",
+      "contained",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "update:query",
+      "select"
+    ],
+    "slots": [
+      "empty",
+      "loading"
+    ]
+  }
+}

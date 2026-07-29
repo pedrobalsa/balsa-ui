@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "name": "avatar",
+  "title": "Avatar",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Represent a person or entity through a resilient image with an accessible text fallback.",
+  "useFor": [
+    "People and organization identity",
+    "Profile lists",
+    "Compact ownership cues"
+  ],
+  "avoidFor": [
+    "Decorative photography",
+    "Clickable controls without a link or button",
+    "Status without a visible status explanation"
+  ],
+  "states": [
+    "idle fallback",
+    "loading",
+    "loaded",
+    "image error"
+  ],
+  "accessibility": [
+    "The root exposes one image role and accessible label.",
+    "The source image is decorative inside the labelled root.",
+    "Fallback text remains visible when the source is missing, delayed, or fails."
+  ],
+  "variants": [
+    "circle",
+    "rounded",
+    "square"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "tokens": [
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Omitting a meaningful label.",
+    "Making the avatar itself interactive instead of wrapping it in a semantic control.",
+    "Using a fallback that does not identify the represented entity."
+  ],
+  "examples": [
+    "Initials fallback",
+    "Loaded image",
+    "Rounded entity mark",
+    "Custom badge slot"
+  ],
+  "publicApi": {
+    "props": [
+      "src",
+      "label",
+      "fallback",
+      "size",
+      "shape",
+      "loading",
+      "fallbackDelay",
+      "theme"
+    ],
+    "events": [
+      "loadState"
+    ],
+    "slots": [
+      "fallback",
+      "badge"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Constrain overflowing content in a labelled native scroll viewport with Balsa scrollbar treatment.",
+  "useFor": [
+    "Long lists inside bounded panels",
+    "Horizontal media rows",
+    "Two-axis work surfaces"
+  ],
+  "avoidFor": [
+    "Whole-page scrolling",
+    "Content that should reflow instead",
+    "Hidden essential content without a visible scroll cue"
+  ],
+  "states": [
+    "resting",
+    "hovered",
+    "focused",
+    "scrolling"
+  ],
+  "accessibility": [
+    "The focusable viewport is a labelled region.",
+    "Native browser wheel, touch, pointer, and keyboard scrolling remain intact.",
+    "Programmatic methods operate the same native viewport."
+  ],
+  "variants": [
+    "auto",
+    "always",
+    "hover"
+  ],
+  "sizes": [
+    "thin",
+    "regular"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Nesting same-axis scroll regions without need.",
+    "Omitting a meaningful region label.",
+    "Using edge fades where they obscure important content."
+  ],
+  "examples": [
+    "Vertical list",
+    "Horizontal row",
+    "Hover scrollbars",
+    "Edge fade"
+  ],
+  "publicApi": {
+    "props": [
+      "label",
+      "orientation",
+      "visibility",
+      "size",
+      "edgeFade",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "scroll"
+    ],
+    "slots": [
+      "default"
+    ],
+    "exposes": [
+      "viewport",
+      "scrollTo",
+      "scrollBy"
+    ]
+  }
+}

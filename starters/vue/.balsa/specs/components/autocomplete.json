@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "name": "autocomplete",
+  "title": "Autocomplete",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Enter text with filtered suggestions and keyboard navigation, or choose one or more suggestions while retaining a searchable query.",
+  "useFor": [
+    "Searchable suggestion lists",
+    "Assisted free-form entry",
+    "Finding an item by partial text",
+    "Searchable multiple selection"
+  ],
+  "avoidFor": [
+    "A short fixed list without filtering",
+    "Remote search without a loading strategy"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "open",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated"
+  ],
+  "composition": {
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "styling": "Consumer class and style attributes merge onto the native input while shared helpers preserve the Balsa field language.",
+    "multiple": "Set multiple to bind a string array, keep the query editable, toggle suggestions without closing the list, and render removable selected-value actions.",
+    "popup": "The suggestion list uses a manually controlled browser top-layer popover when available so overflow containers do not clip it and a focus click cannot light-dismiss it."
+  },
+  "accessibility": [
+    "Uses editable combobox semantics with an associated listbox.",
+    "Arrow keys, Enter, Escape, and Tab follow expected combobox behavior; Backspace removes the final selected value only when a multiple-mode query is empty.",
+    "Multiple mode exposes aria-multiselectable and gives every selected value an accessible remove action.",
+    "The active suggestion is exposed through aria-activedescendant.",
+    "The top-layer suggestion list remains structurally associated with its input."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-selected",
+    "--balsa-color-destructive",
+    "radius.control",
+    "shadow.surface"
+  ],
+  "commonMistakes": [
+    "Using suggestions as an inaccessible visual-only menu.",
+    "Omitting a stable id and visible label.",
+    "Using it for a tiny fixed list."
+  ],
+  "examples": [
+    "Filtered suggestions",
+    "Multiple selection",
+    "Keyboard selection",
+    "Loading autocomplete"
+  ],
+  "publicApi": {
+    "model": "string | readonly string[]",
+    "props": [
+      "id",
+      "label",
+      "suggestions",
+      "multiple",
+      "size",
+      "rounded",
+      "placeholder",
+      "hint",
+      "disabled",
+      "loading",
+      "status",
+      "statusMessage",
+      "required",
+      "defaultOpen",
+      "shadow",
+      "theme"
+    ]
+  }
+}

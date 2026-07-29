@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "name": "hover-card",
+  "title": "Hover Card",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Preview supplementary content from pointer hover or keyboard focus without moving focus.",
+  "useFor": [
+    "Profile previews",
+    "Link summaries",
+    "Supplementary metadata"
+  ],
+  "avoidFor": [
+    "Essential actions",
+    "Touch-only disclosure",
+    "Blocking content"
+  ],
+  "types": [
+    "top",
+    "right",
+    "bottom",
+    "left"
+  ],
+  "states": [
+    "closed",
+    "opening",
+    "open",
+    "closing",
+    "disabled"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The focusable trigger references the open preview.",
+    "Focus never moves into hover content.",
+    "Cancellable delays keep the card open while the pointer crosses into it."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Putting essential controls in hover-only content.",
+    "Using zero close delay across a pointer gap.",
+    "Inventing hover behavior on touch."
+  ],
+  "examples": [
+    "Profile preview",
+    "Link summary",
+    "Delayed preview",
+    "Collision flip"
+  ],
+  "publicApi": {
+    "model": "boolean",
+    "props": [
+      "id",
+      "label",
+      "side",
+      "align",
+      "sideOffset",
+      "openDelay",
+      "closeDelay",
+      "variant",
+      "rounded",
+      "contained",
+      "disabled",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ],
+    "slots": [
+      "trigger",
+      "default"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./styles/balsa-foundation.css";
+@import "./styles/balsa-theme.css";
+
+body {
+  margin: 0;
+  background: var(--balsa-color-background);
+  color: var(--balsa-color-foreground);
+}

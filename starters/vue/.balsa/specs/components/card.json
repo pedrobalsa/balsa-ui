@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "name": "card",
+  "title": "Card",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Group related content and actions on a consistent Balsa surface.",
+  "useFor": [
+    "Grouped content",
+    "Feature summaries",
+    "Contained forms or previews"
+  ],
+  "avoidFor": [
+    "Every page section",
+    "Unrelated content",
+    "Interactive behavior without an inner control"
+  ],
+  "variants": [
+    "surface",
+    "elevated",
+    "muted",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "padding-none",
+    "padding-sm",
+    "padding-md",
+    "padding-lg"
+  ],
+  "states": [
+    "shadowed",
+    "shadowless"
+  ],
+  "accessibility": [
+    "Card is a visual container and does not invent landmark semantics.",
+    "Use semantic headings and controls inside it.",
+    "Each variant supplies an intentional paired surface and foreground."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-muted",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "radius.surface",
+    "shadow.surface"
+  ],
+  "commonMistakes": [
+    "Making the entire Card clickable without link semantics.",
+    "Nesting many cards only for spacing.",
+    "Using unrelated content in one card.",
+    "Using important padding or shadow overrides instead of the typed props and normal consumer utilities."
+  ],
+  "examples": [
+    "Surface card",
+    "Elevated card",
+    "Muted card",
+    "Outline card",
+    "Soft card",
+    "Glass card",
+    "Shadowless card"
+  ],
+  "publicApi": {
+    "props": [
+      "variant",
+      "color",
+      "padding",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}

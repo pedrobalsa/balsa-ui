@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "name": "resizable",
+  "title": "Resizable",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Divide available space into two panels whose boundary can be adjusted by pointer or keyboard.",
+  "useFor": [
+    "Editor panes",
+    "Master-detail layouts",
+    "Side-by-side comparison"
+  ],
+  "avoidFor": [
+    "Content that cannot tolerate a constrained panel",
+    "More than two peers without nested groups",
+    "Primary mobile navigation"
+  ],
+  "states": [
+    "idle",
+    "focused handle",
+    "dragging",
+    "disabled"
+  ],
+  "accessibility": [
+    "The handle uses separator semantics with orientation and current percentage.",
+    "Arrow keys resize by step while Home and End move to limits.",
+    "Both panels preserve normal document and focus order."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Setting minimum above maximum.",
+    "Hiding the handle without another visible boundary.",
+    "Using Resizable where responsive stacking is clearer."
+  ],
+  "examples": [
+    "Horizontal panes",
+    "Vertical panes",
+    "Glass panels",
+    "Disabled split"
+  ],
+  "publicApi": {
+    "props": [
+      "modelValue",
+      "id",
+      "label",
+      "orientation",
+      "min",
+      "max",
+      "step",
+      "disabled",
+      "showGrip",
+      "variant",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue",
+      "resize"
+    ],
+    "slots": [
+      "first",
+      "second"
+    ]
+  }
+}

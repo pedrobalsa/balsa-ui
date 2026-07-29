@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "name": "toggle-group",
+  "title": "ToggleGroup",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Connect exclusive or multiple persistent pressed-state actions with direct pointer affordance.",
+  "useFor": [
+    "Text alignment",
+    "View filters",
+    "Compact multi-format toolbars"
+  ],
+  "avoidFor": [
+    "Unrelated actions",
+    "Boolean settings",
+    "Long or wrapping labels"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "glass"
+  ],
+  "states": [
+    "single",
+    "multiple",
+    "horizontal",
+    "vertical",
+    "disabled item",
+    "disabled group"
+  ],
+  "composition": {
+    "dependency": "Toggle",
+    "selection": "Single mode emits one id and optionally allows empty selection; multiple mode emits an immutable id array.",
+    "keyboard": "Roving tabindex follows the selected or first enabled item and supports axis-aware arrows, Home, End, and wrapping."
+  },
+  "accessibility": [
+    "Provide a concise group label.",
+    "Keep every option label explicit even when an icon is present.",
+    "Skip disabled items during roving focus."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border-strong",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Passing an array model in single mode.",
+    "Providing duplicate option ids.",
+    "Using ToggleGroup for unrelated one-shot actions."
+  ],
+  "examples": [
+    "Single alignment",
+    "Multiple formatting actions",
+    "Vertical connected group"
+  ],
+  "publicApi": {
+    "model": "string | readonly string[]",
+    "props": [
+      "options",
+      "label",
+      "type",
+      "orientation",
+      "allowEmpty",
+      "disabled",
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "events": [
+      "update:modelValue"
+    ]
+  }
+}

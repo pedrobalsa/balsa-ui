@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "balsa-palette",
+  "type": "registry:theme",
+  "title": "Balsa palette",
+  "description": "Optional explicit Dark and Light seven-color presets for the independently installable Balsa color foundation.",
+  "dependencies": [
+    "tailwindcss"
+  ],
+  "registryDependencies": [
+    "@balsa/balsa-foundation"
+  ],
+  "files": [
+    {
+      "path": "src/styles/balsa-palette.css",
+      "type": "registry:style",
+      "target": "src/styles/balsa-palette.css",
+      "content": "/* Balsa UI optional seven-color palette presets.\n * Importing this file is inert until a data-palette selector is applied.\n * All remaining roles are derived by balsa-foundation.css and stay overridable.\n */\n\n[data-palette=\"dark\"] {\n  color-scheme: dark;\n\n  --balsa-color-background: #0f1012;\n  --balsa-color-foreground: #f4f4f5;\n  --balsa-color-surface: #191a1c;\n  --balsa-color-muted: #2b2c2e;\n  --balsa-color-primary: #f4f4f5;\n  --balsa-color-secondary: #a1a1aa;\n  --balsa-color-accent: #cbd5e1;\n}\n\n[data-palette=\"light\"] {\n  color-scheme: light;\n\n  --balsa-color-background: #fafafa;\n  --balsa-color-foreground: #18181b;\n  --balsa-color-surface: #f1f1f1;\n  --balsa-color-muted: #e0e0e1;\n  --balsa-color-primary: #18181b;\n  --balsa-color-secondary: #52525b;\n  --balsa-color-accent: #475569;\n}\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "tokens": [
+      "--balsa-color-background",
+      "--balsa-color-foreground",
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-primary",
+      "--balsa-color-secondary",
+      "--balsa-color-accent"
+    ]
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "name": "data-table",
+  "title": "DataTable",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Explore typed rows through sorting, quick field and advanced filters, pagination, selection, visibility, render slots, and independently configurable header and row colors.",
+  "useFor": [
+    "Interactive result sets",
+    "Administrative lists",
+    "Selectable records"
+  ],
+  "avoidFor": [
+    "Static semantic tables",
+    "Virtualized millions of rows",
+    "Spreadsheet editing"
+  ],
+  "states": [
+    "sorted",
+    "filtered",
+    "paginated",
+    "selected",
+    "loading",
+    "empty"
+  ],
+  "accessibility": [
+    "Composes semantic Table and Pagination.",
+    "The bottom filter action opens a labelled dialog with a field Select and text search input.",
+    "Selection inputs have row-specific names."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "compact",
+    "default",
+    "comfortable"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-selected",
+    "--balsa-color-input",
+    "--balsa-color-focus-ring",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive"
+  ],
+  "commonMistakes": [
+    "Using unstable row keys.",
+    "Fetching secretly inside the component.",
+    "Hiding every column."
+  ],
+  "examples": [
+    "Sortable rows",
+    "Filtered rows",
+    "Multiple selection",
+    "Loading and empty"
+  ],
+  "publicApi": {
+    "props": [
+      "sort",
+      "filters",
+      "page",
+      "selected",
+      "visibleColumns",
+      "id",
+      "caption",
+      "columns",
+      "data",
+      "rowKey",
+      "selection",
+      "pageSize",
+      "variant",
+      "density",
+      "headerColor",
+      "rowColor",
+      "striped",
+      "gridlines",
+      "loading",
+      "emptyText",
+      "rounded",
+      "theme"
+    ],
+    "events": [
+      "update:sort",
+      "update:filters",
+      "update:page",
+      "update:selected",
+      "update:visibleColumns",
+      "rowSelect"
+    ],
+    "slots": [
+      "cell-{columnId}"
+    ]
+  }
+}

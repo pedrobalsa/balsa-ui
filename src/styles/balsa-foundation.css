@@ -1,0 +1,57 @@
+/* Balsa UI shared color foundation.
+ *
+ * The seven --balsa-color-* anchors are optional. When they are absent,
+ * Balsa utilities resolve to neutral defaults through the host color-scheme.
+ * Every derived --balsa-color-* role remains an explicit consumer override.
+ */
+
+@theme inline {
+  --color-balsa-background: var(--balsa-material-background, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-foreground: var(--balsa-material-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-surface: var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c)));
+  --color-balsa-surface-foreground: var(--balsa-material-surface-foreground, var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-surface-elevated: var(--balsa-material-surface-elevated, var(--balsa-color-surface-elevated, light-dark(color-mix(in oklab, var(--balsa-color-surface, #f1f1f1) 30%, white), color-mix(in oklab, var(--balsa-color-surface, #191a1c) 96%, var(--balsa-color-foreground, #f4f4f5)))));
+  --color-balsa-surface-elevated-foreground: var(--balsa-material-surface-elevated-foreground, var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-muted: var(--balsa-material-muted, var(--balsa-color-muted, light-dark(#e0e0e1, #2b2c2e)));
+  --color-balsa-muted-foreground: var(--balsa-material-muted-foreground, var(--balsa-color-muted-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 72%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-inverse: var(--balsa-material-inverse, var(--balsa-color-inverse, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-inverse-foreground: var(--balsa-material-inverse-foreground, var(--balsa-color-inverse-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-code: var(--balsa-material-code, var(--balsa-color-code, light-dark(var(--balsa-color-foreground, #18181b), color-mix(in oklab, var(--balsa-color-background, #0f1012) 96%, var(--balsa-color-foreground, #f4f4f5)))));
+  --color-balsa-code-foreground: var(--balsa-color-code-foreground, light-dark(var(--balsa-color-background, #fafafa), var(--balsa-color-foreground, #f4f4f5)));
+
+  --color-balsa-primary: var(--balsa-material-primary, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-primary-foreground: var(--balsa-material-primary-foreground, var(--balsa-color-primary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-primary-hover: var(--balsa-material-primary-hover, var(--balsa-color-primary-hover, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-primary-active: var(--balsa-material-primary-active, var(--balsa-color-primary-active, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-secondary: var(--balsa-material-secondary, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)));
+  --color-balsa-secondary-foreground: var(--balsa-material-secondary-foreground, var(--balsa-color-secondary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-secondary-hover: var(--balsa-material-secondary-hover, var(--balsa-color-secondary-hover, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-secondary-active: var(--balsa-material-secondary-active, var(--balsa-color-secondary-active, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-accent: var(--balsa-material-accent, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)));
+  --color-balsa-accent-foreground: var(--balsa-material-accent-foreground, var(--balsa-color-accent-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-accent-hover: var(--balsa-material-accent-hover, var(--balsa-color-accent-hover, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-accent-active: var(--balsa-material-accent-active, var(--balsa-color-accent-active, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+
+  --color-balsa-destructive: var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5));
+  --color-balsa-destructive-foreground: var(--balsa-color-destructive-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-destructive-hover: var(--balsa-color-destructive-hover, color-mix(in oklab, var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-destructive-active: var(--balsa-color-destructive-active, color-mix(in oklab, var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-success: var(--balsa-color-success, light-dark(#166534, #86efac));
+  --color-balsa-success-foreground: var(--balsa-color-success-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-warning: var(--balsa-color-warning, light-dark(#854d0e, #fde68a));
+  --color-balsa-warning-foreground: var(--balsa-color-warning-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-info: var(--balsa-color-info, light-dark(#1d4ed8, #93c5fd));
+  --color-balsa-info-foreground: var(--balsa-color-info-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+
+  --color-balsa-border: var(--balsa-material-border, var(--balsa-color-border, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 86%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 80%, var(--balsa-color-foreground, #f4f4f5)))));
+  --color-balsa-border-strong: var(--balsa-material-border-strong, var(--balsa-color-border-strong, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)))));
+  --color-balsa-input: var(--balsa-material-input, var(--balsa-color-input, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 28%, var(--balsa-color-surface, #f1f1f1)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 62%, var(--balsa-color-surface, #191a1c)))));
+  --color-balsa-input-foreground: var(--balsa-color-input-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-input-border: var(--balsa-material-input-border, var(--balsa-color-input-border, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)))));
+  --color-balsa-focus-ring: var(--balsa-color-focus-ring, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-selected: var(--balsa-material-selected, var(--balsa-color-selected, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-selected-foreground: var(--balsa-color-selected-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-disabled: var(--balsa-color-disabled, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 90%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 84%, var(--balsa-color-foreground, #f4f4f5))));
+  --color-balsa-disabled-foreground: var(--balsa-color-disabled-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 66%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-overlay: var(--balsa-color-overlay, light-dark(color-mix(in oklab, var(--balsa-color-foreground, #18181b) 60%, transparent), color-mix(in oklab, var(--balsa-color-background, #0f1012) 72%, transparent)));
+}

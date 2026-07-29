@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "name": "link",
+  "title": "Link",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Navigate to another location with consistent Balsa styling and safe external-link behavior.",
+  "useFor": [
+    "Page navigation",
+    "Documentation links",
+    "Call-to-action navigation"
+  ],
+  "avoidFor": [
+    "Actions that do not change location",
+    "Disabled navigation",
+    "Icon-only links without an accessible name"
+  ],
+  "variants": [
+    "text",
+    "solid",
+    "outline"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "internal",
+    "external"
+  ],
+  "accessibility": [
+    "Uses native anchor semantics.",
+    "External links receive a new browsing context and noreferrer protection.",
+    "Icon-only usage requires the label prop."
+  ],
+  "tokens": [
+    "--balsa-color-accent",
+    "--balsa-color-accent-hover",
+    "--balsa-color-primary",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using Link for an in-place action.",
+    "Omitting a useful accessible name from an icon-only link.",
+    "Manually duplicating button-like link styles.",
+    "Adding a theme-specific glass variant instead of allowing outline to inherit the Glassmorphism material recipe."
+  ],
+  "examples": [
+    "Text link",
+    "Solid call to action",
+    "External link with suffix icon"
+  ],
+  "publicApi": {
+    "props": [
+      "href",
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "prefixIcon",
+      "suffixIcon",
+      "external",
+      "label",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "default"
+    ]
+  }
+}
