@@ -35,7 +35,7 @@
     "balsa-palette": {
       "registry": "@balsa/balsa-palette",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-00f1ce68c3ac6892aa5d8ab8b9d545282c821419e19e8effb5640ab9946d5c73",
+      "sourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
       "targetPath": "src/styles/balsa-palette.css",
       "files": [
         "src/styles/balsa-palette.css"

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./styles/balsa-fonts.css";
+@import "./styles/balsa-icons.css";
 @import "./styles/balsa-foundation.css";
 @import "./styles/balsa-palette.css";
 @import "./styles/balsa-theme.css";

@@ -1,63 +1,18 @@
-/* Balsa UI public palette contract. This is the canonical registry palette source. */
+/* Balsa UI optional seven-color palette presets.
+ * Importing this file is inert until a data-palette selector is applied.
+ * All remaining roles are derived by balsa-foundation.css and stay overridable.
+ */
 
-@theme {
-  /* Palette owns only semantic colors. Theme maps them into public utilities. */
-  --color-*: initial;
-}
-
-/* Dark is the canonical default and does not depend on system preferences. */
-:root,
 [data-palette="dark"] {
   color-scheme: dark;
 
   --balsa-color-background: #0f1012;
   --balsa-color-foreground: #f4f4f5;
   --balsa-color-surface: #191a1c;
-  --balsa-color-surface-foreground: #f4f4f5;
-  --balsa-color-surface-elevated: #222325;
-  --balsa-color-surface-elevated-foreground: #f4f4f5;
   --balsa-color-muted: #2b2c2e;
-  --balsa-color-muted-foreground: #acacae;
-  --balsa-color-inverse: #f4f4f5;
-  --balsa-color-inverse-foreground: #0f1012;
-  --balsa-color-code: #18181b;
-  --balsa-color-code-foreground: #fafafa;
-
   --balsa-color-primary: #f4f4f5;
-  --balsa-color-primary-foreground: #000000;
-  --balsa-color-primary-hover: #d4d4d5;
-  --balsa-color-primary-active: #bbbbbc;
   --balsa-color-secondary: #a1a1aa;
-  --balsa-color-secondary-foreground: #000000;
-  --balsa-color-secondary-hover: #8b8b93;
-  --balsa-color-secondary-active: #7b7b82;
   --balsa-color-accent: #cbd5e1;
-  --balsa-color-accent-foreground: #000000;
-  --balsa-color-accent-hover: #b0b9c4;
-  --balsa-color-accent-active: #9ba3ac;
-  --balsa-color-destructive: #fca5a5;
-  --balsa-color-destructive-foreground: #000000;
-  --balsa-color-destructive-hover: #db8f8f;
-  --balsa-color-destructive-active: #c27e7e;
-  --balsa-color-success: #86efac;
-  --balsa-color-success-foreground: #000000;
-  --balsa-color-warning: #fde68a;
-  --balsa-color-warning-foreground: #000000;
-  --balsa-color-info: #93c5fd;
-  --balsa-color-info-foreground: #000000;
-
-  --balsa-color-border: #353638;
-  --balsa-color-border-strong: #646567;
-  --balsa-color-input: #161719;
-  --balsa-color-input-foreground: #f4f4f5;
-  --balsa-color-input-border: #646567;
-  --balsa-color-focus-ring: #f4f4f5;
-  --balsa-color-selected: #f4f4f5;
-  --balsa-color-selected-foreground: #000000;
-  --balsa-color-disabled: #2d2e30;
-  --balsa-color-disabled-foreground: #9d9d9f;
-  --balsa-color-overlay: rgb(0 0 0 / 0.72);
-
 }
 
 [data-palette="light"] {
@@ -66,49 +21,8 @@
   --balsa-color-background: #fafafa;
   --balsa-color-foreground: #18181b;
   --balsa-color-surface: #f1f1f1;
-  --balsa-color-surface-foreground: #18181b;
-  --balsa-color-surface-elevated: #fdfdfd;
-  --balsa-color-surface-elevated-foreground: #18181b;
   --balsa-color-muted: #e0e0e1;
-  --balsa-color-muted-foreground: #4f4f51;
-  --balsa-color-inverse: #18181b;
-  --balsa-color-inverse-foreground: #fafafa;
-  --balsa-color-code: #18181b;
-  --balsa-color-code-foreground: #fafafa;
-
   --balsa-color-primary: #18181b;
-  --balsa-color-primary-foreground: #ffffff;
-  --balsa-color-primary-hover: #2b2b2e;
-  --balsa-color-primary-active: #3b3b3e;
   --balsa-color-secondary: #52525b;
-  --balsa-color-secondary-foreground: #ffffff;
-  --balsa-color-secondary-hover: #62626a;
-  --balsa-color-secondary-active: #6e6e76;
   --balsa-color-accent: #475569;
-  --balsa-color-accent-foreground: #ffffff;
-  --balsa-color-accent-hover: #586477;
-  --balsa-color-accent-active: #657182;
-  --balsa-color-destructive: #b91c1c;
-  --balsa-color-destructive-foreground: #ffffff;
-  --balsa-color-destructive-hover: #c33e36;
-  --balsa-color-destructive-active: #8d1313;
-  --balsa-color-success: #166534;
-  --balsa-color-success-foreground: #ffffff;
-  --balsa-color-warning: #854d0e;
-  --balsa-color-warning-foreground: #ffffff;
-  --balsa-color-info: #1d4ed8;
-  --balsa-color-info-foreground: #ffffff;
-
-  --balsa-color-border: #d6d6d7;
-  --balsa-color-border-strong: #919192;
-  --balsa-color-input: #fcfcfc;
-  --balsa-color-input-foreground: #18181b;
-  --balsa-color-input-border: #919192;
-  --balsa-color-focus-ring: #18181b;
-  --balsa-color-selected: #18181b;
-  --balsa-color-selected-foreground: #ffffff;
-  --balsa-color-disabled: #e0e0e1;
-  --balsa-color-disabled-foreground: #5b5b5e;
-  --balsa-color-overlay: rgb(0 0 0 / 0.6);
-
 }

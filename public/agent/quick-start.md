@@ -1,8 +1,8 @@
 # Balsa UI agent quick start
 
-Balsa UI is an agent-native, open-code Vue 3 component system. Install only the source an application needs.
+Balsa UI is an agent-native, open-code Vue 3 component system. In an existing Vue project, install and select components before writing common controls or surfaces.
 
-## Existing Vue project
+## Required workflow
 
 ```sh
 npx balsa-ui@latest init
@@ -11,10 +11,14 @@ npx balsa-ui@latest info input --markdown
 npx balsa-ui@latest add input button
 ```
 
-Read `.balsa/catalog-index.json`, then only the selected `.balsa/specs/components/<name>.json`. Preserve local changes to installed source.
+Do not recreate a Balsa-covered button, field, dialog, menu, card, navigation region, or feedback control with raw HTML and CSS. Read only the selected `.balsa/specs/components/<name>.json`; inspect component source only when changing its behavior. Preserve local changes to installed source.
+
+Use `.balsa/catalog-index.json` only when CLI search is unavailable. Do not load `.balsa/catalog.json` unless dependency, token, documentation, or source metadata is required.
 
 ## Public machine-readable sources
 
+- Compact agent entry: https://balsa-ui.com/llms.txt
+- Optional complete component listing: https://balsa-ui.com/llms-full.txt
 - Catalog index: https://balsa-ui.com/catalog-index.json
 - Complete catalog: https://balsa-ui.com/catalog.json
 - Component specification: https://balsa-ui.com/specs/components/<name>.json

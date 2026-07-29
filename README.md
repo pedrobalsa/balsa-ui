@@ -15,11 +15,12 @@ npx balsa-ui@latest add input button
 
 ## Agent discovery
 
-Start with `.balsa/catalog-index.json`, then read only the selected `.balsa/specs/components/<name>.json`. The CLI synchronizes catalogs, specifications, provenance, and the optional Balsa skill into consuming projects.
+Search by intent with `npx balsa-ui@latest search "<intent>"`, then read only the selected `.balsa/specs/components/<name>.json`. Use the compact catalog index only when CLI search is unavailable. The CLI synchronizes catalogs, specifications, provenance, and the optional Balsa skill into consuming projects.
 
 Public machine-readable documentation is hosted at:
 
 - https://balsa-ui.com/llms.txt
+- https://balsa-ui.com/llms-full.txt
 - https://balsa-ui.com/catalog-index.json
 - https://balsa-ui.com/specs/components/button.json
 - https://balsa-ui.com/docs/components/button.md

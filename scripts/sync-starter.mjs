@@ -2,7 +2,12 @@ import path from "node:path";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { installRegistryItems } from "./install-registry.mjs";
-import { publicBaseUrl } from "./agent-context.mjs";
+import {
+  ensureIconStyleImport,
+  ensureIconStyles,
+  ensureStyleImports,
+  publicBaseUrl,
+} from "./agent-context.mjs";
 import { readJson, rootDir, writeJson } from "./registry-lib.mjs";
 
 const starterDir = path.join(rootDir, "starters", "vue");
@@ -19,13 +24,31 @@ delete manifest.components["form-field"];
 delete manifest.components["page-header"];
 await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 const items = await installRegistryItems({
-  names: ["button", "input", "modal", "textarea", "breadcrumb"],
+  names: [
+    "balsa-palette",
+    "button",
+    "input",
+    "modal",
+    "textarea",
+    "breadcrumb",
+  ],
   cwd: starterDir,
   force: true,
   forceAgentSkill: true,
 });
+const iconStylesheet = await ensureIconStyles(starterDir, items);
+await ensureStyleImports(starterDir, true);
+await ensureIconStyleImport(starterDir, iconStylesheet);
 const starterCssPath = path.join(starterDir, "src", "index.css");
 const starterAppPath = path.join(starterDir, "src", "App.vue");
+const starterMainPath = path.join(starterDir, "src", "main.ts");
+const starterHtmlPath = path.join(starterDir, "index.html");
+const starterFontsPath = path.join(
+  starterDir,
+  "src",
+  "styles",
+  "balsa-fonts.css",
+);
 const utilityRenames = new Map([
   ["border-border", "border-balsa-border"],
   ["bg-background", "bg-balsa-background"],
@@ -59,7 +82,44 @@ function namespaceStarterUtilities(source) {
     );
 }
 
-const starterCss = namespaceStarterUtilities(await readFile(starterCssPath, "utf8"));
+await writeFile(
+  starterFontsPath,
+  [
+    "/* Balsa starter Latin fonts. WOFF2-only sources keep the default bundle compact. */",
+    "@font-face {",
+    '  font-family: "Noto Sans";',
+    '  src: url("@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff2") format("woff2");',
+    "  font-style: normal;",
+    "  font-weight: 400;",
+    "  font-display: swap;",
+    "}",
+    "@font-face {",
+    '  font-family: "Noto Sans";',
+    '  src: url("@fontsource/noto-sans/files/noto-sans-latin-700-normal.woff2") format("woff2");',
+    "  font-style: normal;",
+    "  font-weight: 700;",
+    "  font-display: swap;",
+    "}",
+    "@font-face {",
+    '  font-family: "Space Grotesk";',
+    '  src: url("@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2") format("woff2");',
+    "  font-style: normal;",
+    "  font-weight: 500;",
+    "  font-display: swap;",
+    "}",
+    "",
+  ].join("\n"),
+  "utf8",
+);
+const starterCssSource = await readFile(starterCssPath, "utf8");
+const starterCss = namespaceStarterUtilities(
+  starterCssSource.includes('balsa-fonts.css')
+    ? starterCssSource
+    : starterCssSource.replace(
+        '@import "tailwindcss";',
+        '@import "tailwindcss";\n@import "./styles/balsa-fonts.css";',
+      ),
+);
 await writeFile(
   starterCssPath,
   starterCss.includes('balsa-foundation.css')
@@ -75,6 +135,19 @@ await writeFile(
   namespaceStarterUtilities(await readFile(starterAppPath, "utf8")),
   "utf8",
 );
+const starterMain = (await readFile(starterMainPath, "utf8"))
+  .replace(/^import "@fontsource\/[^"]+";\r?\n/gm, "")
+  .replace(/^import "@mdi\/font\/css\/materialdesignicons(?:\.min)?\.css";\r?\n/gm, "");
+await writeFile(
+  starterMainPath,
+  starterMain,
+  "utf8",
+);
+const starterHtml = (await readFile(starterHtmlPath, "utf8")).replace(
+  /<html lang="en"(?: data-palette="[^"]+")?>/,
+  '<html lang="en" data-palette="light">',
+);
+await writeFile(starterHtmlPath, starterHtml, "utf8");
 
 const packagePath = path.join(starterDir, "package.json");
 const packageLockPath = path.join(starterDir, "package-lock.json");
@@ -137,10 +210,12 @@ await writeFile(
   [
     "# Balsa Vue starter agent rules",
     "",
-    "- Start with `.balsa/catalog-index.json`; read `.balsa/catalog.json` only for dependency, token, documentation, or source metadata.",
-    "- Read only the selected `.balsa/specs/components/<name>.json` before creating UI. Prefer installed Balsa components over rebuilding controls.",
-    "- Install missing items with `npx balsa-ui@latest add <name>` and preserve local edits. Never use `--force` without reviewing differences.",
-    "- Use Vue 3 `<script setup lang=\"ts\">`, typed public APIs, semantic Balsa tokens, and existing accessible behavior.",
+    "- Before writing common UI, run `npx balsa-ui@latest search \"<intent>\"`; use `.balsa/catalog-index.json` only when CLI search is unavailable.",
+    "- Read only the selected `.balsa/specs/components/<name>.json`, then install missing items with `npx balsa-ui@latest add <name>` before implementation.",
+    "- Prefer installed Balsa components over rebuilding controls. The specification is sufficient for normal use; inspect component source only when changing behavior.",
+    "- Preserve local edits and never use `--force` without reviewing differences.",
+    "- Use Vue 3 `<script setup lang=\"ts\">`, typed public APIs, semantic `balsa` color utilities for theme-aware UI, and existing accessible behavior. Standard Tailwind colors remain available for product-specific decoration.",
+    "- The starter activates the Light palette on `<html>`. Keep palette, semantic content colors, and Balsa component surfaces consistent.",
     "- Keep labels, keyboard behavior, focus visibility, accessible names, and state announcements intact.",
     "- Validate changes with `npm run lint`, `npm run test`, and `npm run build`.",
     "",
@@ -160,15 +235,15 @@ await writeFile(
     "npm run check",
     "```",
     "",
-    "Agents start with `.balsa/catalog-index.json`, then read only the selected specification. Add missing editable components with:",
+    "Agents search by intent first, then read only the selected specification and add the matching editable components before writing raw controls:",
     "",
     "```sh",
     'npx balsa-ui@latest search "settings form"',
     "npx balsa-ui@latest info input --markdown",
-    "npx balsa-ui@latest add input",
+    "npx balsa-ui@latest add input button modal",
     "```",
     "",
-    "The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items.",
+    "The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items. Generated font and icon stylesheets keep the Latin application fonts and complete MDI class map while shipping only modern WOFF2 assets.",
     "",
   ].join("\n"),
   "utf8",

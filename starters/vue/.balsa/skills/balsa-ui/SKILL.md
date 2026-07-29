@@ -5,13 +5,14 @@ description: Discover, install, compose, add, update, and validate Balsa UI open
 
 # Work with Balsa UI
 
-## Discover before building
+## Install and discover before building
 
-1. Read `.balsa/catalog-index.json` and choose likely items by name, category, purpose, and description. Do not load the complete catalog first.
-2. Read only the selected `.balsa/specs/components/<name>.json` for use/avoid guidance, status, states, accessibility, and mistakes. In the Balsa repository, the canonical path is `specs/components/<name>.json`.
-3. Read `.balsa/catalog.json` only when dependency, token, documentation, or source metadata is needed.
-4. Inspect installed source before changing its behavior. Do not infer behavior from a screenshot alone.
-5. Prefer, in order, a matching block, composition, then primitive. Create raw UI only when no approved item covers the behavior.
+1. In a consumer Vue project without `.balsa/`, run `npx balsa-ui@latest init` before writing common controls or surfaces.
+2. Search by intent with the CLI. Do not load either catalog into context merely to discover an item.
+3. Read only the selected `.balsa/specs/components/<name>.json` for use/avoid guidance, states, accessibility, and mistakes. In the Balsa repository, use `specs/components/<name>.json`.
+4. Install matching items before implementing the interface. Prefer, in order, a block, composition, then primitive. Do not recreate a Balsa-covered control with raw HTML and CSS.
+5. The specification is sufficient for normal composition. Inspect installed source only when changing its behavior.
+6. Use `.balsa/catalog-index.json` only when CLI search is unavailable. Read `.balsa/catalog.json` only for dependency, token, documentation, or source metadata.
 
 Search without loading catalog files into context:
 
@@ -22,7 +23,7 @@ npx balsa-ui@latest info input --markdown
 
 ## Install
 
-Initialize Balsa once in an existing Vue project, then add only the needed components:
+Initialize Balsa once in an existing Vue project, then add only the needed components before writing their replacements:
 
 ```sh
 npx balsa-ui@latest init
@@ -38,7 +39,7 @@ Treat installed files as application source. Preserve local edits; never use `--
 ## Compose
 
 - Use components for low-level controls, compositions for recurring combined behavior, and blocks for meaningful page sections.
-- Use semantic tokens documented in `docs/tokens.md`. Avoid arbitrary colors, spacing, radii, or shadows.
+- Use semantic `balsa` color utilities for palette-aware UI. Standard Tailwind colors remain available for product-specific decoration, but do not use them where content must adapt with the Balsa palette.
 - Preserve semantic HTML, labels, accessible names, focus visibility, keyboard behavior, and non-color state communication.
 - Keep Vue public APIs typed and use `<script setup lang="ts">`.
 

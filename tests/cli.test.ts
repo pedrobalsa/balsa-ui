@@ -78,6 +78,7 @@ describe("Balsa CLI agent workflow", () => {
       const instructions = readFileSync(resolve(target, "AGENTS.md"), "utf8");
       expect(instructions).toContain("Preserve this guidance.");
       expect(instructions).toContain("balsa-ui-agent-context:start");
+      expect(instructions).toContain('balsa-ui@latest search "<intent>"');
       expect(existsSync(resolve(target, ".balsa/catalog-index.json"))).toBe(true);
       expect(existsSync(resolve(target, ".balsa/specs/components/button.json"))).toBe(true);
       expect(existsSync(resolve(target, ".agents/skills/balsa-ui/SKILL.md"))).toBe(true);
@@ -87,11 +88,21 @@ describe("Balsa CLI agent workflow", () => {
         resolve(target, ".agents/skills/balsa-ui/SKILL.md"),
         "Project-owned Balsa guidance.\n",
       );
-      const add = runCli(["add", "badge", "--cwd", target, "--json"]);
+      const add = runCli(["add", "button", "--cwd", target, "--json"]);
       expect(add.status, add.stderr).toBe(0);
       expect(
         readFileSync(resolve(target, ".agents/skills/balsa-ui/SKILL.md"), "utf8"),
       ).toBe("Project-owned Balsa guidance.\n");
+      const updatedCss = readFileSync(resolve(target, "src/index.css"), "utf8");
+      expect(updatedCss).toContain('@import "./styles/balsa-icons.css";');
+      const iconCss = readFileSync(
+        resolve(target, "src/styles/balsa-icons.css"),
+        "utf8",
+      );
+      expect(iconCss).toContain("materialdesignicons-webfont.woff2");
+      expect(iconCss).not.toContain("materialdesignicons-webfont.eot");
+      expect(iconCss).not.toContain("materialdesignicons-webfont.ttf");
+      expect(iconCss).not.toMatch(/materialdesignicons-webfont\.woff\?/);
     } finally {
       rmSync(target, { recursive: true, force: true });
     }

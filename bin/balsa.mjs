@@ -6,6 +6,8 @@ import { createBackgroundConfiguration } from "../scripts/background-cli.mjs";
 import {
   compactCatalogItem,
   ensureAgentInstructions,
+  ensureIconStyleImport,
+  ensureIconStyles,
   ensureStyleImports,
   formatCatalogList,
   formatComponentMarkdown,
@@ -136,14 +138,17 @@ async function addItems(argv) {
   const installed = await installRegistryItems(options);
   const includesTheme = installed.some((item) => item.name === "balsa-theme");
   const includesPalette = installed.some((item) => item.name === "balsa-palette");
+  const iconStyles = await ensureIconStyles(options.cwd, installed);
   const stylesheet = includesTheme || includesPalette
     ? await ensureStyleImports(options.cwd, includesPalette)
     : undefined;
+  const iconStylesheet = await ensureIconStyleImport(options.cwd, iconStyles);
   const npmDependencies = await missingNpmDependencies(options.cwd, installed);
   const result = {
     installed: installed.map((item) => `@balsa/${item.name}`),
     project: options.cwd,
     stylesheet,
+    iconStylesheet,
     agentContext: path.join(options.cwd, ".balsa"),
     missingNpmDependencies: npmDependencies,
   };
@@ -157,6 +162,9 @@ async function addItems(argv) {
     console.log(`Configured styles: ${path.relative(options.cwd, stylesheet)}`);
   } else if (includesTheme || includesPalette) {
     console.log("Add the installed Balsa style imports after Tailwind in your main stylesheet.");
+  }
+  if (iconStylesheet) {
+    console.log(`Configured icons: ${path.relative(options.cwd, iconStylesheet)}`);
   }
   if (npmDependencies.length) {
     console.log(`Install missing npm dependencies: npm install ${npmDependencies.join(" ")}`);

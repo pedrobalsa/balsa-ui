@@ -59,7 +59,7 @@ Install and import `balsa-palette` separately only when the project wants the ex
 
 Install npm dependencies reported by `registry.json` (`vue`, `tailwindcss`, and `@mdi/font` for this example). The installed `.vue`, `.ts`, and `.css` files are ordinary editable source. If a target already differs from the canonical source, installation stops rather than overwriting customization.
 
-Compatible shadcn-style tooling can consume `https://balsa-ui.com/r/<name>.json`. Agents can discover Balsa without loading the complete registry through `/llms.txt`, `/catalog-index.json`, per-item specifications, and per-item Markdown documentation.
+Compatible shadcn-style tooling can consume `https://balsa-ui.com/r/<name>.json`. Agents start with the compact `/llms.txt` workflow and CLI search, then load one per-item specification or Markdown page. `/llms-full.txt` and the catalogs remain available for explicit bulk discovery.
 
 ## Installation smoke test
 

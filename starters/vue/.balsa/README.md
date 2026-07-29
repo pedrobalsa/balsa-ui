@@ -1,7 +1,7 @@
 # Balsa agent context
 
-Start with `catalog-index.json`, then read only the selected specification under `specs/components/`.
-Use `catalog.json` only when dependency, token, documentation, or source metadata is needed.
+Use the CLI to search by intent before loading catalog files into context. Then read only the selected specification under `specs/components/`.
+Use `catalog-index.json` only when CLI search is unavailable, and `catalog.json` only for dependency, token, documentation, or source metadata.
 
 ```sh
 npx balsa-ui@latest search "settings form"

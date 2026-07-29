@@ -8,12 +8,12 @@ npm run dev
 npm run check
 ```
 
-Agents start with `.balsa/catalog-index.json`, then read only the selected specification. Add missing editable components with:
+Agents search by intent first, then read only the selected specification and add the matching editable components before writing raw controls:
 
 ```sh
 npx balsa-ui@latest search "settings form"
 npx balsa-ui@latest info input --markdown
-npx balsa-ui@latest add input
+npx balsa-ui@latest add input button modal
 ```
 
-The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items.
+The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items. Generated font and icon stylesheets keep the Latin application fonts and complete MDI class map while shipping only modern WOFF2 assets.

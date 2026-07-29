@@ -84,10 +84,20 @@ try {
     errors.push("Public compact catalog is stale");
   }
   const llms = await readFile(path.join(rootDir, "public", "llms.txt"), "utf8");
+  const llmsFull = await readFile(
+    path.join(rootDir, "public", "llms-full.txt"),
+    "utf8",
+  );
   const robots = await readFile(path.join(rootDir, "public", "robots.txt"), "utf8");
   const sitemap = await readFile(path.join(rootDir, "public", "sitemap.xml"), "utf8");
   if (!llms.includes(publicBaseUrl) || llms.includes("balsa-ui.dev")) {
     errors.push("llms.txt: public URLs do not use the canonical production domain");
+  }
+  if (!llms.includes(`${publicBaseUrl}/llms-full.txt`) || llms.length > 4000) {
+    errors.push("llms.txt: compact entry point is missing the full-document link or is too large");
+  }
+  if (!llmsFull.includes(publicBaseUrl) || llmsFull.includes("balsa-ui.dev")) {
+    errors.push("llms-full.txt: public URLs do not use the canonical production domain");
   }
   if (!robots.includes(`Sitemap: ${publicBaseUrl}/sitemap.xml`)) {
     errors.push("robots.txt: canonical sitemap URL is missing");
@@ -117,8 +127,8 @@ try {
     if (!canonicalDocs.equals(publicDocs)) {
       errors.push(`${item.name}: public Markdown documentation is stale`);
     }
-    if (!llms.includes(`/docs/components/${item.name}.md`)) {
-      errors.push(`${item.name}: missing from llms.txt`);
+    if (!llmsFull.includes(`/docs/components/${item.name}.md`)) {
+      errors.push(`${item.name}: missing from llms-full.txt`);
     }
     if (!sitemap.includes(`<loc>${publicBaseUrl}/docs/components/${item.name}</loc>`)) {
       errors.push(`${item.name}: missing from sitemap.xml`);
@@ -151,6 +161,26 @@ try {
   const starterCatalog = await readJson(
     path.join(rootDir, "starters", "vue", ".balsa", "catalog.json"),
   );
+  const starterMain = await readFile(
+    path.join(rootDir, "starters", "vue", "src", "main.ts"),
+    "utf8",
+  );
+  const starterCss = await readFile(
+    path.join(rootDir, "starters", "vue", "src", "index.css"),
+    "utf8",
+  );
+  const starterIcons = await readFile(
+    path.join(rootDir, "starters", "vue", "src", "styles", "balsa-icons.css"),
+    "utf8",
+  );
+  const starterFonts = await readFile(
+    path.join(rootDir, "starters", "vue", "src", "styles", "balsa-fonts.css"),
+    "utf8",
+  );
+  const starterHtml = await readFile(
+    path.join(rootDir, "starters", "vue", "index.html"),
+    "utf8",
+  );
   if (starterPackage.dependencies?.balsaui) {
     errors.push("Vue starter still depends on the monorepo filesystem");
   }
@@ -162,6 +192,25 @@ try {
   }
   if (starterCatalog.items.length !== expectedCatalogCount) {
     errors.push("Vue starter agent catalog is stale");
+  }
+  if (
+    starterMain.includes("@fontsource/")
+    || starterMain.includes("@mdi/font/css/materialdesignicons")
+  ) {
+    errors.push("Vue starter does not use the lean font and icon entry points");
+  }
+  if (
+    !starterCss.includes('balsa-icons.css')
+    || !starterCss.includes('balsa-fonts.css')
+    || !starterIcons.includes("materialdesignicons-webfont.woff2")
+    || /materialdesignicons-webfont\.(?:eot|ttf|woff)\?/.test(starterIcons)
+    || !starterFonts.includes("noto-sans-latin-400-normal.woff2")
+    || /normal\.woff["?)]/.test(starterFonts)
+  ) {
+    errors.push("Vue starter optimized font or icon stylesheet is missing or references legacy formats");
+  }
+  if (!starterHtml.includes('<html lang="en" data-palette="light">')) {
+    errors.push("Vue starter does not activate its explicit Light palette");
   }
   await access(
     path.join(rootDir, "starters", "vue", ".agents", "skills", "balsa-ui", "SKILL.md"),

@@ -4,6 +4,8 @@
 
 Concrete hex, rgb, hsl, oklch, or `color()` values belong to a built-in or consumer palette. Components depend only on the semantic contract below. There is no public numbered palette and no legacy `DesignColor` compatibility layer.
 
+Balsa defines only the namespaced `balsa` Tailwind color utilities. It does not clear or replace Tailwind's standard color namespace, so an existing project's `slate`, `blue`, `white`, and other utilities continue to compile. Use `balsa` utilities where content or component surfaces must follow the active palette; keep host colors for deliberately product-specific decoration.
+
 ## Foundation and surfaces
 
 | CSS variable | Tailwind examples | Purpose |
