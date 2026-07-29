@@ -21,7 +21,9 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
       - name: Verify release tag
-        run: node -e "const version = require('./package.json').version; if (process.env.GITHUB_REF_NAME !== `v${version}`) throw new Error(`Tag ${process.env.GITHUB_REF_NAME} does not match package v${version}`)"
+        run: |
+          package_version="$(node -p "require('./package.json').version")"
+          test "$GITHUB_REF_NAME" = "v$package_version"
       - run: npm ci
       - run: npm run fixtures:install
       - run: npm run check
