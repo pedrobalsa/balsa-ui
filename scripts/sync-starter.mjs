@@ -1,5 +1,6 @@
 import path from "node:path";
 import { readFile, rm, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import { installRegistryItems } from "./install-registry.mjs";
 import { readJson, rootDir, writeJson } from "./registry-lib.mjs";
 
@@ -77,8 +78,45 @@ await writeFile(
 const packagePath = path.join(starterDir, "package.json");
 const packageLockPath = path.join(starterDir, "package-lock.json");
 const starterPackage = await readJson(packagePath);
+const rootPackage = await readJson(path.join(rootDir, "package.json"));
 delete starterPackage.dependencies?.balsaui;
+starterPackage.dependencies ??= {};
+for (const dependency of Object.keys(starterPackage.devDependencies ?? {})) {
+  delete starterPackage.dependencies[dependency];
+}
+for (const dependency of new Set(items.flatMap((item) => item.dependencies))) {
+  if (
+    starterPackage.dependencies[dependency]
+    || starterPackage.devDependencies?.[dependency]
+  ) {
+    continue;
+  }
+  const version =
+    rootPackage.dependencies?.[dependency]
+    ?? rootPackage.devDependencies?.[dependency];
+  if (!version) {
+    throw new Error(
+      `Starter dependency ${dependency} is missing from the root package manifest.`,
+    );
+  }
+  starterPackage.dependencies[dependency] = version;
+}
 await writeJson(packagePath, starterPackage);
+if (!process.env.npm_execpath) {
+  throw new Error("Run starter synchronization through `npm run starter:sync`.");
+}
+execFileSync(
+  process.execPath,
+  [
+    process.env.npm_execpath,
+    "install",
+    "--package-lock-only",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+  ],
+  { cwd: starterDir, stdio: "inherit" },
+);
 
 const starterPackageLock = await readJson(packageLockPath);
 delete starterPackageLock.packages?.[""]?.dependencies?.balsaui;

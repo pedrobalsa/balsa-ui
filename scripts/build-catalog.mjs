@@ -22,7 +22,7 @@ export async function buildCatalog() {
       npmDependencies: item.dependencies,
       tokens: spec.tokens,
       documentation: item.meta.documentation,
-      example: item.meta.example,
+      example: item.meta.documentation,
       source: item.files.map((file) => file.path),
       framework: item.meta.framework,
     });

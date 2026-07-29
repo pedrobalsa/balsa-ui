@@ -18,7 +18,8 @@
     "@fontsource/noto-sans": "^5.2.10",
     "@fontsource/space-grotesk": "^5.2.10",
     "@mdi/font": "^7.4.47",
-    "vue": "^3.5.34"
+    "vue": "^3.5.34",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
