@@ -8,7 +8,7 @@ npm run registry:build
 npm run registry:validate
 ```
 
-`registry.json` is the shadcn-style index. The documentation deployment exposes built item payloads at `https://balsa-ui.dev/r/<name>.json`.
+`registry.json` is the shadcn-style index. The documentation deployment exposes built item payloads at `https://balsa-ui.com/r/<name>.json`.
 
 To confirm compatibility against the current official Vue CLI without replacing deterministic repository artifacts:
 
@@ -59,7 +59,7 @@ Install and import `balsa-palette` separately only when the project wants the ex
 
 Install npm dependencies reported by `registry.json` (`vue`, `tailwindcss`, and `@mdi/font` for this example). The installed `.vue`, `.ts`, and `.css` files are ordinary editable source. If a target already differs from the canonical source, installation stops rather than overwriting customization.
 
-Compatible shadcn-style tooling can consume `https://balsa-ui.dev/r/<name>.json`. Agents can discover Balsa without loading the complete registry through `/llms.txt`, `/catalog-index.json`, per-item specifications, and per-item Markdown documentation.
+Compatible shadcn-style tooling can consume `https://balsa-ui.com/r/<name>.json`. Agents can discover Balsa without loading the complete registry through `/llms.txt`, `/catalog-index.json`, per-item specifications, and per-item Markdown documentation.
 
 ## Installation smoke test
 

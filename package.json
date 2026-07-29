@@ -1,10 +1,10 @@
 {
   "name": "balsa-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Agent-native, open-code Vue 3 components with independent palettes, themes, and gradient backgrounds.",
   "license": "MIT",
   "type": "module",
-  "homepage": "https://balsa-ui.dev",
+  "homepage": "https://balsa-ui.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pedrobalsa/balsa-ui.git"

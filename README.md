@@ -19,10 +19,10 @@ Start with `.balsa/catalog-index.json`, then read only the selected `.balsa/spec
 
 Public machine-readable documentation is hosted at:
 
-- https://balsa-ui.dev/llms.txt
-- https://balsa-ui.dev/catalog-index.json
-- https://balsa-ui.dev/specs/components/button.json
-- https://balsa-ui.dev/docs/components/button.md
+- https://balsa-ui.com/llms.txt
+- https://balsa-ui.com/catalog-index.json
+- https://balsa-ui.com/specs/components/button.json
+- https://balsa-ui.com/docs/components/button.md
 
 ## Develop
 

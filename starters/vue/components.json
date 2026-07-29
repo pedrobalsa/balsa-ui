@@ -13,6 +13,6 @@
     "lib": "@/lib"
   },
   "registries": {
-    "@balsa": "https://balsa-ui.dev/r/{name}.json"
+    "@balsa": "https://balsa-ui.com/r/{name}.json"
   }
 }

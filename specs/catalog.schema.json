@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://balsa-ui.dev/schemas/catalog.json",
+  "$id": "https://balsa-ui.com/schemas/catalog.json",
   "title": "Balsa agent catalog",
   "type": "object",
   "additionalProperties": false,

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://balsa-ui.dev/schemas/component.json",
+  "$id": "https://balsa-ui.com/schemas/component.json",
   "title": "Balsa UI component specification",
   "type": "object",
   "additionalProperties": false,

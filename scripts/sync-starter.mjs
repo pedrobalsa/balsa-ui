@@ -2,6 +2,7 @@ import path from "node:path";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { installRegistryItems } from "./install-registry.mjs";
+import { publicBaseUrl } from "./agent-context.mjs";
 import { readJson, rootDir, writeJson } from "./registry-lib.mjs";
 
 const starterDir = path.join(rootDir, "starters", "vue");
@@ -128,7 +129,7 @@ const componentsPath = path.join(starterDir, "components.json");
 const components = await readJson(componentsPath);
 components.registries = {
   ...(components.registries ?? {}),
-  "@balsa": "https://balsa-ui.dev/r/{name}.json",
+  "@balsa": `${publicBaseUrl}/r/{name}.json`,
 };
 await writeJson(componentsPath, components);
 await writeFile(

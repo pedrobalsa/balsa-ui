@@ -31,7 +31,7 @@ describe("Balsa CLI agent workflow", () => {
     expect(results.some((item) => item.name === "input")).toBe(true);
     expect(results[0]).toHaveProperty("install");
     expect(results[0]?.markdown).toMatch(
-      /^https:\/\/balsa-ui\.dev\/docs\/components\/.+\.md$/,
+      /^https:\/\/balsa-ui\.com\/docs\/components\/.+\.md$/,
     );
 
     const info = runCli(["info", "button", "--markdown"]);

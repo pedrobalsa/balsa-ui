@@ -1,6 +1,7 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
+import { publicBaseUrl } from "./agent-context.mjs";
 import {
   generatedDirectory,
   loadRegistry,
@@ -83,6 +84,20 @@ try {
     errors.push("Public compact catalog is stale");
   }
   const llms = await readFile(path.join(rootDir, "public", "llms.txt"), "utf8");
+  const robots = await readFile(path.join(rootDir, "public", "robots.txt"), "utf8");
+  const sitemap = await readFile(path.join(rootDir, "public", "sitemap.xml"), "utf8");
+  if (!llms.includes(publicBaseUrl) || llms.includes("balsa-ui.dev")) {
+    errors.push("llms.txt: public URLs do not use the canonical production domain");
+  }
+  if (!robots.includes(`Sitemap: ${publicBaseUrl}/sitemap.xml`)) {
+    errors.push("robots.txt: canonical sitemap URL is missing");
+  }
+  if (
+    !sitemap.includes(`<loc>${publicBaseUrl}/</loc>`) ||
+    !sitemap.includes(`<loc>${publicBaseUrl}/docs</loc>`)
+  ) {
+    errors.push("sitemap.xml: canonical root and documentation URLs are missing");
+  }
   for (const item of catalog.items) {
     const canonicalSpec = await readJson(
       sourcePath(`specs/components/${item.name}.json`),
@@ -104,6 +119,9 @@ try {
     }
     if (!llms.includes(`/docs/components/${item.name}.md`)) {
       errors.push(`${item.name}: missing from llms.txt`);
+    }
+    if (!sitemap.includes(`<loc>${publicBaseUrl}/docs/components/${item.name}</loc>`)) {
+      errors.push(`${item.name}: missing from sitemap.xml`);
     }
   }
 } catch (error) {
@@ -139,7 +157,7 @@ try {
   if (JSON.stringify(starterPackageLock).includes('"balsaui"')) {
     errors.push("Vue starter lockfile still contains the monorepo filesystem dependency");
   }
-  if (starterRegistry.registries?.["@balsa"] !== "https://balsa-ui.dev/r/{name}.json") {
+  if (starterRegistry.registries?.["@balsa"] !== `${publicBaseUrl}/r/{name}.json`) {
     errors.push("Vue starter does not use the public Balsa registry");
   }
   if (starterCatalog.items.length !== expectedCatalogCount) {

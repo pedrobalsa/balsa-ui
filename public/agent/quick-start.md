@@ -15,8 +15,8 @@ Read `.balsa/catalog-index.json`, then only the selected `.balsa/specs/component
 
 ## Public machine-readable sources
 
-- Catalog index: https://balsa-ui.dev/catalog-index.json
-- Complete catalog: https://balsa-ui.dev/catalog.json
-- Component specification: https://balsa-ui.dev/specs/components/<name>.json
-- Component Markdown: https://balsa-ui.dev/docs/components/<name>.md
-- Registry item: https://balsa-ui.dev/r/<name>.json
+- Catalog index: https://balsa-ui.com/catalog-index.json
+- Complete catalog: https://balsa-ui.com/catalog.json
+- Component specification: https://balsa-ui.com/specs/components/<name>.json
+- Component Markdown: https://balsa-ui.com/docs/components/<name>.md
+- Registry item: https://balsa-ui.com/r/<name>.json

@@ -12,6 +12,23 @@ const publicDir = path.join(rootDir, "public");
 const publicDocsDir = path.join(publicDir, "docs", "components");
 const publicSpecsDir = path.join(publicDir, "specs", "components");
 const publicAgentDir = path.join(publicDir, "agent");
+const publicPagePaths = [
+  "/",
+  "/docs",
+  "/docs/installation",
+  "/docs/cli",
+  "/docs/open-code",
+  "/docs/palette",
+  "/docs/themes",
+  "/docs/accessibility",
+  "/docs/agents",
+  "/docs/registry",
+  "/docs/starter",
+  "/docs/catalog",
+  "/docs/source-updates",
+  "/docs/changelog",
+  "/tools/background-studio",
+];
 
 function assertGeneratedTarget(target) {
   const resolved = path.resolve(target);
@@ -87,6 +104,33 @@ function llmsText(catalog) {
   ].join("\n");
 }
 
+function robotsText() {
+  return [
+    "User-agent: *",
+    "Allow: /",
+    `Sitemap: ${publicBaseUrl}/sitemap.xml`,
+    "",
+  ].join("\n");
+}
+
+function sitemapXml(catalog) {
+  const paths = [
+    ...publicPagePaths,
+    ...catalog.items.map((item) => `/docs/components/${item.name}`),
+  ];
+  const urls = [...new Set(paths)].map(
+    (pagePath) => `  <url><loc>${new URL(pagePath, `${publicBaseUrl}/`).href}</loc></url>`,
+  );
+
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls,
+    "</urlset>",
+    "",
+  ].join("\n");
+}
+
 export async function buildAgentDocs() {
   const catalog = await buildCatalog();
   await resetGeneratedDirectory(publicDocsDir);
@@ -116,6 +160,8 @@ export async function buildAgentDocs() {
     "utf8",
   );
   await writeFile(path.join(publicDir, "llms.txt"), llmsText(catalog), "utf8");
+  await writeFile(path.join(publicDir, "robots.txt"), robotsText(), "utf8");
+  await writeFile(path.join(publicDir, "sitemap.xml"), sitemapXml(catalog), "utf8");
   console.log(`Built agent-readable docs for ${catalog.items.length} public items.`);
   return catalog;
 }
@@ -123,4 +169,3 @@ export async function buildAgentDocs() {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   await buildAgentDocs();
 }
-

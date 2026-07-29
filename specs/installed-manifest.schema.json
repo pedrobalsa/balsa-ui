@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://balsa-ui.dev/schemas/installed-manifest.json",
+  "$id": "https://balsa-ui.com/schemas/installed-manifest.json",
   "title": "Balsa installed source manifest",
   "type": "object",
   "additionalProperties": false,

@@ -7,7 +7,7 @@ import {
   writeJson,
 } from "./registry-lib.mjs";
 
-export const publicBaseUrl = "https://balsa-ui.dev";
+export const publicBaseUrl = "https://balsa-ui.com";
 export const catalogPath = path.join(rootDir, ".balsa", "catalog.json");
 export const catalogIndexPath = path.join(rootDir, ".balsa", "catalog-index.json");
 
