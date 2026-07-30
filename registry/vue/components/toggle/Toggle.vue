@@ -54,24 +54,24 @@ const model = defineModel<boolean>({ default: false });
 const attrs = useAttrs();
 
 const sizeClasses: Readonly<Record<ToggleSize, string[]>> = {
-  sm: ["h-9", "gap-1.5", "px-3", "text-sm"],
-  md: ["h-11", "gap-2", "px-4", "text-base"],
-  lg: ["h-12", "gap-2.5", "px-5", "text-lg"],
-  xl: ["h-14", "gap-3", "px-6", "text-xl"],
+  sm: ["h-8", "gap-1.5", "px-3", "text-sm"],
+  md: ["h-9", "gap-2", "px-4", "text-sm"],
+  lg: ["h-10", "gap-2", "px-5", "text-sm"],
+  xl: ["h-12", "gap-2.5", "px-6", "text-base"],
 };
 
 const iconSizeClasses: Readonly<Record<ToggleSize, string>> = {
   sm: "text-base",
-  md: "text-lg",
-  lg: "text-xl",
-  xl: "text-2xl",
+  md: "text-base",
+  lg: "text-lg",
+  xl: "text-xl",
 };
 
 const iconButtonSizeClasses: Readonly<Record<ToggleSize, string[]>> = {
-  sm: ["h-9", "w-9"],
-  md: ["h-11", "w-11"],
-  lg: ["h-12", "w-12"],
-  xl: ["h-14", "w-14"],
+  sm: ["h-8", "w-8"],
+  md: ["h-9", "w-9"],
+  lg: ["h-10", "w-10"],
+  xl: ["h-12", "w-12"],
 };
 
 const surfaceIdleClasses = [

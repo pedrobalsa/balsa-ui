@@ -102,8 +102,8 @@ const visibleTokens = computed(() =>
 
 const sizeClasses: Readonly<Record<PaginationSize, string[]>> = {
   sm: ["min-h-8", "min-w-8", "px-2", "text-xs"],
-  md: ["min-h-10", "min-w-10", "px-3", "text-sm"],
-  lg: ["min-h-12", "min-w-12", "px-4", "text-base"],
+  md: ["min-h-9", "min-w-9", "px-3", "text-sm"],
+  lg: ["min-h-10", "min-w-10", "px-4", "text-sm"],
 };
 
 const rootAttrs = computed(() => withoutClassAttribute(attrs));

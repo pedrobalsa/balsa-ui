@@ -54,19 +54,19 @@ const sizeClasses: Readonly<
   Record<CollapsibleSize, { trigger: string[]; content: string[]; icon: string }>
 > = {
   sm: {
-    trigger: ["min-h-10", "gap-3", "px-3", "py-2.5", "text-sm"],
-    content: ["px-3", "py-3", "text-sm"],
-    icon: "text-lg",
+    trigger: ["min-h-8", "gap-2", "px-3", "py-1.5", "text-sm"],
+    content: ["px-3", "py-2.5", "text-sm"],
+    icon: "text-base",
   },
   md: {
-    trigger: ["min-h-12", "gap-4", "px-4", "py-3", "text-base"],
-    content: ["px-4", "py-4", "text-sm"],
-    icon: "text-xl",
+    trigger: ["min-h-9", "gap-2.5", "px-4", "py-2", "text-sm"],
+    content: ["px-4", "py-3", "text-sm"],
+    icon: "text-lg",
   },
   lg: {
-    trigger: ["min-h-14", "gap-4", "px-5", "py-4", "text-lg"],
-    content: ["px-5", "py-5", "text-base"],
-    icon: "text-2xl",
+    trigger: ["min-h-10", "gap-3", "px-5", "py-2.5", "text-sm"],
+    content: ["px-5", "py-4", "text-sm"],
+    icon: "text-lg",
   },
 };
 

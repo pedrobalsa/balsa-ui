@@ -70,9 +70,9 @@ const resolvedRounded = computed<Rounded>(() =>
     : props.rounded,
 );
 const sizeClasses: Readonly<Record<TabsSize, { tab: string; tile: string; panel: string }>> = {
-  sm: { tab: "h-8 gap-1.5 px-3 text-xs", tile: "min-h-20 gap-1.5 px-3 py-3 text-xs", panel: "p-4 text-sm" },
-  md: { tab: "h-9 gap-2 px-4 text-sm", tile: "min-h-24 gap-2 px-4 py-4 text-sm", panel: "p-5 sm:p-6" },
-  lg: { tab: "h-11 gap-2.5 px-5 text-base", tile: "min-h-28 gap-2.5 px-5 py-5 text-base", panel: "p-6 sm:p-7" },
+  sm: { tab: "h-8 gap-1.5 px-3 text-xs", tile: "min-h-16 gap-1.5 px-3 py-2.5 text-xs", panel: "p-4 text-sm" },
+  md: { tab: "h-9 gap-2 px-4 text-sm", tile: "min-h-20 gap-2 px-4 py-3 text-sm", panel: "p-5 text-sm" },
+  lg: { tab: "h-10 gap-2 px-5 text-sm", tile: "min-h-24 gap-2 px-5 py-4 text-sm", panel: "p-6 text-sm" },
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",
@@ -137,7 +137,7 @@ const panelVariantClasses: Readonly<Record<TabsVariant, string[]>> = {
   glass: ["border border-balsa-border/70 bg-balsa-surface/60 text-balsa-foreground backdrop-blur-md"],
 };
 const iconTypeClasses: Readonly<Record<TabsType, string>> = {
-  segmented: "text-lg", underline: "text-lg", pills: "text-lg", tiles: "text-2xl",
+  segmented: "text-base", underline: "text-base", pills: "text-base", tiles: "text-xl",
 };
 
 const tabListClasses = computed(() => [

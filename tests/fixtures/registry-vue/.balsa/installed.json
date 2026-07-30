@@ -4,7 +4,7 @@
     "button": {
       "registry": "@balsa/button",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-76e2613b80f92b499591c2479a4aeb9361f7ebd91358d47c5ffc1a427e254dba",
+      "sourceHash": "sha256-51bf3dd43c50e0d98801b955f59706fa9f13483c5dc57797a01ff9457d958328",
       "targetPath": "src/components/ui/Button.vue",
       "files": [
         "src/components/ui/Button.vue",
@@ -24,7 +24,7 @@
     "input": {
       "registry": "@balsa/input",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-45be74207ba938488b2c1528b84e49066d0c38ecee0e5c8071986088667478f5",
+      "sourceHash": "sha256-d5f15c74773953243d1e9a71c8a4490e0848f05435719765eb0ba62f53beb8c4",
       "targetPath": "src/components/ui/Input.vue",
       "files": [
         "src/components/ui/Input.vue",
@@ -57,7 +57,7 @@
     "textarea": {
       "registry": "@balsa/textarea",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-e752ff334c178f93ead606bf307b1b125aa410f13dacdeef52d40599ad99ebc8",
+      "sourceHash": "sha256-ab4692253298243e5cc0a4896ce1ae03a45d05696bd2e4bc42c97a3ffac0c5e6",
       "targetPath": "src/components/ui/Textarea.vue",
       "files": [
         "src/components/ui/Textarea.vue",
@@ -77,7 +77,7 @@
     "switch": {
       "registry": "@balsa/switch",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-36f72258208bfd834de4b0847f262963ebad57b164c9f74feca1a6dd029ea3fa",
+      "sourceHash": "sha256-96fbca7b1dc414b5c40cc7fdc292159a4131669528ae7e68b1c1a1d30b1e0419",
       "targetPath": "src/components/ui/Switch.vue",
       "files": [
         "src/components/ui/Switch.vue",
@@ -87,7 +87,7 @@
     "toggle": {
       "registry": "@balsa/toggle",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-2bc565da7181c8b02343ae30e5590408724febe5d11d2ca1690d3566de4ab04e",
+      "sourceHash": "sha256-3726f5655cb05f3a929e554635f05b5a20336020f20f7b54aaec010f5e227d86",
       "targetPath": "src/components/ui/Toggle.vue",
       "files": [
         "src/components/ui/Toggle.vue",
@@ -108,7 +108,7 @@
     "collapsible": {
       "registry": "@balsa/collapsible",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-6c1288e7c4a4c6eba5d5650e26f87bee41d395c5b4f01e2cc267c00463e0fbc1",
+      "sourceHash": "sha256-7ef716be8e065036af09f82d865ba6511b592f7fd21867de06a570be62dc4ae8",
       "targetPath": "src/components/ui/Collapsible.vue",
       "files": [
         "src/components/ui/Collapsible.vue",
@@ -128,7 +128,7 @@
     "kbd": {
       "registry": "@balsa/kbd",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-0dd1ceda8b37721c247367d42d826293f81da80a7175e95011a8f5bd2b5de9e5",
+      "sourceHash": "sha256-512d539c493a88cabc2f0e56471031a264afe1b9a040f982fa041b5d7d5b3d91",
       "targetPath": "src/components/ui/Kbd.vue",
       "files": [
         "src/components/ui/Kbd.vue",
@@ -149,7 +149,7 @@
     "skeleton": {
       "registry": "@balsa/skeleton",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-898612825ce88971abdc070d444d86a05c2d4d20f09686e501823d30f9c55ee1",
+      "sourceHash": "sha256-4c662f1140453145396b84f6b3fd4547bf1bf58bb6e349872411ccbed591da4f",
       "targetPath": "src/components/ui/Skeleton.vue",
       "files": [
         "src/components/ui/Skeleton.vue",
@@ -171,7 +171,7 @@
     "progress": {
       "registry": "@balsa/progress",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-572c1cbbfc05257740418b2db50bcde4c85edcce07b8f0fe525652f7797de79c",
+      "sourceHash": "sha256-5c377311f4282310f4c5bfaac3d2bb239ebeb73089ed7000392d83e28be349f4",
       "targetPath": "src/components/ui/Progress.vue",
       "files": [
         "src/components/ui/Progress.vue",
@@ -183,7 +183,7 @@
     "alert": {
       "registry": "@balsa/alert",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-acab641b476d56ee48480fd03faccd63c1b8ecc26b1447e2df094ab825e20795",
+      "sourceHash": "sha256-1106cb1c89fd730b893b513fcb601102b840b3f6d8c690b1c91075d44614ca3c",
       "targetPath": "src/components/ui/Alert.vue",
       "files": [
         "src/components/ui/Alert.vue",
@@ -194,7 +194,7 @@
     "toast": {
       "registry": "@balsa/toast",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-3dcf62cf6828c79ce690d1e717b74aaab2463dca2c50dd3233efa803797f6707",
+      "sourceHash": "sha256-c51b60bcef6f6842fb9065cbfb3629170b9460d40873b5c7e4c0e7a153bb3284",
       "targetPath": "src/components/ui/Toast.vue",
       "files": [
         "src/components/ui/Toast.vue",
@@ -207,7 +207,7 @@
     "input-group": {
       "registry": "@balsa/input-group",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-bf8ed7316fb47f507edad1e4aa7acfdc6696d976debe7bfe9744680df1f6b801",
+      "sourceHash": "sha256-085ceb3f2c7dc12f3cf31cb123cf64b78b18cc534b78f8509b9f9d309a6dbe5a",
       "targetPath": "src/components/ui/InputGroup.vue",
       "files": [
         "src/components/ui/InputGroup.vue",
@@ -218,7 +218,7 @@
     "input-otp": {
       "registry": "@balsa/input-otp",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-70128c0832be56a7214af7042ab909a1dca896dfec143e8e52fc9149e4aa85f1",
+      "sourceHash": "sha256-64ddfd92bd245fa838930ddbb1c91cb00c9a5f0eca89d911cee074239f5493f7",
       "targetPath": "src/components/ui/InputOTP.vue",
       "files": [
         "src/components/ui/InputOTP.vue",
@@ -229,7 +229,7 @@
     "radio-group": {
       "registry": "@balsa/radio-group",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-693a0481c05b154db97332dcea78bac5c6b8f0984b17c449bb89c05ab5f2e355",
+      "sourceHash": "sha256-b5382eb7e3aef52e1b2cbfa95ee36daae6161d5b91e87bc8c86d1cf2999df52f",
       "targetPath": "src/components/ui/RadioGroup.vue",
       "files": [
         "src/components/ui/RadioGroup.vue",
@@ -240,7 +240,7 @@
     "slider": {
       "registry": "@balsa/slider",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-7f52e6d880a15b8a853387d3bcd6b7295a992d6f633049fda4a12dfc93c76854",
+      "sourceHash": "sha256-c370c6ea3f95c407cd91e19d35d49b6a343791eb93e4134fb4a8a2effa0e6b4c",
       "targetPath": "src/components/ui/Slider.vue",
       "files": [
         "src/components/ui/Slider.vue",
@@ -251,7 +251,7 @@
     "popup": {
       "registry": "@balsa/popup",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-fec00107f7eb07d445df0c796d60896e484dd1146254ac9445b46c769505b7e4",
+      "sourceHash": "sha256-3495ce9a025cab2f3547709ee87a351a251f37697fe177a52ad93ce00c07b3f6",
       "targetPath": "src/components/ui/Popup.vue",
       "files": [
         "src/components/ui/Popup.vue",
@@ -263,7 +263,7 @@
     "hover-card": {
       "registry": "@balsa/hover-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-d90836e7dd48c94f700762297aeac3348e4c47595b9a111e78efb19ffb0f5c47",
+      "sourceHash": "sha256-394c0a2bb20f38bbad7d71dcb5debe4e6d9a4262a33e03bb4a705bdbccd48307",
       "targetPath": "src/components/ui/HoverCard.vue",
       "files": [
         "src/components/ui/HoverCard.vue",
@@ -275,7 +275,7 @@
     "dropdown-menu": {
       "registry": "@balsa/dropdown-menu",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-ed132aa2ad4ceb09b806b83a25d0147696c47de895ded49b0d0f7da17dc2269c",
+      "sourceHash": "sha256-8257822fb5b82cfcb3d6ab52bb474d0d1a3b1129dada05dc1c23dba4ad1c5a8f",
       "targetPath": "src/components/ui/DropdownMenu.vue",
       "files": [
         "src/components/ui/DropdownMenu.vue",
@@ -290,7 +290,7 @@
     "context-menu": {
       "registry": "@balsa/context-menu",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-721512a6aff5ed8d25a2d6b0da32287d164d548f9e529974bb74fb5a3ec6ea3d",
+      "sourceHash": "sha256-dec8e3a4673457ecf33d31e81326768d1b9863162bd00281c04c6f46ecdf68a3",
       "targetPath": "src/components/ui/ContextMenu.vue",
       "files": [
         "src/components/ui/ContextMenu.vue",
@@ -303,7 +303,7 @@
     "menubar": {
       "registry": "@balsa/menubar",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-1fc9c8781551752130219cc451f03faa07e2fff4b8eae7e1f2a548ee50cdc22c",
+      "sourceHash": "sha256-fe7424012972f358b0adeda70650a76277dce00962a2ac6a693c869c37ede48a",
       "targetPath": "src/components/ui/Menubar.vue",
       "files": [
         "src/components/ui/Menubar.vue",
@@ -318,7 +318,7 @@
     "modal": {
       "registry": "@balsa/modal",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-cf70a01a0f99cbf2bb1c44bb2d5c0fc63ce2634ac5ac6dd916de5313c44e6c51",
+      "sourceHash": "sha256-2223300ac6c025f9c1da7ece8f5d26e3a499a0d961f76c6bcffd339fac186f5c",
       "targetPath": "src/components/ui/Modal.vue",
       "files": [
         "src/components/ui/Modal.vue"
@@ -327,7 +327,7 @@
     "command-menu": {
       "registry": "@balsa/command-menu",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-632ed8e0c0425713427fabfb31c3923a70a49d9949a70b4294ed6b22e3339f0b",
+      "sourceHash": "sha256-fef5c0ef754b65e936e82fb6e168e02c623056eff2e0039bf85e116e4c98d9b1",
       "targetPath": "src/components/ui/CommandMenu.vue",
       "files": [
         "src/components/ui/CommandMenu.vue",
@@ -341,7 +341,7 @@
     "drawer": {
       "registry": "@balsa/drawer",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-ef1609ace8e7f2db2bee21cef67b3845e0bd9c72e7f55f1d5f4f1851467ae91d",
+      "sourceHash": "sha256-8c8c9c0b2d7865d06c58425d53a2a5a3a593b61695615b9cb500f6ea3709b4fc",
       "targetPath": "src/components/ui/Drawer.vue",
       "files": [
         "src/components/ui/Drawer.vue",
@@ -363,7 +363,7 @@
     "pagination": {
       "registry": "@balsa/pagination",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-42e17a3d999a52bdee8c0438a14f78b9cadc6629a75b05599c7a55fe603c88a1",
+      "sourceHash": "sha256-63c8ce8867b15a2219b56a71820b0c5039f4acd727a317b017c2023073784b8f",
       "targetPath": "src/components/ui/Pagination.vue",
       "files": [
         "src/components/ui/Pagination.vue",
@@ -374,7 +374,7 @@
     "resizable": {
       "registry": "@balsa/resizable",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-8ab89ff051920bbe40b344b63efec003299dfdd4fb3ecbfc13284bbbe9ca5fd1",
+      "sourceHash": "sha256-30306512e34f553388ce9320a885bc5e046ed7b5e12e5700837f21415276709e",
       "targetPath": "src/components/ui/Resizable.vue",
       "files": [
         "src/components/ui/Resizable.vue",
@@ -385,7 +385,7 @@
     "scroll-area": {
       "registry": "@balsa/scroll-area",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-76fc4821519a7ed62d19f4d21b2f40db35e1e96297cb9dd654dd606ad2969ac6",
+      "sourceHash": "sha256-4315c577e611acd169ad38cb9bd2b74a9be6aba73a4f856f7357fa81c4cc78b6",
       "targetPath": "src/components/ui/ScrollArea.vue",
       "files": [
         "src/components/ui/ScrollArea.vue",
@@ -396,7 +396,7 @@
     "preview": {
       "registry": "@balsa/preview",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-0f48820cfc59178681d7adc63388b5e29c50b2e6735855fb1b082e0971b38847",
+      "sourceHash": "sha256-08e8d281071a7d99dbcd616d93f2a02bcab86dc6aa29162bc2dba12a85887a12",
       "targetPath": "src/components/ui/Preview.vue",
       "files": [
         "src/components/ui/Preview.vue"
@@ -405,7 +405,7 @@
     "carousel": {
       "registry": "@balsa/carousel",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-5ec6973c7f419069b813b2c1796efa7c23ec0b0dc5f346053a88aa6ac66a2f66",
+      "sourceHash": "sha256-6f69be7e675c8e50fb5d053334ba6d99e2f0e9b1a508bb42ec3de8773cdf4acb",
       "targetPath": "src/components/ui/Carousel.vue",
       "files": [
         "src/components/ui/Carousel.vue",
@@ -416,7 +416,7 @@
     "sidebar": {
       "registry": "@balsa/sidebar",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-1db798e7db8886057c9d8b15048480d263ab1b74e775607b4e47427c4fa3621b",
+      "sourceHash": "sha256-2d6c49040557fd346af77cd22f1796f7901ac582e290e33483521ad68cb82c23",
       "targetPath": "src/components/ui/Sidebar.vue",
       "files": [
         "src/components/ui/Sidebar.vue",
@@ -427,7 +427,7 @@
     "attachment": {
       "registry": "@balsa/attachment",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-04a0e65907224828d3c393aaa6b3c63696e75f9f1d5b4464cf957fef59697dda",
+      "sourceHash": "sha256-58743996db85a09b4417dee7824fbdd08672a163ca8b631a25c77a2643126cbc",
       "targetPath": "src/components/ui/Attachment.vue",
       "files": [
         "src/components/ui/Attachment.vue",
@@ -438,7 +438,7 @@
     "table": {
       "registry": "@balsa/table",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-4057d734e5039ed1ee2d1ea54b03cf73e9ee915a513dc57e43acf196bf275811",
+      "sourceHash": "sha256-edb9324041cd890921321b7c432b2314e45e24025d3d3a66b08877017e559f13",
       "targetPath": "src/components/ui/Table.vue",
       "files": [
         "src/components/ui/Table.vue",
@@ -449,7 +449,7 @@
     "calendar": {
       "registry": "@balsa/calendar",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-1bd94982151d3253208bf9270ea2a90d857004067f50805d52253ed37b7a546a",
+      "sourceHash": "sha256-18584f2894b3478a40ca1465b2dea4bfcf6220cfcd2d152999c6722037de708a",
       "targetPath": "src/components/ui/Calendar.vue",
       "files": [
         "src/components/ui/Calendar.vue",
@@ -478,7 +478,7 @@
     "charts": {
       "registry": "@balsa/charts",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-426198b0197a6e2fd9c47d2edd3ef8e43e96c9cb081186c3978a4419d525848c",
+      "sourceHash": "sha256-21120c7a64ea8fb500e69c7a8091e99c4d893a773e01f329a3a0c920c4570258",
       "targetPath": "src/components/ui/Charts.vue",
       "files": [
         "src/components/ui/Charts.vue",
@@ -489,7 +489,7 @@
     "select": {
       "registry": "@balsa/select",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-2169fd8ced44e814c121534f84d71b9f663456f9533402b62bb9337a3f761013",
+      "sourceHash": "sha256-21225e8617b392d3f2d37c603f6e27c9594cdc78872722cad86c06415c251059",
       "targetPath": "src/components/ui/Select.vue",
       "files": [
         "src/components/ui/Select.vue",
@@ -500,7 +500,7 @@
     "balsa-theme": {
       "registry": "@balsa/balsa-theme",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-1a1f4a8b002a30332951baeda38eded2782b6fae6ec6d05e936d707402cc44fa",
+      "sourceHash": "sha256-cf26dacc2f605de4b964c0466bd0b9f5877cfd1589a4d2b805758412f084d024",
       "targetPath": "src/styles/balsa-theme.css",
       "files": [
         "src/styles/balsa-theme.css",

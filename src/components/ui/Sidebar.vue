@@ -85,7 +85,7 @@ const sidebarStyle = computed(() => ({
 }));
 const itemClasses = (item: SidebarItem): string =>
   mergeClasses(
-    "flex min-h-10 w-full items-center gap-3 rounded-balsa-control px-3 py-2 text-left text-sm font-bold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
+    "flex min-h-9 w-full items-center gap-2.5 rounded-balsa-control px-3 py-1.5 text-left text-sm font-semibold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
     active.value === item.id
       ? "bg-balsa-selected text-balsa-selected-foreground"
       : "text-balsa-foreground hover:bg-balsa-muted",
@@ -143,7 +143,7 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleShortcut));
       :class="classes"
       :style="[sidebarStyle, attrs.style]"
     >
-      <header class="flex min-h-16 items-center gap-3 border-b border-balsa-border p-3">
+      <header class="flex min-h-14 items-center gap-2.5 border-b border-balsa-border p-3">
         <slot name="header" :collapsed="collapsed">
           <span :class="labelClasses">{{ props.label }}</span>
         </slot>
@@ -155,7 +155,7 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleShortcut));
           <ul class="space-y-1">
             <li v-for="item in group.items" :key="item.id">
               <component :is="item.href && !item.children?.length ? 'a' : 'button'" :href="item.href" :disabled="item.disabled" :class="itemClasses(item)" :title="collapsed ? item.label : undefined" @click="select(item)">
-                <i v-if="item.icon" :class="['mdi', item.icon, 'shrink-0 text-xl']" aria-hidden="true" />
+                <i v-if="item.icon" :class="['mdi', item.icon, 'shrink-0 text-lg']" aria-hidden="true" />
                 <span :class="labelClasses">{{ item.label }}</span>
                 <span v-if="item.badge && !(collapsed && props.collapsible === 'rail')" class="text-xs text-balsa-muted-foreground">{{ item.badge }}</span>
                 <i v-if="item.children?.length && !(collapsed && props.collapsible === 'rail')" class="mdi mdi-chevron-down text-lg" aria-hidden="true" />
@@ -179,7 +179,7 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleShortcut));
         <section v-for="group in props.groups" :key="group.id" class="mb-5">
           <small v-if="group.label" class="mb-2 block text-balsa-muted-foreground">{{ group.label }}</small>
           <button v-for="item in group.items" :key="item.id" type="button" :disabled="item.disabled" :class="itemClasses(item)" @click="select(item)">
-            <i v-if="item.icon" :class="['mdi', item.icon, 'text-xl']" aria-hidden="true" />
+            <i v-if="item.icon" :class="['mdi', item.icon, 'text-lg']" aria-hidden="true" />
             <span class="min-w-0 flex-1 text-left">{{ item.label }}</span>
             <span v-if="item.badge" class="text-xs text-balsa-muted-foreground">{{ item.badge }}</span>
           </button>

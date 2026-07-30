@@ -103,11 +103,11 @@ describe("Balsa public components", () => {
         "text-xs",
       ]));
       expect(button.classes()).not.toEqual(expect.arrayContaining([
-        "h-11",
+        "h-8",
         "w-fit",
         "rounded-lg",
-        "px-5",
-        "text-base",
+        "px-3",
+        "text-sm",
       ]));
 
       const card = mount(Card, {
@@ -157,7 +157,7 @@ describe("Balsa public components", () => {
     expect(icons).toHaveLength(2);
     expect(icons[0]?.classes()).toContain("mdi-plus");
     expect(icons[1]?.classes()).toContain("mdi-chevron-down");
-    expect(button.classes()).toContain("px-3");
+    expect(button.classes()).toContain("px-2.5");
   });
 
   it("renders the typed glass button with a restrained semantic rim hook", () => {
@@ -205,23 +205,22 @@ describe("Balsa public components", () => {
     expect(button.attributes("data-shape")).toBe("fab");
     expect(button.attributes("aria-label")).toBe("Add placeholder");
     expect(button.classes()).toEqual(expect.arrayContaining([
-      "h-14",
-      "w-14",
+      "h-9",
+      "w-9",
       "rounded-full",
       "p-0",
     ]));
-    expect(button.get("i").classes()).toContain("text-2xl");
-    expect(button.classes()).not.toContain("h-11");
+    expect(button.get("i").classes()).toContain("text-lg");
     expect(button.classes()).not.toContain("w-fit");
-    expect(button.classes()).not.toContain("pl-4");
-    expect(button.classes()).not.toContain("pr-5");
+    expect(button.classes()).not.toContain("pl-3");
+    expect(button.classes()).not.toContain("pr-4");
   });
 
   it.each([
-    ["sm", "h-10", "w-10", "text-xl"],
-    ["md", "h-14", "w-14", "text-2xl"],
-    ["lg", "h-18", "w-18", "text-3xl"],
-    ["xl", "h-24", "w-24", "text-4xl"],
+    ["sm", "h-8", "w-8", "text-base"],
+    ["md", "h-9", "w-9", "text-lg"],
+    ["lg", "h-10", "w-10", "text-xl"],
+    ["xl", "h-12", "w-12", "text-2xl"],
   ] as const)(
     "uses the distinct %s FAB control and icon scale",
     (size, heightClass, widthClass, iconClass) => {
@@ -306,9 +305,9 @@ describe("Balsa public components", () => {
       props: { id: "compact-name", label: "Name", size: "sm" },
       attrs: { class: "custom-control", style: "width: 12rem" },
     });
-    expect(input.get("input").classes()).toContain("h-10");
+    expect(input.get("input").classes()).toContain("h-8");
     expect(input.get("input").classes()).toContain("text-sm");
-    expect(input.get("input").classes()).not.toContain("h-12");
+    expect(input.get("input").classes()).not.toContain("h-9");
     expect(input.get("input").classes()).toContain("custom-control");
     expect(input.get("input").attributes("style")).toContain("width: 12rem");
 
@@ -325,7 +324,7 @@ describe("Balsa public components", () => {
       attrs: { class: "custom-control" },
     });
     const trigger = select.get('[role="combobox"]');
-    expect(trigger.classes()).toContain("h-10");
+    expect(trigger.classes()).toContain("h-8");
     expect(trigger.classes()).toContain("custom-control");
     await trigger.trigger("click");
     expect(select.get('[role="listbox"]').attributes("popover")).toBe("auto");
@@ -341,7 +340,7 @@ describe("Balsa public components", () => {
       attrs: { class: "custom-control" },
     });
     const autocompleteInput = autocomplete.get('[role="combobox"]');
-    expect(autocompleteInput.classes()).toContain("h-10");
+    expect(autocompleteInput.classes()).toContain("h-8");
     expect(autocompleteInput.classes()).toContain("text-sm");
     expect(autocompleteInput.classes()).toContain("custom-control");
     await autocompleteInput.trigger("focus");
@@ -381,8 +380,8 @@ describe("Balsa public components", () => {
     const listbox = wrapper.get('[role="listbox"]');
     const options = wrapper.findAll('[role="option"]');
     expect(listbox.classes()).toContain("space-y-1");
-    expect(options[0].classes()).toContain("h-10");
-    expect(options[1].classes()).toContain("h-10");
+    expect(options[0].classes()).toContain("min-h-8");
+    expect(options[1].classes()).toContain("min-h-8");
     expect(options[0].classes()).toContain("bg-balsa-selected/80");
     expect(options[0].text()).toContain("Palette Ember");
     expect(options[0].attributes("aria-selected")).toBe("true");
@@ -818,7 +817,7 @@ describe("Balsa public components", () => {
     const switchControl = mount(Switch, {
       props: { id: "compact-switch", label: "Switch", size: "sm", rounded: "none" },
     });
-    expect(switchControl.get('[data-balsa="switch-control"]').classes()).toEqual(expect.arrayContaining(["h-6", "rounded-none"]));
+    expect(switchControl.get('[data-balsa="switch-control"]').classes()).toEqual(expect.arrayContaining(["h-5", "rounded-none"]));
 
     const tabs = mount(Tabs, {
       props: {
@@ -934,10 +933,10 @@ describe("Balsa public components", () => {
       "shadow-balsa-control",
     ]));
     expect(navbar.get("nav").classes()).toEqual(expect.arrayContaining([
-      "h-[3.75rem]",
-      "px-5",
-      "sm:px-8",
-      "lg:px-12",
+      "h-14",
+      "px-4",
+      "sm:px-6",
+      "lg:px-8",
     ]));
     expect(navbar.get("nav > ul").classes()).toContain("justify-end");
     expect(navbar.get("nav").attributes("style")).toContain("max-width: 90rem");
@@ -1215,6 +1214,9 @@ describe("Balsa public components", () => {
       "bg-balsa-secondary",
       "text-balsa-secondary-foreground",
     ]));
+    expect(solid.get("#solid-modal-title").classes()).toEqual(
+      expect.arrayContaining(["font-balsa-title", "text-lg", "leading-none"]),
+    );
     expect(solid.get("#solid-modal-description").classes()).toContain("text-current/80");
 
     const soft = mount(Modal, {
@@ -1277,7 +1279,7 @@ describe("Balsa public components", () => {
     expect(button.classes()).toEqual(expect.arrayContaining([
       "bg-balsa-accent",
       "text-balsa-accent-foreground",
-      "h-12",
+      "h-10",
       "rounded-full",
       "cursor-pointer",
     ]));
@@ -1302,8 +1304,8 @@ describe("Balsa public components", () => {
     expect(button.classes()).toEqual(expect.arrayContaining([
       "cursor-pointer",
       "bg-transparent",
-      "h-9",
-      "w-9",
+      "h-8",
+      "w-8",
     ]));
     expect(button.get("i").classes()).toContain("mdi-bookmark-outline");
 
@@ -1399,12 +1401,12 @@ describe("Balsa public components", () => {
     expect(wrapper.get('[data-balsa="collapsible"]').classes()).toEqual(
       expect.not.arrayContaining(["overflow-hidden", "rounded-lg"]),
     );
-    expect(content.classes()).toEqual(expect.not.arrayContaining(["border-t", "py-3"]));
+    expect(content.classes()).toEqual(expect.not.arrayContaining(["border-t", "py-2.5"]));
 
     await trigger.trigger("click");
     expect(wrapper.emitted("update:modelValue")?.at(-1)).toEqual([true]);
     await wrapper.setProps({ modelValue: true });
-    expect(content.classes()).toEqual(expect.arrayContaining(["py-3"]));
+    expect(content.classes()).toEqual(expect.arrayContaining(["py-2.5"]));
     expect(content.classes()).toEqual(expect.not.arrayContaining(["border-t"]));
   });
 
@@ -1756,7 +1758,7 @@ describe("Balsa public components", () => {
     ]));
     expect(wrapper.get("h3").classes()).toContain("m-0");
     expect(wrapper.get("[data-balsa-alert-close]").classes()).toEqual(
-      expect.arrayContaining(["border-0", "size-9", "text-xl", "hover:bg-current/15"]),
+      expect.arrayContaining(["border-0", "size-8", "text-lg", "hover:bg-current/15"]),
     );
     await wrapper.get("[data-balsa-alert-close]").trigger("click");
     expect(wrapper.emitted("update:modelValue")?.[0]).toEqual([false]);
@@ -1891,7 +1893,7 @@ describe("Balsa public components", () => {
     ]));
     expect(wrapper.get("h3").classes()).toContain("m-0");
     expect(wrapper.get("[data-balsa-toast-close]").classes()).toEqual(
-      expect.arrayContaining(["border-0", "size-9", "text-xl", "hover:bg-balsa-muted"]),
+      expect.arrayContaining(["border-0", "size-8", "text-lg", "hover:bg-balsa-muted"]),
     );
     await wrapper.get("[data-balsa-toast-action] button").trigger("click");
     await wrapper.get("[data-balsa-toast-close]").trigger("click");
@@ -2652,11 +2654,95 @@ describe("Balsa public components", () => {
     });
     expect(wrapper.get("iframe").attributes("title")).toBe("Interface placeholder");
     expect(wrapper.get("iframe").attributes("style")).toContain("width: 390px");
-    await wrapper.get('button[aria-label="Open fullscreen preview"]').trigger("click");
+    const fullscreenButton = wrapper.get(
+      'button[aria-label="Open fullscreen preview"]',
+    );
+    expect(fullscreenButton.attributes()).toMatchObject({
+      "data-variant": "solid",
+      "data-color": "primary",
+    });
+    expect(fullscreenButton.classes()).toEqual(
+      expect.arrayContaining([
+        "border-balsa-border",
+        "bg-balsa-background/90",
+        "text-balsa-foreground",
+        "shadow-balsa-lg",
+      ]),
+    );
+    expect(fullscreenButton.classes()).not.toContain("ring-2");
+    await fullscreenButton.trigger("click");
     expect(document.body.querySelector('[data-balsa="preview-fullscreen"]')).not.toBeNull();
     document.body.querySelector<HTMLButtonElement>('button[aria-label="Close fullscreen preview"]')?.click();
     await flushPromises();
     expect(document.body.querySelector('[data-balsa="preview-fullscreen"]')).toBeNull();
+  });
+
+  it("scales an exact logical viewport inside a fluid aspect-ratio canvas", () => {
+    const wrapper = mount(Preview, {
+      props: {
+        title: "Desktop interface placeholder",
+        viewport: "fixed",
+        width: 1600,
+        height: 900,
+        aspectRatio: 16 / 9,
+        fullscreen: false,
+      },
+      slots: { default: "<div>Scrollable desktop content placeholder</div>" },
+    });
+
+    expect(
+      wrapper.get<HTMLElement>('[data-balsa="preview-workbench"]').element.style
+        .aspectRatio,
+    ).toBe(String(16 / 9));
+    expect(wrapper.get("iframe").attributes("style")).toContain("width: 1600px");
+    expect(wrapper.get("iframe").attributes("style")).toContain("height: 900px");
+    expect(wrapper.get("iframe").attributes("scrolling")).toBe("auto");
+  });
+
+  it("supports natural-height viewport presets and forwards frame scrolling", async () => {
+    const scrollOwner = document.createElement("div");
+    scrollOwner.dataset.balsaPreviewScrollOwner = "";
+    document.body.append(scrollOwner);
+    const wrapper = mount(Preview, {
+      attachTo: scrollOwner,
+      props: {
+        title: "Natural interface placeholder",
+        viewport: "desktop",
+        autoHeight: true,
+        fullscreen: false,
+      },
+      slots: {
+        default: "<div>Natural preview content placeholder</div>",
+      },
+    });
+    const preview = wrapper.get<HTMLElement>('[data-balsa="preview"]');
+    const frame = wrapper.get<HTMLIFrameElement>("iframe");
+    expect(preview.attributes()).toMatchObject({
+      "data-viewport": "desktop",
+      "data-auto-height": "true",
+    });
+    expect(preview.element.style.maxWidth).toBe("1600px");
+    expect(frame.attributes("scrolling")).toBe("no");
+
+    await frame.trigger("load");
+    await flushPromises();
+    expect(frame.element.contentDocument?.documentElement.style.overflow).toBe(
+      "hidden",
+    );
+    frame.element.contentDocument?.dispatchEvent(
+      new WheelEvent("wheel", {
+        cancelable: true,
+        deltaY: 180,
+      }),
+    );
+    expect(wrapper.emitted("previewScroll")).toEqual([[180]]);
+    expect(scrollOwner.scrollTop).toBe(180);
+
+    await wrapper.setProps({ viewport: "mobile" });
+    expect(preview.attributes("data-viewport")).toBe("mobile");
+    expect(preview.element.style.maxWidth).toBe("390px");
+    wrapper.unmount();
+    scrollOwner.remove();
   });
 
   it("renders Carousel empty state without inactive controls", () => {

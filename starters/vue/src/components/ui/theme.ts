@@ -197,7 +197,7 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
   glassmorphism: {
     typography: "modern",
     shape: "soft",
-    density: "balanced",
+    density: "compact",
     border: "subtle",
     elevation: "floating",
     motion: "fluid",
@@ -1095,19 +1095,19 @@ function radiusTokens(option: ThemeShapeOption): NonNullable<ThemeTokens["radius
     return { control: 4, surface: 8, panel: 12, badge: 4, toggle: 4, codeControl: 4 };
   }
   if (option === "soft") {
-    return { control: 14, surface: 22, panel: 32, badge: 9999, toggle: 9999, codeControl: 8 };
+    return { control: 12, surface: 18, panel: 24, badge: 9999, toggle: 9999, codeControl: 8 };
   }
-  return { control: 8, surface: 16, panel: 24, badge: 9999, toggle: 9999, codeControl: 8 };
+  return { control: 8, surface: 14, panel: 18, badge: 9999, toggle: 9999, codeControl: 8 };
 }
 
 function spacingTokens(option: ThemeDensityOption): NonNullable<ThemeTokens["spacing"]> {
   if (option === "compact") {
-    return { controlInline: 16, densityCompact: 6, densityDefault: 10, densityComfortable: 14 };
+    return { controlInline: 12, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
   }
   if (option === "comfortable") {
-    return { controlInline: 24, densityCompact: 10, densityDefault: 16, densityComfortable: 20 };
+    return { controlInline: 20, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
   }
-  return { controlInline: 20, densityCompact: 8, densityDefault: 12, densityComfortable: 16 };
+  return { controlInline: 16, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
 }
 
 function borderTokens(

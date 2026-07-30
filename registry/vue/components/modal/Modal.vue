@@ -66,14 +66,14 @@ const viewportClasses = computed(() => [
     ? "items-stretch justify-stretch p-0"
     : props.presentation === "sheet"
     ? "items-end justify-center p-0"
-    : "items-center justify-center p-5",
+    : "items-center justify-center p-4",
 ]);
 
 const dialogSizeClasses: Readonly<Record<ModalSize, string>> = {
-  sm: "max-w-md p-5 sm:p-6",
-  md: "max-w-lg p-6 sm:p-8",
-  lg: "max-w-2xl p-6 sm:p-8",
-  full: "h-full max-w-none p-5 sm:p-6",
+  sm: "max-w-md p-5",
+  md: "max-w-lg p-6",
+  lg: "max-w-2xl p-6",
+  full: "h-full max-w-none p-5",
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",
@@ -126,8 +126,8 @@ const panelClasses = computed(() => [
         props.presentation === "sheet"
           ? [
               props.contained
-                ? "max-h-[calc(100%-2rem)] p-5 pb-6"
-                : "max-h-[calc(100dvh-2rem)] p-5 pb-6 sm:p-8",
+                ? "max-h-[calc(100%-2rem)] p-5"
+                : "max-h-[calc(100dvh-2rem)] p-5 sm:p-6",
               "overflow-auto border-b-0",
               topRoundedClasses[props.rounded],
             ]
@@ -159,16 +159,20 @@ const closeButtonClasses = computed(() =>
   props.presentation === "fullscreen"
     ? "absolute right-6 top-6 z-10 flex size-11 cursor-pointer items-center justify-center rounded-full border border-balsa-border bg-balsa-surface/70 text-balsa-surface-foreground shadow-balsa-surface backdrop-blur-xl transition-colors hover:bg-balsa-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
     : props.variant === "solid"
-    ? "absolute right-4 top-4 flex size-10 cursor-pointer items-center justify-center rounded-md text-current/80 transition-colors hover:bg-current/10 hover:text-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
-    : "absolute right-4 top-4 flex size-10 cursor-pointer items-center justify-center rounded-md text-balsa-muted-foreground transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
+    ? "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-current/80 transition-colors hover:bg-current/10 hover:text-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
+    : "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-balsa-muted-foreground transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
 );
+const closeIconClasses = computed(() => [
+  "mdi mdi-close",
+  props.presentation === "fullscreen" ? "text-2xl" : "text-xl",
+]);
 const headerClasses = computed(() =>
-  props.presentation === "fullscreen" ? "sr-only" : "mb-6 pr-12",
+  props.presentation === "fullscreen" ? "sr-only" : "mb-5 pr-10",
 );
 const eyebrowClasses = computed(() =>
   props.variant === "solid"
-    ? "mb-3 block text-current/75"
-    : "mb-3 block text-balsa-accent",
+    ? "mb-2 block text-current/75"
+    : "mb-2 block text-balsa-accent",
 );
 const descriptionClasses = computed(() =>
   props.variant === "solid"
@@ -358,14 +362,19 @@ onBeforeUnmount(() => {
             :aria-label="props.closeLabel"
             @click="closeModal"
           >
-            <i class="mdi mdi-close text-3xl" aria-hidden="true"></i>
+            <i :class="closeIconClasses" aria-hidden="true"></i>
           </button>
 
           <header :class="headerClasses">
             <small :class="eyebrowClasses">
               <slot name="eyebrow">Modal</slot>
             </small>
-            <h3 :id="titleId" class="mb-3">{{ props.title }}</h3>
+            <h3
+              :id="titleId"
+              class="mb-2 font-balsa-title text-lg font-semibold leading-none tracking-tight"
+            >
+              {{ props.title }}
+            </h3>
             <p
               v-if="props.description"
               :id="descriptionId"
@@ -379,7 +388,7 @@ onBeforeUnmount(() => {
             <slot />
           </div>
 
-          <footer v-if="$slots.footer" class="mt-8 flex flex-wrap gap-3">
+          <footer v-if="$slots.footer" class="mt-6 flex flex-wrap gap-2">
             <slot name="footer" :close="closeModal" />
           </footer>
         </section>

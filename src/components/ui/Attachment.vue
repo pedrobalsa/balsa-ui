@@ -59,9 +59,9 @@ const describedBy = computed(() => [
   props.status === "unvalidated" || localError.value ? `${props.id}-error` : "",
 ].filter(Boolean).join(" ") || undefined);
 const sizeClasses: Readonly<Record<AttachmentSize, string>> = {
-  sm: "min-h-24 p-3 text-sm",
-  md: "min-h-32 p-5 text-sm",
-  lg: "min-h-40 p-7 text-base",
+  sm: "min-h-20 p-3 text-sm",
+  md: "min-h-24 p-4 text-sm",
+  lg: "min-h-32 p-5 text-sm",
 };
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const classes = computed(() => mergeClasses("space-y-3", attrs.class));

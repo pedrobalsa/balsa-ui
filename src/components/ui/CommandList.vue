@@ -150,7 +150,7 @@ function handleListboxKeydown(event: KeyboardEvent): void {
 
 function itemClasses(item: CommandItem, index: number): string[] {
   return [
-    "flex min-h-10 w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm outline-none transition-colors",
+    "flex min-h-9 w-full items-center gap-2.5 rounded-md px-3 py-1.5 text-left text-sm outline-none transition-colors",
     index === activeIndex.value
       ? "bg-balsa-selected text-balsa-selected-foreground"
       : "text-inherit",
@@ -177,7 +177,7 @@ watch([query, items], () => {
 <template>
   <div data-balsa="command-list" :data-dropdown="props.dropdown || undefined" :class="rootClasses">
     <div :data-shadow="props.dropdown ? props.shadow : undefined" :class="queryClasses">
-      <i class="mdi mdi-magnify text-xl text-balsa-muted-foreground" aria-hidden="true"></i>
+      <i class="mdi mdi-magnify text-lg text-balsa-muted-foreground" aria-hidden="true"></i>
       <input
         v-model="query"
         type="search"
@@ -189,7 +189,7 @@ watch([query, items], () => {
         aria-autocomplete="list"
         :placeholder="props.placeholder"
         autocomplete="off"
-        class="h-12 min-w-0 flex-1 bg-transparent text-balsa-input-foreground outline-none placeholder:text-balsa-muted-foreground"
+        class="h-10 min-w-0 flex-1 bg-transparent text-sm text-balsa-input-foreground outline-none placeholder:text-balsa-muted-foreground"
         @click="openList"
         @focus="openList"
         @input="openList"

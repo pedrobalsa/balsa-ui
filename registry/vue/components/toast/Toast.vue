@@ -177,7 +177,7 @@ const descriptionClasses = computed(() => [
 const contentPaddingClasses = computed(() => props.dismissible ? "pr-9" : "");
 const closeClasses = computed(() =>
   mergeClasses(
-    "absolute right-2 top-2 size-9 min-h-0 min-w-0 border-0 bg-transparent p-0 text-xl shadow-none",
+    "absolute right-2 top-2 size-8 min-h-0 min-w-0 border-0 bg-transparent p-0 text-lg shadow-none",
     isTintedVariant.value
       ? "text-current hover:bg-current/15 active:bg-current/25"
       : "text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground active:bg-balsa-muted",

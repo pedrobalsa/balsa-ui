@@ -86,8 +86,8 @@ const colorClasses: Readonly<Record<ActionColor, Record<CardVariant, string[]>>>
 const paddingClasses: Record<CardPadding, string> = {
   none: "p-0",
   sm: "p-4",
-  md: "p-5 sm:p-6",
-  lg: "p-7 sm:p-8",
+  md: "p-5",
+  lg: "p-6",
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",

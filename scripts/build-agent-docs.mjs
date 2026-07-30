@@ -28,6 +28,7 @@ const publicPagePaths = [
   "/docs/source-updates",
   "/docs/changelog",
   "/tools/background-studio",
+  "/templates",
 ];
 
 function assertGeneratedTarget(target) {

@@ -55,6 +55,20 @@ Primary, secondary, accent, and destructive actions each define their foreground
 
 Shape, spacing, and depth are theme-owned Tailwind values. Public elevation uses `--balsa-shadow-sm`, `--balsa-shadow-md`, and `--balsa-shadow-lg`; the control, surface, and panel variables remain compatibility aliases. Components expose typed shadow levels when they own elevation, while `auto` retains the recipe and `--balsa-shadow-detail` remains internal.
 
+## Density and size rhythm
+
+Balsa uses a compact-first 4px rhythm aligned with common application-interface proportions. All built-in themes default to Compact; Balanced and Comfortable remain available as deliberate custom-theme choices.
+
+| Density recipe | Action control height | Control inline space | Table row block space |
+| --- | --- | --- | --- |
+| Compact | 32px | 12px | 4px |
+| Balanced | 36px | 16px | 8px |
+| Comfortable | 40px | 20px | 12px |
+
+Component size props preserve relative hierarchy within that rhythm: `sm` is the default application size, `md` adds breathing room without increasing body-copy scale, and `lg` or `xl` are intentional emphasis sizes. Standard buttons, links, toggles, and text fields therefore keep 14px labels through their normal application sizes; larger text begins only at display-oriented presets. Cards and overlays use restrained 16px, 20px, and 24px content insets instead of responsive padding inflation.
+
+The documentation and application shell follows the same rhythm with responsive 16px, 24px, and 32px page gutters.
+
 ## Theme material layer
 
 The public `--balsa-color-*` variables remain palette-owned. A design theme derives internal `--balsa-material-*` values from them for standard, raised, muted, action, input, selected, inverse, code, border, and overlay materials. Glassmorphism obtains its depth from translucent fills plus backdrop blur: standard, strong, input, and semantic action rims are low-opacity material colors, and shadows provide only restrained outer separation. It intentionally avoids inset shadows and universal painted gradients, allowing the same material recipe to remain glass-like over Light, Dark, and custom palette backgrounds. The Button `glass` variant uses theme-owned `--balsa-material-glass-control*` recipes for its translucent body, interaction states, and restrained rim; `outline` remains the higher-boundary action treatment. Documentation-workbench layers use the same opacity-led system. The playground's preview canvas remains opaque while its explicit theme and palette boundary follows the active documentation selectors. Consumers should normally customize palette roles or select a theme instead of overriding material variables directly.

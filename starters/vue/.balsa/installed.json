@@ -4,7 +4,7 @@
     "button": {
       "registry": "@balsa/button",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-76e2613b80f92b499591c2479a4aeb9361f7ebd91358d47c5ffc1a427e254dba",
+      "sourceHash": "sha256-51bf3dd43c50e0d98801b955f59706fa9f13483c5dc57797a01ff9457d958328",
       "targetPath": "src/components/ui/Button.vue",
       "files": [
         "src/components/ui/Button.vue",
@@ -15,7 +15,7 @@
     "input": {
       "registry": "@balsa/input",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-45be74207ba938488b2c1528b84e49066d0c38ecee0e5c8071986088667478f5",
+      "sourceHash": "sha256-d5f15c74773953243d1e9a71c8a4490e0848f05435719765eb0ba62f53beb8c4",
       "targetPath": "src/components/ui/Input.vue",
       "files": [
         "src/components/ui/Input.vue",
@@ -26,7 +26,7 @@
     "modal": {
       "registry": "@balsa/modal",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-cf70a01a0f99cbf2bb1c44bb2d5c0fc63ce2634ac5ac6dd916de5313c44e6c51",
+      "sourceHash": "sha256-2223300ac6c025f9c1da7ece8f5d26e3a499a0d961f76c6bcffd339fac186f5c",
       "targetPath": "src/components/ui/Modal.vue",
       "files": [
         "src/components/ui/Modal.vue"
@@ -44,7 +44,7 @@
     "textarea": {
       "registry": "@balsa/textarea",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-e752ff334c178f93ead606bf307b1b125aa410f13dacdeef52d40599ad99ebc8",
+      "sourceHash": "sha256-ab4692253298243e5cc0a4896ce1ae03a45d05696bd2e4bc42c97a3ffac0c5e6",
       "targetPath": "src/components/ui/Textarea.vue",
       "files": [
         "src/components/ui/Textarea.vue",
@@ -75,7 +75,7 @@
     "balsa-theme": {
       "registry": "@balsa/balsa-theme",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-1a1f4a8b002a30332951baeda38eded2782b6fae6ec6d05e936d707402cc44fa",
+      "sourceHash": "sha256-cf26dacc2f605de4b964c0466bd0b9f5877cfd1589a4d2b805758412f084d024",
       "targetPath": "src/styles/balsa-theme.css",
       "files": [
         "src/styles/balsa-theme.css",

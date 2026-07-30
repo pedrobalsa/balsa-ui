@@ -5,10 +5,11 @@
   "category": "component",
   "status": "beta",
   "version": "0.1.0",
-  "purpose": "Render Vue content in a natural or exact logical viewport that scales to a bounded workbench.",
+  "purpose": "Render Vue content in an isolated responsive, preset, or exact logical viewport with bounded or content-preserving height.",
   "useFor": [
     "Responsive component demonstrations",
     "Device-size simulations",
+    "Full-page template review",
     "Fullscreen design review"
   ],
   "avoidFor": [
@@ -18,19 +19,33 @@
   ],
   "states": [
     "responsive",
+    "desktop",
+    "tablet",
+    "mobile",
     "fixed scaled",
+    "natural height",
     "fullscreen"
   ],
   "accessibility": [
     "The isolated frame has a required title.",
+    "Natural-height previews disable iframe scrolling, forward wheel or touch input to the nearest marked or scrollable owner, and emit the delta for observation.",
+    "The fullscreen trigger uses a near-opaque semantic background/foreground pair, thin boundary, and elevation so it remains distinguishable over arbitrary preview content.",
     "Fullscreen is a labelled chromeless dialog with one close action.",
     "Palette and theme state synchronize into the frame document."
   ],
   "variants": [
     "responsive",
+    "desktop",
+    "tablet",
+    "mobile",
     "fixed"
   ],
   "sizes": [
+    "responsive width",
+    "16:9 or consumer-defined aspect ratio",
+    "1600px desktop maximum",
+    "768px tablet maximum",
+    "390px mobile maximum",
     "consumer-defined logical width and height"
   ],
   "tokens": [
@@ -41,13 +56,16 @@
   ],
   "commonMistakes": [
     "Treating CSS transform scale as logical viewport width without iframe isolation.",
+    "Nesting an additional iframe scrollbar around an autoHeight preview.",
     "Omitting a descriptive frame title.",
     "Placing essential controls only in fullscreen."
   ],
   "examples": [
     "Responsive canvas",
-    "Desktop viewport",
-    "Mobile viewport"
+    "Natural-height desktop template",
+    "Tablet viewport",
+    "Mobile viewport",
+    "Fixed scaled viewport"
   ],
   "publicApi": {
     "props": [
@@ -55,13 +73,19 @@
       "viewport",
       "width",
       "height",
+      "aspectRatio",
+      "maxWidth",
       "maxHeight",
+      "autoHeight",
       "fit",
       "edgeToEdge",
       "fullscreen",
       "fullscreenLabel",
       "closeLabel",
       "theme"
+    ],
+    "events": [
+      "previewScroll"
     ],
     "slots": [
       "default",

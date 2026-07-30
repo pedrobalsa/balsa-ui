@@ -139,10 +139,10 @@ const itemsAlignmentClasses: Readonly<Record<NavbarItemsAlignment, string>> = {
 };
 const navigationLayoutClasses = computed(() =>
   resolvedType.value === "floating" && resolvedFloatingLayout.value === "inset"
-    ? "relative flex h-[3.75rem] items-center gap-5 px-2 sm:px-2 lg:px-6 xl:px-12"
+    ? "relative flex h-14 items-center gap-4 px-2 sm:px-2 lg:px-6 xl:px-8"
     : resolvedType.value === "floating"
-      ? "relative flex h-[3.75rem] items-center gap-5 px-5 sm:px-8 lg:px-12"
-      : "site-container relative flex h-16 items-center gap-5",
+      ? "relative flex h-14 items-center gap-4 px-4 sm:px-6 lg:px-8"
+      : "site-container relative flex h-14 items-center gap-4",
 );
 const desktopItemsClasses = computed(() => [
   "hidden h-full flex-1 items-stretch lg:flex",
@@ -175,7 +175,7 @@ const mobilePanelClasses = computed(() => [
     : "grid-rows-[0fr] opacity-0",
 ]);
 const mobileMenuIconClasses = computed(() => [
-  "mdi text-2xl",
+  "mdi text-xl",
   mobileOpen.value ? "mdi-close" : "mdi-menu",
 ]);
 const containerClasses = computed(() => [
@@ -362,13 +362,13 @@ onBeforeUnmount(() => {
         </NavbarExpandableItem>
       </ul>
 
-      <div v-if="hasDesktopActions" class="hidden min-w-40 shrink-0 items-center justify-end gap-3 lg:flex">
+      <div v-if="hasDesktopActions" class="hidden min-w-40 shrink-0 items-center justify-end gap-2 lg:flex">
         <slot name="actions" />
       </div>
 
       <button
         type="button"
-        class="ml-auto flex h-11 w-11 cursor-pointer items-center justify-center rounded-md text-balsa-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring lg:hidden"
+        class="ml-auto flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-balsa-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring lg:hidden"
         :aria-expanded="mobileOpen"
         aria-label="Open navigation menu"
         @click="toggleMobileMenu"
@@ -380,12 +380,12 @@ onBeforeUnmount(() => {
 
     <div :class="mobilePanelClasses" class="lg:hidden">
       <nav aria-label="Mobile navigation" class="min-h-0 overflow-hidden">
-        <ul class="flex flex-col px-5 py-5 sm:px-8">
+        <ul class="flex flex-col px-4 py-3 sm:px-6">
           <li v-for="item in props.items" :key="item.link" class="border-b border-balsa-border last:border-b-0">
-            <div class="flex items-center justify-between gap-3 py-4">
+            <div class="flex items-center justify-between gap-3 py-3">
               <a
                 :href="item.link"
-                class="font-balsa-title text-xl font-medium text-balsa-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
+                class="font-balsa-title text-lg font-medium text-balsa-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
                 @click="navigate(item)"
               >
                 {{ item.title }}
@@ -393,7 +393,7 @@ onBeforeUnmount(() => {
               <button
                 v-if="hasLinks(item)"
                 type="button"
-                class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-balsa-foreground hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
+                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-balsa-foreground hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
                 :aria-expanded="expandedMobileItem === item.link"
                 :aria-label="`Open ${item.title} items`"
                 @click="toggleMobileItem(item)"
@@ -402,7 +402,7 @@ onBeforeUnmount(() => {
               </button>
             </div>
             <div v-if="hasLinks(item)" :class="mobileSubmenuClasses(item)">
-              <ul class="min-h-0 space-y-4 overflow-hidden pb-5 pl-2">
+              <ul class="min-h-0 space-y-3 overflow-hidden pb-4 pl-2">
                 <li v-for="link in item.links" :key="link.link">
                   <a
                     :href="link.link"

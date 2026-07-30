@@ -221,13 +221,13 @@ const descriptionClasses = computed(() => [
 ]);
 const closeClasses = computed(() =>
   mergeClasses(
-    "absolute right-2 top-2 size-9 min-h-0 min-w-0 border-0 bg-transparent p-0 text-xl shadow-none",
+    "absolute right-2 top-2 size-8 min-h-0 min-w-0 border-0 bg-transparent p-0 text-lg shadow-none",
     isColoredTextVariant.value
       ? "text-current hover:bg-current/15 active:bg-current/25"
       : "text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground active:bg-balsa-muted",
   ),
 );
-const contentPaddingClasses = computed(() => canDismiss.value ? "pr-9" : "");
+const contentPaddingClasses = computed(() => canDismiss.value ? "pr-8" : "");
 
 function hasModelBinding(): boolean {
   const vnodeProps = instance?.vnode.props;

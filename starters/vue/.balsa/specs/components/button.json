@@ -46,7 +46,7 @@
       "fab"
     ],
     "brutalismGeometry": "The default rounded shape resolves to rounded-none in Brutalism; pill, FAB, and consumer radius classes remain deliberate overrides.",
-    "fabBehavior": "Render a square, circular, padding-free icon action at deliberately distinct 40px, 56px, 72px, and 96px presets with proportionally scaled icons; consumers own floating placement and must provide an accessible name.",
+    "fabBehavior": "Render a square, circular, padding-free icon action on the shared 32px, 36px, 40px, and 48px control scale with proportionally sized icons; consumers own floating placement and must provide an accessible name.",
     "loadingBehavior": "Disable interaction, expose aria-busy, and replace the leading icon with a spinner."
   },
   "accessibility": [

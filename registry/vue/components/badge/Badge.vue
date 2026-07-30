@@ -36,8 +36,8 @@ const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const sizeClasses: Readonly<Record<BadgeSize, string>> = {
   sm: "px-2 py-0.5 text-xs",
-  md: "px-3 py-1 text-sm",
-  lg: "px-4 py-1.5 text-base",
+  md: "px-2.5 py-0.5 text-xs",
+  lg: "px-3 py-1 text-sm",
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",

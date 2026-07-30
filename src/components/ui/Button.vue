@@ -50,10 +50,10 @@ const resolvedShadow = computed<Shadow>(() =>
 );
 
 const sizeClasses: Record<ButtonSize, string[]> = {
-  sm: ["h-9", "gap-1.5", "text-sm"],
-  md: ["h-11", "gap-2", "text-base"],
-  lg: ["h-12", "gap-2.5", "text-lg"],
-  xl: ["h-14", "gap-3", "text-xl"],
+  sm: ["h-8", "gap-1.5", "text-sm"],
+  md: ["h-9", "gap-2", "text-sm"],
+  lg: ["h-10", "gap-2", "text-sm"],
+  xl: ["h-12", "gap-2.5", "text-base"],
 };
 
 const paddingClasses: Record<
@@ -61,16 +61,16 @@ const paddingClasses: Record<
   Record<ButtonIconPlacement, string>
 > = {
   sm: {
+    none: "px-3",
+    prefix: "pl-2.5 pr-3",
+    suffix: "pl-3 pr-2.5",
+    both: "px-2.5",
+  },
+  md: {
     none: "px-4",
     prefix: "pl-3 pr-4",
     suffix: "pl-4 pr-3",
     both: "px-3",
-  },
-  md: {
-    none: "px-5",
-    prefix: "pl-4 pr-5",
-    suffix: "pl-5 pr-4",
-    both: "px-4",
   },
   lg: {
     none: "px-6",
@@ -79,18 +79,18 @@ const paddingClasses: Record<
     both: "px-5",
   },
   xl: {
-    none: "px-7",
-    prefix: "pl-6 pr-7",
-    suffix: "pl-7 pr-6",
-    both: "px-6",
+    none: "px-8",
+    prefix: "pl-7 pr-8",
+    suffix: "pl-8 pr-7",
+    both: "px-7",
   },
 };
 
 const iconSizeClasses: Record<ButtonSize, string> = {
   sm: "text-base",
-  md: "text-lg",
-  lg: "text-xl",
-  xl: "text-2xl",
+  md: "text-base",
+  lg: "text-lg",
+  xl: "text-xl",
 };
 
 const shapeClasses: Record<ButtonShape, string[]> = {
@@ -100,17 +100,17 @@ const shapeClasses: Record<ButtonShape, string[]> = {
 };
 
 const fabSizeClasses: Record<ButtonSize, string[]> = {
-  sm: ["h-10", "w-10"],
-  md: ["h-14", "w-14"],
-  lg: ["h-18", "w-18"],
-  xl: ["h-24", "w-24"],
+  sm: ["h-8", "w-8"],
+  md: ["h-9", "w-9"],
+  lg: ["h-10", "w-10"],
+  xl: ["h-12", "w-12"],
 };
 
 const fabIconSizeClasses: Record<ButtonSize, string> = {
-  sm: "text-xl",
-  md: "text-2xl",
-  lg: "text-3xl",
-  xl: "text-4xl",
+  sm: "text-base",
+  md: "text-lg",
+  lg: "text-xl",
+  xl: "text-2xl",
 };
 
 const leadingIcon = computed(() =>

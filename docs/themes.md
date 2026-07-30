@@ -52,7 +52,7 @@ export const editorial = defineTheme({
 });
 ```
 
-The seven configurable directions are typography, shape, density, border, elevation, motion, and material.
+The seven configurable directions are typography, shape, density, border, elevation, motion, and material. Every built-in theme starts Compact: 32px application controls, 12px control insets, and a 4px spacing rhythm. Balanced and Comfortable are opt-in recipes for products that deliberately need more air.
 
 The Glass material automatically applies translucent, backdrop-filtered surfaces to navigation, menus, dialogs, selectors, and other overlay-capable components.
 

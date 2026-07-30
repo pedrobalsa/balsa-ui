@@ -107,7 +107,7 @@ const groupClasses = computed(() => [
 const controlClasses = computed(() =>
   mergeClasses(
     "peer min-w-0 flex-1 border-0 bg-transparent font-balsa-body text-balsa-input-foreground outline-none placeholder:text-balsa-muted-foreground disabled:text-balsa-disabled-foreground",
-    props.size === "sm" ? "h-10 px-3 text-sm" : "h-12 px-4 text-base",
+    props.size === "sm" ? "h-8 px-3 text-sm" : "h-9 px-3 text-sm",
     props.layout === "stacked" ? "w-full" : "",
     isDisabled.value
       ? props.loading
@@ -115,14 +115,14 @@ const controlClasses = computed(() =>
         : "cursor-not-allowed"
       : "cursor-text",
     stateIcon.value && !hasEnd.value
-      ? props.size === "sm" ? "pr-10" : "pr-12"
+      ? "pr-10"
       : "",
     attrs.class,
   ),
 );
 const addonBaseClasses = computed(() => [
   "flex shrink-0 items-center gap-2 bg-balsa-muted px-3 text-balsa-muted-foreground",
-  props.size === "sm" ? "min-h-10 text-sm" : "min-h-12 text-base",
+  props.size === "sm" ? "min-h-8 text-sm" : "min-h-9 text-sm",
 ]);
 const startClasses = computed(() => [
   addonBaseClasses.value,

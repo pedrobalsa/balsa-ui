@@ -1,7 +1,7 @@
 export const fieldLabelClasses =
-  "mb-2 block text-sm font-bold leading-snug text-balsa-foreground";
+  "mb-1.5 block text-sm font-medium leading-snug text-balsa-foreground";
 
-export const fieldHintClasses = "mt-2 block text-sm text-balsa-muted-foreground";
+export const fieldHintClasses = "mt-1.5 block text-sm text-balsa-muted-foreground";
 
 export const textControlClasses =
   "w-full rounded-lg border font-balsa-body text-balsa-input-foreground outline-none transition-[border-color,box-shadow,opacity] placeholder:text-balsa-muted-foreground focus:border-balsa-focus-ring focus:ring-2 focus:ring-balsa-focus-ring/30 disabled:border-balsa-border disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground";
@@ -10,7 +10,7 @@ export const textControlPopupClasses =
   "max-h-64 overflow-auto rounded-lg border p-1 text-balsa-surface-elevated-foreground shadow-balsa-surface transition-[opacity,transform,visibility] duration-200";
 
 export const textControlOptionClasses =
-  "flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors";
+  "flex min-h-8 w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left text-sm transition-colors";
 
 export const choiceInputClasses =
   "shrink-0 cursor-pointer appearance-none border outline-none transition-[border-color,background-color,box-shadow,opacity] focus-visible:border-balsa-focus-ring focus-visible:ring-2 focus-visible:ring-balsa-focus-ring/30 disabled:cursor-not-allowed disabled:border-balsa-border disabled:bg-balsa-disabled";
@@ -53,8 +53,8 @@ export interface AnchoredPopupPosition {
 }
 
 const textControlSizeClasses: Record<FieldSize, string[]> = {
-  sm: ["h-10", "px-3", "text-sm"],
-  md: ["h-12", "px-4", "text-base"],
+  sm: ["h-8", "px-3", "text-sm"],
+  md: ["h-9", "px-3", "text-sm"],
 };
 
 const textareaResizeClasses: Readonly<Record<TextareaResize, string>> = {
@@ -94,7 +94,7 @@ export function getTextControlClasses(
     ...(status === "unvalidated"
       ? ["border-balsa-destructive", "focus:border-balsa-destructive", "focus:ring-balsa-destructive/30"]
       : []),
-    ...(hasAdornment ? [resolvedSize === "sm" ? "pr-10" : "pr-12"] : []),
+    ...(hasAdornment ? ["pr-10"] : []),
   ];
 }
 
@@ -118,10 +118,10 @@ export function getTextareaControlClasses(
   return [
     textControlClasses,
     fieldVariantClasses[variant],
-    "h-auto min-h-0 py-3 leading-6",
+    "h-auto min-h-0 py-2 leading-6",
     roundedClasses[rounded],
     textareaResizeClasses[resizable],
-    size === "sm" ? "px-3 text-sm leading-5" : "px-4 text-base",
+    size === "sm" ? "px-3 text-sm leading-5" : "px-3 text-sm leading-6",
     ...(loading
       ? ["disabled:cursor-progress"]
       : disabled
@@ -131,7 +131,7 @@ export function getTextareaControlClasses(
     ...(status === "unvalidated"
       ? ["border-balsa-destructive", "focus:border-balsa-destructive", "focus:ring-balsa-destructive/30"]
       : []),
-    ...(hasAdornment ? ["pr-12"] : []),
+    ...(hasAdornment ? ["pr-10"] : []),
   ];
 }
 

@@ -154,7 +154,7 @@ const iconClasses = computed(() => [
       ? "mdi-chevron-up"
       : "mdi-chevron-down",
   "pointer-events-none absolute top-1/2 -translate-y-1/2",
-  props.size === "sm" ? "right-3 text-lg" : "right-4 text-xl",
+  "right-3 text-lg",
   props.loading ? "text-balsa-info" : getFieldStateColorClass(props.status),
   ...(props.loading ? ["animate-spin"] : []),
 ]);
@@ -452,7 +452,7 @@ onBeforeUnmount(() => {
           role="option"
           :disabled="option.disabled"
           :aria-selected="isOptionSelected(option)"
-          :class="[optionClasses[option.value], 'h-10']"
+          :class="optionClasses[option.value]"
           @pointerenter="activateOption(props.options.indexOf(option))"
           @click="selectOption(option)"
         >

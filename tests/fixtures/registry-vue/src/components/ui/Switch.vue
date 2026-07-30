@@ -50,9 +50,9 @@ const roundedClasses: Readonly<Record<Rounded, string>> = {
 };
 const controlClasses = computed(() => {
   const sizeClasses: Readonly<Record<SwitchSize, string>> = {
-    sm: "h-6 w-10 after:h-4 after:w-4 peer-checked:after:translate-x-4",
-    md: "h-7 w-12 after:h-5 after:w-5 peer-checked:after:translate-x-5",
-    lg: "h-8 w-14 after:h-6 after:w-6 peer-checked:after:translate-x-6",
+    sm: "h-5 w-9 after:h-3 after:w-3 peer-checked:after:translate-x-4",
+    md: "h-6 w-10 after:h-4 after:w-4 peer-checked:after:translate-x-4",
+    lg: "h-7 w-12 after:h-5 after:w-5 peer-checked:after:translate-x-5",
   };
 
   return [
