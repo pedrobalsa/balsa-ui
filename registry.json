@@ -2763,7 +2763,7 @@
       "name": "gradient-background",
       "type": "registry:ui",
       "title": "GradientBackground",
-      "description": "Deterministic single-pass procedural backgrounds with typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
       "files": [
         {
           "path": "src/components/ui/GradientBackground.vue",
@@ -2784,6 +2784,16 @@
           "path": "src/components/ui/gradient-background-shader.ts",
           "type": "registry:lib",
           "target": "src/components/ui/gradient-background-shader.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-effects-shader.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-effects-shader.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-glyphs.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-glyphs.ts"
         },
         {
           "path": "src/components/ui/gradient-background-presets.json",

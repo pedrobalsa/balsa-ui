@@ -406,7 +406,7 @@
       "name": "gradient-background",
       "title": "GradientBackground",
       "category": "component",
-      "description": "Deterministic single-pass procedural backgrounds with typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
       "status": "beta"
     },
     {

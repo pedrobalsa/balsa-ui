@@ -12,6 +12,7 @@ import { useComponentTheme } from "./theme-context";
 import {
   GRADIENT_BACKGROUND_SCRIM_OPACITY,
   applyGradientBackgroundContentContrast,
+  applyGradientBackgroundEffectContrast,
   buildGradientBackgroundFallback,
   hasGradientBackgroundPalette,
   resolveGradientBackgroundConfig,
@@ -23,10 +24,18 @@ import {
   type GradientBackgroundColorMode,
   type GradientBackgroundConfigInput,
   type GradientBackgroundDirectOverrides,
+  type GradientBackgroundEffect,
+  type GradientBackgroundEffectColorMode,
+  type GradientBackgroundEffectShape,
+  type GradientBackgroundPattern,
   type GradientBackgroundPresetName,
   type GradientBackgroundQuality,
 } from "./gradient-background";
 import { GradientBackgroundRenderer } from "./gradient-background-renderer";
+import {
+  createGradientBackgroundGlyphAtlas,
+  type GradientBackgroundGlyphAtlas,
+} from "./gradient-background-glyphs";
 
 const props = withDefaults(
   defineProps<{
@@ -55,7 +64,22 @@ const props = withDefaults(
     noiseOctaves?: number;
     noiseFrequency?: number;
     warpFrequency?: number;
-    ribbonDensity?: number;
+    pattern?: GradientBackgroundPattern;
+    patternDensity?: number;
+    patternCenterX?: number;
+    patternCenterY?: number;
+    patternComplexity?: number;
+    effect?: GradientBackgroundEffect;
+    effectScale?: number;
+    effectAngle?: number;
+    effectMix?: number;
+    effectColorMode?: GradientBackgroundEffectColorMode;
+    effectInk?: string;
+    effectPaper?: string;
+    effectInvert?: boolean;
+    effectLevels?: number;
+    effectShape?: GradientBackgroundEffectShape;
+    effectCharacters?: string;
     quality?: GradientBackgroundQuality;
     paused?: boolean;
     theme?: ThemeInput;
@@ -86,7 +110,22 @@ const props = withDefaults(
     noiseOctaves: undefined,
     noiseFrequency: undefined,
     warpFrequency: undefined,
-    ribbonDensity: undefined,
+    pattern: undefined,
+    patternDensity: undefined,
+    patternCenterX: undefined,
+    patternCenterY: undefined,
+    patternComplexity: undefined,
+    effect: undefined,
+    effectScale: undefined,
+    effectAngle: undefined,
+    effectMix: undefined,
+    effectColorMode: undefined,
+    effectInk: undefined,
+    effectPaper: undefined,
+    effectInvert: undefined,
+    effectLevels: undefined,
+    effectShape: undefined,
+    effectCharacters: undefined,
     quality: undefined,
     paused: false,
     theme: undefined,
@@ -121,6 +160,8 @@ let lastFrameTimestamp = 0;
 let lastRenderTimestamp = 0;
 let elapsedTime = 0;
 let paletteFrame = 0;
+let glyphs: GradientBackgroundGlyphAtlas | undefined;
+let glyphSignature = "";
 
 const directOverrides = computed<GradientBackgroundDirectOverrides>(() => {
   const overrides: GradientBackgroundDirectOverrides = {};
@@ -143,7 +184,22 @@ const directOverrides = computed<GradientBackgroundDirectOverrides>(() => {
   if (props.noiseOctaves !== undefined) overrides.noiseOctaves = props.noiseOctaves;
   if (props.noiseFrequency !== undefined) overrides.noiseFrequency = props.noiseFrequency;
   if (props.warpFrequency !== undefined) overrides.warpFrequency = props.warpFrequency;
-  if (props.ribbonDensity !== undefined) overrides.ribbonDensity = props.ribbonDensity;
+  if (props.pattern !== undefined) overrides.pattern = props.pattern;
+  if (props.patternDensity !== undefined) overrides.patternDensity = props.patternDensity;
+  if (props.patternCenterX !== undefined) overrides.patternCenterX = props.patternCenterX;
+  if (props.patternCenterY !== undefined) overrides.patternCenterY = props.patternCenterY;
+  if (props.patternComplexity !== undefined) overrides.patternComplexity = props.patternComplexity;
+  if (props.effect !== undefined) overrides.effect = props.effect;
+  if (props.effectScale !== undefined) overrides.effectScale = props.effectScale;
+  if (props.effectAngle !== undefined) overrides.effectAngle = props.effectAngle;
+  if (props.effectMix !== undefined) overrides.effectMix = props.effectMix;
+  if (props.effectColorMode !== undefined) overrides.effectColorMode = props.effectColorMode;
+  if (props.effectInk !== undefined) overrides.effectInk = props.effectInk;
+  if (props.effectPaper !== undefined) overrides.effectPaper = props.effectPaper;
+  if (props.effectInvert !== undefined) overrides.effectInvert = props.effectInvert;
+  if (props.effectLevels !== undefined) overrides.effectLevels = props.effectLevels;
+  if (props.effectShape !== undefined) overrides.effectShape = props.effectShape;
+  if (props.effectCharacters !== undefined) overrides.effectCharacters = props.effectCharacters;
   if (props.quality !== undefined) overrides.quality = props.quality;
   return overrides;
 });
@@ -208,6 +264,25 @@ const activeColors = computed(() =>
       )
     : paletteColors.value,
 );
+/**
+ * In duotone and ink modes the effect's own pair is what content ends up
+ * sitting on, so it earns the same repair the stops get. The gradient mode
+ * leaves them unused, and repairing an unused color would only confuse an
+ * exported configuration.
+ */
+const activeConfiguration = computed<BalsaBackgroundConfig>(() => {
+  const base = configuration.value;
+  if (base.effectColorMode === "gradient" || !contentTextColor.value) return base;
+  const { ink, paper } = applyGradientBackgroundEffectContrast(
+    base.effectInk,
+    base.effectPaper,
+    contentTextColor.value,
+    paletteBackground.value,
+  );
+  if (ink === base.effectInk && paper === base.effectPaper) return base;
+  return { ...base, effectInk: ink, effectPaper: paper };
+});
+
 /**
  * How much scrim a field needs depends on the design around it, not on the
  * background, so the amount stays a caller decision. `true` is a plain default.
@@ -313,9 +388,26 @@ function resizeRenderer(width?: number, height?: number): void {
   renderStill();
 }
 
+/**
+ * Building the atlas costs a canvas draw and a pixel readback, so it is rebuilt
+ * only when the character set it was built from changes -- not on every
+ * configuration edit, and never at all until the ASCII effect is selected.
+ */
+function synchronizeGlyphs(): void {
+  const { effect, effectCharacters } = configuration.value;
+  const signature = effect === "ascii" ? effectCharacters : "";
+  if (signature === glyphSignature) return;
+  glyphSignature = signature;
+  glyphs?.dispose();
+  glyphs = signature
+    ? createGradientBackgroundGlyphAtlas(signature)
+    : undefined;
+}
+
 function updateRenderer(): void {
   if (!renderer) return;
-  renderer.update(configuration.value, activeColors.value);
+  synchronizeGlyphs();
+  renderer.update(activeConfiguration.value, activeColors.value, glyphs);
   resizeRenderer();
   synchronizeAnimation();
 }
@@ -324,10 +416,12 @@ function createRenderer(): void {
   if (!canvas.value || !root.value) return;
   try {
     renderer?.dispose();
+    synchronizeGlyphs();
     renderer = new GradientBackgroundRenderer(
       canvas.value,
-      configuration.value,
+      activeConfiguration.value,
       activeColors.value,
+      glyphs,
     );
     const bounds = root.value.getBoundingClientRect();
     renderer.resize(bounds.width, bounds.height);
@@ -411,7 +505,7 @@ async function capturePng(
 defineExpose({ capturePng, renderStill });
 
 watch(
-  [configuration, activeColors],
+  [activeConfiguration, activeColors],
   () => updateRenderer(),
   { deep: true },
 );
@@ -467,6 +561,9 @@ onBeforeUnmount(() => {
   canvas.value?.removeEventListener("webglcontextrestored", handleContextRestored);
   renderer?.dispose();
   renderer = undefined;
+  glyphs?.dispose();
+  glyphs = undefined;
+  glyphSignature = "";
   rendererAvailable.value = false;
 });
 </script>

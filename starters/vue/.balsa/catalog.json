@@ -1970,9 +1970,9 @@
       "name": "gradient-background",
       "title": "GradientBackground",
       "category": "component",
-      "description": "Deterministic single-pass procedural backgrounds with typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "registry": "@balsa/gradient-background",
       "registryDependencies": [
         "@balsa/balsa-theme"
@@ -1996,6 +1996,8 @@
         "src/components/ui/gradient-background.ts",
         "src/components/ui/gradient-background-renderer.ts",
         "src/components/ui/gradient-background-shader.ts",
+        "src/components/ui/gradient-background-effects-shader.ts",
+        "src/components/ui/gradient-background-glyphs.ts",
         "src/components/ui/gradient-background-presets.json"
       ],
       "framework": "vue"

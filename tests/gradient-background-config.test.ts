@@ -2,9 +2,13 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
+  GRADIENT_BACKGROUND_EFFECTS,
   GRADIENT_BACKGROUND_MINIMUM_CONTRAST,
+  GRADIENT_BACKGROUND_PATTERNS,
   GRADIENT_BACKGROUND_SCHEMA_VERSION,
   applyGradientBackgroundContentContrast,
+  applyGradientBackgroundEffectContrast,
+  applyGradientBackgroundPatternDefaults,
   getGradientBackgroundPreset,
   hasGradientBackgroundPalette,
   resolveGradientBackgroundContentColor,
@@ -20,8 +24,12 @@ import {
 } from "../src/components/ui/gradient-background";
 import {
   normalizeGradientBackgroundShaderSeed,
+  resolveGradientBackgroundCellPixels,
   resolveGradientBackgroundQuality,
 } from "../src/components/ui/gradient-background-renderer";
+import { buildGradientBackgroundFragmentShader } from "../src/components/ui/gradient-background-shader";
+import { buildGradientBackgroundEffectFragmentShader } from "../src/components/ui/gradient-background-effects-shader";
+import { createGradientBackgroundGlyphAtlas } from "../src/components/ui/gradient-background-glyphs";
 
 function relativeLuminance(color: string): number {
   const match = color.match(/^#([\da-f]{6})$/i);
@@ -56,9 +64,14 @@ const expectedPresets: GradientBackgroundPresetName[] = [
   "liquid-metal",
   "smoke-field",
   "iridescent-flow",
-  "void-ribbon",
-  "black-silk",
-  "palette-flow",
+  "solar-bloom",
+  "mesh-drift",
+  "terminal-rain",
+  "newsprint",
+  "plotter",
+  "aurora-veil",
+  "terracotta-dune",
+  "neon-drift",
 ];
 
 describe("GradientBackground configuration", () => {
@@ -75,12 +88,10 @@ describe("GradientBackground configuration", () => {
     }
   });
 
-  it("keeps the revised silk and smoke presets on the shared silver palette", () => {
+  it("keeps the smoke preset on the shared silver palette", () => {
     const silver = getGradientBackgroundPreset("silver-dunes").colors;
-    const blackSilk = getGradientBackgroundPreset("black-silk");
     const smokeField = getGradientBackgroundPreset("smoke-field");
 
-    expect(blackSilk.colors).toEqual(silver);
     expect(smokeField.colors).toEqual(silver);
     expect(smokeField.scale).toBe(1.9);
     expect(smokeField.speed).toBe(0.1);
@@ -88,7 +99,7 @@ describe("GradientBackground configuration", () => {
 
   it("publishes the exact Cloud Dancer recipe", () => {
     expect(getGradientBackgroundPreset("cloud-dancer")).toEqual({
-      schemaVersion: 2,
+      schemaVersion: 3,
       preset: "cloud-dancer",
       seed: 1847,
       colorMode: "custom",
@@ -110,7 +121,22 @@ describe("GradientBackground configuration", () => {
       noiseOctaves: 4,
       noiseFrequency: 1.1,
       warpFrequency: 1.05,
-      ribbonDensity: 2.35,
+      pattern: "ribbon",
+      patternDensity: 2.35,
+      patternCenterX: 0,
+      patternCenterY: 0,
+      patternComplexity: 4,
+      effect: "none",
+      effectScale: 10,
+      effectAngle: 0,
+      effectMix: 1,
+      effectColorMode: "gradient",
+      effectInk: "#F5F5F4",
+      effectPaper: "#0A0A0B",
+      effectInvert: false,
+      effectLevels: 4,
+      effectShape: "round",
+      effectCharacters: " .:-=+*#%@",
     });
   });
 
@@ -195,7 +221,21 @@ describe("GradientBackground configuration", () => {
       noiseOctaves: 3.7,
       noiseFrequency: 0,
       warpFrequency: 8,
-      ribbonDensity: 0,
+      patternDensity: 0,
+      patternCenterX: -4,
+      patternCenterY: 9,
+      patternComplexity: 40,
+      pattern: "spiral",
+      effect: "kaleidoscope",
+      effectScale: 900,
+      effectAngle: -900,
+      effectMix: 4,
+      effectColorMode: "neon",
+      effectShape: "hexagon",
+      effectLevels: 0,
+      effectInk: "not-a-color",
+      effectInvert: "yes",
+      effectCharacters: "",
       colors: ["invalid", "#abcdef", "#111111", "#222222", "#333333", "#444444", "#555555"],
     });
     expect(normalized).toMatchObject({
@@ -216,7 +256,23 @@ describe("GradientBackground configuration", () => {
       noiseOctaves: 4,
       noiseFrequency: 0.2,
       warpFrequency: 4,
-      ribbonDensity: 0.5,
+      patternDensity: 0.5,
+      patternCenterX: -1,
+      patternCenterY: 1,
+      patternComplexity: 8,
+      // Unknown enum members fall back to the preset rather than throwing, the
+      // same way an unknown quality does.
+      pattern: "ribbon",
+      effect: "none",
+      effectScale: 48,
+      effectAngle: -180,
+      effectMix: 1,
+      effectColorMode: "gradient",
+      effectShape: "round",
+      effectLevels: 2,
+      effectInk: "#F5F5F4",
+      effectInvert: false,
+      effectCharacters: " .:-=+*#%@",
     });
     expect(normalized.colors).toHaveLength(6);
     expect(normalized.colors[1]).toBe("#ABCDEF");
@@ -226,7 +282,7 @@ describe("GradientBackground configuration", () => {
   it("round trips versioned JSON and rejects invalid versions and color limits", () => {
     const preset = getGradientBackgroundPreset("iridescent-flow");
     expect(parseGradientBackgroundConfig(serializeGradientBackgroundConfig(preset))).toEqual(preset);
-    expect(() => parseGradientBackgroundConfig({ ...preset, schemaVersion: 3 })).toThrow(
+    expect(() => parseGradientBackgroundConfig({ ...preset, schemaVersion: 4 })).toThrow(
       "Unsupported Balsa background schema version",
     );
     expect(() => parseGradientBackgroundConfig({ ...preset, colors: ["#000000"] })).toThrow(
@@ -238,7 +294,7 @@ describe("GradientBackground configuration", () => {
     })).toThrow("two to six colors");
   });
 
-  it("migrates schema-one structural noise into independent schema-two fields", () => {
+  it("migrates schema-one structural noise into independent surface noise fields", () => {
     const current = getGradientBackgroundPreset("obsidian-fold");
     const legacy = {
       ...current,
@@ -252,13 +308,91 @@ describe("GradientBackground configuration", () => {
 
     const migrated = parseGradientBackgroundConfig(legacy);
     expect(migrated).toMatchObject({
-      schemaVersion: 2,
+      schemaVersion: 3,
       fieldOctaves: 3,
       fieldFrequency: 1.7,
       noiseAmount: current.noiseAmount,
       noiseOctaves: current.noiseOctaves,
       noiseFrequency: current.noiseFrequency,
     });
+  });
+
+  it("carries a schema-two ribbon density onto the renamed pattern control", () => {
+    const current = getGradientBackgroundPreset("void-ribbon");
+    const previous: Record<string, unknown> = {
+      ...current,
+      schemaVersion: 2,
+      ribbonDensity: 4.25,
+    };
+    delete previous.patternDensity;
+    delete previous.pattern;
+    delete previous.effect;
+
+    const migrated = parseGradientBackgroundConfig(previous);
+    // The value meant the same thing under its old name, so it is carried
+    // across rather than reset, and the pattern it described stays the default.
+    expect(migrated).toMatchObject({
+      schemaVersion: 3,
+      pattern: "ribbon",
+      patternDensity: 4.25,
+      effect: "none",
+    });
+  });
+
+  it("keeps a character set usable and monotonic for the glyph atlas", () => {
+    const withControlCharacters = normalizeGradientBackgroundConfig({
+      preset: "obsidian-fold",
+      effectCharacters: "a bc",
+    });
+    expect(withControlCharacters.effectCharacters).toBe("abc");
+
+    const tooShort = normalizeGradientBackgroundConfig({
+      preset: "obsidian-fold",
+      effectCharacters: "x",
+    });
+    expect(tooShort.effectCharacters).toBe(" .:-=+*#%@");
+
+    const tooLong = normalizeGradientBackgroundConfig({
+      preset: "obsidian-fold",
+      effectCharacters: "x".repeat(200),
+    });
+    expect(tooLong.effectCharacters).toHaveLength(64);
+  });
+
+  it("gives each pattern defaults that suit its own reading of the shared controls", () => {
+    const ribbon = getGradientBackgroundPreset("obsidian-fold");
+    const radial = applyGradientBackgroundPatternDefaults(ribbon, "radial");
+    expect(radial.pattern).toBe("radial");
+    // A ribbon count reads as far too many concentric rings, so the density
+    // moves with the pattern rather than carrying over.
+    expect(radial.patternDensity).toBeLessThan(ribbon.patternDensity);
+    expect(radial.colors).toEqual(ribbon.colors);
+    expect(radial.seed).toBe(ribbon.seed);
+
+    const blobs = applyGradientBackgroundPatternDefaults(ribbon, "blobs");
+    expect(blobs.patternComplexity).toBe(5);
+    expect(applyGradientBackgroundPatternDefaults(blobs, "ribbon").patternDensity)
+      .toBe(ribbon.patternDensity);
+  });
+
+  it("repairs the effect ink and paper the way it repairs gradient stops", () => {
+    // Duotone puts content on the ink and paper pair rather than the ramp, so
+    // an unreadable pair has to move even though the stops are untouched.
+    const repaired = applyGradientBackgroundEffectContrast(
+      "#FFFFFF",
+      "#FEFEFE",
+      "#FFFFFF",
+      "#101014",
+    );
+    expect(contrast(repaired.ink, "#FFFFFF")).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(repaired.paper, "#FFFFFF")).toBeGreaterThanOrEqual(4.5);
+
+    const untouched = applyGradientBackgroundEffectContrast(
+      "#101014",
+      "#000000",
+      "#FFFFFF",
+    );
+    expect(untouched.ink).toBe("#101014");
   });
 
   it("randomizes into the reproducible integer seed range", () => {
@@ -286,6 +420,131 @@ describe("GradientBackground configuration", () => {
     expect(resolveGradientBackgroundQuality("high", 1440)).not.toHaveProperty(
       "octaveCap",
     );
+  });
+
+  it("holds resolution up when an effect needs its marks to land on pixels", () => {
+    // A smooth gradient survives being rendered below its display size; a
+    // lattice of glyphs does not.
+    expect(resolveGradientBackgroundQuality("low", 390).pixelRatioScale).toBe(0.62);
+    expect(resolveGradientBackgroundQuality("low", 390, true).pixelRatioScale)
+      .toBeGreaterThan(0.62);
+    expect(resolveGradientBackgroundQuality("auto", 390, true).pixelRatioScale)
+      .toBeGreaterThan(resolveGradientBackgroundQuality("auto", 390).pixelRatioScale);
+    // High already renders at full resolution, so an effect changes nothing.
+    expect(resolveGradientBackgroundQuality("high", 1440, true))
+      .toEqual(resolveGradientBackgroundQuality("high", 1440));
+    expect(resolveGradientBackgroundQuality("low", 390, true).framesPerSecond)
+      .toBe(24);
+  });
+
+  it("keeps effect cell density in CSS pixels across ratios and captures", () => {
+    const preview = resolveGradientBackgroundCellPixels(10, 1200, 600);
+    // Two device pixels per CSS pixel means twice as many device pixels per
+    // cell -- the same number of cells across the element.
+    expect(preview).toBe(20);
+    expect(resolveGradientBackgroundCellPixels(10, 600, 600)).toBe(10);
+
+    // A 1920px capture of a 600px preview has to grow the cell by the same
+    // factor, or the export shows a much denser field than the preview did.
+    const capture = resolveGradientBackgroundCellPixels(10, 1920, 600);
+    expect(capture).toBe(32);
+    expect(1920 / capture).toBeCloseTo(600 / 10, 5);
+  });
+
+  it("keeps grain off the field's own hash and on a CSS-pixel cell", () => {
+    // Grain reads per pixel rather than through fBM, so it cannot share the
+    // field's hash: that one ends on fract(x * y), whose output lies along
+    // hyperbolae and shows as repeating structure at screen scale.
+    for (const source of [
+      buildGradientBackgroundFragmentShader("ribbon"),
+      buildGradientBackgroundEffectFragmentShader("ascii"),
+    ]) {
+      expect(source).toContain("float grainHash(vec2 p)");
+      expect(source).toContain("grainHash(grainCoord");
+      expect(source).toContain("float grainCell = max(0.35, uGrainPixels);");
+      expect(source).not.toContain("hash21(floor(gl_FragCoord");
+    }
+    // The field itself still runs on the original hash, so every pre-existing
+    // preset's geometry is untouched.
+    expect(buildGradientBackgroundFragmentShader("ribbon"))
+      .toContain("float hash21(vec2 p)");
+
+    // Same scaling as the effect cell: a 2x display doubles the buffer pixels
+    // per CSS pixel, so a grain cell has to double with it or halve on screen.
+    expect(resolveGradientBackgroundCellPixels(1, 1200, 600)).toBe(2);
+    expect(resolveGradientBackgroundCellPixels(1, 600, 600)).toBe(1);
+  });
+
+  it("compiles one program per pattern, sharing everything around the generator", () => {
+    for (const pattern of GRADIENT_BACKGROUND_PATTERNS) {
+      const source = buildGradientBackgroundFragmentShader(pattern);
+      expect(source).toContain("float patternField(");
+      expect(source).toContain("patternField(p, warped, q, r, terrain, phase)");
+      // The dressing around the generator is identical everywhere.
+      expect(source).toContain("color += surfaceNoise * uNoiseAmount");
+      expect(source).toContain("color += grain * uGrain");
+    }
+    // The ribbon crest is the one piece that must not have moved: every
+    // pre-existing preset and saved background is a ribbon, and its output has
+    // to stay identical through the refactor into swappable generators.
+    const ribbon = buildGradientBackgroundFragmentShader("ribbon");
+    for (const line of [
+      "float ridgePhase = warped.y * uPatternDensity",
+      "+ r.x * 2.8",
+      "+ terrain * 1.55",
+      "+ sin(warped.x * 1.4 + q.y * 2.0) * 0.36;",
+      "float broad = terrain * 0.34 + r.y * 0.24 + q.x * 0.13;",
+      "float field = 0.5 + broad + (ridge - 0.28) * uWave * 0.34;",
+      // The crest and range shaping the ribbon used to inline, now shared.
+      "float ridge = 1.0 - abs(sin(phase));",
+      "return pow(clamp(ridge, 0.0, 1.0), mix(4.8, 1.25, uSoftness));",
+      "return mix(smoothstep(-0.05, 1.05, field), field, uSoftness * 0.45);",
+      "field = (field - 0.5) * uContrast + 0.5 + uBrightness;",
+    ]) {
+      expect(ribbon).toContain(line);
+    }
+    expect(buildGradientBackgroundFragmentShader("radial")).not.toContain(
+      "float ridgePhase = warped.y * uPatternDensity",
+    );
+  });
+
+  it("compiles one program per effect, all ending on the same passthrough blend", () => {
+    for (const effect of GRADIENT_BACKGROUND_EFFECTS) {
+      if (effect === "none") continue;
+      const source = buildGradientBackgroundEffectFragmentShader(effect);
+      expect(source).toContain("vec3 applyEffect(vec3 source)");
+      // effectMix of zero has to leave the field as the gradient pass drew it,
+      // which is what makes the render-target round trip verifiable.
+      expect(source).toContain(
+        "mix(source, applyEffect(source), clamp(uEffectMix, 0.0, 1.0))",
+      );
+      // Grain moved to this pass, so it has to be applied here for every
+      // effect -- otherwise a cell effect flattens it and the field goes
+      // plastic.
+      expect(source).toContain("color += grain * uGrain");
+    }
+    // The gradient pass has to stand down when an effect will grain instead,
+    // or the two passes double it.
+    expect(buildGradientBackgroundFragmentShader("ribbon")).toContain(
+      "color += grain * uGrain * uSourceGrain;",
+    );
+    // Glyphs carry tone by which character is chosen, so the ground stays
+    // clean instead of washing every cell with the field underneath.
+    expect(buildGradientBackgroundEffectFragmentShader("ascii"))
+      .toContain("#define BALSA_MARK_FLOOR 0.0");
+    expect(buildGradientBackgroundEffectFragmentShader("halftone"))
+      .toContain("#define BALSA_MARK_FLOOR 0.18");
+    expect(buildGradientBackgroundEffectFragmentShader("ascii"))
+      .toContain("uniform sampler2D uGlyphs");
+    expect(buildGradientBackgroundEffectFragmentShader("halftone"))
+      .not.toContain("uniform sampler2D uGlyphs");
+  });
+
+  it("declines to build a glyph atlas rather than rendering an empty one", () => {
+    // jsdom has no 2D context, which is the same shape of failure as a server
+    // render: the effect falls back to a dot mark instead of painting black.
+    expect(createGradientBackgroundGlyphAtlas(" .:-=+*#%@")).toBeUndefined();
+    expect(createGradientBackgroundGlyphAtlas("x")).toBeUndefined();
   });
 
   it("separates structural fBM from visible surface noise in the shader", () => {

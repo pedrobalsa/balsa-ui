@@ -15,7 +15,7 @@ import {
   decodeBackgroundInlineConfig,
   validateBackgroundName,
 } from "../scripts/background-cli.mjs";
-import { encodeBackgroundInlineConfig } from "../src/background/background-studio";
+import { encodeGradientInlineConfig } from "../src/background/gradient-studio";
 import { getGradientBackgroundPreset } from "../src/components/ui/gradient-background";
 
 const temporaryRoot = resolve(process.cwd(), ".tmp");
@@ -46,7 +46,7 @@ describe("Balsa background CLI", () => {
     const result = await createBackgroundConfiguration({
       name: "hero-fold",
       cwd: target,
-      preset: "black-silk",
+      preset: "liquid-metal",
     });
     expect(result.relativeTarget).toBe("src/backgrounds/hero-fold.ts");
     const source = readFileSync(result.destination, "utf8");
@@ -54,7 +54,7 @@ describe("Balsa background CLI", () => {
       'import type { BalsaBackgroundConfig } from "../components/ui/gradient-background";',
     );
     expect(source).toContain("export const heroFoldBackground: BalsaBackgroundConfig");
-    expect(source).toContain('"preset": "black-silk"');
+    expect(source).toContain('"preset": "liquid-metal"');
     expect(existsSync(resolve(target, "src/components/ui/GradientBackground.vue"))).toBe(true);
     expect(existsSync(resolve(target, "src/components/ui/gradient-background-shader.ts"))).toBe(true);
 
@@ -92,7 +92,7 @@ describe("Balsa background CLI", () => {
   it("consumes the exact Studio configuration from one inline command payload", async () => {
     const target = temporaryProject();
     const config = { ...getGradientBackgroundPreset("smoke-field"), seed: 1776 };
-    const inlineConfig = encodeBackgroundInlineConfig(config);
+    const inlineConfig = encodeGradientInlineConfig(config);
     expect(decodeBackgroundInlineConfig(inlineConfig)).toEqual(config);
 
     const result = await createBackgroundConfiguration({
@@ -104,7 +104,7 @@ describe("Balsa background CLI", () => {
     expect(readFileSync(result.destination, "utf8")).toContain('"seed": 1776');
   });
 
-  it("migrates saved schema-one geometry into schema-two field controls", async () => {
+  it("migrates saved schema-one geometry into current field controls", async () => {
     const target = temporaryProject();
     const inputPath = resolve(target, "legacy.json");
     const current = getGradientBackgroundPreset("obsidian-fold");
@@ -125,12 +125,38 @@ describe("Balsa background CLI", () => {
       from: inputPath,
     });
     expect(result.config).toMatchObject({
-      schemaVersion: 2,
+      schemaVersion: 3,
       fieldOctaves: 3,
       fieldFrequency: 1.45,
       noiseAmount: current.noiseAmount,
       noiseOctaves: current.noiseOctaves,
       noiseFrequency: current.noiseFrequency,
+    });
+  });
+
+  it("carries a schema-two ribbon density across to the renamed pattern control", async () => {
+    const target = temporaryProject();
+    const inputPath = resolve(target, "schema-two.json");
+    const current = getGradientBackgroundPreset("smoke-field");
+    const previous: Record<string, unknown> = {
+      ...current,
+      schemaVersion: 2,
+      ribbonDensity: 4.25,
+    };
+    delete previous.patternDensity;
+    delete previous.pattern;
+    writeFileSync(inputPath, JSON.stringify(previous), "utf8");
+
+    const result = await createBackgroundConfiguration({
+      name: "carried",
+      cwd: target,
+      from: inputPath,
+    });
+    expect(result.config).toMatchObject({
+      schemaVersion: 3,
+      pattern: "ribbon",
+      patternDensity: 4.25,
+      effect: "none",
     });
   });
 
@@ -149,7 +175,7 @@ describe("Balsa background CLI", () => {
       name: "hero",
       cwd: invalidPresetTarget,
       preset: "obsidian-fold",
-      inlineConfig: encodeBackgroundInlineConfig(
+      inlineConfig: encodeGradientInlineConfig(
         getGradientBackgroundPreset("obsidian-fold"),
       ),
     })).rejects.toThrow("Use only one of");
@@ -158,7 +184,7 @@ describe("Balsa background CLI", () => {
     const inputPath = resolve(invalidJsonTarget, "invalid.json");
     writeFileSync(inputPath, JSON.stringify({
       ...getGradientBackgroundPreset("obsidian-fold"),
-      schemaVersion: 3,
+      schemaVersion: 4,
     }));
     await expect(createBackgroundConfiguration({
       name: "hero",
@@ -183,7 +209,7 @@ describe("Balsa background CLI", () => {
 
   it("exposes the documented non-interactive command and concise usage output", () => {
     const target = temporaryProject();
-    const inlineConfig = encodeBackgroundInlineConfig({
+    const inlineConfig = encodeGradientInlineConfig({
       ...getGradientBackgroundPreset("obsidian-fold"),
       seed: 314,
     });

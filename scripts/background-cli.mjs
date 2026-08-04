@@ -10,8 +10,8 @@ import {
   writeJson,
 } from "./registry-lib.mjs";
 
-const schemaVersion = 2;
-const legacySchemaVersion = 1;
+const schemaVersion = 3;
+const legacySchemaVersions = new Set([1, 2]);
 const presetPath = path.join(
   rootDir,
   "src",
@@ -22,6 +22,40 @@ const presetPath = path.join(
 const hexColor = /^#[\da-f]{6}$/i;
 const qualityValues = new Set(["auto", "low", "medium", "high"]);
 const colorModeValues = new Set(["custom", "palette"]);
+const patternValues = new Set([
+  "ribbon",
+  "radial",
+  "conic",
+  "blobs",
+  "contour",
+  "cellular",
+]);
+const effectValues = new Set([
+  "none",
+  "ascii",
+  "halftone",
+  "dots",
+  "lines",
+  "dither",
+  "crosshatch",
+]);
+const effectColorModeValues = new Set(["gradient", "duotone", "ink"]);
+const effectShapeValues = new Set(["round", "square", "cross"]);
+const maximumCharacters = 64;
+
+function characters(value, fallback) {
+  if (typeof value !== "string") return fallback;
+  const printable = Array.from(value).filter((character) => {
+    const code = character.codePointAt(0) ?? 0;
+    return code >= 0x20 && code !== 0x7f;
+  });
+  if (printable.length < 2) return fallback;
+  return printable.slice(0, maximumCharacters).join("");
+}
+
+function option(value, allowed, fallback) {
+  return allowed.has(value) ? value : fallback;
+}
 
 function clamp(value, fallback, min, max) {
   const number = typeof value === "number" && Number.isFinite(value)
@@ -75,7 +109,7 @@ export function normalizeCliBackgroundConfig(value, presets) {
   }
   if (
     value.schemaVersion !== schemaVersion
-    && value.schemaVersion !== legacySchemaVersion
+    && !legacySchemaVersions.has(value.schemaVersion)
   ) {
     throw new Error(`Unsupported Balsa background schema version: ${String(value.schemaVersion)}.`);
   }
@@ -89,7 +123,8 @@ export function normalizeCliBackgroundConfig(value, presets) {
     throw new Error("Background colors must use six-digit hexadecimal values.");
   }
   const fallback = presets[value.preset];
-  const legacy = value.schemaVersion === legacySchemaVersion;
+  const legacy = value.schemaVersion === 1;
+  const patternDensity = value.patternDensity ?? value.ribbonDensity;
   return {
     schemaVersion,
     preset: value.preset,
@@ -133,7 +168,37 @@ export function normalizeCliBackgroundConfig(value, presets) {
       4,
     ),
     warpFrequency: clamp(value.warpFrequency, fallback.warpFrequency, 0.2, 4),
-    ribbonDensity: clamp(value.ribbonDensity, fallback.ribbonDensity, 0.5, 8),
+    pattern: option(value.pattern, patternValues, fallback.pattern),
+    patternDensity: clamp(patternDensity, fallback.patternDensity, 0.5, 8),
+    patternCenterX: clamp(value.patternCenterX, fallback.patternCenterX, -1, 1),
+    patternCenterY: clamp(value.patternCenterY, fallback.patternCenterY, -1, 1),
+    patternComplexity: integer(
+      value.patternComplexity,
+      fallback.patternComplexity,
+      1,
+      8,
+    ),
+    effect: option(value.effect, effectValues, fallback.effect),
+    effectScale: clamp(value.effectScale, fallback.effectScale, 2, 48),
+    effectAngle: clamp(value.effectAngle, fallback.effectAngle, -180, 180),
+    effectMix: clamp(value.effectMix, fallback.effectMix, 0, 1),
+    effectColorMode: option(
+      value.effectColorMode,
+      effectColorModeValues,
+      fallback.effectColorMode,
+    ),
+    effectInk: hexColor.test(String(value.effectInk))
+      ? String(value.effectInk).toUpperCase()
+      : fallback.effectInk,
+    effectPaper: hexColor.test(String(value.effectPaper))
+      ? String(value.effectPaper).toUpperCase()
+      : fallback.effectPaper,
+    effectInvert: typeof value.effectInvert === "boolean"
+      ? value.effectInvert
+      : fallback.effectInvert,
+    effectLevels: integer(value.effectLevels, fallback.effectLevels, 2, 8),
+    effectShape: option(value.effectShape, effectShapeValues, fallback.effectShape),
+    effectCharacters: characters(value.effectCharacters, fallback.effectCharacters),
   };
 }
 

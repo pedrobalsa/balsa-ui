@@ -39,7 +39,7 @@ npx balsa-ui@latest background create hero --config STUDIO_PAYLOAD
 npx balsa-ui@latest background create hero --from ./balsa-background.json
 ```
 
-Background Studio supplies the complete `--config` command, so exact-current import needs no intermediate download. The background command installs the `gradient-background` registry item and its support files through the same safe installer, writes `src/backgrounds/<name>.ts`, records provenance, and refuses a differing generated file unless `--force` is explicit.
+Gradient Studio supplies the complete `--config` command, so exact-current import needs no intermediate download. The background command installs the `gradient-background` registry item and its support files through the same safe installer, writes `src/backgrounds/<name>.ts`, records provenance, and refuses a differing generated file unless `--force` is explicit.
 
 Repository contributors can run the equivalent deterministic local command:
 

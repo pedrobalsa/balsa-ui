@@ -43,14 +43,16 @@
     },
     "gradient-background": {
       "registry": "@balsa/gradient-background",
-      "installedVersion": "0.1.0",
-      "sourceHash": "sha256-2460ab93aa1e04f25e4787a22a99a9db16ad295b8cbbf21d256314d26f078612",
+      "installedVersion": "0.2.0",
+      "sourceHash": "sha256-85f823ef01a4ddf16e7f5ea58cccf06bf561f88861cc7ba9711619c34503ba74",
       "targetPath": "src/components/ui/GradientBackground.vue",
       "files": [
         "src/components/ui/GradientBackground.vue",
         "src/components/ui/gradient-background.ts",
         "src/components/ui/gradient-background-renderer.ts",
         "src/components/ui/gradient-background-shader.ts",
+        "src/components/ui/gradient-background-effects-shader.ts",
+        "src/components/ui/gradient-background-glyphs.ts",
         "src/components/ui/gradient-background-presets.json"
       ]
     },

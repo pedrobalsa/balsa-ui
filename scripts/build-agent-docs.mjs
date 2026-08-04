@@ -28,7 +28,7 @@ const publicPagePaths = [
   "/docs/catalog",
   "/docs/source-updates",
   "/docs/changelog",
-  "/tools/background-studio",
+  "/tools/gradient-studio",
   "/templates",
 ];
 

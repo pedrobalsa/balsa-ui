@@ -4,12 +4,12 @@
   "title": "GradientBackground",
   "category": "component",
   "status": "beta",
-  "version": "0.1.0",
-  "purpose": "Render a deterministic, slowly animated procedural field behind application content without requiring image or video input.",
+  "version": "0.2.0",
+  "purpose": "Render a deterministic, slowly animated procedural field behind application content, optionally redrawn as ASCII glyphs or print-style marks, without requiring image or video input.",
   "useFor": [
     "Page and hero backgrounds",
     "Atmospheric depth behind Glassmorphism surfaces",
-    "Reproducible generated artwork exported from Background Studio"
+    "Reproducible generated artwork exported from Gradient Studio"
   ],
   "avoidFor": [
     "Motion-dependent information",
@@ -18,7 +18,19 @@
   ],
   "variants": [
     "custom colors",
-    "palette-aware colors"
+    "palette-aware colors",
+    "ribbon pattern",
+    "radial pattern",
+    "conic pattern",
+    "blobs pattern",
+    "contour pattern",
+    "cellular pattern",
+    "ascii effect",
+    "halftone effect",
+    "dots effect",
+    "lines effect",
+    "dither effect",
+    "crosshatch effect"
   ],
   "states": [
     "animated",
@@ -27,15 +39,16 @@
     "offscreen",
     "document hidden",
     "WebGL fallback",
-    "context lost"
+    "context lost",
+    "effect without a glyph atlas"
   ],
   "composition": {
-    "renderer": "One Three.js WebGLRenderer, orthographic camera, full-screen plane, and Balsa-owned single-pass ShaderMaterial.",
-    "configuration": "Versioned schema-two BalsaBackgroundConfig with automatic schema-one migration, preset defaults, configuration overrides, and direct prop overrides in that order.",
+    "renderer": "One Three.js WebGLRenderer, orthographic camera, and full-screen plane. The gradient draws straight to the canvas while no effect is selected; choosing one adds a WebGLRenderTarget and a second full-screen pass that reads the first as a texture.",
+    "configuration": "Versioned schema-three BalsaBackgroundConfig with automatic schema-one and schema-two migration, preset defaults, configuration overrides, and direct prop overrides in that order.",
     "noiseSeparation": "Structural field octaves and frequency shape waves independently from visible noise amount, octaves, and frequency; fine grain remains a separate final texture treatment.",
     "seedSafety": "The renderer maps full-range configuration seeds into a small deterministic shader-safe range before hashing so floating-point precision cannot collapse procedural noise.",
-    "studioSimulations": "Background Studio compares structurally distinct Storefront, Dashboard, and Editorial shells; every simulated label, metric, byline, and content string is explicit placeholder or lorem-ipsum copy rather than plausible live content.",
-    "studioHandoff": "Background Studio groups project export into Balsa CLI, Manual, and Prompt disclosures; CLI is initially expanded, encodes the exact current configuration into one shell-safe background create --config command with no intermediate download, and shows the generated Vue import/template usage; Prompt explicitly obtains GradientBackground through the public add command; PNG capture remains separate.",
+    "studioSimulations": "Gradient Studio renders the field in a rounded preview beside its editor, and can lay structurally distinct Storefront, Dashboard, and Editorial shells over it; every simulated label, metric, byline, and content string is explicit placeholder or lorem-ipsum copy rather than plausible live content.",
+    "studioHandoff": "Gradient Studio exports from a Save modal over the preview: a Balsa CLI command encoding the exact current configuration with no intermediate download, manual typed configuration and Vue usage with optional JSON exchange, an agent prompt that obtains GradientBackground through the public add command first, and still PNG capture at common dimensions.",
     "presets": [
       "obsidian-fold",
       "silver-dunes",
@@ -44,16 +57,27 @@
       "liquid-metal",
       "smoke-field",
       "iridescent-flow",
-      "void-ribbon",
-      "black-silk",
-      "palette-flow"
-    ]
+      "solar-bloom",
+      "mesh-drift",
+      "terminal-rain",
+      "newsprint",
+      "plotter",
+      "aurora-veil",
+      "terracotta-dune",
+      "neon-drift"
+    ],
+    "patterns": "One compiled program per pattern, all sharing the same domain warp and one uniforms object, so warp, scale, direction, and the octave counts behave identically across generators. patternDensity is the repeat count each generator reads in its own terms; patternComplexity sizes blobs and cellular instead.",
+    "effects": "Effects redraw the finished gradient on a lattice measured in CSS pixels, so mark density survives device pixel ratio changes and PNG capture at another size. Color follows the gradient, an ink and paper duotone pair, or ink laid over the field; effectMix of zero renders the field exactly as the gradient pass drew it. Grain is applied in whichever pass runs last, so a cell effect cannot flatten it to one sample per cell.",
+    "asciiAtlas": "ASCII builds its glyph atlas at runtime from the effectCharacters string and orders the columns by measured ink coverage, so the luminance-to-glyph mapping rises monotonically whatever order the characters were typed in. Where no canvas is available the effect degrades to a dot mark.",
+    "grain": "Grain is applied in whichever pass renders last, so a cell effect cannot flatten it to one sample per cell, and it uses a hash of its own rather than the field's -- the field's ends on a product of two fractions, which smooths away inside fBM but reads as visible hyperbolic structure per pixel. grainSize is measured in CSS pixels, so grain holds its size across display densities and PNG capture.",
+    "studioEditor": "Controls collapse into property rows that name their current value and offer the rest in a menu, with an Advanced settings panel anchored to the row for the raw sliders. Presets are chosen from a grid of rendered miniatures rather than by name, and the Studio exposes no render quality or seed input -- quality stays automatic and Randomize rerolls the composition."
   },
   "accessibility": [
     "The canvas is decorative, aria-hidden, non-interactive, and pointer-transparent.",
     "Reduced-motion users receive one static rendered frame.",
     "Forced-colors users receive a system-color fallback.",
-    "No meaning or control state depends on background motion."
+    "No meaning or control state depends on background motion.",
+    "Duotone and ink effect colors receive the same contrast repair as the gradient stops, because content ends up sitting on them rather than on the ramp."
   ],
   "tokens": [
     "--balsa-color-background",
@@ -66,13 +90,19 @@
     "Placing readable content directly over high-contrast forms without a surface.",
     "Running several full-viewport instances when one shared background is enough.",
     "Coupling the primitive to an application palette or theme store.",
-    "Using more than six or fewer than two color stops."
+    "Using more than six or fewer than two color stops.",
+    "Measuring effect cell size in device pixels, which changes mark density between displays and between a preview and its exported PNG.",
+    "Running the cellular pattern at a high complexity on low-power hardware when a cheaper generator would read the same.",
+    "Measuring grain in device pixels, which halves its size on a 2x display and makes it read as barely there."
   ],
   "examples": [
     "Obsidian fold page background",
     "Palette-aware generated field",
     "Glassmorphism content over iridescent flow",
-    "Background Studio export"
+    "Gradient Studio export",
+    "ASCII terminal field",
+    "Halftone newsprint hero",
+    "Radial bloom behind a form"
   ],
   "publicApi": {
     "props": [
@@ -101,7 +131,22 @@
       "noiseOctaves",
       "noiseFrequency",
       "warpFrequency",
-      "ribbonDensity",
+      "pattern",
+      "patternDensity",
+      "patternCenterX",
+      "patternCenterY",
+      "patternComplexity",
+      "effect",
+      "effectScale",
+      "effectAngle",
+      "effectMix",
+      "effectColorMode",
+      "effectInk",
+      "effectPaper",
+      "effectInvert",
+      "effectLevels",
+      "effectShape",
+      "effectCharacters",
       "quality",
       "paused",
       "theme"

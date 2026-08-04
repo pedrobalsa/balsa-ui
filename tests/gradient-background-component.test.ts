@@ -13,6 +13,32 @@ const rendererState = vi.hoisted(() => ({
   throwOnCreate: false,
 }));
 
+const glyphState = vi.hoisted(() => ({
+  created: [] as string[],
+  disposed: 0,
+}));
+
+/**
+ * jsdom has no 2D context, so the real atlas would always decline to build.
+ * Standing in for it is what makes the component's build-and-dispose lifecycle
+ * observable at all.
+ */
+vi.mock("../src/components/ui/gradient-background-glyphs", () => ({
+  GRADIENT_BACKGROUND_GLYPH_ASPECT: 1.8,
+  createGradientBackgroundGlyphAtlas: vi.fn((characters: string) => {
+    glyphState.created.push(characters);
+    return {
+      texture: {},
+      columns: [...characters].length,
+      aspect: 1.8,
+      characters,
+      dispose: () => {
+        glyphState.disposed += 1;
+      },
+    };
+  }),
+}));
+
 vi.mock("../src/components/ui/gradient-background-renderer", () => ({
   GradientBackgroundRenderer: class {
     update = vi.fn();
@@ -21,9 +47,13 @@ vi.mock("../src/components/ui/gradient-background-renderer", () => ({
     capturePng = vi.fn().mockResolvedValue(new Blob(["png"], { type: "image/png" }));
     dispose = vi.fn();
     framesPerSecond = 30;
+    config: Record<string, unknown>;
+    glyphs: unknown;
 
-    constructor() {
+    constructor(...args: unknown[]) {
       if (rendererState.throwOnCreate) throw new Error("WebGL unavailable");
+      this.config = args[1] as Record<string, unknown>;
+      this.glyphs = args[3];
       rendererState.instances.push(this);
     }
   },
@@ -76,6 +106,8 @@ describe("GradientBackground lifecycle", () => {
   beforeEach(() => {
     rendererState.instances.length = 0;
     rendererState.throwOnCreate = false;
+    glyphState.created.length = 0;
+    glyphState.disposed = 0;
     ResizeObserverMock.instances.length = 0;
     IntersectionObserverMock.instances.length = 0;
     rafCallbacks = new Map();
@@ -204,6 +236,74 @@ describe("GradientBackground lifecycle", () => {
     expect(wrapper.find('[data-balsa="gradient-background"] > div').classes()).toContain("opacity-100");
     wrapper.get("canvas").element.dispatchEvent(new Event("webglcontextrestored"));
     expect(rendererState.instances[0]!.render).toHaveBeenCalled();
+    wrapper.unmount();
+  });
+
+  it("builds the glyph atlas only for ASCII and releases it on every exit", async () => {
+    const wrapper = mount(GradientBackground, { attachTo: document.body });
+    const instance = rendererState.instances[0]!;
+    // Nothing but ASCII needs glyphs, so nothing else pays to build them.
+    expect(glyphState.created).toEqual([]);
+    expect(instance.glyphs).toBeUndefined();
+
+    await wrapper.setProps({ effect: "halftone" });
+    expect(glyphState.created).toEqual([]);
+    expect(instance.update.mock.calls.at(-1)?.[2]).toBeUndefined();
+
+    await wrapper.setProps({ effect: "ascii" });
+    expect(glyphState.created).toEqual([" .:-=+*#%@"]);
+    expect(instance.update.mock.calls.at(-1)?.[2]).toMatchObject({
+      characters: " .:-=+*#%@",
+      columns: 10,
+    });
+
+    // An unrelated edit must not rebuild an atlas that would come out identical.
+    await wrapper.setProps({ warp: 1.4 });
+    expect(glyphState.created).toHaveLength(1);
+    expect(glyphState.disposed).toBe(0);
+
+    await wrapper.setProps({ effectCharacters: "01" });
+    expect(glyphState.created).toEqual([" .:-=+*#%@", "01"]);
+    expect(glyphState.disposed).toBe(1);
+
+    await wrapper.setProps({ effect: "none" });
+    expect(glyphState.disposed).toBe(2);
+    expect(instance.update.mock.calls.at(-1)?.[2]).toBeUndefined();
+
+    await wrapper.setProps({ effect: "ascii" });
+    wrapper.unmount();
+    expect(glyphState.disposed).toBe(3);
+  });
+
+  it("repairs the duotone pair against the content color, and leaves it alone otherwise", async () => {
+    const wrapper = mount(GradientBackground, {
+      attachTo: document.body,
+      props: {
+        effect: "ascii",
+        effectColorMode: "duotone",
+        effectInk: "#FFFFFF",
+        effectPaper: "#FEFEFE",
+      },
+    });
+    const instance = rendererState.instances[0]!;
+    // Without a declared content color there is nothing to repair against, so
+    // the authored pair is passed through untouched.
+    expect(instance.glyphs).toBeDefined();
+    expect(instance.config).toMatchObject({
+      effectInk: "#FFFFFF",
+      effectPaper: "#FEFEFE",
+    });
+
+    await wrapper.setProps({ contentColor: "#FFFFFF" });
+    const repaired = instance.update.mock.calls.at(-1)?.[0];
+    expect(repaired.effectInk).not.toBe("#FFFFFF");
+    expect(repaired.effectPaper).not.toBe("#FEFEFE");
+
+    await wrapper.setProps({ effectColorMode: "gradient" });
+    expect(instance.update.mock.calls.at(-1)?.[0]).toMatchObject({
+      effectInk: "#FFFFFF",
+      effectPaper: "#FEFEFE",
+    });
     wrapper.unmount();
   });
 

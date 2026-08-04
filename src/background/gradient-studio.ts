@@ -1,5 +1,6 @@
 import {
   getGradientBackgroundPreset,
+  gradientBackgroundPatternDefaults,
   normalizeGradientBackgroundConfig,
   parseGradientBackgroundConfig,
   randomGradientBackgroundSeed,
@@ -8,14 +9,14 @@ import {
   type GradientBackgroundPresetName,
 } from "../components/ui/gradient-background";
 
-export interface BackgroundExportSize {
+export interface GradientExportSize {
   label: string;
   value: string;
   width: number;
   height: number;
 }
 
-export const backgroundExportSizes: readonly BackgroundExportSize[] = [
+export const gradientExportSizes: readonly GradientExportSize[] = [
   { label: "HD landscape (1920 x 1080)", value: "1920x1080", width: 1920, height: 1080 },
   { label: "Desktop (1440 x 1000)", value: "1440x1000", width: 1440, height: 1000 },
   { label: "Square (1600 x 1600)", value: "1600x1600", width: 1600, height: 1600 },
@@ -23,13 +24,13 @@ export const backgroundExportSizes: readonly BackgroundExportSize[] = [
   { label: "Mobile (390 x 844)", value: "390x844", width: 390, height: 844 },
 ] as const;
 
-export function resetBackgroundStudioConfig(
+export function resetGradientStudioConfig(
   preset: GradientBackgroundPresetName,
 ): BalsaBackgroundConfig {
   return getGradientBackgroundPreset(preset);
 }
 
-export function randomizeBackgroundStudioConfig(
+export function randomizeGradientStudioConfig(
   value: BalsaBackgroundConfig,
   random: () => number = Math.random,
 ): BalsaBackgroundConfig {
@@ -53,10 +54,29 @@ export function randomizeBackgroundStudioConfig(
     const upper = clamp(candidate * maximumScale, lower, maximum);
     return rounded(between(lower, upper));
   };
-  const waveMinimum = Math.max(0.85, preset.wave * 0.78);
+  // Shared controls read differently per generator, so the values a pattern
+  // was tuned around anchor the randomization instead of the preset's -- a
+  // preset is always a ribbon recipe, and its ribbon count is a poor starting
+  // point for rings or facets.
+  const patternBase = gradientBackgroundPatternDefaults[value.pattern];
+  // While the configuration still draws the pattern its preset was written
+  // for, the preset's own tuning is the better anchor. Once the user has
+  // switched generators those numbers describe something else, and the
+  // pattern's defaults take over.
+  const authored = value.pattern === preset.pattern;
+  const baseWave = authored ? preset.wave : patternBase.wave ?? preset.wave;
+  const baseDensity = authored
+    ? preset.patternDensity
+    : patternBase.patternDensity ?? preset.patternDensity;
+  const baseComplexity = authored
+    ? preset.patternComplexity
+    : patternBase.patternComplexity ?? preset.patternComplexity;
+  const usesCenter = value.pattern !== "ribbon" && value.pattern !== "contour";
+
+  const waveMinimum = Math.max(0.85, baseWave * 0.78);
   const waveMaximum = Math.min(
     1.9,
-    Math.max(waveMinimum + 0.28, preset.wave * 1.3),
+    Math.max(waveMinimum + 0.28, baseWave * 1.3),
   );
   const direction = ((preset.direction + between(-75, 75) + 180) % 360) - 180;
 
@@ -123,36 +143,49 @@ export function randomizeBackgroundStudioConfig(
       0.7,
       1.45,
     ),
-    ribbonDensity: varied(
-      preset.ribbonDensity,
+    patternDensity: varied(
+      baseDensity,
       0.82,
       1.28,
-      1.5,
-      4.2,
+      Math.max(0.5, baseDensity * 0.6),
+      Math.min(8, baseDensity * 1.9),
     ),
+    patternComplexity: Math.round(clamp(
+      baseComplexity + between(-1, 1),
+      2,
+      8,
+    )),
+    // Patterns that ignore the center keep it where it was, so randomizing a
+    // ribbon does not quietly write an offset nothing reads.
+    patternCenterX: usesCenter
+      ? rounded(between(-0.35, 0.35))
+      : value.patternCenterX,
+    patternCenterY: usesCenter
+      ? rounded(between(-0.35, 0.35))
+      : value.patternCenterY,
   }, value.preset);
 }
 
-export function importBackgroundStudioConfig(
+export function importGradientStudioConfig(
   source: string | unknown,
 ): BalsaBackgroundConfig {
   return parseGradientBackgroundConfig(source);
 }
 
-export function exportBackgroundStudioConfig(
+export function exportGradientStudioConfig(
   value: BalsaBackgroundConfig,
 ): string {
   return serializeGradientBackgroundConfig(value);
 }
 
-export function backgroundStudioJsonFileName(
+export function gradientStudioJsonFileName(
   value: BalsaBackgroundConfig,
 ): string {
   const normalized = normalizeGradientBackgroundConfig(value);
   return `balsa-${normalized.preset}-${normalized.seed}.json`;
 }
 
-export function encodeBackgroundInlineConfig(
+export function encodeGradientInlineConfig(
   value: BalsaBackgroundConfig,
 ): string {
   const bytes = new TextEncoder().encode(
@@ -166,13 +199,13 @@ export function encodeBackgroundInlineConfig(
     .replace(/=+$/, "");
 }
 
-export function buildBackgroundCliCommand(
+export function buildGradientCliCommand(
   value: BalsaBackgroundConfig,
 ): string {
-  return `npx balsa-ui@latest background create studio-background --config ${encodeBackgroundInlineConfig(value)}`;
+  return `npx balsa-ui@latest background create studio-background --config ${encodeGradientInlineConfig(value)}`;
 }
 
-export function buildBackgroundCliUsage(): string {
+export function buildGradientCliUsage(): string {
   return `<script setup lang="ts">
 import GradientBackground from "@/components/ui/GradientBackground.vue";
 import { studioBackground } from "@/backgrounds/studio-background";
@@ -189,7 +222,7 @@ import { studioBackground } from "@/backgrounds/studio-background";
 `;
 }
 
-export function buildBackgroundAgentPrompt(
+export function buildGradientAgentPrompt(
   value: BalsaBackgroundConfig,
 ): string {
   const serialized = serializeGradientBackgroundConfig(value);
@@ -208,14 +241,14 @@ ${serialized}
 \`\`\``;
 }
 
-export function buildBackgroundTypedConfiguration(
+export function buildGradientTypedConfiguration(
   value: BalsaBackgroundConfig,
 ): string {
   const serialized = JSON.stringify(normalizeGradientBackgroundConfig(value), null, 2);
   return `import type { BalsaBackgroundConfig } from "@/components/ui/gradient-background";\n\nexport const backgroundConfig: BalsaBackgroundConfig = ${serialized};\n`;
 }
 
-export function buildBackgroundVueUsage(value: BalsaBackgroundConfig): string {
+export function buildGradientVueUsage(value: BalsaBackgroundConfig): string {
   const serialized = JSON.stringify(normalizeGradientBackgroundConfig(value), null, 2);
   return `<script setup lang="ts">\nimport GradientBackground from "@/components/ui/GradientBackground.vue";\nimport type { BalsaBackgroundConfig } from "@/components/ui/gradient-background";\n\nconst backgroundConfig: BalsaBackgroundConfig = ${serialized};\n</script>\n\n<template>\n  <section class="relative isolate min-h-screen overflow-hidden">\n    <GradientBackground :config="backgroundConfig" />\n    <div class="relative z-10">\n      <!-- Your content -->\n    </div>\n  </section>\n</template>\n`;
 }
@@ -230,7 +263,7 @@ function relativeLuminance(hex: string): number {
   return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
 }
 
-export function hasPoorBackgroundContentContrast(
+export function hasPoorGradientContentContrast(
   value: BalsaBackgroundConfig,
 ): boolean {
   if (value.colorMode === "palette") return false;
@@ -238,7 +271,7 @@ export function hasPoorBackgroundContentContrast(
   return Math.max(...luminances) - Math.min(...luminances) < 0.18;
 }
 
-export function backgroundExportSize(value: string): BackgroundExportSize {
-  return backgroundExportSizes.find((size) => size.value === value)
-    ?? backgroundExportSizes[0];
+export function gradientExportSize(value: string): GradientExportSize {
+  return gradientExportSizes.find((size) => size.value === value)
+    ?? gradientExportSizes[0];
 }

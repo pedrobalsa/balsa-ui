@@ -1,7 +1,13 @@
 import presetData from "./gradient-background-presets.json";
 
-export const GRADIENT_BACKGROUND_SCHEMA_VERSION = 2 as const;
-const LEGACY_GRADIENT_BACKGROUND_SCHEMA_VERSION = 1;
+export const GRADIENT_BACKGROUND_SCHEMA_VERSION = 3 as const;
+/**
+ * Schema 1 named the structural noise controls `noiseOctaves`/`noiseFrequency`;
+ * schema 2 freed those names for the surface noise and renamed the structural
+ * pair to `field*`. Schema 3 generalized the ribbon-only `ribbonDensity` into
+ * `patternDensity` once the field stopped being ribbons alone.
+ */
+const GRADIENT_BACKGROUND_LEGACY_SCHEMA_VERSIONS = [1, 2] as const;
 export const GRADIENT_BACKGROUND_QUALITY_VALUES = [
   "auto",
   "low",
@@ -9,12 +15,47 @@ export const GRADIENT_BACKGROUND_QUALITY_VALUES = [
   "high",
 ] as const;
 export const GRADIENT_BACKGROUND_COLOR_MODES = ["custom", "palette"] as const;
+export const GRADIENT_BACKGROUND_PATTERNS = [
+  "ribbon",
+  "radial",
+  "conic",
+  "blobs",
+  "contour",
+  "cellular",
+] as const;
+export const GRADIENT_BACKGROUND_EFFECTS = [
+  "none",
+  "ascii",
+  "halftone",
+  "dots",
+  "lines",
+  "dither",
+  "crosshatch",
+] as const;
+export const GRADIENT_BACKGROUND_EFFECT_COLOR_MODES = [
+  "gradient",
+  "duotone",
+  "ink",
+] as const;
+export const GRADIENT_BACKGROUND_EFFECT_SHAPES = [
+  "round",
+  "square",
+  "cross",
+] as const;
 
 export type GradientBackgroundPresetName = keyof typeof presetData;
 export type GradientBackgroundQuality =
   (typeof GRADIENT_BACKGROUND_QUALITY_VALUES)[number];
 export type GradientBackgroundColorMode =
   (typeof GRADIENT_BACKGROUND_COLOR_MODES)[number];
+export type GradientBackgroundPattern =
+  (typeof GRADIENT_BACKGROUND_PATTERNS)[number];
+export type GradientBackgroundEffect =
+  (typeof GRADIENT_BACKGROUND_EFFECTS)[number];
+export type GradientBackgroundEffectColorMode =
+  (typeof GRADIENT_BACKGROUND_EFFECT_COLOR_MODES)[number];
+export type GradientBackgroundEffectShape =
+  (typeof GRADIENT_BACKGROUND_EFFECT_SHAPES)[number];
 
 export interface BalsaBackgroundConfig {
   schemaVersion: typeof GRADIENT_BACKGROUND_SCHEMA_VERSION;
@@ -39,7 +80,32 @@ export interface BalsaBackgroundConfig {
   noiseOctaves: number;
   noiseFrequency: number;
   warpFrequency: number;
-  ribbonDensity: number;
+  /** Which field generator draws the gradient. */
+  pattern: GradientBackgroundPattern;
+  /**
+   * How often the pattern repeats: ribbon count, concentric ring count, conic
+   * arm count, or contour band count depending on `pattern`. Ignored by
+   * `blobs` and `cellular`, which are sized by `patternComplexity`.
+   */
+  patternDensity: number;
+  patternCenterX: number;
+  patternCenterY: number;
+  /** Blob count for `blobs`, cell density for `cellular`. */
+  patternComplexity: number;
+  /** Post-effect applied to the rendered gradient. */
+  effect: GradientBackgroundEffect;
+  /** Effect cell size in CSS pixels, so density survives DPR and PNG capture. */
+  effectScale: number;
+  effectAngle: number;
+  /** Blend between the raw gradient (0) and the fully applied effect (1). */
+  effectMix: number;
+  effectColorMode: GradientBackgroundEffectColorMode;
+  effectInk: string;
+  effectPaper: string;
+  effectInvert: boolean;
+  effectLevels: number;
+  effectShape: GradientBackgroundEffectShape;
+  effectCharacters: string;
 }
 
 export type GradientBackgroundConfigInput = Partial<
@@ -73,6 +139,30 @@ export const gradientBackgroundPresetNames = Object.freeze(
 const HEX_COLOR = /^#[\da-f]{6}$/i;
 const DEFAULT_PRESET: GradientBackgroundPresetName = "obsidian-fold";
 
+/**
+ * Fallbacks for fields a preset may not carry. Presets written before schema 3
+ * have no pattern or effect keys at all, and a config handed in by an agent or
+ * an older export is free to omit any of them.
+ */
+export const GRADIENT_BACKGROUND_DEFAULTS = Object.freeze({
+  pattern: "ribbon" as GradientBackgroundPattern,
+  patternDensity: 2.35,
+  patternCenterX: 0,
+  patternCenterY: 0,
+  patternComplexity: 4,
+  effect: "none" as GradientBackgroundEffect,
+  effectScale: 10,
+  effectAngle: 0,
+  effectMix: 1,
+  effectColorMode: "gradient" as GradientBackgroundEffectColorMode,
+  effectInk: "#F5F5F4",
+  effectPaper: "#0A0A0B",
+  effectInvert: false,
+  effectLevels: 4,
+  effectShape: "round" as GradientBackgroundEffectShape,
+  effectCharacters: " .:-=+*#%@",
+});
+
 export const gradientBackgroundRanges = Object.freeze({
   seed: { min: 0, max: 2147483647, step: 1 },
   speed: { min: 0, max: 2, step: 0.005 },
@@ -91,10 +181,26 @@ export const gradientBackgroundRanges = Object.freeze({
   noiseOctaves: { min: 1, max: 6, step: 1 },
   noiseFrequency: { min: 0.2, max: 4, step: 0.01 },
   warpFrequency: { min: 0.2, max: 4, step: 0.01 },
-  ribbonDensity: { min: 0.5, max: 8, step: 0.05 },
+  patternDensity: { min: 0.5, max: 8, step: 0.05 },
+  patternCenterX: { min: -1, max: 1, step: 0.01 },
+  patternCenterY: { min: -1, max: 1, step: 0.01 },
+  patternComplexity: { min: 1, max: 8, step: 1 },
+  effectScale: { min: 2, max: 48, step: 0.5 },
+  effectAngle: { min: -180, max: 180, step: 1 },
+  effectMix: { min: 0, max: 1, step: 0.01 },
+  effectLevels: { min: 2, max: 8, step: 1 },
   captureWidth: { min: 320, max: 4096, step: 1 },
   captureHeight: { min: 320, max: 4096, step: 1 },
 } as const);
+
+/** The longest character set the ASCII glyph atlas will build a column for. */
+export const GRADIENT_BACKGROUND_MAXIMUM_CHARACTERS = 64;
+
+function isLegacyGradientBackgroundSchemaVersion(value: unknown): boolean {
+  return GRADIENT_BACKGROUND_LEGACY_SCHEMA_VERSIONS.includes(
+    value as (typeof GRADIENT_BACKGROUND_LEGACY_SCHEMA_VERSIONS)[number],
+  );
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -121,6 +227,27 @@ function normalizedColor(value: unknown, fallback: string): string {
   return typeof value === "string" && HEX_COLOR.test(value)
     ? value.toUpperCase()
     : fallback.toUpperCase();
+}
+
+function normalizedBoolean(value: unknown, fallback: boolean): boolean {
+  return typeof value === "boolean" ? value : fallback;
+}
+
+/**
+ * Control characters cannot be drawn into the glyph atlas and would silently
+ * become blank columns, so they are dropped rather than rejected -- a config
+ * with one stray character still renders. Anything printable is allowed
+ * through, including non-Latin sets, and codepoints are counted rather than
+ * UTF-16 units so a surrogate pair stays one glyph.
+ */
+function normalizedCharacters(value: unknown, fallback: string): string {
+  if (typeof value !== "string") return fallback;
+  const characters = Array.from(value).filter((character) => {
+    const code = character.codePointAt(0) ?? 0;
+    return code >= 0x20 && code !== 0x7f;
+  });
+  if (characters.length < 2) return fallback;
+  return characters.slice(0, GRADIENT_BACKGROUND_MAXIMUM_CHARACTERS).join("");
 }
 
 function normalizedColors(value: unknown, fallback: readonly string[]): string[] {
@@ -154,6 +281,34 @@ export function isGradientBackgroundColorMode(
   );
 }
 
+export function isGradientBackgroundPattern(
+  value: unknown,
+): value is GradientBackgroundPattern {
+  return GRADIENT_BACKGROUND_PATTERNS.includes(value as GradientBackgroundPattern);
+}
+
+export function isGradientBackgroundEffect(
+  value: unknown,
+): value is GradientBackgroundEffect {
+  return GRADIENT_BACKGROUND_EFFECTS.includes(value as GradientBackgroundEffect);
+}
+
+export function isGradientBackgroundEffectColorMode(
+  value: unknown,
+): value is GradientBackgroundEffectColorMode {
+  return GRADIENT_BACKGROUND_EFFECT_COLOR_MODES.includes(
+    value as GradientBackgroundEffectColorMode,
+  );
+}
+
+export function isGradientBackgroundEffectShape(
+  value: unknown,
+): value is GradientBackgroundEffectShape {
+  return GRADIENT_BACKGROUND_EFFECT_SHAPES.includes(
+    value as GradientBackgroundEffectShape,
+  );
+}
+
 export function getGradientBackgroundPreset(
   name: GradientBackgroundPresetName,
 ): BalsaBackgroundConfig {
@@ -168,8 +323,11 @@ export function normalizeGradientBackgroundConfig(
   const preset = isGradientBackgroundPresetName(input.preset)
     ? input.preset
     : fallbackPreset;
-  const fallback = presetData[preset];
-  const legacy = input.schemaVersion === LEGACY_GRADIENT_BACKGROUND_SCHEMA_VERSION;
+  const fallback = { ...GRADIENT_BACKGROUND_DEFAULTS, ...presetData[preset] };
+  const legacy = input.schemaVersion === 1;
+  // Schema 3 renamed the key rather than changing its meaning, so an older
+  // config's value is read straight across instead of being migrated away.
+  const patternDensity = input.patternDensity ?? input.ribbonDensity;
 
   return {
     schemaVersion: GRADIENT_BACKGROUND_SCHEMA_VERSION,
@@ -223,8 +381,69 @@ export function normalizeGradientBackgroundConfig(
       4,
     ),
     warpFrequency: clamp(input.warpFrequency, fallback.warpFrequency, 0.2, 4),
-    ribbonDensity: clamp(input.ribbonDensity, fallback.ribbonDensity, 0.5, 8),
+    pattern: isGradientBackgroundPattern(input.pattern)
+      ? input.pattern
+      : (fallback.pattern as GradientBackgroundPattern),
+    patternDensity: clamp(patternDensity, fallback.patternDensity, 0.5, 8),
+    patternCenterX: clamp(input.patternCenterX, fallback.patternCenterX, -1, 1),
+    patternCenterY: clamp(input.patternCenterY, fallback.patternCenterY, -1, 1),
+    patternComplexity: clampInteger(
+      input.patternComplexity,
+      fallback.patternComplexity,
+      1,
+      8,
+    ),
+    effect: isGradientBackgroundEffect(input.effect)
+      ? input.effect
+      : (fallback.effect as GradientBackgroundEffect),
+    effectScale: clamp(input.effectScale, fallback.effectScale, 2, 48),
+    effectAngle: clamp(input.effectAngle, fallback.effectAngle, -180, 180),
+    effectMix: clamp(input.effectMix, fallback.effectMix, 0, 1),
+    effectColorMode: isGradientBackgroundEffectColorMode(input.effectColorMode)
+      ? input.effectColorMode
+      : (fallback.effectColorMode as GradientBackgroundEffectColorMode),
+    effectInk: normalizedColor(input.effectInk, fallback.effectInk),
+    effectPaper: normalizedColor(input.effectPaper, fallback.effectPaper),
+    effectInvert: normalizedBoolean(input.effectInvert, fallback.effectInvert),
+    effectLevels: clampInteger(input.effectLevels, fallback.effectLevels, 2, 8),
+    effectShape: isGradientBackgroundEffectShape(input.effectShape)
+      ? input.effectShape
+      : (fallback.effectShape as GradientBackgroundEffectShape),
+    effectCharacters: normalizedCharacters(
+      input.effectCharacters,
+      fallback.effectCharacters,
+    ),
   };
+}
+
+/**
+ * Shared controls do not mean the same thing to every generator: a
+ * `patternDensity` of 2.35 is a handsome ribbon count but a dizzying number of
+ * concentric rings, and `wave` reads as ridge strength for ribbons and as ring
+ * strength for radial. These are the values a pattern wants when the user
+ * switches to it, applied by the studio rather than by `normalize` -- rewriting
+ * an authored config on every parse would make saved backgrounds unstable.
+ */
+export const gradientBackgroundPatternDefaults: Readonly<
+  Record<GradientBackgroundPattern, Partial<BalsaBackgroundConfig>>
+> = Object.freeze({
+  ribbon: { patternDensity: 2.35, wave: 1.2, warp: 1.12, softness: 0.7 },
+  radial: { patternDensity: 1.4, wave: 0.85, warp: 0.9, softness: 0.8 },
+  conic: { patternDensity: 2, wave: 1, warp: 1.25, softness: 0.75 },
+  blobs: { patternComplexity: 5, wave: 1.1, warp: 0.7, softness: 0.9, scale: 0.85 },
+  contour: { patternDensity: 3.2, wave: 1.35, warp: 1.05, softness: 0.45 },
+  cellular: { patternComplexity: 4, wave: 1.15, warp: 0.85, softness: 0.6 },
+});
+
+export function applyGradientBackgroundPatternDefaults(
+  config: BalsaBackgroundConfig,
+  pattern: GradientBackgroundPattern,
+): BalsaBackgroundConfig {
+  return normalizeGradientBackgroundConfig({
+    ...config,
+    ...gradientBackgroundPatternDefaults[pattern],
+    pattern,
+  }, config.preset);
 }
 
 export function resolveGradientBackgroundConfig(options: {
@@ -237,7 +456,10 @@ export function resolveGradientBackgroundConfig(options: {
       ? options.config.preset
       : DEFAULT_PRESET);
   const base = presetData[selectedPreset];
-  const config = options.config?.schemaVersion === LEGACY_GRADIENT_BACKGROUND_SCHEMA_VERSION
+  // A legacy config is normalized first so its renamed keys land under their
+  // current names before the spread below merges it over the preset -- spreading
+  // it raw would leave `noiseOctaves` meaning two different things at once.
+  const config = isLegacyGradientBackgroundSchemaVersion(options.config?.schemaVersion)
     ? normalizeGradientBackgroundConfig(options.config, selectedPreset)
     : options.config;
   return normalizeGradientBackgroundConfig({
@@ -256,7 +478,7 @@ export function parseGradientBackgroundConfig(
   if (!isRecord(parsed)) throw new Error("Background configuration must be an object.");
   if (
     parsed.schemaVersion !== GRADIENT_BACKGROUND_SCHEMA_VERSION
-    && parsed.schemaVersion !== LEGACY_GRADIENT_BACKGROUND_SCHEMA_VERSION
+    && !isLegacyGradientBackgroundSchemaVersion(parsed.schemaVersion)
   ) {
     throw new Error(
       `Unsupported Balsa background schema version: ${String(parsed.schemaVersion)}.`,
@@ -449,6 +671,27 @@ export function applyGradientBackgroundContentContrast(
   if (!parsed) return [...colors];
   const toward = background ? parseColor(background) : undefined;
   return colors.map((color) => contrastingStop(color, parsed, toward));
+}
+
+/**
+ * In `duotone` and `ink` modes the effect's own two colors are what content
+ * actually sits on -- the ramp underneath is either replaced outright or hidden
+ * behind glyphs -- so the same repair that protects the gradient stops has to
+ * reach them too, or a palette-driven ASCII background can render pale glyphs
+ * on pale paper.
+ */
+export function applyGradientBackgroundEffectContrast(
+  ink: string,
+  paper: string,
+  textColor: string,
+  background?: string,
+): { ink: string; paper: string } {
+  const [repairedInk, repairedPaper] = applyGradientBackgroundContentContrast(
+    [ink, paper],
+    textColor,
+    background,
+  );
+  return { ink: repairedInk, paper: repairedPaper };
 }
 
 /**
