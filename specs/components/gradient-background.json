@@ -24,7 +24,7 @@
   "commonMistakes": ["Placing readable content directly over high-contrast forms without a surface.", "Running several full-viewport instances when one shared background is enough.", "Coupling the primitive to an application palette or theme store.", "Using more than six or fewer than two color stops."],
   "examples": ["Obsidian fold page background", "Palette-aware generated field", "Glassmorphism content over iridescent flow", "Background Studio export"],
   "publicApi": {
-    "props": ["preset", "config", "seed", "colorMode", "colors", "speed", "scale", "warp", "wave", "softness", "grain", "grainSize", "contrast", "brightness", "direction", "fieldOctaves", "fieldFrequency", "noiseAmount", "noiseOctaves", "noiseFrequency", "warpFrequency", "ribbonDensity", "quality", "paused", "theme"],
+    "props": ["preset", "config", "seed", "colorMode", "colors", "contentContrast", "contentColor", "scrim", "scrimColor", "speed", "scale", "warp", "wave", "softness", "grain", "grainSize", "contrast", "brightness", "direction", "fieldOctaves", "fieldFrequency", "noiseAmount", "noiseOctaves", "noiseFrequency", "warpFrequency", "ribbonDensity", "quality", "paused", "theme"],
     "exposed": ["capturePng", "renderStill"]
   }
 }

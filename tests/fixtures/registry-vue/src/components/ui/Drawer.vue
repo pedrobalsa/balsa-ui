@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { X } from "@lucide/vue";
 import {
   computed,
   nextTick,
@@ -12,6 +13,7 @@ import type { LayerVariant } from "./anchored-layer";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type DrawerSide = "left" | "right" | "top" | "bottom";
 export type DrawerSize = "sm" | "md" | "lg";
@@ -350,7 +352,7 @@ onBeforeUnmount(() => {
             :aria-label="props.closeLabel"
             @click="close"
           >
-            <i class="mdi mdi-close text-2xl" aria-hidden="true"></i>
+            <Icon :icon="X" size="lg" />
           </button>
         </header>
         <div class="min-h-0 flex-1 overflow-y-auto p-5">

@@ -1,0 +1,211 @@
+import { Buffer } from "node:buffer";
+import { createHash } from "node:crypto";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { installRegistryItems } from "./install-registry.mjs";
+import { readJson, targetPath, writeJson } from "./registry-lib.mjs";
+import {
+  createThemeModuleSource,
+  normalizeCliThemeConfig,
+  themeExportIdentifier,
+  validateThemeName,
+} from "./theme-cli.mjs";
+
+const sourceColorKeys = [
+  "background", "foreground", "surface", "muted", "primary", "secondary", "accent",
+];
+const paletteTokenKeys = new Set([
+  ...sourceColorKeys,
+  "surface-foreground", "surface-elevated", "surface-elevated-foreground",
+  "muted-foreground", "inverse", "inverse-foreground", "code", "code-foreground",
+  "primary-foreground", "primary-hover", "primary-active",
+  "secondary-foreground", "secondary-hover", "secondary-active",
+  "accent-foreground", "accent-hover", "accent-active",
+  "destructive", "destructive-foreground", "destructive-hover", "destructive-active",
+  "success", "success-foreground", "warning", "warning-foreground",
+  "info", "info-foreground", "border", "border-strong", "input",
+  "input-foreground", "input-border", "focus-ring", "selected",
+  "selected-foreground", "disabled", "disabled-foreground", "overlay",
+]);
+const hexColor = /^#[\da-f]{6}$/i;
+const anyHexColor = /^#(?:[\da-f]{3}|[\da-f]{6}|[\da-f]{8})$/i;
+const keywordColor = /^[a-z]{3,20}$/i;
+// Whitelisted color functions only, and no nested parentheses, so a token value
+// can never smuggle url(), var(), or an extra declaration into the stylesheet.
+const functionalColor =
+  /^(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch)\(\s*[-+\d.%,/\sa-z]{1,80}\)$/i;
+
+function isPlainCssColor(value) {
+  return anyHexColor.test(value) || keywordColor.test(value) || functionalColor.test(value);
+}
+
+function isRecord(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+export function decodeDesignSystemInlineConfig(payload) {
+  if (
+    typeof payload !== "string"
+    || !payload.length
+    || payload.length > 131072
+    || !/^[A-Za-z0-9_-]+$/.test(payload)
+  ) {
+    throw new Error("Inline design system configuration must be a valid base64url payload.");
+  }
+  try {
+    return JSON.parse(Buffer.from(payload, "base64url").toString("utf8"));
+  } catch {
+    throw new Error("Could not decode the inline design system configuration.");
+  }
+}
+
+export function normalizeCliPaletteConfig(value) {
+  if (!isRecord(value)) throw new Error("Palette configuration must be an object.");
+  if (value.schemaVersion !== 1) {
+    throw new Error(`Unsupported Balsa palette schema version: ${String(value.schemaVersion)}.`);
+  }
+  if (value.base !== "light" && value.base !== "dark") {
+    throw new Error('Palette base must be "light" or "dark".');
+  }
+  if (!isRecord(value.colors)) throw new Error("Palette colors must be an object.");
+  const unknownColor = Object.keys(value.colors)
+    .find((key) => !sourceColorKeys.includes(key));
+  if (unknownColor) throw new Error(`Palette color "${unknownColor}" is not supported.`);
+  const colors = {};
+  for (const key of sourceColorKeys) {
+    const color = value.colors[key];
+    if (typeof color !== "string" || !hexColor.test(color)) {
+      throw new Error(`Palette color "${key}" must be a six-digit hex value.`);
+    }
+    colors[key] = color.toLowerCase();
+  }
+
+  const overrides = {};
+  if (value.overrides !== undefined && !isRecord(value.overrides)) {
+    throw new Error("Palette overrides must be an object.");
+  }
+  for (const [key, color] of Object.entries(value.overrides ?? {})) {
+    if (!paletteTokenKeys.has(key)) {
+      throw new Error(`Palette override "${key}" is not a supported palette token.`);
+    }
+    if (typeof color !== "string" || !isPlainCssColor(color.trim())) {
+      throw new Error(`Palette override "${key}" must be a plain CSS color value.`);
+    }
+    overrides[key] = color.trim();
+  }
+
+  return {
+    schemaVersion: 1,
+    base: value.base,
+    colors,
+    ...(Object.keys(overrides).length ? { overrides } : {}),
+  };
+}
+
+export function normalizeCliDesignSystemConfig(value) {
+  if (!isRecord(value)) throw new Error("Design system configuration must be an object.");
+  if (value.schemaVersion !== 1) {
+    throw new Error(`Unsupported Balsa design system schema version: ${String(value.schemaVersion)}.`);
+  }
+  const unknown = Object.keys(value)
+    .find((key) => !["schemaVersion", "palette", "theme"].includes(key));
+  if (unknown) throw new Error(`Design system field "${unknown}" is not supported.`);
+  return {
+    schemaVersion: 1,
+    palette: normalizeCliPaletteConfig(value.palette),
+    theme: normalizeCliThemeConfig(value.theme),
+  };
+}
+
+export function createPaletteStylesheet(name, palette) {
+  const declarations = [
+    ...Object.entries(palette.colors),
+    ...Object.entries(palette.overrides ?? {}),
+  ].map(([key, color]) => `  --balsa-color-${key}: ${color};`).join("\n");
+  return `/* Generated by Balsa UI. Activate with data-palette="${name}". */\n[data-palette="${name}"] {\n  color-scheme: ${palette.base};\n${declarations}\n}\n`;
+}
+
+async function readExisting(filePath) {
+  try {
+    return await readFile(filePath, "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") return undefined;
+    throw error;
+  }
+}
+
+export function contentHash(content) {
+  return `sha256-${createHash("sha256").update(content).digest("hex")}`;
+}
+
+export async function writeGenerated(projectRoot, relativeTarget, content, force) {
+  const destination = targetPath(projectRoot, relativeTarget);
+  const existing = await readExisting(destination);
+  if (existing !== undefined && existing !== content && !force) {
+    throw new Error(`Refusing to overwrite customized file: ${relativeTarget}`);
+  }
+  await mkdir(path.dirname(destination), { recursive: true });
+  await writeFile(destination, content, "utf8");
+  return relativeTarget.replaceAll(path.sep, "/");
+}
+
+export async function createDesignSystemConfiguration({
+  name,
+  cwd,
+  from,
+  inlineConfig,
+  force = false,
+}) {
+  validateThemeName(name, "Design system");
+  if (from && inlineConfig) throw new Error("Use only one of --from or --config.");
+  if (!from && !inlineConfig) {
+    throw new Error("A design system needs --config <payload> or --from <file>.");
+  }
+  const projectRoot = path.resolve(cwd ?? process.cwd());
+
+  let input;
+  if (inlineConfig) {
+    input = decodeDesignSystemInlineConfig(inlineConfig);
+  } else {
+    const inputPath = path.resolve(from);
+    try {
+      input = JSON.parse(await readFile(inputPath, "utf8"));
+    } catch (error) {
+      throw new Error(`Could not read design system JSON ${inputPath}: ${error.message}`);
+    }
+  }
+  const config = normalizeCliDesignSystemConfig(input);
+
+  const themeSource = createThemeModuleSource(name, config.theme);
+  const paletteSource = createPaletteStylesheet(name, config.palette);
+  const themeTarget = path.join("src", "themes", `${name}.ts`);
+  const paletteTarget = path.join("src", "styles", `${name}-palette.css`);
+
+  const installed = await installRegistryItems({
+    names: ["balsa-theme", "balsa-palette"],
+    cwd: projectRoot,
+    force,
+  });
+  const themeFile = await writeGenerated(projectRoot, themeTarget, themeSource, force);
+  const paletteFile = await writeGenerated(projectRoot, paletteTarget, paletteSource, force);
+
+  const manifestPath = path.join(projectRoot, ".balsa", "installed.json");
+  const manifest = await readJson(manifestPath);
+  manifest.components[`design-system-${name}`] = {
+    registry: "@balsa/design-system",
+    installedVersion: "1.0.0",
+    sourceHash: contentHash(`${themeSource}${paletteSource}`),
+    targetPath: themeFile,
+    files: [themeFile, paletteFile],
+  };
+  await writeJson(manifestPath, manifest);
+
+  return {
+    config,
+    themeTarget: themeFile,
+    paletteTarget: paletteFile,
+    identifier: themeExportIdentifier(name),
+    paletteId: name,
+    installed,
+  };
+}

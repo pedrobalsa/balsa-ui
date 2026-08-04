@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "name": "application-card",
+  "title": "ApplicationCard",
+  "category": "composition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Compose a repeatable application surface anatomy while delegating material, geometry, borders, density, and elevation to Card and the active Balsa theme.",
+  "useFor": [
+    "Dashboard panels",
+    "Contained forms",
+    "Metrics and data summaries",
+    "Application sections with optional actions or metadata"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Content without a meaningful grouping",
+    "Clickable containers that compete with inner controls"
+  ],
+  "variants": [
+    "surface",
+    "elevated",
+    "muted",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "header only",
+    "header and action",
+    "body",
+    "footer metadata",
+    "shadowed",
+    "shadowless"
+  ],
+  "composition": {
+    "root": "Card",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "themeDelegation": [
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ]
+  },
+  "accessibility": [
+    "The composition remains a visual container and does not invent landmark semantics.",
+    "headingLevel keeps the generated title in the surrounding document hierarchy.",
+    "The header, action, body, and footer slots preserve consumer-owned semantic content."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-outline-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-shadow-panel"
+  ],
+  "commonMistakes": [
+    "Pinning shadow or radius to make one example look correct instead of inheriting the active theme.",
+    "Nesting another Card only to create body spacing.",
+    "Using a heading level that breaks the surrounding hierarchy.",
+    "Using derived feedback colors instead of neutral, primary, secondary, or accent source-palette roles."
+  ],
+  "examples": [
+    "Dashboard summary",
+    "Form with header action",
+    "Metadata footer",
+    "Explicit local theme override"
+  ],
+  "publicApi": {
+    "props": [
+      "title",
+      "description",
+      "headingLevel",
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ],
+    "slots": [
+      "header",
+      "action",
+      "default",
+      "footer"
+    ],
+    "events": [],
+    "defaults": {
+      "headingLevel": 2,
+      "variant": "inherited Card default",
+      "color": "neutral",
+      "size": "inherited Card default",
+      "rounded": "inherited surface token",
+      "shadow": "auto"
+    }
+  }
+}

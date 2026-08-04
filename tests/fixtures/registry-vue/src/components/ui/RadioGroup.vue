@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LoaderCircle } from "@lucide/vue";
 import { computed, useAttrs } from "vue";
 import { mergeClasses } from "./classes";
 import {
@@ -14,6 +15,7 @@ import {
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import type { SemanticColor } from "./types";
+import Icon from "./Icon.vue";
 
 export interface RadioGroupOption {
   value: string;
@@ -76,7 +78,7 @@ const effectiveStatusMessage = computed(() =>
     : undefined,
 );
 const stateIcon = computed(() =>
-  props.loading ? "mdi-loading" : getFieldStatusIcon(props.status),
+  props.loading ? LoaderCircle : getFieldStatusIcon(props.status),
 );
 const rootClasses = computed(() => mergeClasses("min-w-0", attrs.class));
 const optionsClasses = computed(() => [
@@ -146,8 +148,6 @@ const choiceClasses = computed(() => [
   "peer-disabled:border-balsa-border peer-disabled:bg-balsa-disabled",
 ]);
 const stateIconClasses = computed(() => [
-  "mdi",
-  stateIcon.value,
   props.loading ? "animate-spin text-balsa-info" : getFieldStateColorClass(props.status),
 ]);
 
@@ -197,10 +197,10 @@ function selectOption(value: string): void {
     :aria-describedby="describedBy"
     :class="rootClasses"
   >
-    <legend class="mb-3 text-sm font-bold leading-snug text-balsa-foreground">
+    <legend class="mb-3 text-sm font-medium leading-snug text-balsa-foreground">
       <span>{{ props.label }}</span>
       <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
-      <i v-if="stateIcon" :class="stateIconClasses" aria-hidden="true"></i>
+      <Icon v-if="stateIcon" :icon="stateIcon" size="md" :class="stateIconClasses" />
     </legend>
 
     <div :class="optionsClasses">
@@ -225,7 +225,7 @@ function selectOption(value: string): void {
         />
         <span data-balsa="radio-group-indicator" :class="choiceClasses" aria-hidden="true"></span>
         <span class="min-w-0">
-          <span class="block font-bold leading-snug">{{ option.label }}</span>
+          <span class="block text-sm font-medium leading-snug">{{ option.label }}</span>
           <span
             v-if="option.description"
             :class="descriptionClasses(option)"
@@ -243,7 +243,7 @@ function selectOption(value: string): void {
       v-if="effectiveStatusMessage"
       :id="statusId"
       role="alert"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

@@ -6,7 +6,9 @@
   "dependencies": {
     "@fontsource/noto-sans": "^5.2.10",
     "@fontsource/space-grotesk": "^5.2.10",
-    "@mdi/font": "^7.4.47",
+    "@lucide/vue": "^1.28.0",
+    "@unovis/ts": "^1.6.7",
+    "@unovis/vue": "^1.6.7",
     "balsa-ui": "file:../../..",
     "three": "^0.185.1",
     "vue": "^3.5.34"

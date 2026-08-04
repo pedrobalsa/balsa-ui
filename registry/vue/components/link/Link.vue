@@ -4,6 +4,7 @@ import { actionColorClasses, type ActionColor } from "./types";
 import type { Shadow, ThemeInput } from "./theme";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon, { type IconComponent } from "./Icon.vue";
 
 type LinkVariant = "text" | "solid" | "outline";
 type LinkSize = "sm" | "md" | "lg";
@@ -17,8 +18,8 @@ const rawProps = withDefaults(
     variant?: LinkVariant;
     color?: ActionColor;
     size?: LinkSize;
-    prefixIcon?: string;
-    suffixIcon?: string;
+    prefixIcon?: IconComponent;
+    suffixIcon?: IconComponent;
     external?: boolean;
     label?: string;
     rounded?: Rounded;
@@ -53,7 +54,7 @@ const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const classes = computed(() =>
   mergeClasses(
-    "inline-flex w-fit items-center justify-center font-balsa-body font-bold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
+    "inline-flex w-fit items-center justify-center font-balsa-body transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
     roundedClasses[props.rounded],
     actionColorClasses[props.color][props.variant],
     props.variant === "text"
@@ -67,7 +68,6 @@ const classes = computed(() =>
 
 const target = computed(() => (props.external ? "_blank" : undefined));
 const rel = computed(() => (props.external ? "noreferrer" : undefined));
-const iconClasses = computed(() => ["mdi", "text-lg"]);
 </script>
 
 <template>
@@ -87,16 +87,16 @@ const iconClasses = computed(() => ["mdi", "text-lg"]);
     :class="classes"
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
   >
-    <i
+    <Icon
       v-if="props.prefixIcon"
-      :class="[...iconClasses, props.prefixIcon]"
-      aria-hidden="true"
-    ></i>
+      :icon="props.prefixIcon"
+      size="md"
+    />
     <slot />
-    <i
+    <Icon
       v-if="props.suffixIcon"
-      :class="[...iconClasses, props.suffixIcon]"
-      aria-hidden="true"
-    ></i>
+      :icon="props.suffixIcon"
+      size="md"
+    />
   </a>
 </template>

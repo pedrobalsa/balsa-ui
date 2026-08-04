@@ -16,6 +16,7 @@
   <url><loc>https://balsa-ui.com/docs/changelog</loc></url>
   <url><loc>https://balsa-ui.com/tools/background-studio</loc></url>
   <url><loc>https://balsa-ui.com/templates</loc></url>
+  <url><loc>https://balsa-ui.com/docs/components/icon</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/button</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/button-group</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/input</loc></url>
@@ -38,6 +39,7 @@
   <url><loc>https://balsa-ui.com/docs/components/link</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/badge</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/application-card</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/select</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/autocomplete</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/checkbox</loc></url>
@@ -72,4 +74,34 @@
   <url><loc>https://balsa-ui.com/docs/components/navbar</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/footer</loc></url>
   <url><loc>https://balsa-ui.com/docs/components/gradient-background</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/account-security-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/payout-method-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/transfer-funds-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/savings-goal-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/transaction-list-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/balance-summary-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/usage-summary-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/analytics-chart-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/metric-grid-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/resource-table-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/settings-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/notification-preferences-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/invite-members-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/member-access-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/action-list-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/navigation-menu-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/empty-state-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/error-state-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/loading-state-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/file-upload-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/media-preview-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/schedule-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/appointment-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/payment-method-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/subscription-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/order-summary-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/onboarding-checklist-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/form-progress-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/activity-timeline-card</loc></url>
+  <url><loc>https://balsa-ui.com/docs/compositions/command-toolbar-card</loc></url>
 </urlset>

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "command-toolbar-card",
+  "type": "registry:ui",
+  "title": "CommandToolbarCard",
+  "description": "Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/icon",
+    "@balsa/application-card",
+    "@balsa/button",
+    "@balsa/kbd"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/CommandToolbarCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/CommandToolbarCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport { Copy, Plus, RefreshCw, Share2 } from \"@lucide/vue\";\r\nimport Button from \"../ui/Button.vue\";\r\nimport Kbd from \"../ui/Kbd.vue\";\r\nimport Icon, { type IconComponent } from \"../ui/Icon.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionSurfaceProps } from \"./composition\";\r\n\r\nexport interface ToolbarAction {\r\n  id: string;\r\n  label: string;\r\n  description?: string;\r\n  icon: IconComponent;\r\n  shortcut?: readonly string[];\r\n  disabled?: boolean;\r\n}\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; actions?: readonly ToolbarAction[] }>(), {\r\n  title: \"Quick actions\", description: \"Start common workspace tasks from one place.\", actions: () => [\r\n    { id: \"copy\", label: \"Copy selection\", description: \"Duplicate the active content.\", icon: Copy, shortcut: [\"Ctrl\", \"C\"] },\r\n    { id: \"share\", label: \"Share workspace\", description: \"Invite people to collaborate.\", icon: Share2, shortcut: [\"S\"] },\r\n    { id: \"refresh\", label: \"Refresh data\", description: \"Sync the latest workspace state.\", icon: RefreshCw, shortcut: [\"R\"] },\r\n    { id: \"add\", label: \"Create resource\", description: \"Start a new workspace item.\", icon: Plus, shortcut: [\"Ctrl\", \"K\"] },\r\n  ],\r\n});\r\nconst emit = defineEmits<{ action: [id: string] }>();\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"command-toolbar\">\r\n    <ul class=\"grid gap-2\" role=\"list\">\r\n      <li v-for=\"action in props.actions\" :key=\"action.id\" class=\"min-w-0\">\r\n        <Button\r\n          variant=\"soft\"\r\n          color=\"secondary\"\r\n          class=\"h-auto w-full justify-start gap-3 px-3 py-3 text-left\"\r\n          :disabled=\"action.disabled\"\r\n          @click=\"emit('action', action.id)\"\r\n        >\r\n          <span class=\"grid size-9 shrink-0 place-items-center rounded-balsa-control bg-balsa-muted text-balsa-foreground\" aria-hidden=\"true\">\r\n            <Icon :icon=\"action.icon\" size=\"md\" />\r\n          </span>\r\n          <span class=\"min-w-0 flex-1\">\r\n            <strong class=\"block truncate text-sm font-medium\">{{ action.label }}</strong>\r\n            <span v-if=\"action.description\" class=\"mt-0.5 block truncate text-xs font-normal text-balsa-muted-foreground\">{{ action.description }}</span>\r\n          </span>\r\n          <Kbd v-if=\"action.shortcut\" :keys=\"action.shortcut\" size=\"sm\" />\r\n        </Button>\r\n      </li>\r\n    </ul>\r\n  </CompositionRoot>\r\n</template>\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/command-toolbar-card.json",
+    "documentation": "docs/compositions/command-toolbar-card.md",
+    "example": "docs/compositions/command-toolbar-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { X } from "@lucide/vue";
 import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import type { Shadow, ThemeInput } from "./theme";
 import { semanticColorClasses, type ActionColor } from "./types";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type ModalPresentation = "dialog" | "sheet" | "fullscreen";
 export type ModalVariant = "surface" | "solid" | "outline" | "soft" | "glass";
@@ -97,6 +99,10 @@ const panelVariantClasses: Readonly<Record<ModalVariant, string>> = {
   glass: "text-balsa-surface-foreground",
 };
 const panelColorClasses: Readonly<Record<ActionColor, Record<ModalVariant, string[]>>> = {
+  neutral: {
+    surface: [], solid: ["border-balsa-inverse", "bg-balsa-inverse", "text-balsa-inverse-foreground"],
+    outline: ["border-balsa-border-strong"], soft: ["bg-balsa-muted"], glass: [],
+  },
   primary: {
     surface: ["border-balsa-primary/30"], solid: ["border-balsa-primary", ...semanticColorClasses.primary.solid],
     outline: ["border-balsa-primary"], soft: ["border-balsa-primary/25", "bg-balsa-primary/15"], glass: ["border-balsa-primary/40", "bg-balsa-primary/10"],
@@ -162,10 +168,6 @@ const closeButtonClasses = computed(() =>
     ? "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-current/80 transition-colors hover:bg-current/10 hover:text-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
     : "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-balsa-muted-foreground transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
 );
-const closeIconClasses = computed(() => [
-  "mdi mdi-close",
-  props.presentation === "fullscreen" ? "text-2xl" : "text-xl",
-]);
 const headerClasses = computed(() =>
   props.presentation === "fullscreen" ? "sr-only" : "mb-5 pr-10",
 );
@@ -362,7 +364,7 @@ onBeforeUnmount(() => {
             :aria-label="props.closeLabel"
             @click="closeModal"
           >
-            <i :class="closeIconClasses" aria-hidden="true"></i>
+            <Icon :icon="X" :size="props.presentation === 'fullscreen' ? 'lg' : 'md'" />
           </button>
 
           <header :class="headerClasses">

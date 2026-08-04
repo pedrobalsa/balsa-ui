@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-preferences-card",
+  "type": "registry:ui",
+  "title": "NotificationPreferencesCard",
+  "description": "Independently controlled notification channels with concise explanations.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/switch"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/NotificationPreferencesCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/NotificationPreferencesCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { reactive } from \"vue\";\nimport Switch from \"../ui/Switch.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface NotificationPreference { id: string; label: string; description: string; enabled: boolean }\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; items?: readonly NotificationPreference[] }>(), {\n  title: \"Notification preferences\", description: \"Choose which updates should reach you.\", items: () => [\n    { id: \"reports\", label: \"Monthly reports\", description: \"Balance and performance summaries.\", enabled: true },\n    { id: \"security\", label: \"Security alerts\", description: \"New devices and sensitive account changes.\", enabled: true },\n    { id: \"product\", label: \"Product updates\", description: \"Occasional feature announcements.\", enabled: false },\n  ],\n});\nconst emit = defineEmits<{ change: [id: string, enabled: boolean] }>();\nconst values = reactive(Object.fromEntries(props.items.map((item) => [item.id, item.enabled])) as Record<string, boolean>);\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"notification-preferences\">\n    <div class=\"divide-y divide-balsa-border\">\n      <div v-for=\"item in props.items\" :key=\"item.id\" class=\"py-4 first:pt-0 last:pb-0\">\n        <Switch :id=\"`notification-${item.id}`\" v-model=\"values[item.id]\" :label=\"item.label\" :hint=\"item.description\" @update:model-value=\"emit('change', item.id, $event)\" />\n      </div>\n    </div>\n  </CompositionRoot>\n</template>\n\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/notification-preferences-card.json",
+    "documentation": "docs/compositions/notification-preferences-card.md",
+    "example": "docs/compositions/notification-preferences-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

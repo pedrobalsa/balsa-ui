@@ -93,7 +93,7 @@ const controlClasses = computed(() => {
       aria-hidden="true"
     ></span>
     <span>
-      <span class="block text-sm font-bold text-balsa-foreground">
+      <span class="block text-sm font-medium text-balsa-foreground">
         {{ props.label }}
         <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
       </span>

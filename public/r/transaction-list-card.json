@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "transaction-list-card",
+  "type": "registry:ui",
+  "title": "TransactionListCard",
+  "description": "Scannable activity rows with identity, metadata, time, and amount.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/icon",
+    "@balsa/application-card",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/TransactionListCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/TransactionListCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport { ArrowLeftRight, Coffee, ShoppingCart, Wallet } from \"@lucide/vue\";\r\nimport Button from \"../ui/Button.vue\";\r\nimport Icon, { type IconComponent } from \"../ui/Icon.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionPaletteColor, CompositionSurfaceProps } from \"./composition\";\r\n\r\nexport interface TransactionItem { id: string; name: string; category: string; time: string; amount: string; icon?: IconComponent; status?: CompositionPaletteColor }\r\nconst amountColorClasses: Readonly<Record<CompositionPaletteColor, string>> = {\r\n  primary: \"text-balsa-primary\",\r\n  secondary: \"text-balsa-secondary\",\r\n  accent: \"text-balsa-accent\",\r\n};\r\nconst amountColorClass = (color?: CompositionPaletteColor) => color ? amountColorClasses[color] : undefined;\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; items?: readonly TransactionItem[] }>(), {\r\n  title: \"Recent transactions\", description: \"Your latest account activity.\", items: () => [\r\n    { id: \"coffee\", name: \"Blue Bottle Coffee\", category: \"Food & drink\", time: \"Today, 10:24 AM\", amount: \"-$6.50\", icon: Coffee },\r\n    { id: \"market\", name: \"Whole Foods Market\", category: \"Groceries\", time: \"Yesterday\", amount: \"-$142.30\", icon: ShoppingCart },\r\n    { id: \"payout\", name: \"Stripe payout\", category: \"Income\", time: \"Oct 12\", amount: \"+$4,200.00\", icon: Wallet, status: \"accent\" },\r\n  ],\r\n});\r\nconst emit = defineEmits<{ viewAll: []; select: [id: string] }>();\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"transaction-list\">\r\n    <template #action><Button size=\"sm\" variant=\"soft\" @click=\"emit('viewAll')\">View all</Button></template>\r\n    <ul class=\"divide-y divide-balsa-border\" role=\"list\">\r\n      <li v-for=\"item in props.items\" :key=\"item.id\">\r\n        <button type=\"button\" class=\"grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 py-3 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring\" @click=\"emit('select', item.id)\">\r\n          <span class=\"grid size-9 place-items-center rounded-balsa-control bg-balsa-muted\"><Icon :icon=\"item.icon || ArrowLeftRight\" size=\"sm\" /></span>\r\n          <span class=\"min-w-0\"><strong class=\"block truncate text-sm font-medium\">{{ item.name }}</strong><span class=\"block truncate text-xs text-balsa-muted-foreground\">{{ item.category }} · {{ item.time }}</span></span>\r\n          <strong :class=\"['text-sm font-medium tabular-nums', amountColorClass(item.status)]\">{{ item.amount }}</strong>\r\n        </button>\r\n      </li>\r\n    </ul>\r\n  </CompositionRoot>\r\n</template>\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/transaction-list-card.json",
+    "documentation": "docs/compositions/transaction-list-card.md",
+    "example": "docs/compositions/transaction-list-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

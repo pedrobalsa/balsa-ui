@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CircleAlert, CircleCheckBig, Info, TriangleAlert, X } from "@lucide/vue";
 import {
   computed,
   getCurrentInstance,
@@ -14,6 +15,7 @@ import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
 
 export type AlertMode = "inline" | "dialog";
 export type AlertColor = "neutral" | "info" | "success" | "warning" | "destructive";
@@ -34,7 +36,7 @@ const rawProps = withDefaults(
     size?: AlertSize;
     rounded?: Rounded;
     shadow?: Shadow;
-    icon?: string;
+    icon?: IconComponent;
     persistent?: boolean;
     closeLabel?: string;
     outsideDismiss?: boolean;
@@ -101,12 +103,12 @@ const descriptionId = computed(() =>
     : undefined,
 );
 
-const defaultIcons: Readonly<Record<AlertColor, string>> = {
-  neutral: "mdi-information-outline",
-  info: "mdi-information-outline",
-  success: "mdi-check-circle-outline",
-  warning: "mdi-alert-outline",
-  destructive: "mdi-alert-circle-outline",
+const defaultIcons: Readonly<Record<AlertColor, IconComponent>> = {
+  neutral: Info,
+  info: Info,
+  success: CircleCheckBig,
+  warning: TriangleAlert,
+  destructive: CircleAlert,
 };
 const colorVariantClasses: Readonly<
   Record<AlertColor, Record<AlertVariant, string[]>>
@@ -169,10 +171,10 @@ const dialogSizeClasses: Readonly<Record<AlertSize, string>> = {
   md: "max-w-lg",
   lg: "max-w-2xl",
 };
-const iconSizeClasses: Readonly<Record<AlertSize, string>> = {
-  sm: "text-xl",
-  md: "text-2xl",
-  lg: "text-3xl",
+const iconSizes: Readonly<Record<AlertSize, IconSize>> = {
+  sm: "md",
+  md: "lg",
+  lg: "xl",
 };
 const titleSizeClasses: Readonly<Record<AlertSize, string>> = {
   sm: "text-sm",
@@ -207,12 +209,11 @@ const contentClasses = computed(() => [
   contentGapClasses[props.size],
 ]);
 const iconClasses = computed(() => [
-  "mdi shrink-0 leading-none",
-  iconSizeClasses[props.size],
+  "shrink-0",
   isColoredTextVariant.value ? "text-current" : iconColorClasses[props.color],
 ]);
 const titleClasses = computed(() => [
-  "m-0 font-bold leading-tight",
+  "m-0 font-semibold leading-tight",
   titleSizeClasses[props.size],
 ]);
 const descriptionClasses = computed(() => [
@@ -372,7 +373,7 @@ onBeforeUnmount(closeDialog);
     @close="handleNativeClose"
   >
     <div :class="contentClasses">
-      <i :class="[currentIcon, iconClasses]" aria-hidden="true"></i>
+      <Icon :icon="currentIcon" :size="iconSizes[props.size]" :class="iconClasses" />
 
       <div :class="['min-w-0 flex-1', contentPaddingClasses]">
         <h3 :id="titleId" :class="titleClasses">{{ props.title }}</h3>
@@ -402,7 +403,7 @@ onBeforeUnmount(closeDialog);
       shape="fab"
       variant="outline"
       color="secondary"
-      prefix-icon="mdi-close"
+      :prefix-icon="X"
       :theme="theme.input.value"
       :aria-label="props.closeLabel"
       :class="closeClasses"

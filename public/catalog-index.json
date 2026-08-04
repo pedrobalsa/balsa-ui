@@ -1,13 +1,20 @@
 {
   "schemaVersion": 1,
   "framework": "vue",
-  "itemCount": 56,
+  "itemCount": 88,
   "items": [
+    {
+      "name": "icon",
+      "title": "Icon",
+      "category": "component",
+      "description": "Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.",
+      "status": "beta"
+    },
     {
       "name": "button",
       "title": "Button",
       "category": "component",
-      "description": "Typed action control with solid, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and MDI icons.",
+      "description": "Typed action control with solid, soft, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and Lucide icons.",
       "status": "beta"
     },
     {
@@ -21,14 +28,14 @@
       "name": "input",
       "title": "Input",
       "category": "component",
-      "description": "Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; phone, monetary, and percentage presets; validation feedback; and loading states.",
+      "description": "Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; password, phone, monetary, and percentage modes; validation feedback; and loading states.",
       "status": "beta"
     },
     {
       "name": "input-group",
       "title": "Input Group",
       "category": "component",
-      "description": "One labelled native text input with typed start/end text or MDI addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.",
+      "description": "One labelled native text input with typed start/end text or Lucide addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.",
       "status": "beta"
     },
     {
@@ -77,7 +84,7 @@
       "name": "dropdown-menu",
       "title": "Dropdown Menu",
       "category": "component",
-      "description": "Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals.",
+      "description": "Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals. Ships PropertySelect, the full-width caption-over-value property row built on the same trigger.",
       "status": "beta"
     },
     {
@@ -155,6 +162,13 @@
       "title": "Card",
       "category": "component",
       "description": "Consistent semantic surface with six variants, typed action-intent color, configurable corners, size or padding, and shadow for grouping related content and actions.",
+      "status": "beta"
+    },
+    {
+      "name": "application-card",
+      "title": "ApplicationCard",
+      "category": "composition",
+      "description": "Structured application surface with a repeatable header, action, body, and footer rhythm that inherits Card material, geometry, borders, density, and elevation.",
       "status": "beta"
     },
     {
@@ -259,7 +273,7 @@
       "name": "carousel",
       "title": "Carousel",
       "category": "component",
-      "description": "Typed accessible Embla-backed drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.",
+      "description": "Typed accessible Balsa-owned drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.",
       "status": "beta"
     },
     {
@@ -308,7 +322,7 @@
       "name": "charts",
       "title": "Charts",
       "category": "component",
-      "description": "Typed responsive line, bar, and doughnut charts with configurable semantic palettes, element roundness, loading/empty/error surfaces, reduced motion, figure labels, and complete semantic table alternatives.",
+      "description": "Composable responsive Unovis line, area, grouped or stacked bar, donut, and doughnut charts with contrast-safe semantic series, polished interactions, explicit states, and complete semantic table alternatives.",
       "status": "beta"
     },
     {
@@ -393,6 +407,216 @@
       "title": "GradientBackground",
       "category": "component",
       "description": "Deterministic single-pass procedural backgrounds with typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "status": "beta"
+    },
+    {
+      "name": "account-security-card",
+      "title": "AccountSecurityCard",
+      "category": "composition",
+      "description": "Credential update and separated destructive account action.",
+      "status": "beta"
+    },
+    {
+      "name": "payout-method-card",
+      "title": "PayoutMethodCard",
+      "category": "composition",
+      "description": "Receiving-method selection with account details and one save action.",
+      "status": "beta"
+    },
+    {
+      "name": "transfer-funds-card",
+      "title": "TransferFundsCard",
+      "category": "composition",
+      "description": "Account-to-account transfer form with arrival, fee, and total summary.",
+      "status": "beta"
+    },
+    {
+      "name": "savings-goal-card",
+      "title": "SavingsGoalCard",
+      "category": "composition",
+      "description": "Goal values and progress presented in a repeatable financial rhythm.",
+      "status": "beta"
+    },
+    {
+      "name": "transaction-list-card",
+      "title": "TransactionListCard",
+      "category": "composition",
+      "description": "Scannable activity rows with identity, metadata, time, and amount.",
+      "status": "beta"
+    },
+    {
+      "name": "balance-summary-card",
+      "title": "BalanceSummaryCard",
+      "category": "composition",
+      "description": "Compact balance, availability, and contextual action summary.",
+      "status": "beta"
+    },
+    {
+      "name": "usage-summary-card",
+      "title": "UsageSummaryCard",
+      "category": "composition",
+      "description": "Time-series usage, key totals, and quota progress in one panel.",
+      "status": "beta"
+    },
+    {
+      "name": "analytics-chart-card",
+      "title": "AnalyticsChartCard",
+      "category": "composition",
+      "description": "Trend visualization with period context and semantic delta.",
+      "status": "beta"
+    },
+    {
+      "name": "metric-grid-card",
+      "title": "MetricGridCard",
+      "category": "composition",
+      "description": "Aligned operational KPIs with labels, values, and supporting detail.",
+      "status": "beta"
+    },
+    {
+      "name": "resource-table-card",
+      "title": "ResourceTableCard",
+      "category": "composition",
+      "description": "Resource index with status, metadata, row selection, and creation action.",
+      "status": "beta"
+    },
+    {
+      "name": "settings-card",
+      "title": "SettingsCard",
+      "category": "composition",
+      "description": "Related workspace settings with explicit reset and save actions.",
+      "status": "beta"
+    },
+    {
+      "name": "notification-preferences-card",
+      "title": "NotificationPreferencesCard",
+      "category": "composition",
+      "description": "Independently controlled notification channels with concise explanations.",
+      "status": "beta"
+    },
+    {
+      "name": "invite-members-card",
+      "title": "InviteMembersCard",
+      "category": "composition",
+      "description": "Repeatable email and role rows with a single invitation action.",
+      "status": "beta"
+    },
+    {
+      "name": "member-access-card",
+      "title": "MemberAccessCard",
+      "category": "composition",
+      "description": "People, identity, role, and access metadata in a scannable list.",
+      "status": "beta"
+    },
+    {
+      "name": "action-list-card",
+      "title": "ActionListCard",
+      "category": "composition",
+      "description": "Grouped navigational actions with icons, descriptions, and trailing affordances.",
+      "status": "beta"
+    },
+    {
+      "name": "navigation-menu-card",
+      "title": "NavigationMenuCard",
+      "category": "composition",
+      "description": "Sectioned local navigation with an explicit current destination.",
+      "status": "beta"
+    },
+    {
+      "name": "empty-state-card",
+      "title": "EmptyStateCard",
+      "category": "composition",
+      "description": "Blank-slate explanation with one primary next step.",
+      "status": "beta"
+    },
+    {
+      "name": "error-state-card",
+      "title": "ErrorStateCard",
+      "category": "composition",
+      "description": "Recoverable failure with request context and retry action.",
+      "status": "beta"
+    },
+    {
+      "name": "loading-state-card",
+      "title": "LoadingStateCard",
+      "category": "composition",
+      "description": "Stable skeleton geometry with accessible busy semantics.",
+      "status": "beta"
+    },
+    {
+      "name": "file-upload-card",
+      "title": "FileUploadCard",
+      "category": "composition",
+      "description": "Drag-and-drop import target with format guidance and browse action.",
+      "status": "beta"
+    },
+    {
+      "name": "media-preview-card",
+      "title": "MediaPreviewCard",
+      "category": "composition",
+      "description": "Asset preview, publication status, and replacement action.",
+      "status": "beta"
+    },
+    {
+      "name": "schedule-card",
+      "title": "ScheduleCard",
+      "category": "composition",
+      "description": "Date selection paired with a concise upcoming-event list.",
+      "status": "beta"
+    },
+    {
+      "name": "appointment-card",
+      "title": "AppointmentCard",
+      "category": "composition",
+      "description": "Appointment time selection with preparation guidance and confirmation.",
+      "status": "beta"
+    },
+    {
+      "name": "payment-method-card",
+      "title": "PaymentMethodCard",
+      "category": "composition",
+      "description": "Selectable saved payment methods and a focused continuation action.",
+      "status": "beta"
+    },
+    {
+      "name": "subscription-card",
+      "title": "SubscriptionCard",
+      "category": "composition",
+      "description": "Plan, renewal, included usage, and management action.",
+      "status": "beta"
+    },
+    {
+      "name": "order-summary-card",
+      "title": "OrderSummaryCard",
+      "category": "composition",
+      "description": "Line items, calculated totals, and order confirmation.",
+      "status": "beta"
+    },
+    {
+      "name": "onboarding-checklist-card",
+      "title": "OnboardingChecklistCard",
+      "category": "composition",
+      "description": "Setup tasks with progress and complete/current/future state.",
+      "status": "beta"
+    },
+    {
+      "name": "form-progress-card",
+      "title": "FormProgressCard",
+      "category": "composition",
+      "description": "Linear multistep progress with current-step semantics.",
+      "status": "beta"
+    },
+    {
+      "name": "activity-timeline-card",
+      "title": "ActivityTimelineCard",
+      "category": "composition",
+      "description": "Chronological actor, action, target, and time event stream.",
+      "status": "beta"
+    },
+    {
+      "name": "command-toolbar-card",
+      "title": "CommandToolbarCard",
+      "category": "composition",
+      "description": "Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.",
       "status": "beta"
     }
   ]

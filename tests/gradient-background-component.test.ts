@@ -159,6 +159,37 @@ describe("GradientBackground lifecycle", () => {
     animated.unmount();
   });
 
+  it("renders a scrim only when asked, at a controllable opacity", () => {
+    const off = mount(GradientBackground);
+    expect(off.find("[data-balsa-gradient-scrim]").exists()).toBe(false);
+    off.unmount();
+
+    // `true` is a plain default; how much scrim a field needs is a caller decision.
+    const defaulted = mount(GradientBackground, { props: { scrim: true } });
+    const layer = defaulted.get("[data-balsa-gradient-scrim]");
+    expect(layer.attributes("style")).toContain("opacity: 0.65");
+    expect(layer.attributes("style")).toContain("var(--color-balsa-background)");
+    defaulted.unmount();
+
+    const custom = mount(GradientBackground, {
+      props: { scrim: 0.25, scrimColor: "#102030" },
+    });
+    const customLayer = custom.get("[data-balsa-gradient-scrim]");
+    expect(customLayer.attributes("style")).toContain("opacity: 0.25");
+    // jsdom normalizes hex to rgb() when it round-trips through the style attribute.
+    expect(customLayer.attributes("style")).toContain("rgb(16, 32, 48)");
+    custom.unmount();
+
+    // Out-of-range and non-finite values clamp instead of emitting bad CSS.
+    const clamped = mount(GradientBackground, { props: { scrim: 4 } });
+    expect(clamped.get("[data-balsa-gradient-scrim]").attributes("style")).toContain("opacity: 1");
+    clamped.unmount();
+
+    const zeroed = mount(GradientBackground, { props: { scrim: 0 } });
+    expect(zeroed.find("[data-balsa-gradient-scrim]").exists()).toBe(false);
+    zeroed.unmount();
+  });
+
   it("shows the fallback on WebGL failure and context loss", () => {
     rendererState.throwOnCreate = true;
     const failed = mount(GradientBackground);

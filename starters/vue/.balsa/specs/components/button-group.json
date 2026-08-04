@@ -37,7 +37,7 @@
   ],
   "composition": {
     "dependency": "Button",
-    "selection": "Exactly one option id is represented by modelValue and aria-pressed. An omitted variant resolves from surface to glass under the nearest Glassmorphism theme. The default rounded shape resolves to rounded-none in Brutalism.",
+    "selection": "Exactly one option id is represented by modelValue and aria-pressed. An omitted variant resolves from surface to glass under the nearest Glassmorphism theme. The default rounded shape resolves to rounded-none in Brutalism. In the neutral surface, outline, and glass variants, color emphasizes the selected option only and unselected options stay muted-neutral until hover; the solid variant tints every option.",
     "codeSurface": "The code variant provides the compact code-foreground treatment used by CodeBlock header actions, with a compact control radius in every design theme."
   },
   "accessibility": [
@@ -47,6 +47,9 @@
   ],
   "tokens": [
     "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-foreground",
     "--balsa-color-border-strong",
     "--balsa-color-primary",
     "--balsa-color-primary-foreground",
@@ -58,7 +61,8 @@
     "Using ButtonGroup for unrelated actions.",
     "Providing duplicate option ids.",
     "Omitting the group label.",
-    "Reaching through the group with nested important selectors instead of using its typed code variant."
+    "Reaching through the group with nested important selectors instead of using its typed code variant.",
+    "Expecting color to tint unselected options in the neutral surface, outline, and glass variants."
   ],
   "examples": [
     "Preview and code switcher",

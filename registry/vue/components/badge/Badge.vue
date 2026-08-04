@@ -46,7 +46,7 @@ const roundedClasses: Readonly<Record<Rounded, string>> = {
 
 const classes = computed(() =>
   mergeClasses(
-    "inline-flex font-bold",
+    "inline-flex",
     roundedClasses[props.rounded],
     sizeClasses[props.size],
     semanticColorClasses[props.color][props.variant],

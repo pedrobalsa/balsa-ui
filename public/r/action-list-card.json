@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "action-list-card",
+  "type": "registry:ui",
+  "title": "ActionListCard",
+  "description": "Grouped navigational actions with icons, descriptions, and trailing affordances.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/icon",
+    "@balsa/application-card"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ActionListCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/ActionListCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport { ArrowLeftRight, CalendarDays, ChevronRight, Circle, Gauge } from \"@lucide/vue\";\r\nimport Icon, { type IconComponent } from \"../ui/Icon.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionSurfaceProps } from \"./composition\";\r\n\r\nexport interface ActionListItem { id: string; label: string; description?: string; icon?: IconComponent; meta?: string; disabled?: boolean }\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; items?: readonly ActionListItem[] }>(), {\r\n  title: \"Payments\", description: \"Manage recurring money movement.\", items: () => [\r\n    { id: \"limit\", label: \"Change transfer limit\", description: \"Adjust how much you can send.\", icon: Gauge, meta: \"Daily\" },\r\n    { id: \"scheduled\", label: \"Scheduled transfers\", description: \"Set up a transfer for a later date.\", icon: CalendarDays },\r\n    { id: \"debits\", label: \"Direct debits\", description: \"Review authorized merchants.\", icon: ArrowLeftRight },\r\n  ],\r\n});\r\nconst emit = defineEmits<{ select: [id: string] }>();\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"action-list\">\r\n    <nav :aria-label=\"props.title\" class=\"grid gap-2\">\r\n      <button v-for=\"item in props.items\" :key=\"item.id\" type=\"button\" :disabled=\"item.disabled\" class=\"grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-balsa-control bg-balsa-muted p-3 text-left disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring\" @click=\"emit('select', item.id)\">\r\n        <Icon :icon=\"item.icon || Circle\" size=\"md\" />\r\n        <span class=\"min-w-0\"><strong class=\"block text-sm font-medium\">{{ item.label }}</strong><span v-if=\"item.description\" class=\"mt-0.5 block text-sm text-balsa-muted-foreground\">{{ item.description }}</span></span>\r\n        <span class=\"flex items-center gap-2 text-xs text-balsa-muted-foreground\"><span v-if=\"item.meta\">{{ item.meta }}</span><Icon :icon=\"ChevronRight\" size=\"sm\" /></span>\r\n      </button>\r\n    </nav>\r\n  </CompositionRoot>\r\n</template>\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/action-list-card.json",
+    "documentation": "docs/compositions/action-list-card.md",
+    "example": "docs/compositions/action-list-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

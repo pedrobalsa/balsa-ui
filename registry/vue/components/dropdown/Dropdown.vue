@@ -49,6 +49,9 @@ const variantClasses: Readonly<Record<DropdownVariant, string[]>> = {
   glass: ["text-balsa-surface-elevated-foreground", "backdrop-blur-md"],
 };
 const colorClasses: Readonly<Record<ActionColor, Record<DropdownVariant, string[]>>> = {
+  neutral: {
+    surface: [], outline: [], soft: [], glass: [],
+  },
   primary: {
     surface: ["border-balsa-primary/30"], outline: ["border-balsa-primary"], soft: ["border-balsa-primary/20", "bg-balsa-primary/10"], glass: ["border-balsa-primary/30"],
   },

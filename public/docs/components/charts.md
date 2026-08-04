@@ -1,27 +1,35 @@
 # Charts
 
-Charts uses maintained Chart.js through vue-chartjs for line, bar, and doughnut rendering while Balsa owns typed series, semantic palette colors, responsive layout, loading/empty/error states, reduced motion, figure labelling, and the complete semantic table alternative. Chart.js supplies the mature canvas, scale, plugin, interaction, and responsive lifecycle; Balsa deliberately keeps its public configuration finite instead of exposing raw engine options.
+Charts is the finite facade over Balsa's composable Unovis foundation. It covers line, area, grouped or stacked bar, donut, and the retained `doughnut` alias. `ChartContainer`, tooltip, crosshair, and legend primitives remain available when advanced consumers need to compose native Unovis components.
 
-Use Charts for trends, category comparisons, and part-to-whole summaries. Avoid canvas-only data, arbitrary brand colors, or unsupported engine configuration; every meaningful value remains available in the semantic table.
+Use charts for trends, category comparisons, and part-to-whole summaries. Every meaningful value remains available in the semantic table; the visual plot is supplementary.
 
 ## Installation
 
-Install Charts and its Balsa, Chart.js, and vue-chartjs dependencies with:
-
 ```sh
 npx balsa-ui@latest add charts
+
+# Only for a manual source download
+npm install @unovis/vue @unovis/ts
 ```
 
-If you download `Charts.vue` manually instead, also install its renderer packages:
+## Composition
 
-```sh
-npm install chart.js vue-chartjs
+`ChartConfig` is keyed by series id and supplies a label, optional semantic palette role, and optional `IconComponent`. Default series draw only from primary, secondary, accent, and neutral. Feedback roles are opt-in. The container resolves each rendered series against its owning surface and adjusts graphical boundaries toward the surface foreground until they reach 3:1 contrast; chart text targets 4.5:1.
+
+```vue
+<Charts
+  title="Revenue"
+  type="bar"
+  bar-mode="grouped"
+  :labels="labels"
+  :series="series"
+  :config="config"
+/>
 ```
 
-## Colors and sizing
+Line charts use a 2px curve with active-point emphasis. Area charts add a subtle vertical fill beneath a contrast-safe boundary. Bars use balanced group spacing and theme-derived corners. Donuts use restrained gaps and expose a center-content slot. Quiet axes, a horizontal grid, elevated tooltip, compact legend, tabular values, positive-size rendering guard, theme motion, and reduced-motion behavior are shared defaults.
 
-Use the typed `colors` palette to select semantic colors in series order; an individual `ChartSeries.color` overrides that palette entry. The default sequence is `primary`, `secondary`, `accent`, `success`, `warning`, `info`, and `destructive`.
+`showGrid`, `showXAxis`, `showYAxis`, `showTooltip`, `showLegend`, `showCaption`, and `showTable` are finite visibility controls. `labelFormatter` and `valueFormatter` are shared by chart chrome and the semantic fallback.
 
-Charts is responsive by default. `width` and `height` are optional pixel dimensions. `rounded` applies to bars and doughnut segments where Chart.js supports corner radius; line charts are unchanged. Charts intentionally renders without a card surface, so consumers can place it in a Card only when their layout calls for one.
-
-Canonical source: `src/components/ui/Charts.vue`; interactive documentation: `/docs/components/charts`; contract: `specs/components/charts.json`.
+Canonical sources begin at `src/components/ui/ChartContainer.vue` and `src/components/ui/Charts.vue`; interactive documentation: `/docs/components/charts`; contract: `specs/components/charts.json`.

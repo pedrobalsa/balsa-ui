@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="Row extends DataTableRow = DataTableRow">
+import { ArrowDown, ArrowUp, ArrowUpDown, Search, X } from "@lucide/vue";
 import {
   computed,
   nextTick,
@@ -19,6 +20,7 @@ import Table, {
 import type { Rounded } from "./form";
 import type { ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
+import Icon, { type IconComponent } from "./Icon.vue";
 
 export type DataTableRow = Record<string, unknown>;
 export interface DataTableColumn<Row extends DataTableRow = DataTableRow> {
@@ -160,11 +162,11 @@ function sortState(column: DataTableColumn<Row>): "ascending" | "descending" | "
   if (sort.value?.column !== column.id) return "none";
   return sort.value.direction === "asc" ? "ascending" : "descending";
 }
-function sortIconClasses(column: DataTableColumn<Row>): string {
-  if (sort.value?.column !== column.id) return "mdi mdi-sort text-lg";
+function sortIcon(column: DataTableColumn<Row>): IconComponent {
+  if (sort.value?.column !== column.id) return ArrowUpDown;
   return sort.value.direction === "asc"
-    ? "mdi mdi-sort-ascending text-lg"
-    : "mdi mdi-sort-descending text-lg";
+    ? ArrowUp
+    : ArrowDown;
 }
 function updateFilter(field: string, query: string): void {
   const nextFilters = { ...filters.value };
@@ -276,9 +278,9 @@ onBeforeUnmount(() => {
           <tr>
             <th v-if="props.selection !== 'none'" scope="col"><span class="sr-only">Select row</span></th>
             <th v-for="column in visibleColumns" :key="column.id" scope="col" :aria-sort="sortState(column)" :class="alignmentClass(column)">
-              <button v-if="column.sortable" type="button" class="inline-flex items-center gap-1 font-bold hover:text-balsa-primary focus-visible:outline-2 focus-visible:outline-balsa-focus-ring" @click="toggleSort(column)">
+              <button v-if="column.sortable" type="button" class="inline-flex items-center gap-1 hover:text-balsa-primary focus-visible:outline-2 focus-visible:outline-balsa-focus-ring" @click="toggleSort(column)">
                 {{ column.label }}
-                <i :class="sortIconClasses(column)" aria-hidden="true"></i>
+                <Icon :icon="sortIcon(column)" size="md" />
               </button>
               <span v-else>{{ column.label }}</span>
             </th>
@@ -315,7 +317,7 @@ onBeforeUnmount(() => {
           shape="rounded"
           variant="outline"
           color="secondary"
-          prefix-icon="mdi-magnify"
+          :prefix-icon="Search"
           :aria-label="filterOpen ? 'Close filters' : 'Filter rows'"
           :aria-expanded="filterOpen"
           :aria-controls="`${props.id}-filter-menu`"
@@ -332,8 +334,8 @@ onBeforeUnmount(() => {
           class="absolute bottom-full left-0 z-40 mb-2 w-80 rounded-balsa-surface border border-balsa-border-strong bg-balsa-surface-elevated p-4 text-balsa-surface-elevated-foreground shadow-balsa-panel"
         >
           <div class="flex items-center justify-between gap-3">
-            <h3 class="m-0 text-sm font-bold">Filters</h3>
-            <Button shape="fab" size="sm" variant="outline" color="secondary" prefix-icon="mdi-close" aria-label="Close filters" @click="closeFilters" />
+            <h3 class="m-0 text-sm font-semibold">Filters</h3>
+            <Button shape="fab" size="sm" variant="outline" color="secondary" :prefix-icon="X" aria-label="Close filters" @click="closeFilters" />
           </div>
           <form class="mt-4 space-y-3" @submit.prevent="applyQuickFilter">
             <Select
@@ -356,13 +358,13 @@ onBeforeUnmount(() => {
           </form>
           <div v-if="activeFilters.length" class="mt-4 border-t border-balsa-border pt-4">
             <div class="flex items-center justify-between gap-3">
-              <h4 class="m-0 text-sm font-bold">Advanced filters</h4>
+              <h4 class="m-0 text-sm font-semibold">Advanced filters</h4>
               <Button size="sm" variant="outline" color="secondary" @click="clearFilters">Clear all</Button>
             </div>
             <ul class="mt-3 space-y-2">
               <li v-for="filter in activeFilters" :key="filter.id" class="flex items-center justify-between gap-2 rounded-balsa-control bg-balsa-muted px-3 py-2 text-sm">
                 <span class="min-w-0 truncate"><strong>{{ filter.column?.label }}:</strong> {{ filter.query }}</span>
-                <Button shape="fab" size="sm" variant="outline" color="secondary" prefix-icon="mdi-close" :aria-label="`Remove ${filter.column?.label} filter`" @click="removeFilter(filter.id)" />
+                <Button shape="fab" size="sm" variant="outline" color="secondary" :prefix-icon="X" :aria-label="`Remove ${filter.column?.label} filter`" @click="removeFilter(filter.id)" />
               </li>
             </ul>
           </div>

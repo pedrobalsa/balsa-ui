@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LoaderCircle } from "@lucide/vue";
 import { computed, nextTick, ref, useAttrs, watch } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import {
@@ -16,6 +17,7 @@ import {
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import type { SemanticColor } from "./types";
+import Icon from "./Icon.vue";
 
 export type InputOTPMode = "numeric" | "alphanumeric";
 export type InputOTPVariant = FieldVariant | "solid";
@@ -106,7 +108,7 @@ const effectiveStatusMessage = computed(() =>
     : undefined,
 );
 const stateIcon = computed(() =>
-  props.loading ? "mdi-loading" : getFieldStatusIcon(props.status),
+  props.loading ? LoaderCircle : getFieldStatusIcon(props.status),
 );
 const cells = computed(() =>
   Array.from({ length: safeLength.value }, (_, index) => ({
@@ -195,7 +197,7 @@ const cellColorClasses: Readonly<Record<SemanticColor, Record<InputOTPVariant, s
   },
 };
 const cellClasses = computed(() => [
-  "flex shrink-0 items-center justify-center border font-balsa-body font-bold transition-[border-color,box-shadow,opacity]",
+  "flex shrink-0 items-center justify-center border font-balsa-body font-semibold tabular-nums transition-[border-color,box-shadow,opacity]",
   cellVariantClasses[props.variant],
   cellColorClasses[props.color][props.variant],
   props.size === "sm" ? "size-10 text-base" : "size-12 text-lg",
@@ -215,8 +217,7 @@ const activeCellClasses = computed(() =>
       : "border-balsa-focus-ring ring-2 ring-balsa-focus-ring/30",
 );
 const stateIconClasses = computed(() => [
-  "mdi shrink-0",
-  stateIcon.value,
+  "shrink-0",
   props.loading ? "animate-spin text-balsa-info" : getFieldStateColorClass(props.status),
 ]);
 
@@ -342,7 +343,7 @@ watch(
           {{ props.separator }}
         </span>
       </template>
-      <i v-if="stateIcon" :class="stateIconClasses" aria-hidden="true"></i>
+      <Icon v-if="stateIcon" :icon="stateIcon" size="md" :class="stateIconClasses" />
     </div>
     <span v-if="props.hint" :id="hintId" :class="fieldHintClasses">
       {{ props.hint }}
@@ -351,7 +352,7 @@ watch(
       v-if="effectiveStatusMessage"
       :id="statusId"
       role="alert"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

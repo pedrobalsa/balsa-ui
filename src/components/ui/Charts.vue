@@ -1,175 +1,269 @@
 <script setup lang="ts">
-import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Tooltip,
-  type ChartData,
-  type ChartOptions,
-  type ChartType,
-} from "chart.js";
-import { Chart } from "vue-chartjs";
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, type CSSProperties } from "vue";
-import Spinner from "./Spinner.vue";
+import { computed } from "vue";
+import { VisArea, VisAreaSelectors, VisAxis, VisDonut, VisDonutSelectors, VisGroupedBar, VisGroupedBarSelectors, VisLine, VisLineSelectors, VisSingleContainer, VisStackedBar, VisStackedBarSelectors, VisTooltip, VisXYContainer } from "@unovis/vue";
+import { CurveType } from "@unovis/ts";
+import ChartContainer from "./ChartContainer.vue";
+import ChartCrosshair from "./ChartCrosshair.vue";
+import ChartLegendContent from "./ChartLegendContent.vue";
+import type { ChartConfig, ChartPaletteRole, ChartTableSeries } from "./chart";
+import type { IconComponent } from "./Icon.vue";
 import type { Rounded } from "./form";
 import type { SemanticColor } from "./types";
 import type { ThemeInput } from "./theme";
-import { useResolvedThemeProps } from "./theme-context";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Tooltip, Legend);
-
-export type ChartsType = "line" | "bar" | "doughnut";
+export type ChartsType = "line" | "area" | "bar" | "donut" | "doughnut";
+export type ChartsBarMode = "grouped" | "stacked";
 export interface ChartSeries {
+  key?: string;
   label: string;
   data: readonly number[];
-  color?: SemanticColor;
+  color?: SemanticColor | "neutral";
+  icon?: IconComponent;
 }
 
-const defaultColors: readonly SemanticColor[] = ["primary", "secondary", "accent", "success", "warning", "info", "destructive"];
+interface XYDatum {
+  index: number;
+  label: string;
+  values: number[];
+}
 
-const roundedChartRadii: Readonly<Record<Rounded, number>> = {
-  none: 0,
-  sm: 2,
-  md: 4,
-  lg: 8,
-  xl: 12,
-  "2xl": 16,
-  "3xl": 24,
-  full: Number.MAX_VALUE,
-};
+interface DonutDatum {
+  key: string;
+  label: string;
+  value: number;
+  color: string;
+}
 
-const rawProps = withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   title: string;
   description?: string;
   type?: ChartsType;
   labels: readonly string[];
   series: readonly ChartSeries[];
   colors?: readonly SemanticColor[];
+  config?: ChartConfig;
+  barMode?: ChartsBarMode;
   loading?: boolean;
   error?: string;
   emptyText?: string;
+  showGrid?: boolean;
+  showXAxis?: boolean;
+  showYAxis?: boolean;
+  showTooltip?: boolean;
   showLegend?: boolean;
+  showCaption?: boolean;
   showTable?: boolean;
   responsive?: boolean;
   width?: number;
   height?: number;
   rounded?: Rounded;
+  labelFormatter?: (label: string, index: number) => string;
+  valueFormatter?: (value: number, series: ChartSeries, index: number) => string;
   theme?: ThemeInput;
 }>(), {
   type: "bar",
+  barMode: "grouped",
   loading: false,
   emptyText: "No chart data.",
+  showGrid: true,
+  showXAxis: true,
+  showYAxis: true,
+  showTooltip: true,
   showLegend: true,
+  showCaption: true,
   showTable: false,
   responsive: true,
+  height: 260,
+  labelFormatter: (label: string) => label,
+  valueFormatter: (value: number) => new Intl.NumberFormat().format(value),
 });
-const { props, theme } = useResolvedThemeProps(
-  "charts",
-  "surfaces",
-  rawProps,
-  { rounded: "lg" } as const,
-);
-const root = ref<HTMLElement | null>(null);
-const paletteVersion = ref(0);
-let observer: MutationObserver | undefined;
-type ChartColorToken = SemanticColor | "foreground" | "muted-foreground" | "border" | "surface";
-function colorFor(role: ChartColorToken): string {
-  void paletteVersion.value;
-  const value = root.value ? getComputedStyle(root.value).getPropertyValue(`--balsa-color-${role}`).trim() : "";
-  return value || "currentColor";
-}
-const chartType = computed<ChartType>(() => props.type);
-const empty = computed(() => !props.series.length || !props.labels.length || props.series.every((series) => !series.data.length));
-const chartRadius = computed(() => roundedChartRadii[props.rounded]);
-const palette = computed(() => props.colors?.length ? props.colors : defaultColors);
-const chartWidth = computed(() => props.width === undefined ? undefined : Math.max(1, props.width));
-const chartHeight = computed(() => props.height === undefined ? undefined : Math.max(1, props.height));
-const data = computed<ChartData>(() => ({
-  labels: [...props.labels],
-  datasets: props.series.map((series, index) => {
-    const color = colorFor(series.color ?? palette.value[index % palette.value.length] ?? defaultColors[index % defaultColors.length]!);
-    return {
-      label: series.label,
-      data: [...series.data],
-      borderColor: color,
-      backgroundColor: props.type === "line" ? `color-mix(in oklab, ${color} 22%, transparent)` : color,
-      borderWidth: props.type === "doughnut" ? 2 : props.type === "line" ? 2 : 0,
-      ...(props.type === "doughnut" ? { borderColor: colorFor("surface"), borderRadius: chartRadius.value } : {}),
-      ...(props.type === "bar" ? { borderRadius: chartRadius.value, borderSkipped: false } : {}),
-      tension: 0.3,
-      fill: props.type === "line",
-    };
-  }),
-}));
-const options = computed<ChartOptions>(() => ({
-  responsive: props.responsive,
-  maintainAspectRatio: chartHeight.value === undefined,
-  animation: typeof window !== "undefined" && typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : undefined,
-  plugins: {
-    legend: { display: props.showLegend, labels: { color: colorFor("foreground") } },
-    title: { display: false },
-  },
-  scales: props.type === "doughnut" ? undefined : {
-    x: { ticks: { color: colorFor("muted-foreground") }, grid: { color: `color-mix(in oklab, ${colorFor("border")} 60%, transparent)` } },
-    y: { beginAtZero: true, ticks: { color: colorFor("muted-foreground") }, grid: { color: `color-mix(in oklab, ${colorFor("border")} 60%, transparent)` } },
-  },
-}));
-const chartStyle = computed<CSSProperties>(() => ({
-  ...(chartWidth.value === undefined ? {} : { width: `${chartWidth.value}px`, maxWidth: props.responsive ? "100%" : undefined }),
-  ...(chartHeight.value === undefined ? {} : { height: `${chartHeight.value}px` }),
-}));
-const tableClasses = computed(() => props.showTable ? "mt-5 overflow-x-auto" : "sr-only");
-onMounted(async () => {
-  await nextTick();
-  paletteVersion.value += 1;
-  observer = new MutationObserver(() => { paletteVersion.value += 1; });
-  let context: HTMLElement | null = root.value;
-  while (context) {
-    observer.observe(context, {
-      attributes: true,
-      attributeFilter: ["style", "class", "data-palette", "data-theme"],
-    });
-    context = context.parentElement;
+
+const defaultRoles: readonly ChartPaletteRole[] = ["primary", "secondary", "accent", "neutral"];
+const normalizedType = computed(() => props.type === "doughnut" ? "donut" : props.type);
+const seriesKeys = computed(() => props.series.map((series, index) => series.key ?? `series-${index}`));
+const config = computed<ChartConfig>(() => {
+  if (props.config) return props.config;
+  if (normalizedType.value === "donut") {
+    return Object.fromEntries(props.labels.map((label, index) => [
+      `segment-${index}`,
+      {
+        label: props.labelFormatter(label, index),
+        color: props.series[0]?.color ?? props.colors?.[index % (props.colors.length || 1)] ?? defaultRoles[index % defaultRoles.length],
+        icon: props.series[0]?.icon,
+      },
+    ]));
   }
+  return Object.fromEntries(props.series.map((series, index) => [
+    seriesKeys.value[index]!,
+    {
+      label: series.label,
+      color: series.color ?? props.colors?.[index % (props.colors.length || 1)] ?? defaultRoles[index % defaultRoles.length],
+      icon: series.icon,
+    },
+  ]));
 });
-onBeforeUnmount(() => observer?.disconnect());
-watch(() => props.theme, () => { paletteVersion.value += 1; });
+const tableSeries = computed<ChartTableSeries[]>(() => props.series.map((series, index) => ({ key: seriesKeys.value[index]!, label: series.label, data: series.data })));
+const empty = computed(() => !props.series.length || !props.labels.length || props.series.every((series) => !series.data.length));
+const xyData = computed<XYDatum[]>(() => props.labels.map((label, index) => ({
+  index,
+  label,
+  values: props.series.map((series) => series.data[index] ?? 0),
+})));
+const x = (datum: XYDatum) => datum.index;
+const y = computed(() => props.series.map((_, seriesIndex) => (datum: XYDatum) => datum.values[seriesIndex] ?? 0));
+const labelTick = (tick: number | Date) => {
+  const index = typeof tick === "number" ? Math.round(tick) : 0;
+  return props.labelFormatter(props.labels[index] ?? "", index);
+};
+const valueTick = (tick: number | Date) => props.valueFormatter(Number(tick), props.series[0] ?? { label: "Value", data: [] }, 0);
+const tableValueFormatter = (value: number, series: ChartTableSeries, index: number) => props.valueFormatter(
+  value,
+  props.series.find((item, seriesIndex) => (item.key ?? `series-${seriesIndex}`) === series.key) ?? { label: series.label, data: series.data },
+  index,
+);
+const cornerRadius = computed(() => ({ none: 0, sm: 2, md: 4, lg: 6, xl: 8, "2xl": 12, "3xl": 16, full: 9999 } satisfies Record<Rounded, number>)[props.rounded ?? "lg"]);
+
+function escapeHtml(value: string): string {
+  return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+}
+
+function tooltipTemplate(colors: Readonly<Record<string, string>>, datum: XYDatum): string {
+  const rows = props.series.map((series, index) => `<div class="balsa-chart-tooltip-row"><span class="balsa-chart-tooltip-marker" style="background:${escapeHtml(colors[seriesKeys.value[index]!] ?? "currentColor")}"></span><span>${escapeHtml(series.label)}</span><strong>${escapeHtml(props.valueFormatter(datum.values[index] ?? 0, series, datum.index))}</strong></div>`).join("");
+  return `<div class="balsa-chart-tooltip-content"><div class="balsa-chart-tooltip-label">${escapeHtml(props.labelFormatter(datum.label, datum.index))}</div>${rows}</div>`;
+}
+
+function colorsArray(colors: Readonly<Record<string, string>>): string[] {
+  return seriesKeys.value.map((key) => colors[key] ?? "currentColor");
+}
+function dashArray(_: XYDatum[], index: number): number[] {
+  return index % 3 === 1 ? [7, 4] : index % 3 === 2 ? [2, 4] : [];
+}
+function areaDefs(colors: Readonly<Record<string, string>>): string {
+  return seriesKeys.value.map((key, index) => `<linearGradient id="balsa-area-${index}" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="${escapeHtml(colors[key] ?? "currentColor")}" stop-opacity="0.28"/><stop offset="100%" stop-color="${escapeHtml(colors[key] ?? "currentColor")}" stop-opacity="0.03"/></linearGradient>`).join("");
+}
+function donutData(colors: Readonly<Record<string, string>>): DonutDatum[] {
+  const source = props.series[0];
+  return props.labels.map((label, index) => ({
+    key: `segment-${index}`,
+    label,
+    value: source?.data[index] ?? 0,
+    color: colors[`segment-${index}`] ?? "currentColor",
+  }));
+}
+function donutTooltip(datum: DonutDatum): string {
+  const source = props.series[0] ?? { label: "Value", data: [] };
+  return `<div class="balsa-chart-tooltip-content"><div class="balsa-chart-tooltip-row"><span class="balsa-chart-tooltip-marker" style="background:${escapeHtml(datum.color)}"></span><span>${escapeHtml(datum.label)}</span><strong>${escapeHtml(props.valueFormatter(datum.value, source, props.labels.indexOf(datum.label)))}</strong></div></div>`;
+}
 </script>
 
 <template>
-  <figure
-    ref="root"
+  <ChartContainer
     data-balsa="charts"
-    :data-theme="theme.explicitPresentation.value?.id"
-    :data-theme-base="theme.explicitPresentation.value?.base"
-    :data-type="props.type"
-    :data-responsive="props.responsive"
-    class="text-balsa-foreground"
-    :style="theme.explicitPresentation.value?.style"
+    :title="props.title"
+    :description="props.description"
+    :config="config"
+    :labels="props.labels"
+    :table-series="tableSeries"
+    :loading="props.loading"
+    :error="props.error"
+    :empty="empty"
+    :empty-text="props.emptyText"
+    :show-caption="props.showCaption"
+    :show-table="props.showTable"
+    :label-formatter="props.labelFormatter"
+    :value-formatter="tableValueFormatter"
+    :responsive="props.responsive"
+    :width="props.width"
+    :height="props.height"
+    :rounded="props.rounded"
+    :theme="props.theme"
+    :data-type="normalizedType"
+    :data-bar-mode="props.barMode"
   >
-    <figcaption>
-      <h3>{{ props.title }}</h3>
-      <p v-if="props.description" class="mt-1 text-sm text-balsa-muted-foreground">{{ props.description }}</p>
-    </figcaption>
-    <div v-if="props.loading" :style="chartStyle" class="grid place-items-center" aria-busy="true">
-      <Spinner label="Loading chart" />
-    </div>
-    <div v-else-if="props.error" :style="chartStyle" class="grid place-items-center text-center text-balsa-destructive" role="alert">{{ props.error }}</div>
-    <div v-else-if="empty" :style="chartStyle" class="grid place-items-center text-center text-balsa-muted-foreground">{{ props.emptyText }}</div>
-    <div v-else :style="chartStyle" class="mt-4">
-      <Chart :key="props.type" :type="chartType" :data="data" :options="options" :width="chartWidth" :height="chartHeight" aria-hidden="true" />
-    </div>
-    <div :class="tableClasses">
-      <table>
-        <caption>{{ props.title }} data</caption>
-        <thead><tr><th scope="col">Category</th><th v-for="item in props.series" :key="item.label" scope="col">{{ item.label }}</th></tr></thead>
-        <tbody><tr v-for="(label, index) in props.labels" :key="label"><th scope="row">{{ label }}</th><td v-for="item in props.series" :key="item.label">{{ item.data[index] ?? "—" }}</td></tr></tbody>
-      </table>
-    </div>
-  </figure>
+    <template #default="slotProps">
+      <VisSingleContainer
+        v-if="normalizedType === 'donut'"
+        :data="donutData(slotProps.colors)"
+        :width="slotProps.width"
+        :height="slotProps.height"
+        :duration="slotProps.reducedMotion ? 0 : undefined"
+        :aria-label="props.title"
+        class="balsa-chart-plot"
+      >
+        <VisDonut
+          :value="(datum: DonutDatum) => datum.value"
+          :color="(datum: DonutDatum) => datum.color"
+          :pad-angle="0.025"
+          :corner-radius="Math.min(cornerRadius, 8)"
+          :arc-width="28"
+        />
+        <VisTooltip v-if="props.showTooltip" :triggers="{ [VisDonutSelectors.segment]: donutTooltip }" class-name="balsa-chart-tooltip" />
+      </VisSingleContainer>
+      <VisXYContainer
+        v-else
+        :data="xyData"
+        :width="slotProps.width"
+        :height="slotProps.height"
+        :duration="slotProps.reducedMotion ? 0 : undefined"
+        :svg-defs="normalizedType === 'area' ? areaDefs(slotProps.colors) : undefined"
+        :y-domain="[0, undefined]"
+        :aria-label="props.title"
+        class="balsa-chart-plot"
+      >
+        <VisLine
+          v-if="normalizedType === 'line'"
+          :x="x"
+          :y="y"
+          :color="colorsArray(slotProps.colors)"
+          :line-width="2"
+          :curve-type="CurveType.MonotoneX"
+          :line-dash-array="dashArray"
+          highlight-on-hover
+        />
+        <VisArea
+          v-else-if="normalizedType === 'area'"
+          :x="x"
+          :y="y"
+          :color="seriesKeys.map((_, index) => `url(#balsa-area-${index})`)"
+          :line-color="colorsArray(slotProps.colors)"
+          :line-dash-array="dashArray"
+          :line-width="2"
+          :curve-type="CurveType.MonotoneX"
+          line
+        />
+        <VisGroupedBar
+          v-else-if="props.barMode === 'grouped'"
+          :x="x"
+          :y="y"
+          :color="colorsArray(slotProps.colors)"
+          :group-padding="0.18"
+          :bar-padding="0.08"
+          :rounded-corners="cornerRadius"
+        />
+        <VisStackedBar
+          v-else
+          :x="x"
+          :y="y"
+          :color="colorsArray(slotProps.colors)"
+          :bar-padding="0.22"
+          :rounded-corners="cornerRadius"
+        />
+        <VisAxis v-if="props.showXAxis" type="x" :grid-line="false" :domain-line="false" :tick-line="false" :tick-format="labelTick" :num-ticks="props.labels.length" />
+        <VisAxis v-if="props.showYAxis" type="y" :grid-line="props.showGrid" :domain-line="false" :tick-line="false" :tick-format="valueTick" />
+        <ChartCrosshair v-if="props.showTooltip" :x="x" :y="y" :template="(datum: XYDatum) => tooltipTemplate(slotProps.colors, datum)" />
+        <VisTooltip
+          v-if="props.showTooltip"
+          :triggers="{
+          [VisLineSelectors.line]: (datum: XYDatum) => tooltipTemplate(slotProps.colors, datum),
+          [VisAreaSelectors.area]: (datum: XYDatum) => tooltipTemplate(slotProps.colors, datum),
+          [VisGroupedBarSelectors.bar]: (datum: XYDatum) => tooltipTemplate(slotProps.colors, datum),
+          [VisStackedBarSelectors.bar]: (datum: XYDatum) => tooltipTemplate(slotProps.colors, datum),
+        }" class-name="balsa-chart-tooltip" />
+      </VisXYContainer>
+      <div v-if="normalizedType === 'donut' && $slots.center" class="pointer-events-none absolute inset-0 grid place-items-center">
+        <slot name="center" />
+      </div>
+      <ChartLegendContent v-if="props.showLegend" class="mt-3" />
+    </template>
+  </ChartContainer>
 </template>

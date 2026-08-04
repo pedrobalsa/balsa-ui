@@ -16,4 +16,4 @@ npx balsa-ui@latest info input --markdown
 npx balsa-ui@latest add input button modal
 ```
 
-The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items. Generated font and icon stylesheets keep the Latin application fonts and complete MDI class map while shipping only modern WOFF2 assets.
+The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items. The generated font stylesheet keeps the Latin application fonts on modern WOFF2 assets, while icons are tree-shaken Vue components.

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import emblaCarouselVue from "embla-carousel-vue";
-import { computed, onBeforeUnmount, onMounted, ref, useAttrs, watch } from "vue";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "@lucide/vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useAttrs, watch } from "vue";
 import Button from "./Button.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
@@ -62,17 +62,49 @@ const { props, theme } = useResolvedThemeProps(
 
 const emit = defineEmits<{ select: [index: number, item: CarouselItem] }>();
 const attrs = useAttrs();
-const carouselOptions = computed(() => ({
-  axis: props.orientation === "horizontal" ? "x" as const : "y" as const,
-  align: props.align,
-  loop: props.loop,
-}));
-const [emblaRoot, emblaApi] = emblaCarouselVue(carouselOptions);
+const viewport = ref<HTMLElement>();
+const viewportSize = ref(0);
 const selectedIndex = ref(0);
-const canPrevious = ref(false);
-const canNext = ref(false);
-const paused = ref(false);
+const pointerPaused = ref(false);
+const focusPaused = ref(false);
+const paused = computed(() => pointerPaused.value || focusPaused.value);
+const dragging = ref(false);
+const dragOffset = ref(0);
+const canPrevious = computed(() => props.items.length > 1 && (props.loop || selectedIndex.value > 0));
+const canNext = computed(() => props.items.length > 1 && (props.loop || selectedIndex.value < props.items.length - 1));
+const normalizedSlidesPerView = computed(() =>
+  Number.isFinite(props.slidesPerView) ? Math.max(1, props.slidesPerView) : 1,
+);
+const normalizedGap = computed(() =>
+  Number.isFinite(props.gap) ? Math.max(0, props.gap) : 0,
+);
+const slideExtent = computed(() => {
+  if (viewportSize.value <= 0) return 0;
+  return Math.max(
+    0,
+    (viewportSize.value - (normalizedSlidesPerView.value - 1) * normalizedGap.value)
+      / normalizedSlidesPerView.value,
+  );
+});
+const slideStep = computed(() => slideExtent.value + normalizedGap.value);
+const alignmentOffset = computed(() => {
+  const available = Math.max(0, viewportSize.value - slideExtent.value);
+  if (props.align === "center") return available / 2;
+  if (props.align === "end") return available;
+  return 0;
+});
+const trackOffset = computed(() =>
+  alignmentOffset.value - selectedIndex.value * slideStep.value + dragOffset.value,
+);
 let autoplayTimer: ReturnType<typeof setInterval> | undefined;
+let resizeObserver: ResizeObserver | undefined;
+let activePointerId: number | undefined;
+let pointerStart = 0;
+let pointerLast = 0;
+let pointerLastTime = 0;
+let pointerVelocity = 0;
+let movedDuringDrag = false;
+let suppressClick = false;
 
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const variantClasses: Readonly<Record<CarouselVariant, string[]>> = {
@@ -100,22 +132,33 @@ const emptyClasses = computed(() =>
   ),
 );
 const trackClasses = computed(() =>
-  props.orientation === "horizontal"
-    ? "flex touch-pan-y"
-    : "flex h-full flex-col touch-pan-x",
+  mergeClasses(
+    "transition-transform duration-300 ease-out motion-reduce:transition-none",
+    props.orientation === "horizontal"
+      ? "flex touch-pan-y"
+      : "flex h-full flex-col touch-pan-x",
+    dragging.value && "transition-none",
+  ),
 );
 const slideStyle = computed(() => {
-  const count = Math.max(1, props.slidesPerView);
-  const basis = `calc((100% - ${(count - 1) * Math.max(0, props.gap)}px) / ${count})`;
+  const count = normalizedSlidesPerView.value;
+  const basis = `calc((100% - ${(count - 1) * normalizedGap.value}px) / ${count})`;
   return props.orientation === "horizontal"
     ? { flex: `0 0 ${basis}`, minWidth: "0" }
     : { flex: `0 0 ${basis}`, minHeight: "0" };
 });
-const trackStyle = computed(() =>
-  props.orientation === "horizontal"
-    ? { columnGap: `${Math.max(0, props.gap)}px` }
-    : { rowGap: `${Math.max(0, props.gap)}px` },
-);
+const trackStyle = computed(() => {
+  if (props.orientation === "horizontal") {
+    return {
+      columnGap: `${normalizedGap.value}px`,
+      transform: `translate3d(${trackOffset.value}px, 0, 0)`,
+    };
+  }
+  return {
+    rowGap: `${normalizedGap.value}px`,
+    transform: `translate3d(0, ${trackOffset.value}px, 0)`,
+  };
+});
 const hasInsideArrows = computed(() =>
   props.controls && props.arrowsPosition === "inside",
 );
@@ -135,33 +178,38 @@ const indicatorsClasses = computed(() => {
   return "order-last ml-auto";
 });
 const previousIcon = computed(() =>
-  props.orientation === "horizontal" ? "mdi-chevron-left" : "mdi-chevron-up",
+  props.orientation === "horizontal" ? ChevronLeft : ChevronUp,
 );
 const nextIcon = computed(() =>
-  props.orientation === "horizontal" ? "mdi-chevron-right" : "mdi-chevron-down",
+  props.orientation === "horizontal" ? ChevronRight : ChevronDown,
 );
 
-function synchronize(): void {
-  const api = emblaApi.value;
-  if (!api) return;
-  selectedIndex.value = api.selectedScrollSnap();
-  canPrevious.value = api.canScrollPrev();
-  canNext.value = api.canScrollNext();
+function emitSelection(): void {
   const item = props.items[selectedIndex.value];
   if (item) emit("select", selectedIndex.value, item);
 }
 
-function previous(): void {
-  emblaApi.value?.scrollPrev();
+function normalizeIndex(index: number): number {
+  const length = props.items.length;
+  if (length === 0) return 0;
+  if (props.loop) return ((index % length) + length) % length;
+  return Math.min(length - 1, Math.max(0, index));
 }
-function setCarouselRoot(element: unknown): void {
-  emblaRoot.value = element instanceof HTMLElement ? element : undefined;
+function select(index: number): void {
+  const nextIndex = normalizeIndex(index);
+  dragOffset.value = 0;
+  if (nextIndex === selectedIndex.value) return;
+  selectedIndex.value = nextIndex;
+  emitSelection();
+}
+function previous(): void {
+  select(selectedIndex.value - 1);
 }
 function next(): void {
-  emblaApi.value?.scrollNext();
+  select(selectedIndex.value + 1);
 }
 function goTo(index: number): void {
-  emblaApi.value?.scrollTo(index);
+  select(index);
 }
 function indicatorClasses(index: number): string {
   return mergeClasses(
@@ -175,28 +223,126 @@ function clearAutoplay(): void {
 }
 function configureAutoplay(): void {
   clearAutoplay();
-  if (props.autoplay <= 0 || paused.value || props.items.length <= 1) return;
+  if (
+    props.autoplay <= 0
+    || paused.value
+    || dragging.value
+    || props.items.length <= 1
+    || (typeof document !== "undefined" && document.hidden)
+  ) return;
   autoplayTimer = setInterval(() => {
-    const api = emblaApi.value;
-    if (!api) return;
-    if (api.canScrollNext()) api.scrollNext();
-    else if (props.loop) api.scrollTo(0);
+    if (canNext.value) next();
   }, Math.max(1000, props.autoplay));
+}
+
+function measureViewport(): void {
+  const element = viewport.value;
+  if (!element) return;
+  viewportSize.value = props.orientation === "horizontal"
+    ? element.clientWidth
+    : element.clientHeight;
+}
+function pointerCoordinate(event: PointerEvent): number {
+  return props.orientation === "horizontal" ? event.clientX : event.clientY;
+}
+function beginDrag(event: PointerEvent): void {
+  if (props.items.length <= 1 || (event.pointerType === "mouse" && event.button !== 0)) return;
+  activePointerId = event.pointerId;
+  pointerStart = pointerCoordinate(event);
+  pointerLast = pointerStart;
+  pointerLastTime = event.timeStamp;
+  pointerVelocity = 0;
+  movedDuringDrag = false;
+  suppressClick = false;
+  dragOffset.value = 0;
+  dragging.value = true;
+  clearAutoplay();
+  (event.currentTarget as HTMLElement).setPointerCapture?.(event.pointerId);
+}
+function updateDrag(event: PointerEvent): void {
+  if (activePointerId !== event.pointerId) return;
+  const coordinate = pointerCoordinate(event);
+  const elapsed = Math.max(1, event.timeStamp - pointerLastTime);
+  pointerVelocity = (coordinate - pointerLast) / elapsed;
+  pointerLast = coordinate;
+  pointerLastTime = event.timeStamp;
+  let offset = coordinate - pointerStart;
+  if (!props.loop) {
+    const beyondStart = selectedIndex.value === 0 && offset > 0;
+    const beyondEnd = selectedIndex.value === props.items.length - 1 && offset < 0;
+    if (beyondStart || beyondEnd) offset *= 0.25;
+  }
+  dragOffset.value = offset;
+  movedDuringDrag ||= Math.abs(offset) > 4;
+  if (movedDuringDrag && event.cancelable) event.preventDefault();
+}
+function finishDrag(event: PointerEvent, cancelled = false): void {
+  if (activePointerId !== event.pointerId) return;
+  const element = event.currentTarget as HTMLElement;
+  activePointerId = undefined;
+  if (element.hasPointerCapture?.(event.pointerId)) element.releasePointerCapture(event.pointerId);
+  dragging.value = false;
+  const projectedOffset = dragOffset.value + pointerVelocity * 140;
+  const threshold = Math.min(48, Math.max(16, slideStep.value * 0.15));
+  if (!cancelled && Math.abs(projectedOffset) >= threshold) {
+    const distance = Math.max(1, slideStep.value);
+    const steps = Math.max(1, Math.min(props.items.length - 1, Math.round(Math.abs(projectedOffset) / distance)));
+    select(selectedIndex.value + (projectedOffset < 0 ? steps : -steps));
+  } else {
+    dragOffset.value = 0;
+  }
+  suppressClick = movedDuringDrag;
+  if (suppressClick) window.setTimeout(() => { suppressClick = false; }, 0);
+  configureAutoplay();
+}
+function cancelDrag(event: PointerEvent): void {
+  finishDrag(event, true);
+}
+function preventDraggedClick(event: MouseEvent): void {
+  if (!suppressClick) return;
+  event.preventDefault();
+  event.stopPropagation();
+  suppressClick = false;
+}
+function handleFocusOut(event: FocusEvent): void {
+  const root = event.currentTarget as HTMLElement;
+  if (event.relatedTarget instanceof Node && root.contains(event.relatedTarget)) return;
+  focusPaused.value = false;
 }
 
 watch([() => props.autoplay, () => props.items.length, paused], configureAutoplay);
 watch(
-  () => [props.orientation, props.align, props.loop, props.slidesPerView, props.gap],
-  () => emblaApi.value?.reInit(),
+  () => props.items.length,
+  () => {
+    const nextIndex = normalizeIndex(selectedIndex.value);
+    if (nextIndex !== selectedIndex.value) {
+      selectedIndex.value = nextIndex;
+      emitSelection();
+    }
+  },
+);
+watch(
+  () => [props.orientation, props.align, props.slidesPerView, props.gap],
+  () => {
+    dragOffset.value = 0;
+    void nextTick(measureViewport);
+  },
 );
 onMounted(() => {
-  emblaApi.value?.on("select", synchronize).on("reInit", synchronize);
-  synchronize();
+  measureViewport();
+  if (typeof ResizeObserver !== "undefined" && viewport.value) {
+    resizeObserver = new ResizeObserver(measureViewport);
+    resizeObserver.observe(viewport.value);
+  }
+  window.addEventListener("resize", measureViewport);
+  emitSelection();
   configureAutoplay();
   document.addEventListener("visibilitychange", configureAutoplay);
 });
 onBeforeUnmount(() => {
   clearAutoplay();
+  resizeObserver?.disconnect();
+  window.removeEventListener("resize", measureViewport);
   document.removeEventListener("visibilitychange", configureAutoplay);
 });
 </script>
@@ -214,14 +360,25 @@ onBeforeUnmount(() => {
     role="region"
     :class="classes"
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
-    @mouseenter="paused = true"
-    @mouseleave="paused = false"
-    @focusin="paused = true"
-    @focusout="paused = false"
+    @mouseenter="pointerPaused = true"
+    @mouseleave="pointerPaused = false"
+    @focusin="focusPaused = true"
+    @focusout="handleFocusOut"
   >
     <div v-if="props.items.length" class="relative">
-      <div :ref="setCarouselRoot" data-balsa="carousel-viewport" :class="viewportClasses">
-        <div :class="trackClasses" :style="trackStyle">
+      <div
+        ref="viewport"
+        data-balsa="carousel-viewport"
+        :class="viewportClasses"
+        @pointerdown="beginDrag"
+        @pointermove="updateDrag"
+        @pointerup="finishDrag"
+        @pointercancel="cancelDrag"
+        @lostpointercapture="cancelDrag"
+        @click.capture="preventDraggedClick"
+        @dragstart.prevent
+      >
+        <div data-balsa="carousel-track" :class="trackClasses" :style="trackStyle">
           <article
             v-for="(item, index) in props.items"
             :key="item.id"
@@ -284,7 +441,7 @@ onBeforeUnmount(() => {
           @click="goTo(index)"
         />
       </div>
-      <p class="sr-only" aria-live="polite">Slide {{ selectedIndex + 1 }} of {{ props.items.length }}</p>
     </div>
+    <p v-if="props.items.length > 1" class="sr-only" aria-live="polite">Slide {{ selectedIndex + 1 }} of {{ props.items.length }}</p>
   </section>
 </template>

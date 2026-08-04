@@ -70,5 +70,8 @@
     "slots": [
       "default"
     ]
+  },
+  "composition": {
+    "neutralColor": "Neutral is the chrome color: a filled neutral action uses the inverse pair and every quieter treatment resolves to the plain foreground, so toolbar and shell controls do not compete with the content they frame."
   }
 }

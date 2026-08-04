@@ -9,11 +9,12 @@ import Toggle, {
 import { type Shadow, type ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import type { ActionColor } from "./types";
+import type { IconComponent } from "./Icon.vue";
 
 export interface ToggleGroupOption {
   id: string;
   label: string;
-  icon?: string;
+  icon?: IconComponent;
   disabled?: boolean;
 }
 

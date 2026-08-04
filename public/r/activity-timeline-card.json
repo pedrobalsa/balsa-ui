@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "activity-timeline-card",
+  "type": "registry:ui",
+  "title": "ActivityTimelineCard",
+  "description": "Chronological actor, action, target, and time event stream.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/avatar"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ActivityTimelineCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/ActivityTimelineCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport Avatar from \"../ui/Avatar.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionSurfaceProps } from \"./composition\";\r\n\r\nexport interface ActivityEvent { id: string; actor: string; initials: string; action: string; target: string; time: string }\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; events?: readonly ActivityEvent[] }>(), {\r\n  title: \"Recent activity\", description: \"Changes across this workspace.\", events: () => [\r\n    { id: \"1\", actor: \"Ada Lovelace\", initials: \"AL\", action: \"deployed\", target: \"Atlas to production\", time: \"8 minutes ago\" },\r\n    { id: \"2\", actor: \"Grace Hopper\", initials: \"GH\", action: \"updated\", target: \"environment variables\", time: \"42 minutes ago\" },\r\n    { id: \"3\", actor: \"Margaret Hamilton\", initials: \"MH\", action: \"invited\", target: \"two collaborators\", time: \"Yesterday\" },\r\n  ],\r\n});\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"activity-timeline\">\r\n    <ol class=\"relative grid gap-5 before:absolute before:bottom-4 before:left-4 before:top-4 before:w-px before:bg-balsa-border\">\r\n      <li v-for=\"event in props.events\" :key=\"event.id\" class=\"relative flex gap-3\"><Avatar :label=\"event.actor\" :fallback=\"event.initials\" size=\"sm\" class=\"z-10\" /><p class=\"min-w-0 pt-1 text-sm\"><strong class=\"font-medium\">{{ event.actor }}</strong> {{ event.action }} <span class=\"font-medium\">{{ event.target }}</span><span class=\"mt-1 block text-xs text-balsa-muted-foreground\">{{ event.time }}</span></p></li>\r\n    </ol>\r\n  </CompositionRoot>\r\n</template>\r\n\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/activity-timeline-card.json",
+    "documentation": "docs/compositions/activity-timeline-card.md",
+    "example": "docs/compositions/activity-timeline-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

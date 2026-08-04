@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navigation-menu-card",
+  "type": "registry:ui",
+  "title": "NavigationMenuCard",
+  "description": "Sectioned local navigation with an explicit current destination.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/icon",
+    "@balsa/application-card"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/NavigationMenuCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/NavigationMenuCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport { ArrowLeftRight, ChartLine, Circle, LayoutDashboard, Shield, User } from \"@lucide/vue\";\r\nimport Icon, { type IconComponent } from \"../ui/Icon.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionSurfaceProps } from \"./composition\";\r\n\r\nexport interface NavigationMenuItem { id: string; label: string; icon?: IconComponent }\r\nexport interface NavigationMenuGroup { label: string; items: readonly NavigationMenuItem[] }\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; activeId?: string; groups?: readonly NavigationMenuGroup[] }>(), {\r\n  title: \"Workspace navigation\", description: \"Related destinations grouped by task.\", activeId: \"dashboard\", groups: () => [\r\n    { label: \"Overview\", items: [{ id: \"dashboard\", label: \"Dashboard\", icon: LayoutDashboard }, { id: \"transactions\", label: \"Transactions\", icon: ArrowLeftRight }, { id: \"analytics\", label: \"Analytics\", icon: ChartLine }] },\r\n    { label: \"Account\", items: [{ id: \"profile\", label: \"Profile\", icon: User }, { id: \"security\", label: \"Security\", icon: Shield }] },\r\n  ],\r\n});\r\nconst emit = defineEmits<{ navigate: [id: string] }>();\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"navigation-menu\">\r\n    <nav :aria-label=\"props.title\" class=\"grid gap-4\">\r\n      <section v-for=\"group in props.groups\" :key=\"group.label\">\r\n        <small class=\"text-balsa-muted-foreground\">{{ group.label }}</small>\r\n        <ul class=\"mt-2 grid gap-1\" role=\"list\"><li v-for=\"item in group.items\" :key=\"item.id\"><button type=\"button\" :aria-current=\"item.id === props.activeId ? 'page' : undefined\" :class=\"['flex w-full items-center gap-3 rounded-balsa-control px-3 py-2 text-left text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring', item.id === props.activeId ? 'bg-balsa-muted font-medium' : 'hover:bg-balsa-muted']\" @click=\"emit('navigate', item.id)\"><Icon :icon=\"item.icon || Circle\" size=\"sm\" />{{ item.label }}</button></li></ul>\r\n      </section>\r\n    </nav>\r\n  </CompositionRoot>\r\n</template>\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/navigation-menu-card.json",
+    "documentation": "docs/compositions/navigation-menu-card.md",
+    "example": "docs/compositions/navigation-menu-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

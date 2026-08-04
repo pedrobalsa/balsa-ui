@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { File, Paperclip, X } from "@lucide/vue";
 import { computed, ref, useAttrs } from "vue";
 import Button from "./Button.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export interface AttachmentRejection {
   file: File;
@@ -128,7 +130,7 @@ function formatSize(bytes: number): string {
     :class="classes"
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
   >
-    <label :for="props.id" class="block font-balsa-body text-sm font-bold text-balsa-foreground">
+    <label :for="props.id" class="block font-balsa-body text-sm font-medium text-balsa-foreground">
       {{ props.label }} <span v-if="props.required" class="text-balsa-destructive" aria-hidden="true">*</span>
     </label>
     <label
@@ -139,8 +141,8 @@ function formatSize(bytes: number): string {
       @dragleave.prevent="dragging = false"
       @drop.prevent="handleDrop"
     >
-      <i class="mdi mdi-paperclip mb-2 text-2xl text-balsa-primary" aria-hidden="true"></i>
-      <span class="font-bold">Choose files or drop them here</span>
+      <Icon :icon="Paperclip" size="lg" class="mb-2 text-balsa-primary" />
+      <span class="text-sm font-medium">Choose files or drop them here</span>
       <span v-if="props.accept" class="mt-1 text-xs text-balsa-muted-foreground">{{ props.accept }}</span>
       <input
         :id="props.id"
@@ -159,12 +161,12 @@ function formatSize(bytes: number): string {
     </label>
     <ul v-if="model.length" class="space-y-2" aria-label="Selected files">
       <li v-for="(file, index) in model" :key="`${file.name}-${file.size}-${index}`" class="flex items-center gap-3 rounded-balsa-control border border-balsa-border bg-balsa-surface p-3">
-        <i class="mdi mdi-file-outline text-xl text-balsa-primary" aria-hidden="true"></i>
-        <span class="min-w-0 flex-1"><span class="block truncate font-bold">{{ file.name }}</span><span class="text-xs text-balsa-muted-foreground">{{ formatSize(file.size) }}</span></span>
-        <Button shape="fab" size="sm" variant="outline" color="destructive" prefix-icon="mdi-close" :aria-label="`Remove ${file.name}`" :disabled="props.disabled || props.loading" @click="remove(file)" />
+        <Icon :icon="File" size="md" class="text-balsa-primary" />
+        <span class="min-w-0 flex-1"><span class="block truncate text-sm font-medium">{{ file.name }}</span><span class="text-xs text-balsa-muted-foreground">{{ formatSize(file.size) }}</span></span>
+        <Button shape="fab" size="sm" variant="outline" color="destructive" :prefix-icon="X" :aria-label="`Remove ${file.name}`" :disabled="props.disabled || props.loading" @click="remove(file)" />
       </li>
     </ul>
     <p v-if="props.hint" :id="`${props.id}-hint`" class="text-xs text-balsa-muted-foreground">{{ props.hint }}</p>
-    <p v-if="props.status === 'unvalidated' || localError" :id="`${props.id}-error`" class="text-sm font-bold text-balsa-destructive" role="alert">{{ localError || props.statusMessage }}</p>
+    <p v-if="props.status === 'unvalidated' || localError" :id="`${props.id}-error`" class="text-sm font-medium text-balsa-destructive" role="alert">{{ localError || props.statusMessage }}</p>
   </div>
 </template>

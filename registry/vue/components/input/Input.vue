@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LoaderCircle } from "@lucide/vue";
 import { computed, ref, useAttrs } from "vue";
 import {
   fieldHintClasses,
@@ -15,8 +16,9 @@ import {
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
+import Icon from "./Icon.vue";
 
-type InputType = "text" | "number" | "date" | "email" | "phone" | "monetary" | "percentage";
+type InputType = "text" | "password" | "number" | "date" | "email" | "phone" | "monetary" | "percentage";
 
 const phoneMask = "(##) #####-####";
 
@@ -103,11 +105,9 @@ const ariaInvalid = computed(() =>
   props.status === "unvalidated" ? "true" : undefined,
 );
 const stateIcon = computed(() =>
-  props.loading ? "mdi-loading" : getFieldStatusIcon(props.status),
+  props.loading ? LoaderCircle : getFieldStatusIcon(props.status),
 );
 const stateIconClasses = computed(() => [
-  "mdi",
-  stateIcon.value,
   "pointer-events-none absolute top-1/2 -translate-y-1/2",
   props.size === "sm" ? "right-3 text-base" : "right-4 text-lg",
   props.loading ? "text-balsa-info" : getFieldStateColorClass(props.status),
@@ -308,7 +308,7 @@ function formatPercentageInput(value: string): { amount: number | ""; display: s
         @input="handleInput"
         @blur="handleBlur"
       />
-      <i v-if="stateIcon" :class="stateIconClasses" aria-hidden="true"></i>
+      <Icon v-if="stateIcon" :icon="stateIcon" size="md" :class="stateIconClasses" />
       <span
         v-if="isPercentage"
         :class="percentageSuffixClasses"
@@ -324,7 +324,7 @@ function formatPercentageInput(value: string): { amount: number | ""; display: s
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

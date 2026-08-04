@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Maximize, X } from "@lucide/vue";
 import {
   computed,
   nextTick,
@@ -449,7 +450,7 @@ onBeforeUnmount(() => {
       variant="solid"
       color="primary"
       shadow="lg"
-      prefix-icon="mdi-fullscreen"
+      :prefix-icon="Maximize"
       :aria-label="props.fullscreenLabel"
       class="absolute bottom-3 right-3 border border-balsa-border bg-balsa-background/90 text-balsa-foreground shadow-balsa-lg backdrop-blur-xl hover:bg-balsa-background active:bg-balsa-muted"
       @click="openFullscreen"
@@ -476,7 +477,7 @@ onBeforeUnmount(() => {
           shape="fab"
           size="sm"
           variant="glass"
-          prefix-icon="mdi-close"
+          :prefix-icon="X"
           :aria-label="props.closeLabel"
           class="fixed right-4 top-4"
           @click="closeFullscreen"

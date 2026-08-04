@@ -43,15 +43,98 @@
   --color-balsa-info: var(--balsa-color-info, light-dark(#1d4ed8, #93c5fd));
   --color-balsa-info-foreground: var(--balsa-color-info-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
 
-  --color-balsa-border: var(--balsa-material-border, var(--balsa-color-border, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 86%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 80%, var(--balsa-color-foreground, #f4f4f5)))));
-  --color-balsa-border-strong: var(--balsa-material-border-strong, var(--balsa-color-border-strong, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)))));
+  --color-balsa-border: color-mix(in oklab, var(--balsa-material-border, var(--balsa-color-border, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 86%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 80%, var(--balsa-color-foreground, #f4f4f5))))) var(--balsa-border-opacity, 100%), transparent);
+  --color-balsa-border-strong: color-mix(in oklab, var(--balsa-material-border-strong, var(--balsa-color-border-strong, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))))) var(--balsa-border-opacity, 100%), transparent);
   --color-balsa-input: var(--balsa-material-input, var(--balsa-color-input, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 28%, var(--balsa-color-surface, #f1f1f1)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 62%, var(--balsa-color-surface, #191a1c)))));
   --color-balsa-input-foreground: var(--balsa-color-input-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
-  --color-balsa-input-border: var(--balsa-material-input-border, var(--balsa-color-input-border, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)))));
+  --color-balsa-input-border: color-mix(in oklab, var(--balsa-material-input-border, var(--balsa-color-input-border, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))))) var(--balsa-border-opacity, 100%), transparent);
   --color-balsa-focus-ring: var(--balsa-color-focus-ring, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
   --color-balsa-selected: var(--balsa-material-selected, var(--balsa-color-selected, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5))));
   --color-balsa-selected-foreground: var(--balsa-color-selected-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
   --color-balsa-disabled: var(--balsa-color-disabled, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 90%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 84%, var(--balsa-color-foreground, #f4f4f5))));
   --color-balsa-disabled-foreground: var(--balsa-color-disabled-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 66%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
   --color-balsa-overlay: var(--balsa-color-overlay, light-dark(color-mix(in oklab, var(--balsa-color-foreground, #18181b) 60%, transparent), color-mix(in oklab, var(--balsa-color-background, #0f1012) 72%, transparent)));
+  --color-balsa-chart-surface: var(--balsa-color-chart-surface, var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c))));
+  --color-balsa-chart-axis: var(--balsa-color-chart-axis, var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-chart-grid: var(--balsa-color-chart-grid, color-mix(in oklab, var(--balsa-color-border, light-dark(#d4d4d8, #3f3f46)) 70%, transparent));
+  --color-balsa-chart-tooltip: var(--balsa-color-chart-tooltip, var(--balsa-color-surface-elevated, light-dark(#ffffff, #202124)));
+  --color-balsa-chart-tooltip-foreground: var(--balsa-color-chart-tooltip-foreground, var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+}
+
+:root {
+  --balsa-color-chart-surface: var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c)));
+  --balsa-color-chart-axis: var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-color-chart-grid: color-mix(in oklab, var(--balsa-color-border, light-dark(#d4d4d8, #3f3f46)) 70%, transparent);
+  --balsa-color-chart-tooltip: var(--balsa-color-surface-elevated, light-dark(#ffffff, #202124));
+  --balsa-color-chart-tooltip-foreground: var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-color-chart-interaction: var(--balsa-color-primary, light-dark(#18181b, #f4f4f5));
+  --balsa-chart-marker-size: 0.5rem;
+  --balsa-chart-marker-radius: 999px;
+  --balsa-chart-interaction-opacity: 0.16;
+}
+
+[data-balsa="chart-container"] {
+  position: relative;
+  --vis-font-family: var(--balsa-font-body, ui-sans-serif, system-ui, sans-serif);
+  --vis-axis-grid-color: var(--balsa-color-chart-grid);
+  --vis-axis-tick-color: var(--balsa-color-chart-grid);
+  --vis-axis-tick-label-color: var(--balsa-color-chart-axis);
+  --vis-axis-label-color: var(--balsa-color-chart-axis);
+  --vis-axis-grid-opacity: 0.8;
+  --vis-axis-grid-line-dasharray: 3 4;
+  --vis-axis-tick-label-font-size: 11px;
+  --vis-axis-tick-label-weight: 500;
+  --vis-axis-tick-label-hide-transition: opacity var(--balsa-motion-fast, 160ms) var(--balsa-motion-easing, ease);
+  --vis-crosshair-line-stroke-color: var(--balsa-color-chart-interaction);
+  --vis-crosshair-line-stroke-opacity: 0.35;
+  --vis-crosshair-circle-stroke-color: var(--balsa-color-chart-surface);
+  --vis-crosshair-circle-stroke-width: 2px;
+  --vis-tooltip-background-color: var(--balsa-color-chart-tooltip);
+  --vis-tooltip-border-color: var(--balsa-color-border);
+  --vis-tooltip-text-color: var(--balsa-color-chart-tooltip-foreground);
+  --vis-tooltip-border-radius: var(--balsa-radius-control, 0.5rem);
+  --vis-tooltip-padding: 0;
+  --vis-tooltip-transition-duration: var(--balsa-motion-fast, 160ms);
+  --vis-tooltip-box-shadow: var(--balsa-shadow-overlay, 0 12px 30px rgb(0 0 0 / 0.18));
+  --vis-donut-background-color: color-mix(in oklab, var(--balsa-color-chart-grid) 45%, transparent);
+  --vis-donut-segment-stroke-color: var(--balsa-color-chart-surface);
+  --vis-donut-segment-stroke-width: 2px;
+}
+
+.balsa-chart-tooltip-content {
+  min-width: 9rem;
+  padding: 0.625rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.balsa-chart-tooltip-label {
+  margin-bottom: 0.375rem;
+  font-weight: 700;
+}
+
+.balsa-chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.125rem;
+}
+
+.balsa-chart-tooltip-row strong {
+  margin-left: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.balsa-chart-tooltip-marker {
+  width: var(--balsa-chart-marker-size);
+  height: var(--balsa-chart-marker-size);
+  border-radius: var(--balsa-chart-marker-radius);
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-balsa="chart-container"] {
+    --vis-axis-tick-label-hide-transition: none;
+    --vis-tooltip-transition-duration: 0ms;
+  }
 }

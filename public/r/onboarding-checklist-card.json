@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "onboarding-checklist-card",
+  "type": "registry:ui",
+  "title": "OnboardingChecklistCard",
+  "description": "Setup tasks with progress and complete/current/future state.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/button",
+    "@balsa/checkbox",
+    "@balsa/progress"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/OnboardingChecklistCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/OnboardingChecklistCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { reactive } from \"vue\";\nimport Button from \"../ui/Button.vue\";\nimport Checkbox from \"../ui/Checkbox.vue\";\nimport Progress from \"../ui/Progress.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface OnboardingTask { id: string; label: string; description: string; complete: boolean }\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; tasks?: readonly OnboardingTask[] }>(), {\n  title: \"Set up your workspace\", description: \"Complete these tasks to get ready for launch.\", tasks: () => [\n    { id: \"profile\", label: \"Complete profile\", description: \"Add a name and workspace image.\", complete: true },\n    { id: \"team\", label: \"Invite your team\", description: \"Bring collaborators into the workspace.\", complete: true },\n    { id: \"project\", label: \"Create first project\", description: \"Start with a production or preview project.\", complete: false },\n    { id: \"domain\", label: \"Connect a domain\", description: \"Publish with your own address.\", complete: false },\n  ],\n});\nconst emit = defineEmits<{ continue: [] }>();\nconst values = reactive(Object.fromEntries(props.tasks.map((task) => [task.id, task.complete])) as Record<string, boolean>);\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"onboarding-checklist\">\n    <Progress label=\"Setup progress\" :value=\"Math.round((Object.values(values).filter(Boolean).length / props.tasks.length) * 100)\" color=\"primary\" show-value />\n    <div class=\"mt-5 divide-y divide-balsa-border\"><div v-for=\"task in props.tasks\" :key=\"task.id\" class=\"py-3\"><Checkbox :id=\"`onboarding-${task.id}`\" v-model=\"values[task.id]\" :label=\"task.label\" :hint=\"task.description\" /></div></div>\n    <template #footer><Button class=\"w-full\" @click=\"emit('continue')\">Continue setup</Button></template>\n  </CompositionRoot>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/onboarding-checklist-card.json",
+    "documentation": "docs/compositions/onboarding-checklist-card.md",
+    "example": "docs/compositions/onboarding-checklist-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

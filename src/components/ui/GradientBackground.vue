@@ -10,8 +10,13 @@ import {
 import type { ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
 import {
+  GRADIENT_BACKGROUND_SCRIM_OPACITY,
+  applyGradientBackgroundContentContrast,
   buildGradientBackgroundFallback,
+  hasGradientBackgroundPalette,
   resolveGradientBackgroundConfig,
+  resolveGradientBackgroundContentColor,
+  resolveGradientBackgroundPaletteBackground,
   resolveGradientBackgroundPaletteColors,
   type BalsaBackgroundConfig,
   type GradientBackgroundCaptureOptions,
@@ -30,6 +35,10 @@ const props = withDefaults(
     seed?: number;
     colorMode?: GradientBackgroundColorMode;
     colors?: readonly string[];
+    contentContrast?: boolean;
+    contentColor?: string;
+    scrim?: boolean | number;
+    scrimColor?: string;
     speed?: number;
     scale?: number;
     warp?: number;
@@ -57,6 +66,10 @@ const props = withDefaults(
     seed: undefined,
     colorMode: undefined,
     colors: undefined,
+    contentContrast: false,
+    contentColor: undefined,
+    scrim: false,
+    scrimColor: undefined,
     speed: undefined,
     scale: undefined,
     warp: undefined,
@@ -94,6 +107,9 @@ const documentVisible = ref(true);
 const inViewport = ref(true);
 const reducedMotion = ref(false);
 const resolvedColors = ref<string[]>([]);
+const paletteAvailable = ref(false);
+const paletteBackground = ref<string>();
+const ambientTextColor = ref<string>();
 
 let renderer: GradientBackgroundRenderer | undefined;
 let resizeObserver: ResizeObserver | undefined;
@@ -140,13 +156,75 @@ const configuration = computed<BalsaBackgroundConfig>(() =>
   }),
 );
 
-const activeColors = computed(() =>
-  configuration.value.colorMode === "palette"
+/**
+ * A preset carries a colorMode, so the merged configuration can never say
+ * whether the consumer asked for one. Only the prop and the config object
+ * count as a deliberate choice.
+ */
+const explicitColorMode = computed<GradientBackgroundColorMode | undefined>(
+  () => props.colorMode ?? props.config?.colorMode as GradientBackgroundColorMode | undefined,
+);
+
+/**
+ * Inside a Balsa palette the background belongs to that palette by default, so
+ * it restyles with the rest of the interface rather than sitting on fixed
+ * stops. Naming a preset is itself a choice of colors, so a preset keeps its
+ * own mode; `color-mode` overrides either way.
+ */
+const namedPreset = computed(() => Boolean(props.preset ?? props.config?.preset));
+
+const effectiveColorMode = computed<GradientBackgroundColorMode>(() =>
+  explicitColorMode.value
+  ?? (!namedPreset.value && paletteAvailable.value
+    ? "palette"
+    : configuration.value.colorMode),
+);
+
+const paletteColors = computed(() =>
+  effectiveColorMode.value === "palette"
     ? resolvedColors.value.length >= 2
       ? resolvedColors.value
       : configuration.value.colors
     : configuration.value.colors,
 );
+
+/**
+ * Palette stops are already repaired against the palette's own text roles, so
+ * this only has to cover authored colors -- a preset or explicit `colors` that
+ * the consumer wants kept readable under whatever text they are drawing.
+ */
+const contentTextColor = computed(() =>
+  props.contentColor ?? (props.contentContrast ? ambientTextColor.value : undefined),
+);
+
+const activeColors = computed(() =>
+  contentTextColor.value
+    ? applyGradientBackgroundContentContrast(
+        paletteColors.value,
+        contentTextColor.value,
+        // Tint toward the palette background when there is one; without a
+        // palette the repair falls back to black or white.
+        paletteBackground.value,
+      )
+    : paletteColors.value,
+);
+/**
+ * How much scrim a field needs depends on the design around it, not on the
+ * background, so the amount stays a caller decision. `true` is a plain default.
+ */
+const scrimOpacity = computed(() => {
+  if (props.scrim === true) return GRADIENT_BACKGROUND_SCRIM_OPACITY;
+  if (typeof props.scrim !== "number" || !Number.isFinite(props.scrim)) return 0;
+  return Math.min(1, Math.max(0, props.scrim));
+});
+
+const scrimStyle = computed(() => ({
+  // The palette background is what content is designed to be legible against,
+  // so pulling the field toward it is what buys the headroom back.
+  backgroundColor: props.scrimColor ?? "var(--color-balsa-background)",
+  opacity: String(scrimOpacity.value),
+}));
+
 const fallbackStyle = computed(() => ({
   backgroundImage: buildGradientBackgroundFallback(
     activeColors.value,
@@ -175,10 +253,15 @@ const shouldAnimate = computed(() =>
 
 function updatePaletteColors(): void {
   if (!root.value) return;
+  paletteAvailable.value = hasGradientBackgroundPalette(root.value);
+  paletteBackground.value = resolveGradientBackgroundPaletteBackground(root.value);
   resolvedColors.value = resolveGradientBackgroundPaletteColors(
     root.value,
     configuration.value.colors,
   );
+  if (props.contentContrast) {
+    ambientTextColor.value = resolveGradientBackgroundContentColor(root.value);
+  }
 }
 
 function queuePaletteUpdate(): void {
@@ -400,6 +483,15 @@ onBeforeUnmount(() => {
   >
     <div :class="fallbackClasses" :style="fallbackStyle" />
     <canvas ref="canvas" :class="canvasClasses" />
+    <!-- Repaired stops hold a contrast floor before the shader's contrast,
+         brightness, and grain shaping move them, so content laid straight on
+         the field still needs a way to buy headroom back. -->
+    <div
+      v-if="scrimOpacity > 0"
+      data-balsa-gradient-scrim
+      class="absolute inset-0"
+      :style="scrimStyle"
+    />
   </div>
 </template>
 

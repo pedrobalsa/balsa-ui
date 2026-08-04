@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CircleAlert, CircleCheckBig, Info, Star, TriangleAlert, X } from "@lucide/vue";
 import { computed, useAttrs } from "vue";
 import Button from "./Button.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
@@ -6,6 +7,7 @@ import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import type { ActionColor, SemanticColor } from "./types";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
 
 export type ToastVariant = "surface" | "soft" | "outline" | "glass";
 export type ToastSize = "sm" | "md" | "lg";
@@ -22,7 +24,7 @@ const rawProps = withDefaults(
     size?: ToastSize;
     rounded?: Rounded;
     shadow?: Shadow;
-    icon?: string;
+    icon?: IconComponent;
     actionLabel?: string;
     dismissible?: boolean;
     closeLabel?: string;
@@ -50,14 +52,14 @@ const emit = defineEmits<{
 const attrs = useAttrs();
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
-const defaultIcons: Readonly<Record<SemanticColor, string>> = {
-  primary: "mdi-information-outline",
-  secondary: "mdi-information-outline",
-  accent: "mdi-star-outline",
-  destructive: "mdi-alert-circle-outline",
-  success: "mdi-check-circle-outline",
-  warning: "mdi-alert-outline",
-  info: "mdi-information-outline",
+const defaultIcons: Readonly<Record<SemanticColor, IconComponent>> = {
+  primary: Info,
+  secondary: Info,
+  accent: Star,
+  destructive: CircleAlert,
+  success: CircleCheckBig,
+  warning: TriangleAlert,
+  info: Info,
 };
 const colorVariantClasses: Readonly<
   Record<SemanticColor, Record<ToastVariant, string[]>>
@@ -133,10 +135,10 @@ const contentGapClasses: Readonly<Record<ToastSize, string>> = {
   md: "gap-4",
   lg: "gap-5",
 };
-const iconSizeClasses: Readonly<Record<ToastSize, string>> = {
-  sm: "text-xl",
-  md: "text-2xl",
-  lg: "text-3xl",
+const iconSizes: Readonly<Record<ToastSize, IconSize>> = {
+  sm: "md",
+  md: "lg",
+  lg: "xl",
 };
 const titleSizeClasses: Readonly<Record<ToastSize, string>> = {
   sm: "text-sm",
@@ -162,12 +164,11 @@ const contentClasses = computed(() => [
   contentGapClasses[props.size],
 ]);
 const iconClasses = computed(() => [
-  "mdi shrink-0 leading-none",
-  iconSizeClasses[props.size],
+  "shrink-0",
   isTintedVariant.value ? "text-current" : iconColorClasses[props.color],
 ]);
 const titleClasses = computed(() => [
-  "m-0 font-bold leading-tight",
+  "m-0 font-semibold leading-tight",
   titleSizeClasses[props.size],
 ]);
 const descriptionClasses = computed(() => [
@@ -207,7 +208,7 @@ const closeClasses = computed(() =>
     @focusout="emit('resume')"
   >
     <div :class="contentClasses">
-      <i :class="[currentIcon, iconClasses]" aria-hidden="true"></i>
+      <Icon :icon="currentIcon" :size="iconSizes[props.size]" :class="iconClasses" />
       <div :class="['min-w-0 flex-1', contentPaddingClasses]">
         <h3 :id="`${props.id}-title`" :class="titleClasses">
           {{ props.title }}
@@ -226,7 +227,7 @@ const closeClasses = computed(() =>
       shape="fab"
       variant="outline"
       color="secondary"
-      prefix-icon="mdi-close"
+      :prefix-icon="X"
       :theme="theme.input.value"
       :aria-label="props.closeLabel"
       :class="closeClasses"

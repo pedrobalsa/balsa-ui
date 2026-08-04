@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from "@lucide/vue";
 import { computed, useAttrs, watch } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type PaginationSize = "sm" | "md" | "lg";
 export type PaginationPresentation = "pages" | "action-labels" | "icons";
@@ -125,7 +127,7 @@ const showActionLabels = computed(() =>
 );
 const buttonClasses = computed(() =>
   mergeClasses(
-    "inline-flex shrink-0 items-center justify-center gap-1.5 border border-balsa-border bg-balsa-surface font-bold text-balsa-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-45",
+    "inline-flex shrink-0 items-center justify-center gap-1.5 border border-balsa-border bg-balsa-surface font-medium tabular-nums text-balsa-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-45",
     sizeClasses[props.size],
     roundedClasses[props.rounded],
   ),
@@ -176,7 +178,7 @@ function setPage(page: number): void {
           :disabled="props.disabled || currentPage === 1"
           @click="setPage(1)"
         >
-          <i class="mdi mdi-page-first text-lg" aria-hidden="true"></i>
+          <Icon :icon="ChevronFirst" size="md" />
         </button>
       </li>
       <li>
@@ -187,7 +189,7 @@ function setPage(page: number): void {
           :disabled="props.disabled || currentPage === 1"
           @click="setPage(currentPage - 1)"
         >
-          <i v-if="props.presentation !== 'action-labels'" class="mdi mdi-chevron-left text-lg" aria-hidden="true"></i>
+          <Icon v-if="props.presentation !== 'action-labels'" :icon="ChevronLeft" size="md" />
           <span v-if="showActionLabels" :class="actionLabelClasses">{{ props.previousLabel }}</span>
         </button>
       </li>
@@ -220,7 +222,7 @@ function setPage(page: number): void {
           @click="setPage(currentPage + 1)"
         >
           <span v-if="showActionLabels" :class="actionLabelClasses">{{ props.nextLabel }}</span>
-          <i v-if="props.presentation !== 'action-labels'" class="mdi mdi-chevron-right text-lg" aria-hidden="true"></i>
+          <Icon v-if="props.presentation !== 'action-labels'" :icon="ChevronRight" size="md" />
         </button>
       </li>
       <li v-if="props.presentation === 'pages' && props.showEdges" class="max-sm:hidden">
@@ -231,7 +233,7 @@ function setPage(page: number): void {
           :disabled="props.disabled || currentPage === pageCount"
           @click="setPage(pageCount)"
         >
-          <i class="mdi mdi-page-last text-lg" aria-hidden="true"></i>
+          <Icon :icon="ChevronLast" size="md" />
         </button>
       </li>
     </ul>

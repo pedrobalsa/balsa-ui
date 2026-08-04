@@ -286,23 +286,224 @@ export function randomGradientBackgroundSeed(
   return Math.floor(Math.min(0.999999999, Math.max(0, random())) * 2147483648);
 }
 
+/**
+ * All six tonal roles, the shader's maximum. `muted` anchors the neutral end so
+ * a light palette's saturated accents read as tint rather than a dark mass, and
+ * keeping all three accents preserves the mid-tones that give a dark palette its
+ * depth -- dropping one leaves those fields collapsing toward flat black.
+ */
 const paletteRoles = [
   "--balsa-color-background",
   "--balsa-color-surface",
+  "--balsa-color-muted",
   "--balsa-color-primary",
   "--balsa-color-secondary",
   "--balsa-color-accent",
 ] as const;
 
+const paletteBackgroundRole = "--balsa-color-background";
+/**
+ * Overlaid text is rarely the full-strength foreground -- ledes and eyebrows use
+ * dimmer roles. Holding the floor against the dimmest of them keeps the ones
+ * above it readable too.
+ */
+const paletteTextRoles = [
+  "--balsa-color-muted-foreground",
+  "--balsa-color-foreground",
+] as const;
+
+/** WCAG AA for body text: the floor the palette's own -foreground tokens use. */
+export const GRADIENT_BACKGROUND_MINIMUM_CONTRAST = 4.5;
+
+interface RgbColor {
+  red: number;
+  green: number;
+  blue: number;
+}
+
+/**
+ * Hex and rgb() only. Palettes emit hex, but a project may override a role with
+ * a color this cannot read -- those stops are left untouched rather than
+ * guessed at, so an unparseable value degrades to today's behavior.
+ */
+function parseColor(value: string): RgbColor | undefined {
+  const input = value.trim();
+  const hex = input.startsWith("#") ? input.slice(1) : undefined;
+  if (hex && (hex.length === 3 || hex.length === 6)) {
+    const width = hex.length / 3;
+    const channel = (index: number): number => {
+      const part = hex.slice(index * width, index * width + width);
+      const parsed = Number.parseInt(width === 1 ? part + part : part, 16);
+      return Number.isNaN(parsed) ? Number.NaN : parsed;
+    };
+    const color = { red: channel(0), green: channel(1), blue: channel(2) };
+    return Number.isNaN(color.red + color.green + color.blue) ? undefined : color;
+  }
+  const rgb = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/i.exec(input);
+  if (!rgb) return undefined;
+  return {
+    red: Number.parseFloat(rgb[1]),
+    green: Number.parseFloat(rgb[2]),
+    blue: Number.parseFloat(rgb[3]),
+  };
+}
+
+function channel(value: number): number {
+  return Math.round(Math.min(255, Math.max(0, value)));
+}
+
+function toHex({ red, green, blue }: RgbColor): string {
+  return `#${[red, green, blue].map((value) => channel(value).toString(16).padStart(2, "0")).join("")}`
+    .toUpperCase();
+}
+
+/**
+ * Rounds to the 8-bit values the stop will actually be emitted as. Searching on
+ * unrounded channels lands just under the floor once the result is quantized.
+ */
+function mix(from: RgbColor, to: RgbColor, amount: number): RgbColor {
+  return {
+    red: channel(from.red + (to.red - from.red) * amount),
+    green: channel(from.green + (to.green - from.green) * amount),
+    blue: channel(from.blue + (to.blue - from.blue) * amount),
+  };
+}
+
+function relativeLuminance({ red, green, blue }: RgbColor): number {
+  const [r, g, b] = [red, green, blue].map((value) => {
+    const channel = value / 255;
+    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+  });
+  return r * 0.2126 + g * 0.7152 + b * 0.0722;
+}
+
+function contrastRatio(first: RgbColor, second: RgbColor): number {
+  const a = relativeLuminance(first);
+  const b = relativeLuminance(second);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
+/**
+ * Nudges one gradient stop away from the text that will sit on top of it.
+ *
+ * Palette roles are generated to contrast with `background`, not with each
+ * other, so `primary` frequently lands on or near `foreground` -- the stock
+ * dark palette has them identical. Left alone, text over the gradient
+ * disappears wherever that stop dominates. Each failing stop is mixed toward
+ * whichever of black or white reaches the target first, which preserves as much
+ * of the authored hue as the contrast floor allows.
+ */
+function contrastingStop(
+  color: string,
+  textColor: RgbColor,
+  background?: RgbColor,
+): string {
+  const parsed = parseColor(color);
+  if (!parsed) return color;
+  if (contrastRatio(textColor, parsed) >= GRADIENT_BACKGROUND_MINIMUM_CONTRAST) {
+    return toHex(parsed);
+  }
+
+  // The palette's own background is the preferred direction: text is already
+  // guaranteed to read against it, and moving that way is self-correcting per
+  // scheme -- a light palette's saturated blue rises toward near-white, a dark
+  // palette's bright accent sinks toward near-black and keeps its glow. Black
+  // and white are fallbacks for palettes whose background cannot reach the floor.
+  const candidates: RgbColor[] = [
+    ...(background ? [background] : []),
+    { red: 0, green: 0, blue: 0 },
+    { red: 255, green: 255, blue: 255 },
+  ];
+  const target = candidates.find(
+    (candidate) =>
+      contrastRatio(textColor, candidate) >= GRADIENT_BACKGROUND_MINIMUM_CONTRAST,
+  );
+  if (!target) return toHex(parsed);
+
+  let low = 0;
+  let high = 1;
+  for (let iteration = 0; iteration < 20; iteration += 1) {
+    const middle = (low + high) / 2;
+    if (
+      contrastRatio(textColor, mix(parsed, target, middle))
+      >= GRADIENT_BACKGROUND_MINIMUM_CONTRAST
+    ) {
+      high = middle;
+    } else {
+      low = middle;
+    }
+  }
+  return toHex(mix(parsed, target, high));
+}
+
+/**
+ * Rewrites the stops that would swallow text drawn in `textColor`. Pure, so the
+ * inherited-palette path and the opt-in `contentColor` prop share one behavior.
+ */
+export function applyGradientBackgroundContentContrast(
+  colors: readonly string[],
+  textColor: string,
+  background?: string,
+): string[] {
+  const parsed = parseColor(textColor);
+  if (!parsed) return [...colors];
+  const toward = background ? parseColor(background) : undefined;
+  return colors.map((color) => contrastingStop(color, parsed, toward));
+}
+
+/**
+ * The text color the gradient's own box inherits. Content usually sits in a
+ * sibling layer under the same ancestor, so this is the closest the background
+ * can get to "what will be drawn on me" without inspecting the consumer's tree.
+ * `contentColor` exists for the cases where that guess is wrong.
+ */
+export function resolveGradientBackgroundContentColor(
+  element: Element,
+): string | undefined {
+  return getComputedStyle(element).color.trim() || undefined;
+}
+
+interface PaletteRoles {
+  colors: string[];
+  textColor?: string;
+  background?: string;
+}
+
+function readPaletteRoles(element: Element): PaletteRoles {
+  const styles = getComputedStyle(element);
+  const read = (role: string): string | undefined =>
+    styles.getPropertyValue(role).trim() || undefined;
+  return {
+    colors: paletteRoles.map(read).filter((value): value is string => Boolean(value)),
+    textColor: paletteTextRoles.map(read).find(Boolean),
+    background: read(paletteBackgroundRole),
+  };
+}
+
+/** Whether this element sits inside a Balsa palette, so colors can be inherited. */
+export function hasGradientBackgroundPalette(element: Element): boolean {
+  return readPaletteRoles(element).colors.length >= 2;
+}
+
+/** The inherited palette background, the preferred direction for stop repair. */
+export function resolveGradientBackgroundPaletteBackground(
+  element: Element,
+): string | undefined {
+  return readPaletteRoles(element).background;
+}
+
+/** Opacity used when `scrim` is enabled without a value of its own. */
+export const GRADIENT_BACKGROUND_SCRIM_OPACITY = 0.65;
+
 export function resolveGradientBackgroundPaletteColors(
   element: Element,
   fallback: readonly string[],
 ): string[] {
-  const styles = getComputedStyle(element);
-  const resolved = paletteRoles
-    .map((role) => styles.getPropertyValue(role).trim())
-    .filter(Boolean);
-  return resolved.length >= 2 ? resolved : [...fallback];
+  const { colors, textColor, background } = readPaletteRoles(element);
+  if (colors.length < 2) return [...fallback];
+  return textColor
+    ? applyGradientBackgroundContentContrast(colors, textColor, background)
+    : colors;
 }
 
 export function buildGradientBackgroundFallback(

@@ -147,7 +147,7 @@ const labelClasses = computed(() => [
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
   >
     <div :class="labelClasses">
-      <span class="min-w-0 font-bold text-balsa-foreground">{{ props.label }}</span>
+      <span class="min-w-0 text-sm font-medium text-balsa-foreground">{{ props.label }}</span>
       <span
         v-if="props.showValue"
         class="shrink-0 tabular-nums text-balsa-muted-foreground"

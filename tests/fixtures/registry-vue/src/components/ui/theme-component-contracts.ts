@@ -57,7 +57,7 @@ type SurfaceVariant = "surface" | "outline" | "soft" | "glass";
  */
 export interface ThemeComponentDefaultMap {
   button: ElevatedDefaults<
-    "solid" | "outline" | "glass",
+    "solid" | "soft" | "outline" | "glass",
     "sm" | "md" | "lg" | "xl" | null,
     { shape?: "rounded" | "pill" | "fab" }
   >;

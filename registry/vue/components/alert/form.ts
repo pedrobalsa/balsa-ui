@@ -172,9 +172,9 @@ export function getAnchoredPopupPosition(
   };
 }
 
-export function getFieldStatusIcon(status: FieldStatus): string | undefined {
-  if (status === "validated") return "mdi-check-circle-outline";
-  if (status === "unvalidated") return "mdi-alert-circle-outline";
+export function getFieldStatusIcon(status: FieldStatus): IconComponent | undefined {
+  if (status === "validated") return CircleCheckBig;
+  if (status === "unvalidated") return CircleAlert;
   return undefined;
 }
 
@@ -183,3 +183,5 @@ export function getFieldStateColorClass(status: FieldStatus): string {
   if (status === "validated") return "text-balsa-success";
   return "text-balsa-muted-foreground";
 }
+import { CircleAlert, CircleCheckBig } from "@lucide/vue";
+import type { IconComponent } from "./Icon.vue";

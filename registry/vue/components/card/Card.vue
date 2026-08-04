@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { computed, useAttrs } from "vue";
-import type { ActionColor } from "./types";
+import type {
+  CardColor,
+  CardPadding,
+  CardSize,
+  CardVariant,
+  Rounded,
+} from "./types";
 import { type Shadow, type ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
-
-type CardVariant = "surface" | "elevated" | "muted" | "outline" | "soft" | "glass";
-type CardPadding = "none" | "sm" | "md" | "lg";
-type CardSize = Exclude<CardPadding, "none">;
-type Rounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 
 defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
     variant?: CardVariant;
-    color?: ActionColor;
+    color?: CardColor;
     padding?: CardPadding;
     size?: CardSize;
     rounded?: Rounded;
@@ -23,7 +24,7 @@ const props = withDefaults(
     theme?: ThemeInput;
   }>(),
   {
-    color: "primary",
+    color: "neutral",
     shadow: undefined,
   },
 );
@@ -48,23 +49,27 @@ const resolvedShadow = computed<Shadow>(() => {
 
 const variantClasses: Record<CardVariant, string[]> = {
   surface: [
-    "border",
     "border-balsa-border",
     "bg-balsa-surface",
     "text-balsa-surface-foreground",
   ],
   elevated: [
-    "border",
     "border-balsa-border",
     "bg-balsa-surface-elevated",
     "text-balsa-surface-elevated-foreground",
   ],
-  muted: ["border", "bg-balsa-muted", "text-balsa-muted-foreground"],
-  outline: ["border", "bg-transparent", "text-balsa-foreground"],
-  soft: ["border", "text-balsa-foreground"],
-  glass: ["border", "text-balsa-foreground", "backdrop-blur-md"],
+  muted: ["border-balsa-border", "bg-balsa-muted", "text-balsa-muted-foreground"],
+  outline: ["border-balsa-border-strong", "bg-transparent", "text-balsa-foreground"],
+  soft: ["text-balsa-foreground"],
+  // Blur is theme-owned through --balsa-backdrop-blur; a utility here would sit
+  // in Tailwind's utilities layer and silently outrank the token.
+  glass: ["text-balsa-foreground"],
 };
-const colorClasses: Readonly<Record<ActionColor, Record<CardVariant, string[]>>> = {
+const colorClasses: Readonly<Record<CardColor, Record<CardVariant, string[]>>> = {
+  neutral: {
+    surface: [], elevated: [], muted: [], outline: [],
+    soft: ["border-balsa-border", "bg-balsa-muted/60"], glass: ["border-balsa-border/70"],
+  },
   primary: {
     surface: ["border-balsa-primary/30"], elevated: ["border-balsa-primary/40"], muted: ["border-balsa-primary/25"],
     outline: ["border-balsa-primary"], soft: ["border-balsa-primary/25", "bg-balsa-primary/15"], glass: ["border-balsa-primary/40"],
@@ -104,7 +109,9 @@ const resolvedPadding = computed<CardPadding>(() =>
 const classes = computed(() =>
   mergeClasses(
     "min-w-0",
-    roundedClasses[resolvedRounded.value],
+    props.rounded !== undefined || theme.defaults.value.rounded !== undefined
+      ? roundedClasses[resolvedRounded.value]
+      : undefined,
     variantClasses[resolvedVariant.value],
     colorClasses[props.color][resolvedVariant.value],
     paddingClasses[resolvedPadding.value],

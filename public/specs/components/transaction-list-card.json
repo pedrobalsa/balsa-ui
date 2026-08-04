@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "name": "transaction-list-card",
+  "title": "TransactionListCard",
+  "category": "composition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Scannable activity rows with identity, metadata, time, and amount.",
+  "useFor": [
+    "Production application interfaces",
+    "Design Studio composition previews",
+    "Reusable product workflows"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Unrelated content forced into one surface",
+    "Pinned geometry or elevation that bypasses the active theme"
+  ],
+  "variants": [
+    "theme inherited"
+  ],
+  "sizes": [
+    "responsive"
+  ],
+  "states": [
+    "default",
+    "interactive",
+    "disabled where applicable"
+  ],
+  "composition": {
+    "root": "ApplicationCard",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "research": "https://primer.style/product/components/action-list/guidelines/"
+  },
+  "accessibility": [
+    "Heading level follows the surrounding document hierarchy.",
+    "Interactive controls retain native keyboard and focus behavior through Balsa primitives.",
+    "Supporting text and status do not rely on color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-density-factor"
+  ],
+  "commonMistakes": [
+    "Pinning radius, border, or shadow instead of inheriting the design context.",
+    "Replacing the typed data contract with demo-only DOM.",
+    "Adding a second principal card surface."
+  ],
+  "examples": [
+    "Design Studio Grid",
+    "Application dashboard"
+  ],
+  "publicApi": {
+    "props": [
+      "title",
+      "description",
+      "headingLevel",
+      "shadow",
+      "theme",
+      "pattern-specific typed data"
+    ],
+    "slots": [],
+    "events": [
+      "pattern-specific actions"
+    ],
+    "defaults": {
+      "headingLevel": 2,
+      "shadow": "auto",
+      "theme": "inherited"
+    }
+  }
+}

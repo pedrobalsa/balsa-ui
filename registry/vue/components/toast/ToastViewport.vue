@@ -14,6 +14,7 @@ import Toast, {
 import type { Rounded } from "./form";
 import type { SemanticColor } from "./types";
 import { useComponentTheme } from "./theme-context";
+import type { IconComponent } from "./Icon.vue";
 
 export type ToastPosition =
   | "top-start"
@@ -32,7 +33,7 @@ export interface ToastItem {
   variant?: ToastVariant;
   size?: ToastSize;
   rounded?: Rounded;
-  icon?: string;
+  icon?: IconComponent;
   actionLabel?: string;
   actionDismiss?: boolean;
   dismissible?: boolean;

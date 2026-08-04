@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LoaderCircle } from "@lucide/vue";
 import { computed, nextTick, onMounted, ref, useAttrs, watch } from "vue";
 import {
   fieldHintClasses,
@@ -16,6 +17,7 @@ import {
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
+import Icon from "./Icon.vue";
 
 defineOptions({ inheritAttrs: false });
 
@@ -79,11 +81,11 @@ const ariaInvalid = computed(() =>
   props.status === "unvalidated" ? "true" : undefined,
 );
 const stateIcon = computed(() =>
-  props.loading ? "mdi-loading" : getFieldStatusIcon(props.status),
+  props.loading ? LoaderCircle : getFieldStatusIcon(props.status),
 );
 const stateIconClasses = computed(() => [
-  "mdi pointer-events-none absolute right-4 top-4",
-  props.loading ? "mdi-loading animate-spin text-balsa-info" : stateIcon.value,
+  "pointer-events-none absolute right-4 top-4",
+  props.loading ? "animate-spin text-balsa-info" : "",
   props.loading ? "" : getFieldStateColorClass(props.status),
 ]);
 const controlAttrs = computed(() => withoutClassAttribute(attrs));
@@ -179,7 +181,7 @@ onMounted(() => {
         data-balsa-control
         @input="handleInput"
       ></textarea>
-      <i v-if="stateIcon" :class="stateIconClasses" aria-hidden="true"></i>
+      <Icon v-if="stateIcon" :icon="stateIcon" size="md" :class="stateIconClasses" />
     </div>
     <span v-if="props.hint" :id="hintId" :class="fieldHintClasses">
       {{ props.hint }}
@@ -188,7 +190,7 @@ onMounted(() => {
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

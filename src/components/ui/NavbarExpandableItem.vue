@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ChevronDown, ChevronUp } from "@lucide/vue";
 import { computed } from "vue";
 import type { NavigationGroup } from "./navigation";
+import Icon from "./Icon.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -21,10 +23,7 @@ const emit = defineEmits<{
 
 const hasLinks = computed(() => Boolean(props.item.links?.length));
 
-const iconClasses = computed(() => [
-  "mdi text-xl text-balsa-accent transition-transform duration-200",
-  props.expanded ? "mdi-chevron-up" : "mdi-chevron-down",
-]);
+const icon = computed(() => props.expanded ? ChevronUp : ChevronDown);
 </script>
 
 <template>
@@ -45,7 +44,7 @@ const iconClasses = computed(() => [
     >
       {{ props.item.title }}
     </a>
-    <i v-if="hasLinks" :class="iconClasses" aria-hidden="true"></i>
+    <Icon v-if="hasLinks" :icon="icon" size="md" class="text-balsa-accent transition-transform duration-200" />
     <slot />
   </li>
 </template>

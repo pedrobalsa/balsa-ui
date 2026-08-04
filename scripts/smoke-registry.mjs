@@ -5,6 +5,44 @@ import { installRegistryItems } from "./install-registry.mjs";
 import { rootDir } from "./registry-lib.mjs";
 
 const fixtureDir = path.join(rootDir, "tests", "fixtures", "registry-vue");
+const legacyIconPackage = ["@", "mdi", "/font"].join("");
+const legacyIconStylesheet = ["balsa", "-icons.css"].join("");
+const fixtureMainPath = path.join(fixtureDir, "src", "main.ts");
+const fixtureMain = await readFile(fixtureMainPath, "utf8");
+await writeFile(
+  fixtureMainPath,
+  fixtureMain.replace(`import "${legacyIconPackage}/css/materialdesignicons.css";\n`, ""),
+  "utf8",
+);
+await rm(path.join(fixtureDir, "src", "styles", legacyIconStylesheet), { force: true });
+
+const rootPackage = JSON.parse(await readFile(path.join(rootDir, "package.json"), "utf8"));
+const availableDependencies = {
+  ...rootPackage.devDependencies,
+  ...rootPackage.dependencies,
+};
+const fixturePackagePath = path.join(fixtureDir, "package.json");
+const fixturePackage = JSON.parse(await readFile(fixturePackagePath, "utf8"));
+delete fixturePackage.dependencies[legacyIconPackage];
+for (const dependency of ["@lucide/vue", "@unovis/ts", "@unovis/vue"]) {
+  const version = availableDependencies[dependency];
+  if (typeof version !== "string") {
+    throw new Error(`Missing registry smoke dependency: ${dependency}.`);
+  }
+  fixturePackage.dependencies[dependency] = version;
+}
+fixturePackage.dependencies = Object.fromEntries(Object.entries(fixturePackage.dependencies).sort(([first], [second]) => first.localeCompare(second)));
+await writeFile(fixturePackagePath, `${JSON.stringify(fixturePackage, null, 2)}\n`, "utf8");
+const packageLock = spawnSync("npm", ["install", "--package-lock-only", "--ignore-scripts", "--no-audit", "--no-fund"], {
+  cwd: fixtureDir,
+  encoding: "utf8",
+  stdio: "pipe",
+  shell: process.platform === "win32",
+});
+if (packageLock.status !== 0) {
+  throw new Error(`Smoke fixture dependency sync failed:\n${packageLock.stdout}\n${packageLock.stderr}\n${packageLock.error ?? ""}`);
+}
+
 await rm(path.join(fixtureDir, "src", "styles", "balsa.css"), { force: true });
 await rm(path.join(fixtureDir, "src", "styles", "balsa-palette.css"), { force: true });
 await rm(path.join(fixtureDir, "src", "components", "blocks", "PageHeader.vue"), {
@@ -18,6 +56,38 @@ const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 delete manifest.components["collapsible-group"];
 delete manifest.components["balsa-palette"];
 await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+const compositionItems = [
+  ["account-security-card","AccountSecurityCard"],
+  ["payout-method-card","PayoutMethodCard"],
+  ["transfer-funds-card","TransferFundsCard"],
+  ["savings-goal-card","SavingsGoalCard"],
+  ["transaction-list-card","TransactionListCard"],
+  ["balance-summary-card","BalanceSummaryCard"],
+  ["usage-summary-card","UsageSummaryCard"],
+  ["analytics-chart-card","AnalyticsChartCard"],
+  ["metric-grid-card","MetricGridCard"],
+  ["resource-table-card","ResourceTableCard"],
+  ["settings-card","SettingsCard"],
+  ["notification-preferences-card","NotificationPreferencesCard"],
+  ["invite-members-card","InviteMembersCard"],
+  ["member-access-card","MemberAccessCard"],
+  ["action-list-card","ActionListCard"],
+  ["navigation-menu-card","NavigationMenuCard"],
+  ["empty-state-card","EmptyStateCard"],
+  ["error-state-card","ErrorStateCard"],
+  ["loading-state-card","LoadingStateCard"],
+  ["file-upload-card","FileUploadCard"],
+  ["media-preview-card","MediaPreviewCard"],
+  ["schedule-card","ScheduleCard"],
+  ["appointment-card","AppointmentCard"],
+  ["payment-method-card","PaymentMethodCard"],
+  ["subscription-card","SubscriptionCard"],
+  ["order-summary-card","OrderSummaryCard"],
+  ["onboarding-checklist-card","OnboardingChecklistCard"],
+  ["form-progress-card","FormProgressCard"],
+  ["activity-timeline-card","ActivityTimelineCard"],
+  ["command-toolbar-card","CommandToolbarCard"],
+];
 const installed = await installRegistryItems({
   names: [
     "button-group",
@@ -61,6 +131,7 @@ const installed = await installRegistryItems({
     "progress",
     "alert",
     "toast",
+    ...compositionItems.map(([name]) => name),
   ],
   cwd: fixtureDir,
   force: true,
@@ -116,6 +187,13 @@ await access(path.join(fixtureDir, "src", "components", "ui", "Calendar.vue"));
 await access(path.join(fixtureDir, "src", "components", "ui", "DatePicker.vue"));
 await access(path.join(fixtureDir, "src", "components", "ui", "DataTable.vue"));
 await access(path.join(fixtureDir, "src", "components", "ui", "Charts.vue"));
+await access(path.join(fixtureDir, "src", "components", "ui", "ChartContainer.vue"));
+await access(path.join(fixtureDir, "src", "components", "ui", "ChartTooltip.vue"));
+await access(path.join(fixtureDir, "src", "components", "ui", "ChartTooltipContent.vue"));
+await access(path.join(fixtureDir, "src", "components", "ui", "ChartCrosshair.vue"));
+await access(path.join(fixtureDir, "src", "components", "ui", "ChartLegendContent.vue"));
+await access(path.join(fixtureDir, "src", "components", "ui", "chart.ts"));
+await access(path.join(fixtureDir, "src", "components", "ui", "Icon.vue"));
 await access(path.join(fixtureDir, "src", "components", "ui", "Separator.vue"));
 await access(path.join(fixtureDir, "src", "components", "ui", "Skeleton.vue"));
 await access(path.join(fixtureDir, "src", "components", "ui", "Spinner.vue"));
@@ -130,6 +208,12 @@ await access(path.join(fixtureDir, "src", "components", "ui", "gradient-backgrou
 await access(path.join(fixtureDir, "src", "styles", "balsa-theme.css"));
 await access(path.join(fixtureDir, "src", "styles", "balsa-foundation.css"));
 await access(path.join(fixtureDir, "src", "components", "ui", "theme.ts"));
+for (const [, title] of compositionItems) {
+  await access(path.join(fixtureDir, "src", "components", "compositions", `${title}.vue`));
+}
+await access(path.join(fixtureDir, "src", "components", "compositions", "ApplicationCard.vue"));
+await access(path.join(fixtureDir, "src", "components", "compositions", "_CompositionRoot.vue"));
+await access(path.join(fixtureDir, "src", "components", "compositions", "composition.ts"));
 
 function runNodeScript(relativeScript, args) {
   const result = spawnSync(process.execPath, [path.join(rootDir, relativeScript), ...args], {

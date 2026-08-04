@@ -7,6 +7,7 @@ import type {
 } from "./navigation";
 import type { ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
+import Icon from "./Icon.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -82,11 +83,11 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
                     :href="item.link"
                     :target="item.external ? '_blank' : undefined"
                     :rel="item.external ? 'noreferrer' : undefined"
-                    class="block font-bold text-balsa-inverse-foreground no-underline decoration-balsa-inverse-foreground decoration-2 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
+                    class="block text-sm font-semibold text-balsa-inverse-foreground no-underline decoration-balsa-inverse-foreground decoration-2 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
                   >
                     {{ item.label }}
                   </a>
-                  <span v-else class="block font-bold text-balsa-inverse-foreground">
+                  <span v-else class="block text-sm font-semibold text-balsa-inverse-foreground">
                     {{ item.label }}
                   </span>
                   <span v-if="item.detail" class="block text-xs text-balsa-inverse-foreground/75">
@@ -105,10 +106,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
                 rel="noreferrer"
                 class="flex cursor-pointer items-center justify-center text-balsa-inverse-foreground/75 no-underline transition-colors hover:text-balsa-inverse-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
               >
-                <i
-                  :class="['mdi', social.icon, 'text-3xl']"
-                  aria-hidden="true"
-                ></i>
+                <Icon :icon="social.icon" size="xl" />
               </a>
             </li>
           </ul>
@@ -128,7 +126,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
               <li v-for="link in section.links" :key="link.link">
                 <a
                   :href="link.link"
-                  class="text-sm font-bold text-balsa-inverse-foreground/75 no-underline decoration-balsa-inverse-foreground decoration-2 underline-offset-4 hover:text-balsa-inverse-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
+                  class="text-sm font-medium text-balsa-inverse-foreground/75 no-underline decoration-balsa-inverse-foreground decoration-2 underline-offset-4 hover:text-balsa-inverse-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
                 >
                   {{ link.title }}
                 </a>

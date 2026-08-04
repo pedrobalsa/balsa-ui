@@ -32,7 +32,7 @@ export interface FooterSection {
 export interface FooterSocialLink {
   title: string;
   link: string;
-  icon: string;
+  icon: IconComponent;
 }
 
 export interface FooterContactItem {
@@ -46,3 +46,4 @@ export interface FooterContactGroup {
   title: string;
   items: readonly FooterContactItem[];
 }
+import type { IconComponent } from "./Icon.vue";

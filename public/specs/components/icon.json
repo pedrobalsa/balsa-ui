@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "name": "icon",
+  "title": "Icon",
+  "category": "component",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Render one individually imported Lucide component through Balsa sizing, stroke, color inheritance, and accessibility semantics.",
+  "useFor": [
+    "Consistent interface symbols",
+    "Component-valued icon APIs",
+    "Named standalone symbols"
+  ],
+  "avoidFor": [
+    "Dynamic string lookup",
+    "Product logos",
+    "Illustrations"
+  ],
+  "variants": [
+    "decorative",
+    "labelled"
+  ],
+  "sizes": [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "states": [
+    "decorative",
+    "accessible image"
+  ],
+  "accessibility": [
+    "Decorative icons are aria-hidden and not focusable.",
+    "A labelled icon uses role=img and aria-label.",
+    "Icon-only interactive controls name the owning control; their icon normally remains decorative."
+  ],
+  "tokens": [
+    "currentColor"
+  ],
+  "commonMistakes": [
+    "Passing a string instead of a Lucide component.",
+    "Loading the complete dynamic Lucide map.",
+    "Labelling a decorative icon.",
+    "Using Icon for product branding."
+  ],
+  "examples": [
+    "Decorative search icon",
+    "Labelled help image",
+    "Icon-only button with an accessible control name"
+  ],
+  "publicApi": {
+    "model": null,
+    "props": [
+      "icon",
+      "size",
+      "strokeWidth",
+      "label"
+    ],
+    "events": [],
+    "slots": []
+  }
+}

@@ -39,7 +39,7 @@
   ],
   "composition": {
     "semantic": "A native button exposes modelValue through aria-pressed.",
-    "icon": "Icon type uses paired outlined and filled bookmark, heart, star, pin, bell, or flag MDI glyphs without changing the control surface.",
+    "icon": "Icon type uses paired outlined and filled bookmark, heart, star, pin, bell, or flag Lucide components without changing the control surface.",
     "migration": "The former boolean Toggle moved to Switch; this component is intentionally not a compatibility alias."
   },
   "accessibility": [

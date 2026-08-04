@@ -9,19 +9,19 @@ export const designThemes = [
     id: "modern-flat",
     label: "Modern Flat",
     description: "Clean rounded surfaces with restrained elevation and direct interactions.",
-    icon: "mdi-view-dashboard-outline",
+    icon: LayoutDashboard,
   },
   {
     id: "brutalism",
     label: "Brutalism",
-    description: "Rectangular geometry, visible structure, hard shadows, and utility-first type.",
-    icon: "mdi-grid-large",
+    description: "Rectangular geometry, visible structure, flat surfaces, and utility-first type.",
+    icon: Grid3X3,
   },
   {
     id: "glassmorphism",
     label: "Glassmorphism",
     description: "Layered translucent controls with fluid depth and accessible solid fallbacks.",
-    icon: "mdi-blur",
+    icon: Blend,
   },
 ] as const;
 
@@ -116,7 +116,7 @@ export type ThemeEasing =
 export type ThemeTypographyOption = "modern" | "system" | "editorial" | "mono";
 export type ThemeShapeOption = "square" | "subtle" | "rounded" | "soft";
 export type ThemeDensityOption = "compact" | "balanced" | "comfortable";
-export type ThemeBorderOption = "none" | "subtle" | "strong";
+export type ThemeBorderOption = "none" | "soft" | "medium" | "strong";
 export type ThemeElevationOption = "none" | "soft" | "floating" | "hard";
 export type ThemeMotionOption = "none" | "snappy" | "balanced" | "fluid";
 export type ThemeMaterialOption = "solid" | "soft" | "glass";
@@ -152,7 +152,7 @@ export const themeOptionDefinitions = [
   {
     key: "border",
     label: "Borders",
-    values: ["none", "subtle", "strong"],
+    values: ["none", "soft", "medium", "strong"],
   },
   {
     key: "elevation",
@@ -180,8 +180,8 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
     typography: "modern",
     shape: "rounded",
     density: "compact",
-    border: "subtle",
-    elevation: "soft",
+    border: "soft",
+    elevation: "none",
     motion: "balanced",
     material: "soft",
   },
@@ -190,7 +190,7 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
     shape: "square",
     density: "compact",
     border: "strong",
-    elevation: "hard",
+    elevation: "none",
     motion: "snappy",
     material: "solid",
   },
@@ -198,7 +198,7 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
     typography: "modern",
     shape: "soft",
     density: "compact",
-    border: "subtle",
+    border: "medium",
     elevation: "floating",
     motion: "fluid",
     material: "glass",
@@ -275,6 +275,7 @@ export interface ThemeTokens {
     width?: number;
     outlineWidth?: number;
     solidWidth?: number;
+    opacity?: number;
     style?: "solid" | "dashed" | "dotted" | "double";
   };
   shadow?: {
@@ -340,6 +341,18 @@ export interface ThemeDefinition {
 }
 
 export type ThemeInput = DesignTheme | ThemeDefinition;
+
+/**
+ * Portable input for creating a source-controlled theme from one of Balsa's
+ * built-in presets. The configuration deliberately excludes ids, names, and
+ * component defaults so quick editors can stay focused on presentation.
+ */
+export interface BalsaThemePresetConfig {
+  schemaVersion: 1;
+  base: DesignTheme;
+  options?: ThemeOptions;
+  overrides?: Pick<ThemeOverrides, "tokens">;
+}
 
 export interface ResolvedThemeDefinition {
   id: string;
@@ -500,7 +513,7 @@ export const themeDefaultPropCoverage = {
 export const themeComponentSizeOptions: Readonly<
   Partial<Record<ThemeComponentName, readonly string[]>>
 > = {
-  button: ["sm", "md", "lg", "xl"],
+  button: ["sm", "md", "lg", "xl", "2xl"],
   "button-group": ["sm", "md", "lg", "xl"],
   input: ["sm", "md"],
   "input-group": ["sm", "md"],
@@ -674,6 +687,7 @@ function validateThemeTokens(tokens: ThemeTokens | undefined): void {
   for (const [key, value] of Object.entries(tokens.border ?? {})) {
     if (key !== "style") assertFiniteNumber(value as number, `tokens.border.${key}`);
   }
+  assertOpacity(tokens.border?.opacity, "tokens.border.opacity");
   if (
     tokens.border?.style !== undefined
     && !["solid", "dashed", "dotted", "double"].includes(tokens.border.style)
@@ -1004,7 +1018,7 @@ function materialTokens(option: ThemeMaterialOption): Pick<ThemeTokens, "effects
         "outline-control-hover": color("surface-elevated", 0.86, "currentColor", 0.14),
         "outline-control-active": color("surface-elevated", 0.78, "currentColor", 0.22),
         "outline-control-border": color("currentColor", 0.32),
-        ...controlMaterials("surface-elevated", [0.5, 0.58, 0.64], 0.16),
+        ...controlMaterials("surface", [0.5, 0.58, 0.64], 0.16),
       },
     };
   }
@@ -1058,7 +1072,7 @@ function typographyTokens(option: ThemeTypographyOption): NonNullable<ThemeToken
       controlFonts: systemFonts,
       titleLetterSpacing: 0,
       titleTextTransform: "none",
-      controlWeight: 700,
+      controlWeight: 600,
       controlLetterSpacing: 0,
       controlTextTransform: "none",
     };
@@ -1081,7 +1095,7 @@ function typographyTokens(option: ThemeTypographyOption): NonNullable<ThemeToken
     controlFonts: ["Noto Sans", "sans-serif"],
     titleLetterSpacing: 0,
     titleTextTransform: "none",
-    controlWeight: 700,
+    controlWeight: 600,
     controlLetterSpacing: 0,
     controlTextTransform: "none",
   };
@@ -1110,22 +1124,17 @@ function spacingTokens(option: ThemeDensityOption): NonNullable<ThemeTokens["spa
   return { controlInline: 16, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
 }
 
-function borderTokens(
-  option: ThemeBorderOption,
-  material: ThemeMaterialOption,
-): NonNullable<ThemeTokens["border"]> {
+function borderTokens(option: ThemeBorderOption): NonNullable<ThemeTokens["border"]> {
   if (option === "none") {
-    return { width: 0, outlineWidth: 0, solidWidth: 0, style: "solid" };
+    return { width: 0, outlineWidth: 0, solidWidth: 0, opacity: 1, style: "solid" };
+  }
+  if (option === "soft") {
+    return { width: 1, outlineWidth: 1, solidWidth: 1, opacity: 0.55, style: "solid" };
   }
   if (option === "strong") {
-    return { width: 1, outlineWidth: 1, solidWidth: 1, style: "solid" };
+    return { width: 2, outlineWidth: 2, solidWidth: 2, opacity: 1, style: "solid" };
   }
-  return {
-    width: 1,
-    outlineWidth: 1,
-    solidWidth: material === "glass" ? 1 : 0,
-    style: "solid",
-  };
+  return { width: 1, outlineWidth: 1, solidWidth: 1, opacity: 1, style: "solid" };
 }
 
 function shadowLayer(
@@ -1263,6 +1272,10 @@ function materialDefaults(option: ThemeMaterialOption): ThemeDefaults {
   if (option !== "glass") return {};
   return {
     components: {
+      // Card carries the recipe's translucent surface material either way, so
+      // without its typed glass variant it renders a see-through fill with no
+      // backdrop to filter — the panel reads as broken rather than frosted.
+      card: { variant: "glass" },
       "button-group": { variant: "glass" },
       popup: { variant: "glass" },
       "hover-card": { variant: "glass" },
@@ -1294,7 +1307,7 @@ export function deriveThemeRecipe(options: ResolvedThemeOptions): DerivedThemeRe
       typography: typographyTokens(options.typography),
       radius: radiusTokens(options.shape),
       spacing: spacingTokens(options.density),
-      border: borderTokens(options.border, options.material),
+      border: borderTokens(options.border),
       shadow: shadowTokens(options.elevation),
       motion: motionTokens(options.motion),
       effects: material.effects,
@@ -1521,6 +1534,10 @@ export function serializeThemeTokens(tokens: ThemeTokens): Readonly<Record<strin
     const value = tokens.border?.[key as keyof typeof borderVariables];
     assign(variable, value === undefined ? undefined : `${value}px`);
   }
+  assign(
+    "--balsa-border-opacity",
+    tokens.border?.opacity === undefined ? undefined : percentage(tokens.border.opacity),
+  );
   assign("--balsa-border-style", tokens.border?.style);
 
   for (const level of ["sm", "md", "lg", "detail"] as const) {
@@ -1615,6 +1632,49 @@ export function normalizeThemeDefinition(definition: ThemeDefinition): ThemeDefi
   };
 }
 
+function normalizePresetThemeOptions(value: unknown): ThemeOptions | undefined {
+  if (value === undefined) return undefined;
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value as ThemeOptions;
+  }
+  const options = value as Record<string, unknown>;
+  const border = options.border === "subtle" ? "medium" : options.border;
+  return {
+    ...options,
+    ...(border === undefined ? {} : { border }),
+  } as ThemeOptions;
+}
+
+export function normalizeThemePresetConfig(value: unknown): BalsaThemePresetConfig {
+  if (!value || typeof value !== "object") {
+    throw new TypeError("Theme preset configuration must be an object.");
+  }
+  const candidate = value as Partial<BalsaThemePresetConfig>;
+  if (candidate.schemaVersion !== 1) {
+    throw new TypeError(
+      `Unsupported Balsa theme preset schema version: ${String(candidate.schemaVersion)}.`,
+    );
+  }
+  if (!isDesignTheme(candidate.base)) {
+    throw new TypeError("Theme preset base must be a built-in Balsa theme.");
+  }
+  const normalized = normalizeThemeDefinition({
+    id: "balsa-preset-config",
+    name: "Balsa preset config",
+    extends: candidate.base,
+    options: normalizePresetThemeOptions(candidate.options),
+    overrides: candidate.overrides,
+  });
+  return {
+    schemaVersion: 1,
+    base: candidate.base,
+    ...(normalized.options ? { options: normalized.options } : {}),
+    ...(normalized.overrides?.tokens
+      ? { overrides: { tokens: normalized.overrides.tokens } }
+      : {}),
+  };
+}
+
 export function serializeThemeDefinition(
   definition: ThemeDefinition,
   exportName = "customTheme",
@@ -1630,3 +1690,4 @@ export function serializeThemeDefinition(
     `export const ${identifier} = defineTheme(${JSON.stringify(normalized, null, 2)});`,
   ].join("\n");
 }
+import { Blend, Grid3X3, LayoutDashboard } from "@lucide/vue";

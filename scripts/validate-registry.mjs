@@ -1,7 +1,7 @@
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
-import { publicBaseUrl } from "./agent-context.mjs";
+import { publicBaseUrl, publicDocumentationUrl } from "./agent-context.mjs";
 import {
   generatedDirectory,
   loadRegistry,
@@ -22,6 +22,46 @@ const validateManifest = ajv.compile(await readJson(path.join(rootDir, "specs", 
 
 function schemaErrors(label, validator) {
   return (validator.errors ?? []).map((error) => `${label}${error.instancePath || "/"}: ${error.message}`);
+}
+
+async function sourceFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(entries.map((entry) => {
+    const target = path.join(directory, entry.name);
+    return entry.isDirectory() ? sourceFiles(target) : [target];
+  }));
+  return nested.flat();
+}
+
+const legacyIconPackage = ["@", "mdi", "/font"].join("");
+const legacyIconClass = ["mdi", "-"].join("");
+const legacyIconStylesheet = ["balsa", "-icons.css"].join("");
+const legacyChartPackages = [["vue", "-chartjs"].join(""), ["chart", ".js"].join("")];
+const guardedFiles = [
+  path.join(rootDir, "package.json"),
+  path.join(rootDir, "package-lock.json"),
+  path.join(rootDir, "registry.json"),
+  ...await sourceFiles(path.join(rootDir, "src")),
+  ...await sourceFiles(path.join(rootDir, "registry", "vue")),
+  ...await sourceFiles(path.join(rootDir, "public", "r")),
+  ...await sourceFiles(path.join(rootDir, "starters", "vue", "src")),
+  ...await sourceFiles(path.join(rootDir, "tests", "fixtures", "registry-vue", "src")),
+  path.join(rootDir, "starters", "vue", "package.json"),
+  path.join(rootDir, "starters", "vue", "package-lock.json"),
+  path.join(rootDir, "tests", "fixtures", "registry-vue", "package.json"),
+  path.join(rootDir, "tests", "fixtures", "registry-vue", "package-lock.json"),
+  ...await sourceFiles(path.join(rootDir, "bin")),
+  ...await sourceFiles(path.join(rootDir, "scripts")),
+].filter((file) => /\.(?:css|js|json|mjs|ts|vue)$/.test(file));
+for (const file of guardedFiles) {
+  const source = await readFile(file, "utf8");
+  const cleanupScript = path.basename(file) === "sync-starter.mjs";
+  if (source.includes(legacyIconPackage) || source.includes(legacyIconClass) || (!cleanupScript && source.includes(legacyIconStylesheet))) {
+    errors.push(`${path.relative(rootDir, file)}: legacy icon-font implementation returned`);
+  }
+  if (source.includes(legacyChartPackages[0]) || source.includes(legacyChartPackages[1])) {
+    errors.push(`${path.relative(rootDir, file)}: legacy chart dependency returned`);
+  }
 }
 
 for (const item of registry.items) {
@@ -116,7 +156,7 @@ try {
       path.join(rootDir, "public", "specs", "components", `${item.name}.json`),
     );
     const canonicalDocs = await readFile(
-      sourcePath(`docs/components/${item.name}.md`),
+      sourcePath(item.documentation),
     );
     const publicDocs = await readFile(
       path.join(rootDir, "public", "docs", "components", `${item.name}.md`),
@@ -130,7 +170,7 @@ try {
     if (!llmsFull.includes(`/docs/components/${item.name}.md`)) {
       errors.push(`${item.name}: missing from llms-full.txt`);
     }
-    if (!sitemap.includes(`<loc>${publicBaseUrl}/docs/components/${item.name}</loc>`)) {
+    if (!sitemap.includes(`<loc>${publicDocumentationUrl(item)}</loc>`)) {
       errors.push(`${item.name}: missing from sitemap.xml`);
     }
   }
@@ -169,10 +209,6 @@ try {
     path.join(rootDir, "starters", "vue", "src", "index.css"),
     "utf8",
   );
-  const starterIcons = await readFile(
-    path.join(rootDir, "starters", "vue", "src", "styles", "balsa-icons.css"),
-    "utf8",
-  );
   const starterFonts = await readFile(
     path.join(rootDir, "starters", "vue", "src", "styles", "balsa-fonts.css"),
     "utf8",
@@ -193,21 +229,15 @@ try {
   if (starterCatalog.items.length !== expectedCatalogCount) {
     errors.push("Vue starter agent catalog is stale");
   }
-  if (
-    starterMain.includes("@fontsource/")
-    || starterMain.includes("@mdi/font/css/materialdesignicons")
-  ) {
-    errors.push("Vue starter does not use the lean font and icon entry points");
+  if (starterMain.includes("@fontsource/")) {
+    errors.push("Vue starter does not use the lean font entry point");
   }
   if (
-    !starterCss.includes('balsa-icons.css')
-    || !starterCss.includes('balsa-fonts.css')
-    || !starterIcons.includes("materialdesignicons-webfont.woff2")
-    || /materialdesignicons-webfont\.(?:eot|ttf|woff)\?/.test(starterIcons)
+    !starterCss.includes('balsa-fonts.css')
     || !starterFonts.includes("noto-sans-latin-400-normal.woff2")
     || /normal\.woff["?)]/.test(starterFonts)
   ) {
-    errors.push("Vue starter optimized font or icon stylesheet is missing or references legacy formats");
+    errors.push("Vue starter optimized font stylesheet is missing or references legacy formats");
   }
   if (!starterHtml.includes('<html lang="en" data-palette="light">')) {
     errors.push("Vue starter does not activate its explicit Light palette");

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-card",
+  "type": "registry:ui",
+  "title": "SettingsCard",
+  "description": "Related workspace settings with explicit reset and save actions.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/button",
+    "@balsa/select",
+    "@balsa/switch"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/SettingsCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/SettingsCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"../ui/Button.vue\";\nimport Select, { type SelectOption } from \"../ui/Select.vue\";\nimport Switch from \"../ui/Switch.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string }>(), { title: \"Workspace settings\", description: \"Manage defaults and product behavior.\" });\nconst emit = defineEmits<{ save: [{ locale: string; analytics: boolean }]; reset: [] }>();\nconst locale = ref(\"en\");\nconst analytics = ref(true);\nconst options: readonly SelectOption[] = [{ label: \"English (United States)\", value: \"en\" }, { label: \"Português (Brasil)\", value: \"pt\" }];\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"settings\">\n    <div class=\"grid gap-5\">\n      <Select id=\"settings-locale\" v-model=\"locale\" label=\"Default language\" :options=\"options\" />\n      <div class=\"border-t border-balsa-border pt-4\"><Switch id=\"settings-analytics\" v-model=\"analytics\" label=\"Usage analytics\" hint=\"Share anonymous activity to improve workspace recommendations.\" /></div>\n    </div>\n    <template #footer><div class=\"flex justify-between gap-3\"><Button variant=\"soft\" @click=\"emit('reset')\">Reset</Button><Button @click=\"emit('save', { locale, analytics })\">Save settings</Button></div></template>\n  </CompositionRoot>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/settings-card.json",
+    "documentation": "docs/compositions/settings-card.md",
+    "example": "docs/compositions/settings-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check, LoaderCircle, Search, X } from "@lucide/vue";
 import {
   computed,
   nextTick,
@@ -27,6 +28,7 @@ import {
 import { type Shadow, type ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
+import Icon from "./Icon.vue";
 
 defineOptions({ inheritAttrs: false });
 
@@ -126,12 +128,9 @@ const activeDescendant = computed(() =>
 );
 const stateIcon = computed(
   () =>
-    (props.loading ? "mdi-loading" : getFieldStatusIcon(props.status)) ??
-    "mdi-magnify",
+    (props.loading ? LoaderCircle : getFieldStatusIcon(props.status)) ?? Search,
 );
 const stateIconClasses = computed(() => [
-  "mdi",
-  stateIcon.value,
   "pointer-events-none absolute top-1/2 -translate-y-1/2",
   props.size === "sm" ? "right-3 text-base" : "right-4 text-lg",
   props.loading ? "text-balsa-info" : getFieldStateColorClass(props.status),
@@ -467,14 +466,14 @@ onBeforeUnmount(() => {
           @click="selectSuggestion(suggestion)"
         >
           <span>{{ suggestion }}</span>
-          <i
+          <Icon
             v-if="isSuggestionSelected(suggestion)"
-            class="mdi mdi-check text-lg"
-            aria-hidden="true"
+            :icon="Check"
+            size="md"
           />
         </button>
       </div>
-      <i :class="stateIconClasses" aria-hidden="true"></i>
+      <Icon :icon="stateIcon" size="md" :class="stateIconClasses" />
     </div>
     <div
       v-if="props.multiple && selectedValues.length"
@@ -487,7 +486,7 @@ onBeforeUnmount(() => {
         :size="null"
         :theme="props.theme"
         variant="outline"
-        suffix-icon="mdi-close"
+        :suffix-icon="X"
         :class="selectedValueClasses"
         :aria-label="`Remove ${suggestion}`"
         @click="removeSuggestion(suggestion)"
@@ -502,7 +501,7 @@ onBeforeUnmount(() => {
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

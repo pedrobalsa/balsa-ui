@@ -42,6 +42,8 @@ The component is absolutely positioned and does not create layout height. Give i
 
 Every preset defines every renderer value and has a stable seed. Preset defaults are applied first, `config` overrides them second, and individual component props have final precedence.
 
+`obsidian-fold` is the default identity: it supplies the geometry whenever no preset is named, including in palette mode, where only its colors are replaced by the inherited roles. `palette-flow` is the only preset that ships `colorMode: "palette"` itself; every other preset is authored artwork in `custom` mode, and naming one keeps its stops unless you set `color-mode` explicitly.
+
 ## Versioned configuration
 
 `BalsaBackgroundConfig` uses `schemaVersion: 2`, a finite preset identity, a deterministic integer seed, a custom or palette color mode, two to six colors, visual parameters, and quality. Runtime resources and Studio UI state never appear in the JSON. Schema-one files remain accepted and migrate their former structural `noiseOctaves` and `noiseFrequency` values to `fieldOctaves` and `fieldFrequency`; new visible-noise values come from the selected preset.
@@ -60,7 +62,48 @@ The Studio generates the complete `--config` command with a shell-safe inline pa
 
 ## Palette-aware color
 
-Set `color-mode="palette"` or use `palette-flow`. The component reads inherited semantic CSS variables from its own boundary and reacts to `data-palette`, class, and inline token changes. It does not import a site palette or theme store.
+Palette color is the default inside a palette. When neither `color-mode` nor a preset is given and the boundary inherits Balsa palette variables, the background adopts that palette and restyles with the rest of the interface. Naming a preset selects that preset's authored colors, and an explicit `color-mode` always wins:
+
+```vue
+<GradientBackground />                            <!-- palette, when one is inherited -->
+<GradientBackground preset="iridescent-flow" />   <!-- the preset's authored stops -->
+<GradientBackground color-mode="custom" :colors="[...]" />
+<GradientBackground color-mode="palette" />       <!-- force palette, even with a preset -->
+```
+
+The component reads inherited semantic CSS variables from its own boundary and reacts to `data-palette`, class, and inline token changes. It does not import a site palette or theme store.
+
+Inherited stops are kept readable. Palette roles are generated to contrast with `background` rather than with each other, so `primary` often lands on or near `foreground` — in the stock dark palette they are the same color, which would hide any text sitting over that stop. Each inherited stop is checked against `--balsa-color-foreground` and, if it falls below 4.5:1 (WCAG AA for body text), mixed toward whichever of black or white reaches the floor first, preserving as much of the authored hue as the threshold allows. Stops that already pass are untouched, and a color the component cannot parse is passed through unchanged.
+
+## Readable content over authored colors
+
+Presets and explicit `colors` are authored designs, so they are never altered on their own. A dark preset under light-scheme body text is the common mismatch: `obsidian-fold` opens on `#050506`, which near-black text disappears into. Opt in when you want the same repair applied to authored stops:
+
+```vue
+<GradientBackground />                              <!-- authored stops, untouched -->
+<GradientBackground content-contrast />             <!-- repaired vs inherited text color -->
+<GradientBackground content-color="#18181B" />      <!-- repaired vs an exact color -->
+```
+
+`content-contrast` reads the text color the gradient's own box inherits, which is the color sibling content will normally use. Pass `content-color` when that guess is wrong — when the overlay sets its own color, or when the background renders before the content it must stay readable behind. Either one also overrides the palette text roles in `palette` mode.
+
+## Scrim
+
+Stop repair fixes the colors handed to the shader, but `contrast`, `brightness`, and grain then reshape them, so a stop that cleared the floor can still land under it on screen. When content sits straight on the field with no surface of its own — a hero of bare text and links — pull the whole field toward the palette background:
+
+```vue
+<GradientBackground scrim />              <!-- 0.65 -->
+<GradientBackground :scrim="0.1" />       <!-- explicit opacity, clamped to 0..1 -->
+<GradientBackground scrim scrim-color="#0B0D10" />
+```
+
+How much scrim a field needs depends on the design sitting on it, not on the background, so the amount stays a caller decision. In practice the two schemes want very different values: a dark palette draws near-white text over a mostly near-black field and already has the headroom, so it can keep almost all of the gradient, while a light palette puts saturated mid-tone accents under near-black text and needs most of the help. This site drives it from the active palette:
+
+```ts
+const scrim = computed(() => palette.activePaletteBase.value === "dark" ? 0.1 : 0.65);
+```
+
+The scrim defaults to `--color-balsa-background`, the color content is already designed to be legible against. It is a composition control rather than part of the background's identity, so it is not written into `BalsaBackgroundConfig` and does not appear in Studio exports.
 
 ## Performance
 
@@ -92,8 +135,12 @@ Field layers and scale configure the fBM that constructs wave geometry. Noise am
 - `preset?: GradientBackgroundPresetName`: finite preset identity.
 - `config?: GradientBackgroundConfigInput`: serializable configuration overrides.
 - `seed?: number`: deterministic composition seed.
-- `colorMode?: "custom" | "palette"`: explicit stops or inherited semantic roles.
+- `colorMode?: "custom" | "palette"`: explicit stops or inherited semantic roles. Defaults to `palette` when a palette is inherited and no preset is named, otherwise to the preset's own mode.
 - `colors?: readonly string[]`: two to six six-digit hex colors.
+- `contentContrast?: boolean`: repair stops to 4.5:1 against the inherited text color.
+- `contentColor?: string`: repair stops to 4.5:1 against this exact color.
+- `scrim?: boolean | number`: overlay pulling the field toward the palette background; `true` uses 0.65, a number sets the opacity.
+- `scrimColor?: string`: scrim color, defaulting to `--color-balsa-background`.
 - `speed`, `scale`, `warp`, `wave`, `softness`, `grain`, `grainSize`, `contrast`, `brightness`, `direction`: direct visual overrides.
 - `fieldOctaves`, `fieldFrequency`, `warpFrequency`, `ribbonDensity`: structural field and ribbon overrides.
 - `noiseAmount`, `noiseOctaves`, `noiseFrequency`: independent visible-noise overrides.

@@ -5,7 +5,7 @@
   "category": "component",
   "status": "beta",
   "version": "0.1.0",
-  "purpose": "Group related content and actions on a consistent Balsa surface.",
+  "purpose": "Group related content and actions on a consistent neutral Balsa surface, with semantic color reserved for meaningful state.",
   "useFor": [
     "Grouped content",
     "Feature summaries",
@@ -57,6 +57,7 @@
   "commonMistakes": [
     "Making the entire Card clickable without link semantics.",
     "Nesting many cards only for spacing.",
+    "Using semantic Card colors as decorative variety rather than action or status meaning.",
     "Using unrelated content in one card.",
     "Using important padding or shadow overrides instead of the typed props and normal consumer utilities."
   ],
@@ -81,6 +82,12 @@
     ],
     "slots": [
       "default"
-    ]
+    ],
+    "defaults": {
+      "variant": "surface",
+      "color": "neutral",
+      "rounded": "theme surface token",
+      "shadow": "auto"
+    }
   }
 }

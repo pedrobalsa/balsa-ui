@@ -10,7 +10,9 @@ export interface MenuItem {
   id: string;
   label?: string;
   type?: MenuItemType;
-  icon?: string;
+  icon?: IconComponent;
+  /** Optional font preview for the visible item label. */
+  labelFontFamily?: string;
   shortcut?: string;
   disabled?: boolean;
   destructive?: boolean;
@@ -32,3 +34,4 @@ export type MenuVariant = "surface" | "outline" | "soft" | "glass";
 export function isInteractiveMenuItem(item: MenuItem): boolean {
   return item.type !== "label" && item.type !== "separator" && !item.disabled;
 }
+import type { IconComponent } from "./Icon.vue";

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LoaderCircle } from "@lucide/vue";
 import { computed, useAttrs, useSlots } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import {
@@ -14,6 +15,7 @@ import {
 } from "./form";
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon, { type IconComponent } from "./Icon.vue";
 
 export type InputGroupLayout = "inline" | "stacked";
 
@@ -27,8 +29,8 @@ const rawProps = withDefaults(
     layout?: InputGroupLayout;
     startText?: string;
     endText?: string;
-    startIcon?: string;
-    endIcon?: string;
+    startIcon?: IconComponent;
+    endIcon?: IconComponent;
     size?: FieldSize;
     rounded?: Rounded;
     placeholder?: string;
@@ -84,7 +86,7 @@ const effectiveStatusMessage = computed(() =>
     : undefined,
 );
 const stateIcon = computed(() =>
-  props.loading ? "mdi-loading" : getFieldStatusIcon(props.status),
+  props.loading ? LoaderCircle : getFieldStatusIcon(props.status),
 );
 const hasStart = computed(() =>
   Boolean(props.startText || props.startIcon || slots.start),
@@ -138,8 +140,7 @@ const endClasses = computed(() => [
     : "border-l border-balsa-input-border",
 ]);
 const stateIconClasses = computed(() => [
-  "mdi pointer-events-none absolute z-10",
-  stateIcon.value,
+  "pointer-events-none absolute z-10",
   props.layout === "inline"
     ? props.size === "sm"
       ? "right-3 top-1/2 -translate-y-1/2 text-base"
@@ -190,21 +191,22 @@ function handleInput(event: Event): void {
 
       <div v-if="hasStart" data-balsa="input-group-start" :class="startClasses">
         <slot name="start">
-          <i v-if="props.startIcon" :class="['mdi', props.startIcon]" aria-hidden="true"></i>
+          <Icon v-if="props.startIcon" :icon="props.startIcon" size="md" />
           <span v-if="props.startText">{{ props.startText }}</span>
         </slot>
       </div>
       <div v-if="hasEnd" data-balsa="input-group-end" :class="endClasses">
         <slot name="end">
           <span v-if="props.endText">{{ props.endText }}</span>
-          <i v-if="props.endIcon" :class="['mdi', props.endIcon]" aria-hidden="true"></i>
+          <Icon v-if="props.endIcon" :icon="props.endIcon" size="md" />
         </slot>
       </div>
-      <i
+      <Icon
         v-if="stateIcon && !hasEnd"
+        :icon="stateIcon"
+        size="md"
         :class="stateIconClasses"
-        aria-hidden="true"
-      ></i>
+      />
     </div>
     <span v-if="props.hint" :id="hintId" :class="fieldHintClasses">
       {{ props.hint }}
@@ -213,7 +215,7 @@ function handleInput(event: Event): void {
       v-if="effectiveStatusMessage"
       :id="statusId"
       role="alert"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

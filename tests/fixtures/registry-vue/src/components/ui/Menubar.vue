@@ -70,7 +70,7 @@ const rootClasses = computed(() =>
   ),
 );
 const triggerClasses = computed(() => [
-  "shrink-0 cursor-pointer rounded-md px-3 py-2 text-sm font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
+  "shrink-0 cursor-pointer rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
 ]);
 const layerClasses = computed(() => [
   "z-[65]",

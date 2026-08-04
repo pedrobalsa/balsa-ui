@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check, Copy } from "@lucide/vue";
 import { computed, onBeforeUnmount, ref, useAttrs, watch } from "vue";
 import type { CSSProperties } from "vue";
 import hljs from "highlight.js/lib/core";
@@ -84,7 +85,7 @@ const copyLabel = computed(() => {
 });
 
 const copyIcon = computed(() =>
-  copied.value ? "mdi-check" : "mdi-content-copy",
+  copied.value ? Check : Copy,
 );
 
 const sizeClasses: Readonly<Record<CodeBlockSize, { code: string; header: string; pre: string }>> = {

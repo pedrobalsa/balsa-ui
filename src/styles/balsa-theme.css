@@ -38,16 +38,17 @@
   --balsa-spacing-density-comfortable: 0.75rem;
   --balsa-border-width: 1px;
   --balsa-outline-border-width: 1px;
-  --balsa-solid-border-width: 0px;
+  --balsa-solid-border-width: 1px;
+  --balsa-border-opacity: 55%;
   --balsa-border-style: solid;
   --balsa-shadow-sm: none;
-  --balsa-shadow-md: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 8%, transparent), 0 12px 32px color-mix(in oklab, var(--balsa-color-foreground) 8%, transparent);
-  --balsa-shadow-lg: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 6%, transparent), 0 12px 32px color-mix(in oklab, var(--balsa-color-foreground) 7%, transparent);
-  --balsa-shadow-detail: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 10%, transparent);
+  --balsa-shadow-md: none;
+  --balsa-shadow-lg: none;
+  --balsa-shadow-detail: none;
   --balsa-shadow-control: var(--balsa-shadow-sm);
   --balsa-shadow-surface: var(--balsa-shadow-md);
   --balsa-shadow-panel: var(--balsa-shadow-lg);
-  --balsa-shadow-playground: 0 1px 2px color-mix(in oklab, var(--balsa-color-foreground) 4%, transparent), 0 10px 28px color-mix(in oklab, var(--balsa-color-foreground) 6%, transparent);
+  --balsa-shadow-playground: none;
   --balsa-motion-fast: 160ms;
   --balsa-motion-normal: 260ms;
   --balsa-motion-slow: 420ms;
@@ -58,7 +59,7 @@
   --balsa-control-text-transform: none;
   --balsa-control-letter-spacing: 0;
   --balsa-control-font-family: var(--balsa-font-body);
-  --balsa-control-font-weight: 700;
+  --balsa-control-font-weight: 600;
   --balsa-backdrop-blur: 0px;
   --balsa-backdrop-saturation: 1;
   --balsa-overlay-blur: 4px;
@@ -119,14 +120,15 @@
   --balsa-spacing-density-compact: 0.25rem;
   --balsa-spacing-density-default: 0.5rem;
   --balsa-spacing-density-comfortable: 0.75rem;
-  --balsa-border-width: 1px;
-  --balsa-outline-border-width: 1px;
-  --balsa-solid-border-width: 1px;
+  --balsa-border-width: 2px;
+  --balsa-outline-border-width: 2px;
+  --balsa-solid-border-width: 2px;
+  --balsa-border-opacity: 100%;
   --balsa-border-style: solid;
-  --balsa-shadow-sm: 3px 3px 0 var(--balsa-color-foreground);
-  --balsa-shadow-md: 5px 5px 0 var(--balsa-color-foreground);
-  --balsa-shadow-lg: 6px 6px 0 var(--balsa-color-foreground);
-  --balsa-shadow-detail: 2px 2px 0 var(--balsa-color-foreground);
+  --balsa-shadow-sm: none;
+  --balsa-shadow-md: none;
+  --balsa-shadow-lg: none;
+  --balsa-shadow-detail: none;
   --balsa-shadow-control: var(--balsa-shadow-sm);
   --balsa-shadow-surface: var(--balsa-shadow-md);
   --balsa-shadow-panel: var(--balsa-shadow-lg);
@@ -205,6 +207,7 @@
   --balsa-border-width: 1px;
   --balsa-outline-border-width: 1px;
   --balsa-solid-border-width: 1px;
+  --balsa-border-opacity: 100%;
   --balsa-border-style: solid;
   --balsa-shadow-sm: 0 6px 20px color-mix(in oklab, var(--balsa-color-foreground) 4%, transparent);
   --balsa-shadow-md: 0 14px 36px color-mix(in oklab, var(--balsa-color-foreground) 5%, transparent);
@@ -224,7 +227,7 @@
   --balsa-control-text-transform: none;
   --balsa-control-letter-spacing: 0;
   --balsa-control-font-family: var(--balsa-font-body);
-  --balsa-control-font-weight: 700;
+  --balsa-control-font-weight: 600;
   --balsa-backdrop-blur: 14px;
   --balsa-backdrop-saturation: 1.1;
   --balsa-overlay-blur: 4px;
@@ -263,9 +266,9 @@
   --balsa-material-outline-control-hover: color-mix(in oklab, var(--balsa-material-surface-elevated) 86%, currentColor 14%);
   --balsa-material-outline-control-active: color-mix(in oklab, var(--balsa-material-surface-elevated) 78%, currentColor 22%);
   --balsa-material-outline-control-border: color-mix(in oklab, currentColor 32%, transparent);
-  --balsa-material-glass-control: color-mix(in oklab, var(--balsa-color-surface-elevated) 50%, currentColor 4%);
-  --balsa-material-glass-control-hover: color-mix(in oklab, var(--balsa-color-surface-elevated) 58%, currentColor 8%);
-  --balsa-material-glass-control-active: color-mix(in oklab, var(--balsa-color-surface-elevated) 64%, currentColor 12%);
+  --balsa-material-glass-control: color-mix(in oklab, var(--balsa-color-surface) 50%, currentColor 4%);
+  --balsa-material-glass-control-hover: color-mix(in oklab, var(--balsa-color-surface) 58%, currentColor 8%);
+  --balsa-material-glass-control-active: color-mix(in oklab, var(--balsa-color-surface) 64%, currentColor 12%);
   --balsa-material-glass-control-border: color-mix(in oklab, currentColor 16%, transparent);
 }
 
@@ -294,6 +297,10 @@
   box-shadow: var(--balsa-shadow-control);
 }
 
+:where([data-balsa="button"], [data-balsa="link"])[data-variant="solid"]:not(:disabled) {
+  border-color: color-mix(in oklab, currentColor var(--balsa-border-opacity, 100%), transparent);
+}
+
 :where([data-balsa="button"], [data-balsa="link"])[data-variant="outline"] {
   border-width: var(--balsa-outline-border-width);
   box-shadow: var(--balsa-shadow-control);
@@ -307,7 +314,7 @@
 }
 
 :where([data-balsa="button"])[data-variant="glass"]:not(:disabled) {
-  border-color: var(--balsa-material-glass-control-border);
+  border-color: color-mix(in oklab, var(--balsa-material-glass-control-border) var(--balsa-border-opacity, 100%), transparent);
   background-color: var(--balsa-material-glass-control);
 }
 
@@ -325,7 +332,7 @@
   [data-balsa="button"],
   [data-balsa="link"]
 )[data-variant="outline"]:not(:disabled) {
-  border-color: var(--balsa-material-outline-control-border);
+  border-color: color-mix(in oklab, var(--balsa-material-outline-control-border) var(--balsa-border-opacity, 100%), transparent);
   background-color: var(--balsa-material-outline-control);
 }
 
@@ -384,9 +391,19 @@
 
 [data-balsa="card"] {
   border-radius: var(--balsa-radius-surface);
+  border-width: var(--balsa-border-width);
   border-style: var(--balsa-border-style);
   transition-property: transform, box-shadow, background-color, border-color;
   transition-duration: var(--balsa-motion-normal);
+}
+
+[data-balsa="card"][data-variant="outline"] {
+  border-width: var(--balsa-outline-border-width);
+}
+
+[data-application-card-footer] {
+  border-top-width: var(--balsa-border-width);
+  border-top-style: var(--balsa-border-style);
 }
 
 [data-balsa="card"][data-variant="surface"] {
@@ -498,7 +515,9 @@
 [data-balsa="navbar-surface"][data-variant="glass"],
 [data-balsa="dropdown"][data-variant="glass"],
 [data-balsa="menu-list"][data-variant="glass"],
-[data-balsa="site-floating-panel"][data-variant="glass"] {
+[data-balsa="site-floating-panel"][data-variant="glass"],
+[data-balsa="theme-advanced"][data-variant="glass"],
+[data-balsa="theme-advanced"][data-variant="glass"] [data-balsa-theme-advanced-header] {
   background-color: var(--balsa-material-glass-control);
 }
 
@@ -853,6 +872,7 @@ dialog[data-balsa="alert"][open] {
   [data-balsa="autocomplete-popover"],
   [data-balsa="component-playground-properties"],
   [data-balsa="site-floating-panel"],
+  [data-balsa="theme-advanced"],
   [data-balsa="site-selected"]
 ) {
   backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));

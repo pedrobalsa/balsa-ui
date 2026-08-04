@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import { computed, nextTick, ref, watch } from "vue";
 import Button from "./Button.vue";
 import { mergeClasses } from "./classes";
@@ -129,7 +130,7 @@ const classes = computed(() => mergeClasses("border border-balsa-border bg-balsa
 const monthsClasses = computed(() => props.months === 2 ? "grid gap-6 lg:grid-cols-2" : "grid");
 function dayClasses(date: Date, month: Date): string {
   return mergeClasses(
-    "grid size-10 place-items-center rounded-balsa-control text-sm font-bold transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-35",
+    "grid size-10 place-items-center rounded-balsa-control text-sm font-normal tabular-nums transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-35",
     date.getMonth() !== month.getMonth() && "text-balsa-muted-foreground",
     isInRange(date) && "bg-balsa-selected text-balsa-selected-foreground",
     isSelected(date) && "bg-balsa-primary text-balsa-primary-foreground hover:bg-balsa-primary-hover",
@@ -215,16 +216,16 @@ watch(() => props.month, (month) => {
     :style="theme.explicitPresentation.value?.style"
   >
     <header class="mb-4 flex items-center justify-between gap-3">
-      <Button shape="fab" size="sm" variant="outline" prefix-icon="mdi-chevron-left" aria-label="Previous month" :disabled="props.disabled || !canChangeMonth(-1)" @click="changeMonth(-1)" />
-      <p class="font-bold">{{ monthFormatter.format(visibleMonth) }}</p>
-      <Button shape="fab" size="sm" variant="outline" prefix-icon="mdi-chevron-right" aria-label="Next month" :disabled="props.disabled || !canChangeMonth(1)" @click="changeMonth(1)" />
+      <Button shape="fab" size="sm" variant="outline" :prefix-icon="ChevronLeft" aria-label="Previous month" :disabled="props.disabled || !canChangeMonth(-1)" @click="changeMonth(-1)" />
+      <p class="text-sm font-semibold">{{ monthFormatter.format(visibleMonth) }}</p>
+      <Button shape="fab" size="sm" variant="outline" :prefix-icon="ChevronRight" aria-label="Next month" :disabled="props.disabled || !canChangeMonth(1)" @click="changeMonth(1)" />
     </header>
     <div :class="monthsClasses">
       <div v-for="displayedMonth in displayedMonths" :key="dateKey(displayedMonth)">
-        <p v-if="props.months === 2" class="mb-2 text-center font-bold">{{ monthFormatter.format(displayedMonth) }}</p>
+        <p v-if="props.months === 2" class="mb-2 text-center text-sm font-semibold">{{ monthFormatter.format(displayedMonth) }}</p>
         <div role="grid" :aria-label="monthFormatter.format(displayedMonth)">
           <div role="row" class="grid grid-cols-7">
-            <span v-for="weekday in weekdays" :key="weekday.getDay()" role="columnheader" class="grid size-10 place-items-center text-xs font-bold text-balsa-muted-foreground">{{ weekdayFormatter.format(weekday) }}</span>
+            <span v-for="weekday in weekdays" :key="weekday.getDay()" role="columnheader" class="grid size-10 place-items-center text-xs font-normal text-balsa-muted-foreground">{{ weekdayFormatter.format(weekday) }}</span>
           </div>
           <div v-for="(week, weekIndex) in Math.ceil(monthGrid(displayedMonth).length / 7)" :key="weekIndex" role="row" class="grid grid-cols-7">
             <template v-for="date in monthGrid(displayedMonth).slice((week - 1) * 7, week * 7)" :key="dateKey(date)">

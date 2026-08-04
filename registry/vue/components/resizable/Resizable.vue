@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { GripHorizontal, GripVertical } from "@lucide/vue";
 import { computed, ref, useAttrs, watch } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type ResizableOrientation = "horizontal" | "vertical";
 export type ResizableVariant = "surface" | "outline" | "soft" | "glass";
@@ -111,11 +113,7 @@ const handleClasses = computed(() =>
     props.disabled && "cursor-not-allowed opacity-50",
   ),
 );
-const gripClasses = computed(() =>
-  props.orientation === "horizontal"
-    ? "mdi mdi-dots-vertical text-base"
-    : "mdi mdi-dots-horizontal text-base",
-);
+const gripIcon = computed(() => props.orientation === "horizontal" ? GripVertical : GripHorizontal);
 
 function update(next: number): void {
   const clamped = Math.min(
@@ -213,7 +211,7 @@ function handleKeydown(event: KeyboardEvent): void {
       @pointercancel="handlePointerEnd"
       @keydown="handleKeydown"
     >
-      <i v-if="props.showGrip" :class="gripClasses" aria-hidden="true"></i>
+      <Icon v-if="props.showGrip" :icon="gripIcon" size="sm" />
     </div>
     <section data-balsa="resizable-panel" :class="panelClasses">
       <slot name="second" />

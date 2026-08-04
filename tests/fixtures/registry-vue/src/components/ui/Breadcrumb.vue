@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ChevronRight, Dot } from "@lucide/vue";
 import { computed } from "vue";
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export interface BreadcrumbItem {
   label: string;
@@ -48,10 +50,11 @@ const linkSizeClasses: Readonly<Record<BreadcrumbSize, string>> = {
   md: "min-h-8 px-1.5",
 };
 const separatorClasses: Readonly<Record<BreadcrumbSeparator, string>> = {
-  chevron: "mdi mdi-chevron-right text-base",
+  chevron: "",
   slash: "font-medium text-sm",
-  dot: "mdi mdi-circle-small text-lg",
+  dot: "",
 };
+const separatorIcons = { chevron: ChevronRight, dot: Dot } as const;
 
 function isCurrent(index: number): boolean {
   return index === currentIndex.value;
@@ -68,7 +71,7 @@ function linkRel(item: BreadcrumbItem): string | undefined {
 
 function itemClasses(index: number): string[] {
   return [
-    "inline-flex items-center rounded-balsa-control font-bold",
+    "inline-flex items-center rounded-balsa-control font-medium",
     linkSizeClasses[props.size],
     isCurrent(index) ? "text-balsa-foreground" : "text-balsa-muted-foreground",
   ];
@@ -89,7 +92,7 @@ function itemClasses(index: number): string[] {
     <ol :class="['m-0 flex min-w-0 list-none flex-wrap items-center p-0 text-balsa-muted-foreground', sizeClasses[props.size]]">
       <template v-for="(item, index) in props.items" :key="`${item.label}-${index}`">
         <li v-if="index > 0" aria-hidden="true" class="flex items-center text-balsa-muted-foreground/70">
-          <i v-if="props.separator !== 'slash'" :class="separatorClasses[props.separator]"></i>
+          <Icon v-if="props.separator !== 'slash'" :icon="separatorIcons[props.separator]" size="sm" />
           <span v-else :class="separatorClasses.slash">{{ separatorText() }}</span>
         </li>
         <li class="min-w-0">
@@ -98,7 +101,7 @@ function itemClasses(index: number): string[] {
             :href="item.href"
             :target="item.target"
             :rel="linkRel(item)"
-            :class="['inline-flex items-center rounded-balsa-control font-bold text-balsa-muted-foreground no-underline transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring', linkSizeClasses[props.size]]"
+            :class="['inline-flex items-center rounded-balsa-control font-medium text-balsa-muted-foreground no-underline transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring', linkSizeClasses[props.size]]"
           >
             {{ item.label }}
           </a>

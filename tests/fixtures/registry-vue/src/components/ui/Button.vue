@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { LoaderCircle } from "@lucide/vue";
 import { computed, useAttrs } from "vue";
 import { actionColorClasses, type ActionColor } from "./types";
 import { type Shadow, type ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
+import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
 
-type ButtonVariant = "solid" | "outline" | "glass";
-type ButtonSize = "sm" | "md" | "lg" | "xl";
+export type ButtonVariant = "solid" | "soft" | "outline" | "glass";
+type ButtonSize = "sm" | "md" | "lg" | "xl" | "2xl";
 type ButtonShape = "rounded" | "pill" | "fab";
 type ButtonIconPlacement = "none" | "prefix" | "suffix" | "both";
 
@@ -18,8 +20,8 @@ const props = withDefaults(
     color?: ActionColor;
     size?: ButtonSize | null;
     shape?: ButtonShape;
-    prefixIcon?: string;
-    suffixIcon?: string;
+    prefixIcon?: IconComponent;
+    suffixIcon?: IconComponent;
     disabled?: boolean;
     loading?: boolean;
     type?: "button" | "submit" | "reset";
@@ -54,6 +56,7 @@ const sizeClasses: Record<ButtonSize, string[]> = {
   md: ["h-9", "gap-2", "text-sm"],
   lg: ["h-10", "gap-2", "text-sm"],
   xl: ["h-12", "gap-2.5", "text-base"],
+  "2xl": ["h-18", "gap-3", "text-xl"],
 };
 
 const paddingClasses: Record<
@@ -84,13 +87,20 @@ const paddingClasses: Record<
     suffix: "pl-8 pr-7",
     both: "px-7",
   },
+  "2xl": {
+    none: "px-10",
+    prefix: "pl-9 pr-10",
+    suffix: "pl-10 pr-9",
+    both: "px-9",
+  },
 };
 
-const iconSizeClasses: Record<ButtonSize, string> = {
-  sm: "text-base",
-  md: "text-base",
-  lg: "text-lg",
-  xl: "text-xl",
+const iconSizes: Record<ButtonSize, IconSize> = {
+  sm: "sm",
+  md: "sm",
+  lg: "md",
+  xl: "md",
+  "2xl": "lg",
 };
 
 const shapeClasses: Record<ButtonShape, string[]> = {
@@ -104,17 +114,19 @@ const fabSizeClasses: Record<ButtonSize, string[]> = {
   md: ["h-9", "w-9"],
   lg: ["h-10", "w-10"],
   xl: ["h-12", "w-12"],
+  "2xl": ["h-18", "w-18"],
 };
 
-const fabIconSizeClasses: Record<ButtonSize, string> = {
-  sm: "text-base",
-  md: "text-lg",
-  lg: "text-xl",
-  xl: "text-2xl",
+const fabIconSizes: Record<ButtonSize, IconSize> = {
+  sm: "sm",
+  md: "md",
+  lg: "md",
+  xl: "lg",
+  "2xl": "xl",
 };
 
 const leadingIcon = computed(() =>
-  props.loading ? "mdi-loading" : props.prefixIcon,
+  props.loading ? LoaderCircle : props.prefixIcon,
 );
 
 const trailingIcon = computed(() =>
@@ -136,7 +148,7 @@ const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const classes = computed(() =>
   mergeClasses(
-    "inline-flex w-fit items-center justify-center font-balsa-body font-bold transition-colors duration-200 ease-in-out hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:border-balsa-disabled disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    "inline-flex w-fit items-center justify-center font-balsa-body transition-colors duration-200 ease-in-out hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:border-balsa-disabled disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
     actionColorClasses[props.color][resolvedVariant.value],
     resolvedVariant.value === "outline" ? ["border", "bg-transparent"] : [],
     resolvedVariant.value === "glass" ? ["border"] : [],
@@ -153,25 +165,12 @@ const classes = computed(() =>
   ),
 );
 
-const iconClasses = computed(() => [
-  "mdi",
-  resolvedSize.value
-    ? resolvedShape.value === "fab"
-      ? fabIconSizeClasses[resolvedSize.value]
-      : iconSizeClasses[resolvedSize.value]
-    : "text-inherit",
-]);
-
-const leadingIconClasses = computed(() => [
-  ...iconClasses.value,
-  leadingIcon.value,
-  ...(props.loading ? ["animate-spin"] : []),
-]);
-
-const trailingIconClasses = computed(() => [
-  ...iconClasses.value,
-  trailingIcon.value,
-]);
+const iconSize = computed<IconSize>(() => {
+  if (!resolvedSize.value) return "md";
+  return resolvedShape.value === "fab"
+    ? fabIconSizes[resolvedSize.value]
+    : iconSizes[resolvedSize.value];
+});
 </script>
 
 <template>
@@ -190,16 +189,17 @@ const trailingIconClasses = computed(() => [
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
     :class="classes"
   >
-    <i
+    <Icon
       v-if="leadingIcon"
-      :class="leadingIconClasses"
-      aria-hidden="true"
-    ></i>
+      :icon="leadingIcon"
+      :size="iconSize"
+      :class="props.loading ? 'animate-spin' : undefined"
+    />
     <slot />
-    <i
+    <Icon
       v-if="trailingIcon"
-      :class="trailingIconClasses"
-      aria-hidden="true"
-    ></i>
+      :icon="trailingIcon"
+      :size="iconSize"
+    />
   </button>
 </template>

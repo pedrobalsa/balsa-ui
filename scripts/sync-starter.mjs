@@ -3,15 +3,15 @@ import { readFile, rm, writeFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { installRegistryItems } from "./install-registry.mjs";
 import {
-  ensureIconStyleImport,
-  ensureIconStyles,
   ensureStyleImports,
   publicBaseUrl,
 } from "./agent-context.mjs";
 import { readJson, rootDir, writeJson } from "./registry-lib.mjs";
 
 const starterDir = path.join(rootDir, "starters", "vue");
+const legacyIconPackage = ["@", "mdi", "/font"].join("");
 await rm(path.join(starterDir, "src", "styles", "balsa.css"), { force: true });
+await rm(path.join(starterDir, "src", "styles", "balsa-icons.css"), { force: true });
 await rm(path.join(starterDir, "src", "components", "compositions", "FormField.vue"), {
   force: true,
 });
@@ -36,9 +36,7 @@ const items = await installRegistryItems({
   force: true,
   forceAgentSkill: true,
 });
-const iconStylesheet = await ensureIconStyles(starterDir, items);
 await ensureStyleImports(starterDir, true);
-await ensureIconStyleImport(starterDir, iconStylesheet);
 const starterCssPath = path.join(starterDir, "src", "index.css");
 const starterAppPath = path.join(starterDir, "src", "App.vue");
 const starterMainPath = path.join(starterDir, "src", "main.ts");
@@ -111,7 +109,8 @@ await writeFile(
   ].join("\n"),
   "utf8",
 );
-const starterCssSource = await readFile(starterCssPath, "utf8");
+const starterCssSource = (await readFile(starterCssPath, "utf8"))
+  .replace(/^@import ["']\.\/styles\/balsa-icons\.css["'];\r?\n/gm, "");
 const starterCss = namespaceStarterUtilities(
   starterCssSource.includes('balsa-fonts.css')
     ? starterCssSource
@@ -136,8 +135,8 @@ await writeFile(
   "utf8",
 );
 const starterMain = (await readFile(starterMainPath, "utf8"))
-  .replace(/^import "@fontsource\/[^"]+";\r?\n/gm, "")
-  .replace(/^import "@mdi\/font\/css\/materialdesignicons(?:\.min)?\.css";\r?\n/gm, "");
+  .replace(`import "${legacyIconPackage}/css/materialdesignicons.css";\n`, "")
+  .replace(/^import "@fontsource\/[^"]+";\r?\n/gm, "");
 await writeFile(
   starterMainPath,
   starterMain,
@@ -154,6 +153,8 @@ const packageLockPath = path.join(starterDir, "package-lock.json");
 const starterPackage = await readJson(packagePath);
 const rootPackage = await readJson(path.join(rootDir, "package.json"));
 delete starterPackage.dependencies?.balsaui;
+delete starterPackage.dependencies?.[rootPackage.name];
+delete starterPackage.dependencies?.[legacyIconPackage];
 starterPackage.dependencies ??= {};
 for (const dependency of Object.keys(starterPackage.devDependencies ?? {})) {
   delete starterPackage.dependencies[dependency];
@@ -176,6 +177,19 @@ for (const dependency of new Set(items.flatMap((item) => item.dependencies))) {
   starterPackage.dependencies[dependency] = version;
 }
 await writeJson(packagePath, starterPackage);
+
+function pruneStarterLock(lock) {
+  delete lock.packages?.[""]?.dependencies?.balsaui;
+  delete lock.packages?.[""]?.dependencies?.[rootPackage.name];
+  delete lock.packages?.["../.."];
+  delete lock.packages?.["node_modules/balsaui"];
+  delete lock.packages?.[`node_modules/${rootPackage.name}`];
+  return lock;
+}
+
+// The starter must stay standalone: a `file:../..` self-reference leaves a link
+// entry whose target the export removes, which npm cannot reload afterwards.
+await writeJson(packageLockPath, pruneStarterLock(await readJson(packageLockPath)));
 if (!process.env.npm_execpath) {
   throw new Error("Run starter synchronization through `npm run starter:sync`.");
 }
@@ -192,11 +206,7 @@ execFileSync(
   { cwd: starterDir, stdio: "inherit" },
 );
 
-const starterPackageLock = await readJson(packageLockPath);
-delete starterPackageLock.packages?.[""]?.dependencies?.balsaui;
-delete starterPackageLock.packages?.["../.."];
-delete starterPackageLock.packages?.["node_modules/balsaui"];
-await writeJson(packageLockPath, starterPackageLock);
+await writeJson(packageLockPath, pruneStarterLock(await readJson(packageLockPath)));
 
 const componentsPath = path.join(starterDir, "components.json");
 const components = await readJson(componentsPath);
@@ -243,7 +253,7 @@ await writeFile(
     "npx balsa-ui@latest add input button modal",
     "```",
     "",
-    "The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items. Generated font and icon stylesheets keep the Latin application fonts and complete MDI class map while shipping only modern WOFF2 assets.",
+    "The starter has no dependency on the Balsa monorepo. Installed Balsa files are ordinary application source; preserve local changes when adding or updating items. The generated font stylesheet keeps the Latin application fonts on modern WOFF2 assets, while icons are tree-shaken Vue components.",
     "",
   ].join("\n"),
   "utf8",

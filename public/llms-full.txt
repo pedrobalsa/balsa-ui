@@ -27,17 +27,18 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 
 ## Components
 
-- [Button](https://balsa-ui.com/docs/components/button.md): Typed action control with solid, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and MDI icons.
+- [Icon](https://balsa-ui.com/docs/components/icon.md): Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.
+- [Button](https://balsa-ui.com/docs/components/button.md): Typed action control with solid, soft, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and Lucide icons.
 - [ButtonGroup](https://balsa-ui.com/docs/components/button-group.md): Connected mutually exclusive actions with semantic color, a Glassmorphism-aware surface-to-glass default, explicit surface, solid, outline, glass, and compact code treatments; rounded or pill outer shapes; four shared sizes; responsive labels; and accessible pressed state.
-- [Input](https://balsa-ui.com/docs/components/input.md): Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; phone, monetary, and percentage presets; validation feedback; and loading states.
-- [Input Group](https://balsa-ui.com/docs/components/input-group.md): One labelled native text input with typed start/end text or MDI addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.
+- [Input](https://balsa-ui.com/docs/components/input.md): Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; password, phone, monetary, and percentage modes; validation feedback; and loading states.
+- [Input Group](https://balsa-ui.com/docs/components/input-group.md): One labelled native text input with typed start/end text or Lucide addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.
 - [Input OTP](https://balsa-ui.com/docs/components/input-otp.md): One accessible fixed-length native verification-code input with semantic-colored visual cells, numeric or alphanumeric filtering, paste and caret editing, optional masking and grouping, surface/outline/soft/solid/glass materials, completion events, and shared form states.
 - [Radio Group](https://balsa-ui.com/docs/components/radio-group.md): Accessible native mutually exclusive choices with typed options, a default column layout, semantic selected colors, row and selected-card layouts, shared form validation, sizing, geometry, and loading behavior.
 - [Slider](https://balsa-ui.com/docs/components/slider.md): Single-value and independently draggable bounded-range native sliders with horizontal and vertical orientation, formatted output, three sizes, minimum thumb gaps, keyboard, pointer, touch, and form behavior.
 - [Popup](https://balsa-ui.com/docs/components/popup.md): Collision-aware interactive rich content anchored to a native button with portal or contained rendering, focus entry/restoration, dismissal, typed materials, sizing, and geometry.
 - [Hover Card](https://balsa-ui.com/docs/components/hover-card.md): Delayed pointer-hover and keyboard-focus previews that preserve focus, bridge pointer movement, collision-flip, escape clipping, and inherit Balsa materials and geometry.
 - [Tooltip](https://balsa-ui.com/docs/components/tooltip.md): Collision-aware non-interactive supplementary descriptions for pointer hover and keyboard focus, with typed timing, materials, geometry, portal or contained rendering, and theme inheritance.
-- [Dropdown Menu](https://balsa-ui.com/docs/components/dropdown-menu.md): Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals.
+- [Dropdown Menu](https://balsa-ui.com/docs/components/dropdown-menu.md): Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals. Ships PropertySelect, the full-width caption-over-value property row built on the same trigger.
 - [Context Menu](https://balsa-ui.com/docs/components/context-menu.md): Pointer- and keyboard-positioned typed context actions with viewport collision handling and the complete shared Balsa menu semantics.
 - [Menubar](https://balsa-ui.com/docs/components/menubar.md): Persistent application menus with horizontal roving focus, open-menu transfer, typed shared menu content, portals, and complete keyboard behavior.
 - [Command Menu](https://balsa-ui.com/docs/components/command-menu.md): Inline dropdown or on-demand dialog grouped command filtering with combobox/listbox semantics, active-descendant navigation, hotkey opening, loading, empty states, and typed sizing.
@@ -49,6 +50,7 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Link](https://balsa-ui.com/docs/components/link.md): Typed sized navigation link with text, solid, and outline presentations, optional square geometry, and safe external-link behavior.
 - [Badge](https://balsa-ui.com/docs/components/badge.md): Compact status, category, and metadata label with solid, soft, outline, and low-rim translucent glass styles, three sizes, and optional square geometry.
 - [Card](https://balsa-ui.com/docs/components/card.md): Consistent semantic surface with six variants, typed action-intent color, configurable corners, size or padding, and shadow for grouping related content and actions.
+- [ApplicationCard](https://balsa-ui.com/docs/components/application-card.md): Structured application surface with a repeatable header, action, body, and footer rhythm that inherits Card material, geometry, borders, density, and elevation.
 - [Select](https://balsa-ui.com/docs/components/select.md): Keyboard-accessible outline, surface, soft, or glass single or multiple selection with compact sizing, configurable corners, fixed-height gapped options, and an overflow-safe top-layer listbox.
 - [Autocomplete](https://balsa-ui.com/docs/components/autocomplete.md): Editable outline, surface, soft, or glass single- or multiple-value combobox with shared field sizing, configurable corners, removable selected suggestions, and an overflow-safe suggestion list.
 - [Checkbox](https://balsa-ui.com/docs/components/checkbox.md): Native binary form selection with outline, surface, soft, and glass unchecked-control treatments, associated label, hint, three sizes, and configurable corners.
@@ -63,14 +65,14 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Resizable](https://balsa-ui.com/docs/components/resizable.md): Two-panel pointer and keyboard resize group with controlled percentage, horizontal or vertical orientation, safe limits, typed materials, handle sizes, and geometry.
 - [Scroll Area](https://balsa-ui.com/docs/components/scroll-area.md): Labelled native scroll viewport with typed axes, scrollbar visibility and width, optional edge fades, geometry, native events, and exposed scroll methods.
 - [Preview](https://balsa-ui.com/docs/components/preview.md): Isolated natural or exact logical viewport with fit scaling, synchronized design context, accessible iframe title, and chromeless fullscreen review.
-- [Carousel](https://balsa-ui.com/docs/components/carousel.md): Typed accessible Embla-backed drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.
+- [Carousel](https://balsa-ui.com/docs/components/carousel.md): Typed accessible Balsa-owned drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.
 - [Sidebar](https://balsa-ui.com/docs/components/sidebar.md): Typed grouped application navigation with active state, nested items, expanded/rail/offcanvas desktop modes, shortcut, slots, and Drawer-backed mobile behavior.
 - [Attachment](https://balsa-ui.com/docs/components/attachment.md): Labelled native file selection with drag/drop, immutable single or multiple models, type/size/count validation, loading/error states, metadata, and accessible removal.
 - [Table](https://balsa-ui.com/docs/components/table.md): Responsive slot-first semantic table with typed materials, density, independently configurable header and row colors, stripes, hover, gridlines, sticky header, geometry, and valid loading or empty rows.
 - [Calendar](https://balsa-ui.com/docs/components/calendar.md): Locale-aware single, multiple, and range date-only selection with disabled rules, one or two months, fixed weeks, outside days, and complete grid keyboard navigation.
 - [DatePicker](https://balsa-ui.com/docs/components/date-picker.md): Labelled locale-formatted single or range date field composing Calendar and collision-safe Popup with validation, disabled dates, clear action, dismissal, focus restoration, and Glassmorphism backdrop blur.
 - [DataTable](https://balsa-ui.com/docs/components/data-table.md): Typed columns and rows with render slots, controlled sorting, bottom quick field and advanced filters, pagination, selection, visibility, independent header and row colors, density, loading, empty state, and responsive semantic markup.
-- [Charts](https://balsa-ui.com/docs/components/charts.md): Typed responsive line, bar, and doughnut charts with configurable semantic palettes, element roundness, loading/empty/error surfaces, reduced motion, figure labels, and complete semantic table alternatives.
+- [Charts](https://balsa-ui.com/docs/components/charts.md): Composable responsive Unovis line, area, grouped or stacked bar, donut, and doughnut charts with contrast-safe semantic series, polished interactions, explicit states, and complete semantic table alternatives.
 - [Separator](https://balsa-ui.com/docs/components/separator.md): Decorative or semantic horizontal and vertical separation with typed line styles, thicknesses, orientation, and optional aligned horizontal label content.
 - [Skeleton](https://balsa-ui.com/docs/components/skeleton.md): Screen-reader-hidden text, rectangle, and circle loading placeholders with typed materials, sizing, geometry, pulse or wave motion, and reduced-motion fallback.
 - [Spinner](https://balsa-ui.com/docs/components/spinner.md): Accessible indeterminate loading status with five sizes, semantic color, three speeds, hidden or visible label placement, and reduced-motion fallback.
@@ -83,3 +85,33 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Navbar](https://balsa-ui.com/docs/components/navbar.md): Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.
 - [Footer](https://balsa-ui.com/docs/components/footer.md): Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.
 - [GradientBackground](https://balsa-ui.com/docs/components/gradient-background.md): Deterministic single-pass procedural backgrounds with typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.
+- [AccountSecurityCard](https://balsa-ui.com/docs/components/account-security-card.md): Credential update and separated destructive account action.
+- [PayoutMethodCard](https://balsa-ui.com/docs/components/payout-method-card.md): Receiving-method selection with account details and one save action.
+- [TransferFundsCard](https://balsa-ui.com/docs/components/transfer-funds-card.md): Account-to-account transfer form with arrival, fee, and total summary.
+- [SavingsGoalCard](https://balsa-ui.com/docs/components/savings-goal-card.md): Goal values and progress presented in a repeatable financial rhythm.
+- [TransactionListCard](https://balsa-ui.com/docs/components/transaction-list-card.md): Scannable activity rows with identity, metadata, time, and amount.
+- [BalanceSummaryCard](https://balsa-ui.com/docs/components/balance-summary-card.md): Compact balance, availability, and contextual action summary.
+- [UsageSummaryCard](https://balsa-ui.com/docs/components/usage-summary-card.md): Time-series usage, key totals, and quota progress in one panel.
+- [AnalyticsChartCard](https://balsa-ui.com/docs/components/analytics-chart-card.md): Trend visualization with period context and semantic delta.
+- [MetricGridCard](https://balsa-ui.com/docs/components/metric-grid-card.md): Aligned operational KPIs with labels, values, and supporting detail.
+- [ResourceTableCard](https://balsa-ui.com/docs/components/resource-table-card.md): Resource index with status, metadata, row selection, and creation action.
+- [SettingsCard](https://balsa-ui.com/docs/components/settings-card.md): Related workspace settings with explicit reset and save actions.
+- [NotificationPreferencesCard](https://balsa-ui.com/docs/components/notification-preferences-card.md): Independently controlled notification channels with concise explanations.
+- [InviteMembersCard](https://balsa-ui.com/docs/components/invite-members-card.md): Repeatable email and role rows with a single invitation action.
+- [MemberAccessCard](https://balsa-ui.com/docs/components/member-access-card.md): People, identity, role, and access metadata in a scannable list.
+- [ActionListCard](https://balsa-ui.com/docs/components/action-list-card.md): Grouped navigational actions with icons, descriptions, and trailing affordances.
+- [NavigationMenuCard](https://balsa-ui.com/docs/components/navigation-menu-card.md): Sectioned local navigation with an explicit current destination.
+- [EmptyStateCard](https://balsa-ui.com/docs/components/empty-state-card.md): Blank-slate explanation with one primary next step.
+- [ErrorStateCard](https://balsa-ui.com/docs/components/error-state-card.md): Recoverable failure with request context and retry action.
+- [LoadingStateCard](https://balsa-ui.com/docs/components/loading-state-card.md): Stable skeleton geometry with accessible busy semantics.
+- [FileUploadCard](https://balsa-ui.com/docs/components/file-upload-card.md): Drag-and-drop import target with format guidance and browse action.
+- [MediaPreviewCard](https://balsa-ui.com/docs/components/media-preview-card.md): Asset preview, publication status, and replacement action.
+- [ScheduleCard](https://balsa-ui.com/docs/components/schedule-card.md): Date selection paired with a concise upcoming-event list.
+- [AppointmentCard](https://balsa-ui.com/docs/components/appointment-card.md): Appointment time selection with preparation guidance and confirmation.
+- [PaymentMethodCard](https://balsa-ui.com/docs/components/payment-method-card.md): Selectable saved payment methods and a focused continuation action.
+- [SubscriptionCard](https://balsa-ui.com/docs/components/subscription-card.md): Plan, renewal, included usage, and management action.
+- [OrderSummaryCard](https://balsa-ui.com/docs/components/order-summary-card.md): Line items, calculated totals, and order confirmation.
+- [OnboardingChecklistCard](https://balsa-ui.com/docs/components/onboarding-checklist-card.md): Setup tasks with progress and complete/current/future state.
+- [FormProgressCard](https://balsa-ui.com/docs/components/form-progress-card.md): Linear multistep progress with current-step semantics.
+- [ActivityTimelineCard](https://balsa-ui.com/docs/components/activity-timeline-card.md): Chronological actor, action, target, and time event stream.
+- [CommandToolbarCard](https://balsa-ui.com/docs/components/command-toolbar-card.md): Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.

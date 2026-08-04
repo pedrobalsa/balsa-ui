@@ -25,7 +25,7 @@ Component recipes use CSS variables for reusable decisions and stable data hooks
 ## Reference interpretation
 
 - **Modern Flat** takes the BuyCo reference's clear color fields, rounded composition, solid/outline hierarchy, generous spacing, and restrained elevation without copying its colors, assets, content, or marketing timing.
-- **Brutalism** takes the Latereio reference's rectangular geometry, visible borders, monospaced utility, hard offset shadows, compact rhythm, and direct motion while continuing to use the active Balsa palette.
+- **Brutalism** takes the Latereio reference's rectangular geometry, visible borders, monospaced utility, compact rhythm, and direct motion while using flat, shadow-free elevation and the active Balsa palette.
 - **Glassmorphism** adapts Apple's Liquid Glass principles for the web: glass is strongest on functional and transient layers, ordinary content remains readable, and transparency, contrast, motion, and performance fallbacks are mandatory.
 
 ## Public coverage

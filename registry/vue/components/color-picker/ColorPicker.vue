@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { X } from "@lucide/vue";
 import {
   computed,
   nextTick,
@@ -376,7 +377,7 @@ const triggerClasses = computed(() => [
 ]);
 const colorTagClasses = computed(() => {
   return [
-    "pointer-events-none absolute inset-1 flex items-center justify-center overflow-hidden px-1 text-center font-bold leading-tight",
+    "pointer-events-none absolute inset-1 flex items-center justify-center overflow-hidden px-1 text-center font-medium leading-tight",
     fieldTagSizeClasses[props.size],
   ];
 });
@@ -698,7 +699,7 @@ onBeforeUnmount(() => {
       <div class="mb-3 flex items-center justify-between gap-3">
         <div class="min-w-0">
           <small class="block truncate text-balsa-muted-foreground">{{ props.label }}</small>
-          <p class="mt-1 text-sm font-bold">Choose a color</p>
+          <p class="mt-1 text-sm font-semibold">Choose a color</p>
         </div>
         <div class="flex shrink-0 items-center gap-2">
           <slot name="actions" :close="closePicker" />
@@ -706,7 +707,7 @@ onBeforeUnmount(() => {
             :size="null"
             :theme="props.theme"
             variant="outline"
-            prefix-icon="mdi-close"
+            :prefix-icon="X"
             class="h-9 w-9 shrink-0 p-0"
             aria-label="Close color picker"
             @click="closePicker(true)"
@@ -740,7 +741,7 @@ onBeforeUnmount(() => {
         ></span>
       </div>
 
-      <label :for="`${props.id}-hue`" class="mt-4 block text-sm font-bold">Hue</label>
+      <label :for="`${props.id}-hue`" class="mt-4 block text-sm font-medium">Hue</label>
       <input
         :id="`${props.id}-hue`"
         type="range"

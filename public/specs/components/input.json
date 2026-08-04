@@ -5,9 +5,10 @@
   "category": "component",
   "status": "beta",
   "version": "0.1.0",
-  "purpose": "Collect a short text, email, number, date, phone, monetary, or percentage value with an associated label.",
+  "purpose": "Collect a short text, password, email, number, date, phone, monetary, or percentage value with an associated label.",
   "useFor": [
     "Short free-form values",
+    "Passwords",
     "Email addresses",
     "Numeric values",
     "Native date entry",

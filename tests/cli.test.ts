@@ -94,15 +94,8 @@ describe("Balsa CLI agent workflow", () => {
         readFileSync(resolve(target, ".agents/skills/balsa-ui/SKILL.md"), "utf8"),
       ).toBe("Project-owned Balsa guidance.\n");
       const updatedCss = readFileSync(resolve(target, "src/index.css"), "utf8");
-      expect(updatedCss).toContain('@import "./styles/balsa-icons.css";');
-      const iconCss = readFileSync(
-        resolve(target, "src/styles/balsa-icons.css"),
-        "utf8",
-      );
-      expect(iconCss).toContain("materialdesignicons-webfont.woff2");
-      expect(iconCss).not.toContain("materialdesignicons-webfont.eot");
-      expect(iconCss).not.toContain("materialdesignicons-webfont.ttf");
-      expect(iconCss).not.toMatch(/materialdesignicons-webfont\.woff\?/);
+      expect(updatedCss).not.toContain("balsa-icons.css");
+      expect(existsSync(resolve(target, "src/styles/balsa-icons.css"))).toBe(false);
     } finally {
       rmSync(target, { recursive: true, force: true });
     }

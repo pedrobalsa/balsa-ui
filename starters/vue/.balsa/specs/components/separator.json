@@ -37,7 +37,8 @@
   ],
   "tokens": [
     "--balsa-color-border",
-    "border.width"
+    "border.width",
+    "border.opacity"
   ],
   "commonMistakes": [
     "Using a semantic separator when the boundary is purely decorative.",

@@ -1,23 +1,25 @@
 <script setup lang="ts">
+import { Bell, Bookmark, Flag, Heart, Pin, Star } from "@lucide/vue";
 import { computed, useAttrs } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
 import { type Shadow, type ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import { actionColorClasses, type ActionColor } from "./types";
+import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
 
 export type ToggleVariant = "surface" | "solid" | "outline" | "glass";
 export type ToggleSize = "sm" | "md" | "lg" | "xl";
 export type ToggleType = "button" | "submit" | "reset" | "icon";
 export type ToggleIcon = "bookmark" | "heart" | "star" | "pin" | "bell" | "flag";
 
-const toggleIconClasses: Readonly<Record<ToggleIcon, { outline: string; solid: string }>> = {
-  bookmark: { outline: "mdi-bookmark-outline", solid: "mdi-bookmark" },
-  heart: { outline: "mdi-heart-outline", solid: "mdi-heart" },
-  star: { outline: "mdi-star-outline", solid: "mdi-star" },
-  pin: { outline: "mdi-pin-outline", solid: "mdi-pin" },
-  bell: { outline: "mdi-bell-outline", solid: "mdi-bell" },
-  flag: { outline: "mdi-flag-outline", solid: "mdi-flag" },
+const toggleIcons: Readonly<Record<ToggleIcon, IconComponent>> = {
+  bookmark: Bookmark,
+  heart: Heart,
+  star: Star,
+  pin: Pin,
+  bell: Bell,
+  flag: Flag,
 };
 
 defineOptions({ inheritAttrs: false });
@@ -28,8 +30,8 @@ const rawProps = withDefaults(
     color?: ActionColor;
     size?: ToggleSize;
     rounded?: Rounded;
-    prefixIcon?: string;
-    suffixIcon?: string;
+    prefixIcon?: IconComponent;
+    suffixIcon?: IconComponent;
     icon?: ToggleIcon;
     disabled?: boolean;
     type?: ToggleType;
@@ -60,11 +62,11 @@ const sizeClasses: Readonly<Record<ToggleSize, string[]>> = {
   xl: ["h-12", "gap-2.5", "px-6", "text-base"],
 };
 
-const iconSizeClasses: Readonly<Record<ToggleSize, string>> = {
-  sm: "text-base",
-  md: "text-base",
-  lg: "text-lg",
-  xl: "text-xl",
+const iconSizes: Readonly<Record<ToggleSize, IconSize>> = {
+  sm: "sm",
+  md: "sm",
+  lg: "md",
+  xl: "lg",
 };
 
 const iconButtonSizeClasses: Readonly<Record<ToggleSize, string[]>> = {
@@ -85,6 +87,11 @@ const surfaceIdleClasses = [
 const idleColorClasses: Readonly<
   Record<ActionColor, Record<Exclude<ToggleVariant, "surface">, string[]>>
 > = {
+  neutral: {
+    solid: ["border-transparent", "bg-balsa-muted", "text-balsa-foreground", "hover:bg-balsa-muted/80", "active:bg-balsa-muted/70"],
+    outline: ["border-balsa-border-strong", "bg-transparent", "text-balsa-foreground", "hover:bg-balsa-muted", "active:bg-balsa-muted/80"],
+    glass: ["border-balsa-border", "bg-balsa-surface/60", "text-balsa-foreground", "hover:bg-balsa-surface/70", "active:bg-balsa-surface/80"],
+  },
   primary: {
     solid: ["border-transparent", "bg-balsa-primary/15", "text-balsa-primary", "hover:bg-balsa-primary/20", "active:bg-balsa-primary/25"],
     outline: ["border-balsa-primary", "bg-transparent", "text-balsa-primary", "hover:bg-balsa-primary/15", "active:bg-balsa-primary/25"],
@@ -122,6 +129,7 @@ const iconIdleClasses = [
   "active:bg-balsa-selected",
 ];
 const iconPressedClasses: Readonly<Record<ActionColor, string[]>> = {
+  neutral: ["border-transparent", "bg-transparent", "text-balsa-foreground", "hover:bg-balsa-muted", "active:bg-balsa-selected"],
   primary: ["border-transparent", "bg-transparent", "text-balsa-primary", "hover:bg-balsa-muted", "active:bg-balsa-selected"],
   secondary: ["border-transparent", "bg-transparent", "text-balsa-secondary", "hover:bg-balsa-muted", "active:bg-balsa-selected"],
   accent: ["border-transparent", "bg-transparent", "text-balsa-accent", "hover:bg-balsa-muted", "active:bg-balsa-selected"],
@@ -131,14 +139,13 @@ const isIconType = computed(() => props.type === "icon");
 const nativeType = computed<"button" | "submit" | "reset">(() =>
   props.type === "icon" ? "button" : props.type,
 );
-const activeIconClass = computed(() => {
-  const icon = toggleIconClasses[props.icon];
-  return model.value ? icon.solid : icon.outline;
-});
+const activeIcon = computed(() => toggleIcons[props.icon]);
+const toggleFillClasses = { on: "fill-current", off: "fill-none" } as const;
+const activeFillClass = computed(() => model.value ? toggleFillClasses.on : toggleFillClasses.off);
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const classes = computed(() =>
   mergeClasses(
-    "inline-flex w-fit shrink-0 cursor-pointer items-center justify-center border font-balsa-body font-bold transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:border-balsa-disabled disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    "inline-flex w-fit shrink-0 cursor-pointer items-center justify-center border font-balsa-body transition-[border-color,background-color,color,box-shadow,transform] duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:border-balsa-disabled disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
     isIconType.value ? iconButtonSizeClasses[props.size] : sizeClasses[props.size],
     roundedClasses[props.rounded],
     isIconType.value
@@ -147,13 +154,6 @@ const classes = computed(() =>
     attrs.class,
   ),
 );
-const iconClasses = computed(() => [
-  "mdi",
-  iconSizeClasses[props.size],
-]);
-const prefixIconClasses = computed(() => [...iconClasses.value, props.prefixIcon]);
-const suffixIconClasses = computed(() => [...iconClasses.value, props.suffixIcon]);
-const toggleIconClassList = computed(() => [...iconClasses.value, activeIconClass.value]);
 
 function toggle(): void {
   if (!props.disabled) model.value = !model.value;
@@ -179,21 +179,22 @@ function toggle(): void {
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
     @click="toggle"
   >
-    <i
+    <Icon
       v-if="isIconType"
-      :class="toggleIconClassList"
-      aria-hidden="true"
-    ></i>
-    <i
+      :icon="activeIcon"
+      :size="iconSizes[props.size]"
+      :class="activeFillClass"
+    />
+    <Icon
       v-else-if="props.prefixIcon"
-      :class="prefixIconClasses"
-      aria-hidden="true"
-    ></i>
+      :icon="props.prefixIcon"
+      :size="iconSizes[props.size]"
+    />
     <slot v-if="!isIconType" />
-    <i
+    <Icon
       v-if="!isIconType && props.suffixIcon"
-      :class="suffixIconClasses"
-      aria-hidden="true"
-    ></i>
+      :icon="props.suffixIcon"
+      :size="iconSizes[props.size]"
+    />
   </button>
 </template>

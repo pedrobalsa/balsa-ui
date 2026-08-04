@@ -217,7 +217,7 @@ function handleThumbPointerEnd(event: PointerEvent): void {
     :class="rootClasses"
   >
     <div class="mb-2 flex items-center justify-between gap-4">
-      <label :id="`${props.id}-label`" :for="`${props.id}-0`" class="text-sm font-bold text-balsa-foreground">
+      <label :id="`${props.id}-label`" :for="`${props.id}-0`" class="text-sm font-medium text-balsa-foreground">
         {{ props.label }}
         <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
       </label>

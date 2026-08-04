@@ -59,7 +59,7 @@ const groupGapClasses: Readonly<Record<KbdSize, string>> = {
 
 const capClasses = computed(() =>
   mergeClasses(
-    "inline-flex shrink-0 select-none items-center justify-center border font-mono font-bold leading-none whitespace-nowrap",
+    "inline-flex shrink-0 select-none items-center justify-center border font-mono font-medium leading-none whitespace-nowrap",
     variantClasses[props.variant],
     sizeClasses[props.size],
     roundedClasses[props.rounded],

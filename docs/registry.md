@@ -55,9 +55,23 @@ Both commands recursively install `@balsa/balsa-theme` and `@balsa/balsa-foundat
 @import "./styles/balsa-theme.css";
 ```
 
+Generate a source-controlled theme from a built-in preset, JSON file, or quick
+editor payload with `balsa theme create <name>`. The command installs
+`balsa-theme`, writes `src/themes/<name>.ts`, tracks its hash in the installed
+manifest, protects differing files, and prints registration instructions
+without editing application entrypoints.
+
+Generate a complete design system — palette and theme together — from a Design
+Studio payload with `balsa design-system create <name>`. The command installs
+`balsa-theme` and `balsa-palette`, writes `src/themes/<name>.ts` alongside
+`src/styles/<name>-palette.css`, records both files in the installed manifest,
+protects differing files, and prints the import and activation instructions.
+Palette token values are restricted to plain hex, keyword, and standard color
+functions so a generated stylesheet can never carry arbitrary CSS.
+
 Install and import `balsa-palette` separately only when the project wants the explicit Dark/Light presets. Importing it is inert until a `data-palette` selector is applied.
 
-Install npm dependencies reported by `registry.json` (`vue`, `tailwindcss`, and `@mdi/font` for this example). The installed `.vue`, `.ts`, and `.css` files are ordinary editable source. If a target already differs from the canonical source, installation stops rather than overwriting customization.
+Install npm dependencies reported by `registry.json` (`vue`, `tailwindcss`, and `@lucide/vue` for this example). The installed `.vue`, `.ts`, and `.css` files are ordinary editable source. If a target already differs from the canonical source, installation stops rather than overwriting customization.
 
 Compatible shadcn-style tooling can consume `https://balsa-ui.com/r/<name>.json`. Agents start with the compact `/llms.txt` workflow and CLI search, then load one per-item specification or Markdown page. `/llms-full.txt` and the catalogs remain available for explicit bulk discovery.
 

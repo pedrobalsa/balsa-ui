@@ -2,11 +2,12 @@
 import { computed, watchEffect } from "vue";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
 
 export interface TabItem {
   id: string;
   label: string;
-  icon?: string;
+  icon?: IconComponent;
   disabled?: boolean;
 }
 
@@ -136,10 +137,6 @@ const panelVariantClasses: Readonly<Record<TabsVariant, string[]>> = {
   soft: ["border border-balsa-primary/20 bg-balsa-primary/5 text-balsa-foreground"],
   glass: ["border border-balsa-border/70 bg-balsa-surface/60 text-balsa-foreground backdrop-blur-md"],
 };
-const iconTypeClasses: Readonly<Record<TabsType, string>> = {
-  segmented: "text-base", underline: "text-base", pills: "text-base", tiles: "text-xl",
-};
-
 const tabListClasses = computed(() => [
   roundedClasses[props.type === "underline" ? "none" : resolvedRounded.value],
   ...listClassesByType[props.type][props.variant],
@@ -172,7 +169,7 @@ const tabClasses = computed(() =>
       return [
         item.id,
         [
-          "inline-flex cursor-pointer items-center justify-center font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
+          "inline-flex cursor-pointer items-center justify-center font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
           geometry,
           shape,
           layout,
@@ -187,11 +184,7 @@ const tabIndexById = computed(() =>
     props.items.map((item) => [item.id, item.id === activeId.value ? 0 : -1]),
   ),
 );
-const iconClasses = computed(() =>
-  Object.fromEntries(
-    props.items.map((item) => [item.id, ["mdi", "shrink-0", iconTypeClasses[props.type], item.icon]]),
-  ),
-);
+const iconSize = computed<IconSize>(() => props.size === "sm" ? "sm" : props.size === "lg" ? "lg" : "md");
 
 function selectItem(id: string): void {
   const item = props.items.find((tab) => tab.id === id);
@@ -278,7 +271,7 @@ watchEffect(() => {
         @click="selectItem(item.id)"
         @keydown="handleKeydown($event, item.id)"
       >
-        <i v-if="item.icon" :class="iconClasses[item.id]" aria-hidden="true" />
+        <Icon v-if="item.icon" :icon="item.icon" :size="iconSize" class="shrink-0" />
         <span>{{ item.label }}</span>
       </button>
     </div>

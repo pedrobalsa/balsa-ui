@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check } from "@lucide/vue";
 import { computed } from "vue";
 import {
   fieldHintClasses,
@@ -8,6 +9,7 @@ import {
 } from "./form";
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 type CheckboxSize = "sm" | "md" | "lg";
 const rawProps = withDefaults(
@@ -56,8 +58,7 @@ const controlClasses = computed(() => {
   ];
 });
 const iconClasses = computed(() => [
-  "mdi mdi-check pointer-events-none absolute text-balsa-primary-foreground opacity-0 transition-opacity peer-checked:opacity-100",
-  props.size === "sm" ? "text-sm" : props.size === "lg" ? "text-lg" : "text-base",
+  "pointer-events-none absolute text-balsa-primary-foreground opacity-0 transition-opacity peer-checked:opacity-100",
 ]);
 const controlWrapClasses = computed(() => [
   "relative mt-0.5 flex shrink-0 items-center justify-center",
@@ -88,13 +89,14 @@ const controlWrapClasses = computed(() => [
         :class="controlClasses"
         data-balsa="checkbox-control"
       />
-      <i
+      <Icon
+        :icon="Check"
+        :size="props.size === 'sm' ? 'xs' : props.size === 'lg' ? 'md' : 'sm'"
         :class="iconClasses"
-        aria-hidden="true"
-      ></i>
+      />
     </span>
     <span>
-      <span class="block text-sm font-bold text-balsa-foreground">
+      <span class="block text-sm font-medium text-balsa-foreground">
         {{ props.label }}
         <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
       </span>

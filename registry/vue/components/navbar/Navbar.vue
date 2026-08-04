@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ChevronDown, ChevronRight, ChevronUp, Menu, X } from "@lucide/vue";
 import {
   computed,
   onBeforeUnmount,
@@ -16,6 +17,7 @@ import {
 } from "./theme";
 import type { ActionColor } from "./types";
 import { useComponentTheme } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type NavbarVariant = "surface" | "outline" | "soft" | "glass";
 export type NavbarType = "bar" | "floating" | "minimal";
@@ -102,6 +104,9 @@ const variantClasses: Readonly<Record<NavbarVariant, string[]>> = {
   glass: ["backdrop-blur-md", "shadow-balsa-control"],
 };
 const colorClasses: Readonly<Record<ActionColor, Record<NavbarVariant, string[]>>> = {
+  neutral: {
+    surface: [], outline: [], soft: [], glass: [],
+  },
   primary: {
     surface: ["border-balsa-primary/30"], outline: ["border-balsa-primary"], soft: ["border-balsa-primary/20", "bg-balsa-primary/10"], glass: ["border-balsa-primary/30"],
   },
@@ -174,10 +179,7 @@ const mobilePanelClasses = computed(() => [
     ? "grid-rows-[1fr] opacity-100"
     : "grid-rows-[0fr] opacity-0",
 ]);
-const mobileMenuIconClasses = computed(() => [
-  "mdi text-xl",
-  mobileOpen.value ? "mdi-close" : "mdi-menu",
-]);
+const mobileMenuIcon = computed(() => mobileOpen.value ? X : Menu);
 const containerClasses = computed(() => [
   "z-50 transition-transform duration-300 ease-out",
   ...behaviorClasses[resolvedBehavior.value],
@@ -244,11 +246,8 @@ function mobileSubmenuClasses(item: NavigationGroup): string[] {
   ];
 }
 
-function mobileIconClasses(item: NavigationGroup): string[] {
-  return [
-    "mdi text-xl text-balsa-primary transition-transform duration-200",
-    expandedMobileItem.value === item.link ? "mdi-chevron-up" : "mdi-chevron-down",
-  ];
+function mobileIcon(item: NavigationGroup) {
+  return expandedMobileItem.value === item.link ? ChevronUp : ChevronDown;
 }
 
 function navigate(item: NavigationLink): void {
@@ -351,10 +350,10 @@ onBeforeUnmount(() => {
                   @click="navigate(link)"
                 >
                   <span class="min-w-0 flex-1">
-                    <span class="block font-bold">{{ link.title }}</span>
+                    <span class="block text-sm font-medium">{{ link.title }}</span>
                     <span v-if="link.shortDescription" class="mt-0.5 block text-sm text-balsa-muted-foreground">{{ link.shortDescription }}</span>
                   </span>
-                  <i class="mdi mdi-chevron-right mt-0.5 text-lg text-balsa-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  <Icon :icon="ChevronRight" size="md" class="mt-0.5 text-balsa-primary transition-transform group-hover:translate-x-0.5" />
                 </a>
               </li>
             </ul>
@@ -373,7 +372,7 @@ onBeforeUnmount(() => {
         aria-label="Open navigation menu"
         @click="toggleMobileMenu"
       >
-        <i :class="mobileMenuIconClasses" aria-hidden="true" />
+        <Icon :icon="mobileMenuIcon" size="md" />
       </button>
 
     </nav>
@@ -398,7 +397,7 @@ onBeforeUnmount(() => {
                 :aria-label="`Open ${item.title} items`"
                 @click="toggleMobileItem(item)"
               >
-                <i :class="mobileIconClasses(item)" aria-hidden="true" />
+                <Icon :icon="mobileIcon(item)" size="md" class="text-balsa-primary transition-transform duration-200" />
               </button>
             </div>
             <div v-if="hasLinks(item)" :class="mobileSubmenuClasses(item)">
@@ -406,7 +405,7 @@ onBeforeUnmount(() => {
                 <li v-for="link in item.links" :key="link.link">
                   <a
                     :href="link.link"
-                    class="text-sm font-bold text-balsa-muted-foreground no-underline hover:text-balsa-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
+                    class="text-sm font-medium text-balsa-muted-foreground no-underline hover:text-balsa-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
                     @click="navigate(link)"
                   >
                     {{ link.title }}

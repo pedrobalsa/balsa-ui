@@ -5,11 +5,12 @@ import { mergeClasses, withoutClassAttribute } from "./classes";
 import { type Shadow, type ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
 import type { ActionColor } from "./types";
+import type { IconComponent } from "./Icon.vue";
 
 export interface ButtonGroupOption {
   id: string;
   label: string;
-  icon?: string;
+  icon?: IconComponent;
 }
 
 type ButtonSize = "sm" | "md" | "lg" | "xl";
@@ -18,6 +19,7 @@ type ButtonGroupVariant = "surface" | "solid" | "outline" | "glass" | "code";
 type ButtonGroupShape = "rounded" | "pill";
 
 const solidColorClasses: Readonly<Record<ActionColor, string[]>> = {
+  neutral: ["border-balsa-inverse", "bg-balsa-inverse", "text-balsa-inverse-foreground"],
   primary: ["border-balsa-primary", "bg-balsa-primary", "text-balsa-primary-foreground"],
   secondary: ["border-balsa-secondary", "bg-balsa-secondary", "text-balsa-secondary-foreground"],
   accent: ["border-balsa-accent", "bg-balsa-accent", "text-balsa-accent-foreground"],
@@ -25,6 +27,10 @@ const solidColorClasses: Readonly<Record<ActionColor, string[]>> = {
 };
 
 const solidOptionClasses: Readonly<Record<ActionColor, { selected: string[]; idle: string[] }>> = {
+  neutral: {
+    selected: ["bg-balsa-inverse-foreground/20", "text-balsa-inverse-foreground", "hover:bg-balsa-inverse-foreground/20", "active:bg-balsa-inverse-foreground/30"],
+    idle: ["text-balsa-inverse-foreground/75", "hover:bg-balsa-inverse-foreground/10", "active:bg-balsa-inverse-foreground/20"],
+  },
   primary: {
     selected: ["bg-balsa-primary-foreground/20", "text-balsa-primary-foreground", "hover:bg-balsa-primary-foreground/20", "active:bg-balsa-primary-foreground/30"],
     idle: ["text-balsa-primary-foreground/75", "hover:bg-balsa-primary-foreground/10", "active:bg-balsa-primary-foreground/20"],
@@ -157,6 +163,33 @@ const buttonSizes = computed(() =>
   ) as Record<string, ButtonSize | null>,
 );
 
+/**
+ * Neutral containers keep unselected options neutral and spend `color` on the
+ * selected option only, matching Tabs and the code variant. Letting the action
+ * color tint every idle label makes a surface group read as a colored control
+ * beside otherwise neutral chrome.
+ */
+const neutralIdleClasses: Readonly<Record<"surface" | "outline" | "glass", string[]>> = {
+  surface: [
+    "text-balsa-muted-foreground",
+    "hover:bg-balsa-muted",
+    "hover:text-balsa-foreground",
+    "active:bg-balsa-muted",
+  ],
+  outline: [
+    "text-balsa-muted-foreground",
+    "hover:bg-balsa-muted",
+    "hover:text-balsa-foreground",
+    "active:bg-balsa-muted",
+  ],
+  glass: [
+    "text-balsa-muted-foreground",
+    "hover:bg-balsa-surface/55",
+    "hover:text-balsa-foreground",
+    "active:bg-balsa-surface/70",
+  ],
+};
+
 const buttonClasses = computed(() =>
   Object.fromEntries(
     props.options.map((item) => {
@@ -172,7 +205,9 @@ const buttonClasses = computed(() =>
             ]
           : resolvedVariant.value === "solid"
             ? ["border-transparent", "shadow-none", "transform-none", ...(selected ? solidOptionClasses[props.color].selected : solidOptionClasses[props.color].idle)]
-            : [];
+            : selected
+              ? []
+              : neutralIdleClasses[resolvedVariant.value];
 
       return [
         item.id,

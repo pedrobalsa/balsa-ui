@@ -53,6 +53,23 @@ Primary, secondary, accent, and destructive actions each define their foreground
 | `--balsa-color-disabled-foreground` | Unavailable control content |
 | `--balsa-color-overlay` | Dialog and sheet backdrop |
 
+## Charts
+
+Charts derive their visual roles from the same seven editable palette sources; they do not add palette inputs. `ChartContainer` resolves rendered series against its actual owning surface and may mix a series toward that surface's foreground to preserve a 3:1 graphical boundary. Axis, tooltip, and legend text target 4.5:1.
+
+| CSS variable | Purpose |
+| --- | --- |
+| `--balsa-color-chart-surface` | Plot's owning surface used for contrast resolution |
+| `--balsa-color-chart-axis` | Quiet but readable axis and tick text |
+| `--balsa-color-chart-grid` | Restrained horizontal grid lines |
+| `--balsa-color-chart-tooltip` | Elevated tooltip surface |
+| `--balsa-color-chart-tooltip-foreground` | Tooltip and tabular value text |
+| `--balsa-color-chart-interaction` | Crosshair and active-point emphasis |
+| `--balsa-chart-marker-size` | Theme-derived active marker scale |
+| `--balsa-chart-interaction-opacity` | Hover and crosshair emphasis |
+
+Automatic series order uses primary, secondary, accent, and neutral foreground only. Success, warning, information, and destructive remain available through explicit chart configuration when the data truly has that meaning. Dash, marker, ordering, and grouping differences keep multi-series meaning independent from color.
+
 Shape, spacing, and depth are theme-owned Tailwind values. Public elevation uses `--balsa-shadow-sm`, `--balsa-shadow-md`, and `--balsa-shadow-lg`; the control, surface, and panel variables remain compatibility aliases. Components expose typed shadow levels when they own elevation, while `auto` retains the recipe and `--balsa-shadow-detail` remains internal.
 
 ## Density and size rhythm
@@ -71,9 +88,14 @@ The documentation and application shell follows the same rhythm with responsive 
 
 ## Theme material layer
 
-The public `--balsa-color-*` variables remain palette-owned. A design theme derives internal `--balsa-material-*` values from them for standard, raised, muted, action, input, selected, inverse, code, border, and overlay materials. Glassmorphism obtains its depth from translucent fills plus backdrop blur: standard, strong, input, and semantic action rims are low-opacity material colors, and shadows provide only restrained outer separation. It intentionally avoids inset shadows and universal painted gradients, allowing the same material recipe to remain glass-like over Light, Dark, and custom palette backgrounds. The Button `glass` variant uses theme-owned `--balsa-material-glass-control*` recipes for its translucent body, interaction states, and restrained rim; `outline` remains the higher-boundary action treatment. Documentation-workbench layers use the same opacity-led system. The playground's preview canvas remains opaque while its explicit theme and palette boundary follows the active documentation selectors. Consumers should normally customize palette roles or select a theme instead of overriding material variables directly.
+The public `--balsa-color-*` variables remain palette-owned. A design theme derives internal `--balsa-material-*` values from them for standard, raised, muted, action, input, selected, inverse, code, border, and overlay materials. Glassmorphism obtains its depth from translucent fills plus backdrop blur: standard, strong, input, and semantic action rims are low-opacity material colors, and shadows provide only restrained outer separation. It intentionally avoids inset shadows and universal painted gradients, allowing the same material recipe to remain glass-like over Light, Dark, and custom palette backgrounds. The Button `glass` variant and shared raised glass shells use theme-owned `--balsa-material-glass-control*` recipes; the base shell retains 50% of its semantic surface color so navigation and overlay text remain legible while the backdrop still reads through. `outline` remains the higher-boundary action treatment. Documentation-workbench layers use the same opacity-led system. The playground's preview canvas remains opaque while its explicit theme and palette boundary follows the active documentation selectors. Consumers should normally customize palette roles or select a theme instead of overriding material variables directly.
 
-Theme authors normally choose seven finite `ThemeOptions`: typography, shape, density, border, elevation, motion, and material. Balsa deterministically derives typography, radii, borders, shadows, spacing, effects, transforms, semantic materials, and compatible component defaults from those choices. Structured `ThemeTokens` remain available under `overrides.tokens` for exceptional exact values. Numeric geometry uses pixels, motion uses milliseconds, and opacity is normalized from zero to one. Materials reference palette roles and serialize to `color-mix()`, so a custom theme never owns palette colors. See [Design themes](./themes.md) for inheritance, providers, recipes, and overrides.
+Theme authors normally choose seven finite `ThemeOptions`: typography, shape, density, border, elevation, motion, and material. The border direction accepts None (0px), Soft (1px at 55% opacity), Medium (1px), and Strong (2px); each recipe controls the normal, outline, and solid theme-owned border widths together. Balsa deterministically derives typography, radii, borders, shadows, spacing, effects, transforms, semantic materials, and compatible component defaults from those choices. Structured `ThemeTokens` remain available under `overrides.tokens` for exceptional exact values. Numeric geometry uses pixels, motion uses milliseconds, and opacity is normalized from zero to one. Materials reference palette roles and serialize to `color-mix()`, so a custom theme never owns palette colors. See [Design themes](./themes.md) for inheritance, providers, recipes, and overrides.
+
+`BalsaThemePresetConfig` is the portable schema-one handoff used by the quick
+editor and `balsa theme create`. It contains a built-in base plus sparse recipe
+options and token overrides; it never contains palette colors, component
+defaults, or runtime editor state.
 
 ## Built-in guarantees
 

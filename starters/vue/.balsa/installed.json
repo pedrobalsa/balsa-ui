@@ -4,7 +4,7 @@
     "button": {
       "registry": "@balsa/button",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-51bf3dd43c50e0d98801b955f59706fa9f13483c5dc57797a01ff9457d958328",
+      "sourceHash": "sha256-35524b4b6c0cf92ac0454dec900151d25443571571c12df3b95549f07151de4a",
       "targetPath": "src/components/ui/Button.vue",
       "files": [
         "src/components/ui/Button.vue",
@@ -15,7 +15,7 @@
     "input": {
       "registry": "@balsa/input",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-d5f15c74773953243d1e9a71c8a4490e0848f05435719765eb0ba62f53beb8c4",
+      "sourceHash": "sha256-4ee6e87dd9051f5bac49838c02fd1e3d61f1e3242ca7563ebb1461e230845804",
       "targetPath": "src/components/ui/Input.vue",
       "files": [
         "src/components/ui/Input.vue",
@@ -26,7 +26,7 @@
     "modal": {
       "registry": "@balsa/modal",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-2223300ac6c025f9c1da7ece8f5d26e3a499a0d961f76c6bcffd339fac186f5c",
+      "sourceHash": "sha256-3067e8f6077b58190049a6b30f0cdd52784864084d733f4cb5bc55f85ea0dcbe",
       "targetPath": "src/components/ui/Modal.vue",
       "files": [
         "src/components/ui/Modal.vue"
@@ -44,7 +44,7 @@
     "textarea": {
       "registry": "@balsa/textarea",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-ab4692253298243e5cc0a4896ce1ae03a45d05696bd2e4bc42c97a3ffac0c5e6",
+      "sourceHash": "sha256-ea9f202296c278813f77836feb1802e30b44e08d828b81b0d2ff76e9c1c681bb",
       "targetPath": "src/components/ui/Textarea.vue",
       "files": [
         "src/components/ui/Textarea.vue",
@@ -55,7 +55,7 @@
     "breadcrumb": {
       "registry": "@balsa/breadcrumb",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-03bb9bbc7708a2358bf72621e32ee7936262a350111b3629da05d21b727bae13",
+      "sourceHash": "sha256-040db89a8aef6216c93278a8a70f87ab5e777d9aac5283e964400261faa44474",
       "targetPath": "src/components/ui/Breadcrumb.vue",
       "files": [
         "src/components/ui/Breadcrumb.vue"
@@ -75,7 +75,7 @@
     "balsa-theme": {
       "registry": "@balsa/balsa-theme",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-cf26dacc2f605de4b964c0466bd0b9f5877cfd1589a4d2b805758412f084d024",
+      "sourceHash": "sha256-40d3b9e30e1bb01256891992983b31ad01b9cb5d9c94ef4adf0c48f98f209491",
       "targetPath": "src/styles/balsa-theme.css",
       "files": [
         "src/styles/balsa-theme.css",
@@ -89,10 +89,19 @@
     "balsa-foundation": {
       "registry": "@balsa/balsa-foundation",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-a1a6465a8e76815d87674f9956c4267841bae1b69ec5cb3678e5e8c3c704bd3b",
+      "sourceHash": "sha256-022c5cc6f6bbea3f6f9584565caf793d5ae87d21fe8cd23d6e705db5edaded58",
       "targetPath": "src/styles/balsa-foundation.css",
       "files": [
         "src/styles/balsa-foundation.css"
+      ]
+    },
+    "icon": {
+      "registry": "@balsa/icon",
+      "installedVersion": "0.1.0",
+      "sourceHash": "sha256-b499c62c2ea8ae60659f4ac96c01f56b5d130fa5c4cb4be3a8e1232d0888af8d",
+      "targetPath": "src/components/ui/Icon.vue",
+      "files": [
+        "src/components/ui/Icon.vue"
       ]
     }
   }

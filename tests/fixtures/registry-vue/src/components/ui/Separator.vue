@@ -123,7 +123,7 @@ const afterLineClasses = computed(() =>
   >
     <template v-if="hasLabel">
       <span aria-hidden="true" :class="beforeLineClasses"></span>
-      <span class="shrink-0 font-balsa-body text-sm font-bold text-balsa-muted-foreground">
+      <span class="shrink-0 font-balsa-body text-sm font-medium text-balsa-muted-foreground">
         <slot>{{ props.label }}</slot>
       </span>
       <span aria-hidden="true" :class="afterLineClasses"></span>

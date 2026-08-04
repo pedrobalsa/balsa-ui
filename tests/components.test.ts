@@ -1,17 +1,7 @@
 import { h, ref } from "vue";
 import { flushPromises, mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
-
-vi.mock("vue-chartjs", async () => {
-  const { h } = await import("vue");
-  return {
-    Chart: {
-      name: "Chart",
-      props: ["type", "data", "options", "width", "height"],
-      setup: () => () => h("canvas"),
-    },
-  };
-});
+import { Bell, Bold, ChevronDown, Eye, Home, Plus, Search, Shapes } from "@lucide/vue";
 
 import Autocomplete from "../src/components/ui/Autocomplete.vue";
 import Accordion from "../src/components/ui/Accordion.vue";
@@ -22,6 +12,7 @@ import Badge from "../src/components/ui/Badge.vue";
 import Breadcrumb from "../src/components/ui/Breadcrumb.vue";
 import Button from "../src/components/ui/Button.vue";
 import Card from "../src/components/ui/Card.vue";
+import ApplicationCard from "../src/components/compositions/ApplicationCard.vue";
 import Calendar from "../src/components/ui/Calendar.vue";
 import Carousel from "../src/components/ui/Carousel.vue";
 import Charts from "../src/components/ui/Charts.vue";
@@ -36,10 +27,12 @@ import DatePicker from "../src/components/ui/DatePicker.vue";
 import Drawer from "../src/components/ui/Drawer.vue";
 import Dropdown from "../src/components/ui/Dropdown.vue";
 import DropdownMenu from "../src/components/ui/DropdownMenu.vue";
+import PropertySelect from "../src/components/ui/PropertySelect.vue";
 import HoverCard from "../src/components/ui/HoverCard.vue";
 import Input from "../src/components/ui/Input.vue";
 import InputGroup from "../src/components/ui/InputGroup.vue";
 import InputOTP from "../src/components/ui/InputOTP.vue";
+import Icon from "../src/components/ui/Icon.vue";
 import Kbd from "../src/components/ui/Kbd.vue";
 import Link from "../src/components/ui/Link.vue";
 import Modal from "../src/components/ui/Modal.vue";
@@ -71,7 +64,44 @@ import ToastViewport, {
 import Tooltip from "../src/components/ui/Tooltip.vue";
 import Textarea from "../src/components/ui/Textarea.vue";
 
+function dispatchPointer(
+  element: Element,
+  type: string,
+  init: { pointerId: number; clientX: number; clientY?: number; pointerType?: string; button?: number },
+): void {
+  const event = new MouseEvent(type, {
+    bubbles: true,
+    cancelable: true,
+    clientX: init.clientX,
+    clientY: init.clientY ?? 0,
+    button: init.button ?? 0,
+  });
+  Object.defineProperties(event, {
+    pointerId: { value: init.pointerId },
+    pointerType: { value: init.pointerType ?? "touch" },
+  });
+  element.dispatchEvent(event);
+}
+
 describe("Balsa public components", () => {
+  it("standardizes Lucide size, stroke, color, and decorative semantics", () => {
+    const icon = mount(Icon, { props: { icon: Search, size: "lg", strokeWidth: 1.5 } }).get("svg");
+    expect(icon.attributes()).toMatchObject({
+      width: "24",
+      height: "24",
+      stroke: "currentColor",
+      "stroke-width": "1.5",
+      "aria-hidden": "true",
+      focusable: "false",
+    });
+  });
+
+  it("promotes a labelled Icon to a named image", () => {
+    const icon = mount(Icon, { props: { icon: Search, label: "Search", size: "xs", strokeWidth: 2.5 } }).get("svg");
+    expect(icon.attributes()).toMatchObject({ role: "img", "aria-label": "Search", width: "12", "stroke-width": "5" });
+    expect(icon.attributes("aria-hidden")).toBeUndefined();
+  });
+
   it.each([
     ["modern-flat", "dark"],
     ["modern-flat", "light"],
@@ -141,22 +171,22 @@ describe("Balsa public components", () => {
     const button = wrapper.get("button");
     expect(button.attributes("disabled")).toBeDefined();
     expect(button.attributes("aria-busy")).toBe("true");
-    expect(wrapper.get("i").classes()).toContain("mdi-loading");
+    expect(wrapper.get('[data-balsa="icon"]').classes()).toContain("lucide-loader-circle");
   });
 
-  it("renders leading and trailing MDI icons with both-icon padding", () => {
+  it("renders leading and trailing Lucide components with both-icon padding", () => {
     const button = mount(Button, {
       props: {
-        prefixIcon: "mdi-plus",
-        suffixIcon: "mdi-chevron-down",
+        prefixIcon: Plus,
+        suffixIcon: ChevronDown,
       },
       slots: { default: "Button" },
     }).get("button");
 
-    const icons = button.findAll("i");
+    const icons = button.findAll('[data-balsa="icon"]');
     expect(icons).toHaveLength(2);
-    expect(icons[0]?.classes()).toContain("mdi-plus");
-    expect(icons[1]?.classes()).toContain("mdi-chevron-down");
+    expect(icons[0]?.classes()).toContain("lucide-plus");
+    expect(icons[1]?.classes()).toContain("lucide-chevron-down");
     expect(button.classes()).toContain("px-2.5");
   });
 
@@ -173,6 +203,22 @@ describe("Balsa public components", () => {
       "text-balsa-accent",
     ]));
     expect(button.classes()).not.toContain("border-balsa-accent");
+  });
+
+  it("renders the typed soft button with palette-owned interaction states", () => {
+    const button = mount(Button, {
+      props: { variant: "soft", color: "secondary" },
+      slots: { default: "Soft action" },
+    }).get("button");
+
+    expect(button.attributes("data-variant")).toBe("soft");
+    expect(button.classes()).toEqual(expect.arrayContaining([
+      "bg-balsa-secondary/15",
+      "text-balsa-secondary",
+      "hover:bg-balsa-secondary/20",
+      "active:bg-balsa-secondary/25",
+    ]));
+    expect(button.classes()).not.toContain("border-balsa-secondary");
   });
 
   it("uses square default Button geometry in Brutalism while retaining consumer overrides", () => {
@@ -197,7 +243,7 @@ describe("Balsa public components", () => {
       props: {
         shape: "fab",
         size: "md",
-        prefixIcon: "mdi-plus",
+        prefixIcon: Plus,
       },
       attrs: { "aria-label": "Add placeholder" },
     }).get("button");
@@ -210,25 +256,26 @@ describe("Balsa public components", () => {
       "rounded-full",
       "p-0",
     ]));
-    expect(button.get("i").classes()).toContain("text-lg");
+    expect(button.get('[data-balsa="icon"]').attributes("width")).toBe("20");
     expect(button.classes()).not.toContain("w-fit");
     expect(button.classes()).not.toContain("pl-3");
     expect(button.classes()).not.toContain("pr-4");
   });
 
   it.each([
-    ["sm", "h-8", "w-8", "text-base"],
-    ["md", "h-9", "w-9", "text-lg"],
-    ["lg", "h-10", "w-10", "text-xl"],
-    ["xl", "h-12", "w-12", "text-2xl"],
+    ["sm", "h-8", "w-8", "16"],
+    ["md", "h-9", "w-9", "20"],
+    ["lg", "h-10", "w-10", "20"],
+    ["xl", "h-12", "w-12", "24"],
+    ["2xl", "h-18", "w-18", "32"],
   ] as const)(
     "uses the distinct %s FAB control and icon scale",
-    (size, heightClass, widthClass, iconClass) => {
+    (size, heightClass, widthClass, iconWidth) => {
       const button = mount(Button, {
         props: {
           shape: "fab",
           size,
-          prefixIcon: "mdi-plus",
+          prefixIcon: Plus,
         },
         attrs: { "aria-label": "Add placeholder" },
       }).get("button");
@@ -237,7 +284,7 @@ describe("Balsa public components", () => {
         heightClass,
         widthClass,
       ]));
-      expect(button.get("i").classes()).toContain(iconClass);
+      expect(button.get('[data-balsa="icon"]').attributes("width")).toBe(iconWidth);
     },
   );
 
@@ -255,6 +302,12 @@ describe("Balsa public components", () => {
     expect(wrapper.get("input").attributes("aria-invalid")).toBe("true");
     expect(wrapper.get("input").attributes("aria-describedby")).toBe("email-hint email-status");
     expect(wrapper.get('[role="alert"]').text()).toBe("Enter a valid address.");
+
+    const password = mount(Input, {
+      props: { id: "password", label: "Password", type: "password", autocomplete: "current-password" },
+    });
+    expect(password.get("input").attributes("type")).toBe("password");
+    expect(password.get("input").attributes("autocomplete")).toBe("current-password");
   });
 
   it("formats phone, monetary, and custom masked Input values", async () => {
@@ -761,6 +814,10 @@ describe("Balsa public components", () => {
     const card = mount(Card, { props: { size: "sm", rounded: "none" } })
       .get('[data-balsa="card"]');
    expect(card.classes()).toEqual(expect.arrayContaining(["p-4", "rounded-none"]));
+    expect(card.attributes("data-color")).toBe("neutral");
+    expect(card.classes()).toContain("border-balsa-border");
+    expect(card.classes()).not.toContain("border");
+    expect(card.classes()).not.toContain("border-balsa-primary/30");
 
     const glassCard = mount(Card, {
       props: { variant: "glass", color: "accent" },
@@ -769,9 +826,17 @@ describe("Balsa public components", () => {
     expect(glassCard.attributes("data-color")).toBe("accent");
     expect(glassCard.classes()).toEqual(expect.arrayContaining([
       "border-balsa-accent/40",
-      "backdrop-blur-md",
     ]));
+    // The themed recipe owns the backdrop through --balsa-backdrop-blur; a
+    // utility here would outrank it from Tailwind's utilities layer.
+    expect(glassCard.attributes("data-variant")).toBe("glass");
+    expect(glassCard.classes().join(" ")).not.toMatch(/backdrop-blur-/);
     expect(glassCard.classes()).not.toContain("bg-balsa-accent/10");
+
+    const defaultCard = mount(Card, { slots: { default: "Content" } })
+      .get('[data-balsa="card"]');
+    expect(defaultCard.attributes("data-rounded")).toBe("2xl");
+    expect(defaultCard.classes()).not.toContain("rounded-2xl");
 
     const input = mount(Input, {
       props: { id: "compact-input", label: "Input", rounded: "none" },
@@ -853,7 +918,7 @@ describe("Balsa public components", () => {
         modelValue: "one",
         variant: "glass",
         type: "underline",
-        items: [{ id: "one", label: "One", icon: "mdi-eye-outline" }],
+        items: [{ id: "one", label: "One", icon: Eye }],
       },
     });
     expect(underlineTabs.get('[data-balsa="tabs"]').attributes("data-variant")).toBe("glass");
@@ -880,7 +945,7 @@ describe("Balsa public components", () => {
         modelValue: "one",
         variant: "soft",
         type: "tiles",
-        items: [{ id: "one", label: "One", icon: "mdi-shape-outline" }],
+        items: [{ id: "one", label: "One", icon: Shapes }],
       },
     });
     expect(tileTabs.get('[data-balsa="tabs-list"]').classes()).toContain("grid");
@@ -891,6 +956,49 @@ describe("Balsa public components", () => {
     }).get('[data-balsa="code-block"]');
     expect(codeBlock.classes()).toContain("rounded-none");
     expect(codeBlock.attributes("data-size")).toBe("lg");
+  });
+
+  it("composes application Card regions without freezing the Card theme contract", () => {
+    const wrapper = mount(ApplicationCard, {
+      props: {
+        title: "Workspace health",
+        description: "Readiness for the next release.",
+        headingLevel: 3,
+      },
+      slots: {
+        action: "Inspect",
+        default: "92%",
+        footer: "Updated just now",
+      },
+    });
+    const card = wrapper.get('[data-application-card]');
+
+    expect(card.attributes("data-variant")).toBe("surface");
+    expect(card.attributes("data-color")).toBe("neutral");
+    expect(card.attributes("data-shadow")).toBe("auto");
+    expect(card.classes()).not.toContain("rounded-2xl");
+    expect(card.classes()).not.toContain("border");
+    expect(wrapper.get("h3").text()).toBe("Workspace health");
+    expect(wrapper.get("header").text()).toContain("Inspect");
+    expect(wrapper.get("[data-application-card-body]").text()).toBe("92%");
+    expect(wrapper.get("[data-application-card-footer]").classes()).not.toContain("border-t");
+    expect(wrapper.get("[data-application-card-footer]").classes()).toContain("[border-top-width:var(--balsa-border-width)]");
+
+    const overridden = mount(ApplicationCard, {
+      props: {
+        title: "Explicit task",
+        variant: "elevated",
+        size: "lg",
+        rounded: "3xl",
+        shadow: "lg",
+        theme: "brutalism",
+      },
+    }).get('[data-application-card]');
+    expect(overridden.attributes("data-theme")).toBe("brutalism");
+    expect(overridden.attributes("data-variant")).toBe("elevated");
+    expect(overridden.attributes("data-size")).toBe("lg");
+    expect(overridden.attributes("data-shadow")).toBe("lg");
+    expect(overridden.classes()).toContain("rounded-3xl");
   });
 
   it("supports Navbar materials, layouts, actions, and scroll behavior", async () => {
@@ -1266,7 +1374,7 @@ describe("Balsa public components", () => {
         color: "accent",
         size: "lg",
         rounded: "full",
-        prefixIcon: "mdi-format-bold",
+        prefixIcon: Bold,
         theme: "glassmorphism",
       },
       slots: { default: "Bold placeholder" },
@@ -1283,12 +1391,12 @@ describe("Balsa public components", () => {
       "rounded-full",
       "cursor-pointer",
     ]));
-    expect(button.get("i").classes()).toContain("mdi-format-bold");
+    expect(button.get('[data-balsa="icon"]').classes()).toContain("lucide-bold");
     await button.trigger("click");
     expect(wrapper.emitted("update:modelValue")?.at(-1)).toEqual([false]);
   });
 
-  it("uses paired outlined and filled MDI icons in icon mode", async () => {
+  it("uses a stable paired Lucide icon in icon mode", async () => {
     const wrapper = mount(Toggle, {
       props: {
         modelValue: false,
@@ -1307,12 +1415,11 @@ describe("Balsa public components", () => {
       "h-8",
       "w-8",
     ]));
-    expect(button.get("i").classes()).toContain("mdi-bookmark-outline");
+    expect(button.get('[data-balsa="icon"]').classes()).toContain("lucide-bookmark");
 
     await wrapper.setProps({ modelValue: true });
 
-    expect(button.get("i").classes()).toContain("mdi-bookmark");
-    expect(button.get("i").classes()).not.toContain("mdi-bookmark-outline");
+    expect(button.get('[data-balsa="icon"]').classes()).toContain("lucide-bookmark");
     expect(button.classes()).not.toContain("bg-balsa-primary");
   });
 
@@ -1752,10 +1859,7 @@ describe("Balsa public components", () => {
     expect(alert.classes()).toEqual(
       expect.arrayContaining(["bg-balsa-success/15", "text-balsa-success", "rounded-lg"]),
     );
-    expect(wrapper.get("i").classes()).toEqual(expect.arrayContaining([
-      "mdi-check-circle-outline",
-      "leading-none",
-    ]));
+    expect(wrapper.get('[data-balsa="icon"]').classes()).toContain("lucide-circle-check-big");
     expect(wrapper.get("h3").classes()).toContain("m-0");
     expect(wrapper.get("[data-balsa-alert-close]").classes()).toEqual(
       expect.arrayContaining(["border-0", "size-8", "text-lg", "hover:bg-current/15"]),
@@ -1771,7 +1875,7 @@ describe("Balsa public components", () => {
         id: "persistent-alert",
         title: "Persistent placeholder",
         persistent: true,
-        icon: "mdi-bell-outline",
+        icon: Bell,
       },
       slots: {
         actions: ({ close }) => h("button", { type: "button", onClick: close }, "Action"),
@@ -1779,7 +1883,7 @@ describe("Balsa public components", () => {
     });
 
     expect(wrapper.get('[data-balsa="alert"]').attributes("data-color")).toBe("neutral");
-    expect(wrapper.get("i").classes()).toContain("mdi-bell-outline");
+    expect(wrapper.get('[data-balsa="icon"]').classes()).toContain("lucide-bell");
     expect(wrapper.find("[data-balsa-alert-close]").exists()).toBe(false);
 
     await wrapper.get("[data-balsa-alert-actions] button").trigger("click");
@@ -1875,7 +1979,7 @@ describe("Balsa public components", () => {
         description: "Lorem ipsum dolor sit amet.",
         color: "destructive",
         variant: "outline",
-        icon: "mdi-bell-outline",
+        icon: Bell,
         actionLabel: "Retry placeholder",
       },
     });
@@ -1887,10 +1991,7 @@ describe("Balsa public components", () => {
       "aria-atomic": "true",
       "data-color": "destructive",
     });
-    expect(wrapper.get("i").classes()).toEqual(expect.arrayContaining([
-      "mdi-bell-outline",
-      "leading-none",
-    ]));
+    expect(wrapper.get('[data-balsa="icon"]').classes()).toContain("lucide-bell");
     expect(wrapper.get("h3").classes()).toContain("m-0");
     expect(wrapper.get("[data-balsa-toast-close]").classes()).toEqual(
       expect.arrayContaining(["border-0", "size-8", "text-lg", "hover:bg-balsa-muted"]),
@@ -2585,7 +2686,7 @@ describe("Balsa public components", () => {
     expect(actionLabels.text()).toContain("Previous article");
     expect(actionLabels.text()).toContain("Next article");
     expect(actionLabels.find('[aria-current="page"]').exists()).toBe(false);
-    expect(actionLabels.find(".mdi").exists()).toBe(false);
+    expect(actionLabels.find('[data-balsa="icon"]').exists()).toBe(false);
     await actionLabels.get('button[aria-label="Next article"]').trigger("click");
     expect(actionLabels.emitted("change")?.at(-1)).toEqual([3]);
 
@@ -2601,7 +2702,7 @@ describe("Balsa public components", () => {
     });
     expect(icons.text()).not.toContain("Previous article");
     expect(icons.text()).not.toContain("Next article");
-    expect(icons.findAll(".mdi")).toHaveLength(2);
+    expect(icons.findAll('[data-balsa="icon"]')).toHaveLength(2);
     expect(icons.find('[aria-current="page"]').exists()).toBe(false);
   });
 
@@ -2794,12 +2895,69 @@ describe("Balsa public components", () => {
     }
   });
 
+  it("navigates and loops Carousel with its Balsa engine", async () => {
+    const items = [
+      { id: "one", label: "First placeholder" },
+      { id: "two", label: "Second placeholder" },
+      { id: "three", label: "Third placeholder" },
+    ];
+    const wrapper = mount(Carousel, {
+      props: { items, label: "Cards placeholder", loop: true },
+    });
+    await flushPromises();
+
+    await wrapper.get('button[aria-label="Previous slide"]').trigger("click");
+    expect(wrapper.get('button[aria-label^="Go to slide 3"]').attributes("aria-current")).toBe("true");
+    expect(wrapper.emitted("select")?.at(-1)).toEqual([2, items[2]]);
+
+    await wrapper.get('button[aria-label="Next slide"]').trigger("click");
+    expect(wrapper.get('button[aria-label^="Go to slide 1"]').attributes("aria-current")).toBe("true");
+    expect(wrapper.emitted("select")?.at(-1)).toEqual([0, items[0]]);
+
+    await wrapper.get('button[aria-label^="Go to slide 2"]').trigger("click");
+    expect(wrapper.get('button[aria-label^="Go to slide 2"]').attributes("aria-current")).toBe("true");
+    wrapper.unmount();
+  });
+
+  it("snaps Carousel from pointer dragging and resists the first boundary", async () => {
+    const items = [
+      { id: "one", label: "First placeholder" },
+      { id: "two", label: "Second placeholder" },
+      { id: "three", label: "Third placeholder" },
+    ];
+    const wrapper = mount(Carousel, {
+      props: { items, label: "Cards placeholder" },
+    });
+    const viewport = wrapper.get('[data-balsa="carousel-viewport"]');
+    Object.defineProperty(viewport.element, "clientWidth", { configurable: true, value: 320 });
+    window.dispatchEvent(new Event("resize"));
+    await flushPromises();
+
+    dispatchPointer(viewport.element, "pointerdown", { pointerId: 1, clientX: 250 });
+    dispatchPointer(viewport.element, "pointermove", { pointerId: 1, clientX: 80 });
+    dispatchPointer(viewport.element, "pointermove", { pointerId: 1, clientX: 80 });
+    dispatchPointer(viewport.element, "pointerup", { pointerId: 1, clientX: 80 });
+    await flushPromises();
+
+    expect(wrapper.get('button[aria-label^="Go to slide 2"]').attributes("aria-current")).toBe("true");
+    expect(wrapper.get('[data-balsa="carousel-track"]').element.getAttribute("style")).toContain("translate3d(-336px, 0, 0)");
+
+    await wrapper.get('button[aria-label^="Go to slide 1"]').trigger("click");
+    dispatchPointer(viewport.element, "pointerdown", { pointerId: 2, clientX: 80 });
+    dispatchPointer(viewport.element, "pointermove", { pointerId: 2, clientX: 250 });
+    dispatchPointer(viewport.element, "pointermove", { pointerId: 2, clientX: 250 });
+    dispatchPointer(viewport.element, "pointerup", { pointerId: 2, clientX: 250 });
+    await flushPromises();
+    expect(wrapper.get('button[aria-label^="Go to slide 1"]').attributes("aria-current")).toBe("true");
+    wrapper.unmount();
+  });
+
   it("selects and collapses typed Sidebar navigation", async () => {
     const wrapper = mount(Sidebar, {
       props: {
         id: "workspace-sidebar",
         label: "Workspace placeholder",
-        groups: [{ id: "main", items: [{ id: "overview", label: "Overview placeholder", icon: "mdi-home-outline" }] }],
+        groups: [{ id: "main", items: [{ id: "overview", label: "Overview placeholder", icon: Home }] }],
       },
     });
     const destination = wrapper.findAll('[data-balsa="sidebar"] button').find((button) => button.text().includes("Overview"));
@@ -2979,7 +3137,7 @@ describe("Balsa public components", () => {
       "border-balsa-border",
       "bg-balsa-surface",
     ]));
-    expect(filterAction.get("i").classes()).toContain("mdi-magnify");
+    expect(filterAction.get('[data-balsa="icon"]').classes()).toContain("lucide-search");
     await filterAction.trigger("click");
     expect(wrapper.get('[data-balsa="data-table-filter-menu"]').attributes("role")).toBe("dialog");
     expect(wrapper.get('[data-balsa="data-table-filter-menu"] [data-balsa="select"]').exists()).toBe(true);
@@ -3026,7 +3184,7 @@ describe("Balsa public components", () => {
     expect(wrapper.get("table").text()).toContain("Alpha placeholder");
   });
 
-  it("keeps Charts bare and forwards semantic palette, element rounding, responsive settings, and type changes", async () => {
+  it("keeps Charts bare and forwards semantic configuration, geometry, and type changes", async () => {
     const wrapper = mount(Charts, {
       props: {
         title: "Metrics placeholder",
@@ -3037,20 +3195,15 @@ describe("Balsa public components", () => {
       },
     });
     const root = wrapper.get('[data-balsa="charts"]');
-    const chart = wrapper.findComponent({ name: "Chart" });
 
     expect(root.attributes("data-responsive")).toBe("true");
+    expect(root.attributes("data-type")).toBe("bar");
+    expect(root.attributes("data-bar-mode")).toBe("grouped");
     expect(root.classes()).not.toEqual(expect.arrayContaining(["border", "bg-balsa-surface", "p-5", "rounded-lg"]));
-    expect(chart.props("data")).toMatchObject({
-      datasets: [{ backgroundColor: expect.any(String), borderRadius: 12, borderSkipped: false }],
-    });
-    expect(chart.props("options")).toMatchObject({ responsive: true, maintainAspectRatio: true });
 
-    const firstCanvas = chart.element;
-    await wrapper.setProps({ type: "doughnut" });
-    const updatedChart = wrapper.findComponent({ name: "Chart" });
-    expect(updatedChart.props("type")).toBe("doughnut");
-    expect(updatedChart.element).not.toBe(firstCanvas);
+    await wrapper.setProps({ type: "doughnut", barMode: "stacked" });
+    expect(root.attributes("data-type")).toBe("donut");
+    expect(root.attributes("data-bar-mode")).toBe("stacked");
   });
 
   it.each([
@@ -3255,5 +3408,56 @@ describe("Balsa public components", () => {
         "data-palette": palette,
       });
     }
+  });
+
+  it("renders PropertySelect as a menu row or a forwarding row for a trailing control", async () => {
+    const menu = mount(PropertySelect, {
+      props: {
+        id: "radius",
+        label: "Radius",
+        value: "Large",
+        items: [{ id: "large", type: "action", label: "Large" }],
+      },
+      attachTo: document.body,
+    });
+    const trigger = menu.get("#radius-trigger");
+    expect(trigger.text()).toContain("Radius");
+    expect(trigger.text()).toContain("Large");
+    // Geometry follows the live control-radius token, not a fixed corner.
+    expect(trigger.classes()).toContain("rounded-balsa-control");
+    expect(trigger.classes()).not.toContain("rounded-lg");
+    // The row itself is unpadded so a trailing control can meet its border;
+    // the caption and the default icon carry their own insets instead.
+    expect(trigger.classes()).toEqual(expect.arrayContaining(["p-0", "gap-0"]));
+    expect(trigger.classes()).not.toContain("px-3");
+    expect(trigger.classes()).not.toContain("py-1.5");
+    expect(trigger.get("span").classes()).toEqual(expect.arrayContaining(["py-2", "pl-3"]));
+    menu.unmount();
+
+    const clicks: string[] = [];
+    const row = mount(PropertySelect, {
+      props: { id: "primary", label: "Primary", value: "#1d4ed8" },
+      slots: {
+        trailing: '<div data-trailing><button type="button" data-swatch>swatch</button><div data-popover><span data-inside>inside</span></div></div>',
+      },
+      attachTo: document.body,
+    });
+    expect(row.get("[data-balsa='property-select']").classes())
+      .toEqual(expect.arrayContaining(["p-0", "gap-0"]));
+    const swatch = row.get("[data-swatch]");
+    swatch.element.addEventListener("click", () => clicks.push("swatch"));
+
+    // Clicking the quiet part of the row acts on the trailing control.
+    await row.get("strong").trigger("click");
+    expect(clicks).toEqual(["swatch"]);
+
+    // Anything the trailing control owns handles its own clicks, so a popover
+    // rendered inside it does not toggle the control straight back shut.
+    await row.get("[data-inside]").trigger("click");
+    expect(clicks).toEqual(["swatch"]);
+    await swatch.trigger("click");
+    expect(clicks).toEqual(["swatch", "swatch"]);
+
+    row.unmount();
   });
 });

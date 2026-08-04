@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import {
   createCatalogIndex,
   publicBaseUrl,
+  publicDocumentationUrl,
 } from "./agent-context.mjs";
 import { buildCatalog } from "./build-catalog.mjs";
 import { readJson, rootDir, sourcePath, writeJson } from "./registry-lib.mjs";
@@ -134,7 +135,7 @@ function robotsText() {
 function sitemapXml(catalog) {
   const paths = [
     ...publicPagePaths,
-    ...catalog.items.map((item) => `/docs/components/${item.name}`),
+    ...catalog.items.map((item) => new URL(publicDocumentationUrl(item)).pathname),
   ];
   const urls = [...new Set(paths)].map(
     (pagePath) => `  <url><loc>${new URL(pagePath, `${publicBaseUrl}/`).href}</loc></url>`,
@@ -163,7 +164,7 @@ export async function buildAgentDocs() {
 
   for (const item of catalog.items) {
     await copyFile(
-      sourcePath(`docs/components/${item.name}.md`),
+      sourcePath(item.documentation),
       path.join(publicDocsDir, `${item.name}.md`),
     );
     await writeJson(

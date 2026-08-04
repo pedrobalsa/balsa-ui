@@ -1,8 +1,10 @@
+import type { IconComponent } from "./Icon.vue";
+
 export interface CommandItem {
   id: string;
   label: string;
   keywords?: readonly string[];
-  icon?: string;
+  icon?: IconComponent;
   shortcut?: string;
   disabled?: boolean;
 }

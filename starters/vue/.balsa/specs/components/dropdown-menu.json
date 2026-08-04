@@ -74,6 +74,20 @@
       "shadow",
       "theme"
     ],
+    "itemFields": [
+      "id",
+      "label",
+      "type",
+      "icon",
+      "labelFontFamily",
+      "shortcut",
+      "disabled",
+      "destructive",
+      "checked",
+      "value",
+      "group",
+      "children"
+    ],
     "events": [
       "update:modelValue",
       "select"

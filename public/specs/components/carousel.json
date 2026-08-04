@@ -21,12 +21,13 @@
     "first",
     "middle",
     "last",
+    "dragging",
     "paused autoplay"
   ],
   "accessibility": [
     "The root is a labelled region and each item is a named slide group.",
-    "Previous, next, and indicator actions use native buttons.",
-    "Autoplay pauses for pointer, focus, and document visibility."
+    "Previous, next, and indicator actions use native buttons independently of pointer dragging.",
+    "Autoplay pauses for pointer, focus, dragging, and document visibility."
   ],
   "variants": [
     "surface",

@@ -79,7 +79,7 @@ const ringClasses = computed(() =>
   ),
 );
 const labelClasses = computed(() => [
-  "font-bold text-balsa-foreground",
+  "font-medium text-balsa-foreground",
   sizeClasses[props.size].label,
 ]);
 </script>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ChevronDown, ChevronLeft, ChevronRight, Menu } from "@lucide/vue";
 import { computed, onBeforeUnmount, onMounted, ref, useAttrs } from "vue";
 import Button from "./Button.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
@@ -6,12 +7,13 @@ import Drawer from "./Drawer.vue";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon, { type IconComponent } from "./Icon.vue";
 
 export interface SidebarItem {
   id: string;
   label: string;
   href?: string;
-  icon?: string;
+  icon?: IconComponent;
   badge?: string;
   disabled?: boolean;
   children?: readonly SidebarItem[];
@@ -147,7 +149,7 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleShortcut));
         <slot name="header" :collapsed="collapsed">
           <span :class="labelClasses">{{ props.label }}</span>
         </slot>
-        <Button v-if="props.collapsible !== 'none'" shape="fab" size="sm" variant="glass" :prefix-icon="collapsed ? 'mdi-chevron-right' : 'mdi-chevron-left'" :aria-label="collapsed ? 'Expand sidebar' : 'Collapse sidebar'" @click="toggleCollapsed" />
+        <Button v-if="props.collapsible !== 'none'" shape="fab" size="sm" variant="glass" :prefix-icon="collapsed ? ChevronRight : ChevronLeft" :aria-label="collapsed ? 'Expand sidebar' : 'Collapse sidebar'" @click="toggleCollapsed" />
       </header>
       <nav class="min-h-0 flex-1 overflow-y-auto p-3" :aria-label="props.label">
         <section v-for="group in props.groups" :key="group.id" class="mb-5 last:mb-0">
@@ -155,10 +157,10 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleShortcut));
           <ul class="space-y-1">
             <li v-for="item in group.items" :key="item.id">
               <component :is="item.href && !item.children?.length ? 'a' : 'button'" :href="item.href" :disabled="item.disabled" :class="itemClasses(item)" :title="collapsed ? item.label : undefined" @click="select(item)">
-                <i v-if="item.icon" :class="['mdi', item.icon, 'shrink-0 text-lg']" aria-hidden="true" />
+                <Icon v-if="item.icon" :icon="item.icon" size="md" class="shrink-0" />
                 <span :class="labelClasses">{{ item.label }}</span>
                 <span v-if="item.badge && !(collapsed && props.collapsible === 'rail')" class="text-xs text-balsa-muted-foreground">{{ item.badge }}</span>
-                <i v-if="item.children?.length && !(collapsed && props.collapsible === 'rail')" class="mdi mdi-chevron-down text-lg" aria-hidden="true" />
+                <Icon v-if="item.children?.length && !(collapsed && props.collapsible === 'rail')" :icon="ChevronDown" size="md" />
               </component>
               <ul v-if="item.children?.length && expanded.has(item.id) && !(collapsed && props.collapsible === 'rail')" class="ml-5 mt-1 space-y-1 border-l border-balsa-border pl-2">
                 <li v-for="child in item.children" :key="child.id">
@@ -173,13 +175,13 @@ onBeforeUnmount(() => document.removeEventListener("keydown", handleShortcut));
       </nav>
       <footer v-if="$slots.footer" class="border-t border-balsa-border p-3"><slot name="footer" :collapsed="collapsed" /></footer>
     </aside>
-    <Button class="lg:hidden" prefix-icon="mdi-menu" :aria-label="props.mobileBreakpointLabel" @click="mobileOpen = true">{{ props.mobileBreakpointLabel }}</Button>
+    <Button class="lg:hidden" :prefix-icon="Menu" :aria-label="props.mobileBreakpointLabel" @click="mobileOpen = true">{{ props.mobileBreakpointLabel }}</Button>
     <Drawer :id="`${props.id}-mobile`" v-model="mobileOpen" :title="props.label" :side="props.side" size="lg" :theme="props.theme">
       <nav :aria-label="props.label">
         <section v-for="group in props.groups" :key="group.id" class="mb-5">
           <small v-if="group.label" class="mb-2 block text-balsa-muted-foreground">{{ group.label }}</small>
           <button v-for="item in group.items" :key="item.id" type="button" :disabled="item.disabled" :class="itemClasses(item)" @click="select(item)">
-            <i v-if="item.icon" :class="['mdi', item.icon, 'text-lg']" aria-hidden="true" />
+            <Icon v-if="item.icon" :icon="item.icon" size="md" />
             <span class="min-w-0 flex-1 text-left">{{ item.label }}</span>
             <span v-if="item.badge" class="text-xs text-balsa-muted-foreground">{{ item.badge }}</span>
           </button>

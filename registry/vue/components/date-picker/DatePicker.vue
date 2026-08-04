@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CalendarDays } from "@lucide/vue";
 import { computed, ref } from "vue";
 import Button from "./Button.vue";
 import Calendar, {
@@ -11,6 +12,7 @@ import type { Rounded } from "./form";
 import Popup from "./Popup.vue";
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type DatePickerStatus = "default" | "unvalidated";
 const rawProps = withDefaults(defineProps<{
@@ -100,7 +102,7 @@ function clear(): void { model.value = null; }
     :class="rootClasses"
     :style="theme.explicitPresentation.value?.style"
   >
-    <label :id="`${props.id}-label`" :for="`${props.id}-popup-trigger`" class="mb-2 block text-sm font-bold text-balsa-foreground">
+    <label :id="`${props.id}-label`" :for="`${props.id}-popup-trigger`" class="mb-2 block text-sm font-medium text-balsa-foreground">
       {{ props.label }} <span v-if="props.required" class="text-balsa-destructive" aria-hidden="true">*</span>
     </label>
     <Popup
@@ -119,7 +121,7 @@ function clear(): void { model.value = null; }
     >
       <template #trigger>
         <span :class="valueClasses">{{ displayValue }}</span>
-        <i class="mdi mdi-calendar-month-outline text-lg text-balsa-primary" aria-hidden="true"></i>
+        <Icon :icon="CalendarDays" size="md" class="text-balsa-primary" />
       </template>
       <template #default="{ close }">
         <Calendar
@@ -142,6 +144,6 @@ function clear(): void { model.value = null; }
       </template>
     </Popup>
     <input :name="effectiveName" type="hidden" :value="formValue" />
-    <p v-if="props.status === 'unvalidated'" :id="`${props.id}-error`" class="mt-2 text-sm font-bold text-balsa-destructive" role="alert">{{ props.statusMessage }}</p>
+    <p v-if="props.status === 'unvalidated'" :id="`${props.id}-error`" class="mt-2 text-sm font-medium text-balsa-destructive" role="alert">{{ props.statusMessage }}</p>
   </div>
 </template>

@@ -5,7 +5,7 @@
   "category": "component",
   "status": "beta",
   "version": "0.1.0",
-  "purpose": "Group related content and actions on a consistent Balsa surface.",
+  "purpose": "Group related content and actions on a consistent neutral Balsa surface, with semantic color reserved for meaningful state.",
   "useFor": ["Grouped content", "Feature summaries", "Contained forms or previews"],
   "avoidFor": ["Every page section", "Unrelated content", "Interactive behavior without an inner control"],
   "variants": ["surface", "elevated", "muted", "outline", "soft", "glass"],
@@ -13,7 +13,7 @@
   "states": ["shadowed", "shadowless"],
   "accessibility": ["Card is a visual container and does not invent landmark semantics.", "Use semantic headings and controls inside it.", "Each variant supplies an intentional paired surface and foreground."],
   "tokens": ["--balsa-color-surface", "--balsa-color-surface-foreground", "--balsa-color-surface-elevated", "--balsa-color-muted", "--balsa-color-primary", "--balsa-color-secondary", "--balsa-color-accent", "--balsa-color-destructive", "radius.surface", "shadow.surface"],
-  "commonMistakes": ["Making the entire Card clickable without link semantics.", "Nesting many cards only for spacing.", "Using unrelated content in one card.", "Using important padding or shadow overrides instead of the typed props and normal consumer utilities."],
+  "commonMistakes": ["Making the entire Card clickable without link semantics.", "Nesting many cards only for spacing.", "Using semantic Card colors as decorative variety rather than action or status meaning.", "Using unrelated content in one card.", "Using important padding or shadow overrides instead of the typed props and normal consumer utilities."],
   "examples": ["Surface card", "Elevated card", "Muted card", "Outline card", "Soft card", "Glass card", "Shadowless card"],
-  "publicApi": { "props": ["variant", "color", "padding", "size", "rounded", "shadow", "theme"], "slots": ["default"] }
+  "publicApi": { "props": ["variant", "color", "padding", "size", "rounded", "shadow", "theme"], "slots": ["default"], "defaults": { "variant": "surface", "color": "neutral", "rounded": "theme surface token", "shadow": "auto" } }
 }

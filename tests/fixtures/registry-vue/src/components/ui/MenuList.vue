@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check, ChevronRight, Circle } from "@lucide/vue";
 import { computed, nextTick, ref } from "vue";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
@@ -10,6 +11,7 @@ import {
   type MenuVariant,
 } from "./menu";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 defineOptions({ name: "MenuList" });
 
@@ -56,6 +58,9 @@ const variantClasses: Readonly<Record<MenuVariant, string[]>> = {
   glass: ["border-balsa-border/70 text-balsa-surface-foreground backdrop-blur-md"],
 };
 const colorClasses: Readonly<Record<ActionColor, Record<MenuVariant, string[]>>> = {
+  neutral: {
+    surface: [], outline: [], soft: [], glass: [],
+  },
   primary: {
     surface: ["border-balsa-primary/30"], outline: ["border-balsa-primary"], soft: ["border-balsa-primary/20", "bg-balsa-primary/10"], glass: ["border-balsa-primary/30"],
   },
@@ -212,7 +217,7 @@ defineExpose({ focusFirst: focusActive });
       ></div>
       <div
         v-else-if="item.type === 'label'"
-        class="px-3 py-2 text-xs font-bold uppercase tracking-wider text-balsa-muted-foreground"
+        class="px-3 py-2 text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground"
         role="presentation"
       >
         {{ item.label }}
@@ -233,26 +238,30 @@ defineExpose({ focusFirst: focusActive });
           @click="selectItem(item, index)"
           @keydown="handleKeydown($event, item, index)"
         >
-          <i v-if="item.icon" :class="['mdi', item.icon, 'text-lg']" aria-hidden="true"></i>
-          <span class="min-w-0 flex-1 truncate">{{ item.label }}</span>
-          <i
+          <Icon v-if="item.icon" :icon="item.icon" size="md" />
+          <span
+            class="min-w-0 flex-1 truncate"
+            :style="item.labelFontFamily ? { fontFamily: item.labelFontFamily } : undefined"
+          >{{ item.label }}</span>
+          <Icon
             v-if="item.type === 'checkbox' && item.checked"
-            class="mdi mdi-check text-lg"
-            aria-hidden="true"
-          ></i>
-          <i
+            :icon="Check"
+            size="md"
+          />
+          <Icon
             v-else-if="item.type === 'radio' && item.checked"
-            class="mdi mdi-circle-small text-lg"
-            aria-hidden="true"
-          ></i>
+            :icon="Circle"
+            size="sm"
+            class="fill-current"
+          />
           <span v-if="item.shortcut" class="ml-4 text-xs text-current/70">
             {{ item.shortcut }}
           </span>
-          <i
+          <Icon
             v-if="item.children?.length"
-            class="mdi mdi-chevron-right text-lg"
-            aria-hidden="true"
-          ></i>
+            :icon="ChevronRight"
+            size="md"
+          />
         </button>
         <MenuList
           v-if="item.children?.length && openSubmenuIndex === index"

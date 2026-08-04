@@ -124,7 +124,7 @@ const classes = computed(() => mergeClasses(
 const tableClasses = computed(() => mergeClasses(
   "w-full min-w-max border-collapse text-left",
   densityClasses[props.density],
-  "[&_th]:font-bold [&_th]:text-balsa-muted-foreground [&_tr]:border-b [&_tr]:border-balsa-border [&_tbody_tr:last-child]:border-b-0",
+  "[&_th]:font-medium [&_th]:text-balsa-muted-foreground [&_tr]:border-b [&_tr]:border-balsa-border [&_tbody_tr:last-child]:border-b-0",
   headerColorClasses[props.headerColor],
   rowColorClasses[props.rowColor],
   props.striped && stripedRowClasses[props.rowColor],

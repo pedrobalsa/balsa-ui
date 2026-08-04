@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Check, ChevronDown, ChevronUp, LoaderCircle } from "@lucide/vue";
 import {
   computed,
   nextTick,
@@ -25,6 +26,7 @@ import {
 import { type Shadow, type ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
+import Icon from "./Icon.vue";
 
 export interface SelectOption {
   label: string;
@@ -146,13 +148,8 @@ const controlClasses = computed(() =>
     attrs.class,
   ),
 );
+const currentIcon = computed(() => props.loading ? LoaderCircle : isOpen.value ? ChevronUp : ChevronDown);
 const iconClasses = computed(() => [
-  "mdi",
-  props.loading
-    ? "mdi-loading"
-    : isOpen.value
-      ? "mdi-chevron-up"
-      : "mdi-chevron-down",
   "pointer-events-none absolute top-1/2 -translate-y-1/2",
   "right-3 text-lg",
   props.loading ? "text-balsa-info" : getFieldStateColorClass(props.status),
@@ -464,14 +461,15 @@ onBeforeUnmount(() => {
           >
             <span>{{ option.label }}</span>
           </slot>
-          <i
+          <Icon
             v-if="isOptionSelected(option)"
-            class="mdi mdi-check shrink-0 text-lg leading-none"
-            aria-hidden="true"
+            :icon="Check"
+            size="md"
+            class="shrink-0"
           />
         </button>
       </div>
-      <i :class="iconClasses" aria-hidden="true"></i>
+      <Icon :icon="currentIcon" size="md" :class="iconClasses" />
     </div>
     <span v-if="props.hint" :id="hintId" :class="fieldHintClasses">
       {{ props.hint }}
@@ -480,7 +478,7 @@ onBeforeUnmount(() => {
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-bold text-balsa-destructive"
+      class="mt-2 block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

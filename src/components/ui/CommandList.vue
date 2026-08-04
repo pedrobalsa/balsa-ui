@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { LoaderCircle, Search } from "@lucide/vue";
 import { computed, nextTick, ref, watch } from "vue";
 import type { LayerVariant } from "./anchored-layer";
 import type { CommandGroup, CommandItem } from "./command";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow } from "./theme";
+import Icon from "./Icon.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -177,7 +179,7 @@ watch([query, items], () => {
 <template>
   <div data-balsa="command-list" :data-dropdown="props.dropdown || undefined" :class="rootClasses">
     <div :data-shadow="props.dropdown ? props.shadow : undefined" :class="queryClasses">
-      <i class="mdi mdi-magnify text-lg text-balsa-muted-foreground" aria-hidden="true"></i>
+      <Icon :icon="Search" size="md" class="text-balsa-muted-foreground" />
       <input
         v-model="query"
         type="search"
@@ -195,7 +197,7 @@ watch([query, items], () => {
         @input="openList"
         @keydown="handleKeydown"
       />
-      <i v-if="props.loading" class="mdi mdi-loading animate-spin text-balsa-info" aria-hidden="true"></i>
+      <Icon v-if="props.loading" :icon="LoaderCircle" size="md" class="animate-spin text-balsa-info" />
     </div>
 
     <div
@@ -227,7 +229,7 @@ watch([query, items], () => {
       >
         <div
           :id="`${props.id}-group-${group.id}`"
-          class="px-3 py-2 text-xs font-bold uppercase tracking-wider text-balsa-muted-foreground"
+          class="px-3 py-2 text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground"
         >
           {{ group.label }}
         </div>
@@ -244,7 +246,7 @@ watch([query, items], () => {
           @focus="activeIndex = itemIndex(item)"
           @click="select(item)"
         >
-          <i v-if="item.icon" :class="['mdi', item.icon, 'text-lg']" aria-hidden="true"></i>
+          <Icon v-if="item.icon" :icon="item.icon" size="md" />
           <span class="min-w-0 flex-1 truncate">{{ item.label }}</span>
           <span v-if="item.shortcut" class="text-xs text-current/70">{{ item.shortcut }}</span>
         </button>

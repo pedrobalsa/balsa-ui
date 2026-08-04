@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "savings-goal-card",
+  "type": "registry:ui",
+  "title": "SavingsGoalCard",
+  "description": "Goal values and progress presented in a repeatable financial rhythm.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/button",
+    "@balsa/progress"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/SavingsGoalCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/SavingsGoalCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport Button from \"../ui/Button.vue\";\r\nimport Progress from \"../ui/Progress.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionSurfaceProps } from \"./composition\";\r\n\r\nexport interface SavingsGoal { label: string; amount: string; progress: number; remaining: string }\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; goals?: readonly SavingsGoal[] }>(), {\r\n  title: \"Savings targets\", description: \"Active milestones for this year.\", goals: () => [\r\n    { label: \"Retirement\", amount: \"$420,000\", progress: 65, remaining: \"$273,000\" },\r\n    { label: \"Real estate\", amount: \"$85,000\", progress: 32, remaining: \"$27,200\" },\r\n  ],\r\n});\r\nconst emit = defineEmits<{ create: [] }>();\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"savings-goal\">\r\n    <template #action><Button size=\"sm\" variant=\"soft\" @click=\"emit('create')\">New goal</Button></template>\r\n    <div class=\"grid gap-3\">\r\n      <section v-for=\"goal in props.goals\" :key=\"goal.label\" class=\"rounded-balsa-control bg-balsa-muted p-3\">\r\n        <small class=\"uppercase tracking-wider text-balsa-muted-foreground\">{{ goal.label }}</small>\r\n        <strong class=\"mt-2 block text-2xl tabular-nums\">{{ goal.amount }}</strong>\r\n        <Progress class=\"mt-3\" :label=\"`${goal.progress}% achieved`\" :value=\"goal.progress\" color=\"primary\" />\r\n        <p class=\"mt-2 text-right text-xs font-medium tabular-nums\">{{ goal.remaining }}</p>\r\n      </section>\r\n    </div>\r\n  </CompositionRoot>\r\n</template>\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/savings-goal-card.json",
+    "documentation": "docs/compositions/savings-goal-card.md",
+    "example": "docs/compositions/savings-goal-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

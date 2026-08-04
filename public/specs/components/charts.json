@@ -4,8 +4,8 @@
   "title": "Charts",
   "category": "component",
   "status": "beta",
-  "version": "0.1.0",
-  "purpose": "Visualize typed series with configurable semantic palette-aware responsive canvases and a semantic data alternative.",
+  "version": "0.2.0",
+  "purpose": "Compose accessible, theme-aware Unovis charts through a finite facade or Balsa's lower-level chart primitives.",
   "useFor": [
     "Trends",
     "Category comparisons",
@@ -13,65 +13,98 @@
   ],
   "avoidFor": [
     "Data without an accessible table",
-    "Unsupported custom chart engines",
-    "Decorative unlabeled canvases"
+    "Unsupported facade options",
+    "Decorative unlabeled plots"
   ],
   "states": [
     "data",
     "loading",
     "empty",
-    "error"
+    "error",
+    "zero-size"
   ],
   "accessibility": [
     "Figure caption names the chart.",
-    "Canvas is hidden from assistive technology.",
-    "A semantic table always provides the complete data alternative."
+    "The visual plot is supplementary to a complete semantic table.",
+    "Graphical boundaries reach 3:1 and chart text reaches 4.5:1 against the owning surface.",
+    "Series differ through marker, dash, order, or grouping as well as color.",
+    "Motion follows theme tokens and reduced-motion preference."
   ],
   "variants": [
     "line",
-    "bar",
-    "doughnut"
+    "area",
+    "bar-grouped",
+    "bar-stacked",
+    "donut",
+    "doughnut-alias"
   ],
   "sizes": [
-    "responsive canvas with optional width and height"
+    "responsive positive-size container with optional width and height"
   ],
   "tokens": [
+    "--balsa-color-chart-surface",
+    "--balsa-color-chart-axis",
+    "--balsa-color-chart-grid",
+    "--balsa-color-chart-tooltip",
+    "--balsa-color-chart-tooltip-foreground",
+    "--balsa-color-chart-interaction",
     "--balsa-color-primary",
     "--balsa-color-secondary",
     "--balsa-color-accent",
-    "--balsa-color-success",
-    "--balsa-color-warning",
-    "--balsa-color-info",
-    "--balsa-color-destructive",
-    "--balsa-color-foreground",
-    "--balsa-color-muted-foreground",
-    "--balsa-color-border",
-    "--balsa-color-surface"
+    "--balsa-color-foreground"
   ],
   "commonMistakes": [
-    "Relying on canvas alone.",
+    "Relying on the plot alone.",
     "Using arbitrary raw colors.",
-    "Animating despite reduced-motion preference."
+    "Using feedback roles without explicit meaning.",
+    "Encoding series only by color.",
+    "Rendering Unovis into a zero-size container."
   ],
   "examples": [
-    "Bar comparison",
+    "Grouped bar comparison",
+    "Stacked bar comparison",
     "Line trend",
-    "Doughnut summary",
-    "Loading and error"
+    "Area trend",
+    "Donut summary",
+    "Loading, empty, and error"
   ],
   "publicApi": {
+    "components": [
+      "ChartContainer",
+      "ChartTooltip",
+      "ChartTooltipContent",
+      "ChartCrosshair",
+      "ChartLegendContent",
+      "Charts"
+    ],
+    "types": [
+      "ChartConfig",
+      "ChartConfigEntry",
+      "ChartPaletteRole",
+      "ChartSeries",
+      "ChartType"
+    ],
     "props": [
       "title",
       "description",
       "type",
+      "barMode",
       "labels",
       "series",
+      "config",
       "colors",
       "loading",
       "error",
       "emptyText",
+      "showGrid",
+      "showXAxis",
+      "showYAxis",
+      "showTooltip",
       "showLegend",
+      "showCaption",
       "showTable",
+      "labelFormatter",
+      "valueFormatter",
       "responsive",
       "width",
       "height",

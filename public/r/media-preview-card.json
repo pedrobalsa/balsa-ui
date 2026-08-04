@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "media-preview-card",
+  "type": "registry:ui",
+  "title": "MediaPreviewCard",
+  "description": "Asset preview, publication status, and replacement action.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/icon",
+    "@balsa/application-card",
+    "@balsa/badge",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/MediaPreviewCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/MediaPreviewCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Image } from \"@lucide/vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport Icon from \"../ui/Icon.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionPaletteColor, CompositionSurfaceProps } from \"./composition\";\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; status?: string; statusColor?: CompositionPaletteColor; actionLabel?: string }>(), {\n  title: \"Cover art\", description: \"Preview the asset before publishing.\", status: \"Draft\", statusColor: \"secondary\", actionLabel: \"Replace image\",\n});\nconst emit = defineEmits<{ action: [] }>();\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"media-preview\">\n    <template #action><Badge :color=\"props.statusColor\" variant=\"soft\">{{ props.status }}</Badge></template>\n    <div class=\"relative grid min-h-72 place-items-center overflow-hidden rounded-balsa-panel border border-balsa-border bg-balsa-muted\">\n      <div class=\"absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,transparent_25%,var(--balsa-color-border)_25%,var(--balsa-color-border)_50%,transparent_50%,transparent_75%,var(--balsa-color-border)_75%)] [background-size:2rem_2rem]\"></div>\n      <Icon :icon=\"Image\" size=\"xl\" class=\"relative text-balsa-muted-foreground\" />\n    </div>\n    <template #footer><Button class=\"w-full\" variant=\"soft\" @click=\"emit('action')\">{{ props.actionLabel }}</Button></template>\n  </CompositionRoot>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/media-preview-card.json",
+    "documentation": "docs/compositions/media-preview-card.md",
+    "example": "docs/compositions/media-preview-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

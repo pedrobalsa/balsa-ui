@@ -19,6 +19,7 @@
   ],
   "variants": [
     "solid",
+    "soft",
     "outline",
     "glass"
   ],
@@ -27,6 +28,7 @@
     "md",
     "lg",
     "xl",
+    "2xl",
     "custom"
   ],
   "states": [
@@ -46,8 +48,9 @@
       "fab"
     ],
     "brutalismGeometry": "The default rounded shape resolves to rounded-none in Brutalism; pill, FAB, and consumer radius classes remain deliberate overrides.",
-    "fabBehavior": "Render a square, circular, padding-free icon action on the shared 32px, 36px, 40px, and 48px control scale with proportionally sized icons; consumers own floating placement and must provide an accessible name.",
-    "loadingBehavior": "Disable interaction, expose aria-busy, and replace the leading icon with a spinner."
+    "fabBehavior": "Render a square, circular, padding-free icon action on the shared 32px, 36px, 40px, and 48px application scale, with an intentional 72px 2xl display tier and proportionally sized icons; consumers own floating placement and must provide an accessible name.",
+    "loadingBehavior": "Disable interaction, expose aria-busy, and replace the leading icon with a spinner.",
+    "neutralColor": "Neutral is the chrome color: a filled neutral action uses the inverse pair and every quieter treatment resolves to the plain foreground, so toolbar and shell controls do not compete with the content they frame."
   },
   "accessibility": [
     "Use native button semantics.",
@@ -60,6 +63,9 @@
     "--balsa-color-primary-foreground",
     "--balsa-color-primary-hover",
     "--balsa-color-primary-active",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
     "--balsa-color-focus-ring",
     "radius.control",
     "spacing.control-inline"
@@ -74,6 +80,7 @@
   "examples": [
     "Basic button",
     "Button with leading icon",
+    "Soft button",
     "Outline button",
     "Glass button",
     "Floating action button",

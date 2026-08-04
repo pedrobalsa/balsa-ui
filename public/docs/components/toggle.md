@@ -6,7 +6,7 @@ The default `type="button"` uses the typed `surface`, `solid`, `outline`, and `g
 
 Use `type="icon"` for a compact icon-only action: its neutral surface stays unchanged while the icon switches from its outlined form to its filled form. Set an accessible `aria-label` and choose `icon="bookmark"`, `heart`, `star`, `pin`, `bell`, or `flag`; each option provides a paired Material Design Icon. `disabled` preserves the pressed value while blocking activation.
 
-Use `prefixIcon` or `suffixIcon` for installed MDI classes on the default button treatment and keep an explicit visible label. The component keeps the pointer cursor for enabled actions; disabled actions use the not-allowed cursor.
+Use `prefixIcon` or `suffixIcon` for imported Lucide components on the default button treatment and keep an explicit visible label. The component keeps the pointer cursor for enabled actions; disabled actions use the not-allowed cursor.
 
 Toggle inherits the nearest `data-theme` and accepts `theme?: ThemeInput` for an independent Modern Flat, Brutalism, or Glassmorphism override.
 

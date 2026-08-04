@@ -15,15 +15,39 @@ import {
   resolveTheme,
   themePresentation,
   type ResolvedThemeDefinition,
+  type DesignTheme,
+  type ThemeOptions,
+  type ThemeOverrides,
+  type ThemePresentation,
   type ThemeDefinition,
   type ThemeInput,
 } from "../components/ui/theme";
 
 export const DESIGN_THEME_STORAGE_KEY = "balsa-ui-design-theme";
 
+/**
+ * The single editable theme slot. Built-in presets are never mutated: the first
+ * edit copies the selected preset into this slot and selects it, and every later
+ * edit overwrites the same slot.
+ */
+export const CUSTOM_DESIGN_THEME_ID = "balsa-custom";
+
+export interface DesignThemeDraft {
+  options?: ThemeOptions;
+  overrides?: Pick<ThemeOverrides, "tokens">;
+}
+
+export interface CustomDesignTheme {
+  /** The built-in preset this custom theme was branched from. */
+  base: DesignTheme;
+  draft: DesignThemeDraft;
+}
+
 export interface PersistedDesignThemeState {
-  version: 3;
+  version: 5;
   selectedTheme: string;
+  custom: CustomDesignTheme | null;
+  appliedTheme: ThemePresentation;
 }
 
 export interface DesignThemeStoreOptions {
@@ -35,14 +59,33 @@ export interface DesignThemeStoreOptions {
    * definitions and leave this disabled so only the selected id is persisted.
    */
   persistDefinitions?: boolean;
+  /**
+   * Enables the editable custom-theme slot. Disabled by default so consumer
+   * stores remain source-definition driven.
+   */
+  customTheme?: boolean;
 }
 
 function defaultState(): PersistedDesignThemeState {
-  return { version: 3, selectedTheme: defaultDesignTheme };
+  return {
+    version: 5,
+    selectedTheme: defaultDesignTheme,
+    custom: null,
+    appliedTheme: themePresentation(defaultDesignTheme),
+  };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
+}
+
+function normalizeStoredThemeOptions(value: unknown): ThemeOptions | undefined {
+  if (!isRecord(value)) return undefined;
+  const border = value.border === "subtle" ? "medium" : value.border;
+  return {
+    ...value,
+    ...(border === undefined ? {} : { border }),
+  } as ThemeOptions;
 }
 
 export function normalizePersistedDesignThemeState(
@@ -51,16 +94,73 @@ export function normalizePersistedDesignThemeState(
     designThemes.map(({ id }) => id),
   ),
 ): PersistedDesignThemeState {
-  if (!isRecord(value)) return defaultState();
+  if (!isRecord(value) || value.version !== 5) return defaultState();
+  const custom = normalizeCustomTheme(value.custom);
+  const selectable = new Set<string>([
+    ...availableThemeIds,
+    ...(custom ? [CUSTOM_DESIGN_THEME_ID] : []),
+  ]);
   const selectedTheme = typeof value.selectedTheme === "string"
-    && availableThemeIds.has(value.selectedTheme)
+    && selectable.has(value.selectedTheme)
     ? value.selectedTheme
     : defaultDesignTheme;
 
   return {
-    version: 3,
+    version: 5,
     selectedTheme,
+    custom,
+    appliedTheme: themePresentation(
+      selectedTheme === CUSTOM_DESIGN_THEME_ID && custom
+        ? customThemeDefinition(custom)
+        : isDesignTheme(selectedTheme) ? selectedTheme : defaultDesignTheme,
+    ),
   };
+}
+
+function hasDraft(draft: DesignThemeDraft): boolean {
+  return Boolean(
+    (draft.options && Object.keys(draft.options).length)
+    || (draft.overrides?.tokens && Object.keys(draft.overrides.tokens).length),
+  );
+}
+
+function customThemeDefinition(custom: CustomDesignTheme): ThemeDefinition {
+  return defineTheme({
+    id: CUSTOM_DESIGN_THEME_ID,
+    name: "Custom",
+    extends: custom.base,
+    ...custom.draft,
+  });
+}
+
+function normalizeDraft(value: unknown, base: DesignTheme): DesignThemeDraft {
+  if (!isRecord(value)) return {};
+  try {
+    const normalized = normalizeThemeDefinition({
+      id: CUSTOM_DESIGN_THEME_ID,
+      name: "Custom",
+      extends: base,
+      options: normalizeStoredThemeOptions(value.options),
+      overrides: isRecord(value.overrides)
+        ? value.overrides as ThemeOverrides
+        : undefined,
+    });
+    return {
+      ...(normalized.options ? { options: normalized.options } : {}),
+      ...(normalized.overrides?.tokens
+        ? { overrides: { tokens: normalized.overrides.tokens } }
+        : {}),
+    };
+  } catch {
+    return {};
+  }
+}
+
+function normalizeCustomTheme(value: unknown): CustomDesignTheme | null {
+  if (!isRecord(value)) return null;
+  const base = isDesignTheme(value.base) ? value.base : defaultDesignTheme;
+  const draft = normalizeDraft(value.draft, base);
+  return hasDraft(draft) ? { base, draft } : null;
 }
 
 function readPersistedValue(
@@ -121,18 +221,38 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
   const state = reactive(
     normalizePersistedDesignThemeState(persistedValue, availableThemeIds),
   ) as PersistedDesignThemeState;
+  if (!options.customTheme) {
+    state.custom = null;
+    if (state.selectedTheme === CUSTOM_DESIGN_THEME_ID) {
+      state.selectedTheme = defaultDesignTheme;
+    }
+  }
   const appliedVariables = new Set<string>();
 
-  const activeTheme = computed<ThemeInput>(() =>
-    isDesignTheme(state.selectedTheme)
-      ? state.selectedTheme
-      : definitions.get(state.selectedTheme) ?? defaultDesignTheme
+  const customTheme = computed<CustomDesignTheme | null>(() => state.custom);
+  const customThemeActive = computed(() =>
+    state.selectedTheme === CUSTOM_DESIGN_THEME_ID && state.custom !== null
   );
+  const activeTheme = computed<ThemeInput>(() => {
+    if (customThemeActive.value && state.custom) return customThemeDefinition(state.custom);
+    if (isDesignTheme(state.selectedTheme)) return state.selectedTheme;
+    return definitions.get(state.selectedTheme) ?? defaultDesignTheme;
+  });
   const activeDefinition = computed<ResolvedThemeDefinition>(() =>
     resolveTheme(activeTheme.value)
   );
   const activeThemeName = computed(() => activeDefinition.value.name);
   const registeredThemes = computed(() => [...definitions.values()]);
+  /** The draft the editor writes to: the custom slot, or the selected preset's empty starting point. */
+  const activeDraft = computed<DesignThemeDraft | null>(() => {
+    if (customThemeActive.value && state.custom) return state.custom.draft;
+    return isDesignTheme(state.selectedTheme) ? {} : null;
+  });
+  /** The preset a custom theme was branched from, or the selected preset itself. */
+  const activeBase = computed<DesignTheme>(() => {
+    if (customThemeActive.value && state.custom) return state.custom.base;
+    return isDesignTheme(state.selectedTheme) ? state.selectedTheme : defaultDesignTheme;
+  });
 
   function apply(): void {
     if (!root) return;
@@ -152,6 +272,7 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
   function persist(): void {
     if (!storage) return;
     try {
+      state.appliedTheme = themePresentation(activeTheme.value);
       storage.setItem(DESIGN_THEME_STORAGE_KEY, JSON.stringify(
         options.persistDefinitions
           ? {
@@ -172,6 +293,7 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
   }
 
   function hasTheme(id: string): boolean {
+    if (id === CUSTOM_DESIGN_THEME_ID) return state.custom !== null;
     return isDesignTheme(id) || definitions.has(id);
   }
 
@@ -205,6 +327,7 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
 
   function resetTheme(): void {
     state.selectedTheme = defaultDesignTheme;
+    state.custom = null;
     if (options.persistDefinitions) {
       commit();
       return;
@@ -215,6 +338,33 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
       // The in-memory default remains authoritative for this session.
     }
     apply();
+  }
+
+  /**
+   * Writes the editable slot. The first edit on a built-in preset branches it
+   * into the custom theme and selects that; later edits overwrite the same slot,
+   * so presets never accumulate hidden modifications.
+   */
+  function setCustomDraft(draft: DesignThemeDraft): void {
+    if (!options.customTheme) return;
+    const base = activeBase.value;
+    const normalized = normalizeDraft(draft, base);
+    if (!hasDraft(normalized)) {
+      clearCustomTheme();
+      return;
+    }
+    state.custom = { base, draft: normalized };
+    state.selectedTheme = CUSTOM_DESIGN_THEME_ID;
+    commit();
+  }
+
+  /** Discards the custom theme and returns to the preset it branched from. */
+  function clearCustomTheme(): void {
+    if (!options.customTheme || !state.custom) return;
+    const base = state.custom.base;
+    state.custom = null;
+    if (state.selectedTheme === CUSTOM_DESIGN_THEME_ID) state.selectedTheme = base;
+    commit();
   }
 
   const contextInput: ComputedRef<ThemeInput> = computed(() => activeTheme.value);
@@ -235,11 +385,17 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
     activeTheme: readonly(activeTheme),
     activeDefinition: readonly(activeDefinition),
     activeThemeName: readonly(activeThemeName),
+    activeDraft: readonly(activeDraft),
+    activeBase: readonly(activeBase),
+    customTheme: readonly(customTheme),
+    customThemeActive: readonly(customThemeActive),
     registeredThemes: readonly(registeredThemes),
     hasTheme,
     selectTheme,
     registerTheme,
     unregisterTheme,
+    setCustomDraft,
+    clearCustomTheme,
     resetTheme,
     install,
   };

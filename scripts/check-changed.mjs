@@ -29,6 +29,7 @@ const run = (label, command, commandArgs) => {
 const source = changed.filter((file) => /\.(?:[cm]?js|ts|vue)$/.test(file) && !/^(registry\/vue|public\/r|starters\/vue|tests\/fixtures)\//.test(file));
 const componentChanged = changed.some((file) => /^src\/(components\/ui|styles|theme)\//.test(file));
 const gradientChanged = changed.some((file) => /gradient-background|background-cli/.test(file));
+const themeChanged = changed.some((file) => /(?:^|\/)theme(?:-|\/)|theme-cli/.test(file));
 const registryChanged = changed.some((file) => /^(src\/|specs\/components\/|docs\/components\/|registry\.json|scripts\/(build|validate|registry-lib))/.test(file));
 if (source.length) run("lint", "npx", ["eslint", ...source]);
 const tests = new Set(changed.filter((file) => /^tests\/.+\.test\.ts$/.test(file)));
@@ -40,6 +41,10 @@ if (gradientChanged) {
   tests.add("tests/background-cli.test.ts");
   tests.add("tests/gradient-background-component.test.ts");
   tests.add("tests/gradient-background-config.test.ts");
+}
+if (themeChanged) {
+  tests.add("tests/theme.test.ts");
+  tests.add("tests/theme-cli.test.ts");
 }
 if (tests.size) run("focused tests", "npx", ["vitest", "run", ...tests]);
 if (componentChanged) run("typecheck", "npm", ["run", "typecheck"]);

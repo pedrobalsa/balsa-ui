@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { ChevronDown } from "@lucide/vue";
 import { computed, useAttrs } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
+import Icon from "./Icon.vue";
 
 export type CollapsibleVariant = "underline" | "surface" | "outline" | "soft" | "glass";
 export type CollapsibleSize = "sm" | "md" | "lg";
@@ -86,14 +88,12 @@ const rootClasses = computed(() =>
 );
 const triggerClasses = computed(() =>
   mergeClasses(
-    "flex w-full cursor-pointer items-center justify-between text-left font-bold transition-colors duration-200 hover:bg-balsa-muted/70 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    "flex w-full cursor-pointer items-center justify-between text-left transition-colors duration-200 hover:bg-balsa-muted/70 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
     props.variant === "underline" ? "border-b border-balsa-border hover:border-balsa-border-strong" : "",
     sizeClasses[props.size].trigger,
   ),
 );
 const iconClasses = computed(() => [
-  "mdi",
-  "mdi-chevron-down",
   "shrink-0",
   "transition-transform",
   "duration-200",
@@ -151,7 +151,7 @@ function toggle(): void {
             {{ props.title }}
           </slot>
         </span>
-        <i :class="iconClasses" aria-hidden="true"></i>
+        <Icon :icon="ChevronDown" size="md" :class="iconClasses" />
       </button>
     </component>
 

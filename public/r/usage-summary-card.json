@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "usage-summary-card",
+  "type": "registry:ui",
+  "title": "UsageSummaryCard",
+  "description": "Time-series usage, key totals, and quota progress in one panel.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/charts",
+    "@balsa/progress"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/UsageSummaryCard.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/UsageSummaryCard.vue",
+      "content": "<script setup lang=\"ts\">\r\nimport { computed } from \"vue\";\r\nimport Charts, { type ChartSeries } from \"../ui/Charts.vue\";\r\nimport Progress from \"../ui/Progress.vue\";\r\nimport CompositionRoot from \"./_CompositionRoot.vue\";\r\nimport type { CompositionMetric, CompositionSurfaceProps } from \"./composition\";\r\n\r\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; values?: readonly number[]; metrics?: readonly CompositionMetric[]; progress?: number }>(), {\r\n  title: \"Power usage\", description: \"Whole home\", values: () => [24, 62, 70, 52, 78, 66, 88, 72], progress: 85,\r\n  metrics: () => [{ label: \"Currently using\", value: \"3.4 kW\" }, { label: \"Solar generation\", value: \"+1.2 kW\" }],\r\n});\r\nconst chartLabels = computed(() => props.values.map((_, index) => `${6 + index * 2}${index < 3 ? \"a\" : \"p\"}`));\r\nconst chartSeries = computed<readonly ChartSeries[]>(() => [{ label: \"Power usage\", data: props.values, color: \"primary\" }]);\r\n</script>\r\n\r\n<template>\r\n  <CompositionRoot v-bind=\"props\" data-composition=\"usage-summary\">\r\n    <Charts title=\"Usage by time\" type=\"bar\" :labels=\"chartLabels\" :series=\"chartSeries\" :height=\"160\" :show-legend=\"false\" :show-y-axis=\"false\" />\r\n    <dl class=\"mt-4 grid grid-cols-2 gap-4\">\r\n      <div v-for=\"metric in props.metrics\" :key=\"metric.label\"><dt class=\"text-sm text-balsa-muted-foreground\">{{ metric.label }}</dt><dd class=\"mt-1 text-xl font-semibold tabular-nums\">{{ metric.value }}</dd></div>\r\n    </dl>\r\n    <Progress class=\"mt-5\" label=\"Battery level\" :value=\"props.progress\" color=\"primary\" show-value />\r\n  </CompositionRoot>\r\n</template>\r\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.vue",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, useAttrs, useSlots } from \"vue\";\nimport ApplicationCard from \"./ApplicationCard.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\ndefineOptions({ inheritAttrs: false });\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title: string;\n  description?: string;\n}>(), { headingLevel: 2, shadow: \"auto\" });\nconst slots = useSlots();\nconst attrs = useAttrs();\nconst resolvedShadow = computed(() => props.shadow ?? \"auto\");\nconst rootAttrs = computed(() => Object.fromEntries(\n  Object.entries(attrs).filter(([key]) =>\n    key === \"class\" || key === \"style\" || key === \"id\" || key === \"role\" ||\n    key.startsWith(\"data-\") || key.startsWith(\"aria-\")),\n));\n</script>\n\n<template>\n  <ApplicationCard\n    v-bind=\"rootAttrs\"\n    :title=\"props.title\"\n    :description=\"props.description\"\n    :heading-level=\"props.headingLevel\"\n    :shadow=\"resolvedShadow\"\n    :theme=\"props.theme\"\n    class=\"min-w-0\"\n  >\n    <template v-if=\"slots.action\" #action><slot name=\"action\" /></template>\n    <slot />\n    <template v-if=\"slots.footer\" #footer><slot name=\"footer\" /></template>\n  </ApplicationCard>\n</template>\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/usage-summary-card.json",
+    "documentation": "docs/compositions/usage-summary-card.md",
+    "example": "docs/compositions/usage-summary-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-muted",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}
