@@ -649,7 +649,7 @@
     "metric-grid-card": {
       "registry": "@balsa/metric-grid-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-641d27d9547b6c6c55d8bc146be5d8d8b06b6b86f9bf91866a8e245a21899b83",
+      "sourceHash": "sha256-6f67aef48b90dc841fc5690e07ef3fc765ee8dfe27335a92b0575172c3c582fa",
       "targetPath": "src/components/compositions/MetricGridCard.vue",
       "files": [
         "src/components/compositions/MetricGridCard.vue",
@@ -682,7 +682,7 @@
     "notification-preferences-card": {
       "registry": "@balsa/notification-preferences-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-27a55add1d475949767777b687e4699f51821a923ae09784c5b6d5d8eb519064",
+      "sourceHash": "sha256-63262b21e0ca3b17ee96472612ecb86a5b76dc7af601a33e7529cb41998aec42",
       "targetPath": "src/components/compositions/NotificationPreferencesCard.vue",
       "files": [
         "src/components/compositions/NotificationPreferencesCard.vue",
@@ -759,7 +759,7 @@
     "loading-state-card": {
       "registry": "@balsa/loading-state-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-9e3a58b8fadae7aeb767eae7333b7d5c0bdeaee25909980ebb658510851684af",
+      "sourceHash": "sha256-c96a56bcbc07d125f8ae38c5d65468c9e96302ffb6a9e81810659ebc50eeba96",
       "targetPath": "src/components/compositions/LoadingStateCard.vue",
       "files": [
         "src/components/compositions/LoadingStateCard.vue",
@@ -792,7 +792,7 @@
     "schedule-card": {
       "registry": "@balsa/schedule-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-c0c77c62e1d2191cd78e55393e3d8f96a3321a4e410c2be9f8bf95a747c3584e",
+      "sourceHash": "sha256-9e424b9acb26a9e313d3360d9a44cebb4e986499335154298b9637cc7ccc5a99",
       "targetPath": "src/components/compositions/ScheduleCard.vue",
       "files": [
         "src/components/compositions/ScheduleCard.vue",
@@ -803,7 +803,7 @@
     "appointment-card": {
       "registry": "@balsa/appointment-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-839a2d8a887b4dde5387f6a65708555aef2c4656fcadf808eb77edce68e9db45",
+      "sourceHash": "sha256-fcc475e56c6c23ca91140c456bad146db6d1afe369821d0eb742419d08997e1a",
       "targetPath": "src/components/compositions/AppointmentCard.vue",
       "files": [
         "src/components/compositions/AppointmentCard.vue",
@@ -836,7 +836,7 @@
     "order-summary-card": {
       "registry": "@balsa/order-summary-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-eb153c835b1ac7a1fd9c47735ba6168ed04ee983770d66336756e6dca5496d65",
+      "sourceHash": "sha256-87fe26dad1f18c32a84f88a31465fa28689637a6d148fafd3f2f5f469c7ed9fc",
       "targetPath": "src/components/compositions/OrderSummaryCard.vue",
       "files": [
         "src/components/compositions/OrderSummaryCard.vue",
@@ -879,7 +879,7 @@
     "activity-timeline-card": {
       "registry": "@balsa/activity-timeline-card",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-34534bc9d1b8db078392422e49fb462d546d7252a394c3ff5cfaa12b38a8207a",
+      "sourceHash": "sha256-ef24d2e0e8c59376d9fac6dee15aa52dcfbed7ad8488029094b58ba7bc85b106",
       "targetPath": "src/components/compositions/ActivityTimelineCard.vue",
       "files": [
         "src/components/compositions/ActivityTimelineCard.vue",

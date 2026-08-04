@@ -25,4 +25,3 @@ const values = reactive(Object.fromEntries(props.items.map((item) => [item.id, i
     </div>
   </CompositionRoot>
 </template>
-

@@ -21,4 +21,3 @@ const options: readonly RadioGroupOption[] = props.times.map((time) => ({ value:
     <template #footer><Button class="w-full" @click="emit('book', selected)">Book appointment</Button></template>
   </CompositionRoot>
 </template>
-

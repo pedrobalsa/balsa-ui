@@ -21,4 +21,3 @@ const date = ref<CalendarModelValue>(new Date(2026, 6, 31));
     <ul class="mt-4 divide-y divide-balsa-border" role="list"><li v-for="item in props.items" :key="item.id" class="flex items-center justify-between gap-4 py-3"><span><strong class="block text-sm font-medium">{{ item.title }}</strong><span class="text-xs text-balsa-muted-foreground">{{ item.date }}</span></span><Badge variant="soft">{{ item.meta }}</Badge></li></ul>
   </CompositionRoot>
 </template>
-

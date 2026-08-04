@@ -20,4 +20,3 @@ const emit = defineEmits<{ confirm: [] }>();
     <template #footer><Button class="w-full" @click="emit('confirm')">Confirm order</Button></template>
   </CompositionRoot>
 </template>
-

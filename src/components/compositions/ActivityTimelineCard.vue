@@ -20,4 +20,3 @@ const props = withDefaults(defineProps<CompositionSurfaceProps & { title?: strin
     </ol>
   </CompositionRoot>
 </template>
-

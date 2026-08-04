@@ -18,4 +18,3 @@ const props = withDefaults(defineProps<CompositionSurfaceProps & { title?: strin
     </div>
   </CompositionRoot>
 </template>
-
