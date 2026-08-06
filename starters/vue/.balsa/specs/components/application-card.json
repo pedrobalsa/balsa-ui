@@ -3,6 +3,7 @@
   "name": "application-card",
   "title": "ApplicationCard",
   "category": "composition",
+  "classification": "balsa-composition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Compose a repeatable application surface anatomy while delegating material, geometry, borders, density, and elevation to Card and the active Balsa theme.",
@@ -84,31 +85,164 @@
     "Explicit local theme override"
   ],
   "publicApi": {
+    "source": "src/components/compositions/ApplicationCard.vue",
     "props": [
-      "title",
-      "description",
-      "headingLevel",
-      "variant",
-      "color",
-      "size",
-      "rounded",
-      "shadow",
-      "theme"
-    ],
-    "slots": [
-      "header",
-      "action",
-      "default",
-      "footer"
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "headingLevel",
+        "type": "HeadingLevel | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false,
+        "default": "2"
+      },
+      {
+        "name": "variant",
+        "type": "CardVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "elevated",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ApplicationCardColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CardSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | ThemeShadow | undefined",
+        "values": [
+          "false",
+          "true",
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
     "events": [],
-    "defaults": {
-      "headingLevel": 2,
-      "variant": "inherited Card default",
-      "color": "neutral",
-      "size": "inherited Card default",
-      "rounded": "inherited surface token",
-      "shadow": "auto"
-    }
+    "slots": [
+      {
+        "name": "header",
+        "type": "{}"
+      },
+      {
+        "name": "action",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "footer",
+        "type": "{}"
+      }
+    ]
   }
 }

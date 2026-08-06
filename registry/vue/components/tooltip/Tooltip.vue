@@ -19,7 +19,7 @@ import { roundedClasses, type Rounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaTooltip", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

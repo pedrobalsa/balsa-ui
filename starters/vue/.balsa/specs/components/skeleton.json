@@ -3,6 +3,11 @@
   "name": "skeleton",
   "title": "Skeleton",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "skeleton"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Reserve the shape of pending content without exposing placeholder noise to assistive technology.",
@@ -60,14 +65,120 @@
     "Glass placeholder"
   ],
   "publicApi": {
+    "source": "src/components/ui/Skeleton.vue",
     "props": [
-      "shape",
-      "variant",
-      "size",
-      "rounded",
-      "animation",
-      "lines",
-      "theme"
-    ]
+      {
+        "name": "shape",
+        "type": "SkeletonShape | undefined",
+        "values": [
+          "text",
+          "circle",
+          "rect"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "SkeletonVariant | undefined",
+        "values": [
+          "soft",
+          "glass",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SkeletonSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "animation",
+        "type": "SkeletonAnimation | undefined",
+        "values": [
+          "none",
+          "pulse",
+          "wave"
+        ],
+        "required": false,
+        "default": "\"pulse\""
+      },
+      {
+        "name": "lines",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
   }
 }

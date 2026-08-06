@@ -253,7 +253,7 @@ describe("Balsa public components", () => {
     expect(button.classes()).toEqual(expect.arrayContaining([
       "h-9",
       "w-9",
-      "rounded-full",
+      "rounded-balsa-pill",
       "p-0",
     ]));
     expect(button.get('[data-balsa="icon"]').attributes("width")).toBe("20");
@@ -1046,7 +1046,7 @@ describe("Balsa public components", () => {
       "sm:px-6",
       "lg:px-8",
     ]));
-    expect(navbar.get("nav > ul").classes()).toContain("justify-end");
+    expect(navbar.get("nav ul").classes()).toContain("justify-end");
     expect(navbar.get("nav").attributes("style")).toContain("max-width: 90rem");
     await navbar.get("li").trigger("mouseenter");
     expect(navbar.get('[data-balsa="dropdown"]').classes()).toEqual(
@@ -1111,7 +1111,7 @@ describe("Balsa public components", () => {
       },
     });
     expect(centeredItems.get('[data-balsa="navbar"]').attributes("data-items-alignment")).toBe("center");
-    expect(centeredItems.get("nav > ul").classes()).toContain("justify-center");
+    expect(centeredItems.get("nav ul").classes()).toContain("justify-center");
 
     const noActions = mount(Navbar, {
       props: {
@@ -1120,7 +1120,7 @@ describe("Balsa public components", () => {
       },
     });
     expect(noActions.find("nav > div.hidden.min-w-40").exists()).toBe(false);
-    expect(noActions.get("nav > ul").classes()).toContain("justify-end");
+    expect(noActions.get("nav ul").classes()).toContain("justify-end");
   });
 
   it("renders a compact anchored Dropdown in every supported material", () => {

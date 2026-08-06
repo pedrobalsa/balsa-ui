@@ -3,6 +3,7 @@
   "name": "metric-grid-card",
   "title": "MetricGridCard",
   "category": "composition",
+  "classification": "balsa-composition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Aligned operational KPIs with labels, values, and supporting detail.",
@@ -64,22 +65,103 @@
     "Application dashboard"
   ],
   "publicApi": {
+    "source": "src/components/compositions/MetricGridCard.vue",
     "props": [
-      "title",
-      "description",
-      "headingLevel",
-      "shadow",
-      "theme",
-      "pattern-specific typed data"
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Workspace metrics\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Current operational snapshot.\""
+      },
+      {
+        "name": "metrics",
+        "type": "readonly CompositionMetric[] | undefined",
+        "required": false,
+        "default": "[ { label: \"Deployments\", value: \"128\", detail: \"+12 this week\" }, { label: \"Uptime\", value: \"99.99%\", detail: \"30 day window\" }, { label: \"Members\", value: \"24\", detail: \"3 online\" }, { label: \"Regions\", value: \"6\", detail: \"Global coverage\" }, ]"
+      }
     ],
-    "slots": [],
-    "events": [
-      "pattern-specific actions"
-    ],
-    "defaults": {
-      "headingLevel": 2,
-      "shadow": "auto",
-      "theme": "inherited"
-    }
+    "events": [],
+    "slots": []
   }
 }

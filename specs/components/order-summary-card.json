@@ -3,6 +3,7 @@
   "name": "order-summary-card",
   "title": "OrderSummaryCard",
   "category": "composition",
+  "classification": "balsa-composition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Line items, calculated totals, and order confirmation.",
@@ -64,22 +65,135 @@
     "Application dashboard"
   ],
   "publicApi": {
+    "source": "src/components/compositions/OrderSummaryCard.vue",
     "props": [
-      "title",
-      "description",
-      "headingLevel",
-      "shadow",
-      "theme",
-      "pattern-specific typed data"
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Order summary\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Review charges before confirming.\""
+      },
+      {
+        "name": "items",
+        "type": "readonly OrderLine[] | undefined",
+        "required": false,
+        "default": "[ { id: \"pro\", label: \"Pro workspace\", detail: \"12 members\", amount: \"$240.00\" }, { id: \"storage\", label: \"Additional storage\", detail: \"500 GB\", amount: \"$35.00\" }, ]"
+      },
+      {
+        "name": "subtotal",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"$275.00\""
+      },
+      {
+        "name": "tax",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"$22.00\""
+      },
+      {
+        "name": "total",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"$297.00\""
+      }
     ],
-    "slots": [],
     "events": [
-      "pattern-specific actions"
+      {
+        "name": "confirm",
+        "type": "[]"
+      }
     ],
-    "defaults": {
-      "headingLevel": 2,
-      "shadow": "auto",
-      "theme": "inherited"
-    }
+    "slots": []
   }
 }

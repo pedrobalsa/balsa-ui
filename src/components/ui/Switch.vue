@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaSwitch" });
+
 import { computed } from "vue";
 import {
   fieldHintClasses,

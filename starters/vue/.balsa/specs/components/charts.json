@@ -3,6 +3,11 @@
   "name": "charts",
   "title": "Charts",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "chart"
+  },
   "status": "beta",
   "version": "0.2.0",
   "purpose": "Compose accessible, theme-aware Unovis charts through a finite facade or Balsa's lower-level chart primitives.",
@@ -69,47 +74,270 @@
     "Loading, empty, and error"
   ],
   "publicApi": {
-    "components": [
-      "ChartContainer",
-      "ChartTooltip",
-      "ChartTooltipContent",
-      "ChartCrosshair",
-      "ChartLegendContent",
-      "Charts"
-    ],
-    "types": [
-      "ChartConfig",
-      "ChartConfigEntry",
-      "ChartPaletteRole",
-      "ChartSeries",
-      "ChartType"
-    ],
+    "source": "src/components/ui/Charts.vue",
     "props": [
-      "title",
-      "description",
-      "type",
-      "barMode",
-      "labels",
-      "series",
-      "config",
-      "colors",
-      "loading",
-      "error",
-      "emptyText",
-      "showGrid",
-      "showXAxis",
-      "showYAxis",
-      "showTooltip",
-      "showLegend",
-      "showCaption",
-      "showTable",
-      "labelFormatter",
-      "valueFormatter",
-      "responsive",
-      "width",
-      "height",
-      "rounded",
-      "theme"
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ChartsType | undefined",
+        "values": [
+          "bar",
+          "line",
+          "area",
+          "donut",
+          "doughnut"
+        ],
+        "required": false,
+        "default": "\"bar\""
+      },
+      {
+        "name": "labels",
+        "type": "readonly string[]",
+        "required": true
+      },
+      {
+        "name": "series",
+        "type": "readonly ChartSeries[]",
+        "required": true
+      },
+      {
+        "name": "colors",
+        "type": "readonly SemanticColor[] | undefined",
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "ChartConfig | undefined",
+        "values": [
+          "ChartConfig"
+        ],
+        "required": false
+      },
+      {
+        "name": "barMode",
+        "type": "ChartsBarMode | undefined",
+        "values": [
+          "stacked",
+          "grouped"
+        ],
+        "required": false,
+        "default": "\"grouped\""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "error",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No chart data.\""
+      },
+      {
+        "name": "showGrid",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showXAxis",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showYAxis",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showTooltip",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showLegend",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showCaption",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showTable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "responsive",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "width",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "260"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "labelFormatter",
+        "type": "((label: string, index: number) => string) | undefined",
+        "required": false,
+        "default": "label"
+      },
+      {
+        "name": "valueFormatter",
+        "type": "((value: number, series: ChartSeries, index: number) => string) | undefined",
+        "required": false,
+        "default": "new Intl.NumberFormat().format(value)"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "center",
+        "type": "{}"
+      }
     ]
   }
 }

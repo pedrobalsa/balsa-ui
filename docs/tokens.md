@@ -92,6 +92,14 @@ The public `--balsa-color-*` variables remain palette-owned. A design theme deri
 
 Theme authors normally choose seven finite `ThemeOptions`: typography, shape, density, border, elevation, motion, and material. The border direction accepts None (0px), Soft (1px at 55% opacity), Medium (1px), and Strong (2px); each recipe controls the normal, outline, and solid theme-owned border widths together. Balsa deterministically derives typography, radii, borders, shadows, spacing, effects, transforms, semantic materials, and compatible component defaults from those choices. Structured `ThemeTokens` remain available under `overrides.tokens` for exceptional exact values. Numeric geometry uses pixels, motion uses milliseconds, and opacity is normalized from zero to one. Materials reference palette roles and serialize to `color-mix()`, so a custom theme never owns palette colors. See [Design themes](./themes.md) for inheritance, providers, recipes, and overrides.
 
+The shape recipe publishes four radius utilities: `rounded-balsa-control` for
+controls, `rounded-balsa-surface` and `rounded-balsa-panel` for surfaces, and
+`rounded-balsa-pill` for the fully-rounded family — badges, toggles, and the
+`pill` and FAB control shapes. Pill is a recipe value rather than a constant, so
+a square shape recipe collapses it to `0` and a pill control squares off with
+everything around it. Use `rounded-full` only where a shape must stay circular
+regardless of theme, such as an avatar.
+
 `BalsaThemePresetConfig` is the portable schema-one handoff used by the quick
 editor and `balsa theme create`. It contains a built-in base plus sparse recipe
 options and token overrides; it never contains palette colors, component

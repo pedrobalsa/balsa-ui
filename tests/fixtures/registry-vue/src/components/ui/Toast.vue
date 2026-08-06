@@ -12,7 +12,7 @@ import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
 export type ToastVariant = "surface" | "soft" | "outline" | "glass";
 export type ToastSize = "sm" | "md" | "lg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaToast", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

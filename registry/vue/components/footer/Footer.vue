@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaFooter" });
+
 import type {
   BrandLogo,
   FooterContactGroup,

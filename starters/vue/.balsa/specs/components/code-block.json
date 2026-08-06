@@ -3,6 +3,7 @@
   "name": "code-block",
   "title": "Code block",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Present source code or commands with accessible compact text actions and icon-only copy.",
@@ -24,7 +25,8 @@
     "numbered",
     "highlighted",
     "collapsed",
-    "expanded"
+    "expanded",
+    "inline single-line command"
   ],
   "accessibility": [
     "Uses preformatted code semantics.",
@@ -53,21 +55,167 @@
     "Wrapped configuration"
   ],
   "publicApi": {
+    "source": "src/components/ui/CodeBlock.vue",
     "props": [
-      "code",
-      "language",
-      "label",
-      "copyable",
-      "wrap",
-      "lineNumbers",
-      "collapsedLines",
-      "size",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "code",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "language",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"text\""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "CodeBlockLayout | undefined",
+        "values": [
+          "inline",
+          "block"
+        ],
+        "required": false,
+        "default": "\"block\""
+      },
+      {
+        "name": "copyable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "wrap",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "lineNumbers",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "collapsedLines",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CodeBlockSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": [
-      "actions"
+      {
+        "name": "actions",
+        "type": "{}"
+      }
     ]
   }
 }

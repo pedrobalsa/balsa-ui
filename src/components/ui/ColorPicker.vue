@@ -62,6 +62,9 @@ const { props, theme } = useResolvedThemeProps(
 
 const model = defineModel<string>({ default: "#000000" });
 const root = ref<HTMLElement | null>(null);
+/** The popover leaves the subtree it was opened in, so the palette scoping it
+ *  has to travel with it -- alongside the theme, on the same element. */
+const resolvedPalette = ref<string>();
 const portalPresentation = computed(() => theme.presentationForPortal(root.value));
 const trigger = ref<HTMLButtonElement | null>(null);
 const popover = ref<HTMLElement | null>(null);
@@ -121,30 +124,44 @@ function channelsToHex(red: number, green: number, blue: number): string {
   return `#${channel(red)}${channel(green)}${channel(blue)}`;
 }
 
+// Each CSS parser captures exactly three numeric groups. Resolving them into a
+// tuple keeps that guarantee checkable in projects using noUncheckedIndexedAccess.
+function numericTriple(
+  values: readonly number[] | undefined,
+): readonly [number, number, number] | undefined {
+  const [first, second, third] = values ?? [];
+  if (first === undefined || second === undefined || third === undefined) {
+    return undefined;
+  }
+  return [first, second, third];
+}
+
 function parseRgb(value: string): string | undefined {
   const source = value.trim();
-  const channels = source.match(
+  const channels = numericTriple(source.match(
     /^rgb\(\s*(\d{1,3}(?:\.\d+)?)\s*,\s*(\d{1,3}(?:\.\d+)?)\s*,\s*(\d{1,3}(?:\.\d+)?)\s*\)$/i,
-  )?.slice(1).map(Number);
+  )?.slice(1).map(Number));
 
   if (!channels || channels.some((channel) => channel < 0 || channel > 255)) {
     return undefined;
   }
 
-  return channelsToHex(channels[0], channels[1], channels[2]);
+  return channelsToHex(...channels);
 }
 
 function parseHsl(value: string): string | undefined {
   const source = value.trim();
-  const channels = source.match(
+  const channels = numericTriple(source.match(
     /^hsl\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(\d{1,3}(?:\.\d+)?)%\s*,\s*(\d{1,3}(?:\.\d+)?)%\s*\)$/i,
-  )?.slice(1).map(Number);
+  )?.slice(1).map(Number));
 
-  if (!channels || channels[1] > 100 || channels[2] > 100) return undefined;
+  if (!channels) return undefined;
+  const [hueDegrees, saturationPercent, lightnessPercent] = channels;
+  if (saturationPercent > 100 || lightnessPercent > 100) return undefined;
 
-  const hue = ((channels[0] % 360) + 360) % 360;
-  const saturation = channels[1] / 100;
-  const lightness = channels[2] / 100;
+  const hue = ((hueDegrees % 360) + 360) % 360;
+  const saturation = saturationPercent / 100;
+  const lightness = lightnessPercent / 100;
   const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
   const segment = hue / 60;
   const secondary = chroma * (1 - Math.abs((segment % 2) - 1));
@@ -218,15 +235,20 @@ function parseColorCode(
   return parseHsl(value);
 }
 
+function linearChannel(hex: string, index: number): number {
+  const channel = Number.parseInt(hex.slice(index, index + 2), 16) / 255;
+  return channel <= 0.04045
+    ? channel / 12.92
+    : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
 function relativeLuminance(value: string): number {
   const hex = normalizeHex(value);
-  const channels = [1, 3, 5].map((index) => {
-    const channel = Number.parseInt(hex.slice(index, index + 2), 16) / 255;
-    return channel <= 0.04045
-      ? channel / 12.92
-      : ((channel + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  return (
+    0.2126 * linearChannel(hex, 1)
+    + 0.7152 * linearChannel(hex, 3)
+    + 0.0722 * linearChannel(hex, 5)
+  );
 }
 
 function hexToHsv(value: string): HsvColor {
@@ -514,6 +536,7 @@ function positionPopover(): void {
 
 async function openPicker(): Promise<void> {
   if (props.disabled || open.value) return;
+  resolvedPalette.value = root.value?.closest<HTMLElement>("[data-palette]")?.dataset.palette;
   if (closePopoverTimeout) {
     window.clearTimeout(closePopoverTimeout);
     closePopoverTimeout = undefined;
@@ -682,6 +705,7 @@ onBeforeUnmount(() => {
       data-balsa="color-picker-popover"
       :data-theme="portalPresentation.id"
       :data-theme-base="portalPresentation.base"
+      :data-palette="resolvedPalette"
       :data-shadow="props.shadow"
       :id="popoverId"
       ref="popover"

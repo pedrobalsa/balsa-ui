@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaIcon" });
+
 import { computed } from "vue";
 import type { LucideIcon } from "@lucide/vue";
 

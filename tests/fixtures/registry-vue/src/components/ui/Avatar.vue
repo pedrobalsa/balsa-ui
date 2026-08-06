@@ -8,7 +8,7 @@ export type AvatarSize = "sm" | "md" | "lg" | "xl";
 export type AvatarShape = "circle" | "rounded" | "square";
 export type AvatarLoadState = "idle" | "loading" | "loaded" | "error";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaAvatar", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

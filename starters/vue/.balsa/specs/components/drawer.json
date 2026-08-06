@@ -3,6 +3,11 @@
   "name": "drawer",
   "title": "Drawer",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "drawer"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Present modal, scrollable task content from a viewport edge with native dialog semantics.",
@@ -57,29 +62,215 @@
     "Contained preview"
   ],
   "publicApi": {
-    "model": "boolean",
+    "source": "src/components/ui/Drawer.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "title",
-      "description",
-      "side",
-      "size",
-      "variant",
-      "rounded",
-      "contained",
-      "dismissible",
-      "showHandle",
-      "closeLabel",
-      "initialFocus",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "side",
+        "type": "DrawerSide | undefined",
+        "values": [
+          "bottom",
+          "top",
+          "right",
+          "left"
+        ],
+        "required": false,
+        "default": "\"bottom\""
+      },
+      {
+        "name": "size",
+        "type": "DrawerSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "LayerVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showHandle",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Close drawer\""
+      },
+      {
+        "name": "initialFocus",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      }
     ],
     "slots": [
-      "default",
-      "footer"
+      {
+        "name": "default",
+        "type": "{ close: () => void; }"
+      },
+      {
+        "name": "footer",
+        "type": "{ close: () => void; }"
+      }
     ]
   }
 }

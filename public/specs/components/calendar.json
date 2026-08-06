@@ -3,6 +3,11 @@
   "name": "calendar",
   "title": "Calendar",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "calendar"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Choose date-only values from a locale-aware keyboard grid.",
@@ -53,29 +58,242 @@
     "Disabled dates"
   ],
   "publicApi": {
+    "source": "src/components/ui/Calendar.vue",
+    "models": [
+      {
+        "name": "month",
+        "type": "Date | undefined",
+        "event": "update:month"
+      },
+      {
+        "name": "modelValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "modelValue",
-      "id",
-      "label",
-      "mode",
-      "locale",
-      "weekStartsOn",
-      "month",
-      "min",
-      "max",
-      "disabledDates",
-      "outsideDays",
-      "fixedWeeks",
-      "months",
-      "disabled",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "CalendarMode | undefined",
+        "values": [
+          "range",
+          "multiple",
+          "single"
+        ],
+        "required": false,
+        "default": "\"single\""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"en-US\""
+      },
+      {
+        "name": "weekStartsOn",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "month",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "min",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "disabledDates",
+        "type": "((date: Date) => boolean) | undefined",
+        "required": false
+      },
+      {
+        "name": "outsideDays",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "fixedWeeks",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "months",
+        "type": "2 | 1 | undefined",
+        "values": [
+          "2",
+          "1"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false,
+        "default": "null"
+      }
     ],
     "events": [
-      "update:modelValue",
-      "update:month",
-      "select"
-    ]
+      {
+        "name": "update:modelValue",
+        "type": "[value: CalendarModelValue]"
+      },
+      {
+        "name": "select",
+        "type": "[value: CalendarModelValue]"
+      },
+      {
+        "name": "update:month",
+        "type": "[month: Date]"
+      }
+    ],
+    "slots": []
   }
 }

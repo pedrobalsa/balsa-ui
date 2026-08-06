@@ -2,6 +2,7 @@ import {
   computed,
   reactive,
   readonly,
+  ref,
   type App,
   type ComputedRef,
 } from "vue";
@@ -228,12 +229,20 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
     }
   }
   const appliedVariables = new Set<string>();
+  /**
+   * A theme applied to the document without being selected or persisted, for a
+   * route that presents themes it does not own. The visitor's own selection
+   * returns when the preview is cleared or any editor writes to the store.
+   */
+  const preview = ref<ThemeInput | null>(null);
 
+  const previewActive = computed(() => preview.value !== null);
   const customTheme = computed<CustomDesignTheme | null>(() => state.custom);
   const customThemeActive = computed(() =>
     state.selectedTheme === CUSTOM_DESIGN_THEME_ID && state.custom !== null
   );
   const activeTheme = computed<ThemeInput>(() => {
+    if (preview.value) return preview.value;
     if (customThemeActive.value && state.custom) return customThemeDefinition(state.custom);
     if (isDesignTheme(state.selectedTheme)) return state.selectedTheme;
     return definitions.get(state.selectedTheme) ?? defaultDesignTheme;
@@ -287,9 +296,20 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
     }
   }
 
+  /**
+   * Editing is an explicit statement about the visitor's own theme, so it
+   * always wins over a route preview rather than disappearing beneath one.
+   */
   function commit(): void {
+    preview.value = null;
     apply();
     persist();
+  }
+
+  /** Applies a theme to the document without selecting or persisting it. */
+  function setThemePreview(value: ThemeInput | null): void {
+    preview.value = value;
+    apply();
   }
 
   function hasTheme(id: string): boolean {
@@ -326,6 +346,7 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
   }
 
   function resetTheme(): void {
+    preview.value = null;
     state.selectedTheme = defaultDesignTheme;
     state.custom = null;
     if (options.persistDefinitions) {
@@ -390,6 +411,8 @@ export function createDesignThemeStore(options: DesignThemeStoreOptions = {}) {
     customTheme: readonly(customTheme),
     customThemeActive: readonly(customThemeActive),
     registeredThemes: readonly(registeredThemes),
+    previewActive: readonly(previewActive),
+    setThemePreview,
     hasTheme,
     selectTheme,
     registerTheme,

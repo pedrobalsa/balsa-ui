@@ -1,5 +1,5 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
   "name": "icon",
   "type": "registry:ui",
   "title": "Icon",
@@ -14,7 +14,7 @@
       "path": "src/components/ui/Icon.vue",
       "type": "registry:ui",
       "target": "src/components/ui/Icon.vue",
-      "content": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport type { LucideIcon } from \"@lucide/vue\";\n\nexport type IconComponent = LucideIcon;\nexport type IconSize = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\nexport type IconStrokeWidth = 1.5 | 2 | 2.5;\n\nconst props = withDefaults(defineProps<{\n  icon: IconComponent;\n  size?: IconSize;\n  strokeWidth?: IconStrokeWidth;\n  label?: string;\n}>(), {\n  size: \"md\",\n  strokeWidth: 2,\n});\n\nconst sizes: Readonly<Record<IconSize, number>> = {\n  xs: 12,\n  sm: 16,\n  md: 20,\n  lg: 24,\n  xl: 32,\n};\n\nconst pixels = computed(() => sizes[props.size]);\n</script>\n\n<template>\n  <component\n    :is=\"props.icon\"\n    data-balsa=\"icon\"\n    :size=\"pixels\"\n    :stroke-width=\"props.strokeWidth\"\n    absolute-stroke-width\n    color=\"currentColor\"\n    :aria-hidden=\"props.label ? undefined : 'true'\"\n    :aria-label=\"props.label\"\n    :role=\"props.label ? 'img' : undefined\"\n    focusable=\"false\"\n  />\n</template>\n"
+      "content": "<script setup lang=\"ts\">\ndefineOptions({ name: \"BalsaIcon\" });\n\nimport { computed } from \"vue\";\nimport type { LucideIcon } from \"@lucide/vue\";\n\nexport type IconComponent = LucideIcon;\nexport type IconSize = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\nexport type IconStrokeWidth = 1.5 | 2 | 2.5;\n\nconst props = withDefaults(defineProps<{\n  icon: IconComponent;\n  size?: IconSize;\n  strokeWidth?: IconStrokeWidth;\n  label?: string;\n}>(), {\n  size: \"md\",\n  strokeWidth: 2,\n});\n\nconst sizes: Readonly<Record<IconSize, number>> = {\n  xs: 12,\n  sm: 16,\n  md: 20,\n  lg: 24,\n  xl: 32,\n};\n\nconst pixels = computed(() => sizes[props.size]);\n</script>\n\n<template>\n  <component\n    :is=\"props.icon\"\n    data-balsa=\"icon\"\n    :size=\"pixels\"\n    :stroke-width=\"props.strokeWidth\"\n    absolute-stroke-width\n    color=\"currentColor\"\n    :aria-hidden=\"props.label ? undefined : 'true'\"\n    :aria-label=\"props.label\"\n    :role=\"props.label ? 'img' : undefined\"\n    focusable=\"false\"\n  />\n</template>\n"
     }
   ],
   "meta": {

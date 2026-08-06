@@ -3,6 +3,11 @@
   "name": "scroll-area",
   "title": "Scroll Area",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "scroll-area"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Constrain overflowing content in a labelled native scroll viewport with Balsa scrollbar treatment.",
@@ -55,26 +60,152 @@
     "Edge fade"
   ],
   "publicApi": {
+    "source": "src/components/ui/ScrollArea.vue",
     "props": [
-      "label",
-      "orientation",
-      "visibility",
-      "size",
-      "edgeFade",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "orientation",
+        "type": "ScrollAreaOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical",
+          "both"
+        ],
+        "required": false,
+        "default": "\"vertical\""
+      },
+      {
+        "name": "visibility",
+        "type": "ScrollAreaVisibility | undefined",
+        "values": [
+          "auto",
+          "always",
+          "hover"
+        ],
+        "required": false,
+        "default": "\"auto\""
+      },
+      {
+        "name": "size",
+        "type": "ScrollAreaSize | undefined",
+        "values": [
+          "thin",
+          "regular"
+        ],
+        "required": false
+      },
+      {
+        "name": "edgeFade",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
     "events": [
-      "scroll"
+      {
+        "name": "scroll",
+        "type": "[event: Event]"
+      }
     ],
     "slots": [
-      "default"
+      {
+        "name": "default",
+        "type": "{}"
+      }
     ],
-    "exposes": [
-      "viewport",
-      "scrollTo",
-      "scrollBy"
+    "exposed": [
+      {
+        "name": "viewport",
+        "type": "HTMLElement | null"
+      },
+      {
+        "name": "scrollTo",
+        "type": "(options: ScrollAreaScrollOptions) => void"
+      },
+      {
+        "name": "scrollBy",
+        "type": "(options: ScrollAreaScrollOptions) => void"
+      }
     ]
   }
 }

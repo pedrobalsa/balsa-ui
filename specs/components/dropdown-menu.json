@@ -1,1 +1,270 @@
-{"schemaVersion":1,"name":"dropdown-menu","title":"Dropdown Menu","category":"component","status":"beta","version":"0.1.0","purpose":"Expose a button-triggered set of typed actions, states, submenus, semantic color, and configurable geometry.","useFor":["Action menus","Checkable settings","Compact exclusive choices"],"avoidFor":["Site navigation already served by Dropdown","Arbitrary rich content","Form selection"],"types":["action","checkbox","radio","submenu"],"states":["closed","open","disabled","checked","highlighted"],"sizes":[],"accessibility":["The button owns menu popup state and focus restoration.","Menu items use roving focus, arrows, Home, End, typeahead, and Escape.","Checked, radio, disabled, and submenu state use native ARIA menu roles."],"tokens":["--balsa-color-selected","--balsa-color-selected-foreground","--balsa-color-primary","--balsa-color-secondary","--balsa-color-accent","--balsa-color-destructive","--balsa-color-focus-ring","radius.control","shadow.panel"],"commonMistakes":["Using a menu for ordinary navigation.","Mutating item data inside the component.","Omitting labels for icon actions."],"examples":["Actions","Checkbox items","Radio items","Submenu"],"publicApi":{"model":"boolean","props":["id","label","items","side","align","sideOffset","variant","color","rounded","contained","disabled","shadow", "theme"],"itemFields":["id","label","type","icon","labelFontFamily","shortcut","disabled","destructive","checked","value","group","children"],"events":["update:modelValue","select"],"slots":["trigger"]}}
+{
+  "schemaVersion": 1,
+  "name": "dropdown-menu",
+  "title": "Dropdown Menu",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "dropdown-menu"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Expose a button-triggered set of typed actions, states, submenus, semantic color, and configurable geometry.",
+  "useFor": [
+    "Action menus",
+    "Checkable settings",
+    "Compact exclusive choices"
+  ],
+  "avoidFor": [
+    "Site navigation already served by Dropdown",
+    "Arbitrary rich content",
+    "Form selection"
+  ],
+  "types": [
+    "action",
+    "checkbox",
+    "radio",
+    "submenu"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled",
+    "checked",
+    "highlighted"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The button owns menu popup state and focus restoration.",
+    "Menu items use roving focus, arrows, Home, End, typeahead, and Escape.",
+    "Checked, radio, disabled, and submenu state use native ARIA menu roles."
+  ],
+  "tokens": [
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using a menu for ordinary navigation.",
+    "Mutating item data inside the component.",
+    "Omitting labels for icon actions."
+  ],
+  "examples": [
+    "Actions",
+    "Checkbox items",
+    "Radio items",
+    "Submenu"
+  ],
+  "publicApi": {
+    "source": "src/components/ui/DropdownMenu.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly MenuItem[]",
+        "required": true
+      },
+      {
+        "name": "side",
+        "type": "AnchoredSide | undefined",
+        "values": [
+          "bottom",
+          "top",
+          "right",
+          "left"
+        ],
+        "required": false,
+        "default": "\"bottom\""
+      },
+      {
+        "name": "align",
+        "type": "AnchoredAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"start\""
+      },
+      {
+        "name": "sideOffset",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "8"
+      },
+      {
+        "name": "variant",
+        "type": "MenuVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      },
+      {
+        "name": "select",
+        "type": "[selection: MenuSelection]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "trigger",
+        "type": "{}"
+      }
+    ]
+  }
+}

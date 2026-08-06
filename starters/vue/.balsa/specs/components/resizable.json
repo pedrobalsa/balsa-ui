@@ -3,6 +3,11 @@
   "name": "resizable",
   "title": "Resizable",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "resizable"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Divide available space into two panels whose boundary can be adjusted by pointer or keyboard.",
@@ -56,29 +61,207 @@
     "Disabled split"
   ],
   "publicApi": {
+    "source": "src/components/ui/Resizable.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "modelValue",
-      "id",
-      "label",
-      "orientation",
-      "min",
-      "max",
-      "step",
-      "disabled",
-      "showGrip",
-      "variant",
-      "size",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "orientation",
+        "type": "ResizableOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "10"
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "90"
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "5"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "showGrip",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "variant",
+        "type": "ResizableVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "ResizableSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "50"
+      }
     ],
     "events": [
-      "update:modelValue",
-      "resize"
+      {
+        "name": "update:modelValue",
+        "type": "[value: number]"
+      },
+      {
+        "name": "resize",
+        "type": "[value: number]"
+      }
     ],
     "slots": [
-      "first",
-      "second"
+      {
+        "name": "first",
+        "type": "{}"
+      },
+      {
+        "name": "second",
+        "type": "{}"
+      }
     ]
   }
 }

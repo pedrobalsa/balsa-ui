@@ -149,11 +149,12 @@ function orderByInk(
   const coverage = characters.map(() => 0);
   for (let y = 0; y < layout.cellHeight; y += 1) {
     for (let x = 0; x < width; x += 1) {
-      coverage[Math.floor(x / layout.cellWidth)] += pixels[(y * width + x) * 4];
+      const column = Math.floor(x / layout.cellWidth);
+      coverage[column] = (coverage[column] ?? 0) + (pixels[(y * width + x) * 4] ?? 0);
     }
   }
   return characters
-    .map((character, index) => ({ character, ink: coverage[index] }))
+    .map((character, index) => ({ character, ink: coverage[index] ?? 0 }))
     .sort((first, second) => first.ink - second.ink)
     .map((entry) => entry.character);
 }

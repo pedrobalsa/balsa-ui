@@ -8,7 +8,25 @@ npm run registry:build
 npm run registry:validate
 ```
 
-`registry.json` is the shadcn-style index. The documentation deployment exposes built item payloads at `https://balsa-ui.com/r/<name>.json`.
+`registry.json` is the shadcn-style index. The documentation deployment exposes built item payloads at `https://balsa-ui.com/r/<name>.json`, and the published namespace index at `https://balsa-ui.com/r/registry.json`.
+
+The index is what makes the namespace discoverable without knowing item names in advance. `npm run registry:build` generates it in the same shape `shadcn-vue build` produces, plus a `version` field carrying the npm release; the shadcn registry schema permits additional properties, so the extra field does not affect validation.
+
+## Consume Balsa from other shadcn tooling
+
+Balsa is a compatible registry, so an existing shadcn-vue project can install Balsa items without adopting the Balsa workflow. Declare the namespace in the project's `components.json`:
+
+```json
+{
+  "registries": {
+    "@balsa": "https://balsa-ui.com/r/{name}.json"
+  }
+}
+```
+
+Any client that reads `components.json` registries — the shadcn CLI and shadcn MCP servers among them — can then resolve `@balsa/<name>`, browse the namespace through `/r/registry.json`, and install items. Balsa's own CLI configures `@balsa` and `@shadcn` without any configuration at all.
+
+The Balsa CLI remains the primary interface, because it is the only one that also applies the design system, synchronizes agent context, and records provenance.
 
 To confirm compatibility against the current official Vue CLI without replacing deterministic repository artifacts:
 

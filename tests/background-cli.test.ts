@@ -61,11 +61,11 @@ describe("Balsa background CLI", () => {
     const manifest = JSON.parse(
       readFileSync(resolve(target, ".balsa/installed.json"), "utf8"),
     );
-    expect(manifest.components["gradient-background"].registry).toBe(
+    expect(manifest.components["@balsa/gradient-background"].registry).toBe(
       "@balsa/gradient-background",
     );
-    expect(manifest.components["background-hero-fold"]).toMatchObject({
-      registry: "@balsa/background-config",
+    expect(manifest.components["@balsa/background-hero-fold"]).toMatchObject({
+      registry: "@balsa/background-hero-fold",
       targetPath: "src/backgrounds/hero-fold.ts",
     });
     expect(result.installed.at(-1)?.dependencies).toEqual([

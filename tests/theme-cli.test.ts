@@ -85,9 +85,9 @@ describe("Balsa theme CLI", () => {
     const manifest = JSON.parse(
       readFileSync(resolve(presetTarget, ".balsa/installed.json"), "utf8"),
     );
-    expect(manifest.components["balsa-theme"].registry).toBe("@balsa/balsa-theme");
-    expect(manifest.components["theme-product-flat"]).toMatchObject({
-      registry: "@balsa/theme-config",
+    expect(manifest.components["@balsa/balsa-theme"].registry).toBe("@balsa/balsa-theme");
+    expect(manifest.components["@balsa/theme-product-flat"]).toMatchObject({
+      registry: "@balsa/theme-product-flat",
       targetPath: "src/themes/product-flat.ts",
     });
 

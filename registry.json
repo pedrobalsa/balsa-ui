@@ -1,7 +1,7 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "$schema": "https://shadcn-vue.com/schema/registry.json",
   "name": "balsa-ui",
-  "homepage": "https://github.com/balsa-ui/balsa-ui",
+  "homepage": "https://balsa-ui.com",
   "items": [
     {
       "name": "balsa-foundation",
@@ -2538,6 +2538,7 @@
       "meta": {
         "framework": "vue",
         "spec": "specs/components/toast.json",
+        "component": "src/components/ui/ToastViewport.vue",
         "documentation": "docs/components/toast.md",
         "example": "docs/components/toast.md",
         "tokens": [

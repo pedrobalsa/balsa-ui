@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaPreview" });
+
 import { Maximize, X } from "@lucide/vue";
 import {
   computed,

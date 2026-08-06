@@ -1,10 +1,23 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "components": {
-    "button": {
+    "@balsa/button": {
       "registry": "@balsa/button",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-35524b4b6c0cf92ac0454dec900151d25443571571c12df3b95549f07151de4a",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-023d3210bad56ebf1ef41cd4b3d0b8a04dafed0cefb2816b2f04015e607e7d8b",
+      "installedSourceHash": "sha256-023d3210bad56ebf1ef41cd4b3d0b8a04dafed0cefb2816b2f04015e607e7d8b",
+      "dependencies": [
+        "vue",
+        "@lucide/vue",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/icon",
+        "@balsa/balsa-theme"
+      ],
       "targetPath": "src/components/ui/Button.vue",
       "files": [
         "src/components/ui/Button.vue",
@@ -12,10 +25,23 @@
         "src/components/ui/classes.ts"
       ]
     },
-    "input": {
+    "@balsa/input": {
       "registry": "@balsa/input",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-4ee6e87dd9051f5bac49838c02fd1e3d61f1e3242ca7563ebb1461e230845804",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-e2e9d3f700ff466d2eb591b1da76c9c5b446b72c901f2e92196919bc4dc643e3",
+      "installedSourceHash": "sha256-e2e9d3f700ff466d2eb591b1da76c9c5b446b72c901f2e92196919bc4dc643e3",
+      "dependencies": [
+        "vue",
+        "@lucide/vue",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/icon",
+        "@balsa/balsa-theme"
+      ],
       "targetPath": "src/components/ui/Input.vue",
       "files": [
         "src/components/ui/Input.vue",
@@ -23,28 +49,63 @@
         "src/components/ui/classes.ts"
       ]
     },
-    "modal": {
+    "@balsa/modal": {
       "registry": "@balsa/modal",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-3067e8f6077b58190049a6b30f0cdd52784864084d733f4cb5bc55f85ea0dcbe",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-985a0aa63052208953831f26bc8894de24721630228650fce54d4e12b461fba9",
+      "installedSourceHash": "sha256-985a0aa63052208953831f26bc8894de24721630228650fce54d4e12b461fba9",
+      "dependencies": [
+        "vue",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@balsa/icon",
+        "@balsa/balsa-theme"
+      ],
       "targetPath": "src/components/ui/Modal.vue",
       "files": [
         "src/components/ui/Modal.vue"
       ]
     },
-    "balsa-palette": {
+    "@balsa/balsa-palette": {
       "registry": "@balsa/balsa-palette",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-palette.json",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
+      "installedSourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/balsa-foundation"
+      ],
       "targetPath": "src/styles/balsa-palette.css",
       "files": [
         "src/styles/balsa-palette.css"
       ]
     },
-    "textarea": {
+    "@balsa/textarea": {
       "registry": "@balsa/textarea",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-ea9f202296c278813f77836feb1802e30b44e08d828b81b0d2ff76e9c1c681bb",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-6afc2ce259a6661020878213523105fcf6a179c5b5e51e1266b1487a543100f0",
+      "installedSourceHash": "sha256-6afc2ce259a6661020878213523105fcf6a179c5b5e51e1266b1487a543100f0",
+      "dependencies": [
+        "vue",
+        "@lucide/vue",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/icon",
+        "@balsa/balsa-theme"
+      ],
       "targetPath": "src/components/ui/Textarea.vue",
       "files": [
         "src/components/ui/Textarea.vue",
@@ -52,19 +113,33 @@
         "src/components/ui/classes.ts"
       ]
     },
-    "breadcrumb": {
+    "@balsa/breadcrumb": {
       "registry": "@balsa/breadcrumb",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-040db89a8aef6216c93278a8a70f87ab5e777d9aac5283e964400261faa44474",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-e1112ecc957ec777bae28b5a3fc047f94806d81564bad4c6e76868e10375cde6",
+      "installedSourceHash": "sha256-e1112ecc957ec777bae28b5a3fc047f94806d81564bad4c6e76868e10375cde6",
+      "dependencies": [
+        "vue",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@balsa/icon",
+        "@balsa/balsa-theme"
+      ],
       "targetPath": "src/components/ui/Breadcrumb.vue",
       "files": [
         "src/components/ui/Breadcrumb.vue"
       ]
     },
-    "collapsible": {
+    "@balsa/collapsible": {
       "registry": "@balsa/collapsible",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-c4e579678adcbd0ab0fe4a48c4def93a9805a41faa992f8319a8c7b2fc720194",
+      "installedSourceHash": "sha256-c4e579678adcbd0ab0fe4a48c4def93a9805a41faa992f8319a8c7b2fc720194",
+      "originalSourceHash": "sha256-c4e579678adcbd0ab0fe4a48c4def93a9805a41faa992f8319a8c7b2fc720194",
       "targetPath": "src/components/ui/Collapsible.vue",
       "files": [
         "src/components/ui/Collapsible.vue",
@@ -72,10 +147,21 @@
         "src/components/ui/form.ts"
       ]
     },
-    "balsa-theme": {
+    "@balsa/balsa-theme": {
       "registry": "@balsa/balsa-theme",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-theme.json",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-40d3b9e30e1bb01256891992983b31ad01b9cb5d9c94ef4adf0c48f98f209491",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-14c5a975f50f8cfd92af28c16d13557bf01df057677c7a85b77088c1be0717aa",
+      "installedSourceHash": "sha256-14c5a975f50f8cfd92af28c16d13557bf01df057677c7a85b77088c1be0717aa",
+      "dependencies": [
+        "vue",
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/balsa-foundation"
+      ],
       "targetPath": "src/styles/balsa-theme.css",
       "files": [
         "src/styles/balsa-theme.css",
@@ -86,19 +172,36 @@
         "src/theme/theme-store.ts"
       ]
     },
-    "balsa-foundation": {
+    "@balsa/balsa-foundation": {
       "registry": "@balsa/balsa-foundation",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-foundation.json",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-022c5cc6f6bbea3f6f9584565caf793d5ae87d21fe8cd23d6e705db5edaded58",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-022c5cc6f6bbea3f6f9584565caf793d5ae87d21fe8cd23d6e705db5edaded58",
+      "installedSourceHash": "sha256-022c5cc6f6bbea3f6f9584565caf793d5ae87d21fe8cd23d6e705db5edaded58",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [],
       "targetPath": "src/styles/balsa-foundation.css",
       "files": [
         "src/styles/balsa-foundation.css"
       ]
     },
-    "icon": {
+    "@balsa/icon": {
       "registry": "@balsa/icon",
+      "namespace": "@balsa",
       "installedVersion": "0.1.0",
-      "sourceHash": "sha256-b499c62c2ea8ae60659f4ac96c01f56b5d130fa5c4cb4be3a8e1232d0888af8d",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-ef7e3dcd4d0fbbf0312209dac2a220f05ba08638308211f5e304607bbc594a7d",
+      "installedSourceHash": "sha256-ef7e3dcd4d0fbbf0312209dac2a220f05ba08638308211f5e304607bbc594a7d",
+      "dependencies": [
+        "vue",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [],
       "targetPath": "src/components/ui/Icon.vue",
       "files": [
         "src/components/ui/Icon.vue"

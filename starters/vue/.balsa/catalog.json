@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "releaseVersion": "0.4.0",
   "framework": "vue",
   "generatedFrom": [
     "registry.json",
@@ -10,6 +11,7 @@
       "name": "icon",
       "title": "Icon",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.",
       "status": "beta",
       "version": "0.1.0",
@@ -33,6 +35,11 @@
       "name": "button",
       "title": "Button",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "button"
+      },
       "description": "Typed action control with solid, soft, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and Lucide icons.",
       "status": "beta",
       "version": "0.1.0",
@@ -71,6 +78,11 @@
       "name": "button-group",
       "title": "ButtonGroup",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "button-group"
+      },
       "description": "Connected mutually exclusive actions with semantic color, a Glassmorphism-aware surface-to-glass default, explicit surface, solid, outline, glass, and compact code treatments; rounded or pill outer shapes; four shared sizes; responsive labels; and accessible pressed state.",
       "status": "beta",
       "version": "0.1.0",
@@ -106,6 +118,11 @@
       "name": "input",
       "title": "Input",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "input"
+      },
       "description": "Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; password, phone, monetary, and percentage modes; validation feedback; and loading states.",
       "status": "beta",
       "version": "0.1.0",
@@ -143,6 +160,11 @@
       "name": "input-group",
       "title": "Input Group",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "input-group"
+      },
       "description": "One labelled native text input with typed start/end text or Lucide addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -178,6 +200,11 @@
       "name": "input-otp",
       "title": "Input OTP",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "input-otp"
+      },
       "description": "One accessible fixed-length native verification-code input with semantic-colored visual cells, numeric or alphanumeric filtering, paste and caret editing, optional masking and grouping, surface/outline/soft/solid/glass materials, completion events, and shared form states.",
       "status": "beta",
       "version": "0.1.0",
@@ -218,6 +245,11 @@
       "name": "radio-group",
       "title": "Radio Group",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "radio-group"
+      },
       "description": "Accessible native mutually exclusive choices with typed options, a default column layout, semantic selected colors, row and selected-card layouts, shared form validation, sizing, geometry, and loading behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -257,6 +289,11 @@
       "name": "slider",
       "title": "Slider",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "slider"
+      },
       "description": "Single-value and independently draggable bounded-range native sliders with horizontal and vertical orientation, formatted output, three sizes, minimum thumb gaps, keyboard, pointer, touch, and form behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -290,6 +327,11 @@
       "name": "popup",
       "title": "Popup",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "popover"
+      },
       "description": "Collision-aware interactive rich content anchored to a native button with portal or contained rendering, focus entry/restoration, dismissal, typed materials, sizing, and geometry.",
       "status": "beta",
       "version": "0.1.0",
@@ -323,6 +365,11 @@
       "name": "hover-card",
       "title": "Hover Card",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "hover-card"
+      },
       "description": "Delayed pointer-hover and keyboard-focus previews that preserve focus, bridge pointer movement, collision-flip, escape clipping, and inherit Balsa materials and geometry.",
       "status": "beta",
       "version": "0.1.0",
@@ -356,6 +403,11 @@
       "name": "tooltip",
       "title": "Tooltip",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "tooltip"
+      },
       "description": "Collision-aware non-interactive supplementary descriptions for pointer hover and keyboard focus, with typed timing, materials, geometry, portal or contained rendering, and theme inheritance.",
       "status": "beta",
       "version": "0.1.0",
@@ -389,6 +441,11 @@
       "name": "dropdown-menu",
       "title": "Dropdown Menu",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "dropdown-menu"
+      },
       "description": "Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals. Ships PropertySelect, the full-width caption-over-value property row built on the same trigger.",
       "status": "beta",
       "version": "0.1.0",
@@ -431,6 +488,11 @@
       "name": "context-menu",
       "title": "Context Menu",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "context-menu"
+      },
       "description": "Pointer- and keyboard-positioned typed context actions with viewport collision handling and the complete shared Balsa menu semantics.",
       "status": "beta",
       "version": "0.1.0",
@@ -469,6 +531,11 @@
       "name": "menubar",
       "title": "Menubar",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "menubar"
+      },
       "description": "Persistent application menus with horizontal roving focus, open-menu transfer, typed shared menu content, portals, and complete keyboard behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -506,6 +573,11 @@
       "name": "command-menu",
       "title": "Command Menu",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "command"
+      },
       "description": "Inline dropdown or on-demand dialog grouped command filtering with combobox/listbox semantics, active-descendant navigation, hotkey opening, loading, empty states, and typed sizing.",
       "status": "beta",
       "version": "0.1.0",
@@ -544,6 +616,11 @@
       "name": "drawer",
       "title": "Drawer",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "drawer"
+      },
       "description": "Native modal edge panel with four sides, three extents, scrollable slots, focus/scroll management, dismissal policy, handle drag, and contained previews.",
       "status": "beta",
       "version": "0.1.0",
@@ -578,9 +655,10 @@
       "name": "color-picker",
       "title": "ColorPicker",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Accessible contrast-safe outline, surface, soft, or glass color field or grouped palette trigger with a custom saturation, hue, and editable HEX, RGB, or HSL color-code popover.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/color-picker",
       "registryDependencies": [
         "@balsa/button",
@@ -616,6 +694,11 @@
       "name": "modal",
       "title": "Modal",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "dialog"
+      },
       "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and scroll locking.",
       "status": "beta",
       "version": "0.1.0",
@@ -657,6 +740,11 @@
       "name": "textarea",
       "title": "Textarea",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "textarea"
+      },
       "description": "Accessible multi-line input with outline, surface, soft, and glass materials; typed size and radius; rows; auto expansion; capped height; resize behavior; and validation feedback.",
       "status": "beta",
       "version": "0.1.0",
@@ -694,6 +782,11 @@
       "name": "breadcrumb",
       "title": "Breadcrumb",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "breadcrumb"
+      },
       "description": "Typed compact hierarchy navigation with linked ancestors, a current-page state, selectable separators, and accessible ordered-list semantics.",
       "status": "beta",
       "version": "0.1.0",
@@ -724,6 +817,7 @@
       "name": "link",
       "title": "Link",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Typed sized navigation link with text, solid, and outline presentations, optional square geometry, and safe external-link behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -757,6 +851,11 @@
       "name": "badge",
       "title": "Badge",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "badge"
+      },
       "description": "Compact status, category, and metadata label with solid, soft, outline, and low-rim translucent glass styles, three sizes, and optional square geometry.",
       "status": "beta",
       "version": "0.1.0",
@@ -787,6 +886,11 @@
       "name": "card",
       "title": "Card",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "card"
+      },
       "description": "Consistent semantic surface with six variants, typed action-intent color, configurable corners, size or padding, and shadow for grouping related content and actions.",
       "status": "beta",
       "version": "0.1.0",
@@ -823,6 +927,7 @@
       "name": "application-card",
       "title": "ApplicationCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Structured application surface with a repeatable header, action, body, and footer rhythm that inherits Card material, geometry, borders, density, and elevation.",
       "status": "beta",
       "version": "0.1.0",
@@ -855,9 +960,14 @@
       "name": "select",
       "title": "Select",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "select"
+      },
       "description": "Keyboard-accessible outline, surface, soft, or glass single or multiple selection with compact sizing, configurable corners, fixed-height gapped options, and an overflow-safe top-layer listbox.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/select",
       "registryDependencies": [
         "@balsa/icon",
@@ -890,6 +1000,11 @@
       "name": "autocomplete",
       "title": "Autocomplete",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "combobox"
+      },
       "description": "Editable outline, surface, soft, or glass single- or multiple-value combobox with shared field sizing, configurable corners, removable selected suggestions, and an overflow-safe suggestion list.",
       "status": "beta",
       "version": "0.1.0",
@@ -927,6 +1042,11 @@
       "name": "checkbox",
       "title": "Checkbox",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "checkbox"
+      },
       "description": "Native binary form selection with outline, surface, soft, and glass unchecked-control treatments, associated label, hint, three sizes, and configurable corners.",
       "status": "beta",
       "version": "0.1.0",
@@ -960,6 +1080,11 @@
       "name": "switch",
       "title": "Switch",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "switch"
+      },
       "description": "Native boolean setting control with switch semantics, typed materials, three sizes, configurable corners, form naming, required state, and associated guidance.",
       "status": "beta",
       "version": "0.1.0",
@@ -993,6 +1118,11 @@
       "name": "toggle",
       "title": "Toggle",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "toggle"
+      },
       "description": "Accessible pressed-state action with typed surface, solid, outline, glass, and outline-to-solid icon treatments; semantic action colors; four sizes; and configurable corners.",
       "status": "beta",
       "version": "0.1.0",
@@ -1030,6 +1160,11 @@
       "name": "toggle-group",
       "title": "ToggleGroup",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "toggle-group"
+      },
       "description": "Connected single or multiple pressed-state actions with typed options, orientation, disabled items, immutable models, and complete roving keyboard focus.",
       "status": "beta",
       "version": "0.1.0",
@@ -1062,6 +1197,11 @@
       "name": "collapsible",
       "title": "Collapsible",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "collapsible"
+      },
       "description": "Single controlled underline-default disclosure with native semantics, fully retracted inert closed content, typed materials, natural-height motion, sizing, configurable corners, disabled state, and semantic headings.",
       "status": "beta",
       "version": "0.1.0",
@@ -1096,6 +1236,11 @@
       "name": "accordion",
       "title": "Accordion",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "accordion"
+      },
       "description": "Connected options-driven disclosure collection with single or multiple models, semantic headings, disabled items, complete vertical keyboard navigation, and shared typed materials.",
       "status": "beta",
       "version": "0.1.0",
@@ -1126,6 +1271,11 @@
       "name": "kbd",
       "title": "Kbd",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "kbd"
+      },
       "description": "Semantic single-key and chord notation with individually rendered soft-default key caps, typed materials and sizes, configurable geometry, and accessible symbolic labels.",
       "status": "beta",
       "version": "0.1.0",
@@ -1158,6 +1308,11 @@
       "name": "avatar",
       "title": "Avatar",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "avatar"
+      },
       "description": "Resilient labelled identity image with deterministic or custom fallback, image lifecycle state, delayed fallback, typed shapes and four sizes.",
       "status": "beta",
       "version": "0.1.0",
@@ -1187,6 +1342,11 @@
       "name": "pagination",
       "title": "Pagination",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "pagination"
+      },
       "description": "Clamped result navigation with bounded siblings, semantic ellipses, action-label or icon-only controls, localization, sizing, geometry, and native accessibility.",
       "status": "beta",
       "version": "0.1.0",
@@ -1220,6 +1380,11 @@
       "name": "resizable",
       "title": "Resizable",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "resizable"
+      },
       "description": "Two-panel pointer and keyboard resize group with controlled percentage, horizontal or vertical orientation, safe limits, typed materials, handle sizes, and geometry.",
       "status": "beta",
       "version": "0.1.0",
@@ -1252,6 +1417,11 @@
       "name": "scroll-area",
       "title": "Scroll Area",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "scroll-area"
+      },
       "description": "Labelled native scroll viewport with typed axes, scrollbar visibility and width, optional edge fades, geometry, native events, and exposed scroll methods.",
       "status": "beta",
       "version": "0.1.0",
@@ -1284,6 +1454,7 @@
       "name": "preview",
       "title": "Preview",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Isolated natural or exact logical viewport with fit scaling, synchronized design context, accessible iframe title, and chromeless fullscreen review.",
       "status": "beta",
       "version": "0.1.0",
@@ -1312,6 +1483,11 @@
       "name": "carousel",
       "title": "Carousel",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "carousel"
+      },
       "description": "Typed accessible Balsa-owned drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.",
       "status": "beta",
       "version": "0.1.0",
@@ -1345,6 +1521,11 @@
       "name": "sidebar",
       "title": "Sidebar",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "sidebar"
+      },
       "description": "Typed grouped application navigation with active state, nested items, expanded/rail/offcanvas desktop modes, shortcut, slots, and Drawer-backed mobile behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -1380,6 +1561,11 @@
       "name": "attachment",
       "title": "Attachment",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "attachment"
+      },
       "description": "Labelled native file selection with drag/drop, immutable single or multiple models, type/size/count validation, loading/error states, metadata, and accessible removal.",
       "status": "beta",
       "version": "0.1.0",
@@ -1414,6 +1600,11 @@
       "name": "table",
       "title": "Table",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "table"
+      },
       "description": "Responsive slot-first semantic table with typed materials, density, independently configurable header and row colors, stripes, hover, gridlines, sticky header, geometry, and valid loading or empty rows.",
       "status": "beta",
       "version": "0.1.0",
@@ -1453,6 +1644,11 @@
       "name": "calendar",
       "title": "Calendar",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "calendar"
+      },
       "description": "Locale-aware single, multiple, and range date-only selection with disabled rules, one or two months, fixed weeks, outside days, and complete grid keyboard navigation.",
       "status": "beta",
       "version": "0.1.0",
@@ -1484,6 +1680,7 @@
       "name": "date-picker",
       "title": "DatePicker",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Labelled locale-formatted single or range date field composing Calendar and collision-safe Popup with validation, disabled dates, clear action, dismissal, focus restoration, and Glassmorphism backdrop blur.",
       "status": "beta",
       "version": "0.1.0",
@@ -1516,6 +1713,7 @@
       "name": "data-table",
       "title": "DataTable",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Typed columns and rows with render slots, controlled sorting, bottom quick field and advanced filters, pagination, selection, visibility, independent header and row colors, density, loading, empty state, and responsive semantic markup.",
       "status": "beta",
       "version": "0.1.0",
@@ -1557,6 +1755,11 @@
       "name": "charts",
       "title": "Charts",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "chart"
+      },
       "description": "Composable responsive Unovis line, area, grouped or stacked bar, donut, and doughnut charts with contrast-safe semantic series, polished interactions, explicit states, and complete semantic table alternatives.",
       "status": "beta",
       "version": "0.2.0",
@@ -1604,6 +1807,11 @@
       "name": "separator",
       "title": "Separator",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "separator"
+      },
       "description": "Decorative or semantic horizontal and vertical separation with typed line styles, thicknesses, orientation, and optional aligned horizontal label content.",
       "status": "beta",
       "version": "0.1.0",
@@ -1632,6 +1840,11 @@
       "name": "skeleton",
       "title": "Skeleton",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "skeleton"
+      },
       "description": "Screen-reader-hidden text, rectangle, and circle loading placeholders with typed materials, sizing, geometry, pulse or wave motion, and reduced-motion fallback.",
       "status": "beta",
       "version": "0.1.0",
@@ -1664,6 +1877,11 @@
       "name": "spinner",
       "title": "Spinner",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "spinner"
+      },
       "description": "Accessible indeterminate loading status with five sizes, semantic color, three speeds, hidden or visible label placement, and reduced-motion fallback.",
       "status": "beta",
       "version": "0.1.0",
@@ -1693,6 +1911,11 @@
       "name": "progress",
       "title": "Progress",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "progress"
+      },
       "description": "Labelled determinate or indeterminate task completion with safe value normalization, formatted value text, typed variants, semantic colors, sizing, geometry, and reduced-motion behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -1726,6 +1949,11 @@
       "name": "alert",
       "title": "Alert",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "alert"
+      },
       "description": "Typed inline feedback and native top-layer alert-dialog presentation with five statuses, five materials, persistent dismissal policy, focus restoration, sizing, geometry, and theme inheritance.",
       "status": "beta",
       "version": "0.1.0",
@@ -1764,6 +1992,11 @@
       "name": "toast",
       "title": "Toast",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "sonner"
+      },
       "description": "Declarative viewport-level notification stack with primary-by-default typed items, custom icons, bounded rendering, semantic live regions, timed and sticky lifetimes, pause/resume policies, actions, Escape dismissal, position-aware transitions, responsive placement, and teleported theme inheritance.",
       "status": "beta",
       "version": "0.1.0",
@@ -1804,6 +2037,11 @@
       "name": "tabs",
       "title": "Tabs",
       "category": "component",
+      "classification": "balsa-alternative",
+      "upstream": {
+        "registry": "@shadcn",
+        "name": "tabs"
+      },
       "description": "Keyboard-accessible local panel switching with surface, outline, soft, and glass materials; segmented, square-underline, pill, and icon-tile layouts; and an optional bare content panel.",
       "status": "beta",
       "version": "0.1.0",
@@ -1837,6 +2075,7 @@
       "name": "code-block",
       "title": "Code block",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Theme-aware sized dark source and command presentation with configurable corners, text-style expansion controls, and accessible icon-only copy.",
       "status": "beta",
       "version": "0.1.0",
@@ -1865,6 +2104,7 @@
       "name": "dropdown",
       "title": "Dropdown",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Compact anchored panel for a small group of related links or actions, with typed semantic color, surface, outline, soft, and glass materials, configurable width and geometry, and safe alignment.",
       "status": "beta",
       "version": "0.1.0",
@@ -1902,6 +2142,7 @@
       "name": "navbar",
       "title": "Navbar",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.",
       "status": "beta",
       "version": "0.1.0",
@@ -1941,6 +2182,7 @@
       "name": "footer",
       "title": "Footer",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.",
       "status": "beta",
       "version": "0.1.0",
@@ -1970,9 +2212,10 @@
       "name": "gradient-background",
       "title": "GradientBackground",
       "category": "component",
+      "classification": "balsa-addition",
       "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
       "status": "beta",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "registry": "@balsa/gradient-background",
       "registryDependencies": [
         "@balsa/balsa-theme"
@@ -2006,6 +2249,7 @@
       "name": "account-security-card",
       "title": "AccountSecurityCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Credential update and separated destructive account action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2045,6 +2289,7 @@
       "name": "payout-method-card",
       "title": "PayoutMethodCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Receiving-method selection with account details and one save action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2084,6 +2329,7 @@
       "name": "transfer-funds-card",
       "title": "TransferFundsCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Account-to-account transfer form with arrival, fee, and total summary.",
       "status": "beta",
       "version": "0.1.0",
@@ -2123,6 +2369,7 @@
       "name": "savings-goal-card",
       "title": "SavingsGoalCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Goal values and progress presented in a repeatable financial rhythm.",
       "status": "beta",
       "version": "0.1.0",
@@ -2161,6 +2408,7 @@
       "name": "transaction-list-card",
       "title": "TransactionListCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Scannable activity rows with identity, metadata, time, and amount.",
       "status": "beta",
       "version": "0.1.0",
@@ -2199,6 +2447,7 @@
       "name": "balance-summary-card",
       "title": "BalanceSummaryCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Compact balance, availability, and contextual action summary.",
       "status": "beta",
       "version": "0.1.0",
@@ -2236,6 +2485,7 @@
       "name": "usage-summary-card",
       "title": "UsageSummaryCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Time-series usage, key totals, and quota progress in one panel.",
       "status": "beta",
       "version": "0.1.0",
@@ -2274,6 +2524,7 @@
       "name": "analytics-chart-card",
       "title": "AnalyticsChartCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Trend visualization with period context and semantic delta.",
       "status": "beta",
       "version": "0.1.0",
@@ -2312,6 +2563,7 @@
       "name": "metric-grid-card",
       "title": "MetricGridCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Aligned operational KPIs with labels, values, and supporting detail.",
       "status": "beta",
       "version": "0.1.0",
@@ -2348,6 +2600,7 @@
       "name": "resource-table-card",
       "title": "ResourceTableCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Resource index with status, metadata, row selection, and creation action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2387,6 +2640,7 @@
       "name": "settings-card",
       "title": "SettingsCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Related workspace settings with explicit reset and save actions.",
       "status": "beta",
       "version": "0.1.0",
@@ -2426,6 +2680,7 @@
       "name": "notification-preferences-card",
       "title": "NotificationPreferencesCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Independently controlled notification channels with concise explanations.",
       "status": "beta",
       "version": "0.1.0",
@@ -2463,6 +2718,7 @@
       "name": "invite-members-card",
       "title": "InviteMembersCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Repeatable email and role rows with a single invitation action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2502,6 +2758,7 @@
       "name": "member-access-card",
       "title": "MemberAccessCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "People, identity, role, and access metadata in a scannable list.",
       "status": "beta",
       "version": "0.1.0",
@@ -2540,6 +2797,7 @@
       "name": "action-list-card",
       "title": "ActionListCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Grouped navigational actions with icons, descriptions, and trailing affordances.",
       "status": "beta",
       "version": "0.1.0",
@@ -2577,6 +2835,7 @@
       "name": "navigation-menu-card",
       "title": "NavigationMenuCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Sectioned local navigation with an explicit current destination.",
       "status": "beta",
       "version": "0.1.0",
@@ -2614,6 +2873,7 @@
       "name": "empty-state-card",
       "title": "EmptyStateCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Blank-slate explanation with one primary next step.",
       "status": "beta",
       "version": "0.1.0",
@@ -2652,6 +2912,7 @@
       "name": "error-state-card",
       "title": "ErrorStateCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Recoverable failure with request context and retry action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2690,6 +2951,7 @@
       "name": "loading-state-card",
       "title": "LoadingStateCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Stable skeleton geometry with accessible busy semantics.",
       "status": "beta",
       "version": "0.1.0",
@@ -2727,6 +2989,7 @@
       "name": "file-upload-card",
       "title": "FileUploadCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Drag-and-drop import target with format guidance and browse action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2765,6 +3028,7 @@
       "name": "media-preview-card",
       "title": "MediaPreviewCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Asset preview, publication status, and replacement action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2804,6 +3068,7 @@
       "name": "schedule-card",
       "title": "ScheduleCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Date selection paired with a concise upcoming-event list.",
       "status": "beta",
       "version": "0.1.0",
@@ -2842,6 +3107,7 @@
       "name": "appointment-card",
       "title": "AppointmentCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Appointment time selection with preparation guidance and confirmation.",
       "status": "beta",
       "version": "0.1.0",
@@ -2880,6 +3146,7 @@
       "name": "payment-method-card",
       "title": "PaymentMethodCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Selectable saved payment methods and a focused continuation action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2918,6 +3185,7 @@
       "name": "subscription-card",
       "title": "SubscriptionCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Plan, renewal, included usage, and management action.",
       "status": "beta",
       "version": "0.1.0",
@@ -2958,6 +3226,7 @@
       "name": "order-summary-card",
       "title": "OrderSummaryCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Line items, calculated totals, and order confirmation.",
       "status": "beta",
       "version": "0.1.0",
@@ -2995,6 +3264,7 @@
       "name": "onboarding-checklist-card",
       "title": "OnboardingChecklistCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Setup tasks with progress and complete/current/future state.",
       "status": "beta",
       "version": "0.1.0",
@@ -3034,6 +3304,7 @@
       "name": "form-progress-card",
       "title": "FormProgressCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Linear multistep progress with current-step semantics.",
       "status": "beta",
       "version": "0.1.0",
@@ -3071,6 +3342,7 @@
       "name": "activity-timeline-card",
       "title": "ActivityTimelineCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Chronological actor, action, target, and time event stream.",
       "status": "beta",
       "version": "0.1.0",
@@ -3108,6 +3380,7 @@
       "name": "command-toolbar-card",
       "title": "CommandToolbarCard",
       "category": "composition",
+      "classification": "balsa-composition",
       "description": "Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.",
       "status": "beta",
       "version": "0.1.0",

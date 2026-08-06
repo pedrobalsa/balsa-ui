@@ -3,6 +3,11 @@
   "name": "sidebar",
   "title": "Sidebar",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "sidebar"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Present grouped application navigation as a persistent desktop sidebar and modal mobile drawer.",
@@ -56,33 +61,248 @@
     "Mobile drawer"
   ],
   "publicApi": {
+    "source": "src/components/ui/Sidebar.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:collapsed"
+      },
+      {
+        "name": "mobileOpen",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:mobileOpen"
+      }
+    ],
     "props": [
-      "modelValue",
-      "collapsed",
-      "mobileOpen",
-      "id",
-      "label",
-      "groups",
-      "side",
-      "variant",
-      "collapsible",
-      "width",
-      "railWidth",
-      "mobileBreakpointLabel",
-      "shortcut",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "groups",
+        "type": "readonly SidebarGroup[]",
+        "required": true
+      },
+      {
+        "name": "side",
+        "type": "SidebarSide | undefined",
+        "values": [
+          "right",
+          "left"
+        ],
+        "required": false,
+        "default": "\"left\""
+      },
+      {
+        "name": "variant",
+        "type": "SidebarVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "collapsible",
+        "type": "SidebarCollapse | undefined",
+        "values": [
+          "none",
+          "rail",
+          "offcanvas"
+        ],
+        "required": false,
+        "default": "\"rail\""
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"18rem\""
+      },
+      {
+        "name": "railWidth",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"4.5rem\""
+      },
+      {
+        "name": "mobileBreakpointLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Open navigation\""
+      },
+      {
+        "name": "shortcut",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"b\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "mobileOpen",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
     ],
     "events": [
-      "update:modelValue",
-      "update:collapsed",
-      "update:mobileOpen",
-      "select"
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      },
+      {
+        "name": "select",
+        "type": "[item: SidebarItem]"
+      },
+      {
+        "name": "update:collapsed",
+        "type": "[value: boolean]"
+      },
+      {
+        "name": "update:mobileOpen",
+        "type": "[value: boolean]"
+      }
     ],
     "slots": [
-      "header",
-      "footer"
+      {
+        "name": "header",
+        "type": "{ collapsed: boolean; }"
+      },
+      {
+        "name": "footer",
+        "type": "{ collapsed: boolean; }"
+      }
     ]
   }
 }

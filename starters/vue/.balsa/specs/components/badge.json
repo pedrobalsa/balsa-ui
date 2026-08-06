@@ -3,6 +3,11 @@
   "name": "badge",
   "title": "Badge",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "badge"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Display compact status, category, or metadata without implying interaction.",
@@ -45,15 +50,111 @@
     "Glass metadata"
   ],
   "publicApi": {
+    "source": "src/components/ui/Badge.vue",
     "props": [
-      "variant",
-      "color",
-      "size",
-      "rounded",
-      "theme"
+      {
+        "name": "variant",
+        "type": "BadgeVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "outline",
+          "glass"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"accent\""
+      },
+      {
+        "name": "size",
+        "type": "BadgeSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": [
-      "default"
+      {
+        "name": "default",
+        "type": "{}"
+      }
     ]
   }
 }

@@ -9,7 +9,7 @@ export type SeparatorVariant = "solid" | "dashed" | "dotted";
 export type SeparatorSize = "sm" | "md" | "lg";
 export type SeparatorAlign = "start" | "center" | "end";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaSeparator", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

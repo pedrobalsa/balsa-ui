@@ -14,6 +14,8 @@ export async function buildCatalog() {
       name: spec.name,
       title: spec.title,
       category: spec.category,
+      classification: spec.classification,
+      ...(spec.upstream ? { upstream: spec.upstream } : {}),
       description: item.description,
       status: spec.status,
       version: spec.version,
@@ -28,8 +30,13 @@ export async function buildCatalog() {
     });
   }
 
+  // Stamping the npm version into the catalog is what lets an installed project
+  // tell which Balsa release produced its agent context, and lets the release
+  // gate prove the registry and the package ship together.
+  const packageJson = await readJson(path.join(rootDir, "package.json"));
   const catalog = {
     schemaVersion: 1,
+    releaseVersion: packageJson.version,
     framework: "vue",
     generatedFrom: ["registry.json", "specs/components/*.json"],
     items,

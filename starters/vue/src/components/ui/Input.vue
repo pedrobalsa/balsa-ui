@@ -22,7 +22,7 @@ type InputType = "text" | "password" | "number" | "date" | "email" | "phone" | "
 
 const phoneMask = "(##) #####-####";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaInput", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

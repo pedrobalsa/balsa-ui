@@ -3,8 +3,13 @@
   "name": "select",
   "title": "Select",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "select"
+  },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Choose one or more values from a finite, typed option list.",
   "useFor": [
     "Short finite option lists",
@@ -67,27 +72,219 @@
     "Unvalidated selection"
   ],
   "publicApi": {
-    "model": "string | readonly string[]",
+    "source": "src/components/ui/Select.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "SelectModelValue | undefined",
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "options",
-      "multiple",
-      "size",
-      "rounded",
-      "placeholder",
-      "hint",
-      "disabled",
-      "loading",
-      "status",
-      "statusMessage",
-      "required",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "options",
+        "type": "readonly SelectOption[]",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "SelectModelValue | undefined",
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: SelectModelValue]"
+      }
     ],
     "slots": [
-      "selected",
-      "option"
+      {
+        "name": "selected",
+        "type": "{ option: SelectOption | undefined; options: readonly SelectOption[]; text: string; }"
+      },
+      {
+        "name": "option",
+        "type": "{ option: SelectOption; selected: boolean; active: boolean; }"
+      }
     ]
   }
 }

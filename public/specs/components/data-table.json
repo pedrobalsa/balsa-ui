@@ -3,6 +3,7 @@
   "name": "data-table",
   "title": "DataTable",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Explore typed rows through sorting, quick field and advanced filters, pagination, selection, visibility, render slots, and independently configurable header and row colors.",
@@ -65,40 +66,461 @@
     "Loading and empty"
   ],
   "publicApi": {
+    "source": "src/components/ui/DataTable.vue",
+    "models": [
+      {
+        "name": "sort",
+        "type": "DataTableSort | null | undefined",
+        "shape": {
+          "type": "DataTableSort",
+          "fields": [
+            {
+              "name": "column",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "direction",
+              "type": "\"asc\" | \"desc\"",
+              "required": true
+            }
+          ]
+        },
+        "event": "update:sort"
+      },
+      {
+        "name": "filters",
+        "type": "Readonly<Record<string, string>> | undefined",
+        "values": [
+          "Readonly<Record<string, string>>"
+        ],
+        "event": "update:filters"
+      },
+      {
+        "name": "page",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "event": "update:page"
+      },
+      {
+        "name": "selected",
+        "type": "readonly string[] | undefined",
+        "event": "update:selected"
+      },
+      {
+        "name": "visibleColumns",
+        "type": "readonly string[] | undefined",
+        "event": "update:visibleColumns"
+      }
+    ],
     "props": [
-      "sort",
-      "filters",
-      "page",
-      "selected",
-      "visibleColumns",
-      "id",
-      "caption",
-      "columns",
-      "data",
-      "rowKey",
-      "selection",
-      "pageSize",
-      "variant",
-      "density",
-      "headerColor",
-      "rowColor",
-      "striped",
-      "gridlines",
-      "loading",
-      "emptyText",
-      "rounded",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "columns",
+        "type": "readonly DataTableColumn<Row>[]",
+        "required": true
+      },
+      {
+        "name": "data",
+        "type": "readonly Row[]",
+        "required": true
+      },
+      {
+        "name": "rowKey",
+        "type": "(keyof Row & string) | ((row: Row, index: number) => string)",
+        "shape": {
+          "type": "keyof Row & string",
+          "fields": [
+            {
+              "name": "toString",
+              "type": "(() => string) | (((radix?: number | undefined) => string) & (() => string)) | ((() => string) & (() => string))",
+              "required": true
+            },
+            {
+              "name": "charAt",
+              "type": "(pos: number) => string",
+              "required": true
+            },
+            {
+              "name": "charCodeAt",
+              "type": "(index: number) => number",
+              "required": true
+            },
+            {
+              "name": "concat",
+              "type": "(...strings: string[]) => string",
+              "required": true
+            },
+            {
+              "name": "indexOf",
+              "type": "(searchString: string, position?: number | undefined) => number",
+              "required": true
+            },
+            {
+              "name": "lastIndexOf",
+              "type": "(searchString: string, position?: number | undefined) => number",
+              "required": true
+            },
+            {
+              "name": "localeCompare",
+              "type": "{ (that: string): number; (that: string, locales?: string | string[] | undefined, options?: Intl.CollatorOptions | undefined): number; (that: string, locales?: Intl.LocalesArgument, options?: Intl.CollatorOptions | undefined): number; }",
+              "required": true
+            },
+            {
+              "name": "match",
+              "type": "{ (regexp: string | RegExp): RegExpMatchArray | null; (matcher: { [Symbol.match](string: string): RegExpMatchArray | null; }): RegExpMatchArray | null; }",
+              "required": true
+            },
+            {
+              "name": "replace",
+              "type": "{ (searchValue: string | RegExp, replaceValue: string): string; (searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string; (searchValue: { [Symbol.replace](string: string, replaceValue: string): string; }, replaceValue: string): string; (searchValue: { [Symbol.replace](string: string, replacer: (substring: string, ...args: any[]) => string): string; }, replacer: (substring: string, ...args: any[]) => string): string; }",
+              "required": true
+            },
+            {
+              "name": "search",
+              "type": "{ (regexp: string | RegExp): number; (searcher: { [Symbol.search](string: string): number; }): number; }",
+              "required": true
+            },
+            {
+              "name": "slice",
+              "type": "(start?: number | undefined, end?: number | undefined) => string",
+              "required": true
+            },
+            {
+              "name": "split",
+              "type": "{ (separator: string | RegExp, limit?: number | undefined): string[]; (splitter: { [Symbol.split](string: string, limit?: number | undefined): string[]; }, limit?: number | undefined): string[]; }",
+              "required": true
+            },
+            {
+              "name": "substring",
+              "type": "(start: number, end?: number | undefined) => string",
+              "required": true
+            },
+            {
+              "name": "toLowerCase",
+              "type": "() => string",
+              "required": true
+            },
+            {
+              "name": "toLocaleLowerCase",
+              "type": "{ (locales?: string | string[] | undefined): string; (locales?: Intl.LocalesArgument): string; }",
+              "required": true
+            },
+            {
+              "name": "toUpperCase",
+              "type": "() => string",
+              "required": true
+            },
+            {
+              "name": "toLocaleUpperCase",
+              "type": "{ (locales?: string | string[] | undefined): string; (locales?: Intl.LocalesArgument): string; }",
+              "required": true
+            },
+            {
+              "name": "trim",
+              "type": "() => string",
+              "required": true
+            },
+            {
+              "name": "length",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "substr",
+              "type": "(from: number, length?: number | undefined) => string",
+              "required": true
+            },
+            {
+              "name": "valueOf",
+              "type": "(() => string) | ((() => number) & (() => string)) | ((() => symbol) & (() => string))",
+              "required": true
+            },
+            {
+              "name": "codePointAt",
+              "type": "(pos: number) => number | undefined",
+              "required": true
+            },
+            {
+              "name": "includes",
+              "type": "(searchString: string, position?: number | undefined) => boolean",
+              "required": true
+            },
+            {
+              "name": "endsWith",
+              "type": "(searchString: string, endPosition?: number | undefined) => boolean",
+              "required": true
+            },
+            {
+              "name": "normalize",
+              "type": "{ (form: \"NFC\" | \"NFD\" | \"NFKC\" | \"NFKD\"): string; (form?: string | undefined): string; }",
+              "required": true
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "selection",
+        "type": "DataTableSelection | undefined",
+        "values": [
+          "none",
+          "multiple",
+          "single"
+        ],
+        "required": false,
+        "default": "\"none\""
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "10"
+      },
+      {
+        "name": "variant",
+        "type": "TableVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "density",
+        "type": "TableDensity | undefined",
+        "values": [
+          "default",
+          "compact",
+          "comfortable"
+        ],
+        "required": false
+      },
+      {
+        "name": "headerColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "rowColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "striped",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "gridlines",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No matching rows.\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "sort",
+        "type": "DataTableSort | null | undefined",
+        "shape": {
+          "type": "DataTableSort",
+          "fields": [
+            {
+              "name": "column",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "direction",
+              "type": "\"asc\" | \"desc\"",
+              "required": true
+            }
+          ]
+        },
+        "required": false,
+        "default": "null"
+      },
+      {
+        "name": "filters",
+        "type": "Readonly<Record<string, string>> | undefined",
+        "values": [
+          "Readonly<Record<string, string>>"
+        ],
+        "required": false,
+        "default": "{}"
+      },
+      {
+        "name": "page",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "selected",
+        "type": "readonly string[] | undefined",
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "visibleColumns",
+        "type": "readonly string[] | undefined",
+        "required": false,
+        "default": "[]"
+      }
     ],
     "events": [
-      "update:sort",
-      "update:filters",
-      "update:page",
-      "update:selected",
-      "update:visibleColumns",
-      "rowSelect"
+      {
+        "name": "rowSelect",
+        "type": "[row: Row, key: string]"
+      },
+      {
+        "name": "update:sort",
+        "type": "[value: DataTableSort | null]"
+      },
+      {
+        "name": "update:filters",
+        "type": "[value: Readonly<Record<string, string>>]"
+      },
+      {
+        "name": "update:page",
+        "type": "[value: number]"
+      },
+      {
+        "name": "update:selected",
+        "type": "[value: readonly string[]]"
+      },
+      {
+        "name": "update:visibleColumns",
+        "type": "[value: readonly string[]]"
+      }
     ],
-    "slots": [
-      "cell-{columnId}"
-    ]
+    "slots": []
   }
 }

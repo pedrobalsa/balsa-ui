@@ -276,10 +276,13 @@ export async function createBackgroundConfiguration({
 
   const manifestPath = path.join(projectRoot, ".balsa", "installed.json");
   const manifest = await readJson(manifestPath);
-  manifest.components[`background-${name}`] = {
-    registry: "@balsa/background-config",
+  const generatedHash = contentHash(content);
+  manifest.components[`@balsa/background-${name}`] = {
+    registry: `@balsa/background-${name}`,
+    namespace: "@balsa",
     installedVersion: "1.0.0",
-    sourceHash: contentHash(content),
+    originalSourceHash: generatedHash,
+    installedSourceHash: generatedHash,
     targetPath: relativeTarget.replaceAll(path.sep, "/"),
     files: [relativeTarget.replaceAll(path.sep, "/")],
   };

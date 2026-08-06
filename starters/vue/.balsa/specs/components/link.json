@@ -3,6 +3,7 @@
   "name": "link",
   "title": "Link",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Navigate to another location with consistent Balsa styling and safe external-link behavior.",
@@ -54,21 +55,153 @@
     "External link with suffix icon"
   ],
   "publicApi": {
+    "source": "src/components/ui/Link.vue",
     "props": [
-      "href",
-      "variant",
-      "color",
-      "size",
-      "rounded",
-      "prefixIcon",
-      "suffixIcon",
-      "external",
-      "label",
-      "shadow",
-      "theme"
+      {
+        "name": "href",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "LinkVariant | undefined",
+        "values": [
+          "solid",
+          "outline",
+          "text"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"accent\""
+      },
+      {
+        "name": "size",
+        "type": "LinkSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "prefixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "suffixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "external",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": [
-      "default"
+      {
+        "name": "default",
+        "type": "{}"
+      }
     ]
   },
   "composition": {

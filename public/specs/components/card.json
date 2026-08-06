@@ -3,6 +3,11 @@
   "name": "card",
   "title": "Card",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "card"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Group related content and actions on a consistent neutral Balsa surface, with semantic color reserved for meaningful state.",
@@ -71,23 +76,136 @@
     "Shadowless card"
   ],
   "publicApi": {
+    "source": "src/components/ui/Card.vue",
     "props": [
-      "variant",
-      "color",
-      "padding",
-      "size",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "variant",
+        "type": "CardVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "elevated",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "padding",
+        "type": "CardPadding | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CardSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | ThemeShadow | undefined",
+        "values": [
+          "false",
+          "true",
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": [
-      "default"
-    ],
-    "defaults": {
-      "variant": "surface",
-      "color": "neutral",
-      "rounded": "theme surface token",
-      "shadow": "auto"
-    }
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
   }
 }

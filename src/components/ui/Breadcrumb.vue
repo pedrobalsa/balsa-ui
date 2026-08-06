@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaBreadcrumb" });
+
 import { ChevronRight, Dot } from "@lucide/vue";
 import { computed } from "vue";
 import type { ThemeInput } from "./theme";

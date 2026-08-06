@@ -11,7 +11,7 @@ import { type Shadow, type ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaCard", inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{

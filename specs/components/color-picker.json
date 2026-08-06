@@ -3,17 +3,264 @@
   "name": "color-picker",
   "title": "ColorPicker",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Choose a six-digit hex color through a labeled square field with configurable label position or palette trigger and an accessible custom multi-format editing popover.",
-  "useFor": ["Palette colors", "Brand color settings", "Editable visual properties"],
-  "avoidFor": ["Selecting a named semantic intent", "Status-only color display", "Color formats that require alpha"],
-  "variants": ["outline", "surface", "soft", "glass"],
-  "states": ["default", "focus", "open", "invalid-color-code", "disabled"],
-  "composition": { "model": "six-digit hex string", "trigger": "Field type uses one filled square with an outside left-aligned, non-truncating label by default; labelPosition='inside' centers the concise label inside with contrast-safe black or white text. Field sizes are sm (32px), md (40px), and lg (56px); palette type uses one full-width filled rectangle with its required label visually hidden for grouped palettes.", "editor": "A smoothly anchored top-layer popover with separate saturation/brightness and hue controls plus a compact format Select beside an editable HEX, RGB, or HSL color-code field; the public model remains normalized six-digit hex." },
-  "accessibility": ["Provide a stable id and label; palette type keeps the label available to assistive technology.", "Field labels remain visible outside by default, while inside labels choose black or white foreground from the color's contrast ratio.", "The trigger exposes its current hex value, expanded state, popup relationship, and optional description.", "The saturation and brightness field supports arrow-key changes without changing hue at achromatic edges, and the hue slider retains native range semantics.", "The color-code format Select has an accessible name, and invalid drafts remain editable until Blur restores the last valid code.", "Escape closes and restores focus to the trigger; contextual actions can close before moving focus elsewhere.", "The editable color-code field provides explicit invalid feedback so the selection is not communicated by color alone."],
-  "tokens": ["--balsa-color-surface-elevated", "--balsa-color-surface-elevated-foreground", "--balsa-color-input", "--balsa-color-input-foreground", "--balsa-color-input-border", "--balsa-color-muted-foreground", "--balsa-color-border-strong", "--balsa-color-focus-ring", "--balsa-color-disabled", "radius.control", "radius.surface", "shadow.panel"],
-  "commonMistakes": ["Rendering a second inset square inside the trigger.", "Opening the browser-native color dialog instead of the custom editor.", "Hiding the selected hex value and relying only on color.", "Passing rgb, alpha, or malformed values instead of a six-digit hex string."],
-  "examples": ["Outside-label square field", "Inside-label square field", "Palette color group", "Disabled color picker"],
-  "publicApi": { "model": "string", "events": ["update:modelValue"], "props": ["id", "label", "accessibleLabel", "description", "name", "disabled", "shadow", "theme", "type", "labelPosition", "size", "rounded"], "slots": ["actions"] }
+  "useFor": [
+    "Palette colors",
+    "Brand color settings",
+    "Editable visual properties"
+  ],
+  "avoidFor": [
+    "Selecting a named semantic intent",
+    "Status-only color display",
+    "Color formats that require alpha"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "focus",
+    "open",
+    "invalid-color-code",
+    "disabled"
+  ],
+  "composition": {
+    "model": "six-digit hex string",
+    "trigger": "Field type uses one filled square with an outside left-aligned, non-truncating label by default; labelPosition='inside' centers the concise label inside with contrast-safe black or white text. Field sizes are sm (32px), md (40px), and lg (56px); palette type uses one full-width filled rectangle with its required label visually hidden for grouped palettes.",
+    "editor": "A smoothly anchored top-layer popover with separate saturation/brightness and hue controls plus a compact format Select beside an editable HEX, RGB, or HSL color-code field; the public model remains normalized six-digit hex."
+  },
+  "accessibility": [
+    "Provide a stable id and label; palette type keeps the label available to assistive technology.",
+    "Field labels remain visible outside by default, while inside labels choose black or white foreground from the color's contrast ratio.",
+    "The trigger exposes its current hex value, expanded state, popup relationship, and optional description.",
+    "The saturation and brightness field supports arrow-key changes without changing hue at achromatic edges, and the hue slider retains native range semantics.",
+    "The color-code format Select has an accessible name, and invalid drafts remain editable until Blur restores the last valid code.",
+    "Escape closes and restores focus to the trigger; contextual actions can close before moving focus elsewhere.",
+    "The editable color-code field provides explicit invalid feedback so the selection is not communicated by color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-surface-elevated-foreground",
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control",
+    "radius.surface",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Rendering a second inset square inside the trigger.",
+    "Opening the browser-native color dialog instead of the custom editor.",
+    "Hiding the selected hex value and relying only on color.",
+    "Passing rgb, alpha, or malformed values instead of a six-digit hex string."
+  ],
+  "examples": [
+    "Outside-label square field",
+    "Inside-label square field",
+    "Palette color group",
+    "Disabled color picker"
+  ],
+  "publicApi": {
+    "source": "src/components/ui/ColorPicker.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ColorPickerType | undefined",
+        "values": [
+          "field",
+          "palette"
+        ],
+        "required": false,
+        "default": "\"field\""
+      },
+      {
+        "name": "labelPosition",
+        "type": "ColorPickerLabelPosition | undefined",
+        "values": [
+          "inside",
+          "outside"
+        ],
+        "required": false,
+        "default": "\"outside\""
+      },
+      {
+        "name": "size",
+        "type": "ColorPickerSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"#000000\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "{ close: () => Promise<void>; }"
+      }
+    ]
+  }
 }

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaAccordion" });
+
 import { computed, ref } from "vue";
 import { mergeClasses } from "./classes";
 import Collapsible, {

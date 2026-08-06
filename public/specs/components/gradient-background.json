@@ -3,8 +3,9 @@
   "name": "gradient-background",
   "title": "GradientBackground",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "purpose": "Render a deterministic, slowly animated procedural field behind application content, optionally redrawn as ASCII glyphs or print-style marks, without requiring image or video input.",
   "useFor": [
     "Page and hero backgrounds",
@@ -105,55 +106,574 @@
     "Radial bloom behind a form"
   ],
   "publicApi": {
+    "source": "src/components/ui/GradientBackground.vue",
     "props": [
-      "preset",
-      "config",
-      "seed",
-      "colorMode",
-      "colors",
-      "contentContrast",
-      "contentColor",
-      "scrim",
-      "scrimColor",
-      "speed",
-      "scale",
-      "warp",
-      "wave",
-      "softness",
-      "grain",
-      "grainSize",
-      "contrast",
-      "brightness",
-      "direction",
-      "fieldOctaves",
-      "fieldFrequency",
-      "noiseAmount",
-      "noiseOctaves",
-      "noiseFrequency",
-      "warpFrequency",
-      "pattern",
-      "patternDensity",
-      "patternCenterX",
-      "patternCenterY",
-      "patternComplexity",
-      "effect",
-      "effectScale",
-      "effectAngle",
-      "effectMix",
-      "effectColorMode",
-      "effectInk",
-      "effectPaper",
-      "effectInvert",
-      "effectLevels",
-      "effectShape",
-      "effectCharacters",
-      "quality",
-      "paused",
-      "theme"
+      {
+        "name": "preset",
+        "type": "\"obsidian-fold\" | \"silver-dunes\" | \"cloud-dancer\" | \"holographic-flow\" | \"liquid-metal\" | \"smoke-field\" | \"iridescent-flow\" | \"solar-bloom\" | \"mesh-drift\" | \"terminal-rain\" | \"newsprint\" | \"plotter\" | \"aurora-veil\" | \"terracotta-dune\" | \"neon-drift\" | undefined",
+        "values": [
+          "obsidian-fold",
+          "silver-dunes",
+          "cloud-dancer",
+          "holographic-flow",
+          "liquid-metal",
+          "smoke-field",
+          "iridescent-flow",
+          "solar-bloom",
+          "mesh-drift",
+          "terminal-rain",
+          "newsprint",
+          "plotter",
+          "aurora-veil",
+          "terracotta-dune",
+          "neon-drift"
+        ],
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "GradientBackgroundConfigInput | undefined",
+        "shape": {
+          "type": "GradientBackgroundConfigInput",
+          "fields": [
+            {
+              "name": "direction",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "scale",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "seed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "speed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "wave",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "preset",
+              "type": "\"obsidian-fold\" | \"silver-dunes\" | \"cloud-dancer\" | \"holographic-flow\" | \"liquid-metal\" | \"smoke-field\" | \"iridescent-flow\" | \"solar-bloom\" | \"mesh-drift\" | \"terminal-rain\" | \"newsprint\" | \"plotter\" | \"aurora-veil\" | \"terracotta-dune\" | \"neon-drift\" | undefined",
+              "required": false
+            },
+            {
+              "name": "colorMode",
+              "type": "\"palette\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "warp",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "softness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "grain",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "grainSize",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "contrast",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "brightness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "fieldOctaves",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "fieldFrequency",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "noiseAmount",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "noiseOctaves",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "noiseFrequency",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "warpFrequency",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "pattern",
+              "type": "\"ribbon\" | \"radial\" | \"blobs\" | \"contour\" | \"conic\" | \"cellular\" | undefined",
+              "required": false
+            },
+            {
+              "name": "patternDensity",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "patternCenterX",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "patternCenterY",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "patternComplexity",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "effect",
+              "type": "\"none\" | \"lines\" | \"ascii\" | \"halftone\" | \"dither\" | \"dots\" | \"crosshatch\" | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "seed",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "colorMode",
+        "type": "\"palette\" | \"custom\" | undefined",
+        "values": [
+          "palette",
+          "custom"
+        ],
+        "required": false
+      },
+      {
+        "name": "colors",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "contentContrast",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "contentColor",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "scrim",
+        "type": "number | boolean | undefined",
+        "values": [
+          "number",
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "scrimColor",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "speed",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "scale",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "warp",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "wave",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "softness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "grain",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "grainSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "contrast",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "brightness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "direction",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "fieldOctaves",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "fieldFrequency",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "noiseAmount",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "noiseOctaves",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "noiseFrequency",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "warpFrequency",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "pattern",
+        "type": "\"ribbon\" | \"radial\" | \"blobs\" | \"contour\" | \"conic\" | \"cellular\" | undefined",
+        "values": [
+          "ribbon",
+          "radial",
+          "blobs",
+          "contour",
+          "conic",
+          "cellular"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternDensity",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternCenterX",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternCenterY",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternComplexity",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effect",
+        "type": "\"none\" | \"lines\" | \"ascii\" | \"halftone\" | \"dither\" | \"dots\" | \"crosshatch\" | undefined",
+        "values": [
+          "none",
+          "lines",
+          "ascii",
+          "halftone",
+          "dither",
+          "dots",
+          "crosshatch"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectScale",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectAngle",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectMix",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectColorMode",
+        "type": "\"gradient\" | \"duotone\" | \"ink\" | undefined",
+        "values": [
+          "gradient",
+          "duotone",
+          "ink"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectInk",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectPaper",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectInvert",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectLevels",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectShape",
+        "type": "\"round\" | \"square\" | \"cross\" | undefined",
+        "values": [
+          "round",
+          "square",
+          "cross"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectCharacters",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "quality",
+        "type": "\"auto\" | \"medium\" | \"low\" | \"high\" | undefined",
+        "values": [
+          "auto",
+          "medium",
+          "low",
+          "high"
+        ],
+        "required": false
+      },
+      {
+        "name": "paused",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
+    "slots": [],
     "exposed": [
-      "capturePng",
-      "renderStill"
+      {
+        "name": "capturePng",
+        "type": "(options?: GradientBackgroundCaptureOptions) => Promise<Blob>"
+      },
+      {
+        "name": "renderStill",
+        "type": "() => void"
+      }
     ]
   }
 }

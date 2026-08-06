@@ -3,6 +3,11 @@
   "name": "accordion",
   "title": "Accordion",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "accordion"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Coordinate a vertical collection of heading disclosures with single or multiple expansion.",
@@ -62,23 +67,183 @@
     "Named item slot"
   ],
   "publicApi": {
-    "model": "string | readonly string[]",
-    "props": [
-      "id",
-      "items",
-      "type",
-      "collapsible",
-      "label",
-      "variant",
-      "size",
-      "rounded",
-      "headingLevel",
-      "disabled",
-      "shadow",
-      "theme"
+    "source": "src/components/ui/Accordion.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | readonly string[]",
+        "event": "update:modelValue"
+      }
     ],
-    "slots": [
-      "named item slots"
-    ]
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly AccordionItem[]",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "AccordionType | undefined",
+        "values": [
+          "multiple",
+          "single"
+        ],
+        "required": false,
+        "default": "\"single\""
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Accordion\""
+      },
+      {
+        "name": "variant",
+        "type": "CollapsibleVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "underline"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CollapsibleSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "headingLevel",
+        "type": "CollapsibleHeadingLevel | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false,
+        "default": "3"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | readonly string[]",
+        "required": true
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | readonly string[]]"
+      }
+    ],
+    "slots": []
   }
 }

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaCheckbox" });
+
 import { Check } from "@lucide/vue";
 import { computed } from "vue";
 import {

@@ -10,7 +10,7 @@ import { useResolvedThemeProps } from "./theme-context";
 export type TableVariant = "surface" | "outline" | "soft" | "glass";
 export type TableDensity = "compact" | "default" | "comfortable";
 export type TableColor = "neutral" | SemanticColor;
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaTable", inheritAttrs: false });
 const rawProps = withDefaults(defineProps<{
   caption: string;
   variant?: TableVariant;

@@ -9,7 +9,7 @@ export type SliderModelValue = number | [number, number];
 export type SliderOrientation = "horizontal" | "vertical";
 export type SliderSize = "sm" | "md" | "lg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaSlider", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

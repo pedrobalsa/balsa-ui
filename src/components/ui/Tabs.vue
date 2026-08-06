@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaTabs" });
+
 import { computed, watchEffect } from "vue";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";

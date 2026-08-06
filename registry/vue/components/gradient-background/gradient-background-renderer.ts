@@ -309,7 +309,7 @@ export class GradientBackgroundRenderer {
     this.uniforms.uNoiseOctaves.value = config.noiseOctaves;
     this.uniforms.uColorCount.value = Math.max(2, Math.min(6, colors.length));
     for (let index = 0; index < 6; index += 1) {
-      this.uniforms.uColors.value[index].setStyle(
+      this.uniforms.uColors.value[index]?.setStyle(
         colors[Math.min(index, colors.length - 1)] ?? "#000000",
       );
     }

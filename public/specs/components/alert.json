@@ -3,6 +3,11 @@
   "name": "alert",
   "title": "Alert",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "alert"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Communicate important inline feedback or present a focused alert-dialog decision.",
@@ -66,32 +71,238 @@
     "Destructive alert dialog"
   ],
   "publicApi": {
-    "model": "boolean | undefined",
+    "source": "src/components/ui/Alert.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "title",
-      "description",
-      "mode",
-      "color",
-      "variant",
-      "size",
-      "rounded",
-      "icon",
-      "persistent",
-      "closeLabel",
-      "outsideDismiss",
-      "escapeDismiss",
-      "initialFocus",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "AlertMode | undefined",
+        "values": [
+          "inline",
+          "dialog"
+        ],
+        "required": false,
+        "default": "\"inline\""
+      },
+      {
+        "name": "color",
+        "type": "AlertColor | undefined",
+        "values": [
+          "neutral",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "variant",
+        "type": "AlertVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AlertSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "persistent",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Dismiss alert\""
+      },
+      {
+        "name": "outsideDismiss",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "escapeDismiss",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "initialFocus",
+        "type": "AlertInitialFocus | undefined",
+        "values": [
+          "close",
+          "dialog",
+          "action"
+        ],
+        "required": false,
+        "default": "\"action\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      }
     ],
     "events": [
-      "update:modelValue",
-      "dismiss"
+      {
+        "name": "update:modelValue",
+        "type": "unknown[]"
+      },
+      {
+        "name": "dismiss",
+        "type": "[]"
+      }
     ],
     "slots": [
-      "default",
-      "actions"
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "actions",
+        "type": "{ close: () => void; }"
+      }
     ]
   }
 }

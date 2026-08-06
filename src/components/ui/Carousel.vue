@@ -17,7 +17,7 @@ export type CarouselVariant = "surface" | "outline" | "soft" | "glass";
 export type CarouselArrowsPosition = "inside" | "bottom-start" | "bottom-end";
 export type CarouselIndicatorsPosition = "inside" | "bottom-start" | "bottom-center" | "bottom-end";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaCarousel", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

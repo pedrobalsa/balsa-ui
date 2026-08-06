@@ -3,6 +3,11 @@
   "name": "separator",
   "title": "Separator",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "separator"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Separate related content visually or expose a meaningful structural boundary.",
@@ -51,18 +56,127 @@
     "Vertical toolbar divider"
   ],
   "publicApi": {
+    "source": "src/components/ui/Separator.vue",
     "props": [
-      "orientation",
-      "variant",
-      "size",
-      "align",
-      "decorative",
-      "label",
-      "accessibleLabel",
-      "theme"
+      {
+        "name": "orientation",
+        "type": "SeparatorOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "variant",
+        "type": "SeparatorVariant | undefined",
+        "values": [
+          "solid",
+          "dashed",
+          "dotted"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SeparatorSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "SeparatorAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"center\""
+      },
+      {
+        "name": "decorative",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": [
-      "default"
+      {
+        "name": "default",
+        "type": "{}"
+      }
     ]
   }
 }

@@ -16,7 +16,7 @@ export interface AttachmentRejection {
 export type AttachmentStatus = "default" | "unvalidated";
 export type AttachmentSize = "sm" | "md" | "lg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaAttachment", inheritAttrs: false });
 const rawProps = withDefaults(defineProps<{
   id: string;
   label: string;

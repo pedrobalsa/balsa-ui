@@ -23,7 +23,7 @@ export type AlertVariant = "surface" | "outline" | "soft" | "solid" | "glass";
 export type AlertSize = "sm" | "md" | "lg";
 export type AlertInitialFocus = "dialog" | "action" | "close";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaAlert", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

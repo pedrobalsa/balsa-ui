@@ -22,7 +22,7 @@ const toggleIcons: Readonly<Record<ToggleIcon, IconComponent>> = {
   flag: Flag,
 };
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaToggle", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

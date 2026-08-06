@@ -3,6 +3,11 @@
   "name": "attachment",
   "title": "Attachment",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "attachment"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Select and review local files through a labelled, validated native input.",
@@ -57,29 +62,221 @@
     "Loading selection"
   ],
   "publicApi": {
+    "source": "src/components/ui/Attachment.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "readonly File[] | undefined",
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "modelValue",
-      "id",
-      "label",
-      "multiple",
-      "accept",
-      "maxSize",
-      "maxFiles",
-      "required",
-      "disabled",
-      "loading",
-      "status",
-      "statusMessage",
-      "hint",
-      "size",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "accept",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "maxSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "Number.POSITIVE_INFINITY"
+      },
+      {
+        "name": "maxFiles",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "Number.POSITIVE_INFINITY"
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "AttachmentStatus | undefined",
+        "values": [
+          "default",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Choose a valid file.\""
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AttachmentSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "readonly File[] | undefined",
+        "required": false,
+        "default": "[]"
+      }
     ],
     "events": [
-      "update:modelValue",
-      "reject",
-      "remove"
-    ]
+      {
+        "name": "update:modelValue",
+        "type": "[value: readonly File[]]"
+      },
+      {
+        "name": "reject",
+        "type": "[rejections: readonly AttachmentRejection[]]"
+      },
+      {
+        "name": "remove",
+        "type": "[file: File]"
+      }
+    ],
+    "slots": []
   }
 }

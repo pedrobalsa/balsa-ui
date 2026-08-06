@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaCharts" });
+
 import { computed } from "vue";
 import { VisArea, VisAreaSelectors, VisAxis, VisDonut, VisDonutSelectors, VisGroupedBar, VisGroupedBarSelectors, VisLine, VisLineSelectors, VisSingleContainer, VisStackedBar, VisStackedBarSelectors, VisTooltip, VisXYContainer } from "@unovis/vue";
 import { CurveType } from "@unovis/ts";
@@ -267,3 +269,19 @@ function donutTooltip(datum: DonutDatum): string {
     </template>
   </ChartContainer>
 </template>
+
+<!--
+  Unovis lays its containers out from a stylesheet its entry injects at import
+  time, but `@unovis/vue` ships `sideEffects: false`, so a production bundler
+  drops that injection as dead code while a dev server keeps it. The plot then
+  falls back to its intrinsic width in built apps only. Owning the two rules the
+  containers actually need keeps the chart the same size in both, and keeps it
+  independent of how a consuming app is bundled.
+-->
+<style>
+.balsa-chart-plot {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+</style>

@@ -12,7 +12,7 @@ type ButtonSize = "sm" | "md" | "lg" | "xl" | "2xl";
 type ButtonShape = "rounded" | "pill" | "fab";
 type ButtonIconPlacement = "none" | "prefix" | "suffix" | "both";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaButton", inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
@@ -105,8 +105,8 @@ const iconSizes: Record<ButtonSize, IconSize> = {
 
 const shapeClasses: Record<ButtonShape, string[]> = {
   rounded: ["rounded-balsa-control"],
-  pill: ["rounded-full"],
-  fab: ["rounded-full", "p-0"],
+  pill: ["rounded-balsa-pill"],
+  fab: ["rounded-balsa-pill", "p-0"],
 };
 
 const fabSizeClasses: Record<ButtonSize, string[]> = {

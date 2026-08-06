@@ -23,7 +23,7 @@ export interface MenubarMenu {
   disabled?: boolean;
 }
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaMenubar", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

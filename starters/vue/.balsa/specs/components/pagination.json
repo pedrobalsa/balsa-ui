@@ -3,6 +3,11 @@
   "name": "pagination",
   "title": "Pagination",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "pagination"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Move through a finite result set with bounded pages, labelled adjacent actions, or icon-only adjacent actions.",
@@ -57,28 +62,223 @@
     "Disabled pagination"
   ],
   "publicApi": {
+    "source": "src/components/ui/Pagination.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "modelValue",
-      "total",
-      "pageSize",
-      "siblingCount",
-      "presentation",
-      "showEdges",
-      "showLabels",
-      "disabled",
-      "label",
-      "previousLabel",
-      "nextLabel",
-      "firstLabel",
-      "lastLabel",
-      "pageLabel",
-      "size",
-      "rounded",
-      "theme"
+      {
+        "name": "total",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "10"
+      },
+      {
+        "name": "siblingCount",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "presentation",
+        "type": "PaginationPresentation | undefined",
+        "values": [
+          "pages",
+          "action-labels",
+          "icons"
+        ],
+        "required": false,
+        "default": "\"pages\""
+      },
+      {
+        "name": "showEdges",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showLabels",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Pagination\""
+      },
+      {
+        "name": "previousLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Previous page\""
+      },
+      {
+        "name": "nextLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Next page\""
+      },
+      {
+        "name": "firstLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"First page\""
+      },
+      {
+        "name": "lastLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Last page\""
+      },
+      {
+        "name": "pageLabel",
+        "type": "((page: number) => string) | undefined",
+        "required": false,
+        "default": "`Page ${page}`"
+      },
+      {
+        "name": "size",
+        "type": "PaginationSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      }
     ],
     "events": [
-      "update:modelValue",
-      "change"
-    ]
+      {
+        "name": "update:modelValue",
+        "type": "[value: number]"
+      },
+      {
+        "name": "change",
+        "type": "[page: number]"
+      }
+    ],
+    "slots": []
   }
 }

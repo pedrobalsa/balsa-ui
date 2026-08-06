@@ -3,6 +3,11 @@
   "name": "carousel",
   "title": "Carousel",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "carousel"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Browse a typed collection through an accessible, draggable, snapping viewport with configurable presentation and navigation placement.",
@@ -57,31 +62,227 @@
     "Empty state"
   ],
   "publicApi": {
+    "source": "src/components/ui/Carousel.vue",
     "props": [
-      "items",
-      "label",
-      "variant",
-      "orientation",
-      "align",
-      "loop",
-      "slidesPerView",
-      "gap",
-      "controls",
-      "arrowsPosition",
-      "indicators",
-      "indicatorsPosition",
-      "autoplay",
-      "rounded",
-      "emptyText",
-      "shadow",
-      "theme"
+      {
+        "name": "items",
+        "type": "readonly CarouselItem[]",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "CarouselVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "CarouselOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "align",
+        "type": "CarouselAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"start\""
+      },
+      {
+        "name": "loop",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "slidesPerView",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "gap",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "16"
+      },
+      {
+        "name": "controls",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "arrowsPosition",
+        "type": "CarouselArrowsPosition | undefined",
+        "values": [
+          "inside",
+          "bottom-start",
+          "bottom-end"
+        ],
+        "required": false,
+        "default": "\"bottom-start\""
+      },
+      {
+        "name": "indicators",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "indicatorsPosition",
+        "type": "CarouselIndicatorsPosition | undefined",
+        "values": [
+          "inside",
+          "bottom-start",
+          "bottom-end",
+          "bottom-center"
+        ],
+        "required": false,
+        "default": "\"bottom-end\""
+      },
+      {
+        "name": "autoplay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No carousel items.\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
     "events": [
-      "select"
+      {
+        "name": "select",
+        "type": "[index: number, item: CarouselItem]"
+      }
     ],
     "slots": [
-      "item",
-      "empty"
+      {
+        "name": "item",
+        "type": "{ item: CarouselItem; index: number; }"
+      },
+      {
+        "name": "empty",
+        "type": "{}"
+      }
     ]
   }
 }

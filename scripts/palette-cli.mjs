@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { ensureStyleImports } from "./agent-context.mjs";
 import { installRegistryItems } from "./install-registry.mjs";
 import { readJson, writeJson } from "./registry-lib.mjs";
 import { validateThemeName } from "./theme-cli.mjs";
@@ -55,13 +56,23 @@ export async function createPaletteConfiguration({
     force,
   });
   const paletteFile = await writeGenerated(projectRoot, paletteTarget, paletteSource, force);
+  // A standalone palette installs the foundation but no theme, so the theme
+  // import is omitted rather than pointing the stylesheet at a missing file.
+  const stylesheet = await ensureStyleImports(projectRoot, {
+    includeTheme: false,
+    generated: [`${name}.css`],
+  });
 
   const manifestPath = path.join(projectRoot, ".balsa", "installed.json");
   const manifest = await readJson(manifestPath);
-  manifest.components[`palette-${name}`] = {
-    registry: "@balsa/palette",
+  const generatedHash = contentHash(paletteSource);
+  manifest.components[`@balsa/palette-${name}`] = {
+    registry: `@balsa/palette-${name}`,
+    namespace: "@balsa",
     installedVersion: "1.0.0",
-    sourceHash: contentHash(paletteSource),
+    designSystemVersion: manifest.components["@balsa/balsa-palette"]?.designSystemVersion,
+    originalSourceHash: generatedHash,
+    installedSourceHash: generatedHash,
     targetPath: paletteFile,
     files: [paletteFile],
   };
@@ -72,5 +83,7 @@ export async function createPaletteConfiguration({
     paletteTarget: paletteFile,
     paletteId: name,
     installed,
+    stylesheet,
+    projectRoot,
   };
 }

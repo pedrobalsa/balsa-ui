@@ -27,7 +27,7 @@ export type SidebarVariant = "surface" | "outline" | "soft" | "glass";
 export type SidebarSide = "left" | "right";
 export type SidebarCollapse = "rail" | "offcanvas" | "none";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaSidebar", inheritAttrs: false });
 const rawProps = withDefaults(
   defineProps<{
     id: string;

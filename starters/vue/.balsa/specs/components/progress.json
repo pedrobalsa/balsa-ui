@@ -3,6 +3,11 @@
   "name": "progress",
   "title": "Progress",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "progress"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Communicate determinate task completion or a labelled indeterminate process.",
@@ -55,18 +60,153 @@
     "Formatted value"
   ],
   "publicApi": {
+    "source": "src/components/ui/Progress.vue",
     "props": [
-      "label",
-      "value",
-      "max",
-      "showValue",
-      "formatValue",
-      "indeterminateLabel",
-      "variant",
-      "color",
-      "size",
-      "rounded",
-      "theme"
-    ]
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "number | null | undefined",
+        "values": [
+          "null",
+          "number"
+        ],
+        "required": false,
+        "default": "null"
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "100"
+      },
+      {
+        "name": "showValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "formatValue",
+        "type": "((value: number, max: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "indeterminateLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"In progress\""
+      },
+      {
+        "name": "variant",
+        "type": "ProgressVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "striped"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"info\""
+      },
+      {
+        "name": "size",
+        "type": "ProgressSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
   }
 }

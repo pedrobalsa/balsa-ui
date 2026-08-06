@@ -3,6 +3,11 @@
   "name": "avatar",
   "title": "Avatar",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "avatar"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Represent a person or entity through a resilient image with an accessible text fallback.",
@@ -56,22 +61,130 @@
     "Custom badge slot"
   ],
   "publicApi": {
+    "source": "src/components/ui/Avatar.vue",
     "props": [
-      "src",
-      "label",
-      "fallback",
-      "size",
-      "shape",
-      "loading",
-      "fallbackDelay",
-      "theme"
+      {
+        "name": "src",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "fallback",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AvatarSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "shape",
+        "type": "AvatarShape | undefined",
+        "values": [
+          "rounded",
+          "square",
+          "circle"
+        ],
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "\"lazy\" | \"eager\" | undefined",
+        "values": [
+          "lazy",
+          "eager"
+        ],
+        "required": false,
+        "default": "\"lazy\""
+      },
+      {
+        "name": "fallbackDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
     "events": [
-      "loadState"
+      {
+        "name": "loadState",
+        "type": "[state: AvatarLoadState]"
+      }
     ],
     "slots": [
-      "fallback",
-      "badge"
+      {
+        "name": "fallback",
+        "type": "{}"
+      },
+      {
+        "name": "badge",
+        "type": "{}"
+      }
     ]
   }
 }

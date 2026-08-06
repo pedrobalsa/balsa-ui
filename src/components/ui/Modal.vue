@@ -1,6 +1,8 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaModal" });
+
 import { X } from "@lucide/vue";
-import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, ref, useAttrs, watch } from "vue";
 import type { Shadow, ThemeInput } from "./theme";
 import { semanticColorClasses, type ActionColor } from "./types";
 import { useResolvedThemeProps } from "./theme-context";
@@ -41,10 +43,17 @@ const { props, theme } = useResolvedThemeProps(
 );
 
 const model = defineModel<boolean>({ default: false });
+const attrs = useAttrs();
 const themeAnchor = ref<HTMLElement | null>(null);
 const portalPresentation = computed(() =>
   theme.presentationForPortal(themeAnchor.value)
 );
+/**
+ * The panel teleports to the body, so a palette scoped to a subtree upstream --
+ * a studio that is always dark, say -- would otherwise stop at the boundary.
+ * Resolved on open, the way every other teleporting Balsa layer does it.
+ */
+const resolvedPalette = ref<string>();
 let lockedScrollX = 0;
 let lockedScrollY = 0;
 let returnFocusElement: HTMLElement | null = null;
@@ -137,7 +146,15 @@ const panelClasses = computed(() => [
               "overflow-auto border-b-0",
               topRoundedClasses[props.rounded],
             ]
-          : [dialogSizeClasses[props.size], roundedClasses[props.rounded]],
+          : [
+              // A dialog is as tall as its content until the viewport runs out,
+              // at which point the body scrolls rather than the panel growing
+              // past the screen and taking its close button with it.
+              "flex flex-col",
+              props.contained ? "max-h-full" : "max-h-[calc(100dvh-2rem)]",
+              dialogSizeClasses[props.size],
+              roundedClasses[props.rounded],
+            ],
       ],
 ]);
 
@@ -169,12 +186,22 @@ const closeButtonClasses = computed(() =>
     : "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-balsa-muted-foreground transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
 );
 const headerClasses = computed(() =>
-  props.presentation === "fullscreen" ? "sr-only" : "mb-5 pr-10",
+  props.presentation === "fullscreen" ? "sr-only" : "mb-5 shrink-0 pr-10",
 );
 const eyebrowClasses = computed(() =>
   props.variant === "solid"
     ? "mb-2 block text-current/75"
     : "mb-2 block text-balsa-accent",
+);
+/**
+ * The scroll container in a dialog: `min-h-0` is what lets it shrink inside the
+ * capped panel instead of pushing the footer out of view. Sheet and fullscreen
+ * scroll the panel itself, so the body stays a plain block there.
+ */
+const bodyClasses = computed(() =>
+  props.presentation === "dialog"
+    ? "min-h-0 flex-1 overflow-y-auto"
+    : undefined,
 );
 const descriptionClasses = computed(() =>
   props.variant === "solid"
@@ -260,6 +287,9 @@ function unlockPageScroll(): void {
 
 watch(model, async (isOpen) => {
   if (isOpen) {
+    resolvedPalette.value = typeof attrs["data-palette"] === "string"
+      ? attrs["data-palette"]
+      : themeAnchor.value?.closest<HTMLElement>("[data-palette]")?.dataset.palette;
     returnFocusElement = document.activeElement instanceof HTMLElement
       ? document.activeElement
       : null;
@@ -316,6 +346,7 @@ onBeforeUnmount(() => {
         data-balsa="modal-backdrop"
         :data-theme="portalPresentation.id"
         :data-theme-base="portalPresentation.base"
+        :data-palette="resolvedPalette"
         :style="portalPresentation.style"
         type="button"
         :class="backdropClasses"
@@ -327,6 +358,7 @@ onBeforeUnmount(() => {
     <div
       :data-theme="portalPresentation.id"
       :data-theme-base="portalPresentation.base"
+      :data-palette="resolvedPalette"
       :style="portalPresentation.style"
       :class="viewportClasses"
       @keydown="handleKeydown"
@@ -345,6 +377,7 @@ onBeforeUnmount(() => {
           data-balsa="modal-panel"
           :data-theme="portalPresentation.id"
           :data-theme-base="portalPresentation.base"
+          :data-palette="resolvedPalette"
           :data-size="props.size"
           :data-variant="props.variant"
           :data-color="props.color"
@@ -368,8 +401,10 @@ onBeforeUnmount(() => {
           </button>
 
           <header :class="headerClasses">
-            <small :class="eyebrowClasses">
-              <slot name="eyebrow">Modal</slot>
+            <!-- Only when the caller has one to give: an eyebrow reading
+                 "Modal" names the mechanism instead of the task. -->
+            <small v-if="$slots.eyebrow" :class="eyebrowClasses">
+              <slot name="eyebrow"></slot>
             </small>
             <h3
               :id="titleId"
@@ -386,11 +421,11 @@ onBeforeUnmount(() => {
             </p>
           </header>
 
-          <div>
+          <div :class="bodyClasses">
             <slot />
           </div>
 
-          <footer v-if="$slots.footer" class="mt-6 flex flex-wrap gap-2">
+          <footer v-if="$slots.footer" class="mt-6 flex shrink-0 flex-wrap gap-2">
             <slot name="footer" :close="closeModal" />
           </footer>
         </section>

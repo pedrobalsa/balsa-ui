@@ -44,11 +44,19 @@ const languageAliases: Readonly<Record<string, string>> = {
 type CodeBlockSize = "sm" | "md" | "lg";
 type Rounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 
+/**
+ * `block` is the full anatomy: a header carrying the caption and actions above
+ * the source. `inline` is the one-line form for a single command — the source
+ * and the copy action share one row, and the caption belongs outside the block.
+ */
+export type CodeBlockLayout = "block" | "inline";
+
 const rawProps = withDefaults(
   defineProps<{
     code: string;
     language?: string;
     label?: string;
+    layout?: CodeBlockLayout;
     copyable?: boolean;
     wrap?: boolean;
     lineNumbers?: boolean;
@@ -60,6 +68,7 @@ const rawProps = withDefaults(
   }>(),
   {
     language: "text",
+    layout: "block",
     copyable: true,
     wrap: false,
     lineNumbers: false,
@@ -124,6 +133,11 @@ const textActionClasses =
 const iconActionClasses =
   "h-7 w-7 shrink-0 border-transparent bg-transparent p-0 text-balsa-code-foreground hover:bg-transparent focus-visible:outline-balsa-code-foreground";
 const preClasses = computed(() => ["overflow-x-auto", sizeClasses[props.size].pre]);
+/** One row: the command takes the space, the copy action closes it. */
+const inlineRowClasses = computed(() => [
+  "flex items-center gap-3",
+  sizeClasses[props.size].header,
+]);
 const lineHeightBySize: Readonly<Record<CodeBlockSize, number>> = {
   sm: 20,
   md: 24,
@@ -216,11 +230,31 @@ watch(
     :data-theme="theme.explicitPresentation.value?.id"
     :data-theme-base="theme.explicitPresentation.value?.base"
     :data-size="props.size"
+    :data-layout="props.layout"
     :data-rounded="props.rounded"
     :data-shadow="props.shadow"
     :class="rootClasses"
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
   >
+    <div v-if="props.layout === 'inline'" :class="inlineRowClasses">
+      <!-- highlight.js escapes source before producing this markup. -->
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <pre class="min-w-0 flex-1 overflow-x-auto"><code :class="codeClasses" v-html="highlightedCode"></code></pre>
+      <slot name="actions" />
+      <Button
+        v-if="props.copyable"
+        variant="outline"
+        color="primary"
+        :size="null"
+        :theme="props.theme"
+        :prefix-icon="copyIcon"
+        :aria-label="`${copyLabel} code`"
+        :class="iconActionClasses"
+        @click="copyCode"
+      />
+    </div>
+
+    <template v-else>
     <div
       v-if="props.label || props.copyable || $slots.actions || (canExpand && expanded)"
       :class="headerClasses"
@@ -289,6 +323,7 @@ watch(
         </Button>
       </div>
     </div>
+    </template>
     <span class="sr-only" aria-live="polite">{{ copied ? "Code copied to clipboard." : "" }}</span>
   </div>
 </template>

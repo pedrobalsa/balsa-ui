@@ -3,6 +3,7 @@
   "name": "transaction-list-card",
   "title": "TransactionListCard",
   "category": "composition",
+  "classification": "balsa-composition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Scannable activity rows with identity, metadata, time, and amount.",
@@ -64,22 +65,112 @@
     "Application dashboard"
   ],
   "publicApi": {
+    "source": "src/components/compositions/TransactionListCard.vue",
     "props": [
-      "title",
-      "description",
-      "headingLevel",
-      "shadow",
-      "theme",
-      "pattern-specific typed data"
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Recent transactions\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Your latest account activity.\""
+      },
+      {
+        "name": "items",
+        "type": "readonly TransactionItem[] | undefined",
+        "required": false,
+        "default": "[ { id: \"coffee\", name: \"Blue Bottle Coffee\", category: \"Food & drink\", time: \"Today, 10:24 AM\", amount: \"-$6.50\", icon: Coffee }, { id: \"market\", name: \"Whole Foods Market\", category: \"Groceries\", time: \"Yesterday\", amount: \"-$142.30\", icon: ShoppingCart }, { id: \"payout\", name: \"Stripe payout\", category: \"Income\", time: \"Oct 12\", amount: \"+$4,200.00\", icon: Wallet, status: \"accent\" }, ]"
+      }
     ],
-    "slots": [],
     "events": [
-      "pattern-specific actions"
+      {
+        "name": "select",
+        "type": "[id: string]"
+      },
+      {
+        "name": "viewAll",
+        "type": "[]"
+      }
     ],
-    "defaults": {
-      "headingLevel": 2,
-      "shadow": "auto",
-      "theme": "inherited"
-    }
+    "slots": []
   }
 }

@@ -1,1 +1,201 @@
-{"schemaVersion":1,"name":"menubar","title":"Menubar","category":"component","status":"beta","version":"0.1.0","purpose":"Present persistent top-level menus with coherent horizontal and menu keyboard navigation.","useFor":["Editor commands","Desktop application menus","Dense tool surfaces"],"avoidFor":["Website primary navigation","Mobile-only actions","A single action menu"],"types":["horizontal"],"states":["closed","open","disabled"],"sizes":[],"accessibility":["The root and triggers use menubar and menuitem semantics.","Left, Right, Home, and End move top-level roving focus.","An open menu transfers across adjacent triggers and restores focus on Escape."],"tokens":["--balsa-color-surface","--balsa-color-selected","--balsa-color-selected-foreground","--balsa-color-focus-ring","shadow.panel"],"commonMistakes":["Using Menubar as a site Navbar.","Wrapping triggers into ambiguous rows.","Omitting keyboard-equivalent access to commands."],"examples":["Editor menus","Disabled top-level menu","Checkable view menu","Submenu"],"publicApi":{"model":"string | null","props":["id","label","menus","variant","contained","shadow", "theme"],"events":["update:modelValue","select"],"slots":[]}}
+{
+  "schemaVersion": 1,
+  "name": "menubar",
+  "title": "Menubar",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "menubar"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present persistent top-level menus with coherent horizontal and menu keyboard navigation.",
+  "useFor": [
+    "Editor commands",
+    "Desktop application menus",
+    "Dense tool surfaces"
+  ],
+  "avoidFor": [
+    "Website primary navigation",
+    "Mobile-only actions",
+    "A single action menu"
+  ],
+  "types": [
+    "horizontal"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The root and triggers use menubar and menuitem semantics.",
+    "Left, Right, Home, and End move top-level roving focus.",
+    "An open menu transfers across adjacent triggers and restores focus on Escape."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-focus-ring",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using Menubar as a site Navbar.",
+    "Wrapping triggers into ambiguous rows.",
+    "Omitting keyboard-equivalent access to commands."
+  ],
+  "examples": [
+    "Editor menus",
+    "Disabled top-level menu",
+    "Checkable view menu",
+    "Submenu"
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Menubar.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | null | undefined",
+        "values": [
+          "null",
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "menus",
+        "type": "readonly MenubarMenu[]",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "MenuVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | null | undefined",
+        "values": [
+          "null",
+          "string"
+        ],
+        "required": false,
+        "default": "null"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | null]"
+      },
+      {
+        "name": "select",
+        "type": "[selection: MenuSelection & { menuId: string; }]"
+      }
+    ],
+    "slots": []
+  }
+}

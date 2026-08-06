@@ -8,7 +8,7 @@ import { useResolvedThemeProps } from "./theme-context";
 export type KbdVariant = "raised" | "outline" | "soft";
 export type KbdSize = "sm" | "md" | "lg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaKbd", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

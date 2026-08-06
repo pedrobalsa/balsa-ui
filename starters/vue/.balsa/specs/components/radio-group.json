@@ -3,6 +3,11 @@
   "name": "radio-group",
   "title": "Radio Group",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "radio-group"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Choose exactly one value from a visible, labelled set of mutually exclusive options with semantic selected color treatment.",
@@ -63,26 +68,208 @@
     "Invalid required group"
   ],
   "publicApi": {
-    "model": "string",
+    "source": "src/components/ui/RadioGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "options",
-      "name",
-      "layout",
-      "color",
-      "size",
-      "rounded",
-      "hint",
-      "disabled",
-      "loading",
-      "status",
-      "statusMessage",
-      "required",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "options",
+        "type": "readonly RadioGroupOption[]",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "RadioGroupLayout | undefined",
+        "values": [
+          "column",
+          "row",
+          "cards"
+        ],
+        "required": false,
+        "default": "\"column\""
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
     ],
     "slots": []
   }

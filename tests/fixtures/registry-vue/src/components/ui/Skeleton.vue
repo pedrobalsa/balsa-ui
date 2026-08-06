@@ -10,7 +10,7 @@ export type SkeletonVariant = "muted" | "soft" | "glass";
 export type SkeletonSize = "sm" | "md" | "lg";
 export type SkeletonAnimation = "pulse" | "wave" | "none";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaSkeleton", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

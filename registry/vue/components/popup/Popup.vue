@@ -22,7 +22,7 @@ import { useResolvedThemeProps } from "./theme-context";
 export type PopupVariant = LayerVariant;
 export type PopupSize = "sm" | "md" | "lg" | "trigger";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaPopup", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

@@ -3,6 +3,11 @@
   "name": "toggle",
   "title": "Toggle",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "toggle"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Represent an independent two-state action as a pressed surface or an outline-to-solid icon.",
@@ -68,22 +73,194 @@
     "Disabled pressed action"
   ],
   "publicApi": {
-    "model": "boolean",
+    "source": "src/components/ui/Toggle.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "variant",
-      "color",
-      "size",
-      "rounded",
-      "prefixIcon",
-      "suffixIcon",
-      "icon",
-      "disabled",
-      "type",
-      "shadow",
-      "theme"
+      {
+        "name": "variant",
+        "type": "ToggleVariant | undefined",
+        "values": [
+          "solid",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "ToggleSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "prefixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "suffixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "ToggleIcon | undefined",
+        "values": [
+          "bookmark",
+          "heart",
+          "star",
+          "pin",
+          "bell",
+          "flag"
+        ],
+        "required": false,
+        "default": "\"bookmark\""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "type",
+        "type": "ToggleType | undefined",
+        "values": [
+          "icon",
+          "button",
+          "submit",
+          "reset"
+        ],
+        "required": false,
+        "default": "\"button\""
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
     ]
   }
 }

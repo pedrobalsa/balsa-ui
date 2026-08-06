@@ -3,6 +3,11 @@
   "name": "hover-card",
   "title": "Hover Card",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "hover-card"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Preview supplementary content from pointer hover or keyboard focus without moving focus.",
@@ -54,28 +59,208 @@
     "Collision flip"
   ],
   "publicApi": {
-    "model": "boolean",
+    "source": "src/components/ui/HoverCard.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "side",
-      "align",
-      "sideOffset",
-      "openDelay",
-      "closeDelay",
-      "variant",
-      "rounded",
-      "contained",
-      "disabled",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "side",
+        "type": "AnchoredSide | undefined",
+        "values": [
+          "bottom",
+          "top",
+          "right",
+          "left"
+        ],
+        "required": false,
+        "default": "\"bottom\""
+      },
+      {
+        "name": "align",
+        "type": "AnchoredAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"center\""
+      },
+      {
+        "name": "sideOffset",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "8"
+      },
+      {
+        "name": "openDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "300"
+      },
+      {
+        "name": "closeDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "180"
+      },
+      {
+        "name": "variant",
+        "type": "LayerVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      }
     ],
     "slots": [
-      "trigger",
-      "default"
+      {
+        "name": "trigger",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      }
     ]
   }
 }

@@ -36,7 +36,7 @@ export interface SelectOption {
 
 export type SelectModelValue = string | readonly string[];
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaSelect", inheritAttrs: false });
 defineSlots<{
   selected(props: {
     option: SelectOption | undefined;
@@ -88,6 +88,9 @@ const { props, theme } = useResolvedThemeProps(
 const model = defineModel<SelectModelValue>({ default: "" });
 
 const root = ref<HTMLElement | null>(null);
+/** The popover leaves the subtree it was opened in, so the palette scoping it
+ *  has to travel with it -- alongside the theme, on the same element. */
+const resolvedPalette = ref<string>();
 const portalPresentation = computed(() => theme.presentationForPortal(root.value));
 const trigger = ref<HTMLButtonElement | null>(null);
 const menu = ref<HTMLElement | null>(null);
@@ -221,7 +224,7 @@ function findNextEnabledOptionIndex(
       (currentIndex + offset * step + props.options.length) %
       props.options.length;
 
-    if (!props.options[nextIndex].disabled) return nextIndex;
+    if (!props.options[nextIndex]?.disabled) return nextIndex;
   }
 
   return -1;
@@ -238,6 +241,10 @@ function positionMenu(): void {
 
 async function openMenu(): Promise<void> {
   if (isDisabled.value || isOpen.value) return;
+
+  resolvedPalette.value = typeof attrs["data-palette"] === "string"
+    ? attrs["data-palette"]
+    : root.value?.closest<HTMLElement>("[data-palette]")?.dataset.palette;
 
   const selectedIndex = props.options.findIndex(
     (option) => isOptionSelected(option) && !option.disabled,
@@ -431,6 +438,7 @@ onBeforeUnmount(() => {
         data-balsa="select-popover"
         :data-theme="portalPresentation.id"
         :data-theme-base="portalPresentation.base"
+        :data-palette="resolvedPalette"
         :data-shadow="props.shadow"
         :id="menuId"
         ref="menu"

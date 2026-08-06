@@ -3,6 +3,11 @@
   "name": "autocomplete",
   "title": "Autocomplete",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "combobox"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Enter text with filtered suggestions and keyboard navigation, or choose one or more suggestions while retaining a searchable query.",
@@ -68,24 +73,220 @@
     "Loading autocomplete"
   ],
   "publicApi": {
-    "model": "string | readonly string[]",
+    "source": "src/components/ui/Autocomplete.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "AutocompleteModelValue | undefined",
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "suggestions",
-      "multiple",
-      "size",
-      "rounded",
-      "placeholder",
-      "hint",
-      "disabled",
-      "loading",
-      "status",
-      "statusMessage",
-      "required",
-      "defaultOpen",
-      "shadow",
-      "theme"
-    ]
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "suggestions",
+        "type": "readonly string[]",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "AutocompleteModelValue | undefined",
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: AutocompleteModelValue]"
+      }
+    ],
+    "slots": []
   }
 }

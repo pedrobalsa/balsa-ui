@@ -3,6 +3,7 @@
   "name": "icon",
   "title": "Icon",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Render one individually imported Lucide component through Balsa sizing, stroke, color inheritance, and accessibility semantics.",
@@ -51,12 +52,45 @@
     "Icon-only button with an accessible control name"
   ],
   "publicApi": {
-    "model": null,
+    "source": "src/components/ui/Icon.vue",
     "props": [
-      "icon",
-      "size",
-      "strokeWidth",
-      "label"
+      {
+        "name": "icon",
+        "type": "LucideIcon",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "IconSize | undefined",
+        "values": [
+          "md",
+          "xs",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false,
+        "default": "\"md\""
+      },
+      {
+        "name": "strokeWidth",
+        "type": "IconStrokeWidth | undefined",
+        "values": [
+          "2",
+          "1.5",
+          "2.5"
+        ],
+        "required": false,
+        "default": "2"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      }
     ],
     "events": [],
     "slots": []

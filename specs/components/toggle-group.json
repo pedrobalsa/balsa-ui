@@ -3,26 +3,252 @@
   "name": "toggle-group",
   "title": "ToggleGroup",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "toggle-group"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Connect exclusive or multiple persistent pressed-state actions with direct pointer affordance.",
-  "useFor": ["Text alignment", "View filters", "Compact multi-format toolbars"],
-  "avoidFor": ["Unrelated actions", "Boolean settings", "Long or wrapping labels"],
-  "sizes": ["sm", "md", "lg", "xl"],
-  "variants": ["surface", "solid", "outline", "glass"],
-  "states": ["single", "multiple", "horizontal", "vertical", "disabled item", "disabled group"],
+  "useFor": [
+    "Text alignment",
+    "View filters",
+    "Compact multi-format toolbars"
+  ],
+  "avoidFor": [
+    "Unrelated actions",
+    "Boolean settings",
+    "Long or wrapping labels"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "glass"
+  ],
+  "states": [
+    "single",
+    "multiple",
+    "horizontal",
+    "vertical",
+    "disabled item",
+    "disabled group"
+  ],
   "composition": {
     "dependency": "Toggle",
     "selection": "Single mode emits one id and optionally allows empty selection; multiple mode emits an immutable id array.",
     "keyboard": "Roving tabindex follows the selected or first enabled item and supports axis-aware arrows, Home, End, and wrapping."
   },
-  "accessibility": ["Provide a concise group label.", "Keep every option label explicit even when an icon is present.", "Skip disabled items during roving focus."],
-  "tokens": ["--balsa-color-surface", "--balsa-color-border-strong", "--balsa-color-primary", "--balsa-color-primary-foreground", "--balsa-color-focus-ring", "radius.control", "shadow.control"],
-  "commonMistakes": ["Passing an array model in single mode.", "Providing duplicate option ids.", "Using ToggleGroup for unrelated one-shot actions."],
-  "examples": ["Single alignment", "Multiple formatting actions", "Vertical connected group"],
+  "accessibility": [
+    "Provide a concise group label.",
+    "Keep every option label explicit even when an icon is present.",
+    "Skip disabled items during roving focus."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border-strong",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Passing an array model in single mode.",
+    "Providing duplicate option ids.",
+    "Using ToggleGroup for unrelated one-shot actions."
+  ],
+  "examples": [
+    "Single alignment",
+    "Multiple formatting actions",
+    "Vertical connected group"
+  ],
   "publicApi": {
-    "model": "string | readonly string[]",
-    "props": ["options", "label", "type", "orientation", "allowEmpty", "disabled", "variant", "color", "size", "rounded", "shadow", "theme"],
-    "events": ["update:modelValue"]
+    "source": "src/components/ui/ToggleGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | readonly string[]",
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "options",
+        "type": "readonly ToggleGroupOption[]",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "ToggleGroupType | undefined",
+        "values": [
+          "multiple",
+          "single"
+        ],
+        "required": false,
+        "default": "\"single\""
+      },
+      {
+        "name": "orientation",
+        "type": "ToggleGroupOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "allowEmpty",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "variant",
+        "type": "ToggleVariant | undefined",
+        "values": [
+          "solid",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "ToggleSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | readonly string[]",
+        "required": true
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | readonly string[]]"
+      }
+    ],
+    "slots": []
   }
 }

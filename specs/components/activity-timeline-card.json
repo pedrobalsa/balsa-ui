@@ -3,6 +3,7 @@
   "name": "activity-timeline-card",
   "title": "ActivityTimelineCard",
   "category": "composition",
+  "classification": "balsa-composition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Chronological actor, action, target, and time event stream.",
@@ -64,22 +65,103 @@
     "Application dashboard"
   ],
   "publicApi": {
+    "source": "src/components/compositions/ActivityTimelineCard.vue",
     "props": [
-      "title",
-      "description",
-      "headingLevel",
-      "shadow",
-      "theme",
-      "pattern-specific typed data"
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Recent activity\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Changes across this workspace.\""
+      },
+      {
+        "name": "events",
+        "type": "readonly ActivityEvent[] | undefined",
+        "required": false,
+        "default": "[ { id: \"1\", actor: \"Ada Lovelace\", initials: \"AL\", action: \"deployed\", target: \"Atlas to production\", time: \"8 minutes ago\" }, { id: \"2\", actor: \"Grace Hopper\", initials: \"GH\", action: \"updated\", target: \"environment variables\", time: \"42 minutes ago\" }, { id: \"3\", actor: \"Margaret Hamilton\", initials: \"MH\", action: \"invited\", target: \"two collaborators\", time: \"Yesterday\" }, ]"
+      }
     ],
-    "slots": [],
-    "events": [
-      "pattern-specific actions"
-    ],
-    "defaults": {
-      "headingLevel": 2,
-      "shadow": "auto",
-      "theme": "inherited"
-    }
+    "events": [],
+    "slots": []
   }
 }

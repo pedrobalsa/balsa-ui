@@ -3,6 +3,11 @@
   "name": "input",
   "title": "Input",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "input"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Collect a short text, password, email, number, date, phone, monetary, or percentage value with an associated label.",
@@ -76,31 +81,267 @@
     "Invalid input"
   ],
   "publicApi": {
-    "model": "string | number",
+    "source": "src/components/ui/Input.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "type",
-      "size",
-      "rounded",
-      "placeholder",
-      "hint",
-      "disabled",
-      "loading",
-      "status",
-      "statusMessage",
-      "required",
-      "min",
-      "max",
-      "step",
-      "autocomplete",
-      "mask",
-      "currency",
-      "locale",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "InputType | undefined",
+        "values": [
+          "number",
+          "text",
+          "password",
+          "date",
+          "email",
+          "phone",
+          "monetary",
+          "percentage"
+        ],
+        "required": false,
+        "default": "\"text\""
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "min",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "step",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "autocomplete",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "mask",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "currency",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"USD\""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"en-US\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | number]"
+      }
     ],
     "slots": []
   }

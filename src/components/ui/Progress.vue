@@ -10,7 +10,7 @@ export type ProgressVariant = "solid" | "soft" | "striped";
 export type ProgressSize = "sm" | "md" | "lg";
 export type ProgressState = "loading" | "complete" | "indeterminate";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaProgress", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

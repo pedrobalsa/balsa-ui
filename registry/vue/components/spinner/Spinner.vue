@@ -9,7 +9,7 @@ export type SpinnerSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type SpinnerSpeed = "slow" | "normal" | "fast";
 export type SpinnerLabelPosition = "hidden" | "right" | "bottom";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaSpinner", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

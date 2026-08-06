@@ -65,7 +65,7 @@ const codeOptionSizeClasses: Readonly<Record<ButtonSize, string[]>> = {
 
 const shapeClasses: Readonly<Record<ButtonGroupShape, string>> = {
   rounded: "rounded-balsa-control",
-  pill: "rounded-full",
+  pill: "rounded-balsa-pill",
 };
 
 defineOptions({ inheritAttrs: false });

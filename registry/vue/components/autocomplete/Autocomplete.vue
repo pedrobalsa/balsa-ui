@@ -30,7 +30,7 @@ import { useResolvedThemeProps } from "./theme-context";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import Icon from "./Icon.vue";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaAutocomplete", inheritAttrs: false });
 
 export type AutocompleteModelValue = string | readonly string[];
 

@@ -563,10 +563,14 @@ function parseColor(value: string): RgbColor | undefined {
   }
   const rgb = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/i.exec(input);
   if (!rgb) return undefined;
+  const [, redText, greenText, blueText] = rgb;
+  if (redText === undefined || greenText === undefined || blueText === undefined) {
+    return undefined;
+  }
   return {
-    red: Number.parseFloat(rgb[1]),
-    green: Number.parseFloat(rgb[2]),
-    blue: Number.parseFloat(rgb[3]),
+    red: Number.parseFloat(redText),
+    green: Number.parseFloat(greenText),
+    blue: Number.parseFloat(blueText),
   };
 }
 
@@ -591,12 +595,17 @@ function mix(from: RgbColor, to: RgbColor, amount: number): RgbColor {
   };
 }
 
+function linearChannel(value: number): number {
+  const channel = value / 255;
+  return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
 function relativeLuminance({ red, green, blue }: RgbColor): number {
-  const [r, g, b] = [red, green, blue].map((value) => {
-    const channel = value / 255;
-    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
-  });
-  return r * 0.2126 + g * 0.7152 + b * 0.0722;
+  return (
+    linearChannel(red) * 0.2126
+    + linearChannel(green) * 0.7152
+    + linearChannel(blue) * 0.0722
+  );
 }
 
 function contrastRatio(first: RgbColor, second: RgbColor): number {
@@ -691,7 +700,7 @@ export function applyGradientBackgroundEffectContrast(
     textColor,
     background,
   );
-  return { ink: repairedInk, paper: repairedPaper };
+  return { ink: repairedInk ?? ink, paper: repairedPaper ?? paper };
 }
 
 /**

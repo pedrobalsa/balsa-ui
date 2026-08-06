@@ -3,6 +3,11 @@
   "name": "input-group",
   "title": "Input Group",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "input-group"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Connect typed text or icon addons and contextual actions to one labelled text-like input.",
@@ -57,35 +62,251 @@
     "Stacked action row"
   ],
   "publicApi": {
-    "model": "string",
+    "source": "src/components/ui/InputGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "type",
-      "layout",
-      "startText",
-      "endText",
-      "startIcon",
-      "endIcon",
-      "size",
-      "rounded",
-      "placeholder",
-      "hint",
-      "disabled",
-      "loading",
-      "status",
-      "statusMessage",
-      "required",
-      "name",
-      "autocomplete",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "\"text\" | \"email\" | \"url\" | \"search\" | undefined",
+        "values": [
+          "text",
+          "email",
+          "url",
+          "search"
+        ],
+        "required": false,
+        "default": "\"text\""
+      },
+      {
+        "name": "layout",
+        "type": "InputGroupLayout | undefined",
+        "values": [
+          "inline",
+          "stacked"
+        ],
+        "required": false,
+        "default": "\"inline\""
+      },
+      {
+        "name": "startText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "endText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "startIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "endIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "autocomplete",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
     ],
     "slots": [
-      "start",
-      "end"
+      {
+        "name": "start",
+        "type": "{}"
+      },
+      {
+        "name": "end",
+        "type": "{}"
+      }
     ]
   }
 }

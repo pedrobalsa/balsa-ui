@@ -3,6 +3,11 @@
   "name": "slider",
   "title": "Slider",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "slider"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Choose one numeric value by default or a bounded numeric range through native keyboard, pointer, touch, and form behavior.",
@@ -57,27 +62,204 @@
     "Vertical orientation"
   ],
   "publicApi": {
-    "model": "number | [number, number]",
+    "source": "src/components/ui/Slider.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "SliderModelValue | undefined",
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "min",
-      "max",
-      "step",
-      "minStepsBetweenThumbs",
-      "orientation",
-      "size",
-      "rounded",
-      "disabled",
-      "required",
-      "showValue",
-      "name",
-      "hint",
-      "formatValue",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "100"
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "minStepsBetweenThumbs",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "orientation",
+        "type": "SliderOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "size",
+        "type": "SliderSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "showValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "formatValue",
+        "type": "((value: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "SliderModelValue | undefined",
+        "required": false,
+        "default": "0"
+      }
     ],
     "events": [
-      "update:modelValue"
+      {
+        "name": "update:modelValue",
+        "type": "[value: SliderModelValue]"
+      }
     ],
     "slots": []
   }

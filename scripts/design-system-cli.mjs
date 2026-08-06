@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { ensureStyleImports } from "./agent-context.mjs";
 import { installRegistryItems } from "./install-registry.mjs";
 import { readJson, targetPath, writeJson } from "./registry-lib.mjs";
 import {
@@ -188,13 +189,22 @@ export async function createDesignSystemConfiguration({
   });
   const themeFile = await writeGenerated(projectRoot, themeTarget, themeSource, force);
   const paletteFile = await writeGenerated(projectRoot, paletteTarget, paletteSource, force);
+  // Writing the stylesheets is not the same as activating them. Without this the
+  // command reports success while the application renders completely unstyled.
+  const stylesheet = await ensureStyleImports(projectRoot, {
+    generated: [`${name}-palette.css`],
+  });
 
   const manifestPath = path.join(projectRoot, ".balsa", "installed.json");
   const manifest = await readJson(manifestPath);
-  manifest.components[`design-system-${name}`] = {
-    registry: "@balsa/design-system",
+  const generatedHash = contentHash(`${themeSource}${paletteSource}`);
+  manifest.components[`@balsa/design-system-${name}`] = {
+    registry: `@balsa/design-system-${name}`,
+    namespace: "@balsa",
     installedVersion: "1.0.0",
-    sourceHash: contentHash(`${themeSource}${paletteSource}`),
+    designSystemVersion: manifest.components["@balsa/balsa-theme"]?.designSystemVersion,
+    originalSourceHash: generatedHash,
+    installedSourceHash: generatedHash,
     targetPath: themeFile,
     files: [themeFile, paletteFile],
   };
@@ -207,5 +217,7 @@ export async function createDesignSystemConfiguration({
     identifier: themeExportIdentifier(name),
     paletteId: name,
     installed,
+    stylesheet,
+    projectRoot,
   };
 }

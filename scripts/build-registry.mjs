@@ -4,6 +4,7 @@ import { buildCatalog } from "./build-catalog.mjs";
 import {
   generatedDirectory,
   loadRegistry,
+  readJson,
   rootDir,
   sourcePath,
   writeJson,
@@ -31,12 +32,15 @@ for (const item of registry.items) {
       path: file.path,
       type: file.type,
       target: file.target,
-      content: await readFile(canonicalPath, "utf8"),
+      // Published payloads must not depend on the checkout that built them. A
+      // Windows working tree carries CRLF, which would otherwise ship to every
+      // consumer and make the generated registry differ by build machine.
+      content: (await readFile(canonicalPath, "utf8")).split("\r\n").join("\n"),
     });
   }
 
   await writeJson(path.join(rootDir, "public", "r", `${item.name}.json`), {
-    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    $schema: "https://shadcn-vue.com/schema/registry-item.json",
     name: item.name,
     type: item.type,
     title: item.title,
@@ -47,6 +51,27 @@ for (const item of registry.items) {
     meta: item.meta,
   });
 }
+
+// The published index. Registry tooling and directory listings discover the
+// namespace through this document rather than by guessing item names, and it is
+// what lets an existing shadcn user browse Balsa without adopting the CLI.
+const packageJson = await readJson(path.join(rootDir, "package.json"));
+await writeJson(path.join(rootDir, "public", "r", "registry.json"), {
+  $schema: "https://shadcn-vue.com/schema/registry.json",
+  name: registry.name,
+  homepage: registry.homepage,
+  version: packageJson.version,
+  items: registry.items.map((item) => ({
+    name: item.name,
+    type: item.type,
+    title: item.title,
+    description: item.description,
+    dependencies: item.dependencies,
+    registryDependencies: item.registryDependencies,
+    files: item.files.map((file) => ({ path: file.path, type: file.type, target: file.target })),
+    meta: item.meta,
+  })),
+});
 
 await mkdir(path.join(rootDir, "registry", "vue"), { recursive: true });
 await writeFile(

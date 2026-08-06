@@ -2,10 +2,13 @@ import { Buffer } from "node:buffer";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { ensureStyleImports } from "./agent-context.mjs";
 import { installRegistryItems } from "./install-registry.mjs";
 import { readJson, targetPath, writeJson } from "./registry-lib.mjs";
 
 const themes = new Set(["modern-flat", "brutalism", "glassmorphism"]);
+
+export const themePresets = [...themes];
 const optionValues = {
   typography: new Set(["modern", "system", "editorial", "mono"]),
   shape: new Set(["square", "subtle", "rounded", "soft"]),
@@ -337,6 +340,35 @@ function contentHash(content) {
   return `sha256-${createHash("sha256").update(content).digest("hex")}`;
 }
 
+/**
+ * Creating a theme module is not the same as the project using it. `apply`
+ * finishes the job: it installs the foundation, writes the module, wires the
+ * stylesheet, and reports the exact activation, so a consumer is never left
+ * with a theme on disk that nothing reads.
+ */
+export async function applyThemeConfiguration({ preset, cwd, name, force = false }) {
+  if (!themes.has(preset)) {
+    throw new Error(
+      `Unknown Balsa theme preset: ${preset}. Available presets: ${themePresets.join(", ")}.`,
+    );
+  }
+  const result = await createThemeConfiguration({
+    name: name ?? preset,
+    cwd,
+    preset,
+    force,
+  });
+  const projectRoot = path.resolve(cwd ?? process.cwd());
+  const stylesheet = await ensureStyleImports(projectRoot);
+  return {
+    ...result,
+    preset,
+    themeId: name ?? preset,
+    stylesheet,
+    projectRoot,
+  };
+}
+
 export async function createThemeConfiguration({
   name,
   cwd,
@@ -385,10 +417,13 @@ export async function createThemeConfiguration({
   const manifestPath = path.join(projectRoot, ".balsa", "installed.json");
   const manifest = await readJson(manifestPath);
   const portableTarget = relativeTarget.replaceAll(path.sep, "/");
-  manifest.components[`theme-${name}`] = {
-    registry: "@balsa/theme-config",
+  const generatedHash = contentHash(content);
+  manifest.components[`@balsa/theme-${name}`] = {
+    registry: `@balsa/theme-${name}`,
+    namespace: "@balsa",
     installedVersion: "1.0.0",
-    sourceHash: contentHash(content),
+    originalSourceHash: generatedHash,
+    installedSourceHash: generatedHash,
     targetPath: portableTarget,
     files: [portableTarget],
   };

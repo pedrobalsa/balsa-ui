@@ -2,21 +2,77 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://balsa-ui.com/schemas/installed-manifest.json",
   "title": "Balsa installed source manifest",
+  "description": "Provenance for every registry item installed into a project. Records where source came from, what it was when it arrived, and what Balsa layered on top, so an update can separate upstream change from local change.",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "components"],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "components": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["registry", "installedVersion", "sourceHash", "targetPath", "files"],
+        "required": [
+          "registry",
+          "namespace",
+          "installedVersion",
+          "installedSourceHash",
+          "originalSourceHash",
+          "targetPath",
+          "files"
+        ],
         "properties": {
-          "registry": { "type": "string", "pattern": "^@balsa/" },
+          "registry": {
+            "description": "Fully qualified item reference, for example @balsa/button or @shadcn/button.",
+            "type": "string",
+            "pattern": "^(?:@[a-z0-9-]+/.+|https?://.+)$"
+          },
+          "namespace": {
+            "description": "Registry namespace the item was resolved from.",
+            "type": "string",
+            "pattern": "^(?:@[a-z0-9-]+|url)$"
+          },
+          "origin": {
+            "description": "Resolved registry URL for items not published by Balsa itself.",
+            "type": "string"
+          },
           "installedVersion": { "type": "string" },
-          "sourceHash": { "type": "string", "pattern": "^sha256-[a-f0-9]{64}$" },
+          "upstreamVersion": {
+            "description": "Version declared by the source registry, when it declares one.",
+            "type": "string"
+          },
+          "contractVersion": {
+            "description": "Version of the Balsa component specification describing this item.",
+            "type": "string"
+          },
+          "adapterVersion": {
+            "description": "Version of the Balsa theme adapter applied to an upstream item.",
+            "type": "string"
+          },
+          "designSystemVersion": {
+            "description": "Balsa release whose design system was active at install time.",
+            "type": "string"
+          },
+          "originalSourceHash": {
+            "description": "Hash of the source as published, before any local edit.",
+            "type": "string",
+            "pattern": "^sha256-[a-f0-9]{64}$"
+          },
+          "installedSourceHash": {
+            "description": "Hash of the source as written to disk. Divergence from the files on disk means the consumer edited them.",
+            "type": "string",
+            "pattern": "^sha256-[a-f0-9]{64}$"
+          },
+          "dependencies": {
+            "description": "npm packages the item requires.",
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "registryDependencies": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
           "targetPath": { "type": "string" },
           "files": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
         }

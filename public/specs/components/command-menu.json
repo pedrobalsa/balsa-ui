@@ -3,6 +3,11 @@
   "name": "command-menu",
   "title": "Command Menu",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "command"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Filter and invoke grouped commands through an inline query with an anchored dropdown or on-demand dialog.",
@@ -57,32 +62,243 @@
     "Empty query result"
   ],
   "publicApi": {
-    "model": "boolean; query model: string",
+    "source": "src/components/ui/CommandMenu.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      },
+      {
+        "name": "query",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:query"
+      }
+    ],
     "props": [
-      "id",
-      "label",
-      "groups",
-      "mode",
-      "title",
-      "description",
-      "placeholder",
-      "loading",
-      "variant",
-      "size",
-      "rounded",
-      "hotkey",
-      "contained",
-      "shadow",
-      "theme"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "groups",
+        "type": "readonly CommandGroup[]",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "CommandMenuMode | undefined",
+        "values": [
+          "inline",
+          "dialog"
+        ],
+        "required": false,
+        "default": "\"inline\""
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Command menu\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Search commands\""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "variant",
+        "type": "LayerVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CommandMenuSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "hotkey",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"k\""
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "query",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
     ],
     "events": [
-      "update:modelValue",
-      "update:query",
-      "select"
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      },
+      {
+        "name": "select",
+        "type": "[item: CommandItem]"
+      },
+      {
+        "name": "update:query",
+        "type": "[value: string]"
+      }
     ],
     "slots": [
-      "empty",
-      "loading"
+      {
+        "name": "empty",
+        "type": "{}"
+      },
+      {
+        "name": "loading",
+        "type": "{}"
+      }
     ]
   }
 }

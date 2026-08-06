@@ -3,6 +3,11 @@
   "name": "table",
   "title": "Table",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "table"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Present consumer-authored semantic tabular markup in a responsive Balsa surface with independently configurable header and row colors.",
@@ -62,29 +67,235 @@
     "Empty"
   ],
   "publicApi": {
+    "source": "src/components/ui/Table.vue",
     "props": [
-      "caption",
-      "variant",
-      "density",
-      "headerColor",
-      "rowColor",
-      "striped",
-      "hover",
-      "gridlines",
-      "stickyHeader",
-      "loading",
-      "empty",
-      "emptyText",
-      "columnCount",
-      "rounded",
-      "shadow",
-      "theme"
+      {
+        "name": "caption",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "TableVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "density",
+        "type": "TableDensity | undefined",
+        "values": [
+          "default",
+          "compact",
+          "comfortable"
+        ],
+        "required": false
+      },
+      {
+        "name": "headerColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "rowColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "striped",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "hover",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "gridlines",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "stickyHeader",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "empty",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No rows to display.\""
+      },
+      {
+        "name": "columnCount",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": [
-      "header",
-      "default",
-      "footer",
-      "empty"
+      {
+        "name": "header",
+        "type": "{}"
+      },
+      {
+        "name": "empty",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "footer",
+        "type": "{}"
+      }
     ]
   }
 }

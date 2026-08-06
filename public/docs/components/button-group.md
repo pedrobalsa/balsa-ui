@@ -6,7 +6,7 @@ ButtonGroup inherits the nearest `data-theme` and accepts `theme?: ThemeInput` f
 
 The default `surface` variant serves ordinary grouped actions. When no `variant` is supplied, it resolves to `glass` under the nearest Glassmorphism theme and remains `surface` in Modern Flat and Brutalism; pass `surface` explicitly to retain it in Glassmorphism. Use `solid` for a prominent local mode switch, `outline` for secondary grouped choices, and `glass` for a translucent low-rim group in Glassmorphism. Each non-code variant accepts the typed `primary`, `secondary`, `accent`, or `destructive` `color`, and all support `sm`, `md`, `lg`, and `xl` sizes.
 
-ButtonGroup defaults to the same `rounded` silhouette as Button, using `rounded-lg` rather than the broader theme control radius. In Brutalism, that default resolves to `rounded-none`; use a consumer radius class or the typed `pill` shape when the context calls for an override.
+ButtonGroup defaults to the same `rounded` silhouette as Button, using `rounded-lg` rather than the broader theme control radius. In Brutalism, that default resolves to `rounded-none`; use a consumer radius class when the context calls for an override. The typed `pill` shape follows the theme-owned pill radius, so it squares off under a square shape recipe rather than staying round.
 
 Use the typed `code` variant for compact controls in a CodeBlock header; it resolves code-surface borders, text, selected state, and interaction colors without descendant selectors or important utilities. Its radius stays compact in Glassmorphism, matching the other themes instead of inheriting the larger glass control radius. Root layout classes and styles are merged normally.
 

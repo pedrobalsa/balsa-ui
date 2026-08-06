@@ -3,6 +3,7 @@
   "name": "file-upload-card",
   "title": "FileUploadCard",
   "category": "composition",
+  "classification": "balsa-composition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Drag-and-drop import target with format guidance and browse action.",
@@ -64,22 +65,120 @@
     "Application dashboard"
   ],
   "publicApi": {
+    "source": "src/components/compositions/FileUploadCard.vue",
     "props": [
-      "title",
-      "description",
-      "headingLevel",
-      "shadow",
-      "theme",
-      "pattern-specific typed data"
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"File upload\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Drag and drop or browse.\""
+      },
+      {
+        "name": "acceptLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"PNG, JPG, or PDF up to 10 MB\""
+      },
+      {
+        "name": "actionLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Browse files\""
+      }
     ],
-    "slots": [],
     "events": [
-      "pattern-specific actions"
+      {
+        "name": "browse",
+        "type": "[]"
+      }
     ],
-    "defaults": {
-      "headingLevel": 2,
-      "shadow": "auto",
-      "theme": "inherited"
-    }
+    "slots": []
   }
 }

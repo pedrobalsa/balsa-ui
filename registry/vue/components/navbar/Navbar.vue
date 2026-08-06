@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaNavbar" });
+
 import { ChevronDown, ChevronRight, ChevronUp, Menu, X } from "@lucide/vue";
 import {
   computed,
@@ -36,6 +38,13 @@ const props = defineProps<{
   floatingMaxWidth?: string;
   contentMaxWidth?: string;
   itemsAlignment?: NavbarItemsAlignment;
+  /**
+   * Optional CSS width for the desktop navigation region while the bar itself
+   * stays full width, for a route whose page reserves the remainder. The
+   * content centres inside the region and takes a taller row, reading as chrome
+   * over a full-bleed page; below `lg` it always spans the bar.
+   */
+  contentRegion?: string;
   /** @deprecated Use behavior=\"fixed\" instead. */
   fixed?: boolean;
   shadow?: Shadow;
@@ -142,25 +151,65 @@ const itemsAlignmentClasses: Readonly<Record<NavbarItemsAlignment, string>> = {
   center: "justify-center",
   right: "justify-end",
 };
+/** True when a route has reserved part of the page for its own content. */
+const regionConfined = computed(() => Boolean(props.contentRegion));
 const navigationLayoutClasses = computed(() =>
   resolvedType.value === "floating" && resolvedFloatingLayout.value === "inset"
     ? "relative flex h-14 items-center gap-4 px-2 sm:px-2 lg:px-6 xl:px-8"
     : resolvedType.value === "floating"
       ? "relative flex h-14 items-center gap-4 px-4 sm:px-6 lg:px-8"
-      : "site-container relative flex h-14 items-center gap-4",
+      // A navbar confined to a region is chrome over a full-bleed page: the row
+      // is tall enough to hold it clear of the top edge, and it takes that page
+      // region rather than the page's centred container.
+      : regionConfined.value
+        ? "relative flex h-26 w-full items-center px-4 sm:px-6 lg:w-[var(--balsa-navbar-region,100%)] lg:px-8"
+        : "site-container relative flex h-14 items-center gap-4",
 );
-const desktopItemsClasses = computed(() => [
-  "hidden h-full flex-1 items-stretch lg:flex",
-  itemsAlignmentClasses[resolvedItemsAlignment.value],
+const materialClasses = computed(() => [
+  ...variantClasses[resolvedVariant.value],
+  ...colorClasses[resolvedColor.value][resolvedVariant.value],
 ]);
+/**
+ * The column the bar's content occupies inside its region. It matches the
+ * column the page uses for its own content, and stays transparent to layout for
+ * every ordinary navbar.
+ */
+const contentColumnClasses = computed(() =>
+  regionConfined.value
+    ? [
+        "mx-auto flex w-full max-w-xl items-center gap-4 min-[1536px]:max-w-2xl min-[1920px]:max-w-3xl",
+      ]
+    : ["contents"]
+);
+const regionItemsAlignmentClasses: Readonly<Record<NavbarItemsAlignment, string>> = {
+  left: "mr-auto",
+  center: "mx-auto",
+  right: "ml-auto",
+};
+const desktopItemsClasses = computed(() =>
+  regionConfined.value
+    ? [
+        // The trailing item's own padding is pulled back out so its label lands
+        // on the column edge, level with the page content below it.
+        "hidden h-full w-fit items-stretch lg:-mr-4 lg:flex",
+        regionItemsAlignmentClasses[resolvedItemsAlignment.value],
+      ]
+    : [
+        "hidden h-full flex-1 items-stretch lg:flex",
+        itemsAlignmentClasses[resolvedItemsAlignment.value],
+      ]
+);
 const floatingStyle = computed<Record<string, string> | undefined>(() =>
   resolvedType.value === "floating" && props.floatingMaxWidth
     ? { maxWidth: props.floatingMaxWidth }
     : undefined,
 );
-const navigationStyle = computed<Record<string, string> | undefined>(() =>
-  props.contentMaxWidth ? { maxWidth: props.contentMaxWidth } : undefined,
-);
+const navigationStyle = computed<Record<string, string> | undefined>(() => {
+  const style: Record<string, string> = {};
+  if (props.contentMaxWidth) style.maxWidth = props.contentMaxWidth;
+  if (props.contentRegion) style["--balsa-navbar-region"] = props.contentRegion;
+  return Object.keys(style).length ? style : undefined;
+});
 const brandLinkClasses = computed(() =>
   props.logo.title
     ? "shrink-0 no-underline"
@@ -190,11 +239,16 @@ const containerClasses = computed(() => [
   variantTextClasses[resolvedVariant.value],
   isNavHidden.value ? "pointer-events-none -translate-y-[calc(100%+1rem)]" : "translate-y-0",
 ]);
+/**
+ * A minimal navbar is chrome over the page rather than a band across it, and a
+ * navbar whose items carry the material has already spent it, so in both cases
+ * the bar keeps its geometry and drops its fill.
+ */
+const barMaterialVisible = computed(() => resolvedType.value !== "minimal");
 const surfaceClasses = computed(() => [
   "pointer-events-none absolute z-0",
   ...surfaceTypeClasses[resolvedType.value],
-  ...variantClasses[resolvedVariant.value],
-  ...colorClasses[resolvedColor.value][resolvedVariant.value],
+  ...(barMaterialVisible.value ? materialClasses.value : []),
 ]);
 
 function hasLinks(item: NavigationGroup): boolean {
@@ -304,7 +358,10 @@ onBeforeUnmount(() => {
     :style="[floatingStyle, theme.explicitPresentation.value?.style]"
     :class="containerClasses"
   >
+    <!-- Omitted rather than emptied: the themed recipes fill this element by
+         selector, so a materialless bar must not put one on the page at all. -->
     <div
+      v-if="barMaterialVisible"
       aria-hidden="true"
       data-balsa="navbar-surface"
       :data-variant="resolvedVariant"
@@ -312,27 +369,28 @@ onBeforeUnmount(() => {
       :class="surfaceClasses"
     />
     <nav aria-label="Main navigation" :class="navigationLayoutClasses" :style="navigationStyle">
-      <a
-        :href="props.logo.href"
-        :class="brandLinkClasses"
-        :aria-label="props.logo.alt"
-        @click="navigate({ title: props.logo.alt, link: props.logo.href })"
-      >
-        <span v-if="props.logo.title" :class="brandTitleClasses">{{ props.logo.title }}</span>
-        <img v-else :src="props.logo.src" alt="" class="h-9 w-full object-contain object-left" />
-      </a>
-
-      <ul :class="desktopItemsClasses">
-        <NavbarExpandableItem
-          v-for="(item, index) in props.items"
-          :key="item.link"
-          :item="item"
-          :expanded="activeItem?.link === item.link"
-          :menu-id="`navbar-dropdown-${index}`"
-          @open="openDesktopItem"
-          @close="scheduleDesktopClose"
-          @navigate="navigate"
+      <div :class="contentColumnClasses">
+        <a
+          :href="props.logo.href"
+          :class="brandLinkClasses"
+          :aria-label="props.logo.alt"
+          @click="navigate({ title: props.logo.alt, link: props.logo.href })"
         >
+          <span v-if="props.logo.title" :class="brandTitleClasses">{{ props.logo.title }}</span>
+          <img v-else :src="props.logo.src" alt="" class="h-9 w-full object-contain object-left" />
+        </a>
+
+        <ul :class="desktopItemsClasses">
+          <NavbarExpandableItem
+            v-for="(item, index) in props.items"
+            :key="item.link"
+            :item="item"
+            :expanded="activeItem?.link === item.link"
+            :menu-id="`navbar-dropdown-${index}`"
+            @open="openDesktopItem"
+            @close="scheduleDesktopClose"
+            @navigate="navigate"
+          >
           <Dropdown
             v-if="hasLinks(item)"
             :id="`navbar-dropdown-${index}`"
@@ -358,8 +416,8 @@ onBeforeUnmount(() => {
               </li>
             </ul>
           </Dropdown>
-        </NavbarExpandableItem>
-      </ul>
+          </NavbarExpandableItem>
+        </ul>
 
       <div v-if="hasDesktopActions" class="hidden min-w-40 shrink-0 items-center justify-end gap-2 lg:flex">
         <slot name="actions" />
@@ -374,7 +432,7 @@ onBeforeUnmount(() => {
       >
         <Icon :icon="mobileMenuIcon" size="md" />
       </button>
-
+      </div>
     </nav>
 
     <div :class="mobilePanelClasses" class="lg:hidden">

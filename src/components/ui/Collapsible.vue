@@ -11,7 +11,7 @@ export type CollapsibleVariant = "underline" | "surface" | "outline" | "soft" | 
 export type CollapsibleSize = "sm" | "md" | "lg";
 export type CollapsibleHeadingLevel = 2 | 3 | 4 | 5 | 6;
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaCollapsible", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

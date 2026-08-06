@@ -10,7 +10,7 @@ type LinkVariant = "text" | "solid" | "outline";
 type LinkSize = "sm" | "md" | "lg";
 type Rounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaLink", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

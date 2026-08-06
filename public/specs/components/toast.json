@@ -3,6 +3,11 @@
   "name": "toast",
   "title": "Toast",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "sonner"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Present transient, non-blocking notifications in a viewport-level managed stack.",
@@ -69,30 +74,166 @@
     "Top-center notification"
   ],
   "publicApi": {
-    "model": "readonly ToastItem[]",
+    "source": "src/components/ui/ToastViewport.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "readonly ToastItem[] | undefined",
+        "event": "update:modelValue"
+      }
+    ],
     "props": [
-      "label",
-      "position",
-      "limit",
-      "duration",
-      "pauseOnHover",
-      "pauseOnFocus",
-      "contained",
-      "teleportTo",
-      "shadow",
-      "theme"
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Notifications\""
+      },
+      {
+        "name": "position",
+        "type": "ToastPosition | undefined",
+        "values": [
+          "bottom-start",
+          "bottom-end",
+          "bottom-center",
+          "top-start",
+          "top-center",
+          "top-end"
+        ],
+        "required": false,
+        "default": "\"bottom-end\""
+      },
+      {
+        "name": "limit",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "5"
+      },
+      {
+        "name": "duration",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "5000"
+      },
+      {
+        "name": "pauseOnHover",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "pauseOnFocus",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "teleportTo",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"body\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "readonly ToastItem[] | undefined",
+        "required": false,
+        "default": "[]"
+      }
     ],
     "events": [
-      "update:modelValue",
-      "action",
-      "dismiss"
+      {
+        "name": "update:modelValue",
+        "type": "[value: readonly ToastItem[]]"
+      },
+      {
+        "name": "dismiss",
+        "type": "[item: ToastItem, reason: ToastDismissReason]"
+      },
+      {
+        "name": "action",
+        "type": "[item: ToastItem]"
+      }
     ],
     "slots": [
-      "action"
-    ],
-    "parts": [
-      "Toast",
-      "ToastViewport"
+      {
+        "name": "action",
+        "type": "{ item: ToastItem; dismiss: () => void; run: () => void; }"
+      }
     ]
   }
 }

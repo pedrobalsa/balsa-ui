@@ -3,6 +3,11 @@
   "name": "spinner",
   "title": "Spinner",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "spinner"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Announce and visualize an indeterminate operation with no measurable completion value.",
@@ -47,13 +52,113 @@
     "Stacked loading label"
   ],
   "publicApi": {
+    "source": "src/components/ui/Spinner.vue",
     "props": [
-      "label",
-      "labelPosition",
-      "color",
-      "size",
-      "speed",
-      "theme"
-    ]
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Loading\""
+      },
+      {
+        "name": "labelPosition",
+        "type": "SpinnerLabelPosition | undefined",
+        "values": [
+          "bottom",
+          "right",
+          "hidden"
+        ],
+        "required": false,
+        "default": "\"hidden\""
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"info\""
+      },
+      {
+        "name": "size",
+        "type": "SpinnerSize | undefined",
+        "values": [
+          "md",
+          "xs",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "speed",
+        "type": "SpinnerSpeed | undefined",
+        "values": [
+          "normal",
+          "slow",
+          "fast"
+        ],
+        "required": false,
+        "default": "\"normal\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
   }
 }

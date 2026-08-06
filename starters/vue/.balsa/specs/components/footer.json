@@ -3,6 +3,7 @@
   "name": "footer",
   "title": "Footer",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Close an application with brand context, grouped links, and optional contact or social information.",
@@ -44,17 +45,169 @@
     "Footer with contacts and social links"
   ],
   "publicApi": {
+    "source": "src/components/ui/Footer.vue",
     "props": [
-      "legalLogo",
-      "description",
-      "sections",
-      "copyright",
-      "contactGroups",
-      "socialLinks",
-      "leadTitle",
-      "navigationLabel",
-      "legalText",
-      "theme"
-    ]
+      {
+        "name": "legalLogo",
+        "type": "BrandLogo",
+        "shape": {
+          "type": "BrandLogo",
+          "variants": [
+            {
+              "type": "BrandImage",
+              "fields": [
+                {
+                  "name": "src",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "title",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "type": "BrandTitle",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "src",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "sections",
+        "type": "readonly FooterSection[]",
+        "required": true
+      },
+      {
+        "name": "copyright",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "contactGroups",
+        "type": "readonly FooterContactGroup[] | undefined",
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "socialLinks",
+        "type": "readonly FooterSocialLink[] | undefined",
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "leadTitle",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Balsa UI\""
+      },
+      {
+        "name": "navigationLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Footer navigation\""
+      },
+      {
+        "name": "legalText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Open source. Open code. Built for Vue.\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
   }
 }

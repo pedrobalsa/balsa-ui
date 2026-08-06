@@ -18,7 +18,7 @@ import Icon from "./Icon.vue";
 export type DrawerSide = "left" | "right" | "top" | "bottom";
 export type DrawerSize = "sm" | "md" | "lg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaDrawer", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

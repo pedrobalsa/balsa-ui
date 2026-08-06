@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ name: "BalsaCalendar" });
+
 import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import { computed, nextTick, ref, watch } from "vue";
 import Button from "./Button.vue";

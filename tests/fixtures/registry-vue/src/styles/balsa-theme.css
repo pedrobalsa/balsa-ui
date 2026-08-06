@@ -6,6 +6,10 @@
   --radius-balsa-control: var(--balsa-radius-control);
   --radius-balsa-surface: var(--balsa-radius-surface);
   --radius-balsa-panel: var(--balsa-radius-panel);
+  /* The pill radius badges, toggles, and pill-shaped controls share. It is a
+     recipe value, not a constant: a square shape recipe collapses it to 0 so a
+     pill control squares off with everything around it. */
+  --radius-balsa-pill: var(--balsa-radius-badge);
   --spacing-balsa-control-inline: var(--balsa-spacing-control-inline);
   --spacing-balsa-density-compact: var(--balsa-spacing-density-compact);
   --spacing-balsa-density-default: var(--balsa-spacing-density-default);

@@ -11,7 +11,7 @@ export type ResizableOrientation = "horizontal" | "vertical";
 export type ResizableVariant = "surface" | "outline" | "soft" | "glass";
 export type ResizableSize = "sm" | "md" | "lg";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaResizable", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

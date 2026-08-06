@@ -3,6 +3,11 @@
   "name": "breadcrumb",
   "title": "Breadcrumb",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "breadcrumb"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Show the current location in a compact hierarchy while linking every applicable ancestor.",
@@ -49,13 +54,89 @@
     "Slash-separated location"
   ],
   "publicApi": {
+    "source": "src/components/ui/Breadcrumb.vue",
     "props": [
-      "items",
-      "separator",
-      "size",
-      "ariaLabel",
-      "theme"
+      {
+        "name": "items",
+        "type": "readonly BreadcrumbItem[]",
+        "required": true
+      },
+      {
+        "name": "separator",
+        "type": "BreadcrumbSeparator | undefined",
+        "values": [
+          "dot",
+          "chevron",
+          "slash"
+        ],
+        "required": false,
+        "default": "\"chevron\""
+      },
+      {
+        "name": "size",
+        "type": "BreadcrumbSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Breadcrumb\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
+    "events": [],
     "slots": []
   }
 }

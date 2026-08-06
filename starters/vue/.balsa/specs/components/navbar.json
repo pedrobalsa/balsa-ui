@@ -3,6 +3,7 @@
   "name": "navbar",
   "title": "Navbar",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Provide responsive application navigation with compact item-anchored desktop menus plus controllable material, layout, and scroll behavior without coupling to a router or store.",
@@ -28,6 +29,8 @@
     "minimal"
   ],
   "states": [
+    "material on the bar",
+    "region-confined content column",
     "compact desktop dropdown open",
     "mobile menu open",
     "mobile group expanded",
@@ -69,26 +72,238 @@
     "Mobile accordion navigation"
   ],
   "publicApi": {
+    "source": "src/components/ui/Navbar.vue",
     "props": [
-      "logo",
-      "items",
-      "variant",
-      "color",
-      "type",
-      "behavior",
-      "floatingLayout",
-      "floatingMaxWidth",
-      "contentMaxWidth",
-      "itemsAlignment",
-      "fixed",
-      "shadow",
-      "theme"
-    ],
-    "slots": [
-      "actions"
+      {
+        "name": "logo",
+        "type": "BrandLogo",
+        "shape": {
+          "type": "BrandLogo",
+          "variants": [
+            {
+              "type": "BrandImage",
+              "fields": [
+                {
+                  "name": "src",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "title",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "type": "BrandTitle",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "src",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly NavigationGroup[]",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "NavbarVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "NavbarType | undefined",
+        "values": [
+          "bar",
+          "floating",
+          "minimal"
+        ],
+        "required": false
+      },
+      {
+        "name": "behavior",
+        "type": "NavbarBehavior | undefined",
+        "values": [
+          "fixed",
+          "static",
+          "reveal"
+        ],
+        "required": false
+      },
+      {
+        "name": "floatingLayout",
+        "type": "NavbarFloatingLayout | undefined",
+        "values": [
+          "inset",
+          "container"
+        ],
+        "required": false
+      },
+      {
+        "name": "floatingMaxWidth",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "contentMaxWidth",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "itemsAlignment",
+        "type": "NavbarItemsAlignment | undefined",
+        "values": [
+          "center",
+          "right",
+          "left"
+        ],
+        "required": false
+      },
+      {
+        "name": "contentRegion",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "description": "Optional CSS width for the desktop navigation region while the bar itself\nstays full width, for a route whose page reserves the remainder. The\ncontent centres inside the region and takes a taller row, reading as chrome\nover a full-bleed page; below `lg` it always spans the bar."
+      },
+      {
+        "name": "fixed",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
     "events": [
-      "navigate"
+      {
+        "name": "navigate",
+        "type": "[item: NavigationLink]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "{}"
+      }
     ]
   }
 }

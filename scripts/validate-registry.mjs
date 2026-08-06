@@ -1,7 +1,11 @@
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
-import { publicBaseUrl, publicDocumentationUrl } from "./agent-context.mjs";
+import {
+  formatComponentMarkdown,
+  publicBaseUrl,
+  publicDocumentationUrl,
+} from "./agent-context.mjs";
 import {
   generatedDirectory,
   loadRegistry,
@@ -19,6 +23,38 @@ const ajv = new Ajv2020({ allErrors: true });
 const validateSpec = ajv.compile(await readJson(path.join(rootDir, "specs", "component.schema.json")));
 const validateCatalog = ajv.compile(await readJson(path.join(rootDir, "specs", "catalog.schema.json")));
 const validateManifest = ajv.compile(await readJson(path.join(rootDir, "specs", "installed-manifest.schema.json")));
+
+const documentationSections = [
+  "## Use for",
+  "## Avoid for",
+  "## Accessibility",
+  "## Public API",
+  "## Tokens",
+  "## Examples",
+  "## Common mistakes",
+];
+
+function documentationProblems(item, spec) {
+  const problems = [];
+  let markdown;
+  try {
+    markdown = formatComponentMarkdown(item, spec);
+  } catch (error) {
+    return [`documentation generation failed (${error.message})`];
+  }
+  for (const section of documentationSections) {
+    if (!markdown.includes(section)) {
+      problems.push(`generated documentation is missing the ${section.slice(3)} section`);
+    }
+  }
+  for (const line of markdown.split("\n")) {
+    const rendered = /^- ([^:]+): undefined$/.exec(line);
+    if (rendered) {
+      problems.push(`generated documentation renders an undefined ${rendered[1]} value`);
+    }
+  }
+  return problems;
+}
 
 function schemaErrors(label, validator) {
   return (validator.errors ?? []).map((error) => `${label}${error.instancePath || "/"}: ${error.message}`);
@@ -79,6 +115,20 @@ for (const item of registry.items) {
   }
 
   for (const file of item.files ?? []) {
+    // A consumer running the official create-vue ESLint configuration enforces
+    // vue/multi-word-component-names. Installed single-word files satisfy it
+    // through an explicit component name rather than a consumer rule override.
+    if (file.path.endsWith(".vue")) {
+      const base = path.basename(file.path, ".vue");
+      if (/^[A-Z][a-z0-9]*$/.test(base)) {
+        const source = await readFile(sourcePath(file.path), "utf8");
+        if (!/defineOptions\(\{[^}]*name:\s*"[A-Z][a-z0-9]*[A-Z]/.test(source)) {
+          errors.push(
+            `${item.name}: ${base}.vue is single-word and must declare a multi-word defineOptions name`,
+          );
+        }
+      }
+    }
     try {
       const canonical = await readFile(sourcePath(file.path));
       const mirror = await readFile(path.join(rootDir, generatedDirectory(item), path.basename(file.target)));
@@ -104,6 +154,12 @@ for (const item of registry.items) {
     const built = await readJson(path.join(rootDir, "public", "r", `${item.name}.json`));
     if (built.name !== item.name || built.files.length !== item.files.length) {
       errors.push(`${item.name}: built registry JSON is stale`);
+    }
+    // A published payload must be identical whatever platform built it.
+    if (built.files.some((file) => file.content?.includes("\r\n"))) {
+      errors.push(
+        `${item.name}: built registry JSON embeds CRLF line endings, so the published payload depends on the build machine`,
+      );
     }
   } catch (error) {
     errors.push(`${item.name}: built registry JSON is missing (${error.message})`);
@@ -166,6 +222,9 @@ try {
     }
     if (!canonicalDocs.equals(publicDocs)) {
       errors.push(`${item.name}: public Markdown documentation is stale`);
+    }
+    for (const problem of documentationProblems(item, canonicalSpec)) {
+      errors.push(`${item.name}: ${problem}`);
     }
     if (!llmsFull.includes(`/docs/components/${item.name}.md`)) {
       errors.push(`${item.name}: missing from llms-full.txt`);

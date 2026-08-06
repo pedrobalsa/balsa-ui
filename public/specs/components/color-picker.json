@@ -3,8 +3,9 @@
   "name": "color-picker",
   "title": "ColorPicker",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Choose a six-digit hex color through a labeled square field with configurable label position or palette trigger and an accessible custom multi-format editing popover.",
   "useFor": [
     "Palette colors",
@@ -70,26 +71,196 @@
     "Disabled color picker"
   ],
   "publicApi": {
-    "model": "string",
-    "events": [
-      "update:modelValue"
+    "source": "src/components/ui/ColorPicker.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
     ],
     "props": [
-      "id",
-      "label",
-      "accessibleLabel",
-      "description",
-      "name",
-      "disabled",
-      "shadow",
-      "theme",
-      "type",
-      "labelPosition",
-      "size",
-      "rounded"
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ColorPickerType | undefined",
+        "values": [
+          "field",
+          "palette"
+        ],
+        "required": false,
+        "default": "\"field\""
+      },
+      {
+        "name": "labelPosition",
+        "type": "ColorPickerLabelPosition | undefined",
+        "values": [
+          "inside",
+          "outside"
+        ],
+        "required": false,
+        "default": "\"outside\""
+      },
+      {
+        "name": "size",
+        "type": "ColorPickerSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"#000000\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
     ],
     "slots": [
-      "actions"
+      {
+        "name": "actions",
+        "type": "{ close: () => Promise<void>; }"
+      }
     ]
   }
 }

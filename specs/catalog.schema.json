@@ -4,9 +4,10 @@
   "title": "Balsa agent catalog",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "framework", "generatedFrom", "items"],
+  "required": ["schemaVersion", "releaseVersion", "framework", "generatedFrom", "items"],
   "properties": {
     "schemaVersion": { "const": 1 },
+    "releaseVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+" },
     "framework": { "const": "vue" },
     "generatedFrom": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
     "items": {
@@ -14,11 +15,13 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["name", "title", "category", "description", "status", "version", "registry", "registryDependencies", "npmDependencies", "tokens", "documentation", "example", "source", "framework"],
+        "required": ["name", "title", "category", "classification", "description", "status", "version", "registry", "registryDependencies", "npmDependencies", "tokens", "documentation", "example", "source", "framework"],
         "properties": {
           "name": { "type": "string" },
           "title": { "type": "string" },
           "category": { "enum": ["component", "composition", "block"] },
+          "classification": { "enum": ["upstream-default", "balsa-addition", "balsa-composition", "balsa-alternative", "legacy", "retire"] },
+          "upstream": { "type": "object", "additionalProperties": false, "required": ["registry", "name"], "properties": { "registry": { "type": "string" }, "name": { "type": "string" } } },
           "description": { "type": "string" },
           "status": { "enum": ["experimental", "beta", "stable", "deprecated"] },
           "version": { "type": "string" },

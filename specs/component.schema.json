@@ -9,6 +9,7 @@
     "name",
     "title",
     "category",
+    "classification",
     "status",
     "version",
     "purpose",
@@ -24,6 +25,27 @@
     "name": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
     "title": { "type": "string", "minLength": 1 },
     "category": { "enum": ["component", "composition", "block"] },
+    "classification": {
+      "description": "How this item relates to the upstream shadcn-vue ecosystem. An alternative exists because upstream could not satisfy the integration requirements and must say so; legacy and retire mark items on a migration path.",
+      "enum": [
+        "upstream-default",
+        "balsa-addition",
+        "balsa-composition",
+        "balsa-alternative",
+        "legacy",
+        "retire"
+      ]
+    },
+    "upstream": {
+      "description": "The upstream item this one stands in for. Required for a balsa-alternative, since a component with no upstream equivalent is an addition rather than an alternative.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry", "name"],
+      "properties": {
+        "registry": { "type": "string", "pattern": "^@[a-z0-9-]+$" },
+        "name": { "type": "string" }
+      }
+    },
     "status": { "enum": ["experimental", "beta", "stable", "deprecated"] },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
     "purpose": { "type": "string", "minLength": 1 },
@@ -38,9 +60,125 @@
     "tokens": { "$ref": "#/$defs/nonEmptyStrings" },
     "commonMistakes": { "$ref": "#/$defs/nonEmptyStrings" },
     "examples": { "$ref": "#/$defs/nonEmptyStrings" },
-    "publicApi": { "type": "object" }
+    "publicApi": { "$ref": "#/$defs/publicApi" }
   },
+  "allOf": [
+    {
+      "if": { "properties": { "classification": { "const": "balsa-alternative" } }, "required": ["classification"] },
+      "then": { "required": ["upstream"] }
+    }
+  ],
   "$defs": {
+    "shape": {
+      "description": "Structure of an object-typed prop, or the variants of a union of objects.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string" },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type", "required"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" },
+              "required": { "type": "boolean" }
+            }
+          }
+        },
+        "variants": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/shape" }
+        }
+      }
+    },
+    "publicApi": {
+      "description": "Derived from the component's TypeScript source by scripts/build-contracts.mjs. Do not hand-edit: the release gate regenerates it and fails on drift.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "props", "events", "slots"],
+      "properties": {
+        "source": {
+          "description": "Canonical component file the contract was derived from.",
+          "type": "string"
+        },
+        "models": {
+          "description": "v-model bindings, recovered from each prop paired with its update event.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type", "event"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" },
+              "event": { "type": "string" },
+              "values": { "$ref": "#/$defs/strings" },
+              "shape": { "$ref": "#/$defs/shape" }
+            }
+          }
+        },
+        "props": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type", "required"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" },
+              "required": { "type": "boolean" },
+              "default": { "type": "string" },
+              "description": { "type": "string" },
+              "values": {
+                "description": "Every legal value, when the compiler can enumerate the union. Absent means the type is not a closed set of literals.",
+                "$ref": "#/$defs/strings"
+              },
+              "shape": { "$ref": "#/$defs/shape" }
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" }
+            }
+          }
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" }
+            }
+          }
+        },
+        "exposed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type"],
+            "properties": {
+              "name": { "type": "string" },
+              "type": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
     "strings": {
       "type": "array",
       "items": { "type": "string" },

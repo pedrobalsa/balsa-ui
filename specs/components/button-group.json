@@ -3,26 +3,221 @@
   "name": "button-group",
   "title": "ButtonGroup",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "button-group"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Present a connected set of mutually exclusive actions with one selected item.",
-  "useFor": ["View switching", "Compact mode selection", "Related mutually exclusive actions"],
-  "avoidFor": ["Independent actions", "Multiple simultaneous selections", "Long or wrapping option labels"],
-  "sizes": ["sm", "md", "lg", "xl"],
-  "variants": ["surface", "solid", "outline", "glass", "code"],
-  "states": ["theme-aware default", "selected", "compact labels", "rounded or pill shape"],
+  "useFor": [
+    "View switching",
+    "Compact mode selection",
+    "Related mutually exclusive actions"
+  ],
+  "avoidFor": [
+    "Independent actions",
+    "Multiple simultaneous selections",
+    "Long or wrapping option labels"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "glass",
+    "code"
+  ],
+  "states": [
+    "theme-aware default",
+    "selected",
+    "compact labels",
+    "rounded or pill shape"
+  ],
   "composition": {
     "dependency": "Button",
     "selection": "Exactly one option id is represented by modelValue and aria-pressed. An omitted variant resolves from surface to glass under the nearest Glassmorphism theme. The default rounded shape resolves to rounded-none in Brutalism. In the neutral surface, outline, and glass variants, color emphasizes the selected option only and unselected options stay muted-neutral until hover; the solid variant tints every option.",
     "codeSurface": "The code variant provides the compact code-foreground treatment used by CodeBlock header actions, with a compact control radius in every design theme."
   },
-  "accessibility": ["Provide an accessible group label.", "Expose the selected option with aria-pressed.", "Retain accessible button names when collapseLabels hides visible labels."],
-  "tokens": ["--balsa-color-surface", "--balsa-color-muted", "--balsa-color-muted-foreground", "--balsa-color-foreground", "--balsa-color-border-strong", "--balsa-color-primary", "--balsa-color-primary-foreground", "--balsa-color-focus-ring", "--balsa-code-control-radius", "radius.control"],
-  "commonMistakes": ["Using ButtonGroup for unrelated actions.", "Providing duplicate option ids.", "Omitting the group label.", "Reaching through the group with nested important selectors instead of using its typed code variant.", "Expecting color to tint unselected options in the neutral surface, outline, and glass variants."],
-  "examples": ["Preview and code switcher", "Responsive viewport selector", "Package-manager selector"],
+  "accessibility": [
+    "Provide an accessible group label.",
+    "Expose the selected option with aria-pressed.",
+    "Retain accessible button names when collapseLabels hides visible labels."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-foreground",
+    "--balsa-color-border-strong",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-code-control-radius",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using ButtonGroup for unrelated actions.",
+    "Providing duplicate option ids.",
+    "Omitting the group label.",
+    "Reaching through the group with nested important selectors instead of using its typed code variant.",
+    "Expecting color to tint unselected options in the neutral surface, outline, and glass variants."
+  ],
+  "examples": [
+    "Preview and code switcher",
+    "Responsive viewport selector",
+    "Package-manager selector"
+  ],
   "publicApi": {
-    "model": "string",
-    "props": ["options", "label", "color", "size", "variant", "shape", "collapseLabels", "shadow", "theme"],
-    "events": ["update:modelValue"]
+    "source": "src/components/ui/ButtonGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string",
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "options",
+        "type": "readonly ButtonGroupOption[]",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "ButtonSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "ButtonGroupVariant | undefined",
+        "values": [
+          "solid",
+          "outline",
+          "glass",
+          "surface",
+          "code"
+        ],
+        "required": false
+      },
+      {
+        "name": "shape",
+        "type": "ButtonGroupShape | undefined",
+        "values": [
+          "rounded",
+          "pill"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "collapseLabels",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": []
   }
 }

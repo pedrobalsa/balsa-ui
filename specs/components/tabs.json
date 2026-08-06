@@ -3,17 +3,234 @@
   "name": "tabs",
   "title": "Tabs",
   "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "tabs"
+  },
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Switch between related local panels without navigating away, with compact navigation or visual-choice layouts and square underline geometry.",
-  "useFor": ["Related peer views", "Compact content segmentation", "Local settings categories"],
-  "avoidFor": ["Primary site navigation", "Sequential steps", "Content users need to compare simultaneously"],
-  "states": ["active", "inactive", "disabled"],
-  "accessibility": ["Implements tablist, tab, and tabpanel roles.", "Arrow, Home, and End keys move focus among enabled tabs.", "Each tab is linked to its labelled panel."],
-  "variants": ["surface", "outline", "soft", "glass"],
-  "types": ["segmented", "underline", "pills", "tiles"],
-  "tokens": ["--balsa-color-surface", "--balsa-color-muted", "--balsa-color-muted-foreground", "--balsa-color-primary", "--balsa-color-selected", "--balsa-color-selected-foreground", "--balsa-color-focus-ring", "radius.control"],
-  "commonMistakes": ["Using Tabs as page navigation.", "Hiding essential comparison content in separate panels.", "Changing tab ids between renders."],
-  "examples": ["Underline navigation", "Connected choices", "Pill choices", "Icon tiles", "Disabled tab"],
-  "publicApi": { "model": "string", "props": ["id", "items", "label", "variant", "type", "panelSurface", "size", "rounded", "shadow", "theme"], "slots": ["named panel slots"] }
+  "useFor": [
+    "Related peer views",
+    "Compact content segmentation",
+    "Local settings categories"
+  ],
+  "avoidFor": [
+    "Primary site navigation",
+    "Sequential steps",
+    "Content users need to compare simultaneously"
+  ],
+  "states": [
+    "active",
+    "inactive",
+    "disabled"
+  ],
+  "accessibility": [
+    "Implements tablist, tab, and tabpanel roles.",
+    "Arrow, Home, and End keys move focus among enabled tabs.",
+    "Each tab is linked to its labelled panel."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "segmented",
+    "underline",
+    "pills",
+    "tiles"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using Tabs as page navigation.",
+    "Hiding essential comparison content in separate panels.",
+    "Changing tab ids between renders."
+  ],
+  "examples": [
+    "Underline navigation",
+    "Connected choices",
+    "Pill choices",
+    "Icon tiles",
+    "Disabled tab"
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Tabs.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly TabItem[]",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Content tabs\""
+      },
+      {
+        "name": "variant",
+        "type": "TabsVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "TabsType | undefined",
+        "values": [
+          "underline",
+          "segmented",
+          "pills",
+          "tiles"
+        ],
+        "required": false
+      },
+      {
+        "name": "panelSurface",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "TabsSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{ activeId: string; }"
+      }
+    ]
+  }
 }

@@ -9,7 +9,7 @@ type BadgeVariant = "solid" | "soft" | "outline" | "glass";
 type BadgeSize = "sm" | "md" | "lg";
 type Rounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaBadge", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

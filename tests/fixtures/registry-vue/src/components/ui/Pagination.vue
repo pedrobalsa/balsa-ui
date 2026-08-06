@@ -13,7 +13,7 @@ type PaginationToken =
   | { type: "page"; page: number }
   | { type: "ellipsis"; key: string };
 
-defineOptions({ inheritAttrs: false });
+defineOptions({ name: "BalsaPagination", inheritAttrs: false });
 
 const rawProps = withDefaults(
   defineProps<{

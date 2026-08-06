@@ -3,6 +3,7 @@
   "name": "preview",
   "title": "Preview",
   "category": "component",
+  "classification": "balsa-addition",
   "status": "beta",
   "version": "0.1.0",
   "purpose": "Render Vue content in an isolated responsive, preset, or exact logical viewport with bounded or content-preserving height.",
@@ -68,28 +69,188 @@
     "Fixed scaled viewport"
   ],
   "publicApi": {
+    "source": "src/components/ui/Preview.vue",
     "props": [
-      "title",
-      "viewport",
-      "width",
-      "height",
-      "aspectRatio",
-      "maxWidth",
-      "maxHeight",
-      "autoHeight",
-      "fit",
-      "edgeToEdge",
-      "fullscreen",
-      "fullscreenLabel",
-      "closeLabel",
-      "theme"
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "viewport",
+        "type": "PreviewViewport | undefined",
+        "values": [
+          "fixed",
+          "responsive",
+          "desktop",
+          "tablet",
+          "mobile"
+        ],
+        "required": false,
+        "default": "\"responsive\""
+      },
+      {
+        "name": "width",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1366"
+      },
+      {
+        "name": "height",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "768"
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "maxWidth",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "maxHeight",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "480"
+      },
+      {
+        "name": "autoHeight",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "fit",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "edgeToEdge",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "fullscreen",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "fullscreenLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Open fullscreen preview\""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Close fullscreen preview\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
     ],
     "events": [
-      "previewScroll"
+      {
+        "name": "previewScroll",
+        "type": "[deltaY: number]"
+      }
     ],
     "slots": [
-      "default",
-      "fullscreen"
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "fullscreen",
+        "type": "{}"
+      }
     ]
   }
 }
