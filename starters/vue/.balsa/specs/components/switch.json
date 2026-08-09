@@ -63,9 +63,24 @@
     "Importing the new Toggle as a compatibility alias."
   ],
   "examples": [
-    "Enabled preference",
-    "Required form setting",
-    "Disabled setting"
+    {
+      "id": "off",
+      "title": "Off",
+      "description": "The model controls the immediate on or off state.",
+      "source": "<script setup lang=\"ts\">\nimport Switch from \"@/components/ui/Switch.vue\";\nimport { ref } from \"vue\";\n\nconst enabled = ref(false);\n</script>\n\n<template>\n  <Switch id=\"placeholder-switch\" v-model=\"enabled\" label=\"Switch placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "on",
+      "title": "On",
+      "description": "The selected treatment clearly communicates an enabled setting.",
+      "source": "<script setup lang=\"ts\">\nimport Switch from \"@/components/ui/Switch.vue\";\nimport { ref } from \"vue\";\n\nconst enabled = ref(true);\n</script>\n\n<template>\n  <Switch id=\"placeholder-switch\" v-model=\"enabled\" label=\"Switch placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled state keeps the current value visible and immutable.",
+      "source": "<script setup lang=\"ts\">\nimport Switch from \"@/components/ui/Switch.vue\";\nimport { ref } from \"vue\";\n\nconst enabled = ref(true);\n</script>\n\n<template>\n  <Switch id=\"placeholder-switch\" v-model=\"enabled\" label=\"Switch placeholder\" hint=\"Helper text placeholder.\" disabled />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Switch.vue",

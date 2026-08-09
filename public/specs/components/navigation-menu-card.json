@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Sectioned local navigation with an explicit current destination.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport NavigationMenuCard from \"@/components/compositions/NavigationMenuCard.vue\";\n</script>\n\n<template>\n  <NavigationMenuCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport NavigationMenuCard from \"@/components/compositions/NavigationMenuCard.vue\";\n</script>\n\n<template>\n  <NavigationMenuCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/NavigationMenuCard.vue",
@@ -143,7 +153,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Workspace navigation\""
+        "default": "\"Workspace sidebar\""
       },
       {
         "name": "description",
@@ -152,7 +162,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Related destinations grouped by task.\""
+        "default": "\"Every destination in this workspace, grouped by the work it belongs to.\""
       },
       {
         "name": "activeId",
@@ -167,7 +177,7 @@
         "name": "groups",
         "type": "readonly NavigationMenuGroup[] | undefined",
         "required": false,
-        "default": "[ { label: \"Overview\", items: [{ id: \"dashboard\", label: \"Dashboard\", icon: LayoutDashboard }, { id: \"transactions\", label: \"Transactions\", icon: ArrowLeftRight }, { id: \"analytics\", label: \"Analytics\", icon: ChartLine }] }, { label: \"Account\", items: [{ id: \"profile\", label: \"Profile\", icon: User }, { id: \"security\", label: \"Security\", icon: Shield }] }, ]"
+        "default": "[ { label: \"Overview\", items: [{ id: \"dashboard\", label: \"Dashboard\", icon: LayoutDashboard }, { id: \"analytics\", label: \"Analytics\", icon: ChartLine }] }, { label: \"Build\", items: [{ id: \"projects\", label: \"Projects\", icon: Boxes }, { id: \"deployments\", label: \"Deployments\", icon: Rocket }, { id: \"environments\", label: \"Environments\", icon: Layers }] }, { label: \"Operate\", items: [{ id: \"activity\", label: \"Activity\", icon: ArrowLeftRight }, { id: \"alerts\", label: \"Alerts\", icon: Bell }, { id: \"logs\", label: \"Logs\", icon: ScrollText }] }, { label: \"Account\", items: [{ id: \"profile\", label: \"Profile\", icon: User }, { id: \"security\", label: \"Security\", icon: Shield }, { id: \"billing\", label: \"Billing\", icon: Receipt }] }, ]"
       }
     ],
     "events": [

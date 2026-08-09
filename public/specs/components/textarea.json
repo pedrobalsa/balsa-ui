@@ -77,10 +77,24 @@
     "Using placeholder text as the only label."
   ],
   "examples": [
-    "Default textarea",
-    "Auto-expanding notes",
-    "Capped auto expansion",
-    "Validation feedback"
+    {
+      "id": "auto-expand",
+      "title": "Auto-expanding notes",
+      "description": "Grow with content while keeping a practical height cap.",
+      "source": "<script setup lang=\"ts\">\nimport Textarea from \"@/components/ui/Textarea.vue\";\nimport { ref } from \"vue\";\n\nconst notes = ref(\"\");\n</script>\n\n<template>\n  <Textarea id=\"notes\" v-model=\"notes\" label=\"Textarea placeholder\" :rows=\"4\" auto-expand :max-height=\"220\" resizable=\"none\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "resizable",
+      "title": "Manual resize",
+      "description": "Allow vertical resizing for an open-ended response.",
+      "source": "<script setup lang=\"ts\">\nimport Textarea from \"@/components/ui/Textarea.vue\";\nimport { ref } from \"vue\";\n\nconst notes = ref(\"\");\n</script>\n\n<template>\n  <Textarea id=\"notes\" v-model=\"notes\" label=\"Textarea placeholder\" :rows=\"6\" :max-height=\"280\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Validation feedback",
+      "description": "Use the shared unvalidated state for an actionable error.",
+      "source": "<script setup lang=\"ts\">\nimport Textarea from \"@/components/ui/Textarea.vue\";\nimport { ref } from \"vue\";\n\nconst notes = ref(\"\");\n</script>\n\n<template>\n  <Textarea id=\"notes\" v-model=\"notes\" label=\"Textarea placeholder\" :rows=\"4\" :max-height=\"280\" status=\"unvalidated\" required hint=\"Helper text placeholder.\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Textarea.vue",

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/toggle-group",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/toggle-group/ToggleGroup.vue": "sha256-9fee3362760d6708208d35bcb1cace76fb719d9aa16d41e4513a25b250fc1422",
+      "ui/toggle-group/ToggleGroupItem.vue": "sha256-cc711b064de79a769629fa1ac73d54e46cf7cb2e7c69cd2536616157ef31d01c",
+      "ui/toggle-group/index.ts": "sha256-e3340e7550873fea4d20f512e9d84e8bc4f5dfcd674a9866c0e59226bd07c129"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "class-variance-authority",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/toggle"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "unsupported",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/toggle-group/ToggleGroup.vue",
+      "find": "'flex items-center justify-center gap-1'",
+      "replace": "'flex items-center justify-center gap-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

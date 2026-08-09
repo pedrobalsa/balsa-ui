@@ -179,6 +179,71 @@ export function formatInstallationPhases({ installed, stylesheet, projectRoot, n
   return lines;
 }
 
+/**
+ * What is actually installed here, and what state it is in.
+ *
+ * All of this was already recorded — the manifest carries origin, versions,
+ * source hashes and adapter status for every install, and
+ * `detectLocalModifications` compares them against disk — and none of it was
+ * surfaced anywhere. An agent asking "what am I working with" had to read
+ * `.balsa/installed.json` itself and re-derive the comparison.
+ *
+ * `loadAdapter` is injected rather than imported so this module stays free of
+ * the adapter machinery, which a consumer project has no reason to load just to
+ * run a diagnosis.
+ */
+export async function inspectInstallation(projectRoot, { loadAdapter, detectLocalModifications } = {}) {
+  let manifest;
+  try {
+    manifest = await readJson(path.join(projectRoot, ".balsa", "installed.json"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    return { installed: [], modified: [], outdatedAdapters: [], designSystemVersion: undefined };
+  }
+
+  const components = Object.values(manifest.components ?? {});
+  const installed = components.map((entry) => ({
+    registry: entry.registry,
+    namespace: entry.namespace,
+    version: entry.installedVersion,
+    adapterStatus: entry.adapterStatus,
+    files: (entry.files ?? []).length,
+  }));
+
+  const modified = detectLocalModifications
+    ? await detectLocalModifications(projectRoot)
+    : [];
+
+  /*
+   * An adapter whose status has moved since the component was installed. The
+   * source on disk is still whatever the old adapter produced, so the component
+   * is running an adaptation Balsa no longer publishes — worth reporting, and
+   * not the same thing as a locally modified file.
+   */
+  const outdatedAdapters = [];
+  if (loadAdapter) {
+    for (const entry of components) {
+      if (!entry.adapterStatus || entry.namespace === "@balsa") continue;
+      const adapter = await loadAdapter(entry.registry);
+      if (!adapter) continue;
+      if (adapter.status !== entry.adapterStatus) {
+        outdatedAdapters.push({
+          registry: entry.registry,
+          installedWith: entry.adapterStatus,
+          available: adapter.status,
+        });
+      }
+    }
+  }
+
+  return {
+    installed,
+    modified,
+    outdatedAdapters,
+    designSystemVersion: components.find((entry) => entry.designSystemVersion)?.designSystemVersion,
+  };
+}
+
 export function formatProblems(problems) {
   return problems.map(
     (problem) => `${problem.level === "error" ? "Error" : "Warning"} [${problem.code}]: ${problem.message}\n  Fix: ${problem.fix}`,

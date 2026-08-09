@@ -2,7 +2,7 @@
 import { GripHorizontal, GripVertical } from "@lucide/vue";
 import { computed, ref, useAttrs, watch } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
-import { roundedClasses, type Rounded } from "./form";
+import { surfaceRoundedClasses, type SurfaceRounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import Icon from "./Icon.vue";
@@ -25,7 +25,7 @@ const rawProps = withDefaults(
     showGrip?: boolean;
     variant?: ResizableVariant;
     size?: ResizableSize;
-    rounded?: Rounded;
+    rounded?: SurfaceRounded;
     shadow?: Shadow;
     theme?: ThemeInput;
   }>(),
@@ -42,7 +42,7 @@ const { props, theme } = useResolvedThemeProps(
   "resizable",
   "surfaces",
   rawProps,
-  { variant: "surface", size: "md", rounded: "lg", shadow: "auto" } as const,
+  { variant: "surface", size: "md", rounded: "auto", shadow: "auto" } as const,
 );
 
 const model = defineModel<number>({ default: 50 });
@@ -84,9 +84,9 @@ const handleSizeClasses: Readonly<
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const classes = computed(() =>
   mergeClasses(
-    "grid min-h-0 min-w-0 overflow-hidden border text-balsa-foreground",
+    "grid min-h-0 min-w-0 overflow-hidden text-balsa-foreground",
     variantClasses[props.variant],
-    roundedClasses[props.rounded],
+    surfaceRoundedClasses[props.rounded],
     dragging.value && "select-none",
     attrs.class,
   ),
@@ -181,6 +181,7 @@ function handleKeydown(event: KeyboardEvent): void {
     ref="root"
     v-bind="rootAttrs"
     data-balsa="resizable"
+    :data-rounded="props.rounded"
     :data-theme="theme.explicitPresentation.value?.id"
     :data-theme-base="theme.explicitPresentation.value?.base"
     :data-orientation="props.orientation"

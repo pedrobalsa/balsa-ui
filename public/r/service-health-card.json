@@ -1,0 +1,40 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "service-health-card",
+  "type": "registry:ui",
+  "title": "ServiceHealthCard",
+  "description": "Half-height status strip reporting state and latency per region.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/badge"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ServiceHealthCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/ServiceHealthCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport Badge from \"../ui/Badge.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionPaletteColor, CompositionSurfaceProps } from \"./composition\";\n\nexport interface ServiceStatus { id: string; region: string; state: string; latency: string; color?: CompositionPaletteColor }\n\n/**\n * A status strip: one row of regions, and nothing else. It takes a half-height\n * tile because that is all it is — stretching it to a full unit would add empty\n * space and imply there is detail here that there is not.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  regions?: readonly ServiceStatus[];\n}>(), {\n  title: \"Regional health\",\n  description: \"Every edge, right now.\",\n  regions: () => [\n    { id: \"iad\", region: \"Washington\", state: \"Healthy\", latency: \"18 ms\", color: \"primary\" },\n    { id: \"fra\", region: \"Frankfurt\", state: \"Healthy\", latency: \"24 ms\", color: \"primary\" },\n    { id: \"gru\", region: \"São Paulo\", state: \"Degraded\", latency: \"96 ms\", color: \"secondary\" },\n    { id: \"syd\", region: \"Sydney\", state: \"Healthy\", latency: \"41 ms\", color: \"primary\" },\n  ],\n});\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"service-health\">\n    <ul class=\"grid flex-1 grid-cols-2 content-center gap-balsa-md sm:grid-cols-4\" role=\"list\">\n      <li v-for=\"region in props.regions\" :key=\"region.id\" class=\"min-w-0\">\n        <strong class=\"block truncate text-sm font-medium\">{{ region.region }}</strong>\n        <span class=\"mt-balsa-3xs flex items-center gap-balsa-xs\">\n          <Badge :color=\"region.color\" variant=\"soft\">{{ region.state }}</Badge>\n          <span class=\"text-xs tabular-nums text-balsa-muted-foreground\">{{ region.latency }}</span>\n        </span>\n      </li>\n    </ul>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/service-health-card.json",
+    "documentation": "docs/compositions/service-health-card.md",
+    "example": "docs/compositions/service-health-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

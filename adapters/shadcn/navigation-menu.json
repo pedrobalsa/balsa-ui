@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/navigation-menu",
+  "wave": 4,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/navigation-menu/NavigationMenu.vue": "sha256-1fe1ccce8fbd50c59ad4a1ec79e78c70a6def16a5c7f8c94098f36c763ef2c0c",
+      "ui/navigation-menu/NavigationMenuContent.vue": "sha256-b7c554d09f21a678375d41ee6818c06a8526bb18de678697ac6e535491a01374",
+      "ui/navigation-menu/NavigationMenuIndicator.vue": "sha256-849f7d0eea88a7d195bf52da58ec9b71ec841b12f6da835895e31ba453354229",
+      "ui/navigation-menu/NavigationMenuItem.vue": "sha256-e84ea0e7231e68856642797a0fe2be3155bac3884837a4f65022edac862b01d8",
+      "ui/navigation-menu/NavigationMenuLink.vue": "sha256-696e1b4e10308cac9cc3e346beb9c793c0fe2fba7d1af7ff2e70c0ad38b1cbea",
+      "ui/navigation-menu/NavigationMenuList.vue": "sha256-a738f6d29a89c7532f2fe8339993e10fb608258f2c3d725e6a3ee565b3481258",
+      "ui/navigation-menu/NavigationMenuTrigger.vue": "sha256-0da80c5c97fb9a23b3cf07b1c37c121a3afaa9a4e42984c596320771062e38e1",
+      "ui/navigation-menu/NavigationMenuViewport.vue": "sha256-ab72bc4bbd943aa5d4545d68dddc9dcedafc7d05d26cfbebfa61d2d322ec5c71",
+      "ui/navigation-menu/index.ts": "sha256-9b6d60b2ab2d879116730eab72aa90009088c83f3c744100a1ba4dcc9e069f74"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "class-variance-authority",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "lucide-vue-next",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/navigation-menu/NavigationMenuIndicator.vue",
+      "find": "'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in'",
+      "replace": "'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/navigation-menu/NavigationMenuIndicator.vue",
+      "find": "\"relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md\"",
+      "replace": "\"relative top-[60%] h-2 w-2 rotate-45 rounded-ss-sm bg-border shadow-[var(--balsa-shadow-md)]\"",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/navigation-menu/NavigationMenuList.vue",
+      "find": "'group flex flex-1 list-none items-center justify-center gap-x-1'",
+      "replace": "'group flex flex-1 list-none items-center justify-center gap-x-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/navigation-menu/NavigationMenuTrigger.vue",
+      "find": "\"relative top-px ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180\"",
+      "replace": "\"relative top-px ms-balsa-3xs h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180 motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/navigation-menu/NavigationMenuViewport.vue",
+      "find": "\"absolute left-0 top-full flex justify-center\"",
+      "replace": "\"absolute start-0 top-full flex justify-center\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/navigation-menu/NavigationMenuViewport.vue",
+      "find": "'origin-top-center relative mt-1.5 h-(--reka-navigation-menu-viewport-height) w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-(--reka-navigation-menu-viewport-width) left-(--reka-navigation-menu-viewport-left)'",
+      "replace": "'origin-top-center relative mt-balsa-2xs h-(--reka-navigation-menu-viewport-height) w-full overflow-hidden rounded-md border-solid border-(length:--balsa-outline-border-width) bg-popover text-popover-foreground shadow-[var(--balsa-shadow-control)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-(--reka-navigation-menu-viewport-width) start-(--reka-navigation-menu-viewport-left) motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/navigation-menu/index.ts",
+      "find": "\"group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50\"",
+      "replace": "\"group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-balsa-lg py-balsa-xs text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Animating without a reduced-motion guard ignores the user's stated preference."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (left-, right-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

@@ -102,7 +102,7 @@ function clear(): void { model.value = null; }
     :class="rootClasses"
     :style="theme.explicitPresentation.value?.style"
   >
-    <label :id="`${props.id}-label`" :for="`${props.id}-popup-trigger`" class="mb-2 block text-sm font-medium text-balsa-foreground">
+    <label :id="`${props.id}-label`" :for="`${props.id}-popup-trigger`" class="mb-balsa-xs block text-sm font-medium text-balsa-foreground">
       {{ props.label }} <span v-if="props.required" class="text-balsa-destructive" aria-hidden="true">*</span>
     </label>
     <Popup
@@ -138,12 +138,12 @@ function clear(): void { model.value = null; }
           class="border-0 p-0"
           @select="handleSelect($event, close)"
         />
-        <div v-if="props.clearable && model" class="mt-3 flex justify-end border-t border-balsa-border pt-3">
+        <div v-if="props.clearable && model" class="mt-balsa-md flex justify-end border-t border-balsa-border pt-balsa-md">
           <Button variant="outline" color="secondary" size="sm" @click="clear">Clear date</Button>
         </div>
       </template>
     </Popup>
     <input :name="effectiveName" type="hidden" :value="formValue" />
-    <p v-if="props.status === 'unvalidated'" :id="`${props.id}-error`" class="mt-2 text-sm font-medium text-balsa-destructive" role="alert">{{ props.statusMessage }}</p>
+    <p v-if="props.status === 'unvalidated'" :id="`${props.id}-error`" class="mt-balsa-xs text-sm font-medium text-balsa-destructive" role="alert">{{ props.statusMessage }}</p>
   </div>
 </template>

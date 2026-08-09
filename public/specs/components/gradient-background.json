@@ -97,13 +97,18 @@
     "Measuring grain in device pixels, which halves its size on a 2x display and makes it read as barely there."
   ],
   "examples": [
-    "Obsidian fold page background",
-    "Palette-aware generated field",
-    "Glassmorphism content over iridescent flow",
-    "Gradient Studio export",
-    "ASCII terminal field",
-    "Halftone newsprint hero",
-    "Radial bloom behind a form"
+    {
+      "id": "silver-dunes",
+      "title": "Silver Dunes",
+      "description": "A restrained monochrome preset supports foreground surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport GradientBackground from \"@/components/ui/GradientBackground.vue\";\n</script>\n\n<template>\n  <section class=\"relative isolate min-h-96 overflow-hidden\">\n    <GradientBackground preset=\"silver-dunes\" :seed=\"2411\" color-mode=\"custom\" :colors='[\"#050506\", \"#D7D8DA\"]' :speed=\"0.05\" :scale=\"1.18\" :warp=\"1.12\" pattern=\"ribbon\" :pattern-density=\"2.35\" effect=\"none\" :effect-scale=\"10\" :field-octaves=\"4\" :field-frequency=\"0.78\" :noise-amount=\"0.05\" :noise-octaves=\"4\" :noise-frequency=\"1.1\" :grain=\"0.06\" quality=\"auto\" />\n    <div class=\"relative z-10 p-10\">Content placeholder</div>\n  </section>\n</template>"
+    },
+    {
+      "id": "palette-mode",
+      "title": "Palette mode",
+      "description": "Palette mode derives its colors from the nearest palette boundary.",
+      "source": "<script setup lang=\"ts\">\nimport GradientBackground from \"@/components/ui/GradientBackground.vue\";\n</script>\n\n<template>\n  <section class=\"relative isolate min-h-96 overflow-hidden\">\n    <GradientBackground preset=\"obsidian-fold\" :seed=\"8031\" color-mode=\"palette\" :colors='[\"#050506\", \"#D7D8DA\"]' :speed=\"0.075\" :scale=\"1.18\" :warp=\"1.12\" pattern=\"ribbon\" :pattern-density=\"2.35\" effect=\"none\" :effect-scale=\"10\" :field-octaves=\"4\" :field-frequency=\"0.78\" :noise-amount=\"0.05\" :noise-octaves=\"4\" :noise-frequency=\"1.1\" :grain=\"0.06\" quality=\"auto\" paused />\n    <div class=\"relative z-10 p-10\">Content placeholder</div>\n  </section>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/GradientBackground.vue",

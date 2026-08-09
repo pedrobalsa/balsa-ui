@@ -57,10 +57,10 @@ const codeRootSizeClasses: Readonly<Record<ButtonSize, string>> = {
 };
 
 const codeOptionSizeClasses: Readonly<Record<ButtonSize, string[]>> = {
-  sm: ["gap-1.5", "px-2.5", "text-xs"],
-  md: ["gap-2", "px-3", "text-sm"],
-  lg: ["gap-2.5", "px-3.5", "text-base"],
-  xl: ["gap-3", "px-4", "text-lg"],
+  sm: ["gap-balsa-2xs", "px-balsa-sm", "text-xs"],
+  md: ["gap-balsa-xs", "px-balsa-md", "text-sm"],
+  lg: ["gap-balsa-sm", "px-3.5", "text-base"],
+  xl: ["gap-balsa-md", "px-balsa-lg", "text-lg"],
 };
 
 const shapeClasses: Readonly<Record<ButtonGroupShape, string>> = {

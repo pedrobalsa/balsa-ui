@@ -65,11 +65,36 @@
     "Omitting a stable id and visible label."
   ],
   "examples": [
-    "Basic selection",
-    "Multiple selection",
-    "Rich option content",
-    "Selection with disabled option",
-    "Unvalidated selection"
+    {
+      "id": "multiple",
+      "title": "Multiple",
+      "description": "Keep the list open while users toggle several selected options.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref([\"option-01\", \"option-02\"]);\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" multiple />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact",
+      "description": "The small size fits dense property and filter panels.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required selection uses the same field contract as other inputs.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" required />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid",
+      "description": "Unvalidated state keeps feedback attached to the control.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading communicates that options are not ready yet.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Select.vue",

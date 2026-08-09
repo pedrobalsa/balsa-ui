@@ -56,10 +56,10 @@ const model = defineModel<boolean>({ default: false });
 const attrs = useAttrs();
 
 const sizeClasses: Readonly<Record<ToggleSize, string[]>> = {
-  sm: ["h-8", "gap-1.5", "px-3", "text-sm"],
-  md: ["h-9", "gap-2", "px-4", "text-sm"],
-  lg: ["h-10", "gap-2", "px-5", "text-sm"],
-  xl: ["h-12", "gap-2.5", "px-6", "text-base"],
+  sm: ["h-8", "gap-balsa-2xs", "px-balsa-md", "text-sm"],
+  md: ["h-9", "gap-balsa-xs", "px-balsa-lg", "text-sm"],
+  lg: ["h-10", "gap-balsa-xs", "px-balsa-xl", "text-sm"],
+  xl: ["h-12", "gap-balsa-sm", "px-balsa-2xl", "text-base"],
 };
 
 const iconSizes: Readonly<Record<ToggleSize, IconSize>> = {

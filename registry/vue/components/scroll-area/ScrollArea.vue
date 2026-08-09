@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs } from "vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
-import { roundedClasses, type Rounded } from "./form";
+import { surfaceRoundedClasses, type SurfaceRounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 
@@ -23,7 +23,7 @@ const rawProps = withDefaults(
     visibility?: ScrollAreaVisibility;
     size?: ScrollAreaSize;
     edgeFade?: boolean;
-    rounded?: Rounded;
+    rounded?: SurfaceRounded;
     shadow?: Shadow;
     theme?: ThemeInput;
   }>(),
@@ -37,7 +37,7 @@ const { props, theme } = useResolvedThemeProps(
   "scroll-area",
   "surfaces",
   rawProps,
-  { size: "regular", rounded: "lg", shadow: "auto" } as const,
+  { size: "regular", rounded: "auto", shadow: "auto" } as const,
 );
 
 const emit = defineEmits<{ scroll: [event: Event] }>();
@@ -53,8 +53,8 @@ const overflowClasses: Readonly<Record<ScrollAreaOrientation, string[]>> = {
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const classes = computed(() =>
   mergeClasses(
-    "relative min-h-0 min-w-0 overflow-hidden border border-balsa-border bg-balsa-surface",
-    roundedClasses[props.rounded],
+    "relative min-h-0 min-w-0 overflow-hidden border-balsa-border bg-balsa-surface",
+    surfaceRoundedClasses[props.rounded],
     attrs.class,
   ),
 );
@@ -62,7 +62,7 @@ const viewportClasses = computed(() =>
   mergeClasses(
     "size-full min-h-0 min-w-0 overscroll-contain outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-balsa-focus-ring",
     overflowClasses[props.orientation],
-    roundedClasses[props.rounded],
+    surfaceRoundedClasses[props.rounded],
   ),
 );
 
@@ -81,6 +81,7 @@ defineExpose({ viewport, scrollTo, scrollBy });
   <div
     v-bind="rootAttrs"
     data-balsa="scroll-area"
+    :data-rounded="props.rounded"
     :data-theme="theme.explicitPresentation.value?.id"
     :data-theme-base="theme.explicitPresentation.value?.base"
     :data-orientation="props.orientation"

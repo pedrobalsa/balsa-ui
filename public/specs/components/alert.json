@@ -9,7 +9,7 @@
     "name": "alert"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Communicate important inline feedback or present a focused alert-dialog decision.",
   "useFor": [
     "System and form feedback",
@@ -65,10 +65,30 @@
     "Using success or warning color without matching content meaning."
   ],
   "examples": [
-    "Inline information",
-    "Success feedback",
-    "Dismissible warning",
-    "Destructive alert dialog"
+    {
+      "id": "information",
+      "title": "Inline information",
+      "description": "A surfaced information callout keeps supporting feedback in normal flow.",
+      "source": "<script setup lang=\"ts\">\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Alert id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" color=\"info\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-info text-balsa-info hover:bg-balsa-info/15 active:bg-balsa-info/25\" @click=\"close\">action</Button>\n    </template>\n  </Alert>\n</template>"
+    },
+    {
+      "id": "success",
+      "title": "Success feedback",
+      "description": "Success color is reserved for a completed outcome.",
+      "source": "<script setup lang=\"ts\">\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Alert id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" color=\"success\" variant=\"soft\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-success text-balsa-success hover:bg-balsa-success/15 active:bg-balsa-success/25\" @click=\"close\">action</Button>\n    </template>\n  </Alert>\n</template>"
+    },
+    {
+      "id": "warning",
+      "title": "Dismissible warning",
+      "description": "A visible close action lets users remove warning feedback that is not persistent.",
+      "source": "<script setup lang=\"ts\">\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Alert id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" color=\"warning\" variant=\"outline\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-warning text-balsa-warning hover:bg-balsa-warning/15 active:bg-balsa-warning/25\" @click=\"close\">action</Button>\n    </template>\n  </Alert>\n</template>"
+    },
+    {
+      "id": "decision",
+      "title": "Destructive alert dialog",
+      "description": "Dialog mode moves a consequential decision into the native top layer.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open alert placeholder</Button>\n  <Alert v-model=\"open\" id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" mode=\"dialog\" color=\"destructive\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-destructive text-balsa-destructive hover:bg-balsa-destructive/15 active:bg-balsa-destructive/25\" @click=\"close\">Cancel placeholder</Button>\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-destructive text-balsa-destructive hover:bg-balsa-destructive/15 active:bg-balsa-destructive/25\" @click=\"open = false\">Confirm placeholder</Button>\n    </template>\n  </Alert>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Alert.vue",
@@ -149,13 +169,14 @@
       },
       {
         "name": "rounded",
-        "type": "Rounded | undefined",
+        "type": "SurfaceRounded | undefined",
         "values": [
           "md",
           "sm",
           "lg",
           "xl",
           "2xl",
+          "auto",
           "none",
           "3xl",
           "full"

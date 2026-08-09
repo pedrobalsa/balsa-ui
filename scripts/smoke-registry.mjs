@@ -56,38 +56,40 @@ const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 delete manifest.components["collapsible-group"];
 delete manifest.components["balsa-palette"];
 await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
-const compositionItems = [
-  ["account-security-card","AccountSecurityCard"],
-  ["payout-method-card","PayoutMethodCard"],
-  ["transfer-funds-card","TransferFundsCard"],
-  ["savings-goal-card","SavingsGoalCard"],
-  ["transaction-list-card","TransactionListCard"],
-  ["balance-summary-card","BalanceSummaryCard"],
-  ["usage-summary-card","UsageSummaryCard"],
-  ["analytics-chart-card","AnalyticsChartCard"],
-  ["metric-grid-card","MetricGridCard"],
-  ["resource-table-card","ResourceTableCard"],
-  ["settings-card","SettingsCard"],
-  ["notification-preferences-card","NotificationPreferencesCard"],
-  ["invite-members-card","InviteMembersCard"],
-  ["member-access-card","MemberAccessCard"],
-  ["action-list-card","ActionListCard"],
-  ["navigation-menu-card","NavigationMenuCard"],
-  ["empty-state-card","EmptyStateCard"],
-  ["error-state-card","ErrorStateCard"],
-  ["loading-state-card","LoadingStateCard"],
-  ["file-upload-card","FileUploadCard"],
-  ["media-preview-card","MediaPreviewCard"],
-  ["schedule-card","ScheduleCard"],
-  ["appointment-card","AppointmentCard"],
-  ["payment-method-card","PaymentMethodCard"],
-  ["subscription-card","SubscriptionCard"],
-  ["order-summary-card","OrderSummaryCard"],
-  ["onboarding-checklist-card","OnboardingChecklistCard"],
-  ["form-progress-card","FormProgressCard"],
-  ["activity-timeline-card","ActivityTimelineCard"],
-  ["command-toolbar-card","CommandToolbarCard"],
-];
+/**
+ * Every published composition, read from the registry rather than listed here.
+ *
+ * A hand-maintained copy of the catalog only has to be wrong once. This list
+ * still named the thirteen compositions the provenance audit deleted, so the
+ * smoke test asked the published registry for items that no longer exist and
+ * failed on the first 404 -- long after the deletion that caused it. Deriving
+ * the list means the catalog and the smoke test cannot disagree.
+ *
+ * ApplicationCard is excluded because it is the shared surface primitive rather
+ * than a showcase, and is asserted on its own below.
+ */
+const compositionsDirectory = "src/components/compositions/";
+const sharedCompositionFiles = new Set([
+  "ApplicationCard.vue",
+  "_CompositionRoot.vue",
+  "composition.ts",
+]);
+
+const registryDocument = JSON.parse(
+  await readFile(path.join(rootDir, "registry.json"), "utf8"),
+);
+const compositionItems = registryDocument.items.flatMap((item) => {
+  const own = (item.files ?? [])
+    .map((file) => file.target ?? "")
+    .filter((target) => target.startsWith(compositionsDirectory))
+    .map((target) => target.slice(compositionsDirectory.length))
+    .filter((file) => file.endsWith(".vue") && !sharedCompositionFiles.has(file));
+  return own.length ? [[item.name, own[0].replace(/\.vue$/, "")]] : [];
+});
+
+if (compositionItems.length === 0) {
+  throw new Error("No compositions found in registry.json; the smoke test would prove nothing.");
+}
 const installed = await installRegistryItems({
   names: [
     "button-group",

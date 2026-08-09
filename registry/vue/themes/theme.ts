@@ -115,7 +115,39 @@ export type ThemeEasing =
 
 export type ThemeTypographyOption = "modern" | "system" | "editorial" | "mono";
 export type ThemeShapeOption = "square" | "subtle" | "rounded" | "soft";
-export type ThemeDensityOption = "compact" | "balanced" | "comfortable";
+/**
+ * How large a control is: its height, and the inset that follows from it.
+ *
+ * Distinct from spacing, which is the distance between things. One control
+ * governed both until they were separated, which is why wiring the spacing
+ * token to control padding double-counted: the size step already moved with it,
+ * so a comfortable button gained the increase twice.
+ */
+/**
+ * The default size of a control: its height, and the inset that follows from it.
+ *
+ * Named `size` because that is what it does and what its control has always been
+ * labelled. It was called `density` while it also owned a spacing token, and
+ * kept the name after `spacing` became its own dimension — a key whose name
+ * contradicted its label, which is the same kind of lie that hid the size and
+ * spacing conflation for as long as it did.
+ *
+ * Distinct from `Table`'s own `density` prop, which survives unchanged: that one
+ * is a component's public API for row height, not a theme dimension.
+ */
+export type ThemeSizeOption = "compact" | "balanced" | "comfortable";
+
+/** @deprecated The dimension is called `size`. Kept so older imports resolve. */
+export type ThemeDensityOption = ThemeSizeOption;
+
+/**
+ * How much room the layout gives itself: the rhythm between siblings, and the
+ * inset scale that derives from the same unit.
+ *
+ * Scales the base unit rather than each step, so the whole system moves in
+ * proportion and the ratios between steps survive.
+ */
+export type ThemeSpacingOption = "tight" | "balanced" | "airy";
 export type ThemeBorderOption = "none" | "soft" | "medium" | "strong";
 export type ThemeElevationOption = "none" | "soft" | "floating" | "hard";
 export type ThemeMotionOption = "none" | "snappy" | "balanced" | "fluid";
@@ -124,7 +156,8 @@ export type ThemeMaterialOption = "solid" | "soft" | "glass";
 export interface ThemeOptions {
   typography?: ThemeTypographyOption;
   shape?: ThemeShapeOption;
-  density?: ThemeDensityOption;
+  size?: ThemeSizeOption;
+  spacing?: ThemeSpacingOption;
   border?: ThemeBorderOption;
   elevation?: ThemeElevationOption;
   motion?: ThemeMotionOption;
@@ -145,9 +178,14 @@ export const themeOptionDefinitions = [
     values: ["square", "subtle", "rounded", "soft"],
   },
   {
-    key: "density",
-    label: "Density",
+    key: "size",
+    label: "Control size",
     values: ["compact", "balanced", "comfortable"],
+  },
+  {
+    key: "spacing",
+    label: "Spacing",
+    values: ["tight", "balanced", "airy"],
   },
   {
     key: "border",
@@ -179,7 +217,8 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
   "modern-flat": {
     typography: "modern",
     shape: "rounded",
-    density: "compact",
+    size: "compact",
+    spacing: "balanced",
     border: "soft",
     elevation: "none",
     motion: "balanced",
@@ -188,7 +227,8 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
   brutalism: {
     typography: "mono",
     shape: "square",
-    density: "compact",
+    size: "compact",
+    spacing: "balanced",
     border: "strong",
     elevation: "none",
     motion: "snappy",
@@ -197,7 +237,8 @@ export const builtInThemeOptions: Readonly<Record<DesignTheme, ResolvedThemeOpti
   glassmorphism: {
     typography: "modern",
     shape: "soft",
-    density: "compact",
+    size: "compact",
+    spacing: "balanced",
     border: "medium",
     elevation: "floating",
     motion: "fluid",
@@ -266,6 +307,8 @@ export interface ThemeTokens {
     codeControl?: number;
   };
   spacing?: {
+    /** The spacing scale's base unit. Every step is a multiple of it. */
+    unit?: number;
     controlInline?: number;
     densityCompact?: number;
     densityDefault?: number;
@@ -1114,14 +1157,28 @@ function radiusTokens(option: ThemeShapeOption): NonNullable<ThemeTokens["radius
   return { control: 8, surface: 14, panel: 18, badge: 9999, toggle: 9999, codeControl: 8 };
 }
 
-function spacingTokens(option: ThemeDensityOption): NonNullable<ThemeTokens["spacing"]> {
-  if (option === "compact") {
-    return { controlInline: 12, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
-  }
-  if (option === "comfortable") {
-    return { controlInline: 20, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
-  }
-  return { controlInline: 16, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
+/**
+ * The spacing scale's base unit, and the legacy density values.
+ *
+ * Only the unit moves. Every rhythm step and every control inset is a multiple
+ * of it, so scaling the unit scales the whole system in proportion and the
+ * ratios between steps survive -- which is the property that makes a scale a
+ * scale rather than a list of sizes.
+ *
+ * Half-pixel steps are deliberate. A 4px unit puts the heaviest-used step on
+ * 12px; 3.5 and 4.5 move that to 10.5 and 13.5, which is a perceptible change
+ * in rhythm without breaking the ladder into values nobody chose.
+ */
+function spacingTokens(
+  option: ThemeSpacingOption,
+  size: ThemeSizeOption,
+): NonNullable<ThemeTokens["spacing"]> {
+  const unit = option === "tight" ? 3.5 : option === "airy" ? 4.5 : 4;
+  // `controlInline` predates the split and now describes the size dimension,
+  // not the spacing one. The composition matrix still reads it to size a tile
+  // against the control scale.
+  const controlInline = size === "compact" ? 12 : size === "comfortable" ? 20 : 16;
+  return { unit, controlInline, densityCompact: 4, densityDefault: 8, densityComfortable: 12 };
 }
 
 function borderTokens(option: ThemeBorderOption): NonNullable<ThemeTokens["border"]> {
@@ -1234,7 +1291,15 @@ function shapeDefaults(option: ThemeShapeOption): ThemeDefaults {
   };
 }
 
-function densityDefaults(option: ThemeDensityOption): ThemeDefaults {
+/**
+ * The size dimension, applied as each component's default size.
+ *
+ * `Table` and `DataTable` are the exception: their row height is their own
+ * `density` prop, so the theme's size maps onto it by name rather than through
+ * `size`. That is why this dimension could not simply be renamed everywhere —
+ * two different things were spelled the same, and only one of them moved.
+ */
+function sizeDefaults(option: ThemeSizeOption): ThemeDefaults {
   const density = option === "compact" ? "compact" : option === "comfortable" ? "comfortable" : "default";
   const components: Partial<ThemeComponentDefaultMap> = {};
   for (const component of themeDefaultPropCoverage.size) {
@@ -1306,7 +1371,7 @@ export function deriveThemeRecipe(options: ResolvedThemeOptions): DerivedThemeRe
     tokens: {
       typography: typographyTokens(options.typography),
       radius: radiusTokens(options.shape),
-      spacing: spacingTokens(options.density),
+      spacing: spacingTokens(options.spacing, options.size),
       border: borderTokens(options.border),
       shadow: shadowTokens(options.elevation),
       motion: motionTokens(options.motion),
@@ -1314,7 +1379,7 @@ export function deriveThemeRecipe(options: ResolvedThemeOptions): DerivedThemeRe
       materials: material.materials,
     },
     defaults: mergeThemeDefaults(
-      mergeThemeDefaults(shapeDefaults(options.shape), densityDefaults(options.density)),
+      mergeThemeDefaults(shapeDefaults(options.shape), sizeDefaults(options.size)),
       mergeThemeDefaults(elevationDefaults(options.elevation), materialDefaults(options.material)),
     ),
   };
@@ -1421,9 +1486,19 @@ export function resolveTheme(input: ThemeInput): ResolvedThemeDefinition {
   };
 }
 
+/**
+ * A material refers to the *resolved* role, not the raw palette anchor.
+ *
+ * A palette defines the anchors and leaves the derived roles to the foundation,
+ * so `var(--balsa-color-accent-hover)` had nothing to resolve — and a `var()`
+ * on an undefined custom property with no fallback is invalid at computed-value
+ * time, which makes the whole material variable vanish rather than fall back.
+ * The failure was silent and only visible as a surface that stopped being glass
+ * on hover. `--balsa-role-*` always resolves, so a material always has a value.
+ */
 function paletteColorReference(role: ThemeColorReference["role"]): string {
   if (role === "currentColor" || role === "transparent") return role;
-  return `var(--balsa-color-${role})`;
+  return `var(--balsa-role-${role})`;
 }
 
 function percentage(value: number): string {
@@ -1515,6 +1590,7 @@ export function serializeThemeTokens(tokens: ThemeTokens): Readonly<Record<strin
     assign(variable, value === undefined ? undefined : `${value}px`);
   }
   const spacingVariables = {
+    unit: "--balsa-space-unit",
     controlInline: "--balsa-spacing-control-inline",
     densityCompact: "--balsa-spacing-density-compact",
     densityDefault: "--balsa-spacing-density-default",
@@ -1569,6 +1645,41 @@ export function serializeThemeTokens(tokens: ThemeTokens): Readonly<Record<strin
   assign("--balsa-overlay-blur", tokens.effects?.overlayBlur === undefined
     ? undefined
     : `${tokens.effects.overlayBlur}px`);
+
+  /*
+   * The composed filters, resolved to `none` when they would do nothing.
+   *
+   * `backdrop-filter: blur(0px) saturate(1)` looks identical to `none` and is
+   * not the same declaration: any computed value other than `none` creates a
+   * stacking context, a containing block for absolute and fixed descendants,
+   * and a compositing layer the browser repaints on every scroll frame. A
+   * `position: fixed` child of such an element is fixed to the element rather
+   * than to the viewport, which is a correctness bug rather than a slow one.
+   *
+   * Measured on the gallery before this existed: 32 elements carried an
+   * identity filter at the Solid material and 24 carried a real blur over a
+   * fully opaque background at Glass, where nothing shows through to filter.
+   *
+   * CSS cannot make this decision -- it has no conditional, and the blur is a
+   * runtime value an authored theme sets -- so it is made here, where the
+   * number is known, and mirrored by static defaults in `balsa-theme.css` for
+   * the path where no theme has been applied yet.
+   */
+  const blur = tokens.effects?.backdropBlur;
+  const saturation = tokens.effects?.backdropSaturation ?? 1;
+  const filterFor = (radius: number) =>
+    radius > 0 ? `blur(${radius}px) saturate(${saturation})` : "none";
+  if (blur !== undefined) {
+    assign("--balsa-backdrop-filter", filterFor(blur));
+    // A glass surface inside another blurs less: the layer beneath it is
+    // already frosted, so repeating the full radius reads as muddy rather than
+    // deeper. Floored at zero, and `none` once it gets there.
+    assign("--balsa-backdrop-filter-contained", filterFor(Math.max(0, blur - 4)));
+  }
+  const overlayBlur = tokens.effects?.overlayBlur;
+  if (overlayBlur !== undefined) {
+    assign("--balsa-overlay-filter", overlayBlur > 0 ? `blur(${overlayBlur}px)` : "none");
+  }
 
   for (const [key, material] of Object.entries(tokens.materials ?? {})) {
     if (material) assign(`--balsa-material-${key}`, serializeMaterial(material));

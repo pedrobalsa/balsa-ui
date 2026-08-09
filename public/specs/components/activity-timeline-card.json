@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Chronological actor, action, target, and time event stream.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport ActivityTimelineCard from \"@/components/compositions/ActivityTimelineCard.vue\";\n</script>\n\n<template>\n  <ActivityTimelineCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport ActivityTimelineCard from \"@/components/compositions/ActivityTimelineCard.vue\";\n</script>\n\n<template>\n  <ActivityTimelineCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/ActivityTimelineCard.vue",
@@ -158,7 +168,7 @@
         "name": "events",
         "type": "readonly ActivityEvent[] | undefined",
         "required": false,
-        "default": "[ { id: \"1\", actor: \"Ada Lovelace\", initials: \"AL\", action: \"deployed\", target: \"Atlas to production\", time: \"8 minutes ago\" }, { id: \"2\", actor: \"Grace Hopper\", initials: \"GH\", action: \"updated\", target: \"environment variables\", time: \"42 minutes ago\" }, { id: \"3\", actor: \"Margaret Hamilton\", initials: \"MH\", action: \"invited\", target: \"two collaborators\", time: \"Yesterday\" }, ]"
+        "default": "[ { id: \"1\", actor: \"Ada Lovelace\", initials: \"AL\", action: \"deployed\", target: \"Atlas to production\", time: \"8 minutes ago\" }, { id: \"2\", actor: \"Grace Hopper\", initials: \"GH\", action: \"updated\", target: \"environment variables\", time: \"42 minutes ago\" }, { id: \"3\", actor: \"Barbara Liskov\", initials: \"BL\", action: \"promoted\", target: \"Relay to preview\", time: \"2 hours ago\" }, { id: \"4\", actor: \"Margaret Hamilton\", initials: \"MH\", action: \"invited\", target: \"two collaborators\", time: \"Yesterday\" }, { id: \"5\", actor: \"Katherine Johnson\", initials: \"KJ\", action: \"archived\", target: \"the Nova sandbox\", time: \"Yesterday\" }, { id: \"6\", actor: \"Radia Perlman\", initials: \"RP\", action: \"rotated\", target: \"the deploy key\", time: \"2 days ago\" }, { id: \"7\", actor: \"Jean Bartik\", initials: \"JB\", action: \"connected\", target: \"a preview domain\", time: \"3 days ago\" }, ]"
       }
     ],
     "events": [],

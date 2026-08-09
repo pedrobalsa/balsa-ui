@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/number-field",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/number-field/NumberField.vue": "sha256-07d6399e712a17d3234ee6dbb6cd9173665f743d8f19db2c00cc2e59360cb46b",
+      "ui/number-field/NumberFieldContent.vue": "sha256-a75bb09e066595ef721c18666c2beb196fc6c0344a2aa75dffa102339e38eecf",
+      "ui/number-field/NumberFieldDecrement.vue": "sha256-c924feb3d1c1ca8092b81a8e0685d912ac6e62497643d48b318ae6a2bdca7070",
+      "ui/number-field/NumberFieldIncrement.vue": "sha256-db1873a7f69a8d5b4d4c8ce5f385c6286cd99602c20164ef4bb84bbaced0e8be",
+      "ui/number-field/NumberFieldInput.vue": "sha256-75fa5ed310760df169af79e31970a2b69b440ea6f1aa8fc9cc4e4f5c5a27e1c3",
+      "ui/number-field/index.ts": "sha256-9543471bcc5ce67bfe725facf0367650baf30dc2ec4a70bfa3e3ef6156fb09b9"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/number-field/NumberFieldContent.vue",
+      "find": "'relative [&>[data-slot=input]]:has-[[data-slot=increment]]:pr-5 [&>[data-slot=input]]:has-[[data-slot=decrement]]:pl-5'",
+      "replace": "'relative [&>[data-slot=input]]:has-[[data-slot=increment]]:pe-5 [&>[data-slot=input]]:has-[[data-slot=decrement]]:ps-5'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/number-field/NumberFieldDecrement.vue",
+      "find": "'absolute top-1/2 -translate-y-1/2 left-0 p-3 disabled:cursor-not-allowed disabled:opacity-20'",
+      "replace": "'absolute top-1/2 -translate-y-1/2 start-0 p-balsa-md disabled:cursor-not-allowed disabled:opacity-20'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/number-field/NumberFieldIncrement.vue",
+      "find": "'absolute top-1/2 -translate-y-1/2 right-0 disabled:cursor-not-allowed disabled:opacity-20 p-3'",
+      "replace": "'absolute top-1/2 -translate-y-1/2 end-0 disabled:cursor-not-allowed disabled:opacity-20 p-balsa-md'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/number-field/NumberFieldInput.vue",
+      "find": "'flex h-9 w-full rounded-md border border-input bg-transparent py-1 text-sm text-center shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'",
+      "replace": "'flex h-9 w-full rounded-md border-solid border-(length:--balsa-outline-border-width) border-input bg-transparent py-balsa-3xs text-sm text-center shadow-[var(--balsa-shadow-control)] transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Animating without a reduced-motion guard ignores the user's stated preference."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

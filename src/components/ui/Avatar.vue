@@ -115,7 +115,7 @@ const showFallback = computed(
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const classes = computed(() =>
   mergeClasses(
-    "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden border border-balsa-border bg-balsa-muted font-balsa-body font-medium text-balsa-muted-foreground",
+    "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden border-balsa-border bg-balsa-muted font-balsa-body font-medium text-balsa-muted-foreground",
     sizeClasses[props.size],
     shapeClasses[props.shape],
     attrs.class,

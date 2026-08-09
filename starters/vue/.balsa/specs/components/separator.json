@@ -51,9 +51,24 @@
     "Adding label content to a vertical separator."
   ],
   "examples": [
-    "Horizontal rule",
-    "Labelled separator",
-    "Vertical toolbar divider"
+    {
+      "id": "labelled",
+      "title": "Labelled boundary",
+      "description": "A centred label gives a visible section transition without becoming a badge.",
+      "source": "<script setup lang=\"ts\">\nimport Separator from \"@/components/ui/Separator.vue\";\n</script>\n\n<template>\n  <Separator orientation=\"horizontal\" label=\"Section placeholder\" />\n</template>"
+    },
+    {
+      "id": "dashed",
+      "title": "Dashed rule",
+      "description": "Dashed treatment communicates a softer visual division.",
+      "source": "<script setup lang=\"ts\">\nimport Separator from \"@/components/ui/Separator.vue\";\n</script>\n\n<template>\n  <Separator orientation=\"horizontal\" variant=\"dashed\" size=\"md\" label=\"\" />\n</template>"
+    },
+    {
+      "id": "vertical",
+      "title": "Vertical division",
+      "description": "Vertical orientation separates compact inline groups within a known height.",
+      "source": "<script setup lang=\"ts\">\nimport Separator from \"@/components/ui/Separator.vue\";\n</script>\n\n<template>\n  <div class=\"flex h-20 items-center gap-balsa-lg\">\n    <span>Before placeholder</span>\n    <Separator orientation=\"vertical\" />\n    <span>After placeholder</span>\n  </div>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Separator.vue",

@@ -67,13 +67,30 @@
     "Using important padding or shadow overrides instead of the typed props and normal consumer utilities."
   ],
   "examples": [
-    "Surface card",
-    "Elevated card",
-    "Muted card",
-    "Outline card",
-    "Soft card",
-    "Glass card",
-    "Shadowless card"
+    {
+      "id": "elevated",
+      "title": "Elevated",
+      "description": "Elevated cards separate focused content from the surrounding surface.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"elevated\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Outline cards group content without adding depth.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"outline\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft",
+      "description": "Soft cards add a restrained semantic color wash.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"soft\" color=\"secondary\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Glass cards preserve background detail with a restrained semantic rim.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"glass\" color=\"accent\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Card.vue",

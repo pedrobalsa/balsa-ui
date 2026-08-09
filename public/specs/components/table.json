@@ -9,7 +9,7 @@
     "name": "table"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Present consumer-authored semantic tabular markup in a responsive Balsa surface with independently configurable header and row colors.",
   "useFor": [
     "Comparison data",
@@ -61,10 +61,30 @@
     "Hiding the caption without providing the caption prop."
   ],
   "examples": [
-    "Semantic table",
-    "Striped rows",
-    "Loading",
-    "Empty"
+    {
+      "id": "semantic",
+      "title": "Semantic results",
+      "description": "Caption, scoped headers, and native row groups remain consumer-authored.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"default\" :column-count=\"3\" striped>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    },
+    {
+      "id": "grid",
+      "title": "Compact grid",
+      "description": "Compact density and gridlines support dense comparison.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"compact\" :column-count=\"3\" striped gridlines>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading rows",
+      "description": "One valid spanning row announces pending table content.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"default\" :column-count=\"3\" striped loading>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    },
+    {
+      "id": "empty",
+      "title": "Empty results",
+      "description": "Empty copy remains within the native table structure.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"default\" :column-count=\"3\" striped empty>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Table.vue",
@@ -207,13 +227,14 @@
       },
       {
         "name": "rounded",
-        "type": "Rounded | undefined",
+        "type": "SurfaceRounded | undefined",
         "values": [
           "md",
           "sm",
           "lg",
           "xl",
           "2xl",
+          "auto",
           "none",
           "3xl",
           "full"

@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport SettingsCard from \"@/components/compositions/SettingsCard.vue\";\n</script>\n\n<template>\n  <SettingsCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport SettingsCard from \"@/components/compositions/SettingsCard.vue\";\n</script>\n\n<template>\n  <SettingsCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/SettingsCard.vue",

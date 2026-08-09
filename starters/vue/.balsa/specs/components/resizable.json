@@ -9,7 +9,7 @@
     "name": "resizable"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Divide available space into two panels whose boundary can be adjusted by pointer or keyboard.",
   "useFor": [
     "Editor panes",
@@ -55,10 +55,24 @@
     "Using Resizable where responsive stacking is clearer."
   ],
   "examples": [
-    "Horizontal panes",
-    "Vertical panes",
-    "Glass panels",
-    "Disabled split"
+    {
+      "id": "horizontal",
+      "title": "Horizontal workspace",
+      "description": "A direct separator allocates width, while its second pane demonstrates a nested vertical split.",
+      "source": "<script setup lang=\"ts\">\nimport Resizable from \"@/components/ui/Resizable.vue\";\nimport { ref } from \"vue\";\n\nconst split = ref(42);\nconst secondarySplit = ref(52);\n</script>\n\n<template>\n  <Resizable id=\"workspace-placeholder\" v-model=\"split\" label=\"Resize placeholder panels\" orientation=\"horizontal\" :min=\"15\" :max=\"85\" :step=\"5\" class=\"h-80\">\n    <template #first><div class=\"p-balsa-2xl\">First panel placeholder</div></template>\n    <template #second>\n      <Resizable id=\"workspace-secondary-placeholder\" v-model=\"secondarySplit\" label=\"Resize secondary placeholder panels\" orientation=\"vertical\" :min=\"25\" :max=\"75\" :step=\"5\" rounded=\"none\" class=\"size-full border-0\">\n        <template #first><div class=\"p-balsa-2xl\">Second panel placeholder</div></template>\n        <template #second><div class=\"p-balsa-2xl\">Third panel placeholder</div></template>\n      </Resizable>\n    </template>\n  </Resizable>\n</template>"
+    },
+    {
+      "id": "vertical",
+      "title": "Vertical workspace",
+      "description": "Vertical orientation allocates height with the same keyboard contract.",
+      "source": "<script setup lang=\"ts\">\nimport Resizable from \"@/components/ui/Resizable.vue\";\nimport { ref } from \"vue\";\n\nconst split = ref(58);\nconst secondarySplit = ref(52);\n</script>\n\n<template>\n  <Resizable id=\"workspace-placeholder\" v-model=\"split\" label=\"Resize placeholder panels\" orientation=\"vertical\" :min=\"15\" :max=\"85\" :step=\"5\" variant=\"outline\" class=\"h-80\">\n    <template #first><div class=\"p-balsa-2xl\">First panel placeholder</div></template>\n    <template #second>\n      <Resizable id=\"workspace-secondary-placeholder\" v-model=\"secondarySplit\" label=\"Resize secondary placeholder panels\" orientation=\"vertical\" :min=\"25\" :max=\"75\" :step=\"5\" variant=\"outline\" rounded=\"none\" class=\"size-full border-0\">\n        <template #first><div class=\"p-balsa-2xl\">Second panel placeholder</div></template>\n        <template #second><div class=\"p-balsa-2xl\">Third panel placeholder</div></template>\n      </Resizable>\n    </template>\n  </Resizable>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass split",
+      "description": "Glass material inherits an expressive background without changing resize behavior.",
+      "source": "<script setup lang=\"ts\">\nimport Resizable from \"@/components/ui/Resizable.vue\";\nimport { ref } from \"vue\";\n\nconst split = ref(35);\nconst secondarySplit = ref(52);\n</script>\n\n<template>\n  <Resizable id=\"workspace-placeholder\" v-model=\"split\" label=\"Resize placeholder panels\" orientation=\"horizontal\" :min=\"15\" :max=\"85\" :step=\"5\" variant=\"glass\" rounded=\"2xl\" class=\"h-80\">\n    <template #first><div class=\"p-balsa-2xl\">First panel placeholder</div></template>\n    <template #second>\n      <Resizable id=\"workspace-secondary-placeholder\" v-model=\"secondarySplit\" label=\"Resize secondary placeholder panels\" orientation=\"vertical\" :min=\"25\" :max=\"75\" :step=\"5\" variant=\"glass\" rounded=\"none\" class=\"size-full border-0\">\n        <template #first><div class=\"p-balsa-2xl\">Second panel placeholder</div></template>\n        <template #second><div class=\"p-balsa-2xl\">Third panel placeholder</div></template>\n      </Resizable>\n    </template>\n  </Resizable>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Resizable.vue",
@@ -163,13 +177,14 @@
       },
       {
         "name": "rounded",
-        "type": "Rounded | undefined",
+        "type": "SurfaceRounded | undefined",
         "values": [
           "md",
           "sm",
           "lg",
           "xl",
           "2xl",
+          "auto",
           "none",
           "3xl",
           "full"

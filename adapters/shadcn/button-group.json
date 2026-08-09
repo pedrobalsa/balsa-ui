@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/button-group",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/button-group/ButtonGroup.vue": "sha256-40673f757ef3ee151bf842948a4feeeb4f4afdec80e672838eb9d835581003f9",
+      "ui/button-group/ButtonGroupSeparator.vue": "sha256-252fb969b9725692df0334966b292b93d484cd180e7e1eef6889392b9c114b6a",
+      "ui/button-group/ButtonGroupText.vue": "sha256-efb3ac00d2bb3a35e9e2bfacbef6b74fe2320b14f59fa97ece8823cde9c8c00b",
+      "ui/button-group/index.ts": "sha256-d5c5ff24ca712123c6b4f5fa7c4c1cf3ae1603d33fbfff754f09bbfc8b6f2154"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "class-variance-authority",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/separator"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "unsupported",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/button-group/index.ts",
+      "find": "\"[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none\"",
+      "replace": "\"[&>*:not(:first-child)]:rounded-s-none [&>*:not(:first-child)]:border-s-0 [&>*:not(:last-child)]:rounded-e-none\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (rounded-r-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

@@ -2,10 +2,14 @@
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { installRegistryItems } from "../scripts/install-registry.mjs";
+import { detectLocalModifications, installRegistryItems } from "../scripts/install-registry.mjs";
 import { createBackgroundConfiguration } from "../scripts/background-cli.mjs";
 import { applyThemeConfiguration, createThemeConfiguration, themePresets } from "../scripts/theme-cli.mjs";
-import { createDesignSystemConfiguration } from "../scripts/design-system-cli.mjs";
+import {
+  createDesignSystemConfiguration,
+  describeDesignSystem,
+  formatDesignSystem,
+} from "../scripts/design-system-cli.mjs";
 import { createPaletteConfiguration } from "../scripts/palette-cli.mjs";
 import {
   compactCatalogItem,
@@ -16,14 +20,28 @@ import {
   loadCatalog,
   loadComponentSpec,
   missingNpmDependencies,
+  kindLabels,
+  requiredNpmDependencies,
   searchCatalog,
+  searchKinds,
   unknownItemError,
 } from "../scripts/agent-context.mjs";
+import { listTools, serveStdio } from "../scripts/mcp-server.mjs";
 import { readJson, rootDir } from "../scripts/registry-lib.mjs";
 import { createResolver, loadProjectConfiguration } from "../scripts/registry-resolve.mjs";
+import { rewriteItemImports } from "../scripts/source-imports.mjs";
+import { listAdapters, loadAdapter } from "../scripts/apply-adapters.mjs";
+import {
+  diffInstalled,
+  diffStateOrder,
+  diffStateSummary,
+  planUpdate,
+  updatePolicy,
+} from "../scripts/diff-installed.mjs";
 import {
   formatInstallationPhases,
   formatProblems,
+  inspectInstallation,
   inspectProject,
 } from "../scripts/project-diagnostics.mjs";
 
@@ -35,16 +53,20 @@ Usage:
   balsa init [--palette] [--cwd <project>] [--force] [--json]
   balsa add <item|@registry/item> [more-items] [--implementation <registry>] [--cwd <project>] [--force]
   balsa list [--json]
-  balsa search <terms> [--json]
+  balsa search <terms> [--kind <kind,...>] [--limit <n>] [--json]
   balsa info <item> [--json | --markdown]
   balsa docs <item> [--json | --markdown]
   balsa view <item|@registry/item> [--cwd <project>] [--json]
+  balsa diff [item] [--cwd <project>] [--json]
+  balsa update [item] [--cwd <project>] [--force] [--json]
   balsa doctor [--cwd <project>] [--json]
+  balsa mcp [--tools]
   balsa theme apply <preset> [--name <id>] [--cwd <project>] [--force] [--json]
   balsa theme apply --list
   balsa background create <name> [--preset <preset> | --from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa theme create <name> [--preset <theme> | --from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa palette create <name> [--from <file> | --config <payload>] [--cwd <project>] [--force]
+  balsa design-system show [--cwd <project>] [--json]
   balsa design-system create <name> [--from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa version
   balsa help
@@ -151,19 +173,101 @@ async function listItems(argv) {
   console.log(formatCatalogList(catalog.items));
 }
 
-async function searchItems(argv) {
+/**
+ * Every upstream item Balsa has certified, from the adapter manifests.
+ *
+ * Read from disk rather than fetched: a search that reaches the network is a
+ * search an agent learns not to run, and the manifests already record the name,
+ * the integration status and what the adaptation costs.
+ */
+async function certifiedUpstreamItems() {
+  const adapters = await listAdapters();
+  return adapters.flatMap((adapter) => {
+    const match = /^@([a-z0-9-]+)\/(.+)$/.exec(adapter.item ?? "");
+    if (!match) return [];
+    const [, registry, name] = match;
+    return [{
+      name,
+      title: name.replace(/(^|-)([a-z])/g, (_all, lead, letter) => `${lead ? " " : ""}${letter.toUpperCase()}`),
+      category: "component",
+      registry: `@${registry}/${name}`,
+      description: `Upstream ${registry} component, ${adapter.status.replace(/-/g, " ")}.`,
+      status: adapter.status,
+      npmDependencies: adapter.requires?.npmDependencies ?? [],
+      registryDependencies: [],
+    }];
+  });
+}
+
+function parseSearchArguments(argv) {
   const { json, values } = parseOutputFormat(argv);
-  if (!values.length) throw new Error("Search for a component purpose or name.");
-  const matches = searchCatalog(await loadCatalog(), values.join(" "));
+  const kinds = [];
+  let limit;
+  const terms = [];
+
+  for (let index = 0; index < values.length; index += 1) {
+    const value = values[index];
+    if (value === "--kind" || value === "--type") {
+      kinds.push(...String(values[index + 1] ?? "").split(",").filter(Boolean));
+      index += 1;
+    } else if (value === "--limit") {
+      limit = Number.parseInt(String(values[index + 1] ?? ""), 10);
+      index += 1;
+    } else {
+      terms.push(value);
+    }
+  }
+
+  const unknown = kinds.filter((kind) => !searchKinds.includes(kind));
+  if (unknown.length) {
+    throw new Error(
+      `Unknown kind: ${unknown.join(", ")}. Choose from ${searchKinds.join(", ")}.`,
+    );
+  }
+  if (limit !== undefined && (!Number.isFinite(limit) || limit < 1)) {
+    throw new Error("--limit takes a positive whole number.");
+  }
+  return { json, kinds, limit, query: terms.join(" ") };
+}
+
+async function searchItems(argv) {
+  const { json, kinds, limit, query } = parseSearchArguments(argv);
+  if (!query) throw new Error("Search for a component purpose or name.");
+
+  const results = searchCatalog(await loadCatalog(), query, {
+    kinds,
+    limit,
+    upstreamItems: await certifiedUpstreamItems(),
+  });
+
   if (json) {
-    printJson(matches.map(compactCatalogItem));
+    printJson(results.map((result) => ({
+      ...compactCatalogItem(result.item),
+      kind: result.kind,
+      score: result.score,
+      // Why this appeared, so a caller can tell a name hit from a passing
+      // mention in a dependency without re-reading the item.
+      matched: result.reasons,
+    })));
     return;
   }
-  if (!matches.length) {
-    console.log("No Balsa items matched.");
+
+  if (!results.length) {
+    console.log("Nothing matched.");
     return;
   }
-  console.log(formatCatalogList(matches));
+
+  for (const result of results) {
+    const { item } = result;
+    console.log(`${item.name}  (${kindLabels[result.kind]})`);
+    if (item.description) console.log(`  ${item.description}`);
+    if (result.reasons.length) console.log(`  matched: ${result.reasons.join(", ")}`);
+    if (item.upstream) {
+      console.log(`  stands in for ${item.upstream.registry}/${item.upstream.name}`);
+    }
+    console.log(`  install: npx balsa-ui@latest add ${item.registry ?? item.name}`);
+    console.log("");
+  }
 }
 
 async function describeItem(argv) {
@@ -209,11 +313,25 @@ async function runDoctor(argv) {
   }
 
   const diagnosis = await inspectProject(cwd);
+  const configuration = await loadProjectConfiguration(cwd);
+  const installation = await inspectInstallation(cwd, { loadAdapter, detectLocalModifications });
+
   if (json) {
     printJson({
       project: diagnosis.projectRoot,
       cliVersion,
+      framework: diagnosis.packageJson?.dependencies?.vue ? "vue" : undefined,
+      style: configuration.style,
+      aliases: configuration.aliases,
+      registries: Object.keys(configuration.registries),
       stylesheet: diagnosis.stylesheet,
+      designSystemVersion: installation.designSystemVersion,
+      installed: installation.installed,
+      // Reported separately because they mean different things: a modified file
+      // is the user's own work to preserve, an outdated adapter is Balsa's
+      // adaptation having moved on since the install.
+      locallyModified: installation.modified,
+      outdatedAdapters: installation.outdatedAdapters,
       ready: diagnosis.errors.length === 0,
       problems: diagnosis.problems,
     });
@@ -222,11 +340,46 @@ async function runDoctor(argv) {
   }
 
   console.log(`Balsa UI ${cliVersion} checking ${diagnosis.projectRoot}`);
+
+  if (installation.installed.length) {
+    const byNamespace = new Map();
+    for (const entry of installation.installed) {
+      byNamespace.set(entry.namespace, (byNamespace.get(entry.namespace) ?? 0) + 1);
+    }
+    const summary = [...byNamespace]
+      .sort(([left], [right]) => String(left).localeCompare(String(right)))
+      .map(([namespace, count]) => `${count} from ${namespace}`)
+      .join(", ");
+    console.log(`Installed: ${installation.installed.length} items (${summary}).`);
+    if (installation.designSystemVersion) {
+      console.log(`Design system: ${installation.designSystemVersion}`);
+    }
+  } else {
+    console.log("Installed: nothing yet.");
+  }
+
+  if (installation.modified.length) {
+    console.log(
+      `\nLocally modified — these are yours and no update will overwrite them:`,
+    );
+    for (const entry of installation.modified) {
+      console.log(`  ${entry.registry ?? entry.reference} (${entry.state})`);
+    }
+  }
+
+  if (installation.outdatedAdapters.length) {
+    console.log("\nAdapters that have moved on since these were installed:");
+    for (const entry of installation.outdatedAdapters) {
+      console.log(`  ${entry.registry}: installed as ${entry.installedWith}, now ${entry.available}`);
+    }
+    console.log("  Reinstall with --force to take the current adaptation.");
+  }
+
   if (!diagnosis.problems.length) {
-    console.log("No problems detected. This project can host a Balsa installation.");
+    console.log("\nNo problems detected. This project can host a Balsa installation.");
     return;
   }
-  console.log(formatProblems(diagnosis.problems).join("\n"));
+  console.log(`\n${formatProblems(diagnosis.problems).join("\n")}`);
   if (diagnosis.errors.length) process.exitCode = 1;
 }
 
@@ -280,7 +433,10 @@ async function viewItem(argv) {
       : {}),
     install: `npx balsa-ui@latest add ${references[0]}`,
     files: item.files.map((file) => file.target),
-    npmDependencies: item.dependencies ?? [],
+    // Reported after the rewrites the installer applies, so `view` names the
+    // package a consumer will actually need rather than the one upstream
+    // happens to import under a deprecated name.
+    npmDependencies: requiredNpmDependencies([rewriteItemImports(item, configuration)]),
     registryDependencies: dependencies.map((candidate) => candidate.reference),
   };
 
@@ -372,8 +528,12 @@ async function addItems(argv) {
   const installed = await installRegistryItems(options);
   const includesTheme = installed.some((item) => item.name === "balsa-theme");
   const includesPalette = installed.some((item) => item.name === "balsa-palette");
-  const stylesheet = includesTheme || includesPalette
-    ? await ensureStyleImports(options.cwd, includesPalette)
+  const includesBridge = installed.some((item) => item.name === "balsa-shadcn-bridge");
+  const stylesheet = includesTheme || includesPalette || includesBridge
+    ? await ensureStyleImports(options.cwd, {
+      includePalette: includesPalette,
+      includeBridge: includesBridge,
+    })
     : undefined;
   const npmDependencies = await missingNpmDependencies(options.cwd, installed);
   const result = {
@@ -382,17 +542,22 @@ async function addItems(argv) {
     stylesheet,
     agentContext: path.join(options.cwd, ".balsa"),
     missingNpmDependencies: npmDependencies,
+    adapterConflicts: installed.conflicts ?? [],
   };
   if (options.json) {
     printJson(result);
     return;
+  }
+  for (const conflict of installed.conflicts ?? []) {
+    console.warn(`Adapter [${conflict.reason}]: ${conflict.message}
+`);
   }
   console.log(`Installed into ${options.cwd}`);
   console.log("Agent context synchronized under .balsa/.");
   console.log(
     formatInstallationPhases({
       installed,
-      stylesheet: includesTheme || includesPalette ? stylesheet : undefined,
+      stylesheet: includesTheme || includesPalette || includesBridge ? stylesheet : undefined,
       projectRoot: options.cwd,
       npmDependencies,
     }).join("\n"),
@@ -605,6 +770,162 @@ async function createPalette(argv) {
   console.log(`Activate: <html data-palette="${result.paletteId}">`);
 }
 
+/**
+ * Compare installed source against what it was and what it would be.
+ *
+ * The question before any update is which of three things moved, and this is
+ * the command that answers it. Nothing is written: `diff` reports, `update`
+ * acts, and keeping them apart is what makes the answer trustworthy.
+ */
+async function diffItems(argv) {
+  const { json, values } = parseOutputFormat(argv);
+  let cwd = process.cwd();
+  const names = [];
+  for (let index = 0; index < values.length; index += 1) {
+    if (values[index] === "--cwd") {
+      const destination = values[index + 1];
+      if (!destination) throw new Error("--cwd requires a project path.");
+      cwd = path.resolve(destination);
+      index += 1;
+    } else if (values[index].startsWith("-")) {
+      throw new Error(`Unknown option: ${values[index]}`);
+    } else {
+      names.push(values[index]);
+    }
+  }
+
+  const results = await diffInstalled(cwd, { names });
+
+  if (json) {
+    printJson({
+      project: cwd,
+      items: results.map((entry) => ({ ...entry, meaning: diffStateSummary[entry.state] })),
+    });
+    // Divergence is the only state that needs a person, so it is the only one
+    // that fails. A safe update pending is not an error.
+    if (results.some((entry) => entry.state === "diverged")) process.exitCode = 1;
+    return;
+  }
+
+  if (!results.length) {
+    console.log(names.length ? "No installed item matched." : "Nothing is installed here.");
+    return;
+  }
+
+  const byState = new Map();
+  for (const entry of results) {
+    byState.set(entry.state, [...(byState.get(entry.state) ?? []), entry]);
+  }
+
+  for (const state of diffStateOrder) {
+    const entries = byState.get(state);
+    if (!entries?.length) continue;
+    console.log(`${state} — ${diffStateSummary[state]}`);
+    for (const entry of entries) {
+      console.log(`  ${entry.reference}${entry.unresolved ? ` (${entry.unresolved})` : ""}`);
+    }
+    console.log("");
+  }
+
+  if (byState.get("diverged")?.length) process.exitCode = 1;
+}
+
+async function updateItems(argv) {
+  const { json, values } = parseOutputFormat(argv);
+  let cwd = process.cwd();
+  let force = false;
+  const names = [];
+  for (let index = 0; index < values.length; index += 1) {
+    if (values[index] === "--cwd") {
+      const destination = values[index + 1];
+      if (!destination) throw new Error("--cwd requires a project path.");
+      cwd = path.resolve(destination);
+      index += 1;
+    } else if (values[index] === "--force") {
+      force = true;
+    } else if (values[index].startsWith("-")) {
+      throw new Error(`Unknown option: ${values[index]}`);
+    } else {
+      names.push(values[index]);
+    }
+  }
+
+  const compared = await diffInstalled(cwd, { names });
+  if (!compared.length) {
+    console.log(names.length ? "No installed item matched." : "Nothing is installed here.");
+    return;
+  }
+
+  const planned = planUpdate(compared, { force });
+
+  const toUpdate = planned.filter((entry) => entry.action === "update");
+
+  if (toUpdate.length) {
+    // `force` on the installer, because these files already exist. The decision
+    // about whether overwriting is safe was made above, per item.
+    await installRegistryItems({
+      names: toUpdate.map((entry) => entry.reference),
+      cwd,
+      force: true,
+      agentContext: true,
+    });
+  }
+
+  if (json) {
+    printJson({ project: cwd, updated: toUpdate.map((e) => e.reference), items: planned });
+    return;
+  }
+
+  for (const entry of planned) {
+    console.log(`${entry.action === "update" ? "updated " : "kept    "} ${entry.reference}  (${entry.note})`);
+  }
+
+  const kept = planned.filter((entry) => entry.action === "keep"
+    && updatePolicy[entry.state]?.forceable);
+  console.log(
+    `\n${toUpdate.length} updated, ${planned.length - toUpdate.length} left alone.`
+    + (kept.length && !force
+      ? ` ${kept.length} hold local changes; review with balsa diff before forcing.`
+      : ""),
+  );
+}
+
+/**
+ * What the active design system exposes, and how far each dimension reaches.
+ *
+ * The differentiated answer: an agent asking "what does spacing mean here" or
+ * "will elevation reach an upstream Table" should get it from the CLI rather
+ * than by parsing generated CSS and guessing. Reach is aggregated from the
+ * adapter manifests, so it describes what is actually certified rather than
+ * what the design system would like to be true.
+ */
+async function showDesignSystem(argv) {
+  const { json, values } = parseOutputFormat(argv);
+  let cwd = process.cwd();
+  for (let index = 0; index < values.length; index += 1) {
+    if (values[index] === "--cwd") {
+      const destination = values[index + 1];
+      if (!destination) throw new Error("--cwd requires a project path.");
+      cwd = path.resolve(destination);
+      index += 1;
+    } else if (values[index] !== "show") {
+      throw new Error(`Unknown option: ${values[index]}`);
+    }
+  }
+
+  const described = await describeDesignSystem(cwd);
+  if (json) {
+    printJson(described);
+    return;
+  }
+  console.log(formatDesignSystem(described));
+}
+
+async function runDesignSystemCommand(argv) {
+  if (argv[0] === "show") return showDesignSystem(argv);
+  return createDesignSystem(argv);
+}
+
 async function createDesignSystem(argv) {
   const options = parseDesignSystemArguments(argv);
   await preflight(options.cwd);
@@ -620,6 +941,23 @@ async function createDesignSystem(argv) {
       : `No stylesheet entry point was found. Import "./styles/${path.basename(result.paletteTarget)}" after the Balsa foundation.`,
   );
   console.log(`Activate: <html data-palette="${result.paletteId}" data-theme="${result.paletteId}">`);
+}
+
+/**
+ * Serve the MCP surface over stdin and stdout.
+ *
+ * A subcommand rather than a second binary: an agent that already knows about
+ * `balsa` can be pointed at `balsa mcp` without a separate install, and the
+ * release gate counts one command table.
+ */
+async function runMcpServer(argv) {
+  if (argv.includes("--tools")) {
+    for (const tool of listTools()) console.log(`${tool.name.padEnd(20)} ${tool.description}`);
+    return;
+  }
+  const unknown = argv.find((value) => value.startsWith("-"));
+  if (unknown) throw new Error(`Unknown option: ${unknown}`);
+  await serveStdio({ serverVersion: cliVersion });
 }
 
 async function runThemeCommand(argv) {
@@ -649,13 +987,16 @@ export const commands = {
   info: describeItem,
   docs: describeItem,
   init: initializeProject,
+  diff: diffItems,
+  update: updateItems,
   doctor: runDoctor,
+  mcp: runMcpServer,
   view: viewItem,
   add: addItems,
   background: createBackground,
   theme: runThemeCommand,
   palette: createPalette,
-  "design-system": createDesignSystem,
+  "design-system": runDesignSystemCommand,
 };
 
 const commandAliases = {

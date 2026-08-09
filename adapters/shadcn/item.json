@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/item",
+  "wave": 2,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/item/Item.vue": "sha256-7eea7ea24e4e32981a960903b131002f2738727a8c4a9969060b81af247fff3b",
+      "ui/item/ItemActions.vue": "sha256-efc088290cfb07f48cfec8cb7ba4660d2be45f3acfa0a922a0e6343e69dbf9cc",
+      "ui/item/ItemContent.vue": "sha256-9bb079b6bd130aa9a2a294403b3bc155cece0b728a93705e51a8e414498820a2",
+      "ui/item/ItemDescription.vue": "sha256-269e2f71b3eb8af55975a5cb79802ed3c22b8279335a125a894c940a769aed10",
+      "ui/item/ItemFooter.vue": "sha256-78cb47a9f829d8ca4f263d9775364c37550fdaab6e86dfb5ff0db733001018a5",
+      "ui/item/ItemGroup.vue": "sha256-6767eea8cd7dc168a096e219a6380f34a43a09087f582c6c600304a089f60d3a",
+      "ui/item/ItemHeader.vue": "sha256-f48d036bfa9f4c45e8725db72943b13d06a00819dd5cb6f0fb9b96cf9de68035",
+      "ui/item/ItemMedia.vue": "sha256-bc1f45db64971a11840aa2a5d4312dfca0312b3fb8bba64b1d4d5fcb4d91592d",
+      "ui/item/ItemSeparator.vue": "sha256-d7df1ca10a7d6667100a7cc911e5dad2cd22bd7fb2bb1e873098db1583568fbc",
+      "ui/item/ItemTitle.vue": "sha256-21a523894062aa2daf5c67571952ee29876a3b245e2c6c53722351435bc0b4ce",
+      "ui/item/index.ts": "sha256-0586e708fb1c15c3ce0403299e305349ea611746ff1104d2fc1c1be384e7b21f"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "class-variance-authority",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/separator"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/item/ItemActions.vue",
+      "find": "'flex items-center gap-2'",
+      "replace": "'flex items-center gap-balsa-xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/item/ItemContent.vue",
+      "find": "'flex flex-1 flex-col gap-1 [&+[data-slot=item-content]]:flex-none'",
+      "replace": "'flex flex-1 flex-col gap-balsa-3xs [&+[data-slot=item-content]]:flex-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/item/ItemFooter.vue",
+      "find": "'flex basis-full items-center justify-between gap-2'",
+      "replace": "'flex basis-full items-center justify-between gap-balsa-xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/item/ItemHeader.vue",
+      "find": "'flex basis-full items-center justify-between gap-2'",
+      "replace": "'flex basis-full items-center justify-between gap-balsa-xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/item/ItemTitle.vue",
+      "find": "'flex w-fit items-center gap-2 text-sm leading-snug font-medium'",
+      "replace": "'flex w-fit items-center gap-balsa-xs text-sm leading-snug font-medium'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/item/index.ts",
+      "find": "\"group/item flex items-center border border-transparent text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-1\"",
+      "replace": "\"group/item flex items-center border-solid border-(length:--balsa-outline-border-width) border-transparent text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-1 motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "Tailwind's border utility compiles to a literal 1px width; the outline recipe carries the Balsa border width. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/item/index.ts",
+      "find": "\"py-3 px-4 gap-2.5\"",
+      "replace": "\"py-balsa-md px-balsa-lg gap-balsa-sm\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/item/index.ts",
+      "find": "\"flex shrink-0 items-center justify-center gap-2 group-has-[[data-slot=item-description]]/item:self-start [&_svg]:pointer-events-none group-has-[[data-slot=item-description]]/item:translate-y-0.5\"",
+      "replace": "\"flex shrink-0 items-center justify-center gap-balsa-xs group-has-[[data-slot=item-description]]/item:self-start [&_svg]:pointer-events-none group-has-[[data-slot=item-description]]/item:translate-y-0.5\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

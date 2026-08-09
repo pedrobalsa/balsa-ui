@@ -88,12 +88,12 @@ const sizeClasses: Readonly<Record<PopupSize, string>> = {
 };
 const triggerClasses = computed(() =>
   mergeClasses(
-    "inline-flex min-h-9 cursor-pointer items-center justify-center gap-2 rounded-lg border border-balsa-border-strong bg-balsa-surface px-3 py-1.5 text-sm font-semibold text-balsa-surface-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    "inline-flex min-h-9 cursor-pointer items-center justify-center gap-balsa-xs rounded-lg border border-balsa-border-strong bg-balsa-surface px-balsa-md py-balsa-2xs text-sm font-semibold text-balsa-surface-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
   ),
 );
 const panelClasses = computed(() =>
   mergeClasses(
-    "z-[60] max-w-[calc(100vw-1rem)] overflow-auto border p-3 shadow-balsa-panel outline-none transition-[opacity,transform] duration-150",
+    "z-[60] max-w-[calc(100vw-1rem)] overflow-auto border p-balsa-md shadow-balsa-panel outline-none transition-[opacity,transform] duration-150",
     props.contained ? "absolute" : "fixed",
     sizeClasses[props.size],
     roundedClasses[props.rounded],

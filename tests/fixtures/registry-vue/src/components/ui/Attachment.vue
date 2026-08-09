@@ -61,12 +61,12 @@ const describedBy = computed(() => [
   props.status === "unvalidated" || localError.value ? `${props.id}-error` : "",
 ].filter(Boolean).join(" ") || undefined);
 const sizeClasses: Readonly<Record<AttachmentSize, string>> = {
-  sm: "min-h-20 p-3 text-sm",
-  md: "min-h-24 p-4 text-sm",
-  lg: "min-h-32 p-5 text-sm",
+  sm: "min-h-20 p-balsa-md text-sm",
+  md: "min-h-24 p-balsa-lg text-sm",
+  lg: "min-h-32 p-balsa-xl text-sm",
 };
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
-const classes = computed(() => mergeClasses("space-y-3", attrs.class));
+const classes = computed(() => mergeClasses("space-y-balsa-md", attrs.class));
 const dropClasses = computed(() => mergeClasses(
   "flex cursor-pointer flex-col items-center justify-center border border-dashed border-balsa-input-border bg-balsa-input text-center text-balsa-input-foreground transition-colors hover:border-balsa-primary focus-within:ring-2 focus-within:ring-balsa-focus-ring",
   sizeClasses[props.size],
@@ -141,9 +141,9 @@ function formatSize(bytes: number): string {
       @dragleave.prevent="dragging = false"
       @drop.prevent="handleDrop"
     >
-      <Icon :icon="Paperclip" size="lg" class="mb-2 text-balsa-primary" />
+      <Icon :icon="Paperclip" size="lg" class="mb-balsa-xs text-balsa-primary" />
       <span class="text-sm font-medium">Choose files or drop them here</span>
-      <span v-if="props.accept" class="mt-1 text-xs text-balsa-muted-foreground">{{ props.accept }}</span>
+      <span v-if="props.accept" class="mt-balsa-3xs text-xs text-balsa-muted-foreground">{{ props.accept }}</span>
       <input
         :id="props.id"
         ref="input"
@@ -159,8 +159,8 @@ function formatSize(bytes: number): string {
         @change="handleInput"
       />
     </label>
-    <ul v-if="model.length" class="space-y-2" aria-label="Selected files">
-      <li v-for="(file, index) in model" :key="`${file.name}-${file.size}-${index}`" class="flex items-center gap-3 rounded-balsa-control border border-balsa-border bg-balsa-surface p-3">
+    <ul v-if="model.length" class="space-y-balsa-xs" aria-label="Selected files">
+      <li v-for="(file, index) in model" :key="`${file.name}-${file.size}-${index}`" class="flex items-center gap-balsa-md rounded-balsa-control border border-balsa-border bg-balsa-surface p-balsa-md">
         <Icon :icon="File" size="md" class="text-balsa-primary" />
         <span class="min-w-0 flex-1"><span class="block truncate text-sm font-medium">{{ file.name }}</span><span class="text-xs text-balsa-muted-foreground">{{ formatSize(file.size) }}</span></span>
         <Button shape="fab" size="sm" variant="outline" color="destructive" :prefix-icon="X" :aria-label="`Remove ${file.name}`" :disabled="props.disabled || props.loading" @click="remove(file)" />

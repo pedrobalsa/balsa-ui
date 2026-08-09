@@ -44,10 +44,24 @@
     "Putting paragraphs inside a badge."
   ],
   "examples": [
-    "Solid status",
-    "Soft category",
-    "Outline metadata",
-    "Glass metadata"
+    {
+      "id": "solid",
+      "title": "Solid",
+      "description": "A solid badge carries the strongest status emphasis.",
+      "source": "<script setup lang=\"ts\">\nimport Badge from \"@/components/ui/Badge.vue\";\n</script>\n\n<template>\n  <Badge variant=\"solid\" color=\"success\">Status placeholder</Badge>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Outline badges keep metadata visually light.",
+      "source": "<script setup lang=\"ts\">\nimport Badge from \"@/components/ui/Badge.vue\";\n</script>\n\n<template>\n  <Badge variant=\"outline\" color=\"warning\">Status placeholder</Badge>\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft",
+      "description": "Soft badges provide a quieter status treatment.",
+      "source": "<script setup lang=\"ts\">\nimport Badge from \"@/components/ui/Badge.vue\";\n</script>\n\n<template>\n  <Badge color=\"info\">Status placeholder</Badge>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Badge.vue",

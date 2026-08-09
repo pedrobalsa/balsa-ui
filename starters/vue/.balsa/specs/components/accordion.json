@@ -61,10 +61,24 @@
     "Putting unrelated actions in disclosure headings."
   ],
   "examples": [
-    "Single collapsible FAQ",
-    "Multiple open sections",
-    "Disabled item",
-    "Named item slot"
+    {
+      "id": "single",
+      "title": "Single disclosure",
+      "description": "Single mode keeps one related answer open at a time.",
+      "source": "<script setup lang=\"ts\">\nimport Accordion from \"@/components/ui/Accordion.vue\";\nimport { ref } from \"vue\";\n\nconst openItems = ref<string | readonly string[]>(\"first\");\nconst items = [\n  {\n    \"id\": \"first\",\n    \"title\": \"Question placeholder 01\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n  },\n  {\n    \"id\": \"second\",\n    \"title\": \"Question placeholder 02\",\n    \"content\": \"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"\n  },\n  {\n    \"id\": \"third\",\n    \"title\": \"Question placeholder 03\",\n    \"content\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco.\",\n    \"disabled\": true\n  }\n];\n</script>\n\n<template>\n  <Accordion id=\"questions-placeholder\" v-model=\"openItems\" :items=\"items\" type=\"single\" />\n</template>"
+    },
+    {
+      "id": "multiple",
+      "title": "Multiple disclosures",
+      "description": "Multiple mode lets readers retain several answers for comparison.",
+      "source": "<script setup lang=\"ts\">\nimport Accordion from \"@/components/ui/Accordion.vue\";\nimport { ref } from \"vue\";\n\nconst openItems = ref<string | readonly string[]>([\"first\"]);\nconst items = [\n  {\n    \"id\": \"first\",\n    \"title\": \"Question placeholder 01\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n  },\n  {\n    \"id\": \"second\",\n    \"title\": \"Question placeholder 02\",\n    \"content\": \"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"\n  },\n  {\n    \"id\": \"third\",\n    \"title\": \"Question placeholder 03\",\n    \"content\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco.\",\n    \"disabled\": true\n  }\n];\n</script>\n\n<template>\n  <Accordion id=\"questions-placeholder\" v-model=\"openItems\" :items=\"items\" type=\"multiple\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass collection",
+      "description": "Glass keeps the connected surface translucent over an expressive background.",
+      "source": "<script setup lang=\"ts\">\nimport Accordion from \"@/components/ui/Accordion.vue\";\nimport { ref } from \"vue\";\n\nconst openItems = ref<string | readonly string[]>(\"first\");\nconst items = [\n  {\n    \"id\": \"first\",\n    \"title\": \"Question placeholder 01\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n  },\n  {\n    \"id\": \"second\",\n    \"title\": \"Question placeholder 02\",\n    \"content\": \"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"\n  },\n  {\n    \"id\": \"third\",\n    \"title\": \"Question placeholder 03\",\n    \"content\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco.\",\n    \"disabled\": true\n  }\n];\n</script>\n\n<template>\n  <Accordion id=\"questions-placeholder\" v-model=\"openItems\" :items=\"items\" type=\"single\" variant=\"glass\" rounded=\"2xl\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Accordion.vue",

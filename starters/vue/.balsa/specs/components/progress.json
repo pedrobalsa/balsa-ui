@@ -54,10 +54,30 @@
     "Showing a percentage when the operation is indeterminate."
   ],
   "examples": [
-    "Determinate upload",
-    "Completed task",
-    "Indeterminate process",
-    "Formatted value"
+    {
+      "id": "determinate",
+      "title": "Determinate upload",
+      "description": "A finite value communicates measurable completion.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"58\" />\n</template>"
+    },
+    {
+      "id": "complete",
+      "title": "Completed task",
+      "description": "Success color and a full value communicate completion.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"100\" color=\"success\" />\n</template>"
+    },
+    {
+      "id": "indeterminate",
+      "title": "Indeterminate process",
+      "description": "Null value removes aria-valuenow and animates an incomplete indicator.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"null\" variant=\"soft\" />\n</template>"
+    },
+    {
+      "id": "striped",
+      "title": "Striped progress",
+      "description": "Striped motion gives a long-running active transfer extra movement.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"72\" variant=\"striped\" color=\"accent\" size=\"lg\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Progress.vue",

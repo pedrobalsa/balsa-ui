@@ -63,7 +63,7 @@ const iconClasses = computed(() => [
   "pointer-events-none absolute text-balsa-primary-foreground opacity-0 transition-opacity peer-checked:opacity-100",
 ]);
 const controlWrapClasses = computed(() => [
-  "relative mt-0.5 flex shrink-0 items-center justify-center",
+  "relative mt-balsa-4xs flex shrink-0 items-center justify-center",
   props.size === "sm" ? "h-4 w-4" : props.size === "lg" ? "h-6 w-6" : "h-5 w-5",
 ]);
 </script>
@@ -78,7 +78,7 @@ const controlWrapClasses = computed(() => [
     :data-rounded="props.rounded"
     :data-variant="props.variant"
     :style="theme.explicitPresentation.value?.style"
-    class="flex items-start gap-3"
+    class="flex items-start gap-balsa-md"
   >
     <span :class="controlWrapClasses">
       <input

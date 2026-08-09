@@ -12,7 +12,7 @@ import {
 } from "vue";
 import Button from "./Button.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
-import { roundedClasses, type Rounded } from "./form";
+import { surfaceRoundedClasses, type SurfaceRounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
@@ -34,7 +34,7 @@ const rawProps = withDefaults(
     color?: AlertColor;
     variant?: AlertVariant;
     size?: AlertSize;
-    rounded?: Rounded;
+    rounded?: SurfaceRounded;
     shadow?: Shadow;
     icon?: IconComponent;
     persistent?: boolean;
@@ -58,7 +58,7 @@ const { props, theme } = useResolvedThemeProps(
   "alert",
   "surfaces",
   rawProps,
-  { variant: "surface", size: "md", rounded: "lg", shadow: "auto" } as const,
+  { variant: "surface", size: "md", rounded: "auto", shadow: "auto" } as const,
 );
 
 const emit = defineEmits<{
@@ -157,14 +157,14 @@ const iconColorClasses: Readonly<Record<AlertColor, string>> = {
   destructive: "text-balsa-destructive",
 };
 const sizeClasses: Readonly<Record<AlertSize, string>> = {
-  sm: "p-3 text-sm",
-  md: "p-4 text-sm",
-  lg: "p-5 text-base",
+  sm: "p-balsa-md text-sm",
+  md: "p-balsa-lg text-sm",
+  lg: "p-balsa-xl text-base",
 };
 const contentGapClasses: Readonly<Record<AlertSize, string>> = {
-  sm: "gap-3",
-  md: "gap-4",
-  lg: "gap-5",
+  sm: "gap-balsa-md",
+  md: "gap-balsa-lg",
+  lg: "gap-balsa-xl",
 };
 const dialogSizeClasses: Readonly<Record<AlertSize, string>> = {
   sm: "max-w-md",
@@ -189,9 +189,9 @@ const currentIcon = computed(() => props.icon ?? defaultIcons[props.color]);
 const canDismiss = computed(() => !props.persistent);
 const classes = computed(() =>
   mergeClasses(
-    "relative min-w-0 border font-balsa-body",
+    "relative min-w-0 font-balsa-body",
     sizeClasses[props.size],
-    roundedClasses[props.rounded],
+    surfaceRoundedClasses[props.rounded],
     colorVariantClasses[props.color][props.variant],
     props.mode === "dialog"
       ? [
@@ -217,7 +217,7 @@ const titleClasses = computed(() => [
   titleSizeClasses[props.size],
 ]);
 const descriptionClasses = computed(() => [
-  "mt-1 leading-relaxed",
+  "mt-balsa-3xs leading-relaxed",
   isColoredTextVariant.value ? "text-current" : "text-balsa-muted-foreground",
 ]);
 const closeClasses = computed(() =>
@@ -228,7 +228,7 @@ const closeClasses = computed(() =>
       : "text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground active:bg-balsa-muted",
   ),
 );
-const contentPaddingClasses = computed(() => canDismiss.value ? "pr-8" : "");
+const contentPaddingClasses = computed(() => canDismiss.value ? "pr-balsa-3xl" : "");
 
 function hasModelBinding(): boolean {
   const vnodeProps = instance?.vnode.props;
@@ -391,7 +391,7 @@ onBeforeUnmount(closeDialog);
     <div
       v-if="$slots.actions"
       data-balsa-alert-actions
-      class="mt-3 flex min-w-0 flex-wrap justify-end gap-2"
+      class="mt-balsa-md flex min-w-0 flex-wrap justify-end gap-balsa-xs"
     >
       <slot name="actions" :close="dismiss" />
     </div>

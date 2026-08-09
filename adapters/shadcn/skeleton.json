@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/skeleton",
+  "wave": 2,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/skeleton/Skeleton.vue": "sha256-b5a5b1725a50f317d163a7b021d199e85e561421e25d908da04bf23c71342884",
+      "ui/skeleton/index.ts": "sha256-76c65d13242f2ac4da5ae9f12d2cf9dc9a6825d91f63f9f762e5329461c93314"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "unsupported",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/skeleton/Skeleton.vue",
+      "find": "'animate-pulse rounded-md bg-primary/10'",
+      "replace": "'animate-pulse rounded-md bg-primary/10 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

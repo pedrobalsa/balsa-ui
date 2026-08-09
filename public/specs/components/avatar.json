@@ -55,10 +55,24 @@
     "Using a fallback that does not identify the represented entity."
   ],
   "examples": [
-    "Initials fallback",
-    "Loaded image",
-    "Rounded entity mark",
-    "Custom badge slot"
+    {
+      "id": "fallback",
+      "title": "Initials fallback",
+      "description": "A deterministic text fallback keeps identity visible without an image source.",
+      "source": "<script setup lang=\"ts\">\nimport Avatar from \"@/components/ui/Avatar.vue\";\n</script>\n\n<template>\n  <Avatar label=\"Person placeholder\" fallback=\"PP\" size=\"lg\" :fallback-delay=\"0\" />\n</template>"
+    },
+    {
+      "id": "rounded",
+      "title": "Rounded entity",
+      "description": "Rounded geometry works for organization or workspace identity.",
+      "source": "<script setup lang=\"ts\">\nimport Avatar from \"@/components/ui/Avatar.vue\";\n</script>\n\n<template>\n  <Avatar label=\"Organization placeholder\" fallback=\"OP\" size=\"xl\" shape=\"rounded\" :fallback-delay=\"0\" />\n</template>"
+    },
+    {
+      "id": "error",
+      "title": "Image error fallback",
+      "description": "A failed source returns immediately to the accessible fallback.",
+      "source": "<script setup lang=\"ts\">\nimport Avatar from \"@/components/ui/Avatar.vue\";\n</script>\n\n<template>\n  <Avatar src=\"/missing-avatar-placeholder.jpg\" label=\"Person placeholder\" fallback=\"PP\" size=\"lg\" :fallback-delay=\"0\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Avatar.vue",

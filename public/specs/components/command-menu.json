@@ -56,10 +56,30 @@
     "Changing the command model during internal filtering."
   ],
   "examples": [
-    "Inline commands",
-    "Dialog palette",
-    "Loading state",
-    "Empty query result"
+    {
+      "id": "inline",
+      "title": "Inline commands",
+      "description": "The editable query opens a filtered dropdown of grouped commands.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" size=\"sm\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "dialog",
+      "title": "Dialog palette",
+      "description": "Modal mode opens on request and adds the platform command hotkey.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open commands placeholder</Button>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" mode=\"dialog\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading keeps the query present with an announced status.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" loading @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass palette",
+      "description": "The command surface uses the same semantic selected material.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" variant=\"glass\" @select=\"handleSelect\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/CommandMenu.vue",

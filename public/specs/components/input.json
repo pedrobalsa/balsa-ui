@@ -72,13 +72,48 @@
     "Using error color without a text message."
   ],
   "examples": [
-    "Text input",
-    "Masked phone input",
-    "Monetary input",
-    "Percentage input",
-    "Required email input",
-    "Loading input",
-    "Invalid input"
+    {
+      "id": "phone",
+      "title": "Phone",
+      "description": "The phone type applies a readable digit mask while retaining a native text field.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Phone placeholder\" type=\"phone\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "monetary",
+      "title": "Monetary",
+      "description": "The monetary type formats the visible amount and emits a numeric model value.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Amount placeholder\" type=\"monetary\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "percentage",
+      "title": "Percentage",
+      "description": "The percentage type keeps decimal entry natural with a persistent percent suffix and a numeric 0–100 model.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Percentage placeholder\" type=\"percentage\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "compact-email",
+      "title": "Compact email",
+      "description": "Native input types and the small size can be combined.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Email placeholder\" type=\"email\" size=\"sm\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required state is communicated by the shared field framing.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Field placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid",
+      "description": "Unvalidated state applies destructive feedback to the complete field.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Field placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading blocks editing and exposes progress semantics.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Field placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Input.vue",

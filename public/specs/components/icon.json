@@ -47,9 +47,18 @@
     "Using Icon for product branding."
   ],
   "examples": [
-    "Decorative search icon",
-    "Labelled help image",
-    "Icon-only button with an accessible control name"
+    {
+      "id": "decorative",
+      "title": "Decorative",
+      "description": "An unlabelled symbol inherits color and stays hidden from assistive technology.",
+      "source": "<script setup lang=\"ts\">\nimport Icon from \"@/components/ui/Icon.vue\";\nimport { Search } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Icon :icon=\"Search\" size=\"md\" :stroke-width=\"2\" />\n</template>"
+    },
+    {
+      "id": "labelled",
+      "title": "Labelled image",
+      "description": "Add a label only when the standalone symbol itself conveys content.",
+      "source": "<script setup lang=\"ts\">\nimport Icon from \"@/components/ui/Icon.vue\";\nimport { CircleHelp } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Icon :icon=\"CircleHelp\" size=\"lg\" :stroke-width=\"1.5\" label=\"Help\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Icon.vue",

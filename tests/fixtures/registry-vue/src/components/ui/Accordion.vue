@@ -70,7 +70,7 @@ const rootClasses = computed(() =>
   mergeClasses(
     props.variant === "underline"
       ? "min-w-0 font-balsa-body"
-      : ["min-w-0 overflow-hidden border font-balsa-body", roundedClasses[props.rounded]],
+      : ["min-w-0 overflow-hidden font-balsa-body", roundedClasses[props.rounded]],
     variantClasses[props.variant],
   ),
 );
@@ -107,7 +107,11 @@ function updateItem(id: string, open: boolean): void {
 function itemClasses(index: number): string {
   return mergeClasses(
     "rounded-none border-0 bg-transparent",
-    props.variant === "underline" || index === 0 ? "" : "border-t border-balsa-border/80",
+    // The rule between two items is an edge like any other, so its width reads
+    // the border token rather than compiling to a literal 1px.
+    props.variant === "underline" || index === 0
+      ? ""
+      : "border-t-(length:--balsa-border-width) border-balsa-border/80",
   );
 }
 

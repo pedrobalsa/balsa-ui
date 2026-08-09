@@ -35,9 +35,9 @@ const { props, theme } = useResolvedThemeProps(
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const sizeClasses: Readonly<Record<BadgeSize, string>> = {
-  sm: "px-2 py-0.5 text-xs",
-  md: "px-2.5 py-0.5 text-xs",
-  lg: "px-3 py-1 text-sm",
+  sm: "px-balsa-xs py-balsa-4xs text-xs",
+  md: "px-balsa-sm py-balsa-4xs text-xs",
+  lg: "px-balsa-md py-balsa-3xs text-sm",
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",

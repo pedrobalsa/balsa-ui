@@ -56,10 +56,30 @@
     "Putting the only close path behind a non-dismissible policy."
   ],
   "examples": [
-    "Bottom task",
-    "Right filters",
-    "Scrollable content",
-    "Contained preview"
+    {
+      "id": "bottom",
+      "title": "Bottom task",
+      "description": "A modal task surface enters from the lower edge.",
+      "source": "<script setup lang=\"ts\">\nimport Drawer from \"@/components/ui/Drawer.vue\";\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open drawer placeholder</Button>\n  <Drawer id=\"task-drawer\" v-model=\"open\" title=\"Task placeholder\" description=\"Lorem ipsum dolor sit amet.\" :show-handle=\"false\">\n    <p>Drawer content placeholder.</p>\n    <template #footer=\"{ close }\"><Button variant=\"outline\" @click=\"close\">Close placeholder</Button></template>\n  </Drawer>\n</template>"
+    },
+    {
+      "id": "right",
+      "title": "Right filters",
+      "description": "Side placement supports longer scrollable settings.",
+      "source": "<script setup lang=\"ts\">\nimport Drawer from \"@/components/ui/Drawer.vue\";\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open drawer placeholder</Button>\n  <Drawer id=\"task-drawer\" v-model=\"open\" title=\"Task placeholder\" description=\"Lorem ipsum dolor sit amet.\" side=\"right\" :show-handle=\"false\">\n    <p>Drawer content placeholder.</p>\n    <template #footer=\"{ close }\"><Button variant=\"outline\" @click=\"close\">Close placeholder</Button></template>\n  </Drawer>\n</template>"
+    },
+    {
+      "id": "large",
+      "title": "Large drawer",
+      "description": "The largest extent remains viewport-capped.",
+      "source": "<script setup lang=\"ts\">\nimport Drawer from \"@/components/ui/Drawer.vue\";\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open drawer placeholder</Button>\n  <Drawer id=\"task-drawer\" v-model=\"open\" title=\"Task placeholder\" description=\"Lorem ipsum dolor sit amet.\" size=\"lg\" :show-handle=\"false\">\n    <p>Drawer content placeholder.</p>\n    <template #footer=\"{ close }\"><Button variant=\"outline\" @click=\"close\">Close placeholder</Button></template>\n  </Drawer>\n</template>"
+    },
+    {
+      "id": "fixed",
+      "title": "Fixed decision",
+      "description": "A non-dismissible panel keeps its explicit close workflow.",
+      "source": "<script setup lang=\"ts\">\nimport Drawer from \"@/components/ui/Drawer.vue\";\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open drawer placeholder</Button>\n  <Drawer id=\"task-drawer\" v-model=\"open\" title=\"Task placeholder\" description=\"Lorem ipsum dolor sit amet.\" :dismissible=\"false\" :show-handle=\"false\">\n    <p>Drawer content placeholder.</p>\n    <template #footer=\"{ close }\"><Button variant=\"outline\" @click=\"close\">Close placeholder</Button></template>\n  </Drawer>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Drawer.vue",

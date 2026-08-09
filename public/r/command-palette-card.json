@@ -1,0 +1,41 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "command-palette-card",
+  "type": "registry:ui",
+  "title": "CommandPaletteCard",
+  "description": "Grouped command palette that reaches projects, actions, and settings from one search.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/command-menu"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/CommandPaletteCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/CommandPaletteCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Boxes, GitBranch, Rocket, ScrollText } from \"@lucide/vue\";\nimport CommandList from \"../ui/CommandList.vue\";\nimport type { CommandGroup, CommandItem } from \"../ui/command\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * The palette shown open and in place rather than behind a shortcut, because a\n * gallery tile cannot demonstrate a keystroke. Grouped results need the height:\n * the whole argument for a palette is that it reaches everything at once.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  groups?: readonly CommandGroup[];\n  recents?: readonly { id: string; label: string; detail: string }[];\n}>(), {\n  recents: () => [\n    { id: \"atlas-logs\", label: \"Atlas production logs\", detail: \"8 minutes ago\" },\n    { id: \"relay-preview\", label: \"Relay preview branch\", detail: \"1 hour ago\" },\n    { id: \"members\", label: \"Members and roles\", detail: \"Yesterday\" },\n  ],\n  title: \"Jump to anything\",\n  description: \"One search across projects, people and settings.\",\n  groups: () => [\n    {\n      id: \"projects\", label: \"Projects\", items: [\n        { id: \"atlas\", label: \"Atlas\", icon: Boxes, shortcut: \"1\" },\n        { id: \"relay\", label: \"Relay\", icon: Boxes, shortcut: \"2\" },\n        { id: \"harbor\", label: \"Harbor\", icon: Boxes, shortcut: \"3\" },\n      ],\n    },\n    {\n      id: \"actions\", label: \"Actions\", items: [\n        { id: \"deploy\", label: \"Deploy the current commit\", icon: Rocket },\n        { id: \"branch\", label: \"Open a preview branch\", icon: GitBranch },\n        { id: \"logs\", label: \"Stream production logs\", icon: ScrollText },\n      ],\n    },\n  ],\n});\nconst emit = defineEmits<{ select: [id: string] }>();\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"command-palette\">\n    <CommandList\n      id=\"workspace-palette\"\n      label=\"Search the workspace\"\n      placeholder=\"Search projects, actions and people\"\n      :groups=\"props.groups\"\n      @select=\"(item: CommandItem) => emit('select', item.id)\"\n    />\n    <!--\n      The palette caps its own result list, so the tile is finished with what a\n      palette is actually for: getting back to where you just were. Recents sit\n      outside the search rather than inside it, because they are not results.\n    -->\n    <section class=\"mt-balsa-lg flex flex-1 flex-col justify-end\">\n      <p class=\"text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground\">Recent</p>\n      <ul class=\"mt-balsa-xs divide-y divide-balsa-border\" role=\"list\">\n        <li v-for=\"entry in props.recents\" :key=\"entry.id\">\n          <button\n            type=\"button\"\n            class=\"flex w-full items-center justify-between gap-balsa-md py-balsa-sm text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring\"\n            @click=\"emit('select', entry.id)\"\n          >\n            <span class=\"min-w-0 truncate text-sm\">{{ entry.label }}</span>\n            <span class=\"shrink-0 text-xs text-balsa-muted-foreground\">{{ entry.detail }}</span>\n          </button>\n        </li>\n      </ul>\n    </section>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/command-palette-card.json",
+    "documentation": "docs/compositions/command-palette-card.md",
+    "example": "docs/compositions/command-palette-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

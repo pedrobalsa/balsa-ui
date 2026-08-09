@@ -9,7 +9,7 @@
     "name": "chart"
   },
   "status": "beta",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "purpose": "Compose accessible, theme-aware Unovis charts through a finite facade or Balsa's lower-level chart primitives.",
   "useFor": [
     "Trends",
@@ -66,12 +66,30 @@
     "Rendering Unovis into a zero-size container."
   ],
   "examples": [
-    "Grouped bar comparison",
-    "Stacked bar comparison",
-    "Line trend",
-    "Area trend",
-    "Donut summary",
-    "Loading, empty, and error"
+    {
+      "id": "bar",
+      "title": "Bar comparison",
+      "description": "Semantic series colors compare categories.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"bar\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" :height=\"320\" />\n</template>"
+    },
+    {
+      "id": "line",
+      "title": "Line trend",
+      "description": "Line geometry communicates change over ordered labels.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"line\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" :height=\"320\" />\n</template>"
+    },
+    {
+      "id": "doughnut",
+      "title": "Doughnut summary",
+      "description": "A finite part-to-whole form shares the same data table.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"doughnut\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" :height=\"320\" />\n</template>"
+    },
+    {
+      "id": "table",
+      "title": "Visible data",
+      "description": "The semantic alternative can remain visibly available.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"bar\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" show-table :height=\"320\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Charts.vue",
@@ -241,6 +259,18 @@
         ],
         "required": false,
         "default": "true"
+      },
+      {
+        "name": "areaFill",
+        "type": "ChartsAreaFill | undefined",
+        "values": [
+          "solid",
+          "none",
+          "gradient"
+        ],
+        "required": false,
+        "default": "\"gradient\"",
+        "description": "How the band under an area series is painted."
       },
       {
         "name": "width",

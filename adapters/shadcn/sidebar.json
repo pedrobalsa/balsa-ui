@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/sidebar",
+  "wave": 4,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/sidebar/Sidebar.vue": "sha256-6aefa7ed6f025e7f8c29fcf9718f14257e6f6954c14c67ecaa33b037063620d6",
+      "ui/sidebar/SidebarContent.vue": "sha256-391c9799f24489776d99cd325ec057339aadc9732288fd8dbbfd4ca95d571d28",
+      "ui/sidebar/SidebarFooter.vue": "sha256-8d7daae5caec15b5d5b10b3b3bb8d04318958dec8c53b50857f66b170cffc692",
+      "ui/sidebar/SidebarGroup.vue": "sha256-bd0fcd88f6a7463e0fba547fe04ec7ca9ec2b5c9450eb310147fcc4073de4feb",
+      "ui/sidebar/SidebarGroupAction.vue": "sha256-95fa11f7e4df26c8bbb9175c273590aa0eb127023f8898d03472b9bf7f300454",
+      "ui/sidebar/SidebarGroupContent.vue": "sha256-09ef3fe6c5e3cc0f18926ccdfa72cd37b064ba1215e9653bba12544f5f452014",
+      "ui/sidebar/SidebarGroupLabel.vue": "sha256-71060e1ff9e8163e1585b0f482751fbe8f7061dc3ff9f76fcf1a24133ec3523b",
+      "ui/sidebar/SidebarHeader.vue": "sha256-c6d64c83e003c33bdc6f6aca8dbe97e413ff4168669784c0696adab32afa09cd",
+      "ui/sidebar/SidebarInput.vue": "sha256-a5d28ba513de6ceec850438080b6c61bd81f09046c503eb3e7ae3ea5e65a5923",
+      "ui/sidebar/SidebarInset.vue": "sha256-5d297bf056e3f522d7de103932209be5c277178498031e7cec8653bb42219562",
+      "ui/sidebar/SidebarMenu.vue": "sha256-a3dd3c4a0f5ccc1f9a590144ea35337908ed7314380b5f89545791a5c615c901",
+      "ui/sidebar/SidebarMenuAction.vue": "sha256-911378c5bb956fc5887c555c69686cdbc7e52bab59c8c9b7b55df35f63494598",
+      "ui/sidebar/SidebarMenuBadge.vue": "sha256-29d1a5d9bdac36f28ddd00b117d7cc071d316232e4fbcf2b38479f104691c29f",
+      "ui/sidebar/SidebarMenuButton.vue": "sha256-1a76b6ab6e15069b5a3edd287179beeb833b1b73f1852ee0b9120eda76a18ba6",
+      "ui/sidebar/SidebarMenuButtonChild.vue": "sha256-749027c7566011b33a4c9ed1d585a52b306ff3f4f2d9879cb7346263df62c0f4",
+      "ui/sidebar/SidebarMenuItem.vue": "sha256-7935674776844bee970719409bac1bfae6b3c194efdaebdeb27b26357a2d6822",
+      "ui/sidebar/SidebarMenuSkeleton.vue": "sha256-3efe7e83c0c8fc4ab96c5ac58f85c8d13b49dbc121cadab2e415bf4204172802",
+      "ui/sidebar/SidebarMenuSub.vue": "sha256-85415fe716bf52624c27bac19e831cb017d336ee7cc8da44269b08edccb52426",
+      "ui/sidebar/SidebarMenuSubButton.vue": "sha256-149d9c63b9b2b367c0b23c54109bd12651a378f7665127756254b5ac359215dd",
+      "ui/sidebar/SidebarMenuSubItem.vue": "sha256-fd1e506364dbef60c2d317677cb14fe6d02a31993c9f6c0249208e041a446b5d",
+      "ui/sidebar/SidebarProvider.vue": "sha256-18b15a9f8bf3d0070972b6e0bdbdeedb05a3b8631aaed34b094f6f60283233a9",
+      "ui/sidebar/SidebarRail.vue": "sha256-527470af740865caee684b65a207fba0454e21ecd1df3583c8f4ff268558f8a4",
+      "ui/sidebar/SidebarSeparator.vue": "sha256-edc75d3a81b6c1bdbea1801e476e896fb6a25745cec2c38c1c72846aa8b2a813",
+      "ui/sidebar/SidebarTrigger.vue": "sha256-f563ee9e868705cca090043273aad79fc5c347c96f72c77213cf6a13118349ab",
+      "ui/sidebar/index.ts": "sha256-c1ac1e36bcec6212d86409727d38ff7297164d1d68a31b89d6e3512cc4e55da5",
+      "ui/sidebar/utils.ts": "sha256-a3a513f361a265333805bb64cb8c6312ed6ea69bf181666fc5318055aeb0fa93"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "class-variance-authority",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "lucide-vue-next",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/button",
+      "@/registry/new-york/ui/input",
+      "@/registry/new-york/ui/separator",
+      "@/registry/new-york/ui/sheet",
+      "@/registry/new-york/ui/skeleton",
+      "@/registry/new-york/ui/tooltip"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/sidebar/Sidebar.vue",
+      "find": "'duration-200 relative h-svh w-(--sidebar-width) bg-transparent transition-[width] ease-linear'",
+      "replace": "'duration-200 relative h-svh w-(--sidebar-width) bg-transparent transition-[width] ease-linear motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/sidebar/Sidebar.vue",
+      "find": "'duration-200 fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] ease-linear md:flex'",
+      "replace": "'duration-200 fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] ease-linear md:flex motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/sidebar/Sidebar.vue",
+      "find": "'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'",
+      "replace": "'start-0 group-data-[collapsible=offcanvas]:start-[calc(var(--sidebar-width)*-1)]'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/Sidebar.vue",
+      "find": "'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]'",
+      "replace": "'end-0 group-data-[collapsible=offcanvas]:end-[calc(var(--sidebar-width)*-1)]'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/Sidebar.vue",
+      "find": "'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l'",
+      "replace": "'group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-e group-data-[side=right]:border-s'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarContent.vue",
+      "find": "'flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden'",
+      "replace": "'flex min-h-0 flex-1 flex-col gap-balsa-xs overflow-auto group-data-[collapsible=icon]:overflow-hidden'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarFooter.vue",
+      "find": "'flex flex-col gap-2 p-2'",
+      "replace": "'flex flex-col gap-balsa-xs p-balsa-xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarGroup.vue",
+      "find": "'relative flex w-full min-w-0 flex-col p-2'",
+      "replace": "'relative flex w-full min-w-0 flex-col p-balsa-xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarGroupAction.vue",
+      "find": "'absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0'",
+      "replace": "'absolute end-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/sidebar/SidebarGroupLabel.vue",
+      "find": "'duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0'",
+      "replace": "'duration-200 flex h-8 shrink-0 items-center rounded-md px-balsa-xs text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opacity] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/sidebar/SidebarHeader.vue",
+      "find": "'flex flex-col gap-2 p-2'",
+      "replace": "'flex flex-col gap-balsa-xs p-balsa-xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarInset.vue",
+      "find": "'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ml-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow'",
+      "replace": "'peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[variant=inset]:m-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:ms-2 md:peer-data-[variant=inset]:ms-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarMenu.vue",
+      "find": "'flex w-full min-w-0 flex-col gap-1'",
+      "replace": "'flex w-full min-w-0 flex-col gap-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarMenuAction.vue",
+      "find": "'absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&>svg]:size-4 [&>svg]:shrink-0'",
+      "replace": "'absolute end-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&>svg]:size-4 [&>svg]:shrink-0 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/sidebar/SidebarMenuBadge.vue",
+      "find": "'absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none'",
+      "replace": "'absolute end-1 flex h-5 min-w-5 items-center justify-center rounded-md px-balsa-3xs text-xs font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarMenuSkeleton.vue",
+      "find": "'rounded-md h-8 flex gap-2 px-2 items-center'",
+      "replace": "'rounded-md h-8 flex gap-balsa-xs px-balsa-xs items-center'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarMenuSub.vue",
+      "find": "'mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5'",
+      "replace": "'mx-3.5 flex min-w-0 translate-x-px flex-col gap-balsa-3xs border-s border-sidebar-border px-balsa-sm py-balsa-4xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarMenuSubButton.vue",
+      "find": "'flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground'",
+      "replace": "'flex h-7 min-w-0 -translate-x-px items-center gap-balsa-xs overflow-hidden rounded-md px-balsa-xs text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/sidebar/SidebarRail.vue",
+      "find": "'absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex'",
+      "replace": "'absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:start-1/2 after:w-0.5 hover:after:bg-sidebar-border group-data-[side=left]:-end-4 group-data-[side=right]:start-0 sm:flex motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/sidebar/SidebarRail.vue",
+      "find": "'group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar'",
+      "replace": "'group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:start-full group-data-[collapsible=offcanvas]:hover:bg-sidebar'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarRail.vue",
+      "find": "'[[data-side=left][data-collapsible=offcanvas]_&]:-right-2'",
+      "replace": "'[[data-side=left][data-collapsible=offcanvas]_&]:-end-2'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarRail.vue",
+      "find": "'[[data-side=right][data-collapsible=offcanvas]_&]:-left-2'",
+      "replace": "'[[data-side=right][data-collapsible=offcanvas]_&]:-start-2'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/sidebar/SidebarSeparator.vue",
+      "find": "'mx-2 w-auto bg-sidebar-border'",
+      "replace": "'mx-balsa-xs w-auto bg-sidebar-border'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (pr-, text-left), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

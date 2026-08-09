@@ -50,9 +50,24 @@
     "Adding a theme-specific glass variant instead of allowing outline to inherit the Glassmorphism material recipe."
   ],
   "examples": [
-    "Text link",
-    "Solid call to action",
-    "External link with suffix icon"
+    {
+      "id": "text",
+      "title": "Text",
+      "description": "The text variant fits links embedded alongside prose and metadata.",
+      "source": "<script setup lang=\"ts\">\nimport Link from \"@/components/ui/Link.vue\";\n</script>\n\n<template>\n  <Link href=\"/docs\">Link placeholder</Link>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Outline links can present navigation as a secondary call to action.",
+      "source": "<script setup lang=\"ts\">\nimport Link from \"@/components/ui/Link.vue\";\nimport { ArrowRight } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Link href=\"/docs\" variant=\"outline\" color=\"secondary\" :suffix-icon=\"ArrowRight\">Link placeholder</Link>\n</template>"
+    },
+    {
+      "id": "external",
+      "title": "External",
+      "description": "External links expose their destination behavior and matching icon.",
+      "source": "<script setup lang=\"ts\">\nimport Link from \"@/components/ui/Link.vue\";\nimport { ExternalLink } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Link href=\"/docs\" :suffix-icon=\"ExternalLink\" external>Link placeholder</Link>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Link.vue",

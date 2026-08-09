@@ -68,9 +68,30 @@
     "Treating released state as disabled."
   ],
   "examples": [
-    "Pressed formatting action",
-    "Outline-to-solid bookmark",
-    "Disabled pressed action"
+    {
+      "id": "pressed",
+      "title": "Pressed",
+      "description": "The semantic pressed state communicates that the action remains active.",
+      "source": "<script setup lang=\"ts\">\nimport Toggle from \"@/components/ui/Toggle.vue\";\nimport { ref } from \"vue\";\n\nconst pressed = ref(true); // Toggle state placeholder.\n</script>\n\n<template>\n  <Toggle v-model=\"pressed\">toggle</Toggle>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Outline keeps a released formatting action visibly bounded.",
+      "source": "<script setup lang=\"ts\">\nimport Toggle from \"@/components/ui/Toggle.vue\";\nimport { ref } from \"vue\";\n\nconst pressed = ref(false); // Toggle state placeholder.\n</script>\n\n<template>\n  <Toggle v-model=\"pressed\" variant=\"outline\" color=\"secondary\">toggle</Toggle>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Glass provides a restrained translucent idle action while pressed state stays explicit.",
+      "source": "<script setup lang=\"ts\">\nimport Toggle from \"@/components/ui/Toggle.vue\";\nimport { ref } from \"vue\";\n\nconst pressed = ref(false); // Toggle state placeholder.\n</script>\n\n<template>\n  <Toggle v-model=\"pressed\" variant=\"glass\" color=\"accent\">toggle</Toggle>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled state preserves the current pressed value without allowing activation.",
+      "source": "<script setup lang=\"ts\">\nimport Toggle from \"@/components/ui/Toggle.vue\";\nimport { ref } from \"vue\";\n\nconst pressed = ref(true); // Toggle state placeholder.\n</script>\n\n<template>\n  <Toggle v-model=\"pressed\" disabled>toggle</Toggle>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Toggle.vue",

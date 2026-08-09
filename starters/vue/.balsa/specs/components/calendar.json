@@ -52,10 +52,30 @@
     "Adding a selection mode without complete model behavior."
   ],
   "examples": [
-    "Single date",
-    "Date range",
-    "Multiple dates",
-    "Disabled dates"
+    {
+      "id": "single",
+      "title": "Single date",
+      "description": "One roving-focus grid selects one normalized local day.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"single\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"1\" />\n</template>"
+    },
+    {
+      "id": "range",
+      "title": "Date range",
+      "description": "Range mode retains a start while the user chooses its end.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"range\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"1\" />\n</template>"
+    },
+    {
+      "id": "multiple",
+      "title": "Multiple dates",
+      "description": "Immutable multiple selection toggles independent days.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"multiple\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"1\" />\n</template>"
+    },
+    {
+      "id": "two-months",
+      "title": "Two months",
+      "description": "A paired grid supports wider range comparison.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"range\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"2\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Calendar.vue",

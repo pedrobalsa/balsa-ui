@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Selectable saved payment methods and a focused continuation action.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport PaymentMethodCard from \"@/components/compositions/PaymentMethodCard.vue\";\n</script>\n\n<template>\n  <PaymentMethodCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport PaymentMethodCard from \"@/components/compositions/PaymentMethodCard.vue\";\n</script>\n\n<template>\n  <PaymentMethodCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/PaymentMethodCard.vue",
@@ -143,7 +153,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Payment method\""
+        "default": "\"Billing method\""
       },
       {
         "name": "description",
@@ -152,13 +162,13 @@
           "string"
         ],
         "required": false,
-        "default": "\"Choose how to pay for this order.\""
+        "default": "\"How this workspace is invoiced.\""
       },
       {
         "name": "methods",
         "type": "readonly RadioGroupOption[] | undefined",
         "required": false,
-        "default": "[ { label: \"Visa ending in 4242\", value: \"visa\", description: \"Expires 04/29\" }, { label: \"Business account\", value: \"bank\", description: \"ACH ···· 8402\" }, ]"
+        "default": "[ { label: \"Card on file\", value: \"card\", description: \"Charged on the first of each month\" }, { label: \"Invoice\", value: \"invoice\", description: \"Net 30, sent to billing@example.com\" }, { label: \"Prepaid credits\", value: \"credits\", description: \"4,200 credits remaining\" }, ]"
       }
     ],
     "events": [

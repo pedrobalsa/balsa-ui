@@ -59,10 +59,30 @@
     "Animating already-loaded content."
   ],
   "examples": [
-    "Text lines",
-    "Media rectangle",
-    "Avatar circle",
-    "Glass placeholder"
+    {
+      "id": "text",
+      "title": "Text placeholder",
+      "description": "Several lines reserve the rhythm of pending copy.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"text\" animation=\"wave\" :lines=\"4\" />\n  </div>\n</template>"
+    },
+    {
+      "id": "media",
+      "title": "Media placeholder",
+      "description": "A rounded rectangle reserves a pending visual region.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"rect\" size=\"lg\" :lines=\"3\" />\n  </div>\n</template>"
+    },
+    {
+      "id": "avatar",
+      "title": "Avatar placeholder",
+      "description": "Circle shape and size presets match common identity geometry.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"circle\" size=\"lg\" :lines=\"3\" />\n  </div>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass placeholder",
+      "description": "A translucent wave stays legible over expressive palette fields.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"rect\" variant=\"glass\" animation=\"wave\" :lines=\"3\" />\n  </div>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Skeleton.vue",

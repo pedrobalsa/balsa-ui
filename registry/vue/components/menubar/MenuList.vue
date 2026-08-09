@@ -75,9 +75,9 @@ const colorClasses: Readonly<Record<ActionColor, Record<MenuVariant, string[]>>>
   },
 };
 const rootClasses = computed(() => [
-  "min-w-52 max-w-[min(22rem,calc(100vw-1rem))] overflow-y-auto border p-1 shadow-balsa-panel outline-none",
+  "min-w-52 max-w-[min(22rem,calc(100vw-1rem))] overflow-y-auto border p-balsa-3xs shadow-balsa-panel outline-none",
   roundedClasses[props.rounded],
-  props.submenu ? "absolute left-full top-0 z-[70] ml-1" : "",
+  props.submenu ? "absolute left-full top-0 z-[70] ml-balsa-3xs" : "",
   ...variantClasses[props.variant],
   ...(props.color ? colorClasses[props.color][props.variant] : []),
 ]);
@@ -95,7 +95,7 @@ function itemRole(item: MenuItem): "menuitem" | "menuitemcheckbox" | "menuitemra
 
 function itemClasses(item: MenuItem, index: number): string[] {
   return [
-    "relative flex min-h-9 w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm outline-none transition-colors",
+    "relative flex min-h-9 w-full items-center gap-balsa-xs rounded-md px-balsa-md py-balsa-xs text-left text-sm outline-none transition-colors",
     index === activeIndex.value
       ? item.destructive
         ? "bg-balsa-destructive text-balsa-destructive-foreground"
@@ -212,12 +212,12 @@ defineExpose({ focusFirst: focusActive });
     <template v-for="(item, index) in props.items" :key="item.id">
       <div
         v-if="item.type === 'separator'"
-        class="my-1 h-px bg-balsa-border"
+        class="my-balsa-3xs h-px bg-balsa-border"
         role="separator"
       ></div>
       <div
         v-else-if="item.type === 'label'"
-        class="px-3 py-2 text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground"
+        class="px-balsa-md py-balsa-xs text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground"
         role="presentation"
       >
         {{ item.label }}
@@ -254,7 +254,7 @@ defineExpose({ focusFirst: focusActive });
             size="sm"
             class="fill-current"
           />
-          <span v-if="item.shortcut" class="ml-4 text-xs text-current/70">
+          <span v-if="item.shortcut" class="ml-balsa-lg text-xs text-current/70">
             {{ item.shortcut }}
           </span>
           <Icon

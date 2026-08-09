@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "device-verification-card",
+  "type": "registry:ui",
+  "title": "DeviceVerificationCard",
+  "description": "Single-purpose one-time-code step with resend and explicit confirmation.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/input-otp",
+    "@balsa/button",
+    "@balsa/link"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/DeviceVerificationCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/DeviceVerificationCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, ref } from \"vue\";\nimport Button from \"../ui/Button.vue\";\nimport InputOTP from \"../ui/InputOTP.vue\";\nimport Link from \"../ui/Link.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * One task, one control, one confirmation. A verification step is a whole\n * screen in production and still only a single unit here, because padding it\n * out with detail would misrepresent how little should be on it.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  length?: number;\n}>(), {\n  title: \"Confirm this device\",\n  description: \"Enter the six digits sent to ada@example.com.\",\n  length: 6,\n});\nconst emit = defineEmits<{ verify: [code: string]; resend: [] }>();\n\nconst code = ref(\"\");\nconst complete = computed(() => code.value.length === props.length);\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"device-verification\">\n    <InputOTP\n      id=\"device-code\"\n      v-model=\"code\"\n      label=\"Verification code\"\n      :length=\"props.length\"\n      grouped\n      fluid\n      :separator-every=\"3\"\n    />\n    <p class=\"mt-balsa-lg text-xs text-balsa-muted-foreground\">\n      The code expires in 10 minutes.\n      <Link href=\"#\" @click.prevent=\"emit('resend')\">Send it again</Link>\n    </p>\n    <template #footer>\n      <Button class=\"w-full\" :disabled=\"!complete\" @click=\"emit('verify', code)\">Verify device</Button>\n    </template>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/device-verification-card.json",
+    "documentation": "docs/compositions/device-verification-card.md",
+    "example": "docs/compositions/device-verification-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

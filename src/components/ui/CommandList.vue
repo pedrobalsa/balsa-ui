@@ -63,18 +63,24 @@ const variantClasses: Readonly<Record<LayerVariant, string[]>> = {
   soft: ["border-balsa-border bg-balsa-muted text-balsa-foreground"],
   glass: ["border-balsa-border/70 bg-balsa-surface/80 text-balsa-surface-foreground backdrop-blur-md"],
 };
+/*
+ * `data-shadow` is emitted in both modes. It used to be bound only when
+ * `dropdown` was set, so an inline command list accepted a `shadow` prop and
+ * discarded it: the explicit none/sm/md/lg rules key on the attribute, and
+ * without it there was nothing for them to match.
+ */
 const rootClasses = computed(() => (props.dropdown ? "relative" : "overflow-hidden"));
 const queryClasses = computed(() => [
-  "flex items-center gap-3 px-4",
+  "flex items-center gap-balsa-md px-balsa-lg",
   props.dropdown
     ? ["border shadow-balsa-surface", roundedClasses[props.rounded], variantClasses[props.variant]]
     : "border-b border-balsa-border",
 ]);
 const listboxClasses = computed(() => [
-  "max-h-80 overflow-y-auto p-2",
+  "max-h-80 overflow-y-auto p-balsa-xs",
   props.dropdown
     ? [
-        "absolute left-0 right-0 z-30 mt-2 border shadow-balsa-panel",
+        "absolute left-0 right-0 z-30 mt-balsa-xs border shadow-balsa-panel",
         roundedClasses[props.rounded],
         variantClasses[props.variant],
       ]
@@ -152,7 +158,7 @@ function handleListboxKeydown(event: KeyboardEvent): void {
 
 function itemClasses(item: CommandItem, index: number): string[] {
   return [
-    "flex min-h-9 w-full items-center gap-2.5 rounded-md px-3 py-1.5 text-left text-sm outline-none transition-colors",
+    "flex min-h-9 w-full items-center gap-balsa-sm rounded-md px-balsa-md py-balsa-2xs text-left text-sm outline-none transition-colors",
     index === activeIndex.value
       ? "bg-balsa-selected text-balsa-selected-foreground"
       : "text-inherit",
@@ -178,7 +184,7 @@ watch([query, items], () => {
 
 <template>
   <div data-balsa="command-list" :data-dropdown="props.dropdown || undefined" :class="rootClasses">
-    <div :data-shadow="props.dropdown ? props.shadow : undefined" :class="queryClasses">
+    <div :data-shadow="props.shadow" :class="queryClasses">
       <Icon :icon="Search" size="md" class="text-balsa-muted-foreground" />
       <input
         v-model="query"
@@ -204,18 +210,18 @@ watch([query, items], () => {
       v-if="props.open"
       :id="`${props.id}-listbox`"
       data-balsa="command-listbox"
-      :data-shadow="props.dropdown ? props.shadow : undefined"
+      :data-shadow="props.shadow"
       role="listbox"
       :aria-label="props.label"
       :class="listboxClasses"
       @keydown="handleListboxKeydown"
     >
-      <div v-if="props.loading" class="px-3 py-8 text-center text-sm text-balsa-muted-foreground">
+      <div v-if="props.loading" class="px-balsa-md py-balsa-3xl text-center text-sm text-balsa-muted-foreground">
         <slot name="loading">Loading commands…</slot>
       </div>
       <div
         v-else-if="filteredGroups.length === 0"
-        class="px-3 py-8 text-center text-sm text-balsa-muted-foreground"
+        class="px-balsa-md py-balsa-3xl text-center text-sm text-balsa-muted-foreground"
       >
         <slot name="empty">No commands found.</slot>
       </div>
@@ -229,7 +235,7 @@ watch([query, items], () => {
       >
         <div
           :id="`${props.id}-group-${group.id}`"
-          class="px-3 py-2 text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground"
+          class="px-balsa-md py-balsa-xs text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground"
         >
           {{ group.label }}
         </div>

@@ -118,7 +118,7 @@ const classes = computed(() =>
 );
 const viewportClasses = computed(() =>
   mergeClasses(
-    "overflow-hidden border",
+    "overflow-hidden",
     roundedClasses[props.rounded],
     variantClasses[props.variant],
     props.orientation === "vertical" && "h-96",
@@ -126,14 +126,14 @@ const viewportClasses = computed(() =>
 );
 const emptyClasses = computed(() =>
   mergeClasses(
-    "border border-dashed p-8 text-center text-sm text-balsa-muted-foreground",
+    "border border-dashed p-balsa-3xl text-center text-sm text-balsa-muted-foreground",
     roundedClasses[props.rounded],
     variantClasses[props.variant],
   ),
 );
 const trackClasses = computed(() =>
   mergeClasses(
-    "transition-transform duration-300 ease-out motion-reduce:transition-none",
+    "transition-transform duration-balsa-slow ease-balsa motion-reduce:transition-none",
     props.orientation === "horizontal"
       ? "flex touch-pan-y"
       : "flex h-full flex-col touch-pan-x",
@@ -389,7 +389,7 @@ onBeforeUnmount(() => {
             :style="slideStyle"
           >
             <slot name="item" :item="item" :index="index">
-              <div class="p-6">{{ item.label }}</div>
+              <div class="p-balsa-2xl">{{ item.label }}</div>
             </slot>
           </article>
         </div>
@@ -407,7 +407,7 @@ onBeforeUnmount(() => {
       <div
         v-if="props.items.length > 1 && hasInsideIndicators"
         data-balsa="carousel-indicators"
-        class="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-wrap justify-center gap-2"
+        class="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-wrap justify-center gap-balsa-xs"
         role="group"
         aria-label="Choose slide"
       >
@@ -425,12 +425,12 @@ onBeforeUnmount(() => {
     <div v-else :class="emptyClasses">
       <slot name="empty">{{ props.emptyText }}</slot>
     </div>
-    <div v-if="props.items.length > 1 && hasOutsideNavigation" class="mt-3 flex min-h-9 flex-wrap items-center gap-3">
-      <div v-if="props.controls && props.arrowsPosition !== 'inside'" data-balsa="carousel-arrows" :class="['flex gap-2', arrowsClasses]" role="group" aria-label="Carousel controls">
+    <div v-if="props.items.length > 1 && hasOutsideNavigation" class="mt-balsa-md flex min-h-9 flex-wrap items-center gap-balsa-md">
+      <div v-if="props.controls && props.arrowsPosition !== 'inside'" data-balsa="carousel-arrows" :class="['flex gap-balsa-xs', arrowsClasses]" role="group" aria-label="Carousel controls">
         <Button shape="fab" size="sm" variant="outline" :prefix-icon="previousIcon" aria-label="Previous slide" :disabled="!props.loop && !canPrevious" @click="previous" />
         <Button shape="fab" size="sm" variant="outline" :prefix-icon="nextIcon" aria-label="Next slide" :disabled="!props.loop && !canNext" @click="next" />
       </div>
-      <div v-if="props.indicators && props.indicatorsPosition !== 'inside'" data-balsa="carousel-indicators" :class="['flex flex-wrap gap-2', indicatorsClasses]" role="group" aria-label="Choose slide">
+      <div v-if="props.indicators && props.indicatorsPosition !== 'inside'" data-balsa="carousel-indicators" :class="['flex flex-wrap gap-balsa-xs', indicatorsClasses]" role="group" aria-label="Choose slide">
         <button
           v-for="(item, index) in props.items"
           :key="item.id"

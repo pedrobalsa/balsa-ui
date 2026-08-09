@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "framework": "vue",
-  "itemCount": 88,
+  "itemCount": 95,
   "items": [
     {
       "name": "icon",
@@ -410,55 +410,6 @@
       "status": "beta"
     },
     {
-      "name": "account-security-card",
-      "title": "AccountSecurityCard",
-      "category": "composition",
-      "description": "Credential update and separated destructive account action.",
-      "status": "beta"
-    },
-    {
-      "name": "payout-method-card",
-      "title": "PayoutMethodCard",
-      "category": "composition",
-      "description": "Receiving-method selection with account details and one save action.",
-      "status": "beta"
-    },
-    {
-      "name": "transfer-funds-card",
-      "title": "TransferFundsCard",
-      "category": "composition",
-      "description": "Account-to-account transfer form with arrival, fee, and total summary.",
-      "status": "beta"
-    },
-    {
-      "name": "savings-goal-card",
-      "title": "SavingsGoalCard",
-      "category": "composition",
-      "description": "Goal values and progress presented in a repeatable financial rhythm.",
-      "status": "beta"
-    },
-    {
-      "name": "transaction-list-card",
-      "title": "TransactionListCard",
-      "category": "composition",
-      "description": "Scannable activity rows with identity, metadata, time, and amount.",
-      "status": "beta"
-    },
-    {
-      "name": "balance-summary-card",
-      "title": "BalanceSummaryCard",
-      "category": "composition",
-      "description": "Compact balance, availability, and contextual action summary.",
-      "status": "beta"
-    },
-    {
-      "name": "usage-summary-card",
-      "title": "UsageSummaryCard",
-      "category": "composition",
-      "description": "Time-series usage, key totals, and quota progress in one panel.",
-      "status": "beta"
-    },
-    {
       "name": "analytics-chart-card",
       "title": "AnalyticsChartCard",
       "category": "composition",
@@ -494,13 +445,6 @@
       "status": "beta"
     },
     {
-      "name": "invite-members-card",
-      "title": "InviteMembersCard",
-      "category": "composition",
-      "description": "Repeatable email and role rows with a single invitation action.",
-      "status": "beta"
-    },
-    {
       "name": "member-access-card",
       "title": "MemberAccessCard",
       "category": "composition",
@@ -508,24 +452,10 @@
       "status": "beta"
     },
     {
-      "name": "action-list-card",
-      "title": "ActionListCard",
-      "category": "composition",
-      "description": "Grouped navigational actions with icons, descriptions, and trailing affordances.",
-      "status": "beta"
-    },
-    {
       "name": "navigation-menu-card",
       "title": "NavigationMenuCard",
       "category": "composition",
       "description": "Sectioned local navigation with an explicit current destination.",
-      "status": "beta"
-    },
-    {
-      "name": "empty-state-card",
-      "title": "EmptyStateCard",
-      "category": "composition",
-      "description": "Blank-slate explanation with one primary next step.",
       "status": "beta"
     },
     {
@@ -543,31 +473,10 @@
       "status": "beta"
     },
     {
-      "name": "file-upload-card",
-      "title": "FileUploadCard",
-      "category": "composition",
-      "description": "Drag-and-drop import target with format guidance and browse action.",
-      "status": "beta"
-    },
-    {
       "name": "media-preview-card",
       "title": "MediaPreviewCard",
       "category": "composition",
       "description": "Asset preview, publication status, and replacement action.",
-      "status": "beta"
-    },
-    {
-      "name": "schedule-card",
-      "title": "ScheduleCard",
-      "category": "composition",
-      "description": "Date selection paired with a concise upcoming-event list.",
-      "status": "beta"
-    },
-    {
-      "name": "appointment-card",
-      "title": "AppointmentCard",
-      "category": "composition",
-      "description": "Appointment time selection with preparation guidance and confirmation.",
       "status": "beta"
     },
     {
@@ -617,6 +526,146 @@
       "title": "CommandToolbarCard",
       "category": "composition",
       "description": "Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.",
+      "status": "beta"
+    },
+    {
+      "name": "data-grid-card",
+      "title": "DataGridCard",
+      "category": "composition",
+      "description": "Sortable, selectable, paginated table of records with real columns.",
+      "status": "beta"
+    },
+    {
+      "name": "schedule-planner-card",
+      "title": "SchedulePlannerCard",
+      "category": "composition",
+      "description": "Calendar paired with the bookable hours for the chosen day.",
+      "status": "beta"
+    },
+    {
+      "name": "command-palette-card",
+      "title": "CommandPaletteCard",
+      "category": "composition",
+      "description": "Grouped command palette that reaches projects, actions, and settings from one search.",
+      "status": "beta"
+    },
+    {
+      "name": "asset-carousel-card",
+      "title": "AssetCarouselCard",
+      "category": "composition",
+      "description": "Browsable run of captured assets with captions and review status.",
+      "status": "beta"
+    },
+    {
+      "name": "split-workspace-card",
+      "title": "SplitWorkspaceCard",
+      "category": "composition",
+      "description": "Resizable split of a file list against the diff it selects.",
+      "status": "beta"
+    },
+    {
+      "name": "release-notes-card",
+      "title": "ReleaseNotesCard",
+      "category": "composition",
+      "description": "Scrollable release history with version, date, and change notes.",
+      "status": "beta"
+    },
+    {
+      "name": "device-verification-card",
+      "title": "DeviceVerificationCard",
+      "category": "composition",
+      "description": "Single-purpose one-time-code step with resend and explicit confirmation.",
+      "status": "beta"
+    },
+    {
+      "name": "service-health-card",
+      "title": "ServiceHealthCard",
+      "category": "composition",
+      "description": "Half-height status strip reporting state and latency per region.",
+      "status": "beta"
+    },
+    {
+      "name": "storage-usage-card",
+      "title": "StorageUsageCard",
+      "category": "composition",
+      "description": "Half-height single measurement with the bar that puts it in context.",
+      "status": "beta"
+    },
+    {
+      "name": "inbox-thread-card",
+      "title": "InboxThreadCard",
+      "category": "composition",
+      "description": "Message thread with author, timing, and an inline reply.",
+      "status": "beta"
+    },
+    {
+      "name": "filter-panel-card",
+      "title": "FilterPanelCard",
+      "category": "composition",
+      "description": "Grouped filters across checkboxes and a range, with reset and apply.",
+      "status": "beta"
+    },
+    {
+      "name": "incident-alert-card",
+      "title": "IncidentAlertCard",
+      "category": "composition",
+      "description": "Half-height incident banner with acknowledge and open actions.",
+      "status": "beta"
+    },
+    {
+      "name": "plan-comparison-card",
+      "title": "PlanComparisonCard",
+      "category": "composition",
+      "description": "Plan capabilities compared across tiers with a billing period switch.",
+      "status": "beta"
+    },
+    {
+      "name": "profile-form-card",
+      "title": "ProfileFormCard",
+      "category": "composition",
+      "description": "Labelled profile fields with picture, handle, time zone, and biography.",
+      "status": "beta"
+    },
+    {
+      "name": "usage-breakdown-card",
+      "title": "UsageBreakdownCard",
+      "category": "composition",
+      "description": "Stacked bars attributing billed usage to categories over time.",
+      "status": "beta"
+    },
+    {
+      "name": "environment-switcher-card",
+      "title": "EnvironmentSwitcherCard",
+      "category": "composition",
+      "description": "Searchable environment picker with the current selection stated.",
+      "status": "beta"
+    },
+    {
+      "name": "api-key-card",
+      "title": "ApiKeyCard",
+      "category": "composition",
+      "description": "One-time secret with copy, provenance, and revocation.",
+      "status": "beta"
+    },
+    {
+      "name": "integration-list-card",
+      "title": "IntegrationListCard",
+      "category": "composition",
+      "description": "Connected services, each with the single control that governs it.",
+      "status": "beta"
+    },
+    {
+      "name": "runbook-steps-card",
+      "title": "RunbookStepsCard",
+      "category": "composition",
+      "description": "Ordered procedure where only the step in hand is expanded.",
+      "status": "beta"
+    },
+    {
+      "name": "image-compare-card",
+      "title": "ImageCompareCard",
+      "category": "composition",
+      "description": "Before-and-after comparison where the reader sets the split.",
       "status": "beta"
     }
   ]

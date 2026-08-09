@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/carousel",
+  "wave": 5,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/carousel/Carousel.vue": "sha256-bb6ecaca28497d109496583489361d3d809847a1aa9822e2ae4f259cffd78c94",
+      "ui/carousel/CarouselContent.vue": "sha256-589bb27086574782f18b4bbfdd173ee948a8db18e34d44b600f686464c5274ab",
+      "ui/carousel/CarouselItem.vue": "sha256-32b8bdc29cb7a1c44b4179a5702b020c4a1aaaddc1ee2bca6dfee3a0dcb62445",
+      "ui/carousel/CarouselNext.vue": "sha256-cb822ec2d0bbbaffb020bbb23c4e7d6ff852094e3142651cce859f1c530907f2",
+      "ui/carousel/CarouselPrevious.vue": "sha256-4c5b2e54d6f460e57513bc653fdb8d31f83e3eb11d6e84febd4317c3e3a2a7a9",
+      "ui/carousel/index.ts": "sha256-6bb51259766b55dff119088e630d007bc2c207cfe0a79704522ed268488bdca4",
+      "ui/carousel/interface.ts": "sha256-f7715d3d54e4a9b11420f439db0592bf444c10872bcb14bf18f34b11ce3140e5",
+      "ui/carousel/useCarousel.ts": "sha256-38786685b8d9943ede9e03dc023666a9e91c30ddb1ef7bf4f8b438c00a9524a2"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "embla-carousel-vue",
+      "lucide-vue-next",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/button"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "unsupported",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/carousel/CarouselContent.vue",
+      "find": "'-ml-4'",
+      "replace": "'-ms-4'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/carousel/CarouselItem.vue",
+      "find": "'pl-4'",
+      "replace": "'ps-balsa-lg'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/carousel/CarouselNext.vue",
+      "find": "'-right-12 top-1/2 -translate-y-1/2'",
+      "replace": "'-end-12 top-1/2 -translate-y-1/2'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/carousel/CarouselNext.vue",
+      "find": "'-bottom-12 left-1/2 -translate-x-1/2 rotate-90'",
+      "replace": "'-bottom-12 start-1/2 -translate-x-1/2 rotate-90'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/carousel/CarouselPrevious.vue",
+      "find": "'-left-12 top-1/2 -translate-y-1/2'",
+      "replace": "'-start-12 top-1/2 -translate-y-1/2'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/carousel/CarouselPrevious.vue",
+      "find": "'-top-12 left-1/2 -translate-x-1/2 rotate-90'",
+      "replace": "'-top-12 start-1/2 -translate-x-1/2 rotate-90'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

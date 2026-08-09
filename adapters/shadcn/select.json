@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/select",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/select/Select.vue": "sha256-3caada42d133d993aaa97cf65ccf18a70b58c0c2e5d6776c385db5e6bb7ac520",
+      "ui/select/SelectContent.vue": "sha256-3c9f9f82071a8c86d5229516c133a80b6fa0c2c6c8e1c2823cd8713304edb33f",
+      "ui/select/SelectGroup.vue": "sha256-7b9fb57a5abc5713a11898cd96c47a623d482cabc88bb6b375dad529280b738e",
+      "ui/select/SelectItem.vue": "sha256-fd6eb71a54fe33c94200ddbe353ed6e2db75cf33df37d353aca0509029cb4655",
+      "ui/select/SelectItemText.vue": "sha256-e346c59d93bfb09ea66c1d4bc951de8641b75a8c1e4eb9b79f88dab0f9745c4e",
+      "ui/select/SelectLabel.vue": "sha256-9d2465f4de8b650c93791a03ada61be67b20ae2a692c2d296ca7eda32e3fb561",
+      "ui/select/SelectScrollDownButton.vue": "sha256-8cd96d101be5d5aa24555ca92d743a069a4991aca3d90cff531e9a4643a0e8f6",
+      "ui/select/SelectScrollUpButton.vue": "sha256-2b90e203df5348dd78f80eb481f33499f77b78ea1361e517f03daff23180176b",
+      "ui/select/SelectSeparator.vue": "sha256-7546dc97f52f49a880d52f0220d947538c5dc0ccf364e571182407048cad5733",
+      "ui/select/SelectTrigger.vue": "sha256-5b493926851bf5369ecac8daff2d47ff66782505b8f429cc1d21e60a616c88ea",
+      "ui/select/SelectValue.vue": "sha256-d6984338bc27307882ed8d5aa4452d7539eb18acefafa9d8ea6fc12b141df854",
+      "ui/select/index.ts": "sha256-700c60f2ee037e450cecdb2a0ede7c992eb3260c00ec7632a204556839de2b58"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/select/SelectContent.vue",
+      "find": "'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'",
+      "replace": "'relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border-solid border-(length:--balsa-outline-border-width) bg-popover text-popover-foreground shadow-[var(--balsa-shadow-md)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/select/SelectItem.vue",
+      "find": "'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'",
+      "replace": "'relative flex w-full cursor-default select-none items-center rounded-sm py-balsa-2xs ps-balsa-xs pe-balsa-3xl text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/select/SelectItem.vue",
+      "find": "\"absolute right-2 flex h-3.5 w-3.5 items-center justify-center\"",
+      "replace": "\"absolute end-2 flex h-3.5 w-3.5 items-center justify-center\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/select/SelectLabel.vue",
+      "find": "'px-2 py-1.5 text-sm font-semibold'",
+      "replace": "'px-balsa-xs py-balsa-2xs text-sm font-semibold'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/select/SelectScrollDownButton.vue",
+      "find": "'flex cursor-default items-center justify-center py-1'",
+      "replace": "'flex cursor-default items-center justify-center py-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/select/SelectScrollUpButton.vue",
+      "find": "'flex cursor-default items-center justify-center py-1'",
+      "replace": "'flex cursor-default items-center justify-center py-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/select/SelectSeparator.vue",
+      "find": "'-mx-1 my-1 h-px bg-muted'",
+      "replace": "'-mx-1 my-balsa-3xs h-px bg-muted'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/select/SelectTrigger.vue",
+      "find": "'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:truncate text-start'",
+      "replace": "'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border-solid border-(length:--balsa-outline-border-width) border-input bg-transparent px-balsa-md py-balsa-xs text-sm shadow-[var(--balsa-shadow-control)] ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:truncate text-start'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable."
+    }
+  ],
+  "portal": "Teleports content. The adapter scope does not follow a teleport, so put data-balsa-adapt on the teleport target as well as the application root.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (left-, right-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

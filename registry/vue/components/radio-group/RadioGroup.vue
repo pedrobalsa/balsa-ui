@@ -83,16 +83,16 @@ const stateIcon = computed(() =>
 const rootClasses = computed(() => mergeClasses("min-w-0", attrs.class));
 const optionsClasses = computed(() => [
   props.layout === "row"
-    ? "flex flex-wrap items-start gap-x-6 gap-y-3"
+    ? "flex flex-wrap items-start gap-x-balsa-2xl gap-y-balsa-md"
     : props.layout === "cards"
-      ? "grid grid-cols-1 gap-3 sm:grid-cols-2"
-      : "flex flex-col gap-3",
+      ? "grid grid-cols-1 gap-balsa-md"
+      : "flex flex-col gap-balsa-md",
 ]);
 const optionBaseClasses = computed(() => [
-  "group relative flex min-w-0 cursor-pointer items-start gap-3 transition-[border-color,background-color,box-shadow,opacity]",
+  "group relative flex min-w-0 cursor-pointer items-start gap-balsa-md transition-[border-color,background-color,box-shadow,opacity]",
   props.layout === "cards"
-    ? "border border-balsa-input-border bg-balsa-input p-4 hover:border-balsa-border-strong"
-    : "gap-3",
+    ? "border-balsa-input-border bg-balsa-input p-balsa-lg hover:border-balsa-border-strong"
+    : "gap-balsa-md",
   props.layout === "cards" ? roundedClasses[props.rounded] : "",
   props.size === "sm" ? "text-sm" : "text-base",
 ]);
@@ -138,7 +138,7 @@ const radioColorClasses: Readonly<Record<SemanticColor, {
   },
 };
 const choiceClasses = computed(() => [
-  "pointer-events-none mt-0.5 grid shrink-0 place-items-center rounded-full border bg-balsa-input transition-[border-color,background-color,box-shadow] after:size-1.5 after:rounded-full after:opacity-0 after:content-[''] peer-checked:after:opacity-100",
+  "pointer-events-none mt-balsa-4xs grid shrink-0 place-items-center rounded-full bg-balsa-input transition-[border-color,background-color,box-shadow] after:size-1.5 after:rounded-full after:opacity-0 after:content-[''] peer-checked:after:opacity-100",
   props.size === "sm" ? "size-4" : "size-5",
   props.status === "unvalidated"
     ? "border-balsa-destructive peer-focus-visible:ring-balsa-destructive/30"
@@ -167,7 +167,7 @@ function optionClasses(option: RadioGroupOption): unknown[] {
 
 function descriptionClasses(option: RadioGroupOption): string[] {
   return [mergeClasses(
-    "mt-1 block text-sm leading-relaxed",
+    "mt-balsa-3xs block text-sm leading-relaxed",
     props.layout === "cards" && model.value === option.value
       ? radioColorClasses[props.color].selectedDescription
       : "text-balsa-muted-foreground",
@@ -197,7 +197,7 @@ function selectOption(value: string): void {
     :aria-describedby="describedBy"
     :class="rootClasses"
   >
-    <legend class="mb-3 text-sm font-medium leading-snug text-balsa-foreground">
+    <legend class="mb-balsa-md text-sm font-medium leading-snug text-balsa-foreground">
       <span>{{ props.label }}</span>
       <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
       <Icon v-if="stateIcon" :icon="stateIcon" size="md" :class="stateIconClasses" />
@@ -243,7 +243,7 @@ function selectOption(value: string): void {
       v-if="effectiveStatusMessage"
       :id="statusId"
       role="alert"
-      class="mt-2 block text-sm font-medium text-balsa-destructive"
+      class="mt-balsa-xs block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

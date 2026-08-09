@@ -1,4 +1,4 @@
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
   readJson,
@@ -6,6 +6,7 @@ import {
   sourcePath,
   writeJson,
 } from "./registry-lib.mjs";
+import { importedPackages } from "./source-imports.mjs";
 
 export const publicBaseUrl = "https://balsa-ui.com";
 export const catalogPath = path.join(rootDir, ".balsa", "catalog.json");
@@ -50,21 +51,108 @@ function searchableText(item) {
   ].join(" ").toLocaleLowerCase();
 }
 
-export function searchCatalog(catalog, query) {
+/**
+ * What kind of thing a result is, and how strongly to prefer it.
+ *
+ * The order is a recommendation, not a quality ranking. A composition is a
+ * whole interface and answers an intent outright, so it beats the parts it is
+ * made of. A Balsa addition is something upstream has no equivalent for, so it
+ * is the only way to get that thing. A Balsa alternative is a deliberate
+ * replacement for an upstream component and worth preferring where it exists,
+ * but the upstream original is a legitimate choice and ranks just behind it
+ * rather than being hidden.
+ */
+const kindRank = {
+  block: 0,
+  composition: 1,
+  addition: 2,
+  alternative: 3,
+  upstream: 4,
+};
+
+export const searchKinds = Object.keys(kindRank);
+
+export const kindLabels = {
+  block: "block",
+  composition: "composition",
+  addition: "Balsa addition",
+  alternative: "Balsa alternative",
+  upstream: "upstream component",
+};
+
+function kindOf(item) {
+  if (item.source === "upstream") return "upstream";
+  if (item.type === "registry:block") return "block";
+  if (item.classification === "balsa-composition") return "composition";
+  if (item.classification === "balsa-addition") return "addition";
+  if (item.classification === "balsa-alternative") return "alternative";
+  return item.category === "composition" ? "composition" : "addition";
+}
+
+/**
+ * Why a result matched, in the caller's words where possible.
+ *
+ * An agent choosing between ten results needs the reason more than the rank:
+ * "its name is this" and "one of its dependencies mentions this" are very
+ * different kinds of hit, and a score alone cannot tell them apart.
+ */
+function matchReasons(item, terms) {
+  const name = item.name.toLocaleLowerCase();
+  const title = (item.title ?? "").toLocaleLowerCase();
+  const description = (item.description ?? "").toLocaleLowerCase();
+  const dependencies = [
+    ...(item.registryDependencies ?? []),
+    ...(item.npmDependencies ?? []),
+  ].join(" ").toLocaleLowerCase();
+
+  const reasons = [];
+  for (const term of terms) {
+    if (name === term) reasons.push(`name is "${term}"`);
+    else if (name.includes(term)) reasons.push(`name contains "${term}"`);
+    else if (title.includes(term)) reasons.push(`title mentions "${term}"`);
+    else if (description.includes(term)) reasons.push(`description mentions "${term}"`);
+    else if (dependencies.includes(term)) reasons.push(`depends on "${term}"`);
+  }
+  return [...new Set(reasons)];
+}
+
+/**
+ * Search the catalog, ranked and explained.
+ *
+ * Returns results rather than bare items: the rank, the kind and the reasons
+ * are the parts a caller acts on, and discarding them was why the CLI could
+ * list ten things without saying which to take or why any of them appeared.
+ *
+ * `upstream` items come from the adapter manifests rather than the network, so
+ * a search stays offline and instant while still answering "what does Balsa add
+ * and what does it adapt".
+ */
+export function searchCatalog(catalog, query, options = {}) {
+  const { kinds, limit, upstreamItems = [] } = options;
+
+  const candidates = [
+    ...catalog.items,
+    ...upstreamItems.map((entry) => ({ ...entry, source: "upstream" })),
+  ];
+
   const terms = query
     .toLocaleLowerCase()
     .split(/\s+/)
     .map((term) => term.trim())
     .filter(Boolean);
-  if (!terms.length) return catalog.items;
 
-  return catalog.items
+  const scored = candidates
     .map((item) => {
+      const kind = kindOf(item);
+      if (kinds?.length && !kinds.includes(kind)) return undefined;
+      if (!terms.length) return { item, kind, score: 0, reasons: [] };
+
       const name = item.name.toLocaleLowerCase();
-      const title = item.title.toLocaleLowerCase();
+      const title = (item.title ?? "").toLocaleLowerCase();
       const text = searchableText(item);
       const matchedTerms = terms.filter((term) => text.includes(term));
       if (!matchedTerms.length) return undefined;
+
       const score = terms.reduce((total, term) => {
         if (name === term) return total + 12;
         if (name.startsWith(term)) return total + 8;
@@ -72,13 +160,19 @@ export function searchCatalog(catalog, query) {
         if (text.includes(term)) return total + 1;
         return total;
       }, matchedTerms.length === terms.length ? 6 : 0);
-      return { item, score };
+
+      return { item, kind, score, reasons: matchReasons(item, terms) };
     })
     .filter(Boolean)
     .sort((left, right) =>
-      right.score - left.score || left.item.name.localeCompare(right.item.name)
-    )
-    .map(({ item }) => item);
+      // Relevance first, then the kind recommendation. Ordering by kind first
+      // would bury an exactly-named component under every composition that
+      // happens to mention the word.
+      right.score - left.score
+      || kindRank[left.kind] - kindRank[right.kind]
+      || left.item.name.localeCompare(right.item.name));
+
+  return typeof limit === "number" ? scored.slice(0, limit) : scored;
 }
 
 function editDistance(left, right) {
@@ -218,6 +312,33 @@ function namedLines(entries, emptyText) {
   );
 }
 
+/**
+ * Examples are published as source, not as titles. An agent that can read the
+ * example does not have to invent one, which is where invented APIs come from.
+ */
+function exampleSection(examples) {
+  if (!Array.isArray(examples) || !examples.length) {
+    return ["## Examples", "", "Not documented in this specification.", ""];
+  }
+  // A specification written before examples carried source still renders.
+  if (examples.every((example) => typeof example === "string")) {
+    return bulletSection("Examples", examples);
+  }
+  return [
+    "## Examples",
+    "",
+    ...examples.flatMap((example) => [
+      `### ${example.title ?? example.id}`,
+      "",
+      ...(example.description ? [example.description, ""] : []),
+      "```vue",
+      ...String(example.source ?? "").split("\n"),
+      "```",
+      "",
+    ]),
+  ];
+}
+
 function publicApiSection(publicApi) {
   const contract = publicApi && typeof publicApi === "object" ? publicApi : {};
   // A hand-written contract from an older specification is still readable.
@@ -290,7 +411,7 @@ export function formatComponentMarkdown(item, spec) {
     ...bulletSection("Accessibility", contract.accessibility),
     ...publicApiSection(contract.publicApi),
     ...bulletSection("Tokens", contract.tokens),
-    ...bulletSection("Examples", contract.examples),
+    ...exampleSection(contract.examples),
     ...bulletSection("Common mistakes", contract.commonMistakes),
   ];
   return lines.join("\n");
@@ -335,6 +456,24 @@ async function copyAgentSpecs(targetRoot, catalog) {
     }
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, content, "utf8");
+  }
+
+  // A specification left behind after its component leaves the catalog is worse
+  // than a missing one: an agent reads it, believes the component exists, and
+  // writes an install command that cannot resolve. The directory has to mirror
+  // the catalog, not accumulate it.
+  const directory = path.join(targetRoot, ".balsa", "specs", "components");
+  const published = new Set(catalog.items.map((item) => `${item.name}.json`));
+  let present = [];
+  try {
+    present = await readdir(directory);
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  for (const file of present) {
+    if (file.endsWith(".json") && !published.has(file)) {
+      await rm(path.join(directory, file));
+    }
   }
 }
 
@@ -454,7 +593,7 @@ async function existingStylesheet(targetRoot) {
  * over the defaults it extends.
  */
 export async function ensureStyleImports(targetRoot, options = false) {
-  const { includePalette = false, includeTheme = true, generated = [] } =
+  const { includePalette = false, includeTheme = true, includeBridge = false, generated = [] } =
     typeof options === "boolean" ? { includePalette: options } : options;
   const target = await existingStylesheet(targetRoot);
   if (!target) return undefined;
@@ -469,30 +608,65 @@ export async function ensureStyleImports(targetRoot, options = false) {
     styleImport("balsa-foundation.css"),
     ...(includePalette ? [styleImport("balsa-palette.css")] : []),
     ...(includeTheme ? [styleImport("balsa-theme.css")] : []),
+    // The bridge reads resolved Balsa tokens, so it has to come after them.
+    ...(includeBridge ? [styleImport("balsa-shadcn-bridge.css")] : []),
     ...generated.map((fileName) => styleImport(fileName)),
   ];
   let source = await readFile(target, "utf8");
   const missing = imports.filter((value) => !source.includes(value));
   if (!missing.length) return target;
 
-  const tailwind = /@import\s+["']tailwindcss["'];?/;
-  const matched = source.match(tailwind);
-  if (matched?.index !== undefined) {
-    const insertion = matched.index + matched[0].length;
-    source = `${source.slice(0, insertion)}\n${missing.join("\n")}${source.slice(insertion)}`;
-  } else {
-    source = `${missing.join("\n")}\n${source}`;
+  // Order matters: the bridge reads tokens the foundation and theme define, and
+  // a generated palette overrides the defaults it extends. Anchoring to the last
+  // Balsa import already present keeps a later addition after its prerequisites
+  // rather than dropping it directly under the Tailwind import.
+  const anchors = imports
+    .map((value) => {
+      const index = source.indexOf(value);
+      return index < 0 ? -1 : index + value.length;
+    })
+    .filter((index) => index >= 0);
+
+  let insertion = anchors.length ? Math.max(...anchors) : undefined;
+  if (insertion === undefined) {
+    const matched = source.match(/@import\s+["']tailwindcss["'];?/);
+    insertion = matched?.index === undefined ? undefined : matched.index + matched[0].length;
   }
+
+  source = insertion === undefined
+    ? `${missing.join("\n")}\n${source}`
+    : `${source.slice(0, insertion)}\n${missing.join("\n")}${source.slice(insertion)}`;
   await writeFile(target, source, "utf8");
   return target;
 }
 
+/**
+ * What an item needs from npm.
+ *
+ * The union of what it declares and what its files actually import, because
+ * neither alone is trustworthy. A registry may under-declare -- `@shadcn/field`
+ * declares nothing and imports `class-variance-authority` -- and reporting a
+ * declaration back as if it were a fact produced a clean diagnostic for a
+ * component that could not resolve its own imports. A declaration may also name
+ * something the source no longer imports, and dropping it silently would be its
+ * own guess, so both are kept.
+ */
+export function requiredNpmDependencies(items) {
+  const required = new Set();
+  for (const item of items) {
+    for (const dependency of item.dependencies ?? []) required.add(dependency);
+    for (const dependency of importedPackages(item.files)) required.add(dependency);
+  }
+  return [...required].sort();
+}
+
 export async function missingNpmDependencies(targetRoot, items) {
+  const required = requiredNpmDependencies(items);
   let packageJson;
   try {
     packageJson = await readJson(path.join(targetRoot, "package.json"));
   } catch (error) {
-    if (error.code === "ENOENT") return [...new Set(items.flatMap((item) => item.dependencies ?? []))];
+    if (error.code === "ENOENT") return required;
     throw error;
   }
   const installed = new Set([
@@ -500,6 +674,5 @@ export async function missingNpmDependencies(targetRoot, items) {
     ...Object.keys(packageJson.devDependencies ?? {}),
     ...Object.keys(packageJson.peerDependencies ?? {}),
   ]);
-  return [...new Set(items.flatMap((item) => item.dependencies ?? []))]
-    .filter((dependency) => !installed.has(dependency));
+  return required.filter((dependency) => !installed.has(dependency));
 }

@@ -13,11 +13,11 @@ const emit = defineEmits<{ retry: [] }>();
 
 <template>
   <CompositionRoot v-bind="props" data-composition="error-state" role="status">
-    <div class="flex min-h-52 flex-col items-center justify-center text-center">
+    <div class="flex flex-1 flex-col items-center justify-center gap-balsa-lg px-balsa-lg text-center">
       <Icon :icon="CloudAlert" size="xl" class="text-balsa-accent" />
-      <p class="mt-4 max-w-sm text-sm text-balsa-muted-foreground">{{ props.message }}</p>
-      <code class="mt-3 rounded-balsa-control bg-balsa-muted px-2 py-1 text-xs">{{ props.requestId }}</code>
-      <Button class="mt-5" :prefix-icon="RefreshCw" @click="emit('retry')">{{ props.retryLabel }}</Button>
+      <p class="max-w-sm text-sm text-balsa-muted-foreground">{{ props.message }}</p>
+      <code class="rounded-balsa-control bg-balsa-muted px-balsa-xs py-balsa-3xs text-xs">{{ props.requestId }}</code>
+      <Button class="mt-balsa-3xs" :prefix-icon="RefreshCw" @click="emit('retry')">{{ props.retryLabel }}</Button>
     </div>
   </CompositionRoot>
 </template>

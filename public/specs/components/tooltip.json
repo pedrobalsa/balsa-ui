@@ -53,10 +53,30 @@
     "Making touch access depend on hover alone."
   ],
   "examples": [
-    "Control description",
-    "Abbreviation",
-    "Quick hint",
-    "Collision correction"
+    {
+      "id": "details",
+      "title": "Supplementary detail",
+      "description": "Pointer hover and keyboard focus reveal a brief non-interactive description.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    },
+    {
+      "id": "quick",
+      "title": "Quick tooltip",
+      "description": "Short delays provide faster contextual feedback.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" :open-delay=\"100\" :close-delay=\"100\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    },
+    {
+      "id": "bottom",
+      "title": "Bottom placement",
+      "description": "Preferred placement changes while preserving viewport collision correction.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" side=\"bottom\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass material",
+      "description": "A translucent tooltip keeps its compact supplementary treatment.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" variant=\"glass\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Tooltip.vue",

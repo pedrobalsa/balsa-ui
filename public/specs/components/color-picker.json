@@ -65,10 +65,36 @@
     "Passing rgb, alpha, or malformed values instead of a six-digit hex string."
   ],
   "examples": [
-    "Outside-label square field",
-    "Inside-label square field",
-    "Palette color group",
-    "Disabled color picker"
+    {
+      "id": "field",
+      "title": "Outside label",
+      "description": "The default concise label sits above the filled square.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#7c3aed\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" />\n</template>"
+    },
+    {
+      "id": "inside-label",
+      "title": "Inside label",
+      "description": "Use an inside tag when the color square itself is the compact label.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#7c3aed\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" label-position=\"inside\" />\n</template>"
+    },
+    {
+      "id": "large",
+      "title": "Large field",
+      "description": "A larger square gives a color setting more visual emphasis.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#7c3aed\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" size=\"lg\" />\n</template>"
+    },
+    {
+      "id": "palette",
+      "title": "Palette",
+      "description": "Palette type composes several color triggers into one compact row.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst colors = ref([\"#0f766e\", \"#7C3AED\", \"#EA580C\", \"#0284C7\"]);\n</script>\n\n<template>\n  <div class=\"flex h-12 max-w-xs items-stretch overflow-hidden rounded-balsa-control border border-balsa-border-strong bg-balsa-input\">\n  <ColorPicker id=\"palette-color-1\" v-model=\"colors[0]\" label=\"Color 1\" type=\"palette\" />\n  <ColorPicker id=\"palette-color-2\" v-model=\"colors[1]\" label=\"Color 2\" type=\"palette\" />\n  <ColorPicker id=\"palette-color-3\" v-model=\"colors[2]\" label=\"Color 3\" type=\"palette\" />\n  <ColorPicker id=\"palette-color-4\" v-model=\"colors[3]\" label=\"Color 4\" type=\"palette\" />\n</div>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled color controls remain legible while blocking the editor.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#0f766e\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" disabled />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/ColorPicker.vue",

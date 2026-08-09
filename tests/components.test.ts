@@ -187,7 +187,10 @@ describe("Balsa public components", () => {
     expect(icons).toHaveLength(2);
     expect(icons[0]?.classes()).toContain("lucide-plus");
     expect(icons[1]?.classes()).toContain("lucide-chevron-down");
-    expect(button.classes()).toContain("px-2.5");
+    // The inset is no longer a class. It follows from the size and the icon
+    // placement, both published as data for the icon-adjacency rule to key on.
+    expect(button.attributes("data-icon")).toBe("both");
+    expect(button.attributes("data-size")).toBe("sm");
   });
 
   it("renders the typed glass button with a restrained semantic rim hook", () => {
@@ -198,10 +201,10 @@ describe("Balsa public components", () => {
 
     expect(button.attributes("data-variant")).toBe("glass");
     expect(button.attributes("data-color")).toBe("accent");
-    expect(button.classes()).toEqual(expect.arrayContaining([
-      "border",
-      "text-balsa-accent",
-    ]));
+    // The rim's width comes from the border token through the shared control
+    // rule, not from a `border` utility that would pin it to a literal 1px.
+    expect(button.classes()).toEqual(expect.arrayContaining(["text-balsa-accent"]));
+    expect(button.classes()).not.toContain("border");
     expect(button.classes()).not.toContain("border-balsa-accent");
   });
 
@@ -432,7 +435,7 @@ describe("Balsa public components", () => {
     await trigger.trigger("click");
     const listbox = wrapper.get('[role="listbox"]');
     const options = wrapper.findAll('[role="option"]');
-    expect(listbox.classes()).toContain("space-y-1");
+    expect(listbox.classes()).toContain("space-y-balsa-3xs");
     expect(options[0].classes()).toContain("min-h-8");
     expect(options[1].classes()).toContain("min-h-8");
     expect(options[0].classes()).toContain("bg-balsa-selected/80");
@@ -813,7 +816,7 @@ describe("Balsa public components", () => {
 
     const card = mount(Card, { props: { size: "sm", rounded: "none" } })
       .get('[data-balsa="card"]');
-   expect(card.classes()).toEqual(expect.arrayContaining(["p-4", "rounded-none"]));
+   expect(card.classes()).toEqual(expect.arrayContaining(["p-balsa-lg", "rounded-none"]));
     expect(card.attributes("data-color")).toBe("neutral");
     expect(card.classes()).toContain("border-balsa-border");
     expect(card.classes()).not.toContain("border");
@@ -894,7 +897,7 @@ describe("Balsa public components", () => {
       },
     });
     expect(tabs.get('[data-balsa="tabs-list"]').classes()).toContain("rounded-none");
-    expect(tabs.get('[data-balsa="tabs-panel"]').classes()).toEqual(expect.arrayContaining(["rounded-none", "p-6"]));
+    expect(tabs.get('[data-balsa="tabs-panel"]').classes()).toEqual(expect.arrayContaining(["rounded-none", "p-balsa-2xl"]));
     expect(tabs.get('[data-balsa="tabs-panel"]').attributes("data-surface")).toBe("true");
 
     const barePanelTabs = mount(Tabs, {
@@ -1029,7 +1032,7 @@ describe("Balsa public components", () => {
     expect(root.attributes("style")).toContain("max-width: 90rem");
     expect(root.classes()).toEqual(expect.arrayContaining([
       "text-balsa-surface-elevated-foreground",
-      "mt-4",
+      "mt-balsa-lg",
       "max-w-7xl",
       "-translate-x-1/2",
       "w-full",
@@ -1042,7 +1045,7 @@ describe("Balsa public components", () => {
     ]));
     expect(navbar.get("nav").classes()).toEqual(expect.arrayContaining([
       "h-14",
-      "px-4",
+      "px-balsa-lg",
       "sm:px-6",
       "lg:px-8",
     ]));
@@ -1052,7 +1055,7 @@ describe("Balsa public components", () => {
     expect(navbar.get('[data-balsa="dropdown"]').classes()).toEqual(
       expect.arrayContaining([
         "left-0",
-        "mt-2",
+        "mt-balsa-xs",
         "w-[min(22rem,calc(100vw-2rem))]",
         "border-balsa-accent/30",
         "backdrop-blur-md",
@@ -1508,12 +1511,12 @@ describe("Balsa public components", () => {
     expect(wrapper.get('[data-balsa="collapsible"]').classes()).toEqual(
       expect.not.arrayContaining(["overflow-hidden", "rounded-lg"]),
     );
-    expect(content.classes()).toEqual(expect.not.arrayContaining(["border-t", "py-2.5"]));
+    expect(content.classes()).toEqual(expect.not.arrayContaining(["border-t", "py-balsa-sm"]));
 
     await trigger.trigger("click");
     expect(wrapper.emitted("update:modelValue")?.at(-1)).toEqual([true]);
     await wrapper.setProps({ modelValue: true });
-    expect(content.classes()).toEqual(expect.arrayContaining(["py-2.5"]));
+    expect(content.classes()).toEqual(expect.arrayContaining(["py-balsa-sm"]));
     expect(content.classes()).toEqual(expect.not.arrayContaining(["border-t"]));
   });
 
@@ -1565,8 +1568,10 @@ describe("Balsa public components", () => {
     expect(accordion.classes()).toEqual(
       expect.not.arrayContaining(["overflow-hidden", "rounded-lg"]),
     );
+    // The underline still draws, with its width read from the border token
+    // rather than compiled to a literal.
     expect(wrapper.get('[data-balsa="collapsible-trigger"]').classes())
-      .toEqual(expect.arrayContaining(["border-b"]));
+      .toEqual(expect.arrayContaining(["border-b-(length:--balsa-border-width)"]));
   });
 
   it("moves Accordion focus with arrows and skips disabled triggers", async () => {
@@ -1857,8 +1862,13 @@ describe("Balsa public components", () => {
       "aria-describedby": "inline-alert-description",
     });
     expect(alert.classes()).toEqual(
-      expect.arrayContaining(["bg-balsa-success/15", "text-balsa-success", "rounded-lg"]),
+      expect.arrayContaining(["bg-balsa-success/15", "text-balsa-success"]),
     );
+    // A contained surface defaults to the concentric corner, which emits no
+    // radius utility: the value comes from the containing surface through
+    // --balsa-radius-contained. An explicit rounded value still wins.
+    expect(alert.attributes("data-rounded")).toBe("auto");
+    expect(alert.classes()).not.toContain("rounded-lg");
     expect(wrapper.get('[data-balsa="icon"]').classes()).toContain("lucide-circle-check-big");
     expect(wrapper.get("h3").classes()).toContain("m-0");
     expect(wrapper.get("[data-balsa-alert-close]").classes()).toEqual(
@@ -3429,9 +3439,10 @@ describe("Balsa public components", () => {
     // The row itself is unpadded so a trailing control can meet its border;
     // the caption and the default icon carry their own insets instead.
     expect(trigger.classes()).toEqual(expect.arrayContaining(["p-0", "gap-0"]));
-    expect(trigger.classes()).not.toContain("px-3");
-    expect(trigger.classes()).not.toContain("py-1.5");
-    expect(trigger.get("span").classes()).toEqual(expect.arrayContaining(["py-2", "pl-3"]));
+    expect(trigger.classes()).not.toContain("px-balsa-md");
+    expect(trigger.classes()).not.toContain("py-balsa-2xs");
+    expect(trigger.get("span").classes())
+      .toEqual(expect.arrayContaining(["py-balsa-xs", "pl-balsa-md"]));
     menu.unmount();
 
     const clicks: string[] = [];

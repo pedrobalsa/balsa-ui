@@ -5,11 +5,10 @@
   "title": "MediaPreviewCard",
   "description": "Asset preview, publication status, and replacement action.",
   "dependencies": [
-    "vue",
-    "@lucide/vue"
+    "vue"
   ],
   "registryDependencies": [
-    "@balsa/icon",
+    "@balsa/gradient-background",
     "@balsa/application-card",
     "@balsa/badge",
     "@balsa/button"
@@ -19,7 +18,7 @@
       "path": "src/components/compositions/MediaPreviewCard.vue",
       "type": "registry:component",
       "target": "src/components/compositions/MediaPreviewCard.vue",
-      "content": "<script setup lang=\"ts\">\nimport { Image } from \"@lucide/vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport Icon from \"../ui/Icon.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionPaletteColor, CompositionSurfaceProps } from \"./composition\";\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; status?: string; statusColor?: CompositionPaletteColor; actionLabel?: string }>(), {\n  title: \"Cover art\", description: \"Preview the asset before publishing.\", status: \"Draft\", statusColor: \"secondary\", actionLabel: \"Replace image\",\n});\nconst emit = defineEmits<{ action: [] }>();\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"media-preview\">\n    <template #action><Badge :color=\"props.statusColor\" variant=\"soft\">{{ props.status }}</Badge></template>\n    <div class=\"relative grid min-h-72 place-items-center overflow-hidden rounded-balsa-panel border border-balsa-border bg-balsa-muted\">\n      <div class=\"absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,transparent_25%,var(--balsa-color-border)_25%,var(--balsa-color-border)_50%,transparent_50%,transparent_75%,var(--balsa-color-border)_75%)] [background-size:2rem_2rem]\"></div>\n      <Icon :icon=\"Image\" size=\"xl\" class=\"relative text-balsa-muted-foreground\" />\n    </div>\n    <template #footer><Button class=\"w-full\" variant=\"soft\" @click=\"emit('action')\">{{ props.actionLabel }}</Button></template>\n  </CompositionRoot>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport GradientBackground from \"../ui/GradientBackground.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionPaletteColor, CompositionSurfaceProps } from \"./composition\";\n\nconst props = withDefaults(defineProps<CompositionSurfaceProps & { title?: string; description?: string; status?: string; statusColor?: CompositionPaletteColor; actionLabel?: string }>(), {\n  title: \"Preview build\", description: \"What visitors see at relay-preview.example.com.\", status: \"Awaiting review\", statusColor: \"secondary\", actionLabel: \"Open the preview\",\n});\nconst emit = defineEmits<{ action: [] }>();\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"media-preview\">\n    <template #action><Badge :color=\"props.statusColor\" variant=\"soft\">{{ props.status }}</Badge></template>\n    <!--\n      A captured page is imagery, so the stand-in is imagery too: a palette-mode\n      gradient reads as a rendered screen and answers to the palette being\n      edited, where a checkerboard only ever reads as \"no image here\". The\n      checkerboard belongs on surfaces that genuinely have nothing yet.\n    -->\n    <div class=\"relative min-h-80 flex-1 overflow-hidden rounded-balsa-panel border border-balsa-border bg-balsa-muted\">\n      <GradientBackground\n        color-mode=\"palette\"\n        preset=\"mesh-drift\"\n        :speed=\"0\"\n        class=\"absolute inset-0\"\n      />\n    </div>\n    <dl class=\"mt-balsa-lg divide-y divide-balsa-border text-sm\">\n      <div class=\"flex justify-between py-balsa-sm\"><dt class=\"text-balsa-muted-foreground\">Captured at</dt><dd class=\"tabular-nums\">1440 &times; 900</dd></div>\n      <div class=\"flex justify-between py-balsa-sm\"><dt class=\"text-balsa-muted-foreground\">Commit</dt><dd class=\"tabular-nums\">a41c9f2</dd></div>\n      <div class=\"flex justify-between py-balsa-sm\"><dt class=\"text-balsa-muted-foreground\">Built</dt><dd>4 minutes ago</dd></div>\n    </dl>\n    <template #footer><Button class=\"w-full\" variant=\"soft\" @click=\"emit('action')\">{{ props.actionLabel }}</Button></template>\n  </CompositionRoot>\n</template>\n"
     },
     {
       "path": "src/components/compositions/_CompositionRoot.vue",

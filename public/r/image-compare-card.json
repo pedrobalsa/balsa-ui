@@ -1,0 +1,44 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "image-compare-card",
+  "type": "registry:ui",
+  "title": "ImageCompareCard",
+  "description": "Before-and-after comparison where the reader sets the split.",
+  "dependencies": [
+    "vue",
+    "@lucide/vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/resizable",
+    "@balsa/gradient-background",
+    "@balsa/icon",
+    "@balsa/badge"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ImageCompareCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/ImageCompareCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ImageOff } from \"@lucide/vue\";\nimport { ref } from \"vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport GradientBackground from \"../ui/GradientBackground.vue\";\nimport Icon from \"../ui/Icon.vue\";\nimport Resizable from \"../ui/Resizable.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * Before and after, with the divider between them.\n *\n * This is what Resizable is for: the reader decides how much of each to see,\n * and there is no correct split for the component to default to. The left side\n * keeps an explicit image placeholder because it stands for an asset that is\n * genuinely missing; the right is a palette gradient because it stands for one\n * that exists.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  beforeLabel?: string;\n  afterLabel?: string;\n}>(), {\n  title: \"Before and after\",\n  description: \"Drag the divider to compare the replacement against the original.\",\n  beforeLabel: \"Original, not yet uploaded\",\n  afterLabel: \"Proposed replacement\",\n});\n\nconst split = ref(50);\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"image-compare\">\n    <template #action><Badge variant=\"soft\">Awaiting sign-off</Badge></template>\n    <Resizable\n      id=\"artwork-compare\"\n      v-model=\"split\"\n      label=\"Original against replacement\"\n      :min=\"20\"\n      :max=\"80\"\n      class=\"min-h-64 flex-1 grid-rows-1\"\n    >\n      <template #first>\n        <figure class=\"relative grid h-full place-items-center overflow-hidden bg-balsa-muted\">\n          <div\n            class=\"absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,transparent_25%,var(--balsa-color-border)_25%,var(--balsa-color-border)_50%,transparent_50%,transparent_75%,var(--balsa-color-border)_75%)] [background-size:2rem_2rem]\"\n          ></div>\n          <Icon :icon=\"ImageOff\" size=\"xl\" class=\"relative text-balsa-muted-foreground\" />\n          <figcaption class=\"absolute inset-x-0 bottom-0 truncate bg-balsa-surface/80 px-balsa-md py-balsa-xs text-xs text-balsa-muted-foreground\">\n            {{ props.beforeLabel }}\n          </figcaption>\n        </figure>\n      </template>\n      <template #second>\n        <figure class=\"relative h-full overflow-hidden bg-balsa-muted\">\n          <GradientBackground color-mode=\"palette\" preset=\"aurora-veil\" :speed=\"0\" class=\"absolute inset-0\" />\n          <figcaption class=\"absolute inset-x-0 bottom-0 truncate bg-balsa-surface/80 px-balsa-md py-balsa-xs text-xs text-balsa-muted-foreground\">\n            {{ props.afterLabel }}\n          </figcaption>\n        </figure>\n      </template>\n    </Resizable>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/image-compare-card.json",
+    "documentation": "docs/compositions/image-compare-card.md",
+    "example": "docs/compositions/image-compare-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

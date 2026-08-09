@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/alert-dialog",
+  "wave": 3,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/alert-dialog/AlertDialog.vue": "sha256-dd3ae260d1247ada3360254a059a15bcdb3bba4e7ad5f9a7e4596bf3eb7e2f66",
+      "ui/alert-dialog/AlertDialogAction.vue": "sha256-8a4cf02ddee5b774027d7e67630f1c90747e1d7fc579d3bc1f70ce8c209d3919",
+      "ui/alert-dialog/AlertDialogCancel.vue": "sha256-6d0d4c8fd9099f7177cfcb298c0f8ed3c62c66c3329c622eba307f2c1bc6167b",
+      "ui/alert-dialog/AlertDialogContent.vue": "sha256-2fc29f050bf9aafaf8c536fdb0b2e2b304dbfee3625d969f3ac7b6f08c46e776",
+      "ui/alert-dialog/AlertDialogDescription.vue": "sha256-5649d8d90dcf4f240905315887e12db08922238b2a49dcae0146e6f69b9d4bf7",
+      "ui/alert-dialog/AlertDialogFooter.vue": "sha256-dac7fbbe2025024e61acb7e825e67aad8e35cb75a793aa657293ee5f11fff483",
+      "ui/alert-dialog/AlertDialogHeader.vue": "sha256-5538b4066ccdff90d2ea5ccb01184451f6b479aa2aa0ed514ef3a252a961ac9a",
+      "ui/alert-dialog/AlertDialogTitle.vue": "sha256-29975f70bd14950c0370a9921cb81f83d9a7227a196bd403222a0de7af37f42b",
+      "ui/alert-dialog/AlertDialogTrigger.vue": "sha256-18f8dac0a2addff63a702267cbe31c70956a14a81fb2c6e3f1a10961fd34de17",
+      "ui/alert-dialog/index.ts": "sha256-89d00a287c03882b130ccb5b660a2810337aeea417e9cde0973568a761c19532"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/button"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/alert-dialog/AlertDialogContent.vue",
+      "find": "\"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\"",
+      "replace": "\"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/alert-dialog/AlertDialogContent.vue",
+      "find": "'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg'",
+      "replace": "'fixed start-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-balsa-lg border-solid border-(length:--balsa-outline-border-width) bg-background p-balsa-2xl shadow-[var(--balsa-shadow-lg)] duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/alert-dialog/AlertDialogHeader.vue",
+      "find": "'flex flex-col gap-y-2 text-center sm:text-left'",
+      "replace": "'flex flex-col gap-y-balsa-xs text-center sm:text-start'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Teleports content. The adapter scope does not follow a teleport, so put data-balsa-adapt on the teleport target as well as the application root.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (left-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

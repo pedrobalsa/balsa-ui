@@ -58,7 +58,7 @@ const chartStyle = computed<CSSProperties>(() => ({
   height: `${resolvedHeight.value}px`,
   ...(props.width === undefined ? {} : { width: `${Math.max(0, props.width)}px`, maxWidth: props.responsive ? "100%" : undefined }),
 }));
-const tableClasses = computed(() => props.showTable ? "mt-5 overflow-x-auto" : "sr-only");
+const tableClasses = computed(() => props.showTable ? "mt-balsa-xl overflow-x-auto" : "sr-only");
 
 function token(role: ChartPaletteRole): string {
   if (role === "neutral") return "foreground";
@@ -87,7 +87,7 @@ provide(chartContextKey, {
 });
 
 function refreshWidth(): void {
-  measuredWidth.value = plot.value?.getBoundingClientRect().width ?? 0;
+  measuredWidth.value = plot.value?.clientWidth ?? 0;
 }
 
 function refreshMotion(): void {
@@ -140,14 +140,14 @@ watch(() => props.theme, () => { paletteVersion.value += 1; });
       <!-- A chart usually sits inside a titled surface, so its caption stays
            subordinate to that surface title rather than taking the h3 display size. -->
       <h3 class="text-sm font-semibold leading-snug">{{ props.title }}</h3>
-      <p v-if="props.description" class="mt-1 text-xs text-balsa-muted-foreground">{{ props.description }}</p>
+      <p v-if="props.description" class="mt-balsa-3xs text-xs text-balsa-muted-foreground">{{ props.description }}</p>
     </figcaption>
     <div v-if="props.loading" :style="chartStyle" class="grid place-items-center" aria-busy="true">
       <Spinner label="Loading chart" />
     </div>
     <div v-else-if="props.error" :style="chartStyle" class="grid place-items-center text-center text-balsa-destructive" role="alert">{{ props.error }}</div>
     <div v-else-if="props.empty" :style="chartStyle" class="grid place-items-center text-center text-balsa-muted-foreground">{{ props.emptyText }}</div>
-    <div v-else ref="plot" :style="chartStyle" class="mt-4 min-w-0" aria-hidden="true">
+    <div v-else ref="plot" :style="chartStyle" class="mt-balsa-lg min-w-0" aria-hidden="true">
       <slot v-if="renderable" :width="resolvedWidth" :height="resolvedHeight" :colors="colors" :reduced-motion="reducedMotion" />
     </div>
     <div :class="tableClasses">

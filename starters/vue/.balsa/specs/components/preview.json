@@ -62,11 +62,24 @@
     "Placing essential controls only in fullscreen."
   ],
   "examples": [
-    "Responsive canvas",
-    "Natural-height desktop template",
-    "Tablet viewport",
-    "Mobile viewport",
-    "Fixed scaled viewport"
+    {
+      "id": "mobile",
+      "title": "Mobile viewport",
+      "description": "Exact logical mobile dimensions evaluate responsive CSS before scaling.",
+      "source": "<script setup lang=\"ts\">\nimport Preview from \"@/components/ui/Preview.vue\";\n</script>\n\n<template>\n  <Preview title=\"Interface placeholder\" viewport=\"fixed\" :width=\"390\" :height=\"844\" :max-width=\"1600\" :max-height=\"480\" auto-height>\n    <div class=\"p-balsa-3xl\">Responsive interface placeholder</div>\n  </Preview>\n</template>"
+    },
+    {
+      "id": "desktop",
+      "title": "Desktop viewport",
+      "description": "A wide logical canvas scales into the bounded documentation workbench.",
+      "source": "<script setup lang=\"ts\">\nimport Preview from \"@/components/ui/Preview.vue\";\n</script>\n\n<template>\n  <Preview title=\"Interface placeholder\" viewport=\"fixed\" :width=\"1366\" :height=\"768\" :max-width=\"1600\" :max-height=\"480\" auto-height>\n    <div class=\"p-balsa-3xl\">Responsive interface placeholder</div>\n  </Preview>\n</template>"
+    },
+    {
+      "id": "responsive",
+      "title": "Responsive canvas",
+      "description": "Natural mode follows the available consumer width.",
+      "source": "<script setup lang=\"ts\">\nimport Preview from \"@/components/ui/Preview.vue\";\n</script>\n\n<template>\n  <Preview title=\"Interface placeholder\" viewport=\"responsive\" :width=\"900\" :height=\"520\" :max-width=\"1600\" :max-height=\"480\" auto-height>\n    <div class=\"p-balsa-3xl\">Responsive interface placeholder</div>\n  </Preview>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Preview.vue",

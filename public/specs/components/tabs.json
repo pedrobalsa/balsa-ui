@@ -59,11 +59,30 @@
     "Changing tab ids between renders."
   ],
   "examples": [
-    "Underline navigation",
-    "Connected choices",
-    "Pill choices",
-    "Icon tiles",
-    "Disabled tab"
+    {
+      "id": "underline",
+      "title": "Underline navigation",
+      "description": "Use an understated active indicator for familiar local views.",
+      "source": "<script setup lang=\"ts\">\nimport Tabs from \"@/components/ui/Tabs.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeTab = ref(\"preview\");\nconst items = [\n  { id: \"preview\", label: \"Tab placeholder 01\", icon: Eye },\n  { id: \"source\", label: \"Tab placeholder 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <Tabs id=\"component-view\" v-model=\"activeTab\" :items=\"items\" label=\"Tabs placeholder\" type=\"underline\">\n    <template #preview>Lorem ipsum dolor sit amet.</template>\n    <template #source>Consectetur adipiscing elit.</template>\n  </Tabs>\n</template>"
+    },
+    {
+      "id": "segmented",
+      "title": "Connected choices",
+      "description": "A shared surface gives related modes a compact, connected hierarchy.",
+      "source": "<script setup lang=\"ts\">\nimport Tabs from \"@/components/ui/Tabs.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeTab = ref(\"source\");\nconst items = [\n  { id: \"preview\", label: \"Tab placeholder 01\", icon: Eye },\n  { id: \"source\", label: \"Tab placeholder 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <Tabs id=\"component-view\" v-model=\"activeTab\" :items=\"items\" label=\"Tabs placeholder\" variant=\"outline\">\n    <template #preview>Lorem ipsum dolor sit amet.</template>\n    <template #source>Consectetur adipiscing elit.</template>\n  </Tabs>\n</template>"
+    },
+    {
+      "id": "pills",
+      "title": "Pill choices",
+      "description": "Separated choice buttons make the selected view more prominent.",
+      "source": "<script setup lang=\"ts\">\nimport Tabs from \"@/components/ui/Tabs.vue\";\nimport { ref } from \"vue\";\n\nconst activeTab = ref(\"preview\");\nconst items = [\n  { id: \"preview\", label: \"Tab placeholder 01\" },\n  { id: \"source\", label: \"Tab placeholder 02\" },\n];\n</script>\n\n<template>\n  <Tabs id=\"component-view\" v-model=\"activeTab\" :items=\"items\" label=\"Tabs placeholder\" type=\"pills\" variant=\"soft\">\n    <template #preview>Lorem ipsum dolor sit amet.</template>\n    <template #source>Consectetur adipiscing elit.</template>\n  </Tabs>\n</template>"
+    },
+    {
+      "id": "tiles",
+      "title": "Icon tiles",
+      "description": "Spacious icon-forward tabs suit a small set of visual categories.",
+      "source": "<script setup lang=\"ts\">\nimport Tabs from \"@/components/ui/Tabs.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeTab = ref(\"source\");\nconst items = [\n  { id: \"preview\", label: \"Tab placeholder 01\", icon: Eye },\n  { id: \"source\", label: \"Tab placeholder 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <Tabs id=\"component-view\" v-model=\"activeTab\" :items=\"items\" label=\"Tabs placeholder\" type=\"tiles\" variant=\"glass\">\n    <template #preview>Lorem ipsum dolor sit amet.</template>\n    <template #source>Consectetur adipiscing elit.</template>\n  </Tabs>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Tabs.vue",

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/combobox",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/combobox/Combobox.vue": "sha256-1e8e10d3415adf64ef4a0ea1ebb5e5755231dd9f1ba01c30dae4ef176fa385b7",
+      "ui/combobox/ComboboxAnchor.vue": "sha256-0a0f2fe74761ac43cfce8bba1eab92d558e7b01d5c8485d1716a13f95b764025",
+      "ui/combobox/ComboboxEmpty.vue": "sha256-608c616559fe61d19be99d64c5fc080266de9d852de0a67b3b85242a5397dec4",
+      "ui/combobox/ComboboxGroup.vue": "sha256-4c0a9bfbb8d89219ccf69662641e700fb80f3fa42afcb30c0f877e9bae8a0fcf",
+      "ui/combobox/ComboboxInput.vue": "sha256-dc56e39e8b507639baa957439bdad0301391bc2afa635001002c2502993e424f",
+      "ui/combobox/ComboboxItem.vue": "sha256-da98c4a0cfc0b4929067cd55bfbd50805a0a09347a62020ac98bcb0e7003abff",
+      "ui/combobox/ComboboxList.vue": "sha256-46356933cb12b69957f7d2768ed831810e1cf1c56344320a5369b36900645799",
+      "ui/combobox/ComboboxSeparator.vue": "sha256-442a011e192fbc0ee614f4456ff1070702ac0304a3714465139836d92b926eb8",
+      "ui/combobox/ComboboxTrigger.vue": "sha256-b0b92e827afbba0fba4f1d6a7b01ba60359c51bfc9a42385f2d2dead1ef36754",
+      "ui/combobox/index.ts": "sha256-8e0ee2aef750e9c004a61c401a5f9282302e08235c3c21abe67ea6ec7b210ba7"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/combobox/ComboboxEmpty.vue",
+      "find": "'py-6 text-center text-sm'",
+      "replace": "'py-balsa-2xl text-center text-sm'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/combobox/ComboboxGroup.vue",
+      "find": "'overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground'",
+      "replace": "'overflow-hidden p-balsa-3xs text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/combobox/ComboboxGroup.vue",
+      "find": "\"px-2 py-1.5 text-xs font-medium text-muted-foreground\"",
+      "replace": "\"px-balsa-xs py-balsa-2xs text-xs font-medium text-muted-foreground\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/combobox/ComboboxInput.vue",
+      "find": "'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'",
+      "replace": "'flex h-9 w-full rounded-md border-solid border-(length:--balsa-outline-border-width) border-input bg-transparent px-balsa-md py-balsa-3xs text-sm shadow-[var(--balsa-shadow-control)] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/combobox/ComboboxItem.vue",
+      "find": "'relative flex cursor-default gap-2 select-none justify-between items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0'",
+      "replace": "'relative flex cursor-default gap-balsa-xs select-none justify-between items-center rounded-sm px-balsa-xs py-balsa-2xs text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/combobox/ComboboxList.vue",
+      "find": "'z-50 w-[200px] rounded-md border bg-popover text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'",
+      "replace": "'z-50 w-[200px] rounded-md border-solid border-(length:--balsa-outline-border-width) bg-popover text-popover-foreground shadow-[var(--balsa-shadow-md)] outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Animating without a reduced-motion guard ignores the user's stated preference."
+    }
+  ],
+  "portal": "Teleports content. The adapter scope does not follow a teleport, so put data-balsa-adapt on the teleport target as well as the application root.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (left-, right-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

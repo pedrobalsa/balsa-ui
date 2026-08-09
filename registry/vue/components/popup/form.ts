@@ -1,19 +1,26 @@
 export const fieldLabelClasses =
-  "mb-1.5 block text-sm font-medium leading-snug text-balsa-foreground";
+  "mb-balsa-2xs block text-sm font-medium leading-snug text-balsa-foreground";
 
-export const fieldHintClasses = "mt-1.5 block text-sm text-balsa-muted-foreground";
+export const fieldHintClasses = "mt-balsa-2xs block text-sm text-balsa-muted-foreground";
 
 export const textControlClasses =
   "w-full rounded-lg border font-balsa-body text-balsa-input-foreground outline-none transition-[border-color,box-shadow,opacity] placeholder:text-balsa-muted-foreground focus:border-balsa-focus-ring focus:ring-2 focus:ring-balsa-focus-ring/30 disabled:border-balsa-border disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground";
 
 export const textControlPopupClasses =
-  "max-h-64 overflow-auto rounded-lg border p-1 text-balsa-surface-elevated-foreground shadow-balsa-surface transition-[opacity,transform,visibility] duration-200";
+  "max-h-64 overflow-auto rounded-lg p-balsa-3xs text-balsa-surface-elevated-foreground shadow-balsa-surface transition-[opacity,transform,visibility] duration-balsa-fast ease-balsa";
 
 export const textControlOptionClasses =
-  "flex min-h-8 w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left text-sm transition-colors";
+  "flex min-h-8 w-full items-center justify-between rounded-md px-balsa-sm py-balsa-2xs text-left text-sm transition-colors";
 
+/*
+ * No bare `border`. Tailwind compiles it to a literal 1px, which outranks the
+ * `border-width: var(--balsa-border-width)` the stylesheet sets on these
+ * controls -- so a checkbox and a radio kept a 1px edge at every border
+ * setting while everything around them moved. The colour utilities stay; only
+ * the width comes from the token.
+ */
 export const choiceInputClasses =
-  "shrink-0 cursor-pointer appearance-none border outline-none transition-[border-color,background-color,box-shadow,opacity] focus-visible:border-balsa-focus-ring focus-visible:ring-2 focus-visible:ring-balsa-focus-ring/30 disabled:cursor-not-allowed disabled:border-balsa-border disabled:bg-balsa-disabled";
+  "shrink-0 cursor-pointer appearance-none outline-none transition-[border-color,background-color,box-shadow,opacity] focus-visible:border-balsa-focus-ring focus-visible:ring-2 focus-visible:ring-balsa-focus-ring/30 disabled:cursor-not-allowed disabled:border-balsa-border disabled:bg-balsa-disabled";
 
 export type FieldStatus = "default" | "validated" | "unvalidated";
 export type FieldSize = "sm" | "md";
@@ -30,6 +37,29 @@ export const roundedClasses: Readonly<Record<Rounded, string>> = {
   "2xl": "rounded-2xl",
   "3xl": "rounded-3xl",
   full: "rounded-full",
+};
+
+/**
+ * A surface that may be contained by another one.
+ *
+ * `auto` means "concentric with whatever contains me": the corner follows the
+ * containing surface's radius minus the inset between them, so the gap between
+ * the two edges stays even instead of thickening at every corner. A surface
+ * standing on its own finds nothing published to nest inside and keeps the
+ * ordinary surface radius.
+ *
+ * Kept apart from `Rounded` because that union is shared with text controls,
+ * where there is nothing to be concentric with and `auto` would be a value
+ * nobody could act on.
+ */
+export type SurfaceRounded = Rounded | "auto";
+
+export const surfaceRoundedClasses: Readonly<Record<SurfaceRounded, string>> = {
+  ...roundedClasses,
+  // Deliberately no class. The radius comes from the concentric rule in
+  // balsa-theme.css, keyed on data-rounded="auto"; a utility emitted here would
+  // outrank it and pin the corner to one value.
+  auto: "",
 };
 
 const fieldVariantClasses: Readonly<Record<FieldVariant, string>> = {
@@ -53,8 +83,8 @@ export interface AnchoredPopupPosition {
 }
 
 const textControlSizeClasses: Record<FieldSize, string[]> = {
-  sm: ["h-8", "px-3", "text-sm"],
-  md: ["h-9", "px-3", "text-sm"],
+  sm: ["h-8", "px-balsa-md", "text-sm"],
+  md: ["h-9", "px-balsa-md", "text-sm"],
 };
 
 const textareaResizeClasses: Readonly<Record<TextareaResize, string>> = {
@@ -118,10 +148,10 @@ export function getTextareaControlClasses(
   return [
     textControlClasses,
     fieldVariantClasses[variant],
-    "h-auto min-h-0 py-2 leading-6",
+    "h-auto min-h-0 py-balsa-xs leading-6",
     roundedClasses[rounded],
     textareaResizeClasses[resizable],
-    size === "sm" ? "px-3 text-sm leading-5" : "px-3 text-sm leading-6",
+    size === "sm" ? "px-balsa-md text-sm leading-5" : "px-balsa-md text-sm leading-6",
     ...(loading
       ? ["disabled:cursor-progress"]
       : disabled

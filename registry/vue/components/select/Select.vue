@@ -168,10 +168,10 @@ const statusRole = computed(() =>
 );
 const menuClasses = computed(() => [
   getTextControlPopupClasses(props.rounded, props.variant),
-  "space-y-1",
+  "space-y-balsa-3xs",
   supportsPopover.value
     ? "fixed z-[70] m-0"
-    : "absolute left-0 right-0 z-30 mt-2",
+    : "absolute left-0 right-0 z-30 mt-balsa-xs",
   isOpen.value
     ? "visible translate-y-0 opacity-100"
     : "pointer-events-none invisible -translate-y-1 opacity-0",
@@ -486,7 +486,7 @@ onBeforeUnmount(() => {
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-medium text-balsa-destructive"
+      class="mt-balsa-xs block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/alert",
+  "wave": 2,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/alert/Alert.vue": "sha256-bfaa0099f3a5c96ef4591e9c8fa2f84a61be63a18927935e3ab54657427b086e",
+      "ui/alert/AlertDescription.vue": "sha256-05b9c0baf654589ce2acb4a25b7f47c4c4c8bc62f58f910a46962e0d0043defd",
+      "ui/alert/AlertTitle.vue": "sha256-48d4dd5011a84ed451b2b87e7692c16c0d8da711cef344eec83976238f22ca79",
+      "ui/alert/index.ts": "sha256-3c53d6d1ddddfde139ea883ee68df263953801662d36e216d465b780f17f60ad"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/alert/AlertTitle.vue",
+      "find": "'mb-1 font-medium leading-none tracking-tight'",
+      "replace": "'mb-balsa-3xs font-medium leading-none tracking-tight'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/alert/index.ts",
+      "find": "\"relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7\"",
+      "replace": "\"relative w-full rounded-lg border-solid border-(length:--balsa-outline-border-width) px-balsa-lg py-balsa-md text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:start-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:ps-7\"",
+      "reason": "Tailwind's border utility compiles to a literal 1px width; the outline recipe carries the Balsa border width. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

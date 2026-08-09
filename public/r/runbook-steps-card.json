@@ -1,0 +1,41 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "runbook-steps-card",
+  "type": "registry:ui",
+  "title": "RunbookStepsCard",
+  "description": "Ordered procedure where only the step in hand is expanded.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/accordion",
+    "@balsa/badge"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/RunbookStepsCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/RunbookStepsCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Accordion, { type AccordionItem } from \"../ui/Accordion.vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * A procedure people follow under pressure, so each step is collapsed until it\n * is the one being done. The accordion is the composition: nothing else on the\n * card competes with the step you are on.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  steps?: readonly AccordionItem[];\n}>(), {\n  title: \"Rollback runbook\",\n  description: \"Follow in order. Each step is safe to repeat.\",\n  steps: () => [\n    { id: \"freeze\", title: \"1 · Freeze the pipeline\", content: \"Pause queued deploys so nothing lands on top of the rollback. Anything mid-build finishes but does not promote.\" },\n    { id: \"confirm\", title: \"2 · Confirm the last good build\", content: \"Check the deployment history for the newest build that passed two consecutive health checks in every region.\" },\n    { id: \"promote\", title: \"3 · Promote it\", content: \"Promote that build to production. The rollout holds at 10% until the health check passes twice, as it does for any deploy.\" },\n    { id: \"verify\", title: \"4 · Verify each region\", content: \"Watch p95 latency and error rate per region. São Paulo recovers last because it is furthest from the origin.\" },\n    { id: \"unfreeze\", title: \"5 · Unfreeze and write it up\", content: \"Resume the pipeline, then record what happened while it is still fresh.\" },\n  ],\n});\n\n// Opens on the steps someone reaching for a runbook is most likely to be on.\nconst openStep = ref<readonly string[]>([\"confirm\", \"promote\"]);\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"runbook-steps\">\n    <template #action><Badge variant=\"soft\">5 steps</Badge></template>\n    <div class=\"flex-1\">\n      <Accordion id=\"rollback-runbook\" v-model=\"openStep\" :items=\"props.steps\" type=\"multiple\" label=\"Rollback steps\" />\n    </div>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/runbook-steps-card.json",
+    "documentation": "docs/compositions/runbook-steps-card.md",
+    "example": "docs/compositions/runbook-steps-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

@@ -13,9 +13,11 @@ import {
   createThemeConfiguration,
   decodeThemeInlineConfig,
   normalizeCliThemeConfig,
+  optionValues,
   themeExportIdentifier,
   validateThemeName,
 } from "../scripts/theme-cli.mjs";
+import { themeOptionDefinitions } from "../src/components/ui/theme";
 
 const temporaryRoot = resolve(process.cwd(), ".tmp");
 mkdirSync(temporaryRoot, { recursive: true });
@@ -36,6 +38,27 @@ afterEach(() => {
     const directory = created.pop();
     if (directory) rmSync(directory, { recursive: true, force: true });
   }
+});
+
+/**
+ * The CLI keeps its own copy of the recipe dimensions, because it is plain ESM
+ * and the definitions are TypeScript. A copy that falls behind does not fail
+ * loudly — it rejects a valid payload as invalid, so a design system authored in
+ * the Studio cannot be exported. That is what happened to `spacing`: it became a
+ * dimension and was never added here.
+ */
+describe("recipe dimensions", () => {
+  it("accepts exactly the dimensions the design system defines", () => {
+    expect(Object.keys(optionValues).sort())
+      .toEqual(themeOptionDefinitions.map((definition) => definition.key).sort());
+  });
+
+  it("accepts exactly the values each dimension defines", () => {
+    for (const definition of themeOptionDefinitions) {
+      expect([...optionValues[definition.key]].sort(), `${definition.key} values`)
+        .toEqual([...definition.values].sort());
+    }
+  });
 });
 
 describe("Balsa theme CLI", () => {

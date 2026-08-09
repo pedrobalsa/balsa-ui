@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Stacked command launcher with consistently aligned icons, descriptions, shortcuts, and full-row actions.",
   "useFor": [
     "Production application interfaces",
@@ -62,8 +62,18 @@
     "Returning to unequal wrapping controls that misalign labels and shortcuts."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport CommandToolbarCard from \"@/components/compositions/CommandToolbarCard.vue\";\n</script>\n\n<template>\n  <CommandToolbarCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport CommandToolbarCard from \"@/components/compositions/CommandToolbarCard.vue\";\n</script>\n\n<template>\n  <CommandToolbarCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/CommandToolbarCard.vue",
@@ -144,7 +154,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Quick actions\""
+        "default": "\"Workspace commands\""
       },
       {
         "name": "description",
@@ -153,13 +163,13 @@
           "string"
         ],
         "required": false,
-        "default": "\"Start common workspace tasks from one place.\""
+        "default": "\"Everything you can trigger without leaving this view.\""
       },
       {
         "name": "actions",
         "type": "readonly ToolbarAction[] | undefined",
         "required": false,
-        "default": "[ { id: \"copy\", label: \"Copy selection\", description: \"Duplicate the active content.\", icon: Copy, shortcut: [\"Ctrl\", \"C\"] }, { id: \"share\", label: \"Share workspace\", description: \"Invite people to collaborate.\", icon: Share2, shortcut: [\"S\"] }, { id: \"refresh\", label: \"Refresh data\", description: \"Sync the latest workspace state.\", icon: RefreshCw, shortcut: [\"R\"] }, { id: \"add\", label: \"Create resource\", description: \"Start a new workspace item.\", icon: Plus, shortcut: [\"Ctrl\", \"K\"] }, ]"
+        "default": "[ { id: \"deploy\", label: \"Deploy Atlas\", description: \"Ship the current commit to production.\", icon: Rocket, shortcut: [\"Ctrl\", \"D\"] }, { id: \"logs\", label: \"Open logs\", description: \"Stream the last hour of output.\", icon: ScrollText, shortcut: [\"L\"] }, { id: \"rollback\", label: \"Roll back\", description: \"Return production to the previous build.\", icon: Undo2, shortcut: [\"Ctrl\", \"Z\"] }, { id: \"environment\", label: \"New environment\", description: \"Branch a preview from production.\", icon: Layers, shortcut: [\"E\"] }, { id: \"invite\", label: \"Invite collaborator\", description: \"Send an invitation by email.\", icon: UserPlus, shortcut: [\"I\"] }, { id: \"key\", label: \"Rotate deploy key\", description: \"Replace the key every runner uses.\", icon: KeyRound, shortcut: [\"Ctrl\", \"R\"] }, { id: \"search\", label: \"Search everything\", description: \"Projects, members, and settings.\", icon: Search, shortcut: [\"Ctrl\", \"K\"] }, { id: \"export\", label: \"Export audit log\", description: \"Download the last 90 days as CSV.\", icon: Download, shortcut: [\"Ctrl\", \"E\"] }, ]"
       }
     ],
     "events": [

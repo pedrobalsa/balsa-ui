@@ -56,10 +56,24 @@
     "Removing a file through an unnamed icon action."
   ],
   "examples": [
-    "Single document",
-    "Multiple files",
-    "Validation error",
-    "Loading selection"
+    {
+      "id": "multiple",
+      "title": "Multiple documents",
+      "description": "Count, type, and size validation run before files enter the model.",
+      "source": "<script setup lang=\"ts\">\nimport Attachment from \"@/components/ui/Attachment.vue\";\nimport { ref } from \"vue\";\n\nconst files = ref<readonly File[]>([]);\n</script>\n\n<template>\n  <Attachment id=\"files-placeholder\" v-model=\"files\" label=\"Files placeholder\" accept=\".pdf,.png,.jpg\" :max-size=\"5242880\" :max-files=\"4\" multiple />\n</template>"
+    },
+    {
+      "id": "single",
+      "title": "Single image",
+      "description": "Single mode replaces the prior local selection.",
+      "source": "<script setup lang=\"ts\">\nimport Attachment from \"@/components/ui/Attachment.vue\";\nimport { ref } from \"vue\";\n\nconst files = ref<readonly File[]>([]);\n</script>\n\n<template>\n  <Attachment id=\"files-placeholder\" v-model=\"files\" label=\"Files placeholder\" accept=\"image/*\" :max-size=\"5242880\" :max-files=\"4\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Validation feedback",
+      "description": "Explicit error copy accompanies the destructive field state.",
+      "source": "<script setup lang=\"ts\">\nimport Attachment from \"@/components/ui/Attachment.vue\";\nimport { ref } from \"vue\";\n\nconst files = ref<readonly File[]>([]);\n</script>\n\n<template>\n  <Attachment id=\"files-placeholder\" v-model=\"files\" label=\"Files placeholder\" accept=\".pdf,.png,.jpg\" :max-size=\"5242880\" :max-files=\"4\" multiple status=\"unvalidated\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Attachment.vue",

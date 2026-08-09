@@ -56,10 +56,30 @@
     "Showing too many slides for the available width."
   ],
   "examples": [
-    "Card carousel",
-    "Multiple slides",
-    "Looping autoplay",
-    "Empty state"
+    {
+      "id": "cards",
+      "title": "Card collection",
+      "description": "Two visible slides keep adjacent content discoverable.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"start\" :slides-per-view=\"2\" :gap=\"16\" :autoplay=\"0\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    },
+    {
+      "id": "single",
+      "title": "Focused slide",
+      "description": "One slide per view gives each item the full content width.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"center\" :slides-per-view=\"1\" :gap=\"16\" :autoplay=\"0\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    },
+    {
+      "id": "loop",
+      "title": "Looping autoplay",
+      "description": "Opt-in autoplay loops and pauses for pointer or focus interaction.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"start\" :slides-per-view=\"2\" :gap=\"16\" loop :autoplay=\"4000\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    },
+    {
+      "id": "empty",
+      "title": "Empty collection",
+      "description": "An explicit empty state replaces navigation and indicators.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"start\" :slides-per-view=\"1\" :gap=\"16\" :autoplay=\"0\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Carousel.vue",

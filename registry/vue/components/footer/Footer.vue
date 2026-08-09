@@ -45,13 +45,13 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
   >
     <div>
       <div
-        class="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[minmax(18rem,1.35fr)_minmax(0,2fr)] lg:gap-x-14 lg:px-12"
+        class="mx-auto grid max-w-7xl gap-balsa-section-sm px-balsa-xl py-balsa-section-md sm:px-8 lg:grid-cols-[minmax(18rem,1.35fr)_minmax(0,2fr)] lg:gap-x-14 lg:px-12"
       >
         <div class="min-w-0">
           <a
             :href="props.legalLogo.href"
             :aria-label="props.legalLogo.alt"
-            class="mb-6 inline-flex rounded-balsa-control focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-balsa-inverse-foreground"
+            class="mb-balsa-2xl inline-flex rounded-balsa-control focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-balsa-inverse-foreground"
           >
             <span
               v-if="props.legalLogo.title"
@@ -70,7 +70,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
           <p class="max-w-sm text-sm text-balsa-inverse-foreground/75">{{ props.description }}</p>
           <div
             v-if="props.contactGroups.length"
-            class="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2"
+            class="mt-balsa-3xl grid gap-x-balsa-3xl gap-y-balsa-2xl sm:grid-cols-2"
           >
             <div
               v-for="group in props.contactGroups"
@@ -78,7 +78,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
               class="min-w-0"
             >
               <p class="text-balsa-inverse-foreground/75">{{ group.title }}</p>
-              <ul class="space-y-2">
+              <ul class="space-y-balsa-xs">
                 <li v-for="item in group.items" :key="item.label">
                   <a
                     v-if="item.link"
@@ -99,7 +99,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
               </ul>
             </div>
           </div>
-          <ul v-if="props.socialLinks?.length" class="mt-7 flex gap-5">
+          <ul v-if="props.socialLinks?.length" class="mt-balsa-2xl flex gap-balsa-xl">
             <li v-for="social in props.socialLinks" :key="social.link">
               <a
                 :href="social.link"
@@ -116,15 +116,15 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
         <nav
           v-if="props.sections.length"
           :aria-label="props.navigationLabel"
-          class="grid min-w-0 gap-10 sm:grid-cols-2 xl:grid-cols-3"
+          class="grid min-w-0 gap-balsa-3xl sm:grid-cols-2 xl:grid-cols-3"
         >
           <div
             v-for="section in props.sections"
             :key="section.title"
             class="min-w-0"
           >
-            <h3 class="mb-5 text-base text-balsa-inverse-foreground">{{ section.title }}</h3>
-            <ul class="space-y-4">
+            <h3 class="mb-balsa-xl text-base text-balsa-inverse-foreground">{{ section.title }}</h3>
+            <ul class="space-y-balsa-lg">
               <li v-for="link in section.links" :key="link.link">
                 <a
                   :href="link.link"
@@ -140,7 +140,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
     </div>
     <div class="border-t border-balsa-inverse-foreground/25">
       <div
-        class="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12"
+        class="mx-auto flex max-w-7xl flex-col gap-balsa-md px-balsa-xl py-balsa-xl sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12"
       >
         <p class="text-xs text-balsa-inverse-foreground/75">{{ props.copyright }}</p>
         <p class="text-xs text-balsa-inverse-foreground/75">{{ props.legalText }}</p>

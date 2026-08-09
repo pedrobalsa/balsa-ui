@@ -101,6 +101,32 @@ describe("agent documentation generation", () => {
     expect(formatComponentMarkdown(item, undefined)).toContain("A fallback.");
   });
 
+  it("publishes example source, not example titles", async () => {
+    const badge = catalog.items.find((item) => item.name === "badge");
+    const spec = (await loadComponentSpec(badge)) as {
+      examples: Array<{ id: string; title: string; source: string }>;
+    };
+
+    expect(spec.examples.length).toBeGreaterThan(0);
+    for (const example of spec.examples) {
+      // An agent that can read the example does not have to invent one.
+      expect(example.source, example.id).toContain("<template>");
+      expect(example.source, example.id).toContain("@/components/ui/");
+    }
+
+    const markdown = formatComponentMarkdown(badge, spec);
+    expect(markdown).toContain("```vue");
+    expect(markdown).toContain("<Badge");
+  });
+
+  it("renders a specification whose examples are still bare titles", () => {
+    const item = { name: "ghost", title: "Ghost", category: "component", description: "" };
+    const markdown = formatComponentMarkdown(item, { examples: ["Basic", "Advanced"] });
+
+    expect(markdown).toContain("- Basic");
+    expect(markdown).toContain("- Advanced");
+  });
+
   it("explains unknown item names instead of failing opaquely", () => {
     expect(suggestItemNames(catalog, "tabel")).toContain("table");
     expect(unknownItemError(catalog, "tabel").message).toContain("Did you mean");

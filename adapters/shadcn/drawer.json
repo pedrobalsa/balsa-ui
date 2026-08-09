@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/drawer",
+  "wave": 3,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/drawer/Drawer.vue": "sha256-7a45fae4a4fb99fa862f27cc511011e80605582cda40b48823c82bcb3bc6b61e",
+      "ui/drawer/DrawerContent.vue": "sha256-191ddaf6b46cf18ab3c99d80f03dfc93266bbfd2b265f624286325c4a17a1126",
+      "ui/drawer/DrawerDescription.vue": "sha256-b36d5376948defa6c20f0e9cf0f9aabc1d0886f5f56aff3205bbd76d93887bdb",
+      "ui/drawer/DrawerFooter.vue": "sha256-d104a63cdcbc324d6d33d56d4b5985c20243845056bc129c469c3381f780674a",
+      "ui/drawer/DrawerHeader.vue": "sha256-bf89dd782114e8bc6436c527f111181af7cb4b8a843e6e7e0afd31ecd694a669",
+      "ui/drawer/DrawerOverlay.vue": "sha256-ac05c8c9093c428db2f4a9d54a1e67bbe800f6c8b0863db6dfaa2f20c8110300",
+      "ui/drawer/DrawerTitle.vue": "sha256-a72431cb286d9afd6be0651e4b4aae819d0dd32e468272f81a9b0ff19c73df93",
+      "ui/drawer/index.ts": "sha256-f0c5b815d20946a615c43d7eae27e74c4747ebba1cd54377b1a36e0384791a8f"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "reka-ui",
+      "vaul-vue",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/drawer/DrawerContent.vue",
+      "find": "'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background'",
+      "replace": "'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border-solid border-(length:--balsa-outline-border-width) bg-background'",
+      "reason": "Tailwind's border utility compiles to a literal 1px width; the outline recipe carries the Balsa border width."
+    },
+    {
+      "file": "ui/drawer/DrawerContent.vue",
+      "find": "\"mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted\"",
+      "replace": "\"mx-auto mt-balsa-lg h-2 w-[100px] rounded-full bg-muted\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/drawer/DrawerFooter.vue",
+      "find": "'mt-auto flex flex-col gap-2 p-4'",
+      "replace": "'mt-auto flex flex-col gap-balsa-xs p-balsa-lg'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/drawer/DrawerHeader.vue",
+      "find": "'grid gap-1.5 p-4 text-center sm:text-left'",
+      "replace": "'grid gap-balsa-2xs p-balsa-lg text-center sm:text-start'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Teleports content. The adapter scope does not follow a teleport, so put data-balsa-adapt on the teleport target as well as the application root.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

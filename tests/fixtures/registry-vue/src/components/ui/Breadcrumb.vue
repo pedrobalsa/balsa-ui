@@ -44,12 +44,12 @@ const currentIndex = computed(() => {
 });
 
 const sizeClasses: Readonly<Record<BreadcrumbSize, string>> = {
-  sm: "gap-1.5 text-xs",
-  md: "gap-2 text-sm",
+  sm: "gap-balsa-2xs text-xs",
+  md: "gap-balsa-xs text-sm",
 };
 const linkSizeClasses: Readonly<Record<BreadcrumbSize, string>> = {
-  sm: "min-h-7 px-1",
-  md: "min-h-8 px-1.5",
+  sm: "min-h-7 px-balsa-3xs",
+  md: "min-h-8 px-balsa-2xs",
 };
 const separatorClasses: Readonly<Record<BreadcrumbSeparator, string>> = {
   chevron: "",

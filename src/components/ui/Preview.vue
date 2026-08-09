@@ -156,11 +156,11 @@ const hostClasses = computed(() => {
   if (props.autoHeight) {
     return props.edgeToEdge
       ? "w-full bg-balsa-background"
-      : "w-full bg-balsa-background p-6";
+      : "w-full bg-balsa-background p-balsa-2xl";
   }
   return props.edgeToEdge
     ? "h-full w-full bg-balsa-background"
-    : "flex h-full w-full items-center justify-center bg-balsa-background p-6";
+    : "flex h-full w-full items-center justify-center bg-balsa-background p-balsa-2xl";
 });
 
 function syncDesign(documentElement: HTMLElement): void {

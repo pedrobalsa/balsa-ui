@@ -85,6 +85,10 @@ const attrs = useAttrs();
 const copied = ref(false);
 const copyUnavailable = ref(false);
 const expanded = ref(false);
+// Declared and assigned through the same bare setTimeout, so the two agree
+// whichever one is in scope. Assigning from window.setTimeout does not:
+// `window` is `Window & typeof globalThis`, so in a project with @types/node
+// the call resolves to Node's and returns a Timeout the DOM annotation rejects.
 let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
 const copyLabel = computed(() => {
@@ -98,9 +102,9 @@ const copyIcon = computed(() =>
 );
 
 const sizeClasses: Readonly<Record<CodeBlockSize, { code: string; header: string; pre: string }>> = {
-  sm: { code: "text-xs leading-5", header: "min-h-9 px-3", pre: "p-3" },
-  md: { code: "text-sm leading-6", header: "min-h-10 px-3", pre: "p-4" },
-  lg: { code: "text-base leading-7", header: "min-h-12 px-4", pre: "p-5" },
+  sm: { code: "text-xs leading-5", header: "min-h-9 px-balsa-md", pre: "p-balsa-md" },
+  md: { code: "text-sm leading-6", header: "min-h-10 px-balsa-md", pre: "p-balsa-lg" },
+  lg: { code: "text-base leading-7", header: "min-h-12 px-balsa-lg", pre: "p-balsa-xl" },
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",
@@ -119,23 +123,23 @@ const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const rootClasses = computed(() =>
   mergeClasses(
-    "w-full min-w-0 max-w-full overflow-hidden border border-balsa-code-foreground/10 bg-balsa-code text-balsa-code-foreground",
+    "w-full min-w-0 max-w-full overflow-hidden border-balsa-code-foreground/10 bg-balsa-code text-balsa-code-foreground",
     roundedClasses[props.rounded],
     attrs.class,
   ),
 );
 const headerClasses = computed(() => [
-  "flex items-center justify-between gap-3 border-b border-balsa-code-foreground/10",
+  "flex items-center justify-between gap-balsa-md border-b border-balsa-code-foreground/10",
   sizeClasses[props.size].header,
 ]);
 const textActionClasses =
-  "h-7 shrink-0 gap-1 border-transparent bg-transparent px-1.5 text-xs text-balsa-code-foreground hover:bg-transparent hover:underline focus-visible:outline-balsa-code-foreground";
+  "h-7 shrink-0 gap-balsa-3xs border-transparent bg-transparent px-balsa-2xs text-xs text-balsa-code-foreground hover:bg-transparent hover:underline focus-visible:outline-balsa-code-foreground";
 const iconActionClasses =
   "h-7 w-7 shrink-0 border-transparent bg-transparent p-0 text-balsa-code-foreground hover:bg-transparent focus-visible:outline-balsa-code-foreground";
 const preClasses = computed(() => ["overflow-x-auto", sizeClasses[props.size].pre]);
 /** One row: the command takes the space, the copy action closes it. */
 const inlineRowClasses = computed(() => [
-  "flex items-center gap-3",
+  "flex items-center gap-balsa-md",
   sizeClasses[props.size].header,
 ]);
 const lineHeightBySize: Readonly<Record<CodeBlockSize, number>> = {
@@ -197,8 +201,8 @@ async function copyCode(): Promise<void> {
     await navigator.clipboard.writeText(props.code);
     copied.value = true;
     copyUnavailable.value = false;
-    if (resetTimer) window.clearTimeout(resetTimer);
-    resetTimer = window.setTimeout(() => {
+    if (resetTimer) clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
       copied.value = false;
       resetTimer = undefined;
     }, 1800);
@@ -212,7 +216,7 @@ function collapseCode(): void {
 }
 
 onBeforeUnmount(() => {
-  if (resetTimer) window.clearTimeout(resetTimer);
+  if (resetTimer) clearTimeout(resetTimer);
 });
 
 watch(
@@ -263,7 +267,7 @@ watch(
         data-balsa-code-label
         class="min-w-0 truncate font-mono text-xs"
       >{{ props.label ?? props.language }}</span>
-      <div data-balsa-code-actions class="flex shrink-0 items-center gap-2">
+      <div data-balsa-code-actions class="flex shrink-0 items-center gap-balsa-xs">
         <slot name="actions" />
         <Button
           v-if="canExpand && expanded"
@@ -302,13 +306,13 @@ watch(
         :key="`${index}-${line}`"
         :class="numberedRowClasses"
       ><span
-        class="mr-4 w-6 shrink-0 select-none text-right text-balsa-code-foreground/40"
+        class="mr-balsa-lg w-6 shrink-0 select-none text-right text-balsa-code-foreground/40"
         aria-hidden="true"
       >{{ index + 1 }}</span><span :class="numberedLineClasses" v-html="line || ' '"></span></span></code></pre>
       <!-- eslint-enable vue/no-v-html -->
       <div
         v-if="isCollapsed"
-        class="pointer-events-none absolute inset-x-0 bottom-0 flex h-20 items-end justify-center bg-gradient-to-t from-balsa-code via-balsa-code/95 to-transparent pb-3"
+        class="pointer-events-none absolute inset-x-0 bottom-0 flex h-20 items-end justify-center bg-gradient-to-t from-balsa-code via-balsa-code/95 to-transparent pb-balsa-md"
       >
         <Button
           data-balsa-code-expand
@@ -316,7 +320,7 @@ watch(
           variant="outline"
           color="primary"
           :size="null"
-          class="pointer-events-auto border-transparent bg-transparent px-1.5 text-xs text-balsa-code-foreground hover:bg-transparent hover:underline focus-visible:outline-balsa-code-foreground"
+          class="pointer-events-auto border-transparent bg-transparent px-balsa-2xs text-xs text-balsa-code-foreground hover:bg-transparent hover:underline focus-visible:outline-balsa-code-foreground"
           @click="expanded = true"
         >
           See more

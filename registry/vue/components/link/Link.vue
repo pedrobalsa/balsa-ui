@@ -41,9 +41,9 @@ const { props, theme } = useResolvedThemeProps(
 const attrs = useAttrs();
 
 const sizeClasses: Record<LinkSize, string> = {
-  sm: "h-8 gap-1.5 px-3 text-sm",
-  md: "h-9 gap-2 px-4 text-sm",
-  lg: "h-10 gap-2 px-6 text-sm",
+  sm: "h-8 gap-balsa-2xs px-balsa-md text-sm",
+  md: "h-9 gap-balsa-xs px-balsa-lg text-sm",
+  lg: "h-10 gap-balsa-xs px-balsa-2xl text-sm",
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",
@@ -54,7 +54,7 @@ const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const classes = computed(() =>
   mergeClasses(
-    "inline-flex w-fit items-center justify-center font-balsa-body transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
+    "inline-flex w-fit items-center justify-center font-balsa-body transition-colors duration-balsa-fast ease-balsa focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
     roundedClasses[props.rounded],
     actionColorClasses[props.color][props.variant],
     props.variant === "text"

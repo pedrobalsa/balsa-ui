@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/empty",
+  "wave": 2,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/empty/Empty.vue": "sha256-28a5070dd55db5f8dd73037faf1725141d20c83bc28d3bc667dec71d50d96b76",
+      "ui/empty/EmptyContent.vue": "sha256-4e0a1ac45971d960cad2ec798323e4025a7a3e48acb1a2dae66da74eae18feb3",
+      "ui/empty/EmptyDescription.vue": "sha256-a412bd49ddd9175c732868d68843cb65d0060d2097544bf31b604ae022b9267d",
+      "ui/empty/EmptyHeader.vue": "sha256-bccd00d93d1795a627a4976490a3f63e4b80fde6321c1a7cb17cf1b5ff8d9c60",
+      "ui/empty/EmptyMedia.vue": "sha256-24bd50a9f60ea0a5c3e86df8e6dfdfce642c95ea6d093549e63b828b237dd0db",
+      "ui/empty/EmptyTitle.vue": "sha256-a6704f3e8793a3c487dbe8c2d26f5360ad0a34bd803e500c306dec8157783340",
+      "ui/empty/index.ts": "sha256-489716d184467f21117b718657664994e302666dd756b95a4ae5b57e3f59d83b"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/empty/Empty.vue",
+      "find": "'flex min-w-0 flex-1 flex-col items-center justify-center gap-6 text-balance rounded-lg border-dashed p-6 text-center md:p-12'",
+      "replace": "'flex min-w-0 flex-1 flex-col items-center justify-center gap-balsa-2xl text-balance rounded-lg border-dashed p-balsa-2xl text-center md:p-12'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/empty/EmptyContent.vue",
+      "find": "'flex w-full min-w-0 max-w-sm flex-col items-center gap-4 text-balance text-sm'",
+      "replace": "'flex w-full min-w-0 max-w-sm flex-col items-center gap-balsa-lg text-balance text-sm'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/empty/EmptyHeader.vue",
+      "find": "'flex max-w-sm flex-col items-center gap-2 text-center'",
+      "replace": "'flex max-w-sm flex-col items-center gap-balsa-xs text-center'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/empty/index.ts",
+      "find": "\"mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0\"",
+      "replace": "\"mb-balsa-xs flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

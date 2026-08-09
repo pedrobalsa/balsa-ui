@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/breadcrumb",
+  "wave": 4,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/breadcrumb/Breadcrumb.vue": "sha256-40ac6c79ba64f06c1d222a6c8e6fe567f01d8a8dc7f49dc6a7f7b14b1c9b38f8",
+      "ui/breadcrumb/BreadcrumbEllipsis.vue": "sha256-cabe0707f595babf5fff129a2e92666bfafde5a8e2f0cdcea45df77e03c06c95",
+      "ui/breadcrumb/BreadcrumbItem.vue": "sha256-ddd4769374452754894b9c27a4b79f67f0b8a2f75db0dc01f090ba0a1b80e83a",
+      "ui/breadcrumb/BreadcrumbLink.vue": "sha256-13fb7935585acada98801d99c2337409be27afc4bda8fc4556481dfd45548b4d",
+      "ui/breadcrumb/BreadcrumbList.vue": "sha256-af3fb67caff3df758ff1be5d7434b47de791ceaae3f3c2d9c6cbf6d09481417a",
+      "ui/breadcrumb/BreadcrumbPage.vue": "sha256-1a8b10116c363b1882d4edbad3daaea110e40a4a9f4f3e423012f61bcfe96aa1",
+      "ui/breadcrumb/BreadcrumbSeparator.vue": "sha256-af04371941b3aef96bc8dbd5923b4c57e82ea788c531c11946ea5b12a9fd709b",
+      "ui/breadcrumb/index.ts": "sha256-eb4d1c95b806e5d498f2199dea3b0fc777686b318a96e3f53d7d5c1b48c2d509"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/breadcrumb/BreadcrumbItem.vue",
+      "find": "'inline-flex items-center gap-1.5'",
+      "replace": "'inline-flex items-center gap-balsa-2xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/breadcrumb/BreadcrumbList.vue",
+      "find": "'flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5'",
+      "replace": "'flex flex-wrap items-center gap-balsa-2xs break-words text-sm text-muted-foreground sm:gap-2.5'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "unsupported",
+  "findings": [
+    "Animates in 1 place(s) with no motion-reduce guard, so a reduced-motion preference is ignored."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

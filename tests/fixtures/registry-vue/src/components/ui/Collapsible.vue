@@ -56,18 +56,18 @@ const sizeClasses: Readonly<
   Record<CollapsibleSize, { trigger: string[]; content: string[]; icon: string }>
 > = {
   sm: {
-    trigger: ["min-h-8", "gap-2", "px-3", "py-1.5", "text-sm"],
-    content: ["px-3", "py-2.5", "text-sm"],
+    trigger: ["min-h-8", "gap-balsa-xs", "px-balsa-md", "py-balsa-2xs", "text-sm"],
+    content: ["px-balsa-md", "py-balsa-sm", "text-sm"],
     icon: "text-base",
   },
   md: {
-    trigger: ["min-h-9", "gap-2.5", "px-4", "py-2", "text-sm"],
-    content: ["px-4", "py-3", "text-sm"],
+    trigger: ["min-h-9", "gap-balsa-sm", "px-balsa-lg", "py-balsa-xs", "text-sm"],
+    content: ["px-balsa-lg", "py-balsa-md", "text-sm"],
     icon: "text-lg",
   },
   lg: {
-    trigger: ["min-h-10", "gap-3", "px-5", "py-2.5", "text-sm"],
-    content: ["px-5", "py-4", "text-sm"],
+    trigger: ["min-h-10", "gap-balsa-md", "px-balsa-xl", "py-balsa-sm", "text-sm"],
+    content: ["px-balsa-xl", "py-balsa-lg", "text-sm"],
     icon: "text-lg",
   },
 };
@@ -81,35 +81,35 @@ const rootClasses = computed(() =>
   mergeClasses(
     props.variant === "underline"
       ? "min-w-0 font-balsa-body"
-      : ["min-w-0 overflow-hidden border font-balsa-body", roundedClasses[props.rounded]],
+      : ["min-w-0 overflow-hidden font-balsa-body", roundedClasses[props.rounded]],
     variantClasses[props.variant],
     attrs.class,
   ),
 );
 const triggerClasses = computed(() =>
   mergeClasses(
-    "flex w-full cursor-pointer items-center justify-between text-left transition-colors duration-200 hover:bg-balsa-muted/70 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
-    props.variant === "underline" ? "border-b border-balsa-border hover:border-balsa-border-strong" : "",
+    "flex w-full cursor-pointer items-center justify-between text-left transition-colors duration-balsa-fast ease-balsa hover:bg-balsa-muted/70 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    props.variant === "underline" ? "border-b-(length:--balsa-border-width) border-balsa-border hover:border-balsa-border-strong" : "",
     sizeClasses[props.size].trigger,
   ),
 );
 const iconClasses = computed(() => [
   "shrink-0",
   "transition-transform",
-  "duration-200",
+  "duration-balsa-fast ease-balsa",
   "motion-reduce:transition-none",
   sizeClasses[props.size].icon,
   model.value ? "rotate-180" : "rotate-0",
 ]);
 const panelClasses = computed(() => [
-  "grid transition-[grid-template-rows,visibility] duration-200 ease-out motion-reduce:transition-none",
+  "grid transition-[grid-template-rows,visibility] duration-balsa-normal ease-balsa motion-reduce:transition-none",
   model.value ? "visible grid-rows-[1fr]" : "invisible grid-rows-[0fr]",
 ]);
 const contentClasses = computed(() => [
   "min-h-0 min-w-0 overflow-hidden text-balsa-muted-foreground",
   model.value
     ? [
-        props.variant === "underline" ? "" : "border-t border-balsa-border/80",
+        props.variant === "underline" ? "" : "border-t-(length:--balsa-border-width) border-balsa-border/80",
         sizeClasses[props.size].content,
       ]
     : "",

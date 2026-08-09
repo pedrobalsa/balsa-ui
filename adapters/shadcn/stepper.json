@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/stepper",
+  "wave": 5,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/stepper/Stepper.vue": "sha256-d8c3e6924e09fac08443b5131471c5e15f7d22522a2f271453b1dfc0d6e61fb6",
+      "ui/stepper/StepperDescription.vue": "sha256-5b2a767240c973b6da85e87c35ad742059f4b98c6b4abe0d8832617320d82219",
+      "ui/stepper/StepperIndicator.vue": "sha256-7b2e10698457d2610be777e60d125fdb48f5e3c4b5f6b126601f07c8142d0c54",
+      "ui/stepper/StepperItem.vue": "sha256-1d1b9a55eb03f38d547b737e43c6612016ce3930881a11fd3bd3b687021cbcc9",
+      "ui/stepper/StepperSeparator.vue": "sha256-496f1810d3a56de71a5be939ba7358c58674f8b874b5cdec8d8449d1c7b77486",
+      "ui/stepper/StepperTitle.vue": "sha256-c407b3681d7753666c35f4569c228e2d1057d402b85736774ae4cbd40183b41e",
+      "ui/stepper/StepperTrigger.vue": "sha256-d30ee4b834dd65df539d3ce754c0413b3f3554cb332affcdbcd7ba732f13c082",
+      "ui/stepper/index.ts": "sha256-df77cf26094f2f58a7ebf7bc93a145cdf1e0bcdf201cb61dfc333a82a4d5afef"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/stepper/StepperItem.vue",
+      "find": "'flex items-center gap-2 group data-[disabled]:pointer-events-none'",
+      "replace": "'flex items-center gap-balsa-xs group data-[disabled]:pointer-events-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/stepper/StepperTrigger.vue",
+      "find": "'p-1 flex flex-col items-center text-center gap-1 rounded-md'",
+      "replace": "'p-balsa-3xs flex flex-col items-center text-center gap-balsa-3xs rounded-md'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

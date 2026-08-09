@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://balsa-ui.com/schemas/adapter.json",
+  "title": "Balsa theme adapter",
+  "description": "How one upstream registry item is carried into the Balsa design system, which dimensions reach it, and what it costs. A patch records the source it was written against so an upstream change is detected rather than silently mis-applied.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "item", "status", "upstream", "dimensions"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "item": {
+      "description": "Fully qualified upstream reference, for example @shadcn/button.",
+      "type": "string",
+      "pattern": "^@[a-z0-9-]+/.+$"
+    },
+    "wave": {
+      "description": "Integration wave this item belongs to, ordered by how much of an application's surface the group covers.",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "status": {
+      "description": "compatible: standard variables work but integration is incomplete. integrated: complete through stable styling hooks. integrated-with-patch: complete, and Balsa applies a styling-only source patch. balsa-alternative: a separate Balsa implementation is provided instead. legacy: maintained for migration only. unsupported: not certified.",
+      "enum": [
+        "compatible",
+        "integrated",
+        "integrated-with-patch",
+        "balsa-alternative",
+        "legacy",
+        "unsupported"
+      ]
+    },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["files"],
+      "properties": {
+        "version": {
+          "description": "Version declared by the upstream registry, when it declares one.",
+          "type": ["string", "null"]
+        },
+        "files": {
+          "description": "Per-file hash of the upstream source this adapter was written against.",
+          "type": "object",
+          "additionalProperties": { "type": "string", "pattern": "^sha256-[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "requires": {
+      "description": "What the component needs to build, measured from its source rather than read off the registry item. A registry may under-declare its dependencies, and an install that trusts the declaration reports a clean result for a component that cannot resolve its own imports.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["npmDependencies"],
+      "properties": {
+        "npmDependencies": {
+          "description": "Union of what the registry item declares and what its files import.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "undeclaredUpstreamDependencies": {
+          "description": "Packages the source imports that the registry item does not declare. Present only when upstream under-declares.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "siblingImports": {
+          "description": "Specifiers pointing at shadcn's own repository layout, which the installer rewrites to this project's aliases. Not dependencies, but the case that breaks when the rewrite is wrong.",
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "dimensions": {
+      "description": "How each Balsa design-system dimension reaches this component.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "color": { "$ref": "#/$defs/reach" },
+        "radius": { "$ref": "#/$defs/reach" },
+        "typography": { "$ref": "#/$defs/reach" },
+        "spacing": { "$ref": "#/$defs/reach" },
+        "density": { "$ref": "#/$defs/reach" },
+        "border": { "$ref": "#/$defs/reach" },
+        "elevation": { "$ref": "#/$defs/reach" },
+        "motion": { "$ref": "#/$defs/reach" },
+        "material": { "$ref": "#/$defs/reach" }
+      }
+    },
+    "patches": {
+      "description": "Styling-only replacements. Each must be an exact, unique match in the named file.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "find", "replace", "reason"],
+        "properties": {
+          "file": { "type": "string" },
+          "find": { "type": "string", "minLength": 1 },
+          "replace": { "type": "string" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "portal": {
+      "description": "Whether the component teleports content, and what the design system does about it.",
+      "type": "string"
+    },
+    "rtl": { "enum": ["supported", "untested", "unsupported"] },
+    "reducedMotion": { "enum": ["supported", "inherits", "untested", "unsupported"] },
+    "findings": {
+      "description": "Static conformance findings measured on the patched source. Absent means none were found; it is not a claim of visual conformance.",
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "visual": { "type": "boolean" },
+        "interaction": { "type": "boolean" },
+        "staticConformance": { "type": "boolean" }
+      }
+    },
+    "limitations": { "type": "array", "items": { "type": "string" } }
+  },
+  "$defs": {
+    "reach": {
+      "description": "bridge: standard shadcn variables. adapter-scope: Tailwind theme variables under [data-balsa-adapt]. patch: a styling-only source patch. unsupported: cannot be carried, see the design-system manifest for why.",
+      "enum": ["bridge", "adapter-scope", "patch", "unsupported"]
+    }
+  }
+}

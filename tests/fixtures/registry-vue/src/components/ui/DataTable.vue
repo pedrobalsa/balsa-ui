@@ -255,7 +255,7 @@ onBeforeUnmount(() => {
     :data-theme-base="theme.explicitPresentation.value?.base"
     :data-header-color="props.headerColor"
     :data-row-color="props.rowColor"
-    class="min-w-0 space-y-3"
+    class="min-w-0 space-y-balsa-md"
     :style="theme.explicitPresentation.value?.style"
   >
     <Table
@@ -278,7 +278,7 @@ onBeforeUnmount(() => {
           <tr>
             <th v-if="props.selection !== 'none'" scope="col"><span class="sr-only">Select row</span></th>
             <th v-for="column in visibleColumns" :key="column.id" scope="col" :aria-sort="sortState(column)" :class="alignmentClass(column)">
-              <button v-if="column.sortable" type="button" class="inline-flex items-center gap-1 hover:text-balsa-primary focus-visible:outline-2 focus-visible:outline-balsa-focus-ring" @click="toggleSort(column)">
+              <button v-if="column.sortable" type="button" class="inline-flex items-center gap-balsa-3xs hover:text-balsa-primary focus-visible:outline-2 focus-visible:outline-balsa-focus-ring" @click="toggleSort(column)">
                 {{ column.label }}
                 <Icon :icon="sortIcon(column)" size="md" />
               </button>
@@ -309,7 +309,7 @@ onBeforeUnmount(() => {
         </tr>
       </tbody>
     </Table>
-    <div v-if="hasFooterActions" class="flex flex-wrap items-center justify-between gap-3">
+    <div v-if="hasFooterActions" class="flex flex-wrap items-center justify-between gap-balsa-md">
       <div v-if="filterableColumns" ref="filterAction" class="relative">
         <Button
           data-balsa-data-table-filter-action
@@ -321,7 +321,7 @@ onBeforeUnmount(() => {
           :aria-label="filterOpen ? 'Close filters' : 'Filter rows'"
           :aria-expanded="filterOpen"
           :aria-controls="`${props.id}-filter-menu`"
-          class="min-h-8 min-w-8 border-balsa-border bg-balsa-surface px-2 text-balsa-foreground hover:bg-balsa-muted active:bg-balsa-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring [&_i]:text-lg"
+          class="min-h-8 min-w-8 border-balsa-border bg-balsa-surface px-balsa-xs text-balsa-foreground hover:bg-balsa-muted active:bg-balsa-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring [&_i]:text-lg"
           @click="toggleFilters"
         />
         <section
@@ -331,13 +331,13 @@ onBeforeUnmount(() => {
           data-balsa="data-table-filter-menu"
           role="dialog"
           aria-label="Filter rows"
-          class="absolute bottom-full left-0 z-40 mb-2 w-80 rounded-balsa-surface border border-balsa-border-strong bg-balsa-surface-elevated p-4 text-balsa-surface-elevated-foreground shadow-balsa-panel"
+          class="absolute bottom-full left-0 z-40 mb-balsa-xs w-80 rounded-balsa-surface border border-balsa-border-strong bg-balsa-surface-elevated p-balsa-lg text-balsa-surface-elevated-foreground shadow-balsa-panel"
         >
-          <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center justify-between gap-balsa-md">
             <h3 class="m-0 text-sm font-semibold">Filters</h3>
             <Button shape="fab" size="sm" variant="outline" color="secondary" :prefix-icon="X" aria-label="Close filters" @click="closeFilters" />
           </div>
-          <form class="mt-4 space-y-3" @submit.prevent="applyQuickFilter">
+          <form class="mt-balsa-lg space-y-balsa-md" @submit.prevent="applyQuickFilter">
             <Select
               :id="`${props.id}-filter-field`"
               v-model="filterField"
@@ -356,13 +356,13 @@ onBeforeUnmount(() => {
             />
             <Button type="submit" size="sm" variant="outline" color="primary" class="w-full">Apply filter</Button>
           </form>
-          <div v-if="activeFilters.length" class="mt-4 border-t border-balsa-border pt-4">
-            <div class="flex items-center justify-between gap-3">
+          <div v-if="activeFilters.length" class="mt-balsa-lg border-t border-balsa-border pt-balsa-lg">
+            <div class="flex items-center justify-between gap-balsa-md">
               <h4 class="m-0 text-sm font-semibold">Advanced filters</h4>
               <Button size="sm" variant="outline" color="secondary" @click="clearFilters">Clear all</Button>
             </div>
-            <ul class="mt-3 space-y-2">
-              <li v-for="filter in activeFilters" :key="filter.id" class="flex items-center justify-between gap-2 rounded-balsa-control bg-balsa-muted px-3 py-2 text-sm">
+            <ul class="mt-balsa-md space-y-balsa-xs">
+              <li v-for="filter in activeFilters" :key="filter.id" class="flex items-center justify-between gap-balsa-xs rounded-balsa-control bg-balsa-muted px-balsa-md py-balsa-xs text-sm">
                 <span class="min-w-0 truncate"><strong>{{ filter.column?.label }}:</strong> {{ filter.query }}</span>
                 <Button shape="fab" size="sm" variant="outline" color="secondary" :prefix-icon="X" :aria-label="`Remove ${filter.column?.label} filter`" @click="removeFilter(filter.id)" />
               </li>

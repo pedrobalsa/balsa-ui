@@ -61,6 +61,10 @@ const mobileOpen = ref(false);
 const expandedMobileItem = ref<string>();
 const isNavHidden = ref(false);
 const lastScrollY = ref(0);
+// Declared and assigned through the same bare setTimeout, so the two agree
+// whichever one is in scope. `window` is `Window & typeof globalThis`, so
+// window.setTimeout resolves to Node's where @types/node is present and returns
+// a Timeout the DOM annotation rejects.
 let closeTimeout: ReturnType<typeof setTimeout> | undefined;
 const theme = useComponentTheme("navbar", "navigation", () => props.theme);
 const resolvedVariant = computed<NavbarVariant>(() =>
@@ -93,7 +97,7 @@ const resolvedItemsAlignment = computed<NavbarItemsAlignment>(() =>
 const typeClasses: Readonly<Record<NavbarType, string[]>> = {
   bar: ["inset-x-0 w-full"],
   floating: [
-    "left-1/2 mt-4 max-w-7xl -translate-x-1/2",
+    "left-1/2 mt-balsa-lg max-w-7xl -translate-x-1/2",
   ],
   minimal: ["inset-x-0 w-full"],
 };
@@ -155,15 +159,15 @@ const itemsAlignmentClasses: Readonly<Record<NavbarItemsAlignment, string>> = {
 const regionConfined = computed(() => Boolean(props.contentRegion));
 const navigationLayoutClasses = computed(() =>
   resolvedType.value === "floating" && resolvedFloatingLayout.value === "inset"
-    ? "relative flex h-14 items-center gap-4 px-2 sm:px-2 lg:px-6 xl:px-8"
+    ? "relative flex h-14 items-center gap-balsa-lg px-balsa-xs sm:px-2 lg:px-6 xl:px-8"
     : resolvedType.value === "floating"
-      ? "relative flex h-14 items-center gap-4 px-4 sm:px-6 lg:px-8"
+      ? "relative flex h-14 items-center gap-balsa-lg px-balsa-lg sm:px-6 lg:px-8"
       // A navbar confined to a region is chrome over a full-bleed page: the row
       // is tall enough to hold it clear of the top edge, and it takes that page
       // region rather than the page's centred container.
       : regionConfined.value
-        ? "relative flex h-26 w-full items-center px-4 sm:px-6 lg:w-[var(--balsa-navbar-region,100%)] lg:px-8"
-        : "site-container relative flex h-14 items-center gap-4",
+        ? "relative flex h-26 w-full items-center px-balsa-lg sm:px-6 lg:w-[var(--balsa-navbar-region,100%)] lg:px-8"
+        : "site-container relative flex h-14 items-center gap-balsa-lg",
 );
 const materialClasses = computed(() => [
   ...variantClasses[resolvedVariant.value],
@@ -177,7 +181,7 @@ const materialClasses = computed(() => [
 const contentColumnClasses = computed(() =>
   regionConfined.value
     ? [
-        "mx-auto flex w-full max-w-xl items-center gap-4 min-[1536px]:max-w-2xl min-[1920px]:max-w-3xl",
+        "mx-auto flex w-full max-w-xl items-center gap-balsa-lg min-[1536px]:max-w-2xl min-[1920px]:max-w-3xl",
       ]
     : ["contents"]
 );
@@ -257,7 +261,7 @@ function hasLinks(item: NavigationGroup): boolean {
 
 function clearCloseTimeout(): void {
   if (closeTimeout) {
-    window.clearTimeout(closeTimeout);
+    clearTimeout(closeTimeout);
     closeTimeout = undefined;
   }
 }
@@ -269,7 +273,7 @@ function openDesktopItem(item: NavigationGroup): void {
 
 function scheduleDesktopClose(): void {
   clearCloseTimeout();
-  closeTimeout = window.setTimeout(() => {
+  closeTimeout = setTimeout(() => {
     activeItem.value = undefined;
     closeTimeout = undefined;
   }, 160);
@@ -404,14 +408,14 @@ onBeforeUnmount(() => {
               <li v-for="link in item.links" :key="link.link">
                 <a
                   :href="link.link"
-                  class="group flex items-start gap-3 rounded-lg px-3 py-2.5 text-inherit no-underline transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
+                  class="group flex items-start gap-balsa-md rounded-lg px-balsa-md py-balsa-sm text-inherit no-underline transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
                   @click="navigate(link)"
                 >
                   <span class="min-w-0 flex-1">
                     <span class="block text-sm font-medium">{{ link.title }}</span>
-                    <span v-if="link.shortDescription" class="mt-0.5 block text-sm text-balsa-muted-foreground">{{ link.shortDescription }}</span>
+                    <span v-if="link.shortDescription" class="mt-balsa-4xs block text-sm text-balsa-muted-foreground">{{ link.shortDescription }}</span>
                   </span>
-                  <Icon :icon="ChevronRight" size="md" class="mt-0.5 text-balsa-primary transition-transform group-hover:translate-x-0.5" />
+                  <Icon :icon="ChevronRight" size="md" class="mt-balsa-4xs text-balsa-primary transition-transform group-hover:translate-x-0.5" />
                 </a>
               </li>
             </ul>
@@ -419,7 +423,7 @@ onBeforeUnmount(() => {
           </NavbarExpandableItem>
         </ul>
 
-      <div v-if="hasDesktopActions" class="hidden min-w-40 shrink-0 items-center justify-end gap-2 lg:flex">
+      <div v-if="hasDesktopActions" class="hidden min-w-40 shrink-0 items-center justify-end gap-balsa-xs lg:flex">
         <slot name="actions" />
       </div>
 
@@ -437,9 +441,9 @@ onBeforeUnmount(() => {
 
     <div :class="mobilePanelClasses" class="lg:hidden">
       <nav aria-label="Mobile navigation" class="min-h-0 overflow-hidden">
-        <ul class="flex flex-col px-4 py-3 sm:px-6">
+        <ul class="flex flex-col px-balsa-lg py-balsa-md sm:px-6">
           <li v-for="item in props.items" :key="item.link" class="border-b border-balsa-border last:border-b-0">
-            <div class="flex items-center justify-between gap-3 py-3">
+            <div class="flex items-center justify-between gap-balsa-md py-balsa-md">
               <a
                 :href="item.link"
                 class="font-balsa-title text-lg font-medium text-balsa-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
@@ -459,7 +463,7 @@ onBeforeUnmount(() => {
               </button>
             </div>
             <div v-if="hasLinks(item)" :class="mobileSubmenuClasses(item)">
-              <ul class="min-h-0 space-y-3 overflow-hidden pb-4 pl-2">
+              <ul class="min-h-0 space-y-balsa-md overflow-hidden pb-balsa-lg pl-balsa-xs">
                 <li v-for="link in item.links" :key="link.link">
                   <a
                     :href="link.link"

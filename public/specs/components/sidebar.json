@@ -55,10 +55,24 @@
     "Using badges as decorative metadata rather than concise navigation counts."
   ],
   "examples": [
-    "Expanded navigation",
-    "Rail navigation",
-    "Nested destinations",
-    "Mobile drawer"
+    {
+      "id": "expanded",
+      "title": "Expanded workspace",
+      "description": "Grouped destinations retain labels, icons, and concise counts.",
+      "source": "<script setup lang=\"ts\">\nimport Sidebar from \"@/components/ui/Sidebar.vue\";\nimport { LayoutDashboard, ChartNoAxesColumn, Archive } from \"@lucide/vue\";\nimport { ref } from \"vue\";\nimport type { SidebarGroup } from \"@/components/ui/Sidebar.vue\";\n\nconst active = ref(\"overview\");\nconst collapsed = ref(false);\nconst groups: readonly SidebarGroup[] = [{\n  id: \"main\",\n  label: \"Workspace placeholder\",\n  items: [\n    { id: \"overview\", label: \"Overview placeholder\", icon: LayoutDashboard },\n    { id: \"reports\", label: \"Reports placeholder\", icon: ChartNoAxesColumn, badge: \"3\" },\n    { id: \"archive\", label: \"Archive placeholder\", icon: Archive },\n  ],\n}];\n</script>\n\n<template>\n  <Sidebar id=\"workspace-navigation-placeholder\" v-model=\"active\" v-model:collapsed=\"collapsed\" label=\"Workspace placeholder\" :groups=\"groups\" side=\"left\" variant=\"surface\" collapsible=\"rail\" />\n</template>"
+    },
+    {
+      "id": "rail",
+      "title": "Compact rail",
+      "description": "Rail mode preserves accessible names and title cues.",
+      "source": "<script setup lang=\"ts\">\nimport Sidebar from \"@/components/ui/Sidebar.vue\";\nimport { LayoutDashboard, ChartNoAxesColumn, Archive } from \"@lucide/vue\";\nimport { ref } from \"vue\";\nimport type { SidebarGroup } from \"@/components/ui/Sidebar.vue\";\n\nconst active = ref(\"overview\");\nconst collapsed = ref(true);\nconst groups: readonly SidebarGroup[] = [{\n  id: \"main\",\n  label: \"Workspace placeholder\",\n  items: [\n    { id: \"overview\", label: \"Overview placeholder\", icon: LayoutDashboard },\n    { id: \"reports\", label: \"Reports placeholder\", icon: ChartNoAxesColumn, badge: \"3\" },\n    { id: \"archive\", label: \"Archive placeholder\", icon: Archive },\n  ],\n}];\n</script>\n\n<template>\n  <Sidebar id=\"workspace-navigation-placeholder\" v-model=\"active\" v-model:collapsed=\"collapsed\" label=\"Workspace placeholder\" :groups=\"groups\" side=\"left\" variant=\"surface\" collapsible=\"rail\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass navigation",
+      "description": "Glass material remains a local visual choice over the same navigation model.",
+      "source": "<script setup lang=\"ts\">\nimport Sidebar from \"@/components/ui/Sidebar.vue\";\nimport { LayoutDashboard, ChartNoAxesColumn, Archive } from \"@lucide/vue\";\nimport { ref } from \"vue\";\nimport type { SidebarGroup } from \"@/components/ui/Sidebar.vue\";\n\nconst active = ref(\"overview\");\nconst collapsed = ref(false);\nconst groups: readonly SidebarGroup[] = [{\n  id: \"main\",\n  label: \"Workspace placeholder\",\n  items: [\n    { id: \"overview\", label: \"Overview placeholder\", icon: LayoutDashboard },\n    { id: \"reports\", label: \"Reports placeholder\", icon: ChartNoAxesColumn, badge: \"3\" },\n    { id: \"archive\", label: \"Archive placeholder\", icon: Archive },\n  ],\n}];\n</script>\n\n<template>\n  <Sidebar id=\"workspace-navigation-placeholder\" v-model=\"active\" v-model:collapsed=\"collapsed\" label=\"Workspace placeholder\" :groups=\"groups\" side=\"left\" variant=\"glass\" collapsible=\"rail\" rounded=\"2xl\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Sidebar.vue",

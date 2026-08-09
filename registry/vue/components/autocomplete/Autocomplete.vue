@@ -163,7 +163,7 @@ const menuClasses = computed(() => [
   getTextControlPopupClasses(props.rounded, props.variant),
   supportsPopover.value
     ? "fixed z-[70] m-0"
-    : "absolute left-0 right-0 z-30 mt-2",
+    : "absolute left-0 right-0 z-30 mt-balsa-xs",
   hasVisibleSuggestions.value
     ? "visible translate-y-0 opacity-100"
     : "pointer-events-none invisible -translate-y-1 opacity-0",
@@ -178,7 +178,7 @@ const menuStyle = computed(() =>
     : undefined,
 );
 const selectedValueClasses = computed(() =>
-  "h-7 max-w-full gap-1 px-2 text-xs",
+  "h-7 max-w-full gap-balsa-3xs px-balsa-xs text-xs",
 );
 const suggestionClasses = computed(() =>
   Object.fromEntries(
@@ -477,7 +477,7 @@ onBeforeUnmount(() => {
     </div>
     <div
       v-if="props.multiple && selectedValues.length"
-      class="mt-2 flex flex-wrap gap-1"
+      class="mt-balsa-xs flex flex-wrap gap-balsa-3xs"
       aria-label="Selected suggestions"
     >
       <Button
@@ -501,7 +501,7 @@ onBeforeUnmount(() => {
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-medium text-balsa-destructive"
+      class="mt-balsa-xs block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

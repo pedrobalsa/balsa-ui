@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/form",
+  "wave": 1,
+  "status": "integrated",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/form/FormControl.vue": "sha256-de089a6962df9951b25366bde0d09e2758e9da20c880bc2f7982e7e4ee6d2276",
+      "ui/form/FormDescription.vue": "sha256-f8f5d6d3e2bac4e0f1ff53bf9933bc4011d49636c161cf4a13a01aabfd0d7934",
+      "ui/form/FormItem.vue": "sha256-5b26f30db76fc15239bfdb7dec8fd34475a8392e0dd1ee654d474a9ebb102b00",
+      "ui/form/FormLabel.vue": "sha256-3952794a21a42b04a1f4924ec642ef8ab0c33275023977430a58b372702d9c65",
+      "ui/form/FormMessage.vue": "sha256-eda07333dc2795005247b40a2e0af779539d1c10ff3261aa0d7e9d112d856fd3",
+      "ui/form/index.ts": "sha256-6c5aff6697a47268bf7eb76e73bfcd758087d8ac728d4521e398d1d011b98d7d",
+      "ui/form/injectionKeys.ts": "sha256-3faa49aa1439064cea69d6161334d81a3abd3631ef6f330a473d9fc497cea3d1",
+      "ui/form/useFormField.ts": "sha256-e445cf2521c6dc6c1e961e7989023b634d019048ff03530fbef366a029efcea2"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vee-validate/zod",
+      "reka-ui",
+      "vee-validate",
+      "vue",
+      "zod"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/label"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "unsupported",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

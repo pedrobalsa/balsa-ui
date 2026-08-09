@@ -73,9 +73,9 @@ const resolvedRounded = computed<Rounded>(() =>
     : props.rounded,
 );
 const sizeClasses: Readonly<Record<TabsSize, { tab: string; tile: string; panel: string }>> = {
-  sm: { tab: "h-8 gap-1.5 px-3 text-xs", tile: "min-h-16 gap-1.5 px-3 py-2.5 text-xs", panel: "p-4 text-sm" },
-  md: { tab: "h-9 gap-2 px-4 text-sm", tile: "min-h-20 gap-2 px-4 py-3 text-sm", panel: "p-5 text-sm" },
-  lg: { tab: "h-10 gap-2 px-5 text-sm", tile: "min-h-24 gap-2 px-5 py-4 text-sm", panel: "p-6 text-sm" },
+  sm: { tab: "h-8 gap-balsa-2xs px-balsa-md text-xs", tile: "min-h-16 gap-balsa-2xs px-balsa-md py-balsa-sm text-xs", panel: "p-balsa-lg text-sm" },
+  md: { tab: "h-9 gap-balsa-xs px-balsa-lg text-sm", tile: "min-h-20 gap-balsa-xs px-balsa-lg py-balsa-md text-sm", panel: "p-balsa-xl text-sm" },
+  lg: { tab: "h-10 gap-balsa-xs px-balsa-xl text-sm", tile: "min-h-24 gap-balsa-xs px-balsa-xl py-balsa-lg text-sm", panel: "p-balsa-2xl text-sm" },
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",
@@ -83,28 +83,28 @@ const roundedClasses: Readonly<Record<Rounded, string>> = {
 };
 const listClassesByType: Readonly<Record<TabsType, Record<TabsVariant, string[]>>> = {
   segmented: {
-    surface: ["flex w-fit max-w-full flex-wrap gap-1 border border-balsa-border bg-balsa-muted p-1"],
-    outline: ["flex w-fit max-w-full flex-wrap gap-1 border border-balsa-border-strong bg-transparent p-1"],
-    soft: ["flex w-fit max-w-full flex-wrap gap-1 border border-balsa-primary/20 bg-balsa-primary/10 p-1"],
-    glass: ["flex w-fit max-w-full flex-wrap gap-1 border border-balsa-border/70 bg-balsa-surface/70 p-1 backdrop-blur-md"],
+    surface: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-border bg-balsa-muted p-balsa-3xs"],
+    outline: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-border-strong bg-transparent p-balsa-3xs"],
+    soft: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-primary/20 bg-balsa-primary/10 p-balsa-3xs"],
+    glass: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-border/70 bg-balsa-surface/70 p-balsa-3xs backdrop-blur-md"],
   },
   underline: {
-    surface: ["flex w-full min-w-0 items-end gap-1 border-b border-balsa-border bg-transparent p-0"],
-    outline: ["flex w-full min-w-0 items-end gap-1 border-b-2 border-balsa-border-strong bg-transparent p-0"],
-    soft: ["flex w-full min-w-0 items-end gap-1 border-b border-balsa-primary/20 bg-balsa-primary/5 p-0"],
-    glass: ["flex w-full min-w-0 items-end gap-1 border-b border-balsa-border/70 bg-balsa-surface/50 p-0 backdrop-blur-md"],
+    surface: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-border bg-transparent p-0"],
+    outline: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b-2 border-balsa-border-strong bg-transparent p-0"],
+    soft: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-primary/20 bg-balsa-primary/5 p-0"],
+    glass: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-border/70 bg-balsa-surface/50 p-0 backdrop-blur-md"],
   },
   pills: {
-    surface: ["flex w-fit max-w-full flex-wrap gap-2 border-0 bg-transparent p-0"],
-    outline: ["flex w-fit max-w-full flex-wrap gap-2 border-0 bg-transparent p-0"],
-    soft: ["flex w-fit max-w-full flex-wrap gap-2 border-0 bg-transparent p-0"],
-    glass: ["flex w-fit max-w-full flex-wrap gap-2 border-0 bg-transparent p-0"],
+    surface: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
+    outline: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
+    soft: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
+    glass: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
   },
   tiles: {
-    surface: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-2 border-0 bg-transparent p-0"],
-    outline: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-2 border-0 bg-transparent p-0"],
-    soft: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-2 border-0 bg-transparent p-0"],
-    glass: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-2 border-0 bg-transparent p-0"],
+    surface: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-balsa-xs border-0 bg-transparent p-0"],
+    outline: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-balsa-xs border-0 bg-transparent p-0"],
+    soft: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-balsa-xs border-0 bg-transparent p-0"],
+    glass: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-balsa-xs border-0 bg-transparent p-0"],
   },
 };
 const tabClassesByType: Readonly<Record<TabsType, Record<TabsVariant, Record<TabState, string[]>>>> = {
@@ -112,7 +112,7 @@ const tabClassesByType: Readonly<Record<TabsType, Record<TabsVariant, Record<Tab
     surface: { active: ["bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail hover:bg-balsa-selected hover:text-balsa-selected-foreground"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-surface hover:text-balsa-foreground"] },
     outline: { active: ["bg-balsa-surface-elevated text-balsa-surface-elevated-foreground shadow-balsa-detail"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
     soft: { active: ["bg-balsa-primary/20 text-balsa-primary hover:bg-balsa-primary/25"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
-    glass: { active: ["border border-balsa-border/70 bg-balsa-surface/80 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-surface/55 hover:text-balsa-foreground"] },
+    glass: { active: ["border-balsa-border/70 bg-balsa-surface/80 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-surface/55 hover:text-balsa-foreground"] },
   },
   underline: {
     surface: { active: ["-mb-px rounded-none border-b-2 border-balsa-primary text-balsa-foreground"], inactive: ["rounded-none text-balsa-muted-foreground hover:text-balsa-foreground"] },
@@ -122,29 +122,29 @@ const tabClassesByType: Readonly<Record<TabsType, Record<TabsVariant, Record<Tab
   },
   pills: {
     surface: { active: ["bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
-    outline: { active: ["border border-balsa-border-strong bg-balsa-surface text-balsa-surface-foreground shadow-balsa-detail"], inactive: ["border border-transparent text-balsa-muted-foreground hover:border-balsa-border hover:text-balsa-foreground"] },
+    outline: { active: ["border-balsa-border-strong bg-balsa-surface text-balsa-surface-foreground shadow-balsa-detail"], inactive: ["border-transparent text-balsa-muted-foreground hover:border-balsa-border hover:text-balsa-foreground"] },
     soft: { active: ["bg-balsa-primary/20 text-balsa-primary"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
-    glass: { active: ["border border-balsa-border/70 bg-balsa-surface/70 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["border border-transparent text-balsa-muted-foreground hover:bg-balsa-surface/45 hover:text-balsa-foreground"] },
+    glass: { active: ["border-balsa-border/70 bg-balsa-surface/70 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["border-transparent text-balsa-muted-foreground hover:bg-balsa-surface/45 hover:text-balsa-foreground"] },
   },
   tiles: {
-    surface: { active: ["border border-balsa-selected bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail"], inactive: ["border border-transparent bg-balsa-muted text-balsa-muted-foreground hover:bg-balsa-surface hover:text-balsa-foreground"] },
-    outline: { active: ["border border-balsa-border-strong bg-balsa-surface text-balsa-surface-foreground shadow-balsa-detail"], inactive: ["border border-balsa-border bg-transparent text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
-    soft: { active: ["border border-balsa-primary/30 bg-balsa-primary/20 text-balsa-primary"], inactive: ["border border-transparent bg-balsa-primary/5 text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
-    glass: { active: ["border border-balsa-border/70 bg-balsa-surface/75 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["border border-balsa-border/50 bg-balsa-surface/40 text-balsa-muted-foreground backdrop-blur-md hover:bg-balsa-surface/60 hover:text-balsa-foreground"] },
+    surface: { active: ["border-balsa-selected bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail"], inactive: ["border-transparent bg-balsa-muted text-balsa-muted-foreground hover:bg-balsa-surface hover:text-balsa-foreground"] },
+    outline: { active: ["border-balsa-border-strong bg-balsa-surface text-balsa-surface-foreground shadow-balsa-detail"], inactive: ["border-balsa-border bg-transparent text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
+    soft: { active: ["border-balsa-primary/30 bg-balsa-primary/20 text-balsa-primary"], inactive: ["border-transparent bg-balsa-primary/5 text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
+    glass: { active: ["border-balsa-border/70 bg-balsa-surface/75 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["border-balsa-border/50 bg-balsa-surface/40 text-balsa-muted-foreground backdrop-blur-md hover:bg-balsa-surface/60 hover:text-balsa-foreground"] },
   },
 };
 const panelVariantClasses: Readonly<Record<TabsVariant, string[]>> = {
-  surface: ["border border-balsa-border bg-balsa-surface text-balsa-surface-foreground"],
-  outline: ["border border-balsa-border-strong bg-transparent text-balsa-foreground"],
-  soft: ["border border-balsa-primary/20 bg-balsa-primary/5 text-balsa-foreground"],
-  glass: ["border border-balsa-border/70 bg-balsa-surface/60 text-balsa-foreground backdrop-blur-md"],
+  surface: ["border-balsa-border bg-balsa-surface text-balsa-surface-foreground"],
+  outline: ["border-balsa-border-strong bg-transparent text-balsa-foreground"],
+  soft: ["border-balsa-primary/20 bg-balsa-primary/5 text-balsa-foreground"],
+  glass: ["border-balsa-border/70 bg-balsa-surface/60 text-balsa-foreground backdrop-blur-md"],
 };
 const tabListClasses = computed(() => [
   roundedClasses[props.type === "underline" ? "none" : resolvedRounded.value],
   ...listClassesByType[props.type][props.variant],
 ]);
 const panelClasses = computed(() => [
-  "mt-6 min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
+  "mt-balsa-2xl min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
   ...(props.panelSurface
     ? [
         "overflow-hidden",

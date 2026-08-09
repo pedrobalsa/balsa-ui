@@ -130,7 +130,7 @@ const visibleItems = computed(() =>
   model.value.slice(-safeLimit.value).reverse(),
 );
 const viewportClasses = computed(() => [
-  "pointer-events-none z-[70] flex max-h-[calc(100dvh-2rem)] max-w-sm gap-3 overflow-y-auto overscroll-contain",
+  "pointer-events-none z-[70] flex max-h-[calc(100dvh-2rem)] max-w-sm gap-balsa-md overflow-y-auto overscroll-contain",
   props.contained
     ? "absolute w-[calc(100%-2rem)]"
     : "fixed w-[calc(100vw-2rem)]",

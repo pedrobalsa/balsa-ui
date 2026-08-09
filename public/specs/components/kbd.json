@@ -53,9 +53,24 @@
     "Leaving a symbolic chord ambiguous to assistive technology."
   ],
   "examples": [
-    "Single key",
-    "Modifier chord",
-    "Inline instruction"
+    {
+      "id": "chord",
+      "title": "Modifier chord",
+      "description": "Render every key in a shortcut as a distinct semantic cap.",
+      "source": "<script setup lang=\"ts\">\nimport Kbd from \"@/components/ui/Kbd.vue\";\nconst keys = [\"Ctrl\",\"Shift\",\"P\"];\n</script>\n\n<template>\n  <p class=\"flex items-center gap-balsa-xs\">Press <Kbd :keys=\"keys\" separator=\"+\" accessible-label=\"Control plus Shift plus P\" /> to open the placeholder command menu.</p>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline keys",
+      "description": "Outline keeps shortcut guidance quiet inside dense surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport Kbd from \"@/components/ui/Kbd.vue\";\nconst keys = [\"Alt\",\"Enter\"];\n</script>\n\n<template>\n  <p class=\"flex items-center gap-balsa-xs\">Press <Kbd :keys=\"keys\" separator=\"+\" accessible-label=\"Alt plus Enter\" variant=\"outline\" /> to open the placeholder command menu.</p>\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft key",
+      "description": "A soft key cap works naturally inside supporting prose.",
+      "source": "<script setup lang=\"ts\">\nimport Kbd from \"@/components/ui/Kbd.vue\";\nconst keys = [\"Esc\"];\n</script>\n\n<template>\n  <p class=\"flex items-center gap-balsa-xs\">Press <Kbd :keys=\"keys\" separator=\"+\" accessible-label=\"Escape\" size=\"sm\" /> to open the placeholder command menu.</p>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Kbd.vue",

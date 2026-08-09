@@ -46,9 +46,9 @@
             "description": "Version of the Balsa component specification describing this item.",
             "type": "string"
           },
-          "adapterVersion": {
-            "description": "Version of the Balsa theme adapter applied to an upstream item.",
-            "type": "string"
+          "adapterStatus": {
+            "description": "Integration status of the Balsa theme adapter applied to an upstream item.",
+            "enum": ["compatible", "integrated", "integrated-with-patch", "balsa-alternative", "legacy", "unsupported"]
           },
           "designSystemVersion": {
             "description": "Balsa release whose design system was active at install time.",

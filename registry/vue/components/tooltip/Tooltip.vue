@@ -74,7 +74,7 @@ const variantClasses: Readonly<Record<LayerVariant, string[]>> = {
 };
 const tooltipClasses = computed(() =>
   mergeClasses(
-    "pointer-events-none z-[60] max-w-[calc(100vw-1rem)] overflow-auto border px-3 py-2 text-sm shadow-balsa-panel outline-none",
+    "pointer-events-none z-[60] max-w-[calc(100vw-1rem)] overflow-auto border px-balsa-md py-balsa-xs text-sm shadow-balsa-panel outline-none",
     props.contained ? "absolute" : "fixed",
     roundedClasses[props.rounded],
     variantClasses[props.variant],

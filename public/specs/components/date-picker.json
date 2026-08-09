@@ -48,10 +48,24 @@
     "Using DatePicker for time values."
   ],
   "examples": [
-    "Single date",
-    "Date range",
-    "Disabled dates",
-    "Invalid field"
+    {
+      "id": "single",
+      "title": "Single date field",
+      "description": "A labelled field opens the complete Calendar interaction.",
+      "source": "<script setup lang=\"ts\">\nimport DatePicker from \"@/components/ui/DatePicker.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(null);\n</script>\n\n<template>\n  <DatePicker id=\"due-date-placeholder\" v-model=\"date\" label=\"Due date placeholder\" mode=\"single\" locale=\"en-US\" />\n</template>"
+    },
+    {
+      "id": "range",
+      "title": "Date range field",
+      "description": "The popup remains open until both range boundaries exist.",
+      "source": "<script setup lang=\"ts\">\nimport DatePicker from \"@/components/ui/DatePicker.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(null);\n</script>\n\n<template>\n  <DatePicker id=\"due-date-placeholder\" v-model=\"date\" label=\"Due date placeholder\" mode=\"range\" locale=\"en-US\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid date field",
+      "description": "Explicit feedback accompanies the destructive trigger state.",
+      "source": "<script setup lang=\"ts\">\nimport DatePicker from \"@/components/ui/DatePicker.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(null);\n</script>\n\n<template>\n  <DatePicker id=\"due-date-placeholder\" v-model=\"date\" label=\"Due date placeholder\" mode=\"single\" locale=\"en-US\" required status=\"unvalidated\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/DatePicker.vue",

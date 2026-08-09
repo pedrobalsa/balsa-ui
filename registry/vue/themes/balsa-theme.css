@@ -14,6 +14,22 @@
   --spacing-balsa-density-compact: var(--balsa-spacing-density-compact);
   --spacing-balsa-density-default: var(--balsa-spacing-density-default);
   --spacing-balsa-density-comfortable: var(--balsa-spacing-density-comfortable);
+  /* The spacing scale, aliased so `gap-balsa-md` and `py-balsa-section-lg` read as
+     what they are. See docs/spacing-scale.md for the steps, their roles and the
+     three laws that derive everything not on the scale. */
+  --spacing-balsa-4xs: var(--balsa-space-4xs);
+  --spacing-balsa-3xs: var(--balsa-space-3xs);
+  --spacing-balsa-2xs: var(--balsa-space-2xs);
+  --spacing-balsa-xs: var(--balsa-space-xs);
+  --spacing-balsa-sm: var(--balsa-space-sm);
+  --spacing-balsa-md: var(--balsa-space-md);
+  --spacing-balsa-lg: var(--balsa-space-lg);
+  --spacing-balsa-xl: var(--balsa-space-xl);
+  --spacing-balsa-2xl: var(--balsa-space-2xl);
+  --spacing-balsa-3xl: var(--balsa-space-3xl);
+  --spacing-balsa-section-sm: var(--balsa-space-section-sm);
+  --spacing-balsa-section-md: var(--balsa-space-section-md);
+  --spacing-balsa-section-lg: var(--balsa-space-section-lg);
   --shadow-balsa-control: var(--balsa-shadow-control);
   --shadow-balsa-surface: var(--balsa-shadow-surface);
   --shadow-balsa-panel: var(--balsa-shadow-panel);
@@ -21,6 +37,67 @@
   --shadow-balsa-md: var(--balsa-shadow-md);
   --shadow-balsa-lg: var(--balsa-shadow-lg);
   --shadow-balsa-detail: var(--balsa-shadow-detail);
+  /* Motion as utilities. Without these there was no way to write a
+     token-driven duration as a class, which is why components reached for
+     `duration-200` and pinned themselves to one speed at every motion
+     setting -- including the one that asks for none. */
+  --transition-duration-balsa-fast: var(--balsa-motion-fast);
+  --transition-duration-balsa-normal: var(--balsa-motion-normal);
+  --transition-duration-balsa-slow: var(--balsa-motion-slow);
+  --ease-balsa: var(--balsa-motion-easing);
+}
+
+/* ---------------------------------------------------------------------------
+   The spacing scale.
+
+   Every step is a multiple of one base unit, so the unit is the only number
+   here that was chosen — the rest follow from it, and changing it rescales the
+   whole system rather than requiring eleven edits.
+
+   Two scales, because spacing answers two different questions. `space` is the
+   rhythm between siblings and inside a component; `space-section` is the
+   distance between page regions, which the website has been improvising with
+   ad-hoc values because it had nothing to draw on. They deliberately do not
+   overlap: rhythm tops out at 32px and section starts at 48px.
+
+   A control's own inset is neither. It is derived from the control's size and
+   the spacing density, so nobody picks one — see docs/spacing-scale.md.
+
+   Declared on :root rather than inside a theme preset: a preset may override
+   any of it, but the scale exists before any preset does.
+   --------------------------------------------------------------------------- */
+:root {
+  --balsa-space-unit: 0.25rem;
+
+  /* The fine region is a uniform half-unit ladder: 2, 4, 6, 8, 10, 12. It is
+     where a control is built, and every rung of it is in use. The coarse region
+     steps by a full unit and then doubles, because layout distances stop
+     needing 2px discrimination. */
+  --balsa-space-0: 0px;
+  --balsa-space-4xs: calc(var(--balsa-space-unit) * 0.5);
+  --balsa-space-3xs: calc(var(--balsa-space-unit) * 1);
+  --balsa-space-2xs: calc(var(--balsa-space-unit) * 1.5);
+  --balsa-space-xs: calc(var(--balsa-space-unit) * 2);
+  --balsa-space-sm: calc(var(--balsa-space-unit) * 2.5);
+  --balsa-space-md: calc(var(--balsa-space-unit) * 3);
+  --balsa-space-lg: calc(var(--balsa-space-unit) * 4);
+  --balsa-space-xl: calc(var(--balsa-space-unit) * 5);
+  --balsa-space-2xl: calc(var(--balsa-space-unit) * 6);
+  --balsa-space-3xl: calc(var(--balsa-space-unit) * 8);
+
+  --balsa-space-section-sm: calc(var(--balsa-space-unit) * 12);
+  --balsa-space-section-md: calc(var(--balsa-space-unit) * 16);
+  --balsa-space-section-lg: calc(var(--balsa-space-unit) * 20);
+
+  /* A control's own inset, by its size. Deliberately its own scale rather than
+     a rhythm step: rhythm is the distance between two things, and this is the
+     distance from a control's edge to what it contains. Nobody picks one -- a
+     caller picks a size. */
+  --balsa-inset-sm: calc(var(--balsa-space-unit) * 3);
+  --balsa-inset-md: calc(var(--balsa-space-unit) * 4);
+  --balsa-inset-lg: calc(var(--balsa-space-unit) * 6);
+  --balsa-inset-xl: calc(var(--balsa-space-unit) * 8);
+  --balsa-inset-2xl: calc(var(--balsa-space-unit) * 10);
 }
 
 :root,
@@ -66,7 +143,10 @@
   --balsa-control-font-weight: 600;
   --balsa-backdrop-blur: 0px;
   --balsa-backdrop-saturation: 1;
+  --balsa-backdrop-filter: none;
+  --balsa-backdrop-filter-contained: none;
   --balsa-overlay-blur: 4px;
+  --balsa-overlay-filter: blur(4px);
   --balsa-material-background: var(--balsa-color-background);
   --balsa-material-foreground: var(--balsa-color-foreground);
   --balsa-material-surface: var(--balsa-color-surface);
@@ -150,7 +230,10 @@
   --balsa-control-font-weight: 800;
   --balsa-backdrop-blur: 0px;
   --balsa-backdrop-saturation: 1;
+  --balsa-backdrop-filter: none;
+  --balsa-backdrop-filter-contained: none;
   --balsa-overlay-blur: 0px;
+  --balsa-overlay-filter: none;
   --balsa-material-background: var(--balsa-color-background);
   --balsa-material-foreground: var(--balsa-color-foreground);
   --balsa-material-surface: var(--balsa-color-background);
@@ -234,7 +317,11 @@
   --balsa-control-font-weight: 600;
   --balsa-backdrop-blur: 14px;
   --balsa-backdrop-saturation: 1.1;
+  --balsa-backdrop-filter: blur(14px) saturate(1.1);
+  /* A glass surface inside another blurs less; see theme.ts. */
+  --balsa-backdrop-filter-contained: blur(10px) saturate(1.1);
   --balsa-overlay-blur: 4px;
+  --balsa-overlay-filter: blur(4px);
   --balsa-material-background: var(--balsa-color-background);
   --balsa-material-foreground: var(--balsa-color-foreground);
   --balsa-material-surface: color-mix(in oklab, var(--balsa-color-surface) 60%, transparent);
@@ -294,6 +381,52 @@
   text-transform: var(--balsa-control-text-transform);
   transition-duration: var(--balsa-motion-fast);
   transition-timing-function: var(--balsa-motion-easing);
+}
+
+/* ---------------------------------------------------------------------------
+   Icon adjacency.
+
+   An inset beside an icon is one base unit less than the same inset beside
+   text, because an icon carries less optical weight than a word and the same
+   gap reads wider next to it.
+
+   This was already true and written out as a five-by-four table of literal
+   padding classes, where the law was visible only to someone who compared the
+   numbers. Stating it once removes the table, and removes 28px, 36px and 14px
+   from the vocabulary: they were never chosen, only arrived at.
+
+   Logical properties, so the reduction follows the writing direction. The old
+   table used `pl`/`pr` and put the icon's smaller inset on the wrong side in
+   RTL.
+   --------------------------------------------------------------------------- */
+[data-balsa="button"][data-size="sm"] { --balsa-inset: var(--balsa-inset-sm); }
+[data-balsa="button"][data-size="md"] { --balsa-inset: var(--balsa-inset-md); }
+[data-balsa="button"][data-size="lg"] { --balsa-inset: var(--balsa-inset-lg); }
+[data-balsa="button"][data-size="xl"] { --balsa-inset: var(--balsa-inset-xl); }
+[data-balsa="button"][data-size="2xl"] { --balsa-inset: var(--balsa-inset-2xl); }
+
+/* Only where a size was resolved. A button told `:size="null"` opts out of the
+   size scale entirely and carries whatever padding its caller gave it. */
+[data-balsa="button"][data-size] {
+  --balsa-inset-icon: max(0px, calc(var(--balsa-inset) - var(--balsa-space-unit)));
+  padding-inline: var(--balsa-inset);
+}
+
+[data-balsa="button"][data-size][data-icon="prefix"] {
+  padding-inline-start: var(--balsa-inset-icon);
+}
+
+[data-balsa="button"][data-size][data-icon="suffix"] {
+  padding-inline-end: var(--balsa-inset-icon);
+}
+
+[data-balsa="button"][data-size][data-icon="both"] {
+  padding-inline: var(--balsa-inset-icon);
+}
+
+/* A FAB is a circle sized by its height; an inset would make it an oval. */
+[data-balsa="button"][data-shape="fab"] {
+  padding-inline: 0;
 }
 
 :where([data-balsa="button"], [data-balsa="link"])[data-variant="solid"] {
@@ -440,6 +573,108 @@
   padding-block: var(--balsa-table-density);
   padding-inline: calc(var(--balsa-table-density) + 0.25rem);
 }
+
+/* ---------------------------------------------------------------------------
+   Concentric nesting.
+
+   A surface publishes, for whatever it contains, two things it is the only one
+   in a position to know: the shadow a contained surface should wear instead of
+   repeating this one, and the radius that keeps the gap between the two edges
+   even.
+
+   Inheritance does the nesting detection. A contained surface reads the
+   variable and gets the quieter treatment; the same surface standing on its own
+   finds nothing published, falls back, and elevates in full. No selector has to
+   ask how deep it is.
+
+   Concentric radius follows the rule that an inner corner is the outer corner
+   minus the padding between them. Equal radii read as a gap that thickens at
+   every corner, which is the flaw the rule exists to fix. Clamped at zero
+   because a padding larger than the radius means a square inner corner, not a
+   negative one.
+
+   The published radius reaches every descendant, not only a direct child, so a
+   surface nested two deep is inset further than the arithmetic assumes. That is
+   deliberate: the alternative is threading the value through every level, and a
+   second-level surface is rare enough that being slightly generous beats being
+   wrong everywhere.
+   --------------------------------------------------------------------------- */
+
+[data-balsa="card"][data-padding="none"] { --balsa-surface-padding: 0px; }
+[data-balsa="card"][data-padding="sm"] { --balsa-surface-padding: 1rem; }
+[data-balsa="card"][data-padding="md"] { --balsa-surface-padding: 1.25rem; }
+[data-balsa="card"][data-padding="lg"] { --balsa-surface-padding: 1.5rem; }
+
+/* ApplicationCard hands Card `padding="none"` and pads its own regions, so the
+   inset its body actually uses has to be declared here rather than inferred. */
+[data-balsa="card"][data-application-card] { --balsa-surface-padding: 1.25rem; }
+[data-balsa="card"][data-application-card][data-size="sm"] { --balsa-surface-padding: 1rem; }
+[data-balsa="card"][data-application-card][data-size="lg"] { --balsa-surface-padding: 1.5rem; }
+
+:where(
+  [data-balsa="card"],
+  [data-balsa="modal-panel"],
+  [data-balsa="drawer-panel"],
+  [data-balsa="popup-panel"],
+  [data-balsa="menu-list"]
+) {
+  --balsa-shadow-contained: var(--balsa-shadow-detail);
+  /* Floored at one base unit, and never above the radius it nests inside.
+     The pure subtraction is right and degenerates here: Balsa pads further
+     than it curves -- 16px of inset against a 14px surface radius -- so it
+     clamps to zero and squares off every contained corner. That proportion is
+     not an accident and is shared with shadcn, whose card is a 12px radius with
+     24px of padding, so correcting it by growing the radius would pull away
+     from the ecosystem Balsa is built on.
+     The floor is the documented answer for this case: where the subtraction
+     reaches zero, a small inner radius is chosen by eye, typically a few
+     pixels. One base unit is that value, expressed as a token rather than as a
+     number nobody can trace.
+     The upper clamp keeps a square design system square: Brutalism curves by
+     0px, and a floor with no ceiling would round its inner corners while its
+     outer corners stayed sharp. */
+  --balsa-radius-contained: min(
+    var(--balsa-radius-surface),
+    max(
+      var(--balsa-space-unit),
+      calc(var(--balsa-radius-surface) - var(--balsa-surface-padding, 0px))
+    )
+  );
+}
+
+/* A bordered surface elevates on its own and stays quiet inside another. Before
+   this, none of them elevated at all: `data-shadow` only ever had rules for the
+   explicit none/sm/md/lg, and every component defaults to `auto`, which had no
+   rule anywhere. */
+:where(
+  [data-balsa="alert"],
+  [data-balsa="table"],
+  [data-balsa="scroll-area"],
+  [data-balsa="resizable"]
+)[data-shadow="auto"] {
+  box-shadow: var(--balsa-shadow-contained, var(--balsa-shadow-surface));
+}
+
+/* The concentric corner, for a surface that asked for one. `auto` emits no
+   radius utility, so this is the only declaration and nothing outranks it. A
+   surface with nothing published above it falls back to the ordinary surface
+   radius and reads exactly as it did before. */
+:where(
+  [data-balsa="alert"],
+  [data-balsa="table"],
+  [data-balsa="scroll-area"],
+  [data-balsa="resizable"]
+)[data-rounded="auto"] {
+  border-radius: var(--balsa-radius-contained, var(--balsa-radius-surface));
+}
+
+/* `--balsa-radius-contained` is published above and deliberately not consumed
+   yet. Every one of these components already sets its own corner from a
+   `rounded` prop, compiled to a Tailwind utility, so reading the contained
+   radius here would override an explicit choice a caller made through the
+   public API rather than filling in a default. Wiring it up needs the prop to
+   grow an `auto` that means "concentric with whatever contains me"; until then
+   the value is available to anyone who opts in. */
 
 [data-balsa="card"][data-shadow="none"] {
   box-shadow: none;
@@ -600,22 +835,38 @@
 [data-balsa="select-popover"],
 [data-balsa="autocomplete-popover"],
 :where([data-balsa="button"])[data-variant="glass"] {
-  backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
-  -webkit-backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+  backdrop-filter: var(--balsa-backdrop-filter);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter);
 }
 
 [data-balsa="modal-panel"][data-variant="glass"]:not([data-presentation="fullscreen"]) {
-  backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
-  -webkit-backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+  backdrop-filter: var(--balsa-backdrop-filter);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter);
 }
 
 [data-balsa="modal-backdrop"] {
-  backdrop-filter: blur(var(--balsa-overlay-blur));
-  -webkit-backdrop-filter: blur(var(--balsa-overlay-blur));
+  backdrop-filter: var(--balsa-overlay-filter);
+  -webkit-backdrop-filter: var(--balsa-overlay-filter);
 }
 
 [data-balsa="checkbox-control"] {
   border-radius: min(var(--balsa-radius-control), 0.25rem);
+  border-width: var(--balsa-border-width);
+  border-style: var(--balsa-border-style);
+}
+
+/* An avatar and a one-time-code cell both draw an edge and had no rule to draw
+   it from, so each carried a bare `border` -- a literal 1px that no border
+   setting could reach. */
+[data-balsa="avatar"],
+[data-balsa="input-otp-cell"],
+[data-balsa="radio-group-indicator"],
+[data-balsa="table"],
+[data-balsa="calendar"],
+[data-balsa="scroll-area"],
+[data-balsa="resizable"],
+[data-balsa="carousel-viewport"],
+[data-balsa="alert"] {
   border-width: var(--balsa-border-width);
   border-style: var(--balsa-border-style);
 }
@@ -651,8 +902,8 @@
 }
 
 [data-balsa="toggle"][data-variant="glass"][data-state="off"] {
-  backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
-  -webkit-backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
+  backdrop-filter: var(--balsa-backdrop-filter-contained);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-contained);
 }
 
 [data-balsa="toggle"]:hover:not(:disabled) {
@@ -699,11 +950,15 @@
   border-top-width: var(--balsa-border-width);
 }
 
+/* A key cap is monospace by convention, so the component sets `font-mono` and
+   the typography control deliberately does not move it. This rule used to
+   declare `font-family: var(--balsa-control-font-family)` as well, which never
+   applied -- the utility won every time -- and read as though the body face
+   were meant to reach here. */
 [data-balsa="kbd"][data-group="false"],
 [data-balsa="kbd-key"] {
   border-width: var(--balsa-border-width);
   border-style: var(--balsa-border-style);
-  font-family: var(--balsa-control-font-family);
   letter-spacing: var(--balsa-control-letter-spacing);
 }
 
@@ -853,7 +1108,11 @@ dialog[data-balsa="alert"][open] {
    translucent but unfiltered. */
 :where(
   [data-balsa="card"][data-variant="glass"]:not([data-balsa-playground]),
-  [data-balsa="button"],
+  /* Not the solid variant. Its background is opaque in every palette, so the
+     filter composites nothing while still making the button a backdrop root
+     and a containing block for any fixed descendant. Measured: 22 of the 29
+     buttons in the gallery were paying for a blur nothing could show through. */
+  [data-balsa="button"]:not([data-variant="solid"]),
   [data-balsa="link"],
   [data-balsa-control],
   [data-balsa="button-group"],
@@ -879,13 +1138,13 @@ dialog[data-balsa="alert"][open] {
   [data-balsa="theme-advanced"],
   [data-balsa="site-selected"]
 ) {
-  backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
-  -webkit-backdrop-filter: blur(var(--balsa-backdrop-blur)) saturate(var(--balsa-backdrop-saturation));
+  backdrop-filter: var(--balsa-backdrop-filter);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter);
 }
 
 [data-balsa="dropdown"][data-variant="glass"] {
-  backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
-  -webkit-backdrop-filter: blur(max(0px, calc(var(--balsa-backdrop-blur) - 4px))) saturate(var(--balsa-backdrop-saturation));
+  backdrop-filter: var(--balsa-backdrop-filter-contained);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-contained);
 }
 
 /* Native range inputs preserve keyboard and form behavior while the visible
@@ -1039,6 +1298,8 @@ dialog[data-balsa="alert"][open] {
     --balsa-material-playground-workspace: var(--balsa-color-muted);
     --balsa-material-playground-properties: var(--balsa-color-surface);
     --balsa-backdrop-blur: 0px;
+    --balsa-backdrop-filter: none;
+    --balsa-backdrop-filter-contained: none;
   }
 }
 
@@ -1064,6 +1325,8 @@ dialog[data-balsa="alert"][open] {
     --balsa-outline-border-width: 2px;
     --balsa-material-outline-control-border: currentColor;
     --balsa-backdrop-blur: 0px;
+    --balsa-backdrop-filter: none;
+    --balsa-backdrop-filter-contained: none;
   }
 }
 
@@ -1085,7 +1348,10 @@ dialog[data-balsa="alert"][open] {
     --balsa-material-playground-workspace: var(--balsa-color-muted);
     --balsa-material-playground-properties: var(--balsa-color-surface);
     --balsa-backdrop-blur: 0px;
+    --balsa-backdrop-filter: none;
+    --balsa-backdrop-filter-contained: none;
     --balsa-overlay-blur: 0px;
+    --balsa-overlay-filter: none;
   }
 }
 
@@ -1114,7 +1380,10 @@ dialog[data-balsa="alert"][open] {
     --balsa-shadow-panel: none;
     --balsa-shadow-playground: none;
     --balsa-backdrop-blur: 0px;
+    --balsa-backdrop-filter: none;
+    --balsa-backdrop-filter-contained: none;
     --balsa-overlay-blur: 0px;
+    --balsa-overlay-filter: none;
     --balsa-border-width: 2px;
   }
 }

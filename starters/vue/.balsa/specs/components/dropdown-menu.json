@@ -57,10 +57,30 @@
     "Omitting labels for icon actions."
   ],
   "examples": [
-    "Actions",
-    "Checkbox items",
-    "Radio items",
-    "Submenu"
+    {
+      "id": "actions",
+      "title": "Actions",
+      "description": "Typed action and destructive rows emit immutable selections.",
+      "source": "<script setup lang=\"ts\">\nimport DropdownMenu from \"@/components/ui/DropdownMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <DropdownMenu id=\"actions-menu\" label=\"Actions placeholder\" :items=\"items\" @select=\"handleSelect\">\n    <template #trigger>Actions placeholder</template>\n  </DropdownMenu>\n</template>"
+    },
+    {
+      "id": "checks",
+      "title": "Checkable item",
+      "description": "Checkbox menu state exposes checked semantics.",
+      "source": "<script setup lang=\"ts\">\nimport DropdownMenu from \"@/components/ui/DropdownMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <DropdownMenu id=\"actions-menu\" label=\"Actions placeholder\" :items=\"items\" variant=\"outline\" color=\"accent\" rounded=\"2xl\" @select=\"handleSelect\">\n    <template #trigger>Actions placeholder</template>\n  </DropdownMenu>\n</template>"
+    },
+    {
+      "id": "aligned",
+      "title": "End aligned",
+      "description": "The menu aligns to the safe trigger edge.",
+      "source": "<script setup lang=\"ts\">\nimport DropdownMenu from \"@/components/ui/DropdownMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <DropdownMenu id=\"actions-menu\" label=\"Actions placeholder\" :items=\"items\" align=\"end\" @select=\"handleSelect\">\n    <template #trigger>Actions placeholder</template>\n  </DropdownMenu>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled trigger",
+      "description": "Disabled menus preserve a visible unavailable trigger.",
+      "source": "<script setup lang=\"ts\">\nimport DropdownMenu from \"@/components/ui/DropdownMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <DropdownMenu id=\"actions-menu\" label=\"Actions placeholder\" :items=\"items\" disabled @select=\"handleSelect\">\n    <template #trigger>Actions placeholder</template>\n  </DropdownMenu>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/DropdownMenu.vue",

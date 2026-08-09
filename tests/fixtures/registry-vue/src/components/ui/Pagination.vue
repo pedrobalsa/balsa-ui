@@ -103,9 +103,9 @@ const visibleTokens = computed(() =>
 );
 
 const sizeClasses: Readonly<Record<PaginationSize, string[]>> = {
-  sm: ["min-h-8", "min-w-8", "px-2", "text-xs"],
-  md: ["min-h-9", "min-w-9", "px-3", "text-sm"],
-  lg: ["min-h-10", "min-w-10", "px-4", "text-sm"],
+  sm: ["min-h-8", "min-w-8", "px-balsa-xs", "text-xs"],
+  md: ["min-h-9", "min-w-9", "px-balsa-md", "text-sm"],
+  lg: ["min-h-10", "min-w-10", "px-balsa-lg", "text-sm"],
 };
 
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
@@ -114,7 +114,7 @@ const classes = computed(() =>
 );
 const listClasses = computed(() =>
   mergeClasses(
-    "flex max-w-full items-center gap-1 overflow-x-auto",
+    "flex max-w-full items-center gap-balsa-3xs overflow-x-auto",
     props.presentation === "action-labels" ? "w-full justify-between" : "justify-center",
   ),
 );
@@ -127,7 +127,7 @@ const showActionLabels = computed(() =>
 );
 const buttonClasses = computed(() =>
   mergeClasses(
-    "inline-flex shrink-0 items-center justify-center gap-1.5 border border-balsa-border bg-balsa-surface font-medium tabular-nums text-balsa-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-45",
+    "inline-flex shrink-0 items-center justify-center gap-balsa-2xs border border-balsa-border bg-balsa-surface font-medium tabular-nums text-balsa-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-45",
     sizeClasses[props.size],
     roundedClasses[props.rounded],
   ),

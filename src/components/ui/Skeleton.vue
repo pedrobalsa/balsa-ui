@@ -68,9 +68,9 @@ const circleSizeClasses: Readonly<Record<SkeletonSize, string>> = {
   lg: "size-16",
 };
 const lineGapClasses: Readonly<Record<SkeletonSize, string>> = {
-  sm: "gap-2",
-  md: "gap-2.5",
-  lg: "gap-3",
+  sm: "gap-balsa-xs",
+  md: "gap-balsa-sm",
+  lg: "gap-balsa-md",
 };
 
 const pieceClasses = computed(() =>

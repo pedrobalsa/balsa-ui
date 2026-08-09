@@ -13,6 +13,30 @@ npx balsa-ui@latest add input button
 
 `init --palette` adds Balsa's explicit Dark and Light presets. Without it, components use the adaptive foundation and can coexist with an existing project palette.
 
+## CLI reference
+
+```sh
+balsa init
+balsa add button
+balsa list
+balsa search "settings form"
+balsa info button --markdown
+balsa docs button --markdown
+balsa view @shadcn/stepper
+balsa diff
+balsa update
+balsa doctor
+balsa mcp --tools
+balsa theme apply --list
+balsa background create hero --preset obsidian-fold
+balsa palette create product --config PAYLOAD
+balsa design-system show
+balsa version
+balsa help
+```
+
+`diff` is read-only. `update` applies safe upstream changes and keeps locally edited or diverged source unless replacement is explicitly forced. `mcp` exposes the same read-only discovery, contract, project, design-system, and update-planning answers over stdio.
+
 ## Agent discovery
 
 Search by intent with `npx balsa-ui@latest search "<intent>"`, then read only the selected `.balsa/specs/components/<name>.json`. Use the compact catalog index only when CLI search is unavailable. The CLI synchronizes catalogs, specifications, provenance, and the optional Balsa skill into consuming projects.

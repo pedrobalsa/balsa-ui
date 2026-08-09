@@ -57,10 +57,30 @@
     "Failing to label the target region."
   ],
   "examples": [
-    "Canvas region",
-    "Data row",
-    "Checkable context setting",
-    "Keyboard open"
+    {
+      "id": "pointer",
+      "title": "Pointer request",
+      "description": "Right-click opens at the requested coordinates.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    },
+    {
+      "id": "keyboard",
+      "title": "Keyboard request",
+      "description": "Shift+F10 and ContextMenu open against the target with an accent rim and softer corners.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" variant=\"outline\" color=\"accent\" rounded=\"2xl\" @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass menu",
+      "description": "Teleported material preserves theme and palette context.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" variant=\"glass\" @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Native fallback",
+      "description": "Disabled mode leaves the browser context menu intact.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" disabled @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/ContextMenu.vue",

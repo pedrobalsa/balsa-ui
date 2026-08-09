@@ -15,10 +15,10 @@ const options: readonly SelectOption[] = [{ label: "English (United States)", va
 
 <template>
   <CompositionRoot v-bind="props" data-composition="settings">
-    <div class="grid gap-5">
+    <div class="grid flex-1 content-between gap-balsa-xl">
       <Select id="settings-locale" v-model="locale" label="Default language" :options="options" />
-      <div class="border-t border-balsa-border pt-4"><Switch id="settings-analytics" v-model="analytics" label="Usage analytics" hint="Share anonymous activity to improve workspace recommendations." /></div>
+      <div class="border-t-(length:--balsa-border-width) border-balsa-border pt-balsa-lg"><Switch id="settings-analytics" v-model="analytics" label="Usage analytics" hint="Share anonymous activity to improve workspace recommendations." /></div>
     </div>
-    <template #footer><div class="flex justify-between gap-3"><Button variant="soft" @click="emit('reset')">Reset</Button><Button @click="emit('save', { locale, analytics })">Save settings</Button></div></template>
+    <template #footer><div class="flex justify-between gap-balsa-md"><Button variant="soft" @click="emit('reset')">Reset</Button><Button @click="emit('save', { locale, analytics })">Save settings</Button></div></template>
   </CompositionRoot>
 </template>

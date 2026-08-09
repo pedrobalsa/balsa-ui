@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/dialog",
+  "wave": 3,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/dialog/Dialog.vue": "sha256-3c912cb3568b847099f095e167ea7f2dc17da24ddb7c8fd745eeb7062347fe76",
+      "ui/dialog/DialogClose.vue": "sha256-5bb3674d4f7d0da01821f55045ecce5cf09d37d8fe843f2f8942919375a615b3",
+      "ui/dialog/DialogContent.vue": "sha256-54a058e1945f30313e70e1690a753d88a669da38e766f0f029eb5da48e2f116c",
+      "ui/dialog/DialogDescription.vue": "sha256-1690d99853c062443e1b4330512d002da0c49e7cd04ee7533e484701f24a7233",
+      "ui/dialog/DialogFooter.vue": "sha256-463a1e673d0c0b7db83aca45a1e7956785c0bb428dbb22d8ba61d083b564caef",
+      "ui/dialog/DialogHeader.vue": "sha256-61e85a2c043cd906ccb9ba59328607cbd76f3af55843d740fdb7aca8146120c4",
+      "ui/dialog/DialogScrollContent.vue": "sha256-a6d83da3a77bd73114c952569cb24b3edde4c5ba735956c4694841c3ce4296d2",
+      "ui/dialog/DialogTitle.vue": "sha256-62038cfdcd0bc7284552bfa7e90e3d7f1cf4b44546e839ed342b3a37c0c9a70e",
+      "ui/dialog/DialogTrigger.vue": "sha256-21cb17ea13635aa709ff79d95b4def1777448a58cd6effd9a45bd38435ea6589",
+      "ui/dialog/index.ts": "sha256-0ae6959b697c6b2d1a44f5c17f2ff7ec9a03b12c1f3b1c422b69b89998cfb3e8"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/dialog/DialogContent.vue",
+      "find": "\"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\"",
+      "replace": "\"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dialog/DialogContent.vue",
+      "find": "'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg'",
+      "replace": "'fixed start-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-balsa-lg border-solid border-(length:--balsa-outline-border-width) bg-background p-balsa-2xl shadow-[var(--balsa-shadow-lg)] duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dialog/DialogContent.vue",
+      "find": "\"absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground\"",
+      "replace": "\"absolute end-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dialog/DialogHeader.vue",
+      "find": "'flex flex-col gap-y-1.5 text-center sm:text-left'",
+      "replace": "'flex flex-col gap-y-balsa-2xs text-center sm:text-start'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/dialog/DialogScrollContent.vue",
+      "find": "\"fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\"",
+      "replace": "\"fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dialog/DialogScrollContent.vue",
+      "find": "'relative z-50 grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg md:w-full'",
+      "replace": "'relative z-50 grid w-full max-w-lg my-balsa-3xl gap-balsa-lg border-solid border-(length:--balsa-outline-border-width) border-border bg-background p-balsa-2xl shadow-[var(--balsa-shadow-lg)] duration-200 sm:rounded-lg md:w-full'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable."
+    },
+    {
+      "file": "ui/dialog/DialogScrollContent.vue",
+      "find": "\"absolute top-4 right-4 p-0.5 transition-colors rounded-md hover:bg-secondary\"",
+      "replace": "\"absolute top-4 end-4 p-balsa-4xs transition-colors rounded-md hover:bg-secondary motion-reduce:transition-none motion-reduce:animate-none\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    }
+  ],
+  "portal": "Teleports content. The adapter scope does not follow a teleport, so put data-balsa-adapt on the teleport target as well as the application root.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (left-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

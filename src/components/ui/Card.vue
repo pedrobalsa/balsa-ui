@@ -90,9 +90,9 @@ const colorClasses: Readonly<Record<CardColor, Record<CardVariant, string[]>>> =
 
 const paddingClasses: Record<CardPadding, string> = {
   none: "p-0",
-  sm: "p-4",
-  md: "p-5",
-  lg: "p-6",
+  sm: "p-balsa-lg",
+  md: "p-balsa-xl",
+  lg: "p-balsa-2xl",
 };
 const roundedClasses: Readonly<Record<Rounded, string>> = {
   none: "rounded-none", sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg",
@@ -118,6 +118,11 @@ const classes = computed(() =>
     attrs.class,
   ),
 );
+/*
+ * The padding is a Tailwind class, which the stylesheet downstream cannot read.
+ * A contained surface needs the number to keep its corners concentric with this
+ * one, so the choice is published as `data-padding` for CSS to key on.
+ */
 </script>
 
 <template>
@@ -131,6 +136,7 @@ const classes = computed(() =>
     :data-size="resolvedSize"
     :data-rounded="resolvedRounded"
     :data-shadow="resolvedShadow"
+    :data-padding="resolvedPadding"
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
     :class="classes"
   >

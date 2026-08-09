@@ -49,9 +49,18 @@
     "Adding visible separators to assistive-technology output."
   ],
   "examples": [
-    "Documentation path",
-    "Mixed linked and plain hierarchy",
-    "Slash-separated location"
+    {
+      "id": "slash",
+      "title": "Slash path",
+      "description": "Use a slash separator when the hierarchy should read like a compact path.",
+      "source": "<script setup lang=\"ts\">\nimport Breadcrumb from \"@/components/ui/Breadcrumb.vue\";\nconst items = [\n  { label: \"Section placeholder 01\", href: \"#section-placeholder-01\" },\n  { label: \"Section placeholder 02\", href: \"#section-placeholder-02\" },\n  { label: \"Current placeholder\" },\n];\n</script>\n\n<template>\n  <Breadcrumb :items=\"items\" separator=\"slash\" size=\"md\" />\n</template>"
+    },
+    {
+      "id": "dot",
+      "title": "Dot path",
+      "description": "Use a dot separator for a quiet compact location trail.",
+      "source": "<script setup lang=\"ts\">\nimport Breadcrumb from \"@/components/ui/Breadcrumb.vue\";\nconst items = [\n  { label: \"Section placeholder 01\", href: \"#section-placeholder-01\" },\n  { label: \"Section placeholder 02\", href: \"#section-placeholder-02\" },\n  { label: \"Current placeholder\" },\n];\n</script>\n\n<template>\n  <Breadcrumb :items=\"items\" separator=\"dot\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Breadcrumb.vue",

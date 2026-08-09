@@ -62,7 +62,7 @@ const position = ref({ left: 0, top: 0 });
 
 const rootClasses = computed(() =>
   mergeClasses(
-    "flex max-w-full items-center gap-1 rounded-lg border border-balsa-border-strong bg-balsa-surface p-1 text-balsa-surface-foreground",
+    "flex max-w-full items-center gap-balsa-3xs rounded-lg border border-balsa-border-strong bg-balsa-surface p-balsa-3xs text-balsa-surface-foreground",
     roundedClasses[props.rounded],
     "relative",
     props.contained ? "overflow-visible" : "overflow-x-auto",
@@ -70,7 +70,7 @@ const rootClasses = computed(() =>
   ),
 );
 const triggerClasses = computed(() => [
-  "shrink-0 cursor-pointer rounded-md px-3 py-2 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
+  "shrink-0 cursor-pointer rounded-md px-balsa-md py-balsa-xs text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
 ]);
 const layerClasses = computed(() => [
   "z-[65]",

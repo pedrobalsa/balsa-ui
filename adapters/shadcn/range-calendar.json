@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/range-calendar",
+  "wave": 5,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/range-calendar/RangeCalendar.vue": "sha256-72afff4bc054a3cb7f722510b7e9bc0c785746638ffc7f97e992e90f6f23bb7e",
+      "ui/range-calendar/RangeCalendarCell.vue": "sha256-e2eda20e778bf52cb1f42f92cdaebfc72f867728fffdd3a54a6af1ae0e6b34fa",
+      "ui/range-calendar/RangeCalendarCellTrigger.vue": "sha256-abf9f4a03a971b8d8f9cd6235735cebea41816205ce671a17fe570a500bb284c",
+      "ui/range-calendar/RangeCalendarGrid.vue": "sha256-4d801e06c4b85b08a937067165daf8dd4b13eb81bb1d904f4a789497010935ee",
+      "ui/range-calendar/RangeCalendarGridBody.vue": "sha256-7080277909b1cfc59e25044aaca48e0c87b55ee0642b4c2a3b429b74df28a039",
+      "ui/range-calendar/RangeCalendarGridHead.vue": "sha256-0845b108d2ed46f49b9e0cfa4012c464a85bf8ea5a36cb742980d56fe0ad0af8",
+      "ui/range-calendar/RangeCalendarGridRow.vue": "sha256-e67b02123705338423a59779450162dc2505905f2ef97ef5eb70ac444f00e634",
+      "ui/range-calendar/RangeCalendarHeadCell.vue": "sha256-eb98c0bac81753a7e98f46c02009b22f38b6211d13be22d78c7d6be51ce91355",
+      "ui/range-calendar/RangeCalendarHeader.vue": "sha256-776231d5789531cec788b2112699928235afec7c42c1eb2f7de718ea88e439b3",
+      "ui/range-calendar/RangeCalendarHeading.vue": "sha256-08e8e88d2baf2ce00d901159a04fc45797487f45ece0ea2ea7130d3a51b0e6f9",
+      "ui/range-calendar/RangeCalendarNextButton.vue": "sha256-a6e2f584dc588beb6d62495784144522a4caf364d90d62397ec44f2dfe50a6d4",
+      "ui/range-calendar/RangeCalendarPrevButton.vue": "sha256-fe9c8ae3572fea2b601140828a9de8bcf1c89311dd6c3689a893c6716e86c406",
+      "ui/range-calendar/index.ts": "sha256-0ddd21e6b5834b1c7f9776718199b39ff7f3ca888b22dd0c97a9912de33b84d1"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/button"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/range-calendar/RangeCalendar.vue",
+      "find": "\"flex flex-col gap-y-4 mt-4 sm:flex-row sm:gap-x-4 sm:gap-y-0\"",
+      "replace": "\"flex flex-col gap-y-balsa-lg mt-balsa-lg sm:flex-row sm:gap-x-4 sm:gap-y-0\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/range-calendar/RangeCalendarCell.vue",
+      "find": "'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([data-selected])]:bg-accent first:[&:has([data-selected])]:rounded-l-md last:[&:has([data-selected])]:rounded-r-md [&:has([data-selected][data-outside-view])]:bg-accent/50 [&:has([data-selected][data-selection-end])]:rounded-r-md [&:has([data-selected][data-selection-start])]:rounded-l-md'",
+      "replace": "'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([data-selected])]:bg-accent first:[&:has([data-selected])]:rounded-s-md last:[&:has([data-selected])]:rounded-e-md [&:has([data-selected][data-outside-view])]:bg-accent/50 [&:has([data-selected][data-selection-end])]:rounded-e-md [&:has([data-selected][data-selection-start])]:rounded-s-md'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/range-calendar/RangeCalendarGrid.vue",
+      "find": "'w-full border-collapse space-y-1'",
+      "replace": "'w-full border-collapse space-y-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/range-calendar/RangeCalendarHeader.vue",
+      "find": "'relative flex w-full items-center justify-between pt-1'",
+      "replace": "'relative flex w-full items-center justify-between pt-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

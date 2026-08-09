@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/scroll-area",
+  "wave": 5,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/scroll-area/ScrollArea.vue": "sha256-f68f4ff25e1d61c6459e3c1bd0bbfce1f4b855e6e782a311875fb67775946724",
+      "ui/scroll-area/ScrollBar.vue": "sha256-d417cf68d358d07b746e6dcf1680fa9085da8c1df0641f6c83d6e48826947212",
+      "ui/scroll-area/index.ts": "sha256-e158441de429600452d1c25182daee6fd2a43e27e1d900c5c9844090e894fc7c"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "unsupported",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/scroll-area/ScrollBar.vue",
+      "find": "'flex touch-none select-none transition-colors'",
+      "replace": "'flex touch-none select-none transition-colors motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/scroll-area/ScrollBar.vue",
+      "find": "'h-full w-2.5 border-l border-l-transparent p-px'",
+      "replace": "'h-full w-2.5 border-s border-s-transparent p-px'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

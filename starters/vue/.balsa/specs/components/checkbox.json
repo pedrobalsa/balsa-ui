@@ -53,9 +53,24 @@
     "Using several checkboxes for mutually exclusive choices."
   ],
   "examples": [
-    "Agreement checkbox",
-    "Checked option",
-    "Required unvalidated checkbox"
+    {
+      "id": "unchecked",
+      "title": "Unchecked",
+      "description": "The model controls the independent checked state.",
+      "source": "<script setup lang=\"ts\">\nimport Checkbox from \"@/components/ui/Checkbox.vue\";\nimport { ref } from \"vue\";\n\nconst accepted = ref(false);\n</script>\n\n<template>\n  <Checkbox id=\"placeholder-checkbox\" v-model=\"accepted\" label=\"Checkbox placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required checkboxes expose their requirement alongside the label.",
+      "source": "<script setup lang=\"ts\">\nimport Checkbox from \"@/components/ui/Checkbox.vue\";\nimport { ref } from \"vue\";\n\nconst accepted = ref(false);\n</script>\n\n<template>\n  <Checkbox id=\"placeholder-checkbox\" v-model=\"accepted\" label=\"Checkbox placeholder\" hint=\"Helper text placeholder.\" required />\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled state prevents interaction without hiding the current value.",
+      "source": "<script setup lang=\"ts\">\nimport Checkbox from \"@/components/ui/Checkbox.vue\";\nimport { ref } from \"vue\";\n\nconst accepted = ref(true);\n</script>\n\n<template>\n  <Checkbox id=\"placeholder-checkbox\" v-model=\"accepted\" label=\"Checkbox placeholder\" hint=\"Helper text placeholder.\" disabled />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Checkbox.vue",

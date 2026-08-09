@@ -106,7 +106,7 @@ function forwardToTrailing(event: MouseEvent): void {
     @select="emit('select', $event)"
   >
     <template #trigger>
-      <span class="min-w-0 flex-1 py-2 pl-3">
+      <span class="min-w-0 flex-1 py-balsa-xs pl-balsa-md">
         <small class="block text-xs font-normal text-balsa-muted-foreground">{{ props.label }}</small>
         <strong
           class="block truncate"
@@ -114,7 +114,7 @@ function forwardToTrailing(event: MouseEvent): void {
         >{{ props.value }}</strong>
       </span>
       <slot name="trailing">
-        <Icon v-if="props.icon" :icon="props.icon" size="md" class="mr-3 shrink-0 self-center" />
+        <Icon v-if="props.icon" :icon="props.icon" size="md" class="mr-balsa-md shrink-0 self-center" />
       </slot>
     </template>
   </DropdownMenu>
@@ -127,7 +127,7 @@ function forwardToTrailing(event: MouseEvent): void {
     :class="controlClasses"
     @click="forwardToTrailing"
   >
-    <span class="min-w-0 flex-1 py-2 pl-3" aria-hidden="true">
+    <span class="min-w-0 flex-1 py-balsa-xs pl-balsa-md" aria-hidden="true">
       <small class="block text-xs font-normal text-balsa-muted-foreground">{{ props.label }}</small>
       <strong
         class="block truncate"
@@ -136,7 +136,7 @@ function forwardToTrailing(event: MouseEvent): void {
     </span>
     <span ref="trailingHost" class="contents">
       <slot name="trailing">
-        <Icon v-if="props.icon" :icon="props.icon" size="md" class="mr-3 shrink-0 self-center" />
+        <Icon v-if="props.icon" :icon="props.icon" size="md" class="mr-balsa-md shrink-0 self-center" />
       </slot>
     </span>
   </div>

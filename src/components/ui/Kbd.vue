@@ -47,19 +47,29 @@ const variantClasses: Readonly<Record<KbdVariant, string[]>> = {
   soft: ["border-transparent", "bg-balsa-muted", "text-balsa-muted-foreground"],
 };
 const sizeClasses: Readonly<Record<KbdSize, string[]>> = {
-  sm: ["min-h-5", "min-w-5", "px-1.5", "text-[0.6875rem]"],
-  md: ["min-h-6", "min-w-6", "px-2", "text-xs"],
-  lg: ["min-h-8", "min-w-8", "px-2.5", "text-sm"],
+  sm: ["min-h-5", "min-w-5", "px-balsa-2xs", "text-[0.6875rem]"],
+  md: ["min-h-6", "min-w-6", "px-balsa-xs", "text-xs"],
+  lg: ["min-h-8", "min-w-8", "px-balsa-sm", "text-sm"],
 };
 const groupGapClasses: Readonly<Record<KbdSize, string>> = {
-  sm: "gap-1",
-  md: "gap-1.5",
-  lg: "gap-2",
+  sm: "gap-balsa-3xs",
+  md: "gap-balsa-2xs",
+  lg: "gap-balsa-xs",
 };
 
+/*
+ * No bare `border` here. Tailwind compiles it to a literal 1px, which beats the
+ * `border-width: var(--balsa-border-width)` the stylesheet sets on this same
+ * element -- so a key cap kept a 1px edge at every border setting while every
+ * other control moved. The width and style come from the tokens; the variant
+ * classes still supply the colour.
+ *
+ * `font-mono` stays. A key cap is monospace by convention, and that is why the
+ * typography control does not move it.
+ */
 const capClasses = computed(() =>
   mergeClasses(
-    "inline-flex shrink-0 select-none items-center justify-center border font-mono font-medium leading-none whitespace-nowrap",
+    "inline-flex shrink-0 select-none items-center justify-center font-mono font-medium leading-none whitespace-nowrap",
     variantClasses[props.variant],
     sizeClasses[props.size],
     roundedClasses[props.rounded],

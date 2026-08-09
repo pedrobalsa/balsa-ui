@@ -15,6 +15,7 @@ import type { ThemeInput } from "./theme";
 
 export type ChartsType = "line" | "area" | "bar" | "donut" | "doughnut";
 export type ChartsBarMode = "grouped" | "stacked";
+export type ChartsAreaFill = "gradient" | "solid" | "none";
 export interface ChartSeries {
   key?: string;
   label: string;
@@ -56,6 +57,8 @@ const props = withDefaults(defineProps<{
   showCaption?: boolean;
   showTable?: boolean;
   responsive?: boolean;
+  /** How the band under an area series is painted. */
+  areaFill?: ChartsAreaFill;
   width?: number;
   height?: number;
   rounded?: Rounded;
@@ -75,6 +78,7 @@ const props = withDefaults(defineProps<{
   showCaption: true,
   showTable: false,
   responsive: true,
+  areaFill: "gradient",
   height: 260,
   labelFormatter: (label: string) => label,
   valueFormatter: (value: number) => new Intl.NumberFormat().format(value),
@@ -140,8 +144,21 @@ function colorsArray(colors: Readonly<Record<string, string>>): string[] {
 function dashArray(_: XYDatum[], index: number): number[] {
   return index % 3 === 1 ? [7, 4] : index % 3 === 2 ? [2, 4] : [];
 }
+const areaFillOpacity: Readonly<Record<ChartsAreaFill, readonly [number, number]>> = {
+  gradient: [0.5, 0.02],
+  solid: [0.24, 0.24],
+  none: [0, 0],
+};
+
 function areaDefs(colors: Readonly<Record<string, string>>): string {
-  return seriesKeys.value.map((key, index) => `<linearGradient id="balsa-area-${index}" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="${escapeHtml(colors[key] ?? "currentColor")}" stop-opacity="0.28"/><stop offset="100%" stop-color="${escapeHtml(colors[key] ?? "currentColor")}" stop-opacity="0.03"/></linearGradient>`).join("");
+  const [top, bottom] = areaFillOpacity[props.areaFill];
+  return seriesKeys.value.map((key, index) => {
+    const color = escapeHtml(colors[key] ?? "currentColor");
+    return `<linearGradient id="balsa-area-${index}" x1="0" x2="0" y1="0" y2="1">`
+      + `<stop offset="0%" stop-color="${color}" stop-opacity="${top}"/>`
+      + `<stop offset="100%" stop-color="${color}" stop-opacity="${bottom}"/>`
+      + `</linearGradient>`;
+  }).join("");
 }
 function donutData(colors: Readonly<Record<string, string>>): DonutDatum[] {
   const source = props.series[0];
@@ -265,7 +282,7 @@ function donutTooltip(datum: DonutDatum): string {
       <div v-if="normalizedType === 'donut' && $slots.center" class="pointer-events-none absolute inset-0 grid place-items-center">
         <slot name="center" />
       </div>
-      <ChartLegendContent v-if="props.showLegend" class="mt-3" />
+      <ChartLegendContent v-if="props.showLegend" class="mt-balsa-md" />
     </template>
   </ChartContainer>
 </template>

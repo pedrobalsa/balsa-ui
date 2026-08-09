@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Asset preview, publication status, and replacement action.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport MediaPreviewCard from \"@/components/compositions/MediaPreviewCard.vue\";\n</script>\n\n<template>\n  <MediaPreviewCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport MediaPreviewCard from \"@/components/compositions/MediaPreviewCard.vue\";\n</script>\n\n<template>\n  <MediaPreviewCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/MediaPreviewCard.vue",
@@ -143,7 +153,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Cover art\""
+        "default": "\"Preview build\""
       },
       {
         "name": "description",
@@ -152,7 +162,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Preview the asset before publishing.\""
+        "default": "\"What visitors see at relay-preview.example.com.\""
       },
       {
         "name": "status",
@@ -161,7 +171,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Draft\""
+        "default": "\"Awaiting review\""
       },
       {
         "name": "statusColor",
@@ -181,7 +191,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Replace image\""
+        "default": "\"Open the preview\""
       }
     ],
     "events": [

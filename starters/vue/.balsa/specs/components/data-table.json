@@ -60,10 +60,30 @@
     "Hiding every column."
   ],
   "examples": [
-    "Sortable rows",
-    "Filtered rows",
-    "Multiple selection",
-    "Loading and empty"
+    {
+      "id": "sortable",
+      "title": "Sortable results",
+      "description": "Header actions update typed sort state.",
+      "source": "<script setup lang=\"ts\">\nimport DataTable from \"@/components/ui/DataTable.vue\";\nconst columns = [\n  { id: \"name\", label: \"Name placeholder\", sortable: true, filterable: true },\n  { id: \"status\", label: \"Status placeholder\", filterable: true },\n  { id: \"value\", label: \"Value placeholder\", sortable: true, align: \"right\" as const },\n];\nconst rows = Array.from({ length: 12 }, (_, index) => ({\n  id: `row-${index + 1}`,\n  name: `Row placeholder ${index + 1}`,\n  status: index % 2 ? \"Pending placeholder\" : \"Ready placeholder\",\n  value: (index + 1) * 12,\n}));\n</script>\n\n<template>\n  <DataTable id=\"results-placeholder\" caption=\"Results placeholder\" :columns=\"columns\" :data=\"rows\" row-key=\"id\" selection=\"none\" :page-size=\"5\" variant=\"surface\" density=\"default\" striped />\n</template>"
+    },
+    {
+      "id": "selectable",
+      "title": "Selectable rows",
+      "description": "Multiple selection emits immutable row keys.",
+      "source": "<script setup lang=\"ts\">\nimport DataTable from \"@/components/ui/DataTable.vue\";\nconst columns = [\n  { id: \"name\", label: \"Name placeholder\", sortable: true, filterable: true },\n  { id: \"status\", label: \"Status placeholder\", filterable: true },\n  { id: \"value\", label: \"Value placeholder\", sortable: true, align: \"right\" as const },\n];\nconst rows = Array.from({ length: 12 }, (_, index) => ({\n  id: `row-${index + 1}`,\n  name: `Row placeholder ${index + 1}`,\n  status: index % 2 ? \"Pending placeholder\" : \"Ready placeholder\",\n  value: (index + 1) * 12,\n}));\n</script>\n\n<template>\n  <DataTable id=\"results-placeholder\" caption=\"Results placeholder\" :columns=\"columns\" :data=\"rows\" row-key=\"id\" selection=\"multiple\" :page-size=\"5\" variant=\"surface\" density=\"default\" striped />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact grid",
+      "description": "Compact density and gridlines support dense records.",
+      "source": "<script setup lang=\"ts\">\nimport DataTable from \"@/components/ui/DataTable.vue\";\nconst columns = [\n  { id: \"name\", label: \"Name placeholder\", sortable: true, filterable: true },\n  { id: \"status\", label: \"Status placeholder\", filterable: true },\n  { id: \"value\", label: \"Value placeholder\", sortable: true, align: \"right\" as const },\n];\nconst rows = Array.from({ length: 12 }, (_, index) => ({\n  id: `row-${index + 1}`,\n  name: `Row placeholder ${index + 1}`,\n  status: index % 2 ? \"Pending placeholder\" : \"Ready placeholder\",\n  value: (index + 1) * 12,\n}));\n</script>\n\n<template>\n  <DataTable id=\"results-placeholder\" caption=\"Results placeholder\" :columns=\"columns\" :data=\"rows\" row-key=\"id\" selection=\"multiple\" :page-size=\"5\" variant=\"surface\" density=\"compact\" striped gridlines />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading results",
+      "description": "Loading remains inside the semantic table.",
+      "source": "<script setup lang=\"ts\">\nimport DataTable from \"@/components/ui/DataTable.vue\";\nconst columns = [\n  { id: \"name\", label: \"Name placeholder\", sortable: true, filterable: true },\n  { id: \"status\", label: \"Status placeholder\", filterable: true },\n  { id: \"value\", label: \"Value placeholder\", sortable: true, align: \"right\" as const },\n];\nconst rows = Array.from({ length: 12 }, (_, index) => ({\n  id: `row-${index + 1}`,\n  name: `Row placeholder ${index + 1}`,\n  status: index % 2 ? \"Pending placeholder\" : \"Ready placeholder\",\n  value: (index + 1) * 12,\n}));\n</script>\n\n<template>\n  <DataTable id=\"results-placeholder\" caption=\"Results placeholder\" :columns=\"columns\" :data=\"rows\" row-key=\"id\" selection=\"multiple\" :page-size=\"5\" variant=\"surface\" density=\"default\" striped loading />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/DataTable.vue",

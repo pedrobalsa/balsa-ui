@@ -65,11 +65,18 @@
     "Overriding Glassmorphism's floating glass treatment without a deliberate reason."
   ],
   "examples": [
-    "Application bar",
-    "Compact anchored desktop menu",
-    "Floating glass slab",
-    "Reveal-on-scroll navigation",
-    "Mobile accordion navigation"
+    {
+      "id": "floating-glass",
+      "title": "Floating glass",
+      "description": "An inset translucent slab keeps surrounding background detail visible.",
+      "source": "<script setup lang=\"ts\">\nimport Navbar from \"@/components/ui/Navbar.vue\";\nimport Link from \"@/components/ui/Link.vue\";\n\n// Placeholder navigation data for this documentation example.\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"#top\" };\nconst items = [\n  {\n    title: \"Product\",\n    link: \"#product\",\n    links: [\n      { title: \"Overview\", link: \"#overview\", shortDescription: \"A concise product introduction.\" },\n      { title: \"Release notes\", link: \"#releases\", shortDescription: \"What changed in the latest version.\" },\n    ],\n  },\n  { title: \"Solutions\", link: \"#solutions\" },\n  { title: \"Resources\", link: \"#resources\" },\n];\n</script>\n\n<template>\n  <Navbar :logo=\"logo\" :items=\"items\" type=\"floating\" variant=\"glass\" behavior=\"fixed\">\n  <template #actions>\n    <Link href=\"#sign-in\" size=\"sm\">Sign in</Link>\n    <Link href=\"#get-started\" variant=\"solid\" size=\"sm\">Get started</Link>\n  </template>\n</Navbar>\n</template>"
+    },
+    {
+      "id": "reveal",
+      "title": "Reveal on scroll",
+      "description": "The header steps away while reading down and returns when the reader moves up.",
+      "source": "<script setup lang=\"ts\">\nimport Navbar from \"@/components/ui/Navbar.vue\";\nimport Link from \"@/components/ui/Link.vue\";\n\n// Placeholder navigation data for this documentation example.\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"#top\" };\nconst items = [\n  {\n    title: \"Product\",\n    link: \"#product\",\n    links: [\n      { title: \"Overview\", link: \"#overview\", shortDescription: \"A concise product introduction.\" },\n      { title: \"Release notes\", link: \"#releases\", shortDescription: \"What changed in the latest version.\" },\n    ],\n  },\n  { title: \"Solutions\", link: \"#solutions\" },\n  { title: \"Resources\", link: \"#resources\" },\n];\n</script>\n\n<template>\n  <Navbar :logo=\"logo\" :items=\"items\" type=\"bar\" variant=\"surface\">\n  <template #actions>\n    <Link href=\"#sign-in\" size=\"sm\">Sign in</Link>\n    <Link href=\"#get-started\" variant=\"solid\" size=\"sm\">Get started</Link>\n  </template>\n</Navbar>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Navbar.vue",

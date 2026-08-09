@@ -53,9 +53,18 @@
     "Filling a compact dropdown with an unstructured large inventory."
   ],
   "examples": [
-    "Anchored link list",
-    "Contextual action panel",
-    "Compact Navbar submenu"
+    {
+      "id": "surface-start",
+      "title": "Surface menu",
+      "description": "Anchor a compact surface menu below its placeholder trigger.",
+      "source": "<script setup lang=\"ts\">\nimport Dropdown from \"@/components/ui/Dropdown.vue\";\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(true);\n</script>\n\n<template>\n  <div class=\"relative w-fit\">\n  <Button type=\"button\" @click=\"open = !open\">Toggle placeholder</Button>\n  <Dropdown :open=\"open\" variant=\"surface\" align=\"start\">\n    <a href=\"#placeholder\" class=\"block rounded-lg px-balsa-md py-balsa-xs font-bold text-inherit no-underline hover:bg-balsa-muted\">Menu item placeholder</a>\n  </Dropdown>\n</div>\n</template>"
+    },
+    {
+      "id": "glass-end",
+      "title": "Rounded glass menu",
+      "description": "Align a translucent compact menu to the end of its placeholder trigger.",
+      "source": "<script setup lang=\"ts\">\nimport Dropdown from \"@/components/ui/Dropdown.vue\";\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(true);\n</script>\n\n<template>\n  <div class=\"relative w-fit\">\n  <Button type=\"button\" @click=\"open = !open\">Toggle placeholder</Button>\n  <Dropdown :open=\"open\" variant=\"glass\" align=\"end\" width=\"lg\" rounded=\"2xl\">\n    <a href=\"#placeholder\" class=\"block rounded-lg px-balsa-md py-balsa-xs font-bold text-inherit no-underline hover:bg-balsa-muted\">Menu item placeholder</a>\n  </Dropdown>\n</div>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Dropdown.vue",

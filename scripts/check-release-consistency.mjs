@@ -52,8 +52,10 @@ async function documentationSources() {
 // `balsa add`, `npx balsa-ui@latest search`, `npx balsa-ui background create`.
 // The subcommand must sit on the same line, and a `$`-prefixed token is a prompt
 // placeholder rather than an invocation.
+// A leading dot makes it a path, not an invocation: `.balsa directory` names a
+// folder, `balsa add` names a command.
 const commandPattern =
-  /(?<![\w$@/-])(?:npx[ \t]+)?balsa(?:-ui)?(?:@[a-z0-9.]+)?[ \t]+([a-z][a-z-]*)/g;
+  /(?<![\w$@/.-])(?:npx[ \t]+)?balsa(?:-ui)?(?:@[a-z0-9.]+)?[ \t]+([a-z][a-z-]*)/g;
 const prose = new Set(["ui", "and", "the", "is", "cli", "component", "components", "registry"]);
 
 for (const source of await documentationSources()) {
@@ -126,6 +128,33 @@ try {
   } else {
     throw error;
   }
+}
+
+// The reverse direction matters too. Proving a documented command exists stops
+// the website advertising something nobody can run; proving a shipped command
+// is documented stops a release adding a command nobody can discover.
+const documentedCommands = new Set();
+for (const source of await documentationSources()) {
+  let text;
+  try {
+    text = await readFile(path.join(rootDir, source), "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") continue;
+    throw error;
+  }
+  for (const match of text.matchAll(commandPattern)) documentedCommands.add(match[1]);
+}
+
+// `help` and `version` are conventions every CLI carries; the rest are Balsa's
+// own surface and have to be findable.
+const undocumented = Object.keys(commands)
+  .filter((command) => !["help", "version"].includes(command))
+  .filter((command) => !documentedCommands.has(command));
+if (undocumented.length) {
+  errors.push(
+    `These commands ship but are not documented anywhere: ${undocumented.join(", ")}.`
+    + ` Documentation is part of the release, not a follow-up to it.`,
+  );
 }
 
 if (registry.homepage !== packageJson.homepage) {

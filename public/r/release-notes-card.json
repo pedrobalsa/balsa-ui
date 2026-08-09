@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "release-notes-card",
+  "type": "registry:ui",
+  "title": "ReleaseNotesCard",
+  "description": "Scrollable release history with version, date, and change notes.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/scroll-area",
+    "@balsa/separator",
+    "@balsa/badge"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ReleaseNotesCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/ReleaseNotesCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport Badge from \"../ui/Badge.vue\";\nimport ScrollArea from \"../ui/ScrollArea.vue\";\nimport Separator from \"../ui/Separator.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface ReleaseEntry { id: string; version: string; date: string; kind: string; notes: readonly string[] }\n\n/**\n * More content than the tile can hold, on purpose. A scroll area only justifies\n * itself when there is something below the fold, so the release history runs\n * past the bottom edge and the fade shows that it does.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  releases?: readonly ReleaseEntry[];\n}>(), {\n  title: \"Release notes\",\n  description: \"Everything shipped to Atlas this quarter.\",\n  releases: () => [\n    { id: \"4.12.0\", version: \"4.12.0\", date: \"Aug 6, 2026\", kind: \"Minor\", notes: [\"Rolling deploys hold at 10% until the health check passes twice.\", \"Environment variables are diffed before a promotion.\"] },\n    { id: \"4.11.6\", version: \"4.11.6\", date: \"Jul 29, 2026\", kind: \"Patch\", notes: [\"Fixed a rollback that skipped the São Paulo edge.\"] },\n    { id: \"4.11.0\", version: \"4.11.0\", date: \"Jul 14, 2026\", kind: \"Minor\", notes: [\"Preview branches inherit production secrets by default.\", \"Build logs stream from the first line rather than on completion.\", \"Deploy keys can be scoped to one environment.\"] },\n    { id: \"4.10.2\", version: \"4.10.2\", date: \"Jun 30, 2026\", kind: \"Patch\", notes: [\"Reduced cold start on the Frankfurt edge by 40 ms.\"] },\n    { id: \"4.10.0\", version: \"4.10.0\", date: \"Jun 11, 2026\", kind: \"Minor\", notes: [\"Added the deployment history table.\", \"Members can be invited straight into a role.\"] },\n  ],\n});\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"release-notes\">\n    <ScrollArea label=\"Release history\" edge-fade rounded=\"none\" class=\"min-h-0 flex-1 border-0 bg-transparent\">\n      <ol class=\"grid gap-balsa-lg pr-balsa-xs\" role=\"list\">\n        <li v-for=\"(release, index) in props.releases\" :key=\"release.id\">\n          <div class=\"flex items-baseline justify-between gap-balsa-md\">\n            <strong class=\"text-sm font-medium tabular-nums\">{{ release.version }}</strong>\n            <Badge variant=\"soft\">{{ release.kind }}</Badge>\n          </div>\n          <p class=\"mt-balsa-4xs text-xs text-balsa-muted-foreground\">{{ release.date }}</p>\n          <ul class=\"mt-balsa-xs grid gap-balsa-2xs\" role=\"list\">\n            <li v-for=\"note in release.notes\" :key=\"note\" class=\"text-sm text-balsa-muted-foreground\">\n              {{ note }}\n            </li>\n          </ul>\n          <Separator v-if=\"index < props.releases.length - 1\" class=\"mt-balsa-lg\" />\n        </li>\n      </ol>\n    </ScrollArea>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/release-notes-card.json",
+    "documentation": "docs/compositions/release-notes-card.md",
+    "example": "docs/compositions/release-notes-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

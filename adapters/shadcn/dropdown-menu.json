@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/dropdown-menu",
+  "wave": 3,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/dropdown-menu/DropdownMenu.vue": "sha256-643bd6ca3fbe790ee479408e78a8f5fceeb58807dd0de10d20c326513baa2523",
+      "ui/dropdown-menu/DropdownMenuCheckboxItem.vue": "sha256-c2b2d006eacb7e41888b82dbe3881173314c3d5e1299347455304ab1ec1bf0a8",
+      "ui/dropdown-menu/DropdownMenuContent.vue": "sha256-7d8f374b179821994c5350d885fc8b6543163cf184823a128a16c0fa05db1882",
+      "ui/dropdown-menu/DropdownMenuGroup.vue": "sha256-cba632d064adf57e4f32c1767865d5dbffbf02259715b815a28f6b26fa017025",
+      "ui/dropdown-menu/DropdownMenuItem.vue": "sha256-12de4f01cdfc7b1e51e2e98958280f9460466fbcd094371e6c072b32a9140441",
+      "ui/dropdown-menu/DropdownMenuLabel.vue": "sha256-b1ca38469209f59358c8d9edf2e49e160ac6b6ee112c9016c412101003306042",
+      "ui/dropdown-menu/DropdownMenuRadioGroup.vue": "sha256-c7d1b33752cea4ba45b6ed1f70fa4fa37bf1be8d3ade7d14a24b2e86938d039d",
+      "ui/dropdown-menu/DropdownMenuRadioItem.vue": "sha256-10d89e3009d70cc4878af317ee4f1111166222cc95e88dc8564d568ba25e196d",
+      "ui/dropdown-menu/DropdownMenuSeparator.vue": "sha256-c68a8965d35817107ba42e24f250a079f124d73919ffe4f12beb6aa9de2b0f32",
+      "ui/dropdown-menu/DropdownMenuShortcut.vue": "sha256-bfa482ce5b6d17df077dc83b4c4a066a759bbd85d74d9bf849a375324b793875",
+      "ui/dropdown-menu/DropdownMenuSub.vue": "sha256-5febef5eace3dd0da94ab8e86594886f46cfc3ddc0f35641989636a318e3e637",
+      "ui/dropdown-menu/DropdownMenuSubContent.vue": "sha256-142eb89c2b218afceace45f808b7be7b2da390cad7701791d778896cb5577c08",
+      "ui/dropdown-menu/DropdownMenuSubTrigger.vue": "sha256-fc0e5e533a6b417ed1467c700d9953ec42bbdc8279b24ebd386b78aa04ef022c",
+      "ui/dropdown-menu/DropdownMenuTrigger.vue": "sha256-5287fc452f27feb66b3eb46e99bde0127c6fb8764c766dd73df94f26c5700783",
+      "ui/dropdown-menu/index.ts": "sha256-19ee04e0a51375d18aa2d8310f86cdfcc4abe15439033df6a54a3134b3e1d415"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/dropdown-menu/DropdownMenuCheckboxItem.vue",
+      "find": "'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'",
+      "replace": "'relative flex cursor-default select-none items-center rounded-sm py-balsa-2xs ps-balsa-3xl pe-balsa-xs text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuCheckboxItem.vue",
+      "find": "\"absolute left-2 flex h-3.5 w-3.5 items-center justify-center\"",
+      "replace": "\"absolute start-2 flex h-3.5 w-3.5 items-center justify-center\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuContent.vue",
+      "find": "'z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'",
+      "replace": "'z-50 min-w-32 overflow-hidden rounded-md border-solid border-(length:--balsa-outline-border-width) bg-popover p-balsa-3xs text-popover-foreground shadow-[var(--balsa-shadow-md)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuItem.vue",
+      "find": "'relative flex cursor-default select-none items-center rounded-sm gap-2 px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'",
+      "replace": "'relative flex cursor-default select-none items-center rounded-sm gap-balsa-xs px-balsa-xs py-balsa-2xs text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuItem.vue",
+      "find": "'pl-8'",
+      "replace": "'ps-balsa-3xl'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuLabel.vue",
+      "find": "'px-2 py-1.5 text-sm font-semibold'",
+      "replace": "'px-balsa-xs py-balsa-2xs text-sm font-semibold'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuLabel.vue",
+      "find": "'pl-8'",
+      "replace": "'ps-balsa-3xl'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuRadioItem.vue",
+      "find": "'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'",
+      "replace": "'relative flex cursor-default select-none items-center rounded-sm py-balsa-2xs ps-balsa-3xl pe-balsa-xs text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuRadioItem.vue",
+      "find": "\"absolute left-2 flex h-3.5 w-3.5 items-center justify-center\"",
+      "replace": "\"absolute start-2 flex h-3.5 w-3.5 items-center justify-center\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuSeparator.vue",
+      "find": "'-mx-1 my-1 h-px bg-muted'",
+      "replace": "'-mx-1 my-balsa-3xs h-px bg-muted'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuShortcut.vue",
+      "find": "'ml-auto text-xs tracking-widest opacity-60'",
+      "replace": "'ms-auto text-xs tracking-widest opacity-60'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuSubContent.vue",
+      "find": "'z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'",
+      "replace": "'z-50 min-w-32 overflow-hidden rounded-md border-solid border-(length:--balsa-outline-border-width) bg-popover p-balsa-3xs text-popover-foreground shadow-[var(--balsa-shadow-lg)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-reduce:transition-none motion-reduce:animate-none'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable. Animating without a reduced-motion guard ignores the user's stated preference."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuSubTrigger.vue",
+      "find": "'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent'",
+      "replace": "'flex cursor-default select-none items-center rounded-sm px-balsa-xs py-balsa-2xs text-sm outline-none focus:bg-accent data-[state=open]:bg-accent'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/dropdown-menu/DropdownMenuSubTrigger.vue",
+      "find": "\"ml-auto h-4 w-4\"",
+      "replace": "\"ms-auto h-4 w-4\"",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Teleports content. The adapter scope does not follow a teleport, so put data-balsa-adapt on the teleport target as well as the application root.",
+  "rtl": "unsupported",
+  "reducedMotion": "supported",
+  "findings": [
+    "Uses physical-direction utilities (left-, right-), which do not mirror in RTL."
+  ],
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

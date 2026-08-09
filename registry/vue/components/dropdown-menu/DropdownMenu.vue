@@ -71,7 +71,7 @@ const position = ref({ left: 0, top: 0, maxHeight: 0 });
 
 const triggerClasses = computed(() =>
   mergeClasses(
-    "inline-flex min-h-9 cursor-pointer items-center justify-center gap-2 border border-balsa-border-strong bg-balsa-surface px-3 py-1.5 text-sm font-semibold text-balsa-surface-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    "inline-flex min-h-9 cursor-pointer items-center justify-center gap-balsa-xs border border-balsa-border-strong bg-balsa-surface px-balsa-md py-balsa-2xs text-sm font-semibold text-balsa-surface-foreground transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
     // Without an explicit corner the trigger follows the live control-radius
     // token, so Radius edits restyle it instead of leaving a fixed corner behind.
     rawProps.rounded === undefined ? "rounded-balsa-control" : roundedClasses[props.rounded],

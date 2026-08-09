@@ -85,29 +85,16 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Navbar](https://balsa-ui.com/docs/components/navbar.md): Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.
 - [Footer](https://balsa-ui.com/docs/components/footer.md): Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.
 - [GradientBackground](https://balsa-ui.com/docs/components/gradient-background.md): Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.
-- [AccountSecurityCard](https://balsa-ui.com/docs/components/account-security-card.md): Credential update and separated destructive account action.
-- [PayoutMethodCard](https://balsa-ui.com/docs/components/payout-method-card.md): Receiving-method selection with account details and one save action.
-- [TransferFundsCard](https://balsa-ui.com/docs/components/transfer-funds-card.md): Account-to-account transfer form with arrival, fee, and total summary.
-- [SavingsGoalCard](https://balsa-ui.com/docs/components/savings-goal-card.md): Goal values and progress presented in a repeatable financial rhythm.
-- [TransactionListCard](https://balsa-ui.com/docs/components/transaction-list-card.md): Scannable activity rows with identity, metadata, time, and amount.
-- [BalanceSummaryCard](https://balsa-ui.com/docs/components/balance-summary-card.md): Compact balance, availability, and contextual action summary.
-- [UsageSummaryCard](https://balsa-ui.com/docs/components/usage-summary-card.md): Time-series usage, key totals, and quota progress in one panel.
 - [AnalyticsChartCard](https://balsa-ui.com/docs/components/analytics-chart-card.md): Trend visualization with period context and semantic delta.
 - [MetricGridCard](https://balsa-ui.com/docs/components/metric-grid-card.md): Aligned operational KPIs with labels, values, and supporting detail.
 - [ResourceTableCard](https://balsa-ui.com/docs/components/resource-table-card.md): Resource index with status, metadata, row selection, and creation action.
 - [SettingsCard](https://balsa-ui.com/docs/components/settings-card.md): Related workspace settings with explicit reset and save actions.
 - [NotificationPreferencesCard](https://balsa-ui.com/docs/components/notification-preferences-card.md): Independently controlled notification channels with concise explanations.
-- [InviteMembersCard](https://balsa-ui.com/docs/components/invite-members-card.md): Repeatable email and role rows with a single invitation action.
 - [MemberAccessCard](https://balsa-ui.com/docs/components/member-access-card.md): People, identity, role, and access metadata in a scannable list.
-- [ActionListCard](https://balsa-ui.com/docs/components/action-list-card.md): Grouped navigational actions with icons, descriptions, and trailing affordances.
 - [NavigationMenuCard](https://balsa-ui.com/docs/components/navigation-menu-card.md): Sectioned local navigation with an explicit current destination.
-- [EmptyStateCard](https://balsa-ui.com/docs/components/empty-state-card.md): Blank-slate explanation with one primary next step.
 - [ErrorStateCard](https://balsa-ui.com/docs/components/error-state-card.md): Recoverable failure with request context and retry action.
 - [LoadingStateCard](https://balsa-ui.com/docs/components/loading-state-card.md): Stable skeleton geometry with accessible busy semantics.
-- [FileUploadCard](https://balsa-ui.com/docs/components/file-upload-card.md): Drag-and-drop import target with format guidance and browse action.
 - [MediaPreviewCard](https://balsa-ui.com/docs/components/media-preview-card.md): Asset preview, publication status, and replacement action.
-- [ScheduleCard](https://balsa-ui.com/docs/components/schedule-card.md): Date selection paired with a concise upcoming-event list.
-- [AppointmentCard](https://balsa-ui.com/docs/components/appointment-card.md): Appointment time selection with preparation guidance and confirmation.
 - [PaymentMethodCard](https://balsa-ui.com/docs/components/payment-method-card.md): Selectable saved payment methods and a focused continuation action.
 - [SubscriptionCard](https://balsa-ui.com/docs/components/subscription-card.md): Plan, renewal, included usage, and management action.
 - [OrderSummaryCard](https://balsa-ui.com/docs/components/order-summary-card.md): Line items, calculated totals, and order confirmation.
@@ -115,3 +102,23 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [FormProgressCard](https://balsa-ui.com/docs/components/form-progress-card.md): Linear multistep progress with current-step semantics.
 - [ActivityTimelineCard](https://balsa-ui.com/docs/components/activity-timeline-card.md): Chronological actor, action, target, and time event stream.
 - [CommandToolbarCard](https://balsa-ui.com/docs/components/command-toolbar-card.md): Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.
+- [DataGridCard](https://balsa-ui.com/docs/components/data-grid-card.md): Sortable, selectable, paginated table of records with real columns.
+- [SchedulePlannerCard](https://balsa-ui.com/docs/components/schedule-planner-card.md): Calendar paired with the bookable hours for the chosen day.
+- [CommandPaletteCard](https://balsa-ui.com/docs/components/command-palette-card.md): Grouped command palette that reaches projects, actions, and settings from one search.
+- [AssetCarouselCard](https://balsa-ui.com/docs/components/asset-carousel-card.md): Browsable run of captured assets with captions and review status.
+- [SplitWorkspaceCard](https://balsa-ui.com/docs/components/split-workspace-card.md): Resizable split of a file list against the diff it selects.
+- [ReleaseNotesCard](https://balsa-ui.com/docs/components/release-notes-card.md): Scrollable release history with version, date, and change notes.
+- [DeviceVerificationCard](https://balsa-ui.com/docs/components/device-verification-card.md): Single-purpose one-time-code step with resend and explicit confirmation.
+- [ServiceHealthCard](https://balsa-ui.com/docs/components/service-health-card.md): Half-height status strip reporting state and latency per region.
+- [StorageUsageCard](https://balsa-ui.com/docs/components/storage-usage-card.md): Half-height single measurement with the bar that puts it in context.
+- [InboxThreadCard](https://balsa-ui.com/docs/components/inbox-thread-card.md): Message thread with author, timing, and an inline reply.
+- [FilterPanelCard](https://balsa-ui.com/docs/components/filter-panel-card.md): Grouped filters across checkboxes and a range, with reset and apply.
+- [IncidentAlertCard](https://balsa-ui.com/docs/components/incident-alert-card.md): Half-height incident banner with acknowledge and open actions.
+- [PlanComparisonCard](https://balsa-ui.com/docs/components/plan-comparison-card.md): Plan capabilities compared across tiers with a billing period switch.
+- [ProfileFormCard](https://balsa-ui.com/docs/components/profile-form-card.md): Labelled profile fields with picture, handle, time zone, and biography.
+- [UsageBreakdownCard](https://balsa-ui.com/docs/components/usage-breakdown-card.md): Stacked bars attributing billed usage to categories over time.
+- [EnvironmentSwitcherCard](https://balsa-ui.com/docs/components/environment-switcher-card.md): Searchable environment picker with the current selection stated.
+- [ApiKeyCard](https://balsa-ui.com/docs/components/api-key-card.md): One-time secret with copy, provenance, and revocation.
+- [IntegrationListCard](https://balsa-ui.com/docs/components/integration-list-card.md): Connected services, each with the single control that governs it.
+- [RunbookStepsCard](https://balsa-ui.com/docs/components/runbook-steps-card.md): Ordered procedure where only the step in hand is expanded.
+- [ImageCompareCard](https://balsa-ui.com/docs/components/image-compare-card.md): Before-and-after comparison where the reader sets the split.

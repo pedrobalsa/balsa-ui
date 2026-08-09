@@ -83,13 +83,48 @@
     "Putting visible text inside a FAB-shaped button or omitting its accessible name."
   ],
   "examples": [
-    "Basic button",
-    "Button with leading icon",
-    "Soft button",
-    "Outline button",
-    "Glass button",
-    "Floating action button",
-    "Loading button"
+    {
+      "id": "soft",
+      "title": "Soft",
+      "description": "Use the soft variant for a low-emphasis action with a palette-tinted fill.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button variant=\"soft\">button</Button>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Use the outline variant when the action needs a visible semantic boundary.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button variant=\"outline\" color=\"secondary\">button</Button>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Use the glass variant for a translucent action with a restrained rim.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button variant=\"glass\" :prefix-icon=\"undefined\">button</Button>\n</template>"
+    },
+    {
+      "id": "large-pill",
+      "title": "Large pill",
+      "description": "Combine the large size, pill shape, and an optional icon.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\nimport { ArrowRight } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Button size=\"lg\" shape=\"pill\" :prefix-icon=\"ArrowRight\">button</Button>\n</template>"
+    },
+    {
+      "id": "fab",
+      "title": "2XL floating action button",
+      "description": "Use the 2XL FAB for a display-level 72px icon action with an accessible label.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\nimport { Plus } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Button size=\"2xl\" shape=\"fab\" :prefix-icon=\"Plus\" aria-label=\"Add placeholder\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading preserves the action label while blocking interaction.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button loading>button</Button>\n</template>"
+    },
+    {
+      "id": "destructive",
+      "title": "Destructive",
+      "description": "Reserve the destructive color for consequential actions.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button color=\"destructive\" :prefix-icon=\"undefined\">Action placeholder</Button>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Button.vue",

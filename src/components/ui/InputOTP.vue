@@ -30,6 +30,8 @@ const rawProps = withDefaults(
     label: string;
     length?: number;
     mode?: InputOTPMode;
+    /** Share the available width between cells instead of fixing their size. */
+    fluid?: boolean;
     mask?: boolean;
     grouped?: boolean;
     separatorEvery?: number;
@@ -131,7 +133,8 @@ const dataPalette = computed(() =>
 );
 const groupClasses = computed(() =>
   mergeClasses(
-    "relative flex max-w-full items-center gap-2 overflow-x-auto p-1",
+    "relative flex max-w-full items-center gap-balsa-xs p-balsa-3xs",
+    props.fluid ? "w-full" : "overflow-x-auto",
     isDisabled.value
       ? props.loading ? "cursor-progress" : "cursor-not-allowed"
       : "cursor-text",
@@ -197,10 +200,13 @@ const cellColorClasses: Readonly<Record<SemanticColor, Record<InputOTPVariant, s
   },
 };
 const cellClasses = computed(() => [
-  "flex shrink-0 items-center justify-center border font-balsa-body font-semibold tabular-nums transition-[border-color,box-shadow,opacity]",
+  "flex items-center justify-center font-balsa-body font-semibold tabular-nums transition-[border-color,box-shadow,opacity]",
+  props.fluid ? "aspect-square min-w-0 flex-1" : "shrink-0",
   cellVariantClasses[props.variant],
   cellColorClasses[props.color][props.variant],
-  props.size === "sm" ? "size-10 text-base" : "size-12 text-lg",
+  props.fluid
+    ? props.size === "sm" ? "text-base" : "text-lg"
+    : props.size === "sm" ? "size-10 text-base" : "size-12 text-lg",
   roundedClasses[props.rounded],
   props.status === "validated"
     ? "border-balsa-success"
@@ -352,7 +358,7 @@ watch(
       v-if="effectiveStatusMessage"
       :id="statusId"
       role="alert"
-      class="mt-2 block text-sm font-medium text-balsa-destructive"
+      class="mt-balsa-xs block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

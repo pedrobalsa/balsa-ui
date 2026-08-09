@@ -75,10 +75,18 @@
     "Removing the visible close affordance."
   ],
   "examples": [
-    "Centered dialog",
-    "Mobile bottom sheet",
-    "Fullscreen viewport simulation",
-    "Dialog with footer actions"
+    {
+      "id": "dialog",
+      "title": "Dialog",
+      "description": "Dialog presentation centers a short, focused task.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport Modal from \"@/components/ui/Modal.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open</Button>\n  <Modal id=\"placeholder-modal\" v-model=\"open\" title=\"Modal heading placeholder\" description=\"Description placeholder for the modal surface.\" presentation=\"dialog\" variant=\"surface\" close-label=\"Close placeholder\">\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n    <template #footer=\"{ close }\">\n      <Button variant=\"outline\" @click=\"close\">Secondary action</Button>\n      <Button @click=\"close\">Primary action</Button>\n    </template>\n  </Modal>\n</template>"
+    },
+    {
+      "id": "sheet",
+      "title": "Sheet",
+      "description": "Sheet presentation provides more vertical room from the viewport edge.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport Modal from \"@/components/ui/Modal.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open</Button>\n  <Modal id=\"placeholder-modal\" v-model=\"open\" title=\"Modal heading placeholder\" description=\"Description placeholder for the modal surface.\" presentation=\"sheet\" variant=\"surface\" close-label=\"Close placeholder\">\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n    <template #footer=\"{ close }\">\n      <Button variant=\"outline\" @click=\"close\">Secondary action</Button>\n      <Button @click=\"close\">Primary action</Button>\n    </template>\n  </Modal>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Modal.vue",

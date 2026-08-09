@@ -37,7 +37,7 @@ Reuse these values verbatim so listings stay consistent with the package and the
 | License | MIT |
 | Framework | Vue 3 |
 | Styling | Tailwind CSS 4 |
-| Items | 91 registry items, 88 documented components and compositions |
+| Items | 100 registry items, 95 documented components and compositions |
 
 Short description (one line, for directory tables):
 
@@ -77,7 +77,7 @@ Adds Balsa UI, a Vue 3 registry for the shadcn ecosystem.
 - Source: https://github.com/pedrobalsa/balsa-ui
 - License: MIT
 
-Balsa publishes 91 registry items compatible with `shadcn-vue build`, verified
+Balsa publishes 100 registry items compatible with `shadcn-vue build`, verified
 byte-for-byte against that tool's own output. Items install with
 `npx shadcn-vue@latest add https://balsa-ui.com/r/<name>.json`, or through the
 Balsa CLI, which also applies the design system and records provenance.

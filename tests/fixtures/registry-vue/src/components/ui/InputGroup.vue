@@ -109,7 +109,7 @@ const groupClasses = computed(() => [
 const controlClasses = computed(() =>
   mergeClasses(
     "peer min-w-0 flex-1 border-0 bg-transparent font-balsa-body text-balsa-input-foreground outline-none placeholder:text-balsa-muted-foreground disabled:text-balsa-disabled-foreground",
-    props.size === "sm" ? "h-8 px-3 text-sm" : "h-9 px-3 text-sm",
+    props.size === "sm" ? "h-8 px-balsa-md text-sm" : "h-9 px-balsa-md text-sm",
     props.layout === "stacked" ? "w-full" : "",
     isDisabled.value
       ? props.loading
@@ -123,7 +123,7 @@ const controlClasses = computed(() =>
   ),
 );
 const addonBaseClasses = computed(() => [
-  "flex shrink-0 items-center gap-2 bg-balsa-muted px-3 text-balsa-muted-foreground",
+  "flex shrink-0 items-center gap-balsa-xs bg-balsa-muted px-balsa-md text-balsa-muted-foreground",
   props.size === "sm" ? "min-h-8 text-sm" : "min-h-9 text-sm",
 ]);
 const startClasses = computed(() => [
@@ -215,7 +215,7 @@ function handleInput(event: Event): void {
       v-if="effectiveStatusMessage"
       :id="statusId"
       role="alert"
-      class="mt-2 block text-sm font-medium text-balsa-destructive"
+      class="mt-balsa-xs block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

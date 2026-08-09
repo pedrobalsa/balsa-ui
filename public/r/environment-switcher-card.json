@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "environment-switcher-card",
+  "type": "registry:ui",
+  "title": "EnvironmentSwitcherCard",
+  "description": "Searchable environment picker with the current selection stated.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/autocomplete",
+    "@balsa/badge",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/EnvironmentSwitcherCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/EnvironmentSwitcherCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Autocomplete from \"../ui/Autocomplete.vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * Search across more environments than a menu should hold, with the current one\n * stated rather than implied. One unit: choosing where you are working is a\n * small decision that should not take a screen.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  environments?: readonly string[];\n}>(), {\n  title: \"Switch environment\",\n  description: \"Everything below applies to the one you pick.\",\n  environments: () => [\n    \"atlas-production\", \"atlas-preview\", \"atlas-staging\",\n    \"relay-production\", \"relay-preview\",\n    \"harbor-production\", \"harbor-development\",\n    \"nova-development\", \"quill-preview\",\n  ],\n});\nconst emit = defineEmits<{ switch: [environment: string] }>();\n\nconst target = ref(\"atlas-production\");\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"environment-switcher\">\n    <template #action><Badge color=\"primary\" variant=\"soft\">Live</Badge></template>\n    <div class=\"flex flex-1 flex-col justify-between gap-balsa-lg\">\n      <Autocomplete\n        id=\"environment-target\"\n        v-model=\"target\"\n        label=\"Environment\"\n        :suggestions=\"props.environments\"\n        placeholder=\"Start typing a project or environment\"\n        hint=\"Nine environments across five projects.\"\n      />\n      <Button class=\"w-full\" @click=\"emit('switch', target)\">Switch to this environment</Button>\n    </div>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/environment-switcher-card.json",
+    "documentation": "docs/compositions/environment-switcher-card.md",
+    "example": "docs/compositions/environment-switcher-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

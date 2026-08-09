@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 2,
+  "components": {
+    "@balsa/balsa-foundation": {
+      "registry": "@balsa/balsa-foundation",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-foundation.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-022c5cc6f6bbea3f6f9584565caf793d5ae87d21fe8cd23d6e705db5edaded58",
+      "installedSourceHash": "sha256-022c5cc6f6bbea3f6f9584565caf793d5ae87d21fe8cd23d6e705db5edaded58",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/styles/balsa-foundation.css",
+      "files": [
+        "src/styles/balsa-foundation.css"
+      ]
+    },
+    "@balsa/balsa-theme": {
+      "registry": "@balsa/balsa-theme",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-theme.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-1b58ea88ed1d8147f287fff8284c4f6bc445989e30616f51a77dbd10a3c1799f",
+      "installedSourceHash": "sha256-1b58ea88ed1d8147f287fff8284c4f6bc445989e30616f51a77dbd10a3c1799f",
+      "dependencies": [
+        "vue",
+        "tailwindcss",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@balsa/balsa-foundation"
+      ],
+      "targetPath": "src/styles/balsa-theme.css",
+      "files": [
+        "src/styles/balsa-theme.css",
+        "src/components/ui/theme.ts",
+        "src/components/ui/theme-component-contracts.ts",
+        "src/components/ui/theme-context.ts",
+        "src/components/ui/BalsaThemeProvider.vue",
+        "src/theme/theme-store.ts"
+      ]
+    },
+    "@balsa/balsa-shadcn-bridge": {
+      "registry": "@balsa/balsa-shadcn-bridge",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-shadcn-bridge.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-6054b7bee1cf51777aa825e5dbf49d8b597fdd622d73690bc91793170a0786bb",
+      "installedSourceHash": "sha256-6054b7bee1cf51777aa825e5dbf49d8b597fdd622d73690bc91793170a0786bb",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/balsa-foundation",
+        "@balsa/balsa-theme"
+      ],
+      "targetPath": "src/styles/balsa-shadcn-bridge.css",
+      "files": [
+        "src/styles/balsa-shadcn-bridge.css"
+      ]
+    },
+    "@shadcn/label": {
+      "registry": "@shadcn/label",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/label.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-e205b34c06966632c920d97010854e2b4550f27a232358fc087713b3cfbb86f2",
+      "installedSourceHash": "sha256-e205b34c06966632c920d97010854e2b4550f27a232358fc087713b3cfbb86f2",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/label/Label.vue",
+      "files": [
+        "src/components/upstream/label/Label.vue",
+        "src/components/upstream/label/index.ts"
+      ]
+    },
+    "@shadcn/separator": {
+      "registry": "@shadcn/separator",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/separator.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-5e9ba4232f7ebac2c3243258c0f8ce450a83e00aacb6b7f43ae1470a244fca07",
+      "installedSourceHash": "sha256-5e9ba4232f7ebac2c3243258c0f8ce450a83e00aacb6b7f43ae1470a244fca07",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/separator/Separator.vue",
+      "files": [
+        "src/components/upstream/separator/Separator.vue",
+        "src/components/upstream/separator/index.ts"
+      ]
+    },
+    "@shadcn/field": {
+      "registry": "@shadcn/field",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/field.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-f62626198b61d20c0ebbecf07756132d1414cbeb712c6e8755d59bbc127e5519",
+      "installedSourceHash": "sha256-f62626198b61d20c0ebbecf07756132d1414cbeb712c6e8755d59bbc127e5519",
+      "dependencies": [],
+      "registryDependencies": [
+        "label",
+        "separator"
+      ],
+      "targetPath": "src/components/upstream/field/Field.vue",
+      "files": [
+        "src/components/upstream/field/Field.vue",
+        "src/components/upstream/field/FieldContent.vue",
+        "src/components/upstream/field/FieldDescription.vue",
+        "src/components/upstream/field/FieldError.vue",
+        "src/components/upstream/field/FieldGroup.vue",
+        "src/components/upstream/field/FieldLabel.vue",
+        "src/components/upstream/field/FieldLegend.vue",
+        "src/components/upstream/field/FieldSeparator.vue",
+        "src/components/upstream/field/FieldSet.vue",
+        "src/components/upstream/field/FieldTitle.vue",
+        "src/components/upstream/field/index.ts"
+      ]
+    },
+    "@shadcn/empty": {
+      "registry": "@shadcn/empty",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/empty.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-b7bbc9118e6ff7d8b058680ad45778bbaea10e89cfb064cc62f2af71d15fe5c0",
+      "installedSourceHash": "sha256-b7bbc9118e6ff7d8b058680ad45778bbaea10e89cfb064cc62f2af71d15fe5c0",
+      "dependencies": [],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/empty/Empty.vue",
+      "files": [
+        "src/components/upstream/empty/Empty.vue",
+        "src/components/upstream/empty/EmptyContent.vue",
+        "src/components/upstream/empty/EmptyDescription.vue",
+        "src/components/upstream/empty/EmptyHeader.vue",
+        "src/components/upstream/empty/EmptyMedia.vue",
+        "src/components/upstream/empty/EmptyTitle.vue",
+        "src/components/upstream/empty/index.ts"
+      ]
+    },
+    "@shadcn/item": {
+      "registry": "@shadcn/item",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/item.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-8a8a188de1117ca879904943a4f1dfe978009ca123b037a3a79e722a38786f5d",
+      "installedSourceHash": "sha256-8a8a188de1117ca879904943a4f1dfe978009ca123b037a3a79e722a38786f5d",
+      "dependencies": [
+        "reka-ui"
+      ],
+      "registryDependencies": [
+        "separator"
+      ],
+      "targetPath": "src/components/upstream/item/Item.vue",
+      "files": [
+        "src/components/upstream/item/Item.vue",
+        "src/components/upstream/item/ItemActions.vue",
+        "src/components/upstream/item/ItemContent.vue",
+        "src/components/upstream/item/ItemDescription.vue",
+        "src/components/upstream/item/ItemFooter.vue",
+        "src/components/upstream/item/ItemGroup.vue",
+        "src/components/upstream/item/ItemHeader.vue",
+        "src/components/upstream/item/ItemMedia.vue",
+        "src/components/upstream/item/ItemSeparator.vue",
+        "src/components/upstream/item/ItemTitle.vue",
+        "src/components/upstream/item/index.ts"
+      ]
+    },
+    "@shadcn/aspect-ratio": {
+      "registry": "@shadcn/aspect-ratio",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/aspect-ratio.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-859e1d2791685fc21b2ff6528c3242ca9be879124a230d5084c949ec00c390e4",
+      "installedSourceHash": "sha256-859e1d2791685fc21b2ff6528c3242ca9be879124a230d5084c949ec00c390e4",
+      "dependencies": [
+        "reka-ui"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/aspect-ratio/AspectRatio.vue",
+      "files": [
+        "src/components/upstream/aspect-ratio/AspectRatio.vue",
+        "src/components/upstream/aspect-ratio/index.ts"
+      ]
+    },
+    "@shadcn/button": {
+      "registry": "@shadcn/button",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/button.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-331c9ec0dbfad350c4abb0c47664fdf9f5555fcbff492d5c70cd7f6186ee3ede",
+      "installedSourceHash": "sha256-331c9ec0dbfad350c4abb0c47664fdf9f5555fcbff492d5c70cd7f6186ee3ede",
+      "dependencies": [
+        "reka-ui"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/button/Button.vue",
+      "files": [
+        "src/components/upstream/button/Button.vue",
+        "src/components/upstream/button/index.ts"
+      ]
+    },
+    "@shadcn/alert-dialog": {
+      "registry": "@shadcn/alert-dialog",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/alert-dialog.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-2567f1a3e15690e763142ba19b24dd23eda33910e8167134a41181ceb8bf49ef",
+      "installedSourceHash": "sha256-2567f1a3e15690e763142ba19b24dd23eda33910e8167134a41181ceb8bf49ef",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "targetPath": "src/components/upstream/alert-dialog/AlertDialog.vue",
+      "files": [
+        "src/components/upstream/alert-dialog/AlertDialog.vue",
+        "src/components/upstream/alert-dialog/AlertDialogAction.vue",
+        "src/components/upstream/alert-dialog/AlertDialogCancel.vue",
+        "src/components/upstream/alert-dialog/AlertDialogContent.vue",
+        "src/components/upstream/alert-dialog/AlertDialogDescription.vue",
+        "src/components/upstream/alert-dialog/AlertDialogFooter.vue",
+        "src/components/upstream/alert-dialog/AlertDialogHeader.vue",
+        "src/components/upstream/alert-dialog/AlertDialogTitle.vue",
+        "src/components/upstream/alert-dialog/AlertDialogTrigger.vue",
+        "src/components/upstream/alert-dialog/index.ts"
+      ]
+    },
+    "@shadcn/combobox": {
+      "registry": "@shadcn/combobox",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/combobox.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-20a56ae92ae15f6c07631273072e9e9c4456a3936d82c837fda7c2dd3bea75e3",
+      "installedSourceHash": "sha256-20a56ae92ae15f6c07631273072e9e9c4456a3936d82c837fda7c2dd3bea75e3",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/combobox/Combobox.vue",
+      "files": [
+        "src/components/upstream/combobox/Combobox.vue",
+        "src/components/upstream/combobox/ComboboxAnchor.vue",
+        "src/components/upstream/combobox/ComboboxEmpty.vue",
+        "src/components/upstream/combobox/ComboboxGroup.vue",
+        "src/components/upstream/combobox/ComboboxInput.vue",
+        "src/components/upstream/combobox/ComboboxItem.vue",
+        "src/components/upstream/combobox/ComboboxList.vue",
+        "src/components/upstream/combobox/ComboboxSeparator.vue",
+        "src/components/upstream/combobox/ComboboxTrigger.vue",
+        "src/components/upstream/combobox/index.ts"
+      ]
+    },
+    "@shadcn/number-field": {
+      "registry": "@shadcn/number-field",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/number-field.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-7803c01ab8cb28abef712fe9a4ae000a2ec266ab2d6a7bb64e9637351c6b20e0",
+      "installedSourceHash": "sha256-7803c01ab8cb28abef712fe9a4ae000a2ec266ab2d6a7bb64e9637351c6b20e0",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/number-field/NumberField.vue",
+      "files": [
+        "src/components/upstream/number-field/NumberField.vue",
+        "src/components/upstream/number-field/NumberFieldContent.vue",
+        "src/components/upstream/number-field/NumberFieldDecrement.vue",
+        "src/components/upstream/number-field/NumberFieldIncrement.vue",
+        "src/components/upstream/number-field/NumberFieldInput.vue",
+        "src/components/upstream/number-field/index.ts"
+      ]
+    },
+    "@shadcn/tags-input": {
+      "registry": "@shadcn/tags-input",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/tags-input.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-c82ead0cfe45ce64844f3536876ee91834895abc87c873420ed9c0c4ea89ead3",
+      "installedSourceHash": "sha256-c82ead0cfe45ce64844f3536876ee91834895abc87c873420ed9c0c4ea89ead3",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/tags-input/TagsInput.vue",
+      "files": [
+        "src/components/upstream/tags-input/TagsInput.vue",
+        "src/components/upstream/tags-input/TagsInputInput.vue",
+        "src/components/upstream/tags-input/TagsInputItem.vue",
+        "src/components/upstream/tags-input/TagsInputItemDelete.vue",
+        "src/components/upstream/tags-input/TagsInputItemText.vue",
+        "src/components/upstream/tags-input/index.ts"
+      ]
+    },
+    "@shadcn/stepper": {
+      "registry": "@shadcn/stepper",
+      "namespace": "@shadcn",
+      "origin": "https://shadcn-vue.com/r/styles/new-york/stepper.json",
+      "installedVersion": "unversioned",
+      "adapterStatus": "integrated-with-patch",
+      "designSystemVersion": "0.4.0",
+      "originalSourceHash": "sha256-ed62cc6514adf04d7774627c02641b3c59e13fd652ed04c300c8c6cadfc842d4",
+      "installedSourceHash": "sha256-ed62cc6514adf04d7774627c02641b3c59e13fd652ed04c300c8c6cadfc842d4",
+      "dependencies": [
+        "reka-ui",
+        "@vueuse/core"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/upstream/stepper/Stepper.vue",
+      "files": [
+        "src/components/upstream/stepper/Stepper.vue",
+        "src/components/upstream/stepper/StepperDescription.vue",
+        "src/components/upstream/stepper/StepperIndicator.vue",
+        "src/components/upstream/stepper/StepperItem.vue",
+        "src/components/upstream/stepper/StepperSeparator.vue",
+        "src/components/upstream/stepper/StepperTitle.vue",
+        "src/components/upstream/stepper/StepperTrigger.vue",
+        "src/components/upstream/stepper/index.ts"
+      ]
+    }
+  }
+}

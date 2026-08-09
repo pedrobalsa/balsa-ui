@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Line items, calculated totals, and order confirmation.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport OrderSummaryCard from \"@/components/compositions/OrderSummaryCard.vue\";\n</script>\n\n<template>\n  <OrderSummaryCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport OrderSummaryCard from \"@/components/compositions/OrderSummaryCard.vue\";\n</script>\n\n<template>\n  <OrderSummaryCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/OrderSummaryCard.vue",
@@ -158,7 +168,7 @@
         "name": "items",
         "type": "readonly OrderLine[] | undefined",
         "required": false,
-        "default": "[ { id: \"pro\", label: \"Pro workspace\", detail: \"12 members\", amount: \"$240.00\" }, { id: \"storage\", label: \"Additional storage\", detail: \"500 GB\", amount: \"$35.00\" }, ]"
+        "default": "[ { id: \"pro\", label: \"Pro workspace\", detail: \"12 members\", amount: \"$240.00\" }, { id: \"storage\", label: \"Additional storage\", detail: \"500 GB\", amount: \"$35.00\" }, { id: \"regions\", label: \"Extra regions\", detail: \"3 beyond the plan\", amount: \"$45.00\" }, { id: \"support\", label: \"Priority support\", detail: \"4 hour response\", amount: \"$60.00\" }, { id: \"credit\", label: \"Annual commitment\", detail: \"-10% for 12 months\", amount: \"-$38.00\" }, ]"
       },
       {
         "name": "subtotal",
@@ -167,7 +177,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"$275.00\""
+        "default": "\"$342.00\""
       },
       {
         "name": "tax",
@@ -176,7 +186,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"$22.00\""
+        "default": "\"$27.36\""
       },
       {
         "name": "total",
@@ -185,7 +195,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"$297.00\""
+        "default": "\"$369.36\""
       }
     ],
     "events": [

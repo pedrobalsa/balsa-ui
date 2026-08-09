@@ -1,5 +1,15 @@
 import { extendTailwindMerge, type ClassNameValue } from "tailwind-merge";
 
+/**
+ * Every custom scale has to be declared here, not only defined in CSS.
+ *
+ * tailwind-merge decides which of two classes wins by knowing they belong to
+ * the same group. A scale it has not been told about is not a group, so a
+ * component's own `gap-balsa-md` and a caller's `gap-3` both survive the merge
+ * and whichever CSS rule happens to come last decides — the caller's override
+ * silently stops working. That is what happened the moment the spacing scale
+ * landed, and it is invisible in the source: the class list looks right.
+ */
 const twMerge = extendTailwindMerge({
   extend: {
     theme: {
@@ -12,6 +22,25 @@ const twMerge = extendTailwindMerge({
         "balsa-md",
         "balsa-lg",
         "balsa-detail",
+      ],
+      spacing: [
+        "balsa-4xs",
+        "balsa-3xs",
+        "balsa-2xs",
+        "balsa-xs",
+        "balsa-sm",
+        "balsa-md",
+        "balsa-lg",
+        "balsa-xl",
+        "balsa-2xl",
+        "balsa-3xl",
+        "balsa-section-sm",
+        "balsa-section-md",
+        "balsa-section-lg",
+        "balsa-control-inline",
+        "balsa-density-compact",
+        "balsa-density-default",
+        "balsa-density-comfortable",
       ],
     },
   },

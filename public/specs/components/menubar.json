@@ -48,10 +48,30 @@
     "Omitting keyboard-equivalent access to commands."
   ],
   "examples": [
-    "Editor menus",
-    "Disabled top-level menu",
-    "Checkable view menu",
-    "Submenu"
+    {
+      "id": "editor",
+      "title": "Editor menus",
+      "description": "Top-level triggers use horizontal roving focus.",
+      "source": "<script setup lang=\"ts\">\nimport Menubar from \"@/components/ui/Menubar.vue\";\nimport { ref } from \"vue\";\nimport type { MenubarMenu } from \"@/components/ui/Menubar.vue\";\n\nconst openMenu = ref<string | null>(null);\nconst menus: readonly MenubarMenu[] = [\n  { id: \"file\", label: \"File placeholder\", items: [{ id: \"file-action\", label: \"New placeholder\" }] },\n  { id: \"edit\", label: \"Edit placeholder\", items: [{ id: \"edit-action\", label: \"Undo placeholder\" }] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <Menubar id=\"editor-menubar\" v-model=\"openMenu\" label=\"Editor menu placeholder\" :menus=\"menus\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outlined menus",
+      "description": "Menu material remains consistent across top-level owners.",
+      "source": "<script setup lang=\"ts\">\nimport Menubar from \"@/components/ui/Menubar.vue\";\nimport { ref } from \"vue\";\nimport type { MenubarMenu } from \"@/components/ui/Menubar.vue\";\n\nconst openMenu = ref<string | null>(null);\nconst menus: readonly MenubarMenu[] = [\n  { id: \"file\", label: \"File placeholder\", items: [{ id: \"file-action\", label: \"New placeholder\" }] },\n  { id: \"edit\", label: \"Edit placeholder\", items: [{ id: \"edit-action\", label: \"Undo placeholder\" }] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <Menubar id=\"editor-menubar\" v-model=\"openMenu\" label=\"Editor menu placeholder\" :menus=\"menus\" variant=\"outline\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft menus",
+      "description": "Soft material creates a quieter application command surface.",
+      "source": "<script setup lang=\"ts\">\nimport Menubar from \"@/components/ui/Menubar.vue\";\nimport { ref } from \"vue\";\nimport type { MenubarMenu } from \"@/components/ui/Menubar.vue\";\n\nconst openMenu = ref<string | null>(null);\nconst menus: readonly MenubarMenu[] = [\n  { id: \"file\", label: \"File placeholder\", items: [{ id: \"file-action\", label: \"New placeholder\" }] },\n  { id: \"edit\", label: \"Edit placeholder\", items: [{ id: \"edit-action\", label: \"Undo placeholder\" }] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <Menubar id=\"editor-menubar\" v-model=\"openMenu\" label=\"Editor menu placeholder\" :menus=\"menus\" variant=\"soft\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass menus",
+      "description": "Translucent menu panels retain selected foreground contrast.",
+      "source": "<script setup lang=\"ts\">\nimport Menubar from \"@/components/ui/Menubar.vue\";\nimport { ref } from \"vue\";\nimport type { MenubarMenu } from \"@/components/ui/Menubar.vue\";\n\nconst openMenu = ref<string | null>(null);\nconst menus: readonly MenubarMenu[] = [\n  { id: \"file\", label: \"File placeholder\", items: [{ id: \"file-action\", label: \"New placeholder\" }] },\n  { id: \"edit\", label: \"Edit placeholder\", items: [{ id: \"edit-action\", label: \"Undo placeholder\" }] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <Menubar id=\"editor-menubar\" v-model=\"openMenu\" label=\"Editor menu placeholder\" :menus=\"menus\" variant=\"glass\" @select=\"handleSelect\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Menubar.vue",

@@ -67,10 +67,30 @@
     "Using it for a tiny fixed list."
   ],
   "examples": [
-    "Filtered suggestions",
-    "Multiple selection",
-    "Keyboard selection",
-    "Loading autocomplete"
+    {
+      "id": "medium",
+      "title": "Medium",
+      "description": "Use medium sizing when search-assisted entry is a primary field.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required state is exposed through the shared field presentation.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" size=\"sm\" required />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid",
+      "description": "Unvalidated state communicates an unacceptable value.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading blocks input while suggestions are prepared.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" size=\"sm\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Autocomplete.vue",

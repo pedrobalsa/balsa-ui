@@ -56,10 +56,30 @@
     "Using inline layout when long addon text needs a stacked row."
   ],
   "examples": [
-    "URL prefix",
-    "Currency suffix",
-    "Icon search",
-    "Stacked action row"
+    {
+      "id": "url",
+      "title": "URL prefix",
+      "description": "Short semantic text can connect to the start of one labelled field.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" start-text=\"https://\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "currency",
+      "title": "Currency suffix",
+      "description": "A trailing unit remains visually connected without becoming a second input.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" start-text=\"$\" end-text=\"USD\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "stacked",
+      "title": "Stacked addons",
+      "description": "Block rows give longer contextual content enough room on narrow layouts.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" layout=\"stacked\" start-text=\"Address prefix placeholder\" end-text=\"Address suffix placeholder\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid grouped field",
+      "description": "One error boundary and explicit message cover the native control and addons.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" start-text=\"https://\" end-text=\".example\" status=\"unvalidated\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/InputGroup.vue",

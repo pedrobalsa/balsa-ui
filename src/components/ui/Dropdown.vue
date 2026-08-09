@@ -111,7 +111,7 @@ const stateClasses = computed(() =>
 );
 
 const classes = computed(() => [
-  "absolute top-full z-50 mt-2 border p-2 transition-[opacity,transform,visibility] duration-150 ease-out",
+  "absolute top-full z-50 mt-balsa-xs border p-balsa-xs transition-[opacity,transform,visibility] duration-150 ease-out",
   widthClasses[props.width],
   roundedClasses[props.rounded],
   ...alignClasses[resolvedAlign.value],

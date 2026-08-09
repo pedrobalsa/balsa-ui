@@ -324,7 +324,7 @@ function formatPercentageInput(value: string): { amount: number | ""; display: s
       v-if="effectiveStatusMessage"
       :id="statusId"
       :role="statusRole"
-      class="mt-2 block text-sm font-medium text-balsa-destructive"
+      class="mt-balsa-xs block text-sm font-medium text-balsa-destructive"
     >
       {{ effectiveStatusMessage }}
     </span>

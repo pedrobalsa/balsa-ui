@@ -144,7 +144,7 @@ const containedBackdropClasses = computed(() => [
   motionState.value === "open" ? "opacity-100" : "opacity-0",
 ]);
 const headerClasses = computed(() => [
-  "flex shrink-0 items-start justify-between gap-4 border-b border-balsa-border p-5",
+  "flex shrink-0 items-start justify-between gap-balsa-lg border-b border-balsa-border p-balsa-xl",
   props.showHandle && vertical.value ? "pt-10" : "",
   props.showHandle && props.side === "left" ? "pr-10" : "",
   props.showHandle && props.side === "right" ? "pl-10" : "",
@@ -342,7 +342,7 @@ onBeforeUnmount(() => {
         <header :class="headerClasses">
           <div>
             <h3 :id="titleId">{{ props.title }}</h3>
-            <p v-if="props.description" :id="descriptionId" class="mt-2 text-sm text-balsa-muted-foreground">
+            <p v-if="props.description" :id="descriptionId" class="mt-balsa-xs text-sm text-balsa-muted-foreground">
               {{ props.description }}
             </p>
           </div>
@@ -355,10 +355,10 @@ onBeforeUnmount(() => {
             <Icon :icon="X" size="lg" />
           </button>
         </header>
-        <div class="min-h-0 flex-1 overflow-y-auto p-5">
+        <div class="min-h-0 flex-1 overflow-y-auto p-balsa-xl">
           <slot :close="close" />
         </div>
-        <footer v-if="$slots.footer" class="shrink-0 border-t border-balsa-border p-5">
+        <footer v-if="$slots.footer" class="shrink-0 border-t border-balsa-border p-balsa-xl">
           <slot name="footer" :close="close" />
         </footer>
       </dialog>

@@ -50,9 +50,30 @@
     "Making the Glassmorphism surface so transparent that it no longer reads as a consistently dark code surface."
   ],
   "examples": [
-    "Install command with package-manager actions",
-    "Highlighted Vue source example",
-    "Wrapped configuration"
+    {
+      "id": "collapsed-preview",
+      "title": "Collapsed preview",
+      "description": "Long source can start compact and expand over a bottom fade.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"const background = '#101114';\nconst foreground = '#f4f4f5';\nconst surface = '#18191d';\nconst primary = '#f5f5f4';\nconst secondary = '#a1a1aa';\nconst accent = '#93c5fd';\" label=\"Configuration\" language=\"shell\" :collapsed-lines=\"5\" />\n</template>"
+    },
+    {
+      "id": "line-numbers",
+      "title": "Line numbers",
+      "description": "Visual line numbers can support longer reference examples.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"const placeholder = true;\nconst value = placeholder ? 1 : 0;\" label=\"Vue\" language=\"shell\" line-numbers />\n</template>"
+    },
+    {
+      "id": "wrapped",
+      "title": "Wrapped",
+      "description": "Wrapped code keeps long commands within narrow layouts.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"echo &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor&quot;\" label=\"Code placeholder\" language=\"shell\" wrap />\n</template>"
+    },
+    {
+      "id": "read-only",
+      "title": "Without copy",
+      "description": "Hide the copy action when the snippet is illustrative rather than reusable.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"echo &quot;Lorem ipsum placeholder&quot;\" label=\"Code placeholder\" language=\"shell\" :copyable=\"false\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/CodeBlock.vue",

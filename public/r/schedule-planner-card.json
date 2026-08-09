@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "schedule-planner-card",
+  "type": "registry:ui",
+  "title": "SchedulePlannerCard",
+  "description": "Calendar paired with the bookable hours for the chosen day.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/calendar",
+    "@balsa/badge",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/SchedulePlannerCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/SchedulePlannerCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Mail, Video } from \"@lucide/vue\";\nimport { ref } from \"vue\";\nimport Avatar from \"../ui/Avatar.vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport Calendar from \"../ui/Calendar.vue\";\nimport Icon from \"../ui/Icon.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface ScheduleSlot { id: string; time: string; label: string; taken?: boolean }\n\n/**\n * Two columns that answer different halves of one question: the left says when\n * and with whom, the right says at what hour. The confirm sits under the hours\n * because that is the last choice made — put in a card footer it would read as\n * confirming the calendar too.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  guestName?: string;\n  guestRole?: string;\n  guestInitials?: string;\n  guestEmail?: string;\n  slots?: readonly ScheduleSlot[];\n}>(), {\n  title: \"Schedule meeting\",\n  description: \"Pick a day and an hour that suits you both.\",\n  guestName: \"Grace Hopper\",\n  guestRole: \"Platform, Frankfurt\",\n  guestInitials: \"GH\",\n  guestEmail: \"grace@example.com\",\n  slots: () => [\n    { id: \"08\", time: \"08:00\", label: \"Early, before either inbox\" },\n    { id: \"09\", time: \"09:00\", label: \"Before the standup\" },\n    { id: \"10\", time: \"10:00\", label: \"Held for the release review\", taken: true },\n    { id: \"11\", time: \"11:00\", label: \"Overlaps both time zones\" },\n    { id: \"14\", time: \"14:00\", label: \"After lunch in Frankfurt\" },\n    { id: \"15\", time: \"15:00\", label: \"Quiet hour on both calendars\" },\n    { id: \"16\", time: \"16:00\", label: \"Held for on-call handover\", taken: true },\n    { id: \"17\", time: \"17:00\", label: \"Last hour of the Frankfurt day\" },\n  ],\n});\nconst emit = defineEmits<{ schedule: [slot: string] }>();\n\nconst day = ref<Date | null>(new Date(2026, 8, 16));\nconst slot = ref(\"11\");\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"schedule-planner\">\n    <div class=\"grid flex-1 gap-balsa-xl sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]\">\n      <div class=\"flex min-w-0 flex-col gap-balsa-lg\">\n        <Calendar id=\"meeting-day\" v-model=\"day\" label=\"Meeting day\" />\n        <div class=\"flex min-w-0 items-center gap-balsa-md rounded-balsa-control border border-balsa-border p-balsa-md\">\n          <Avatar :label=\"props.guestName\" :fallback=\"props.guestInitials\" size=\"md\" />\n          <span class=\"min-w-0 flex-1\">\n            <strong class=\"block truncate text-sm font-medium\">{{ props.guestName }}</strong>\n            <span class=\"block truncate text-xs text-balsa-muted-foreground\">{{ props.guestRole }}</span>\n          </span>\n        </div>\n        <ul class=\"grid gap-balsa-xs text-xs text-balsa-muted-foreground\" role=\"list\">\n          <li class=\"flex min-w-0 items-center gap-balsa-xs\">\n            <Icon :icon=\"Video\" size=\"sm\" class=\"shrink-0\" />\n            <span class=\"truncate\">30 minutes, video call</span>\n          </li>\n          <li class=\"flex min-w-0 items-center gap-balsa-xs\">\n            <Icon :icon=\"Mail\" size=\"sm\" class=\"shrink-0\" />\n            <span class=\"truncate\">{{ props.guestEmail }}</span>\n          </li>\n        </ul>\n      </div>\n\n      <div class=\"flex min-w-0 flex-col\">\n        <p class=\"text-xs font-medium uppercase tracking-wider text-balsa-muted-foreground\">\n          Available hours\n        </p>\n        <ul class=\"mt-balsa-md grid flex-1 content-start gap-balsa-xs\" role=\"list\">\n          <li v-for=\"option in props.slots\" :key=\"option.id\">\n            <button\n              type=\"button\"\n              :disabled=\"option.taken\"\n              :aria-pressed=\"slot === option.id\"\n              :class=\"['flex w-full items-center justify-between gap-balsa-md rounded-balsa-control border px-balsa-md py-balsa-sm text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring',\n                       option.taken ? 'cursor-not-allowed border-balsa-border opacity-60'\n                       : slot === option.id ? 'border-balsa-primary bg-balsa-muted'\n                       : 'border-balsa-border hover:bg-balsa-muted']\"\n              @click=\"slot = option.id\"\n            >\n              <span class=\"min-w-0\">\n                <strong class=\"block text-sm font-medium tabular-nums\">{{ option.time }}</strong>\n                <span class=\"block truncate text-xs text-balsa-muted-foreground\">{{ option.label }}</span>\n              </span>\n              <Badge v-if=\"option.taken\" variant=\"soft\">Taken</Badge>\n            </button>\n          </li>\n        </ul>\n        <Button class=\"mt-balsa-md w-full\" @click=\"emit('schedule', slot)\">Confirm the meeting</Button>\n      </div>\n    </div>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/schedule-planner-card.json",
+    "documentation": "docs/compositions/schedule-planner-card.md",
+    "example": "docs/compositions/schedule-planner-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

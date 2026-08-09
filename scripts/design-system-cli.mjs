@@ -3,6 +3,8 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { ensureStyleImports } from "./agent-context.mjs";
+import { listAdapters } from "./apply-adapters.mjs";
+import { colorBridge, createIntegrationManifest, extendedDimensions } from "./theme-bridge.mjs";
 import { installRegistryItems } from "./install-registry.mjs";
 import { readJson, targetPath, writeJson } from "./registry-lib.mjs";
 import {
@@ -42,6 +44,83 @@ function isPlainCssColor(value) {
 
 function isRecord(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+/*
+ * The recipe calls a dimension `shape`; the adapter manifests call the same
+ * thing `radius`. Without the mapping a report says shape is unmeasured across
+ * all 58, which is worse than saying nothing — a confident wrong answer to the
+ * exact question the report exists to answer.
+ */
+const adapterDimension = { shape: "radius" };
+
+/**
+ * What the active design system exposes, and how far each dimension reaches.
+ *
+ * Data only, with no output of its own, because there are now two callers that
+ * present it differently — `balsa design-system show` and the MCP surface — and
+ * a second derivation of "how far does spacing reach" is a second answer that
+ * can disagree with the first.
+ */
+export async function describeDesignSystem(cwd) {
+  let authored;
+  try {
+    authored = await readJson(path.join(cwd, ".balsa", "design-system.json"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+
+  // How each dimension lands on upstream components, counted across every
+  // adapter rather than asserted once.
+  const adapters = await listAdapters();
+  const reach = {};
+  for (const adapter of adapters) {
+    for (const [dimension, value] of Object.entries(adapter.dimensions ?? {})) {
+      reach[dimension] ??= {};
+      reach[dimension][value] = (reach[dimension][value] ?? 0) + 1;
+    }
+  }
+
+  return {
+    project: cwd,
+    source: authored ? ".balsa/design-system.json" : "built-in defaults",
+    palette: authored?.palette,
+    theme: authored?.theme,
+    supportedModes: authored?.supportedModes ?? ["light", "dark"],
+    dimensions: Object.entries(extendedDimensions).map(([name, tokens]) => ({
+      dimension: name,
+      tokens,
+      upstreamReach: reach[adapterDimension[name] ?? name] ?? { unmeasured: adapters.length },
+    })),
+    colorBridge: Object.keys(colorBridge).length,
+    adapters: adapters.length,
+  };
+}
+
+/** The same description as prose, for a terminal or an agent's context. */
+export function formatDesignSystem(described) {
+  const lines = [
+    described.source === "built-in defaults"
+      ? "No authored design system here; reporting the built-in defaults."
+      : `Design system from .balsa/design-system.json${described.theme?.name ? ` (${described.theme.name})` : ""}`,
+    `Modes: ${described.supportedModes.join(", ")}`,
+    "",
+    `Dimensions, and how far each reaches ${described.adapters} adapted upstream components:`,
+  ];
+  for (const entry of described.dimensions) {
+    const spread = Object.entries(entry.upstreamReach)
+      .sort(([, left], [, right]) => right - left)
+      .map(([value, count]) => `${value} ${count}`)
+      .join(", ");
+    lines.push(`  ${entry.dimension.padEnd(11)} ${entry.tokens.length} tokens — upstream: ${spread}`);
+  }
+  lines.push(
+    "",
+    "Colour reaches upstream through the token bridge; the rest through the"
+    + " adapter scope or a styling patch. A dimension reported unsupported cannot"
+    + " be carried, and the adapter manifests say why per component.",
+  );
+  return lines.join("\n");
 }
 
 export function decodeDesignSystemInlineConfig(payload) {
@@ -183,7 +262,7 @@ export async function createDesignSystemConfiguration({
   const paletteTarget = path.join("src", "styles", `${name}-palette.css`);
 
   const installed = await installRegistryItems({
-    names: ["balsa-theme", "balsa-palette"],
+    names: ["balsa-theme", "balsa-palette", "balsa-shadcn-bridge"],
     cwd: projectRoot,
     force,
   });
@@ -192,8 +271,18 @@ export async function createDesignSystemConfiguration({
   // Writing the stylesheets is not the same as activating them. Without this the
   // command reports success while the application renders completely unstyled.
   const stylesheet = await ensureStyleImports(projectRoot, {
+    includeBridge: true,
     generated: [`${name}-palette.css`],
   });
+
+  // The portable description of this design system. An adapter, an agent or a
+  // later migration can read what the system exposes and how far it reaches
+  // into upstream components without parsing the generated CSS.
+  const designSystemPath = path.join(projectRoot, ".balsa", "design-system.json");
+  await writeJson(
+    designSystemPath,
+    createIntegrationManifest({ palette: config.palette, theme: config.theme }),
+  );
 
   const manifestPath = path.join(projectRoot, ".balsa", "installed.json");
   const manifest = await readJson(manifestPath);
@@ -219,5 +308,6 @@ export async function createDesignSystemConfiguration({
     installed,
     stylesheet,
     projectRoot,
+    designSystem: designSystemPath,
   };
 }

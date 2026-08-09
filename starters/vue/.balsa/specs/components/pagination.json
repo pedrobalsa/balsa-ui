@@ -55,11 +55,30 @@
     "Removing accessible names from icon-only controls."
   ],
   "examples": [
-    "Default range",
-    "Action labels only",
-    "Icons only",
-    "Without edge controls",
-    "Disabled pagination"
+    {
+      "id": "default",
+      "title": "Bounded result pages",
+      "description": "Sibling pages and semantic ellipses keep a large result set compact.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"248\" :page-size=\"20\" :sibling-count=\"1\" label=\"Result pages placeholder\" />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact navigation",
+      "description": "Small icon-forward controls fit dense result surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"96\" :page-size=\"12\" :sibling-count=\"1\" label=\"Result pages placeholder\" presentation=\"icons\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "action-labels",
+      "title": "Adjacent actions",
+      "description": "Previous and next labels provide document-style navigation without a page range.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"72\" :page-size=\"10\" :sibling-count=\"1\" label=\"Result pages placeholder\" presentation=\"action-labels\" />\n</template>"
+    },
+    {
+      "id": "without-edges",
+      "title": "Previous and next",
+      "description": "Edge controls can be omitted while bounded page context remains.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"72\" :page-size=\"10\" :sibling-count=\"1\" label=\"Result pages placeholder\" :show-edges=\"false\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Pagination.vue",

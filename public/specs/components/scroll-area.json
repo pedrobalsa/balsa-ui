@@ -9,7 +9,7 @@
     "name": "scroll-area"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Constrain overflowing content in a labelled native scroll viewport with Balsa scrollbar treatment.",
   "useFor": [
     "Long lists inside bounded panels",
@@ -54,10 +54,24 @@
     "Using edge fades where they obscure important content."
   ],
   "examples": [
-    "Vertical list",
-    "Horizontal row",
-    "Hover scrollbars",
-    "Edge fade"
+    {
+      "id": "vertical",
+      "title": "Vertical list",
+      "description": "A labelled native viewport contains a long stacked collection.",
+      "source": "<script setup lang=\"ts\">\nimport ScrollArea from \"@/components/ui/ScrollArea.vue\";\n</script>\n\n<template>\n  <ScrollArea label=\"Scrollable items placeholder\" orientation=\"vertical\" visibility=\"auto\" size=\"regular\" class=\"h-64 w-full\">\n    <div class=\"min-w-[42rem] space-y-balsa-md p-balsa-lg\">\n      <p v-for=\"item in 12\" :key=\"item\">Item placeholder {{ item }}</p>\n    </div>\n  </ScrollArea>\n</template>"
+    },
+    {
+      "id": "horizontal",
+      "title": "Horizontal row",
+      "description": "Horizontal overflow preserves fixed-width item cards and native gestures.",
+      "source": "<script setup lang=\"ts\">\nimport ScrollArea from \"@/components/ui/ScrollArea.vue\";\n</script>\n\n<template>\n  <ScrollArea label=\"Scrollable items placeholder\" orientation=\"horizontal\" visibility=\"always\" size=\"thin\" class=\"h-64 w-full\">\n    <div class=\"min-w-[42rem] space-y-balsa-md p-balsa-lg\">\n      <p v-for=\"item in 12\" :key=\"item\">Item placeholder {{ item }}</p>\n    </div>\n  </ScrollArea>\n</template>"
+    },
+    {
+      "id": "fade",
+      "title": "Edge cue",
+      "description": "An optional fade indicates additional offscreen content without replacing the scrollbar.",
+      "source": "<script setup lang=\"ts\">\nimport ScrollArea from \"@/components/ui/ScrollArea.vue\";\n</script>\n\n<template>\n  <ScrollArea label=\"Scrollable items placeholder\" orientation=\"both\" visibility=\"hover\" size=\"regular\" edge-fade class=\"h-64 w-full\">\n    <div class=\"min-w-[42rem] space-y-balsa-md p-balsa-lg\">\n      <p v-for=\"item in 12\" :key=\"item\">Item placeholder {{ item }}</p>\n    </div>\n  </ScrollArea>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/ScrollArea.vue",
@@ -110,13 +124,14 @@
       },
       {
         "name": "rounded",
-        "type": "Rounded | undefined",
+        "type": "SurfaceRounded | undefined",
         "values": [
           "md",
           "sm",
           "lg",
           "xl",
           "2xl",
+          "auto",
           "none",
           "3xl",
           "full"

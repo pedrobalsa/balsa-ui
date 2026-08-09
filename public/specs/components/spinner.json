@@ -47,9 +47,30 @@
     "Using several unrelated spinners in one compact region."
   ],
   "examples": [
-    "Icon-only loading",
-    "Inline loading label",
-    "Stacked loading label"
+    {
+      "id": "hidden-label",
+      "title": "Compact status",
+      "description": "Keep the loading name accessible when visual space is tight.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "inline",
+      "title": "Inline label",
+      "description": "A visible right-hand label provides immediate process context.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" label-position=\"right\" />\n</template>"
+    },
+    {
+      "id": "stacked",
+      "title": "Stacked label",
+      "description": "Bottom placement supports centered loading regions.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" label-position=\"bottom\" color=\"primary\" size=\"lg\" />\n</template>"
+    },
+    {
+      "id": "fast",
+      "title": "Fast compact action",
+      "description": "Fast motion can indicate a short inline operation.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" label-position=\"right\" size=\"sm\" speed=\"fast\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Spinner.vue",

@@ -5,6 +5,77 @@
  * Every derived --balsa-color-* role remains an explicit consumer override.
  */
 
+/*
+ * The resolved role layer: every palette role with its derivation applied.
+ *
+ * A material recipe refers to a palette role -- `color("accent-hover", 0.94)`
+ * becomes `color-mix(in oklab, var(--balsa-color-accent-hover) 94%, transparent)`.
+ * A palette defines the anchors and not the derived roles, so that `var()` had
+ * nothing to resolve, and a `var()` on an undefined custom property with no
+ * fallback is invalid at computed-value time: the whole declaration computes to
+ * the guaranteed-invalid value and the material variable silently disappears.
+ *
+ * Measured consequence before this existed: at the Glass material `accent` was
+ * 92% translucent while `accent-hover` and `accent-active` stayed fully opaque,
+ * so a glass accent surface snapped to solid on hover. The same for `secondary`,
+ * `code`, `inverse` and `selected`. Nothing errored -- an invalid custom
+ * property just is not there.
+ *
+ * These carry the derivation so a material always has something to resolve, and
+ * a palette that defines a role explicitly still wins.
+ *
+ * Deliberately a plain rule rather than part of the `@theme inline` block
+ * below. Those aliases are inlined into utilities and resolve at the element
+ * that uses them, which is what lets a palette apply to a subtree. These
+ * resolve where they are declared, which matches the material layer -- written
+ * as inline styles on the theme root and already root-scoped. Moving the
+ * aliases onto these would quietly narrow subtree palettes to the root, so the
+ * derivations appear in both places on purpose. `tests/theme.test.ts` fails if
+ * the two ever disagree.
+ */
+:root {
+  --balsa-role-background: var(--balsa-color-background, light-dark(#fafafa, #0f1012));
+  --balsa-role-foreground: var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5));
+  --balsa-role-surface: var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c));
+  --balsa-role-surface-foreground: var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-surface-elevated: var(--balsa-color-surface-elevated, light-dark(color-mix(in oklab, var(--balsa-color-surface, #f1f1f1) 30%, white), color-mix(in oklab, var(--balsa-color-surface, #191a1c) 96%, var(--balsa-color-foreground, #f4f4f5))));
+  --balsa-role-surface-elevated-foreground: var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-muted: var(--balsa-color-muted, light-dark(#e0e0e1, #2b2c2e));
+  --balsa-role-muted-foreground: var(--balsa-color-muted-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 72%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-inverse: var(--balsa-color-inverse, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-inverse-foreground: var(--balsa-color-inverse-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+
+  --balsa-role-primary: var(--balsa-color-primary, light-dark(#18181b, #f4f4f5));
+  --balsa-role-primary-foreground: var(--balsa-color-primary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-primary-hover: var(--balsa-color-primary-hover, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-primary-active: var(--balsa-color-primary-active, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-secondary: var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa));
+  --balsa-role-secondary-foreground: var(--balsa-color-secondary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-secondary-hover: var(--balsa-color-secondary-hover, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-secondary-active: var(--balsa-color-secondary-active, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-accent: var(--balsa-color-accent, light-dark(#475569, #cbd5e1));
+  --balsa-role-accent-foreground: var(--balsa-color-accent-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-accent-hover: var(--balsa-color-accent-hover, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-accent-active: var(--balsa-color-accent-active, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+
+  --balsa-role-destructive: var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5));
+  --balsa-role-destructive-foreground: var(--balsa-color-destructive-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-success: var(--balsa-color-success, light-dark(#166534, #86efac));
+  --balsa-role-success-foreground: var(--balsa-color-success-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-warning: var(--balsa-color-warning, light-dark(#854d0e, #fde68a));
+  --balsa-role-warning-foreground: var(--balsa-color-warning-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-info: var(--balsa-color-info, light-dark(#1d4ed8, #93c5fd));
+  --balsa-role-info-foreground: var(--balsa-color-info-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+
+  --balsa-role-input: var(--balsa-color-input, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 28%, var(--balsa-color-surface, #f1f1f1)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 62%, var(--balsa-color-surface, #191a1c))));
+  --balsa-role-input-border: var(--balsa-color-input-border, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --balsa-role-selected: var(--balsa-color-selected, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-border: var(--balsa-color-border, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 86%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 80%, var(--balsa-color-foreground, #f4f4f5))));
+  --balsa-role-border-strong: var(--balsa-color-border-strong, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --balsa-role-code: var(--balsa-color-code, light-dark(var(--balsa-color-foreground, #18181b), color-mix(in oklab, var(--balsa-color-background, #0f1012) 96%, var(--balsa-color-foreground, #f4f4f5))));
+  --balsa-role-code-foreground: var(--balsa-color-code-foreground, light-dark(var(--balsa-color-background, #fafafa), var(--balsa-color-foreground, #f4f4f5)));
+}
+
 @theme inline {
   --color-balsa-background: var(--balsa-material-background, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
   --color-balsa-foreground: var(--balsa-material-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));

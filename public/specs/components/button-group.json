@@ -70,9 +70,48 @@
     "Expecting color to tint unselected options in the neutral surface, outline, and glass variants."
   ],
   "examples": [
-    "Preview and code switcher",
-    "Responsive viewport selector",
-    "Package-manager selector"
+    {
+      "id": "solid",
+      "title": "Solid",
+      "description": "Use a solid group for the primary mode switch in a local workbench.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" size=\"md\" variant=\"solid\" />\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Use an outline group for secondary choices that should remain visibly connected.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" color=\"secondary\" variant=\"outline\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Use glass for a low-rim connected choice over a translucent Glassmorphism surface.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" color=\"accent\" variant=\"glass\" />\n</template>"
+    },
+    {
+      "id": "extra-large",
+      "title": "Extra large",
+      "description": "Use extra large only when a mode switch needs to lead a spacious local area.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" size=\"xl\" />\n</template>"
+    },
+    {
+      "id": "pill",
+      "title": "Pill",
+      "description": "Use pill ends only when the surrounding layout calls for a fully rounded connected control.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" shape=\"pill\" />\n</template>"
+    },
+    {
+      "id": "text-only",
+      "title": "Text only",
+      "description": "Icons can be omitted when the option labels are already concise.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\n\nconst activeView = ref(\"code\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\" },\n  { id: \"code\", label: \"Option 02\" },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" />\n</template>"
+    },
+    {
+      "id": "collapsed",
+      "title": "Collapsed labels",
+      "description": "Collapse labels for constrained toolbars while retaining the accessible group label.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" collapse-labels />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/ButtonGroup.vue",

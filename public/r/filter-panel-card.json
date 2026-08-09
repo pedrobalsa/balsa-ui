@@ -1,0 +1,43 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "filter-panel-card",
+  "type": "registry:ui",
+  "title": "FilterPanelCard",
+  "description": "Grouped filters across checkboxes and a range, with reset and apply.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/accordion",
+    "@balsa/checkbox",
+    "@balsa/slider",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/FilterPanelCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/FilterPanelCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { reactive, ref } from \"vue\";\nimport Accordion, { type AccordionItem } from \"../ui/Accordion.vue\";\nimport Button from \"../ui/Button.vue\";\nimport Checkbox from \"../ui/Checkbox.vue\";\nimport Slider from \"../ui/Slider.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * Filters as a rail: every group open to its own depth, with the reset and\n * apply pair pinned to the bottom. It is tall because a filter panel that fits\n * in one unit is a toolbar, and toolbars do not need sections.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n}>(), {\n  title: \"Filter deployments\",\n  description: \"Narrow the deployment history.\",\n});\nconst emit = defineEmits<{ apply: []; reset: [] }>();\n\nconst sections: readonly AccordionItem[] = [\n  { id: \"environment\", title: \"Environment\" },\n  { id: \"outcome\", title: \"Outcome\" },\n  { id: \"duration\", title: \"Duration\" },\n  { id: \"actor\", title: \"Triggered by\" },\n];\n\nconst environments = reactive({ production: true, preview: true, development: false });\nconst outcomes = reactive({ succeeded: true, failed: true, rolledBack: false });\nconst maxDuration = ref(180);\n// Every group open at rest: a filter panel that hides its own state makes the\n// reader click three times to learn what is already filtered.\nconst openSections = ref<readonly string[]>([\"environment\", \"outcome\", \"duration\", \"actor\"]);\nconst actors = reactive({ people: true, schedule: true, api: false });\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"filter-panel\">\n    <div class=\"flex-1\">\n      <Accordion id=\"deployment-filters\" v-model=\"openSections\" :items=\"sections\" type=\"multiple\" label=\"Filter groups\">\n        <template #environment>\n          <div class=\"grid gap-balsa-md\">\n            <Checkbox id=\"filter-production\" v-model=\"environments.production\" label=\"Production\" />\n            <Checkbox id=\"filter-preview\" v-model=\"environments.preview\" label=\"Preview\" />\n            <Checkbox id=\"filter-development\" v-model=\"environments.development\" label=\"Development\" />\n          </div>\n        </template>\n        <template #outcome>\n          <div class=\"grid gap-balsa-md\">\n            <Checkbox id=\"filter-succeeded\" v-model=\"outcomes.succeeded\" label=\"Succeeded\" />\n            <Checkbox id=\"filter-failed\" v-model=\"outcomes.failed\" label=\"Failed\" />\n            <Checkbox id=\"filter-rolled-back\" v-model=\"outcomes.rolledBack\" label=\"Rolled back\" />\n          </div>\n        </template>\n        <template #duration>\n          <Slider\n            id=\"filter-duration\"\n            v-model=\"maxDuration\"\n            label=\"At most\"\n            :min=\"30\"\n            :max=\"600\"\n            :step=\"30\"\n            show-value\n            :format-value=\"(value: number) => `${Math.round(value / 60)} min`\"\n          />\n        </template>\n        <template #actor>\n          <div class=\"grid gap-balsa-md\">\n            <Checkbox id=\"filter-people\" v-model=\"actors.people\" label=\"A person\" />\n            <Checkbox id=\"filter-schedule\" v-model=\"actors.schedule\" label=\"A schedule\" />\n            <Checkbox id=\"filter-api\" v-model=\"actors.api\" label=\"The API\" />\n          </div>\n        </template>\n      </Accordion>\n      <p class=\"mt-balsa-lg text-xs text-balsa-muted-foreground\">\n        42 of 318 deployments match.\n      </p>\n    </div>\n    <template #footer>\n      <div class=\"flex justify-between gap-balsa-md\">\n        <Button variant=\"soft\" @click=\"emit('reset')\">Reset</Button>\n        <Button @click=\"emit('apply')\">Apply filters</Button>\n      </div>\n    </template>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/filter-panel-card.json",
+    "documentation": "docs/compositions/filter-panel-card.md",
+    "example": "docs/compositions/filter-panel-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

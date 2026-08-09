@@ -9,10 +9,20 @@ import { readJson, targetPath, writeJson } from "./registry-lib.mjs";
 const themes = new Set(["modern-flat", "brutalism", "glassmorphism"]);
 
 export const themePresets = [...themes];
-const optionValues = {
+/**
+ * The recipe dimensions this CLI accepts.
+ *
+ * A hand-kept duplicate of `themeOptionDefinitions`, because this script is
+ * plain ESM and the definitions are TypeScript. `tests/theme-cli.test.ts` fails
+ * if the two ever disagree — which they did: `spacing` became a dimension and
+ * was never added here, so a design system that set it could be authored in the
+ * Studio and then rejected by `theme create` as invalid.
+ */
+export const optionValues = {
   typography: new Set(["modern", "system", "editorial", "mono"]),
   shape: new Set(["square", "subtle", "rounded", "soft"]),
-  density: new Set(["compact", "balanced", "comfortable"]),
+  size: new Set(["compact", "balanced", "comfortable"]),
+  spacing: new Set(["tight", "balanced", "airy"]),
   border: new Set(["none", "soft", "medium", "strong"]),
   elevation: new Set(["none", "soft", "floating", "hard"]),
   motion: new Set(["none", "snappy", "balanced", "fluid"]),
@@ -279,7 +289,12 @@ export function normalizeCliThemeConfig(value) {
   if (value.options !== undefined && !isRecord(value.options)) {
     throw new Error("Theme options must be an object.");
   }
-  for (const [key, rawEntry] of Object.entries(value.options ?? {})) {
+  for (const [rawKey, rawEntry] of Object.entries(value.options ?? {})) {
+    // `density` was this dimension's name before spacing was split out of it and
+    // it took the name its control always carried. A payload written by an older
+    // Studio still says `density`, and dropping it would silently lose a setting
+    // rather than fail — the same reason `border: "subtle"` is still accepted.
+    const key = rawKey === "density" ? "size" : rawKey;
     const entry = key === "border" && rawEntry === "subtle" ? "medium" : rawEntry;
     if (!optionValues[key]?.has(entry)) {
       throw new Error(`Theme option "${key}" is invalid.`);

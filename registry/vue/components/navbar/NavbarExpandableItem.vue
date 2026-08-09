@@ -28,7 +28,7 @@ const icon = computed(() => props.expanded ? ChevronUp : ChevronDown);
 
 <template>
   <li
-    class="group relative flex h-full items-center gap-1 px-4"
+    class="group relative flex h-full items-center gap-balsa-3xs px-balsa-lg"
     @mouseenter="emit('open', props.item)"
     @mouseleave="emit('close')"
     @keydown.escape.stop="emit('close')"

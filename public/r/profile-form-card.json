@@ -1,0 +1,44 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "profile-form-card",
+  "type": "registry:ui",
+  "title": "ProfileFormCard",
+  "description": "Labelled profile fields with picture, handle, time zone, and biography.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/input",
+    "@balsa/select",
+    "@balsa/textarea",
+    "@balsa/avatar",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ProfileFormCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/ProfileFormCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Avatar from \"../ui/Avatar.vue\";\nimport Button from \"../ui/Button.vue\";\nimport Input from \"../ui/Input.vue\";\nimport Select, { type SelectOption } from \"../ui/Select.vue\";\nimport Switch from \"../ui/Switch.vue\";\nimport Textarea from \"../ui/Textarea.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * The ordinary form, done properly: labelled fields, a hint where one is\n * genuinely needed, and a save that is the last thing on the card. It is here\n * because most of an application is this, not the interesting surfaces.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n}>(), {\n  title: \"Your profile\",\n  description: \"How you appear to everyone in this workspace.\",\n});\nconst emit = defineEmits<{ save: [{ name: string; handle: string; timezone: string; bio: string }] }>();\n\nconst name = ref(\"Ada Lovelace\");\nconst handle = ref(\"ada\");\nconst timezone = ref(\"europe-london\");\nconst bio = ref(\"Working on the deploy pipeline and whatever it breaks.\");\nconst website = ref(\"https://example.com/ada\");\nconst showLocalTime = ref(true);\n\nconst timezones: readonly SelectOption[] = [\n  { label: \"Europe / London\", value: \"europe-london\" },\n  { label: \"America / New York\", value: \"america-new-york\" },\n  { label: \"America / São Paulo\", value: \"america-sao-paulo\" },\n  { label: \"Asia / Tokyo\", value: \"asia-tokyo\" },\n];\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"profile-form\">\n    <div class=\"flex flex-1 flex-col gap-balsa-lg\">\n      <div class=\"flex items-center gap-balsa-md\">\n        <Avatar label=\"Ada Lovelace\" fallback=\"AL\" size=\"lg\" />\n        <Button variant=\"soft\" size=\"sm\">Change picture</Button>\n      </div>\n      <Input id=\"profile-name\" v-model=\"name\" label=\"Display name\" />\n      <Input id=\"profile-handle\" v-model=\"handle\" label=\"Handle\" hint=\"Used in mentions and commit trailers.\" />\n      <Select id=\"profile-timezone\" v-model=\"timezone\" label=\"Time zone\" :options=\"timezones\" />\n      <Textarea id=\"profile-bio\" v-model=\"bio\" label=\"About\" :rows=\"3\" class=\"flex-1\" />\n      <Input id=\"profile-website\" v-model=\"website\" label=\"Website\" />\n      <div class=\"rounded-balsa-control border border-balsa-border p-balsa-md\">\n        <Switch\n          id=\"profile-local-time\"\n          v-model=\"showLocalTime\"\n          label=\"Show local time\"\n          hint=\"Others see the hour where you are.\"\n        />\n      </div>\n    </div>\n    <template #footer>\n      <Button class=\"w-full\" @click=\"emit('save', { name, handle, timezone, bio })\">Save profile</Button>\n    </template>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/profile-form-card.json",
+    "documentation": "docs/compositions/profile-form-card.md",
+    "example": "docs/compositions/profile-form-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

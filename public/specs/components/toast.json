@@ -68,10 +68,30 @@
     "Using a short duration for long descriptions or keyboard actions."
   ],
   "examples": [
-    "Success notification",
-    "Actionable information",
-    "Sticky destructive feedback",
-    "Top-center notification"
+    {
+      "id": "success",
+      "title": "Success notification",
+      "description": "A polite success item confirms a completed background action.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"success\",\n      variant: \"surface\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n      actionLabel: \"Undo placeholder\",\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"bottom-end\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    },
+    {
+      "id": "action",
+      "title": "Actionable information",
+      "description": "One concise action remains reachable while the timer is paused by focus.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"info\",\n      variant: \"soft\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n      actionLabel: \"Undo placeholder\",\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"bottom-start\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    },
+    {
+      "id": "destructive",
+      "title": "Sticky destructive feedback",
+      "description": "Assertive destructive feedback stays until explicitly dismissed.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"destructive\",\n      variant: \"outline\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"top-end\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    },
+    {
+      "id": "center",
+      "title": "Top-center notification",
+      "description": "Centered placement remains viewport-safe at narrow widths.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"accent\",\n      variant: \"glass\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n      actionLabel: \"Undo placeholder\",\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"top-center\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/ToastViewport.vue",

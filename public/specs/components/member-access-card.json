@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "People, identity, role, and access metadata in a scannable list.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport MemberAccessCard from \"@/components/compositions/MemberAccessCard.vue\";\n</script>\n\n<template>\n  <MemberAccessCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport MemberAccessCard from \"@/components/compositions/MemberAccessCard.vue\";\n</script>\n\n<template>\n  <MemberAccessCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/MemberAccessCard.vue",
@@ -158,7 +168,7 @@
         "name": "members",
         "type": "readonly MemberAccess[] | undefined",
         "required": false,
-        "default": "[ { id: \"ada\", name: \"Ada Lovelace\", email: \"ada@example.com\", role: \"Owner\", initials: \"AL\", status: \"accent\" }, { id: \"grace\", name: \"Grace Hopper\", email: \"grace@example.com\", role: \"Editor\", initials: \"GH\" }, { id: \"margaret\", name: \"Margaret Hamilton\", email: \"margaret@example.com\", role: \"Viewer\", initials: \"MH\" }, ]"
+        "default": "[ { id: \"ada\", name: \"Ada Lovelace\", email: \"ada@example.com\", role: \"Owner\", initials: \"AL\", status: \"accent\" }, { id: \"grace\", name: \"Grace Hopper\", email: \"grace@example.com\", role: \"Editor\", initials: \"GH\" }, { id: \"margaret\", name: \"Margaret Hamilton\", email: \"margaret@example.com\", role: \"Viewer\", initials: \"MH\" }, { id: \"barbara\", name: \"Barbara Liskov\", email: \"barbara@example.com\", role: \"Editor\", initials: \"BL\" }, { id: \"katherine\", name: \"Katherine Johnson\", email: \"katherine@example.com\", role: \"Editor\", initials: \"KJ\" }, { id: \"radia\", name: \"Radia Perlman\", email: \"radia@example.com\", role: \"Viewer\", initials: \"RP\" }, { id: \"jean\", name: \"Jean Bartik\", email: \"jean@example.com\", role: \"Viewer\", initials: \"JB\" }, { id: \"alan\", name: \"Alan Turing\", email: \"alan@example.com\", role: \"Viewer\", initials: \"AT\" }, { id: \"annie\", name: \"Annie Easley\", email: \"annie@example.com\", role: \"Viewer\", initials: \"AE\" }, ]"
       }
     ],
     "events": [

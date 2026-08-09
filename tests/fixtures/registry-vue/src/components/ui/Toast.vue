@@ -126,14 +126,14 @@ const actionColorMap: Readonly<Record<SemanticColor, ActionColor>> = {
   info: "primary",
 };
 const sizeClasses: Readonly<Record<ToastSize, string>> = {
-  sm: "p-3 text-sm",
-  md: "p-4 text-sm",
-  lg: "p-5 text-base",
+  sm: "p-balsa-md text-sm",
+  md: "p-balsa-lg text-sm",
+  lg: "p-balsa-xl text-base",
 };
 const contentGapClasses: Readonly<Record<ToastSize, string>> = {
-  sm: "gap-3",
-  md: "gap-4",
-  lg: "gap-5",
+  sm: "gap-balsa-md",
+  md: "gap-balsa-lg",
+  lg: "gap-balsa-xl",
 };
 const iconSizes: Readonly<Record<ToastSize, IconSize>> = {
   sm: "md",
@@ -172,7 +172,7 @@ const titleClasses = computed(() => [
   titleSizeClasses[props.size],
 ]);
 const descriptionClasses = computed(() => [
-  "mt-1 leading-relaxed",
+  "mt-balsa-3xs leading-relaxed",
   isTintedVariant.value ? "text-current" : "text-balsa-muted-foreground",
 ]);
 const contentPaddingClasses = computed(() => props.dismissible ? "pr-9" : "");
@@ -237,7 +237,7 @@ const closeClasses = computed(() =>
     <div
       v-if="props.actionLabel || $slots.action"
       data-balsa-toast-action
-      class="mt-3 flex min-w-0 justify-end gap-2"
+      class="mt-balsa-md flex min-w-0 justify-end gap-balsa-xs"
     >
       <slot name="action" :dismiss="() => emit('dismiss')">
         <Button

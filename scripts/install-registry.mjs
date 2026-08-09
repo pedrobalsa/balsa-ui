@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { syncAgentContext } from "./agent-context.mjs";
+import { applyAdapter, loadAdapter } from "./apply-adapters.mjs";
 import {
   createResolver,
   defaultNamespace,
@@ -17,6 +18,7 @@ import {
   targetPath,
   writeJson,
 } from "./registry-lib.mjs";
+import { rewriteItemImports } from "./source-imports.mjs";
 
 const manifestSchemaVersion = 2;
 
@@ -108,7 +110,39 @@ export async function installRegistryItems({
 }) {
   const configuration = await loadProjectConfiguration(cwd);
   const resolver = createResolver({ configuration });
-  const items = await resolver.resolve(names);
+  let items = await resolver.resolve(names);
+
+  // An upstream component styles itself from the standard shadcn variables and
+  // knows nothing about Balsa. Installing the token bridge alongside it is what
+  // makes it follow the active palette instead of shadcn's defaults, so it is
+  // pulled in automatically rather than left as a step to remember.
+  // Adapters carry the dimensions the token bridge cannot: Tailwind compiles
+  // border width and shadow geometry to literals, so those need a styling-only
+  // source patch applied before the file is written.
+  const adapterConflicts = [];
+  const adapterStatus = new Map();
+  items = await Promise.all(items.map(async (item) => {
+    if (item.namespace === defaultNamespace) return item;
+    const result = applyAdapter(item, await loadAdapter(item.reference));
+    adapterStatus.set(item.reference, result.status);
+    if (result.conflict) adapterConflicts.push(result.conflict);
+    return result.item;
+  }));
+
+  // Only now that every adapter has matched its recorded hashes and applied its
+  // patches is it safe to touch the source. An upstream component reaches its
+  // siblings through shadcn's own repository layout, which does not exist in a
+  // consumer project, so the specifiers have to be pointed at wherever this
+  // project's aliases put those siblings. Doing it before the adapters would
+  // drift every recorded hash and downgrade all of them to unpatched.
+  items = items.map((item) => rewriteItemImports(item, configuration));
+
+  const needsBridge = items.some((item) => item.namespace !== defaultNamespace);
+  if (needsBridge && !items.some((item) => item.name === "balsa-shadcn-bridge")) {
+    const bridge = await resolver.resolve([`${defaultNamespace}/balsa-shadcn-bridge`]);
+    const known = new Set(items.map((item) => item.reference));
+    items = [...bridge.filter((item) => !known.has(item.reference)), ...items];
+  }
 
   const collisions = findTargetCollisions(items);
   if (collisions.length && !force) {
@@ -168,8 +202,7 @@ export async function installRegistryItems({
           : item.version ?? "unversioned",
         upstreamVersion: item.version,
         contractVersion: isBalsa ? await balsaContractVersion(item.name) : undefined,
-        // Populated by the Phase 0.7 adapter program.
-        adapterVersion: undefined,
+        adapterStatus: adapterStatus.get(item.reference),
         designSystemVersion,
         originalSourceHash: sourceHash,
         installedSourceHash: sourceHash,
@@ -194,6 +227,7 @@ export async function installRegistryItems({
 
   await writeJson(manifestPath, manifest);
   if (agentContext) await syncAgentContext(cwd, { forceSkill: forceAgentSkill });
+  items.conflicts = adapterConflicts;
   return items;
 }
 
@@ -241,7 +275,7 @@ export async function detectLocalModifications(cwd) {
   return modified;
 }
 
-export { manifestSchemaVersion };
+export { hashContent, manifestSchemaVersion, upgradeManifest };
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const options = parseArguments(process.argv.slice(2));

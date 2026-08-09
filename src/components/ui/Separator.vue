@@ -74,7 +74,7 @@ const classes = computed(() =>
     "border-balsa-border",
     props.orientation === "horizontal"
       ? hasLabel.value
-        ? "flex w-full items-center gap-3"
+        ? "flex w-full items-center gap-balsa-md"
         : [
             "block w-full",
             horizontalSizeClasses[props.size],

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/field",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/field/Field.vue": "sha256-c8c79517de5118dcaba6716439fba8118ab27d8cb91272b42644b0d3e5819d4c",
+      "ui/field/FieldContent.vue": "sha256-35dea5b478de375a528c2dfcc8acf56e31e27b943df869c9278e6156985b5bba",
+      "ui/field/FieldDescription.vue": "sha256-85acca8ff6310fc2e616c0be118e0e26a7ca4a4baea97ebbd32b7aa2cc6c265b",
+      "ui/field/FieldError.vue": "sha256-502b3ef9ab50ed0770b2b6b6d2f0d1adfa170c363d33bc576415e244858a7f60",
+      "ui/field/FieldGroup.vue": "sha256-cf8cc8807276ab2c14113ef8bc1eaf7b8d473b48dac24afe0eadf84997380f91",
+      "ui/field/FieldLabel.vue": "sha256-a32874ffe97bfea8bf6cf3b34c288c89cfcd74840e27bed94947af8abc5e5268",
+      "ui/field/FieldLegend.vue": "sha256-ba1794efbc5c8b4e2ed03fdc046f8f1ee9901aaaeb7f509507faab5a180a6cbe",
+      "ui/field/FieldSeparator.vue": "sha256-dd0c44a680d13e6c005572e9d850e608caa00a2db79d5a5b89166647ed5bee08",
+      "ui/field/FieldSet.vue": "sha256-087bf0b4058d2f33361c651d5b11846f4a0108873db3311b7253573409efd740",
+      "ui/field/FieldTitle.vue": "sha256-fb1553768838dec9130840ce0219c1192c4012a676ee0716887282f33a1054ec",
+      "ui/field/index.ts": "sha256-d8d4ea6b875410a3cb9e540dcf27516056675647306a16dfb304f8bddaf5ab67"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/label",
+      "@/registry/new-york/ui/separator"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/field/FieldContent.vue",
+      "find": "'group/field-content flex flex-1 flex-col gap-1.5 leading-snug'",
+      "replace": "'group/field-content flex flex-1 flex-col gap-balsa-2xs leading-snug'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/field/FieldError.vue",
+      "find": "\"ml-4 flex list-disc flex-col gap-1\"",
+      "replace": "\"ms-balsa-lg flex list-disc flex-col gap-balsa-3xs\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/field/FieldLabel.vue",
+      "find": "'group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50'",
+      "replace": "'group/field-label peer/field-label flex w-fit gap-balsa-xs leading-snug group-data-[disabled=true]/field:opacity-50'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/field/FieldSeparator.vue",
+      "find": "\"bg-background text-muted-foreground relative mx-auto block w-fit px-2\"",
+      "replace": "\"bg-background text-muted-foreground relative mx-auto block w-fit px-balsa-xs\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/field/FieldSet.vue",
+      "find": "'flex flex-col gap-6'",
+      "replace": "'flex flex-col gap-balsa-2xl'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/field/FieldTitle.vue",
+      "find": "'flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50'",
+      "replace": "'flex w-fit items-center gap-balsa-xs text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/field/index.ts",
+      "find": "\"group/field flex w-full gap-3 data-[invalid=true]:text-destructive\"",
+      "replace": "\"group/field flex w-full gap-balsa-md data-[invalid=true]:text-destructive\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

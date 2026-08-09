@@ -2,7 +2,7 @@
 import { computed, useAttrs } from "vue";
 import Spinner from "./Spinner.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
-import { roundedClasses, type Rounded } from "./form";
+import { surfaceRoundedClasses, type SurfaceRounded } from "./form";
 import type { Shadow, ThemeInput } from "./theme";
 import type { SemanticColor } from "./types";
 import { useResolvedThemeProps } from "./theme-context";
@@ -25,7 +25,7 @@ const rawProps = withDefaults(defineProps<{
   empty?: boolean;
   emptyText?: string;
   columnCount?: number;
-  rounded?: Rounded;
+  rounded?: SurfaceRounded;
   shadow?: Shadow;
   theme?: ThemeInput;
 }>(), {
@@ -47,7 +47,7 @@ const { props, theme } = useResolvedThemeProps(
   {
     variant: "surface",
     density: "default",
-    rounded: "lg",
+    rounded: "auto",
     shadow: "auto",
   } as const,
 );
@@ -116,9 +116,9 @@ const selectedRowClasses = [
   "[&_tbody_tr[data-selected=true]_td]:text-balsa-selected-foreground",
 ];
 const classes = computed(() => mergeClasses(
-  "max-w-full overflow-x-auto border text-balsa-foreground",
+  "max-w-full overflow-x-auto text-balsa-foreground",
   variantClasses[props.variant],
-  roundedClasses[props.rounded],
+  surfaceRoundedClasses[props.rounded],
   attrs.class,
 ));
 const tableClasses = computed(() => mergeClasses(
@@ -144,6 +144,7 @@ const tableClasses = computed(() => mergeClasses(
   <div
     v-bind="rootAttrs"
     data-balsa="table"
+    :data-rounded="props.rounded"
     :data-theme="theme.explicitPresentation.value?.id"
     :data-theme-base="theme.explicitPresentation.value?.base"
     :data-variant="props.variant"

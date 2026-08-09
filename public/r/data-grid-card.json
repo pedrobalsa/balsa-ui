@@ -1,0 +1,40 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "data-grid-card",
+  "type": "registry:ui",
+  "title": "DataGridCard",
+  "description": "Sortable, selectable, paginated table of records with real columns.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/data-table"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/DataGridCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/DataGridCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport DataTable, { type DataTableColumn } from \"../ui/DataTable.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n// The index signature satisfies DataTable's row constraint while the named\n// fields keep the data contract typed for whoever supplies the rows.\nexport interface DeploymentRow {\n  [column: string]: string;\n  id: string;\n  service: string;\n  environment: string;\n  version: string;\n  duration: string;\n  started: string;\n}\n\n/**\n * A table earns a wide tile and asks for nothing beyond it. Five columns and a\n * page of rows is the smallest honest demonstration — a three-column, three-row\n * table says nothing about how the component behaves with real data in it —\n * while a taller tile would only add empty surface under the pager.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  rows?: readonly DeploymentRow[];\n}>(), {\n  title: \"Deployment history\",\n  description: \"Every build that reached an environment, newest first.\",\n  rows: () => [\n    { id: \"d-108\", service: \"Atlas\", environment: \"Production\", version: \"4.12.0\", duration: \"1m 48s\", started: \"2 minutes ago\" },\n    { id: \"d-107\", service: \"Relay\", environment: \"Preview\", version: \"2.7.3\", duration: \"52s\", started: \"18 minutes ago\" },\n    { id: \"d-106\", service: \"Atlas\", environment: \"Preview\", version: \"4.12.0-rc.2\", duration: \"1m 31s\", started: \"1 hour ago\" },\n    { id: \"d-105\", service: \"Harbor\", environment: \"Production\", version: \"1.9.8\", duration: \"3m 04s\", started: \"3 hours ago\" },\n    { id: \"d-104\", service: \"Nova\", environment: \"Development\", version: \"0.4.1\", duration: \"41s\", started: \"5 hours ago\" },\n    { id: \"d-103\", service: \"Relay\", environment: \"Production\", version: \"2.7.2\", duration: \"58s\", started: \"Yesterday\" },\n    { id: \"d-102\", service: \"Quill\", environment: \"Preview\", version: \"3.0.0-beta.4\", duration: \"2m 12s\", started: \"Yesterday\" },\n    { id: \"d-101\", service: \"Atlas\", environment: \"Production\", version: \"4.11.6\", duration: \"1m 44s\", started: \"2 days ago\" },\n    { id: \"d-100\", service: \"Harbor\", environment: \"Development\", version: \"1.9.7\", duration: \"37s\", started: \"2 days ago\" },\n  ],\n});\nconst emit = defineEmits<{ inspect: [id: string] }>();\n\nconst columns: readonly DataTableColumn<DeploymentRow>[] = [\n  { id: \"service\", label: \"Service\", key: \"service\", sortable: true },\n  { id: \"environment\", label: \"Environment\", key: \"environment\", sortable: true, filterable: true },\n  { id: \"version\", label: \"Version\", key: \"version\" },\n  { id: \"duration\", label: \"Duration\", key: \"duration\", align: \"right\", sortable: true },\n  { id: \"started\", label: \"Started\", key: \"started\", align: \"right\" },\n];\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"data-grid\">\n    <DataTable\n      id=\"deployment-history\"\n      caption=\"Deployment history\"\n      :columns=\"columns\"\n      :data=\"props.rows\"\n      row-key=\"id\"\n      selection=\"multiple\"\n      :page-size=\"4\"\n      striped\n      class=\"flex min-h-0 flex-1 flex-col [&>[data-balsa=table]]:min-h-0 [&>[data-balsa=table]]:flex-1 [&_table]:h-full\"\n      @row-select=\"(row: DeploymentRow) => emit('inspect', row.id)\"\n    />\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/data-grid-card.json",
+    "documentation": "docs/compositions/data-grid-card.md",
+    "example": "docs/compositions/data-grid-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

@@ -128,8 +128,8 @@ const monthFormatter = computed(() => new Intl.DateTimeFormat(props.locale, { mo
 const weekdayFormatter = computed(() => new Intl.DateTimeFormat(props.locale, { weekday: "short" }));
 const dayFormatter = computed(() => new Intl.DateTimeFormat(props.locale, { day: "numeric" }));
 const fullFormatter = computed(() => new Intl.DateTimeFormat(props.locale, { dateStyle: "full" }));
-const classes = computed(() => mergeClasses("border border-balsa-border bg-balsa-surface p-4 text-balsa-foreground", roundedClasses[props.rounded]));
-const monthsClasses = computed(() => props.months === 2 ? "grid gap-6 lg:grid-cols-2" : "grid");
+const classes = computed(() => mergeClasses("border-balsa-border bg-balsa-surface p-balsa-lg text-balsa-foreground", roundedClasses[props.rounded]));
+const monthsClasses = computed(() => props.months === 2 ? "grid gap-balsa-2xl lg:grid-cols-2" : "grid");
 function dayClasses(date: Date, month: Date): string {
   return mergeClasses(
     "grid size-10 place-items-center rounded-balsa-control text-sm font-normal tabular-nums transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-balsa-focus-ring disabled:cursor-not-allowed disabled:opacity-35",
@@ -217,14 +217,14 @@ watch(() => props.month, (month) => {
     :class="classes"
     :style="theme.explicitPresentation.value?.style"
   >
-    <header class="mb-4 flex items-center justify-between gap-3">
+    <header class="mb-balsa-lg flex items-center justify-between gap-balsa-md">
       <Button shape="fab" size="sm" variant="outline" :prefix-icon="ChevronLeft" aria-label="Previous month" :disabled="props.disabled || !canChangeMonth(-1)" @click="changeMonth(-1)" />
       <p class="text-sm font-semibold">{{ monthFormatter.format(visibleMonth) }}</p>
       <Button shape="fab" size="sm" variant="outline" :prefix-icon="ChevronRight" aria-label="Next month" :disabled="props.disabled || !canChangeMonth(1)" @click="changeMonth(1)" />
     </header>
     <div :class="monthsClasses">
       <div v-for="displayedMonth in displayedMonths" :key="dateKey(displayedMonth)">
-        <p v-if="props.months === 2" class="mb-2 text-center text-sm font-semibold">{{ monthFormatter.format(displayedMonth) }}</p>
+        <p v-if="props.months === 2" class="mb-balsa-xs text-center text-sm font-semibold">{{ monthFormatter.format(displayedMonth) }}</p>
         <div role="grid" :aria-label="monthFormatter.format(displayedMonth)">
           <div role="row" class="grid grid-cols-7">
             <span v-for="weekday in weekdays" :key="weekday.getDay()" role="columnheader" class="grid size-10 place-items-center text-xs font-normal text-balsa-muted-foreground">{{ weekdayFormatter.format(weekday) }}</span>

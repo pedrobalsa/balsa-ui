@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "split-workspace-card",
+  "type": "registry:ui",
+  "title": "SplitWorkspaceCard",
+  "description": "Resizable split of a file list against the diff it selects.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/resizable",
+    "@balsa/scroll-area",
+    "@balsa/code-block"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/SplitWorkspaceCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/SplitWorkspaceCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport CodeBlock from \"../ui/CodeBlock.vue\";\nimport ScrollArea from \"../ui/ScrollArea.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface WorkspaceFile { id: string; path: string; added: number; removed: number }\n\n/**\n * A file list against the diff it selects, at a fixed split.\n *\n * It was resizable, and that was the wrong control here: the two panes have\n * settled proportions — a path list is narrow, a diff is wide — so a handle only\n * invited the reader to make it worse. Resizable belongs where the trade is\n * genuinely theirs, which is the before-and-after comparison.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  files?: readonly WorkspaceFile[];\n  source?: string;\n}>(), {\n  title: \"Review changes\",\n  description: \"Nine files changed in this pull request.\",\n  files: () => [\n    { id: \"config\", path: \"deploy/atlas.config.ts\", added: 18, removed: 4 },\n    { id: \"runner\", path: \"deploy/runner.ts\", added: 7, removed: 7 },\n    { id: \"environments\", path: \"deploy/environments.ts\", added: 2, removed: 0 },\n    { id: \"health\", path: \"deploy/health-check.ts\", added: 24, removed: 3 },\n    { id: \"rollback\", path: \"deploy/rollback.ts\", added: 12, removed: 9 },\n    { id: \"regions\", path: \"config/regions.json\", added: 3, removed: 1 },\n    { id: \"workflow\", path: \".github/workflows/deploy.yml\", added: 6, removed: 6 },\n    { id: \"tests\", path: \"tests/rollout.test.ts\", added: 41, removed: 0 },\n    { id: \"readme\", path: \"README.md\", added: 11, removed: 1 },\n  ],\n  source: `export const atlas = {\n  regions: [\"iad1\", \"fra1\", \"gru1\"],\n  strategy: \"rolling\",\n  healthCheck: \"/internal/ready\",\n  healthChecksBeforePromotion: 2,\n  holdAtPercent: 10,\n  rollbackAfter: 90,\n  notifyOnFailure: [\"#atlas-deploys\"],\n};`,\n});\n\nconst active = ref(\"config\");\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"split-workspace\">\n    <template #action><Badge variant=\"soft\">+124 &minus;31</Badge></template>\n    <div class=\"grid min-h-0 flex-1 grid-rows-1 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]\">\n      <ScrollArea label=\"Changed files\" class=\"min-h-0 rounded-r-none border-r-0\">\n        <ul class=\"grid gap-balsa-3xs p-balsa-xs\" role=\"list\">\n          <li v-for=\"file in props.files\" :key=\"file.id\">\n            <button\n              type=\"button\"\n              :aria-current=\"active === file.id ? 'true' : undefined\"\n              :class=\"['flex w-full items-center justify-between gap-balsa-xs rounded-balsa-control px-balsa-sm py-balsa-xs text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring',\n                       active === file.id ? 'bg-balsa-muted font-medium' : 'hover:bg-balsa-muted']\"\n              @click=\"active = file.id\"\n            >\n              <span class=\"min-w-0 truncate text-xs\">{{ file.path }}</span>\n              <span class=\"shrink-0 text-xs tabular-nums text-balsa-muted-foreground\">\n                +{{ file.added }} &minus;{{ file.removed }}\n              </span>\n            </button>\n          </li>\n        </ul>\n      </ScrollArea>\n      <CodeBlock\n        :code=\"props.source\"\n        language=\"ts\"\n        class=\"min-h-0 rounded-l-none border-l-0 [&>pre]:h-full [&_pre]:min-h-full\"\n      />\n    </div>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/split-workspace-card.json",
+    "documentation": "docs/compositions/split-workspace-card.md",
+    "example": "docs/compositions/split-workspace-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

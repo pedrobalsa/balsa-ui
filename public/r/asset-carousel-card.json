@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "asset-carousel-card",
+  "type": "registry:ui",
+  "title": "AssetCarouselCard",
+  "description": "Browsable run of captured assets with captions and review status.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/carousel",
+    "@balsa/gradient-background",
+    "@balsa/badge"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/AssetCarouselCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/AssetCarouselCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport Badge from \"../ui/Badge.vue\";\nimport Carousel, { type CarouselItem } from \"../ui/Carousel.vue\";\nimport GradientBackground from \"../ui/GradientBackground.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface AssetSlide extends CarouselItem { caption: string; preset: \"mesh-drift\" | \"aurora-veil\" | \"silver-dunes\" | \"solar-bloom\" }\n\n/**\n * Captured screens, stood in for by palette-mode gradients: the placeholder is\n * imagery rather than an \"image missing\" mark, so it reads as the artwork this\n * carousel is for and follows the palette being edited.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  slides?: readonly AssetSlide[];\n}>(), {\n  title: \"Launch artwork\",\n  description: \"Every asset queued for the Atlas announcement.\",\n  slides: () => [\n    { id: \"hero\", label: \"Hero banner\", caption: \"2560 × 1440 · approved\", preset: \"mesh-drift\" },\n    { id: \"social\", label: \"Social card\", caption: \"1200 × 630 · in review\", preset: \"aurora-veil\" },\n    { id: \"email\", label: \"Email header\", caption: \"1080 × 400 · approved\", preset: \"silver-dunes\" },\n    { id: \"docs\", label: \"Docs cover\", caption: \"1600 × 900 · draft\", preset: \"solar-bloom\" },\n  ],\n});\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"asset-carousel\">\n    <template #action><Badge variant=\"soft\">4 assets</Badge></template>\n    <Carousel\n      label=\"Launch artwork\"\n      :items=\"props.slides\"\n      :slides-per-view=\"2\"\n      loop\n      arrows-position=\"bottom-start\"\n      indicators-position=\"bottom-end\"\n      class=\"min-h-0\"\n    >\n      <template #item=\"{ item }\">\n        <figure class=\"min-w-0\">\n          <div class=\"relative h-40 overflow-hidden rounded-balsa-control border border-balsa-border bg-balsa-muted\">\n            <GradientBackground\n              color-mode=\"palette\"\n              :preset=\"(item as AssetSlide).preset\"\n              :speed=\"0\"\n              class=\"absolute inset-0\"\n            />\n          </div>\n          <figcaption class=\"mt-balsa-xs min-w-0\">\n            <strong class=\"block truncate text-sm font-medium\">{{ item.label }}</strong>\n            <span class=\"block truncate text-xs text-balsa-muted-foreground\">{{ (item as AssetSlide).caption }}</span>\n          </figcaption>\n        </figure>\n      </template>\n    </Carousel>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/asset-carousel-card.json",
+    "documentation": "docs/compositions/asset-carousel-card.md",
+    "example": "docs/compositions/asset-carousel-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

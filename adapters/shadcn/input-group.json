@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/input-group",
+  "wave": 1,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/input-group/InputGroup.vue": "sha256-a844249da419eeedda467ac239742a37210cd586e2e36e20091ba48684c0423f",
+      "ui/input-group/InputGroupAddon.vue": "sha256-794a67130a5504c951c022bdb918f59f158f638ee877f80fe1ca4d3a0bc1c557",
+      "ui/input-group/InputGroupButton.vue": "sha256-00b65576997c2b580f6783d1b142ab1007f22bdf7528fdbcf9ef8bb01cea9c07",
+      "ui/input-group/InputGroupInput.vue": "sha256-6906c81406a7ad594111a3e9a27193bfd8c80c6bea581c0a99e8b93d9a717a83",
+      "ui/input-group/InputGroupText.vue": "sha256-00abb77444d365d1bd2e2215f4478601aee7ad699219c014c3e6ec58c50ad0ea",
+      "ui/input-group/InputGroupTextarea.vue": "sha256-75a7cd13bdc629c8cc305ebc67b82e3b8ada26978736e52f6680a7d93497dd92",
+      "ui/input-group/index.ts": "sha256-a433959fac23d0b5a3ccef9cf1f528ed31e11ea54627104003dd82a6bbec9eea"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "class-variance-authority",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/button",
+      "@/registry/new-york/ui/input",
+      "@/registry/new-york/ui/textarea"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/input-group/InputGroup.vue",
+      "find": "'group/input-group border-input dark:bg-input/30 relative flex w-full items-center rounded-md border outline-none'",
+      "replace": "'group/input-group border-input dark:bg-input/30 relative flex w-full items-center rounded-md border-solid border-(length:--balsa-outline-border-width) outline-none'",
+      "reason": "Tailwind's border utility compiles to a literal 1px width; the outline recipe carries the Balsa border width."
+    },
+    {
+      "file": "ui/input-group/InputGroup.vue",
+      "find": "'has-[>[data-align=inline-start]]:[&>input]:pl-2'",
+      "replace": "'has-[>[data-align=inline-start]]:[&>input]:ps-2'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/input-group/InputGroup.vue",
+      "find": "'has-[>[data-align=inline-end]]:[&>input]:pr-2'",
+      "replace": "'has-[>[data-align=inline-end]]:[&>input]:pe-2'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/input-group/InputGroupTextarea.vue",
+      "find": "'flex-1 resize-none rounded-none border-0 bg-transparent py-3 shadow-none focus-visible:ring-0 focus-visible:ring-transparent ring-offset-transparent dark:bg-transparent'",
+      "replace": "'flex-1 resize-none rounded-none border-0 bg-transparent py-balsa-md shadow-none focus-visible:ring-0 focus-visible:ring-transparent ring-offset-transparent dark:bg-transparent'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/input-group/index.ts",
+      "find": "\"order-first pl-3 has-[>button]:ml-[-0.45rem] has-[>kbd]:ml-[-0.35rem]\"",
+      "replace": "\"order-first ps-balsa-md has-[>button]:ms-[-0.45rem] has-[>kbd]:ms-[-0.35rem]\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/input-group/index.ts",
+      "find": "\"order-last pr-3 has-[>button]:mr-[-0.45rem] has-[>kbd]:mr-[-0.35rem]\"",
+      "replace": "\"order-last pe-balsa-md has-[>button]:me-[-0.45rem] has-[>kbd]:me-[-0.35rem]\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/input-group/index.ts",
+      "find": "\"order-first w-full justify-start px-3 pt-3 [.border-b]:pb-3 group-has-[>input]/input-group:pt-2.5\"",
+      "replace": "\"order-first w-full justify-start px-balsa-md pt-balsa-md [.border-b]:pb-3 group-has-[>input]/input-group:pt-2.5\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/input-group/index.ts",
+      "find": "\"order-last w-full justify-start px-3 pb-3 [.border-t]:pt-3 group-has-[>input]/input-group:pb-2.5\"",
+      "replace": "\"order-last w-full justify-start px-balsa-md pb-balsa-md [.border-t]:pt-3 group-has-[>input]/input-group:pb-2.5\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/input-group/index.ts",
+      "find": "\"text-sm shadow-none flex gap-2 items-center\"",
+      "replace": "\"text-sm shadow-none flex gap-balsa-xs items-center\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/input-group/index.ts",
+      "find": "\"h-8 px-2.5 gap-1.5 rounded-md has-[>svg]:px-2.5\"",
+      "replace": "\"h-8 px-balsa-sm gap-balsa-2xs rounded-md has-[>svg]:px-2.5\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

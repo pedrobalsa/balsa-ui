@@ -74,7 +74,7 @@ const variantClasses: Readonly<Record<LayerVariant, string[]>> = {
 };
 const cardClasses = computed(() =>
   mergeClasses(
-    "z-[60] w-80 max-w-[calc(100vw-1rem)] overflow-auto border p-4 shadow-balsa-panel outline-none",
+    "z-[60] w-80 max-w-[calc(100vw-1rem)] overflow-auto border p-balsa-lg shadow-balsa-panel outline-none",
     props.contained ? "absolute" : "fixed",
     roundedClasses[props.rounded],
     variantClasses[props.variant],

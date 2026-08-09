@@ -1,0 +1,42 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "api-key-card",
+  "type": "registry:ui",
+  "title": "ApiKeyCard",
+  "description": "One-time secret with copy, provenance, and revocation.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/code-block",
+    "@balsa/badge",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ApiKeyCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/ApiKeyCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport CodeBlock from \"../ui/CodeBlock.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * A secret shown once, with the two facts that decide what to do about it: when\n * it was made, and when it stops working. Copying is the whole interaction, so\n * the block that holds it is the only thing that grows.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  token?: string;\n  created?: string;\n  expires?: string;\n}>(), {\n  title: \"Deploy key\",\n  description: \"Shown once. Store it before leaving this page.\",\n  token: \"blsa_live_9f4c21ae7d6b48f0a35c8e12\",\n  created: \"Today, 09:14\",\n  expires: \"Feb 3, 2027\",\n});\nconst emit = defineEmits<{ revoke: [] }>();\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"api-key\">\n    <template #action><Badge variant=\"soft\">Write access</Badge></template>\n    <div class=\"flex flex-1 flex-col justify-between gap-balsa-lg\">\n      <CodeBlock :code=\"props.token\" language=\"text\" wrap />\n      <dl class=\"divide-y divide-balsa-border text-sm\">\n        <div class=\"flex justify-between py-balsa-xs\"><dt class=\"text-balsa-muted-foreground\">Created</dt><dd>{{ props.created }}</dd></div>\n        <div class=\"flex justify-between py-balsa-xs\"><dt class=\"text-balsa-muted-foreground\">Expires</dt><dd>{{ props.expires }}</dd></div>\n      </dl>\n    </div>\n    <template #footer>\n      <Button class=\"w-full\" variant=\"soft\" @click=\"emit('revoke')\">Revoke this key</Button>\n    </template>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/api-key-card.json",
+    "documentation": "docs/compositions/api-key-card.md",
+    "example": "docs/compositions/api-key-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

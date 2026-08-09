@@ -518,21 +518,33 @@ onMounted(() => {
   canvas.value?.addEventListener("webglcontextrestored", handleContextRestored);
   document.addEventListener("visibilitychange", handleVisibilityChange);
 
-  motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  reducedMotion.value = motionQuery.matches;
-  motionQuery.addEventListener("change", handleMotionChange);
+  // Not every DOM implementation this mounts in has matchMedia — jsdom does
+  // not. Treating its absence as "no stated preference" keeps the component
+  // mountable there instead of throwing before it can render anything.
+  if (typeof window.matchMedia === "function") {
+    motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotion.value = motionQuery.matches;
+    motionQuery.addEventListener("change", handleMotionChange);
+  }
 
-  resizeObserver = new ResizeObserver((entries) => {
-    const entry = entries[0];
-    if (entry) resizeRenderer(entry.contentRect.width, entry.contentRect.height);
-  });
-  if (root.value) resizeObserver.observe(root.value);
+  // Both observers are optimisations — resizing the renderer to its box, and
+  // pausing it off-screen. Where the DOM implementation lacks them the
+  // component still renders; it just does not get those savings.
+  if (typeof ResizeObserver !== "undefined") {
+    resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (entry) resizeRenderer(entry.contentRect.width, entry.contentRect.height);
+    });
+    if (root.value) resizeObserver.observe(root.value);
+  }
 
-  intersectionObserver = new IntersectionObserver((entries) => {
-    inViewport.value = entries[0]?.isIntersecting ?? true;
-    synchronizeAnimation();
-  }, { rootMargin: "96px" });
-  if (root.value) intersectionObserver.observe(root.value);
+  if (typeof IntersectionObserver !== "undefined") {
+    intersectionObserver = new IntersectionObserver((entries) => {
+      inViewport.value = entries[0]?.isIntersecting ?? true;
+      synchronizeAnimation();
+    }, { rootMargin: "96px" });
+    if (root.value) intersectionObserver.observe(root.value);
+  }
 
   paletteObserver = new MutationObserver(queuePaletteUpdate);
   let paletteBoundary: HTMLElement | null = root.value;

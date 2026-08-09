@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Resource index with status, metadata, row selection, and creation action.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport ResourceTableCard from \"@/components/compositions/ResourceTableCard.vue\";\n</script>\n\n<template>\n  <ResourceTableCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport ResourceTableCard from \"@/components/compositions/ResourceTableCard.vue\";\n</script>\n\n<template>\n  <ResourceTableCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/ResourceTableCard.vue",
@@ -158,7 +168,7 @@
         "name": "rows",
         "type": "readonly ResourceRow[] | undefined",
         "required": false,
-        "default": "[ { id: \"atlas\", name: \"Atlas\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"2m ago\" }, { id: \"relay\", name: \"Relay\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"1h ago\" }, { id: \"nova\", name: \"Nova\", status: \"Paused\", detail: \"Development\", updated: \"Yesterday\" }, ]"
+        "default": "[ { id: \"atlas\", name: \"Atlas\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"2m ago\" }, { id: \"relay\", name: \"Relay\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"1h ago\" }, { id: \"nova\", name: \"Nova\", status: \"Paused\", detail: \"Development\", updated: \"Yesterday\" }, { id: \"quill\", name: \"Quill\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"Yesterday\" }, { id: \"harbor\", name: \"Harbor\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"3 days ago\" }, { id: \"beacon\", name: \"Beacon\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"3 days ago\" }, { id: \"ferry\", name: \"Ferry\", status: \"Paused\", detail: \"Development\", updated: \"Last week\" }, { id: \"kite\", name: \"Kite\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"Last week\" }, ]"
       }
     ],
     "events": [

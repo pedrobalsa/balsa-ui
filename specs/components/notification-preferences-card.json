@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Independently controlled notification channels with concise explanations.",
   "useFor": [
     "Production application interfaces",
@@ -61,8 +61,18 @@
     "Adding a second principal card surface."
   ],
   "examples": [
-    "Design Studio Grid",
-    "Application dashboard"
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport NotificationPreferencesCard from \"@/components/compositions/NotificationPreferencesCard.vue\";\n</script>\n\n<template>\n  <NotificationPreferencesCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport NotificationPreferencesCard from \"@/components/compositions/NotificationPreferencesCard.vue\";\n</script>\n\n<template>\n  <NotificationPreferencesCard title=\"Pattern placeholder\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/NotificationPreferencesCard.vue",
@@ -143,7 +153,7 @@
           "string"
         ],
         "required": false,
-        "default": "\"Notification preferences\""
+        "default": "\"Delivery preferences\""
       },
       {
         "name": "description",
@@ -152,19 +162,23 @@
           "string"
         ],
         "required": false,
-        "default": "\"Choose which updates should reach you.\""
+        "default": "\"Where workspace events reach you.\""
       },
       {
         "name": "items",
         "type": "readonly NotificationPreference[] | undefined",
         "required": false,
-        "default": "[ { id: \"reports\", label: \"Monthly reports\", description: \"Balance and performance summaries.\", enabled: true }, { id: \"security\", label: \"Security alerts\", description: \"New devices and sensitive account changes.\", enabled: true }, { id: \"product\", label: \"Product updates\", description: \"Occasional feature announcements.\", enabled: false }, ]"
+        "default": "[ { id: \"failures\", label: \"Deploy failures\", description: \"Paged the moment a production build fails.\", enabled: true }, { id: \"quota\", label: \"Quota warnings\", description: \"Sent once usage passes 80% of the plan.\", enabled: true }, { id: \"mentions\", label: \"Mentions\", description: \"When someone names you in a review comment.\", enabled: true }, { id: \"digest\", label: \"Weekly digest\", description: \"One summary of everything, Monday at 09:00.\", enabled: false }, { id: \"budget\", label: \"Budget alerts\", description: \"When projected spend passes the monthly cap.\", enabled: true }, ]"
       }
     ],
     "events": [
       {
         "name": "change",
         "type": "[id: string, enabled: boolean]"
+      },
+      {
+        "name": "save",
+        "type": "[channel: string]"
       }
     ],
     "slots": []

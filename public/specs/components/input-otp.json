@@ -9,7 +9,7 @@
     "name": "input-otp"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Collect one fixed-length verification code through a coherent accessible input with semantic-colored visual cells.",
   "useFor": [
     "One-time verification codes",
@@ -69,10 +69,30 @@
     "Masking a code without an alternate way to verify entry."
   ],
   "examples": [
-    "Six-digit code",
-    "Grouped code",
-    "Masked code",
-    "Alphanumeric recovery code"
+    {
+      "id": "numeric",
+      "title": "Six-digit code",
+      "description": "One numeric field drives six accessible visual cells.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"6\" required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    },
+    {
+      "id": "grouped",
+      "title": "Accent grouped code",
+      "description": "An accent color and decorative separators improve scanning without creating extra form controls.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"6\" grouped variant=\"solid\" color=\"accent\" required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    },
+    {
+      "id": "masked",
+      "title": "Masked code",
+      "description": "Masking changes only the visual cells while the logical value stays editable.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"6\" mask required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    },
+    {
+      "id": "recovery",
+      "title": "Recovery token",
+      "description": "Alphanumeric filtering supports short fixed-length recovery tokens.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"8\" mode=\"alphanumeric\" grouped required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/InputOTP.vue",
@@ -115,6 +135,16 @@
         ],
         "required": false,
         "default": "\"numeric\""
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "description": "Share the available width between cells instead of fixing their size."
       },
       {
         "name": "mask",

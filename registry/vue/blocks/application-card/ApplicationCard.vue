@@ -55,7 +55,7 @@ const resolvedShadow = computed(() =>
   >
     <header
       v-if="title || slots.header || slots.action"
-      class="flex items-start justify-between gap-4 px-5 pb-0 pt-5 group-data-[size=sm]/application-card:px-4 group-data-[size=sm]/application-card:pt-4 group-data-[size=lg]/application-card:px-6 group-data-[size=lg]/application-card:pt-6"
+      class="flex items-start justify-between gap-balsa-lg px-balsa-xl pb-0 pt-balsa-xl group-data-[size=sm]/application-card:px-4 group-data-[size=sm]/application-card:pt-4 group-data-[size=lg]/application-card:px-6 group-data-[size=lg]/application-card:pt-6"
     >
       <slot name="header">
         <div class="min-w-0">
@@ -65,7 +65,7 @@ const resolvedShadow = computed(() =>
           >
             {{ title }}
           </component>
-          <p v-if="description" class="mt-1 text-sm leading-snug text-balsa-muted-foreground">
+          <p v-if="description" class="mt-balsa-3xs text-sm leading-snug text-balsa-muted-foreground">
             {{ description }}
           </p>
         </div>
@@ -77,7 +77,7 @@ const resolvedShadow = computed(() =>
 
     <div
       data-application-card-body
-      class="flex-1 p-5 pt-4 group-data-[size=sm]/application-card:p-4 group-data-[size=sm]/application-card:pt-3 group-data-[size=lg]/application-card:p-6 group-data-[size=lg]/application-card:pt-5"
+      class="flex min-h-0 flex-1 flex-col p-balsa-xl pt-balsa-lg group-data-[size=sm]/application-card:p-4 group-data-[size=sm]/application-card:pt-3 group-data-[size=lg]/application-card:p-6 group-data-[size=lg]/application-card:pt-5"
     >
       <slot />
     </div>
@@ -85,7 +85,7 @@ const resolvedShadow = computed(() =>
     <footer
       v-if="slots.footer"
       data-application-card-footer
-      class="border-balsa-border [border-top-style:var(--balsa-border-style)] [border-top-width:var(--balsa-border-width)] px-5 py-3 text-xs text-balsa-muted-foreground group-data-[size=sm]/application-card:px-4 group-data-[size=sm]/application-card:py-2.5 group-data-[size=lg]/application-card:px-6 group-data-[size=lg]/application-card:py-4"
+      class="border-balsa-border [border-top-style:var(--balsa-border-style)] [border-top-width:var(--balsa-border-width)] px-balsa-xl py-balsa-md text-xs text-balsa-muted-foreground group-data-[size=sm]/application-card:px-4 group-data-[size=sm]/application-card:py-2.5 group-data-[size=lg]/application-card:px-6 group-data-[size=lg]/application-card:py-4"
     >
       <slot name="footer" />
     </footer>

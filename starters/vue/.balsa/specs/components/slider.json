@@ -56,10 +56,30 @@
     "Creating a two-thumb range whose thumbs can cross or lose their minimum gap."
   ],
   "examples": [
-    "Single value",
-    "Bounded range",
-    "Formatted value",
-    "Vertical orientation"
+    {
+      "id": "single",
+      "title": "Single value",
+      "description": "One native thumb controls a bounded numeric setting.",
+      "source": "<script setup lang=\"ts\">\nimport Slider from \"@/components/ui/Slider.vue\";\nimport { ref } from \"vue\";\n\nconst value = ref(50);\n</script>\n\n<template>\n  <Slider id=\"range-placeholder\" v-model=\"value\" label=\"Slider placeholder\" :min=\"0\" :max=\"100\" :step=\"1\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "range",
+      "title": "Bounded range",
+      "description": "Two native thumbs preserve an ordered lower and upper value.",
+      "source": "<script setup lang=\"ts\">\nimport Slider from \"@/components/ui/Slider.vue\";\nimport { ref } from \"vue\";\n\nconst value = ref<[number, number]>([25, 75]);\n</script>\n\n<template>\n  <Slider id=\"range-placeholder\" v-model=\"value\" label=\"Slider placeholder\" :min=\"0\" :max=\"100\" :step=\"5\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "large",
+      "title": "Large control",
+      "description": "The large preset increases the visual thumb and pointer target.",
+      "source": "<script setup lang=\"ts\">\nimport Slider from \"@/components/ui/Slider.vue\";\nimport { ref } from \"vue\";\n\nconst value = ref(50);\n</script>\n\n<template>\n  <Slider id=\"range-placeholder\" v-model=\"value\" label=\"Slider placeholder\" :min=\"0\" :max=\"100\" :step=\"10\" size=\"lg\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "vertical",
+      "title": "Vertical orientation",
+      "description": "The same native range behavior can follow a vertical track.",
+      "source": "<script setup lang=\"ts\">\nimport Slider from \"@/components/ui/Slider.vue\";\nimport { ref } from \"vue\";\n\nconst value = ref(50);\n</script>\n\n<template>\n  <Slider id=\"range-placeholder\" v-model=\"value\" label=\"Slider placeholder\" :min=\"0\" :max=\"100\" :step=\"5\" orientation=\"vertical\" hint=\"Helper text placeholder.\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Slider.vue",

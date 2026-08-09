@@ -120,14 +120,14 @@ const trackClasses = computed(() =>
 );
 const indicatorClasses = computed(() =>
   mergeClasses(
-    "relative h-full overflow-hidden transition-[width,transform] duration-300 ease-out motion-reduce:transition-none",
+    "relative h-full overflow-hidden transition-[width,transform] duration-balsa-slow ease-balsa motion-reduce:transition-none",
     roundedClasses[props.rounded],
     indicatorColorClasses[props.color],
     indicatorVariantClasses[props.variant],
   ),
 );
 const labelClasses = computed(() => [
-  "mb-2 flex min-w-0 items-baseline justify-between gap-4",
+  "mb-balsa-xs flex min-w-0 items-baseline justify-between gap-balsa-lg",
   labelSizeClasses[props.size],
 ]);
 </script>

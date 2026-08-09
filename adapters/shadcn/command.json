@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/command",
+  "wave": 3,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/command/Command.vue": "sha256-75b2f33461c27173c4d58f3f37bcd961705606e2b7fce239c40caec6ae8629b4",
+      "ui/command/CommandDialog.vue": "sha256-b01a6a75de15a67b08517f2c3d0d0d848553d6c063eecf1de8d525d72e49cb2b",
+      "ui/command/CommandEmpty.vue": "sha256-66e2ec86e83312968aca64f17d70b1cd8f84639b0f716de3e9f625fa3a15690e",
+      "ui/command/CommandGroup.vue": "sha256-5553b6bc070146e56980ba10aa71a1db32f06a4b8d1c4470e6a679819b5ac9ee",
+      "ui/command/CommandInput.vue": "sha256-584afc65261babeb08516827aaf1670f0dd31f38507398641dc8de8dce32b807",
+      "ui/command/CommandItem.vue": "sha256-daa5e26df90e018d143c84ede5463c1a6d171b5806e9d9d6f4c3c7bc603184c1",
+      "ui/command/CommandList.vue": "sha256-8210d3a4e3dc98d20e76c5fd911c92077bd17a25c0f2437960a8f7a7ed4ec149",
+      "ui/command/CommandSeparator.vue": "sha256-780a9d5aa8327b58eb347e23a90a65693a69fe0ddc411dac76e31a6d584006cc",
+      "ui/command/CommandShortcut.vue": "sha256-e6cff88cd20f1a48116c7475959d62bee6fede196c10b3a8a2dbb7781bca9e2a",
+      "ui/command/index.ts": "sha256-c9d00b268745618182717c2f8b23ad36f90e57fe005d47c86cba6fb3a9ba1294"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/dialog"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/command/CommandDialog.vue",
+      "find": "\"overflow-hidden p-0 shadow-lg\"",
+      "replace": "\"overflow-hidden p-0 shadow-[var(--balsa-shadow-lg)]\"",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable."
+    },
+    {
+      "file": "ui/command/CommandEmpty.vue",
+      "find": "'py-6 text-center text-sm'",
+      "replace": "'py-balsa-2xl text-center text-sm'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/command/CommandGroup.vue",
+      "find": "'overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground'",
+      "replace": "'overflow-hidden p-balsa-3xs text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/command/CommandGroup.vue",
+      "find": "\"px-2 py-1.5 text-xs font-medium text-muted-foreground\"",
+      "replace": "\"px-balsa-xs py-balsa-2xs text-xs font-medium text-muted-foreground\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/command/CommandInput.vue",
+      "find": "\"flex items-center border-b px-3\"",
+      "replace": "\"flex items-center border-b px-balsa-md\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/command/CommandInput.vue",
+      "find": "\"mr-2 h-4 w-4 shrink-0 opacity-50\"",
+      "replace": "\"me-balsa-xs h-4 w-4 shrink-0 opacity-50\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit. Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    },
+    {
+      "file": "ui/command/CommandInput.vue",
+      "find": "'flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'",
+      "replace": "'flex h-10 w-full rounded-md bg-transparent py-balsa-md text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/command/CommandItem.vue",
+      "find": "'relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0'",
+      "replace": "'relative flex cursor-default gap-balsa-xs select-none items-center rounded-sm px-balsa-xs py-balsa-2xs text-sm outline-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/command/CommandShortcut.vue",
+      "find": "'ml-auto text-xs tracking-widest text-muted-foreground'",
+      "replace": "'ms-auto text-xs tracking-widest text-muted-foreground'",
+      "reason": "Physical-direction utilities do not mirror in RTL; their logical equivalents resolve identically in LTR."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

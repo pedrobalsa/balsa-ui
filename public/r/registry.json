@@ -2,7 +2,7 @@
   "$schema": "https://shadcn-vue.com/schema/registry.json",
   "name": "balsa-ui",
   "homepage": "https://balsa-ui.com",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "items": [
     {
       "name": "balsa-foundation",
@@ -72,7 +72,8 @@
       "description": "Typed inheritable design themes with seven finite recipe choices, deterministic tokens, sparse overrides, component defaults, scoped providers, an optional editable custom-theme slot, and persisted flash-free presentation.",
       "dependencies": [
         "vue",
-        "tailwindcss"
+        "tailwindcss",
+        "@lucide/vue"
       ],
       "registryDependencies": [
         "@balsa/balsa-foundation"
@@ -141,6 +142,53 @@
         "defaultTheme": "modern-flat",
         "selectionAttribute": "data-theme",
         "paletteAttribute": "data-palette"
+      }
+    },
+    {
+      "name": "balsa-shadcn-bridge",
+      "type": "registry:theme",
+      "title": "Balsa shadcn token bridge",
+      "description": "Maps the active Balsa design system onto the standard shadcn semantic variables so components installed from compatible registries follow the Balsa palette, focus ring, and base radius.",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/balsa-foundation",
+        "@balsa/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/styles/balsa-shadcn-bridge.css",
+          "type": "registry:style",
+          "target": "src/styles/balsa-shadcn-bridge.css"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "utilityNamespace": "balsa"
+      }
+    },
+    {
+      "name": "balsa-portal-scope",
+      "type": "registry:theme",
+      "title": "Balsa portal scope",
+      "description": "Forwards a scoped Balsa design system onto content that upstream components teleport outside the scope, so an overlay opened from a scoped region matches it.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/balsa-shadcn-bridge"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/BalsaPortalScope.vue",
+          "type": "registry:ui",
+          "target": "src/components/ui/BalsaPortalScope.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "utilityNamespace": "balsa"
       }
     },
     {
@@ -2826,344 +2874,6 @@
       }
     },
     {
-      "name": "account-security-card",
-      "type": "registry:ui",
-      "title": "AccountSecurityCard",
-      "description": "Credential update and separated destructive account action.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/icon",
-        "@balsa/application-card",
-        "@balsa/button",
-        "@balsa/input"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/AccountSecurityCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/AccountSecurityCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/account-security-card.json",
-        "documentation": "docs/compositions/account-security-card.md",
-        "example": "docs/compositions/account-security-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "payout-method-card",
-      "type": "registry:ui",
-      "title": "PayoutMethodCard",
-      "description": "Receiving-method selection with account details and one save action.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/button",
-        "@balsa/input",
-        "@balsa/radio-group"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/PayoutMethodCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/PayoutMethodCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/payout-method-card.json",
-        "documentation": "docs/compositions/payout-method-card.md",
-        "example": "docs/compositions/payout-method-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "transfer-funds-card",
-      "type": "registry:ui",
-      "title": "TransferFundsCard",
-      "description": "Account-to-account transfer form with arrival, fee, and total summary.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/button",
-        "@balsa/input",
-        "@balsa/select"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/TransferFundsCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/TransferFundsCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/transfer-funds-card.json",
-        "documentation": "docs/compositions/transfer-funds-card.md",
-        "example": "docs/compositions/transfer-funds-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "savings-goal-card",
-      "type": "registry:ui",
-      "title": "SavingsGoalCard",
-      "description": "Goal values and progress presented in a repeatable financial rhythm.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/button",
-        "@balsa/progress"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/SavingsGoalCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/SavingsGoalCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/savings-goal-card.json",
-        "documentation": "docs/compositions/savings-goal-card.md",
-        "example": "docs/compositions/savings-goal-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "transaction-list-card",
-      "type": "registry:ui",
-      "title": "TransactionListCard",
-      "description": "Scannable activity rows with identity, metadata, time, and amount.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/icon",
-        "@balsa/application-card",
-        "@balsa/button"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/TransactionListCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/TransactionListCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/transaction-list-card.json",
-        "documentation": "docs/compositions/transaction-list-card.md",
-        "example": "docs/compositions/transaction-list-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "balance-summary-card",
-      "type": "registry:ui",
-      "title": "BalanceSummaryCard",
-      "description": "Compact balance, availability, and contextual action summary.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/button"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/BalanceSummaryCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/BalanceSummaryCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/balance-summary-card.json",
-        "documentation": "docs/compositions/balance-summary-card.md",
-        "example": "docs/compositions/balance-summary-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "usage-summary-card",
-      "type": "registry:ui",
-      "title": "UsageSummaryCard",
-      "description": "Time-series usage, key totals, and quota progress in one panel.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/charts",
-        "@balsa/progress"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/UsageSummaryCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/UsageSummaryCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/usage-summary-card.json",
-        "documentation": "docs/compositions/usage-summary-card.md",
-        "example": "docs/compositions/usage-summary-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
       "name": "analytics-chart-card",
       "type": "registry:ui",
       "title": "AnalyticsChartCard",
@@ -3403,55 +3113,6 @@
       }
     },
     {
-      "name": "invite-members-card",
-      "type": "registry:ui",
-      "title": "InviteMembersCard",
-      "description": "Repeatable email and role rows with a single invitation action.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/button",
-        "@balsa/input",
-        "@balsa/select"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/InviteMembersCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/InviteMembersCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/invite-members-card.json",
-        "documentation": "docs/compositions/invite-members-card.md",
-        "example": "docs/compositions/invite-members-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
       "name": "member-access-card",
       "type": "registry:ui",
       "title": "MemberAccessCard",
@@ -3500,53 +3161,6 @@
       }
     },
     {
-      "name": "action-list-card",
-      "type": "registry:ui",
-      "title": "ActionListCard",
-      "description": "Grouped navigational actions with icons, descriptions, and trailing affordances.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/icon",
-        "@balsa/application-card"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/ActionListCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/ActionListCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/action-list-card.json",
-        "documentation": "docs/compositions/action-list-card.md",
-        "example": "docs/compositions/action-list-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
       "name": "navigation-menu-card",
       "type": "registry:ui",
       "title": "NavigationMenuCard",
@@ -3581,54 +3195,6 @@
         "spec": "specs/components/navigation-menu-card.json",
         "documentation": "docs/compositions/navigation-menu-card.md",
         "example": "docs/compositions/navigation-menu-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "empty-state-card",
-      "type": "registry:ui",
-      "title": "EmptyStateCard",
-      "description": "Blank-slate explanation with one primary next step.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/icon",
-        "@balsa/application-card",
-        "@balsa/button"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/EmptyStateCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/EmptyStateCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/empty-state-card.json",
-        "documentation": "docs/compositions/empty-state-card.md",
-        "example": "docs/compositions/empty-state-card.md",
         "tokens": [
           "--balsa-color-surface",
           "--balsa-color-muted",
@@ -3737,64 +3303,15 @@
       }
     },
     {
-      "name": "file-upload-card",
-      "type": "registry:ui",
-      "title": "FileUploadCard",
-      "description": "Drag-and-drop import target with format guidance and browse action.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/icon",
-        "@balsa/application-card",
-        "@balsa/button"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/FileUploadCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/FileUploadCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/file-upload-card.json",
-        "documentation": "docs/compositions/file-upload-card.md",
-        "example": "docs/compositions/file-upload-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
       "name": "media-preview-card",
       "type": "registry:ui",
       "title": "MediaPreviewCard",
       "description": "Asset preview, publication status, and replacement action.",
       "dependencies": [
-        "vue",
-        "@lucide/vue"
+        "vue"
       ],
       "registryDependencies": [
-        "@balsa/icon",
+        "@balsa/gradient-background",
         "@balsa/application-card",
         "@balsa/badge",
         "@balsa/button"
@@ -3821,102 +3338,6 @@
         "spec": "specs/components/media-preview-card.json",
         "documentation": "docs/compositions/media-preview-card.md",
         "example": "docs/compositions/media-preview-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "schedule-card",
-      "type": "registry:ui",
-      "title": "ScheduleCard",
-      "description": "Date selection paired with a concise upcoming-event list.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/badge",
-        "@balsa/calendar"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/ScheduleCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/ScheduleCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/schedule-card.json",
-        "documentation": "docs/compositions/schedule-card.md",
-        "example": "docs/compositions/schedule-card.md",
-        "tokens": [
-          "--balsa-color-surface",
-          "--balsa-color-muted",
-          "--balsa-color-border",
-          "--balsa-radius-surface",
-          "--balsa-border-width",
-          "--balsa-border-opacity",
-          "--balsa-shadow-surface",
-          "--balsa-density-factor"
-        ]
-      }
-    },
-    {
-      "name": "appointment-card",
-      "type": "registry:ui",
-      "title": "AppointmentCard",
-      "description": "Appointment time selection with preparation guidance and confirmation.",
-      "dependencies": [
-        "vue",
-        "@lucide/vue"
-      ],
-      "registryDependencies": [
-        "@balsa/application-card",
-        "@balsa/button",
-        "@balsa/radio-group"
-      ],
-      "files": [
-        {
-          "path": "src/components/compositions/AppointmentCard.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/AppointmentCard.vue"
-        },
-        {
-          "path": "src/components/compositions/_CompositionRoot.vue",
-          "type": "registry:component",
-          "target": "src/components/compositions/_CompositionRoot.vue"
-        },
-        {
-          "path": "src/components/compositions/composition.ts",
-          "type": "registry:lib",
-          "target": "src/components/compositions/composition.ts"
-        }
-      ],
-      "meta": {
-        "framework": "vue",
-        "spec": "specs/components/appointment-card.json",
-        "documentation": "docs/compositions/appointment-card.md",
-        "example": "docs/compositions/appointment-card.md",
         "tokens": [
           "--balsa-color-surface",
           "--balsa-color-muted",
@@ -4257,6 +3678,801 @@
         "tokens": [
           "--balsa-color-surface",
           "--balsa-color-muted",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "data-grid-card",
+      "type": "registry:ui",
+      "title": "DataGridCard",
+      "description": "Sortable, selectable, paginated table of records with real columns.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/data-table"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/DataGridCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/DataGridCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/data-grid-card.json",
+        "documentation": "docs/compositions/data-grid-card.md",
+        "example": "docs/compositions/data-grid-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "schedule-planner-card",
+      "type": "registry:ui",
+      "title": "SchedulePlannerCard",
+      "description": "Calendar paired with the bookable hours for the chosen day.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/calendar",
+        "@balsa/badge",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/SchedulePlannerCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/SchedulePlannerCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/schedule-planner-card.json",
+        "documentation": "docs/compositions/schedule-planner-card.md",
+        "example": "docs/compositions/schedule-planner-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "command-palette-card",
+      "type": "registry:ui",
+      "title": "CommandPaletteCard",
+      "description": "Grouped command palette that reaches projects, actions, and settings from one search.",
+      "dependencies": [
+        "vue",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/command-menu"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/CommandPaletteCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/CommandPaletteCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/command-palette-card.json",
+        "documentation": "docs/compositions/command-palette-card.md",
+        "example": "docs/compositions/command-palette-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "asset-carousel-card",
+      "type": "registry:ui",
+      "title": "AssetCarouselCard",
+      "description": "Browsable run of captured assets with captions and review status.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/carousel",
+        "@balsa/gradient-background",
+        "@balsa/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/AssetCarouselCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/AssetCarouselCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/asset-carousel-card.json",
+        "documentation": "docs/compositions/asset-carousel-card.md",
+        "example": "docs/compositions/asset-carousel-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "split-workspace-card",
+      "type": "registry:ui",
+      "title": "SplitWorkspaceCard",
+      "description": "Resizable split of a file list against the diff it selects.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/resizable",
+        "@balsa/scroll-area",
+        "@balsa/code-block"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/SplitWorkspaceCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/SplitWorkspaceCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/split-workspace-card.json",
+        "documentation": "docs/compositions/split-workspace-card.md",
+        "example": "docs/compositions/split-workspace-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "release-notes-card",
+      "type": "registry:ui",
+      "title": "ReleaseNotesCard",
+      "description": "Scrollable release history with version, date, and change notes.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/scroll-area",
+        "@balsa/separator",
+        "@balsa/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ReleaseNotesCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/ReleaseNotesCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/release-notes-card.json",
+        "documentation": "docs/compositions/release-notes-card.md",
+        "example": "docs/compositions/release-notes-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "device-verification-card",
+      "type": "registry:ui",
+      "title": "DeviceVerificationCard",
+      "description": "Single-purpose one-time-code step with resend and explicit confirmation.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/input-otp",
+        "@balsa/button",
+        "@balsa/link"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/DeviceVerificationCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/DeviceVerificationCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/device-verification-card.json",
+        "documentation": "docs/compositions/device-verification-card.md",
+        "example": "docs/compositions/device-verification-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "service-health-card",
+      "type": "registry:ui",
+      "title": "ServiceHealthCard",
+      "description": "Half-height status strip reporting state and latency per region.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ServiceHealthCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/ServiceHealthCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/service-health-card.json",
+        "documentation": "docs/compositions/service-health-card.md",
+        "example": "docs/compositions/service-health-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "storage-usage-card",
+      "type": "registry:ui",
+      "title": "StorageUsageCard",
+      "description": "Half-height single measurement with the bar that puts it in context.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/progress"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/StorageUsageCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/StorageUsageCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/storage-usage-card.json",
+        "documentation": "docs/compositions/storage-usage-card.md",
+        "example": "docs/compositions/storage-usage-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "inbox-thread-card",
+      "type": "registry:ui",
+      "title": "InboxThreadCard",
+      "description": "Message thread with author, timing, and an inline reply.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/avatar",
+        "@balsa/button",
+        "@balsa/textarea"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/InboxThreadCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/InboxThreadCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/inbox-thread-card.json",
+        "documentation": "docs/compositions/inbox-thread-card.md",
+        "example": "docs/compositions/inbox-thread-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "filter-panel-card",
+      "type": "registry:ui",
+      "title": "FilterPanelCard",
+      "description": "Grouped filters across checkboxes and a range, with reset and apply.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/accordion",
+        "@balsa/checkbox",
+        "@balsa/slider",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/FilterPanelCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/FilterPanelCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/filter-panel-card.json",
+        "documentation": "docs/compositions/filter-panel-card.md",
+        "example": "docs/compositions/filter-panel-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "incident-alert-card",
+      "type": "registry:ui",
+      "title": "IncidentAlertCard",
+      "description": "Half-height incident banner with acknowledge and open actions.",
+      "dependencies": [
+        "vue",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/alert",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/IncidentAlertCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/IncidentAlertCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/incident-alert-card.json",
+        "documentation": "docs/compositions/incident-alert-card.md",
+        "example": "docs/compositions/incident-alert-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "plan-comparison-card",
+      "type": "registry:ui",
+      "title": "PlanComparisonCard",
+      "description": "Plan capabilities compared across tiers with a billing period switch.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/tabs",
+        "@balsa/table",
+        "@balsa/badge",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/PlanComparisonCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/PlanComparisonCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/plan-comparison-card.json",
+        "documentation": "docs/compositions/plan-comparison-card.md",
+        "example": "docs/compositions/plan-comparison-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "profile-form-card",
+      "type": "registry:ui",
+      "title": "ProfileFormCard",
+      "description": "Labelled profile fields with picture, handle, time zone, and biography.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/input",
+        "@balsa/select",
+        "@balsa/textarea",
+        "@balsa/avatar",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ProfileFormCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/ProfileFormCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/profile-form-card.json",
+        "documentation": "docs/compositions/profile-form-card.md",
+        "example": "docs/compositions/profile-form-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "usage-breakdown-card",
+      "type": "registry:ui",
+      "title": "UsageBreakdownCard",
+      "description": "Stacked bars attributing billed usage to categories over time.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/charts"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/UsageBreakdownCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/UsageBreakdownCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/usage-breakdown-card.json",
+        "documentation": "docs/compositions/usage-breakdown-card.md",
+        "example": "docs/compositions/usage-breakdown-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "environment-switcher-card",
+      "type": "registry:ui",
+      "title": "EnvironmentSwitcherCard",
+      "description": "Searchable environment picker with the current selection stated.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/autocomplete",
+        "@balsa/badge",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/EnvironmentSwitcherCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/EnvironmentSwitcherCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/environment-switcher-card.json",
+        "documentation": "docs/compositions/environment-switcher-card.md",
+        "example": "docs/compositions/environment-switcher-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "api-key-card",
+      "type": "registry:ui",
+      "title": "ApiKeyCard",
+      "description": "One-time secret with copy, provenance, and revocation.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/code-block",
+        "@balsa/badge",
+        "@balsa/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ApiKeyCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/ApiKeyCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/api-key-card.json",
+        "documentation": "docs/compositions/api-key-card.md",
+        "example": "docs/compositions/api-key-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "integration-list-card",
+      "type": "registry:ui",
+      "title": "IntegrationListCard",
+      "description": "Connected services, each with the single control that governs it.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/switch",
+        "@balsa/avatar"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/IntegrationListCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/IntegrationListCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/integration-list-card.json",
+        "documentation": "docs/compositions/integration-list-card.md",
+        "example": "docs/compositions/integration-list-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "runbook-steps-card",
+      "type": "registry:ui",
+      "title": "RunbookStepsCard",
+      "description": "Ordered procedure where only the step in hand is expanded.",
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/accordion",
+        "@balsa/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/RunbookStepsCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/RunbookStepsCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/runbook-steps-card.json",
+        "documentation": "docs/compositions/runbook-steps-card.md",
+        "example": "docs/compositions/runbook-steps-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
+          "--balsa-color-border",
+          "--balsa-radius-surface",
+          "--balsa-border-width",
+          "--balsa-border-opacity",
+          "--balsa-shadow-surface",
+          "--balsa-density-factor"
+        ]
+      }
+    },
+    {
+      "name": "image-compare-card",
+      "type": "registry:ui",
+      "title": "ImageCompareCard",
+      "description": "Before-and-after comparison where the reader sets the split.",
+      "dependencies": [
+        "vue",
+        "@lucide/vue"
+      ],
+      "registryDependencies": [
+        "@balsa/application-card",
+        "@balsa/resizable",
+        "@balsa/gradient-background",
+        "@balsa/icon",
+        "@balsa/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ImageCompareCard.vue",
+          "type": "registry:ui",
+          "target": "src/components/compositions/ImageCompareCard.vue"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/image-compare-card.json",
+        "documentation": "docs/compositions/image-compare-card.md",
+        "example": "docs/compositions/image-compare-card.md",
+        "tokens": [
+          "--balsa-color-surface",
+          "--balsa-color-surface-foreground",
+          "--balsa-color-muted",
+          "--balsa-color-muted-foreground",
           "--balsa-color-border",
           "--balsa-radius-surface",
           "--balsa-border-width",

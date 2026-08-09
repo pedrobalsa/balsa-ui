@@ -79,10 +79,24 @@
     "Using derived feedback colors instead of neutral, primary, secondary, or accent source-palette roles."
   ],
   "examples": [
-    "Dashboard summary",
-    "Form with header action",
-    "Metadata footer",
-    "Explicit local theme override"
+    {
+      "id": "summary",
+      "title": "Dashboard summary",
+      "description": "A compact header and metadata footer establish the repeated application rhythm.",
+      "source": "<script setup lang=\"ts\">\nimport ApplicationCard from \"@/components/compositions/ApplicationCard.vue\";\n</script>\n\n<template>\n  <ApplicationCard title=\"Workspace placeholder\" description=\"Lorem ipsum dolor sit amet.\">\n    <strong class=\"text-3xl\">92%</strong>\n    <template #footer>Metadata placeholder</template>\n  </ApplicationCard>\n</template>"
+    },
+    {
+      "id": "elevated",
+      "title": "Elevated task",
+      "description": "Use elevation only when the panel is meaningfully stacked above its surroundings.",
+      "source": "<script setup lang=\"ts\">\nimport ApplicationCard from \"@/components/compositions/ApplicationCard.vue\";\n</script>\n\n<template>\n  <ApplicationCard title=\"Workspace placeholder\" description=\"Lorem ipsum dolor sit amet.\" variant=\"elevated\" size=\"lg\">\n    <strong class=\"text-3xl\">92%</strong>\n    <template #footer>Metadata placeholder</template>\n  </ApplicationCard>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outlined grouping",
+      "description": "Outline preserves grouping without adding a filled application surface.",
+      "source": "<script setup lang=\"ts\">\nimport ApplicationCard from \"@/components/compositions/ApplicationCard.vue\";\n</script>\n\n<template>\n  <ApplicationCard title=\"Workspace placeholder\" description=\"Lorem ipsum dolor sit amet.\" variant=\"outline\" :shadow=\"false\">\n    <strong class=\"text-3xl\">92%</strong>\n    <template #footer>Metadata placeholder</template>\n  </ApplicationCard>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/compositions/ApplicationCard.vue",

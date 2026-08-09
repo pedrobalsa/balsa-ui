@@ -65,7 +65,7 @@ const speedClasses: Readonly<Record<SpinnerSpeed, string>> = {
 const classes = computed(() =>
   mergeClasses(
     "inline-flex w-fit items-center font-balsa-body",
-    props.labelPosition === "bottom" ? "flex-col gap-2" : "flex-row gap-2.5",
+    props.labelPosition === "bottom" ? "flex-col gap-balsa-xs" : "flex-row gap-balsa-sm",
     colorClasses[props.color],
     attrs.class,
   ),

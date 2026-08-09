@@ -83,6 +83,10 @@ const colorCodeTouched = ref(false);
 const locallyAppliedHex = ref<string | undefined>();
 const popoverLeft = ref(0);
 const popoverTop = ref(0);
+// Declared and assigned through the same bare setTimeout, so the two agree
+// whichever one is in scope. `window` is `Window & typeof globalThis`, so
+// window.setTimeout resolves to Node's where @types/node is present and returns
+// a Timeout the DOM annotation rejects.
 let closePopoverTimeout: ReturnType<typeof setTimeout> | undefined;
 
 const labelId = computed(() => `${props.id}-label`);
@@ -349,7 +353,7 @@ const rootClasses = computed(() =>
     ? "flex h-full min-w-0 flex-1"
     : isFieldLabelInside.value
       ? "inline-flex shrink-0"
-      : "inline-flex shrink-0 flex-col items-start gap-1",
+      : "inline-flex shrink-0 flex-col items-start gap-balsa-3xs",
 );
 const fieldSizeClasses: Readonly<Record<ColorPickerSize, string>> = {
   sm: "size-8",
@@ -399,7 +403,7 @@ const triggerClasses = computed(() => [
 ]);
 const colorTagClasses = computed(() => {
   return [
-    "pointer-events-none absolute inset-1 flex items-center justify-center overflow-hidden px-1 text-center font-medium leading-tight",
+    "pointer-events-none absolute inset-1 flex items-center justify-center overflow-hidden px-balsa-3xs text-center font-medium leading-tight",
     fieldTagSizeClasses[props.size],
   ];
 });
@@ -538,7 +542,7 @@ async function openPicker(): Promise<void> {
   if (props.disabled || open.value) return;
   resolvedPalette.value = root.value?.closest<HTMLElement>("[data-palette]")?.dataset.palette;
   if (closePopoverTimeout) {
-    window.clearTimeout(closePopoverTimeout);
+    clearTimeout(closePopoverTimeout);
     closePopoverTimeout = undefined;
   }
   open.value = true;
@@ -567,7 +571,7 @@ async function closePicker(restoreFocus = false): Promise<void> {
   restoreColorCode();
 
   if (supportsPopover.value && popover.value?.matches(":popover-open")) {
-    closePopoverTimeout = window.setTimeout(() => {
+    closePopoverTimeout = setTimeout(() => {
       if (!open.value && popover.value?.matches(":popover-open")) {
         popover.value.hidePopover();
       }
@@ -642,7 +646,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (closePopoverTimeout) window.clearTimeout(closePopoverTimeout);
+  if (closePopoverTimeout) clearTimeout(closePopoverTimeout);
   document.removeEventListener("pointerdown", handleDocumentPointerDown, true);
   window.removeEventListener("resize", handleViewportChange);
   window.removeEventListener("scroll", handleViewportChange, true);
@@ -713,19 +717,19 @@ onBeforeUnmount(() => {
       role="dialog"
       :aria-label="`Choose ${props.label} color`"
       :aria-hidden="!open"
-      class="fixed z-[70] m-0 w-72 rounded-balsa-surface border border-balsa-border-strong bg-balsa-surface-elevated p-4 text-balsa-surface-elevated-foreground shadow-balsa-panel"
+      class="fixed z-[70] m-0 w-72 rounded-balsa-surface border border-balsa-border-strong bg-balsa-surface-elevated p-balsa-lg text-balsa-surface-elevated-foreground shadow-balsa-panel"
       :class="popoverMotionClasses"
       :style="[popoverStyle, portalPresentation.style]"
       data-balsa-color-picker-popover
       @toggle="handleNativeToggle"
       @keydown.esc.stop.prevent="closePicker(true)"
     >
-      <div class="mb-3 flex items-center justify-between gap-3">
+      <div class="mb-balsa-md flex items-center justify-between gap-balsa-md">
         <div class="min-w-0">
           <small class="block truncate text-balsa-muted-foreground">{{ props.label }}</small>
-          <p class="mt-1 text-sm font-semibold">Choose a color</p>
+          <p class="mt-balsa-3xs text-sm font-semibold">Choose a color</p>
         </div>
-        <div class="flex shrink-0 items-center gap-2">
+        <div class="flex shrink-0 items-center gap-balsa-xs">
           <slot name="actions" :close="closePicker" />
           <Button
             :size="null"
@@ -765,7 +769,7 @@ onBeforeUnmount(() => {
         ></span>
       </div>
 
-      <label :for="`${props.id}-hue`" class="mt-4 block text-sm font-medium">Hue</label>
+      <label :for="`${props.id}-hue`" class="mt-balsa-lg block text-sm font-medium">Hue</label>
       <input
         :id="`${props.id}-hue`"
         type="range"
@@ -774,12 +778,12 @@ onBeforeUnmount(() => {
         step="1"
         :value="hue"
         aria-label="Hue"
-        class="mt-2 h-3 w-full cursor-pointer appearance-none rounded-full border border-balsa-border-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring [&::-moz-range-thumb]:size-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-balsa-background [&::-moz-range-thumb]:bg-balsa-foreground [&::-webkit-slider-thumb]:size-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-balsa-background [&::-webkit-slider-thumb]:bg-balsa-foreground"
+        class="mt-balsa-xs h-3 w-full cursor-pointer appearance-none rounded-full border border-balsa-border-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring [&::-moz-range-thumb]:size-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-balsa-background [&::-moz-range-thumb]:bg-balsa-foreground [&::-webkit-slider-thumb]:size-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-balsa-background [&::-webkit-slider-thumb]:bg-balsa-foreground"
         :style="{ backgroundImage: 'linear-gradient(to right, rgb(255 0 0), rgb(255 255 0), rgb(0 255 0), rgb(0 255 255), rgb(0 0 255), rgb(255 0 255), rgb(255 0 0))' }"
         @input="updateHue"
       />
 
-      <div class="mt-5 grid grid-cols-[5.5rem_minmax(0,1fr)] items-end gap-2">
+      <div class="mt-balsa-xl grid grid-cols-[5.5rem_minmax(0,1fr)] items-end gap-balsa-xs">
         <Select
           :id="colorCodeFormatId"
           v-model="colorCodeFormat"
@@ -789,7 +793,7 @@ onBeforeUnmount(() => {
           size="sm"
           :variant="props.variant"
           :theme="props.theme"
-          class="h-10 px-2 pr-7 text-xs"
+          class="h-10 px-balsa-xs pr-7 text-xs"
         />
         <Input
           :id="colorCodeInputId"

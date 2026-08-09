@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/card",
+  "wave": 2,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/card/Card.vue": "sha256-dcaa00c6cf14bbde614be147bee27b9f87ba94074405b5d643d816077f861116",
+      "ui/card/CardContent.vue": "sha256-4c09b330804cda0c4d983a924a04ffb331d3f2e9bda495a851eed1ab60567947",
+      "ui/card/CardDescription.vue": "sha256-5ed5065e722dbe0a16be5c636fb9dbcdc9681a727cc558873812ae5d5659cb1b",
+      "ui/card/CardFooter.vue": "sha256-25a96f10ace40048ad850abea19da4d03eba1e31f4a1b661dc6d9375978f36c5",
+      "ui/card/CardHeader.vue": "sha256-b1386d46cd995b421ab3d13e70299d1f5b74ea5eb3ebe5cee613462f85c0bc6f",
+      "ui/card/CardTitle.vue": "sha256-9ee1f38fb4e863a0f2e34452b3353b41e5d79066fce00cbe0ba4393b9efefe0e",
+      "ui/card/index.ts": "sha256-92bbffb0b595ce41fc8995a300a521255dd83f6c1c7c6f2f8628e4bd4c23bd97"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "vue"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "patch",
+    "elevation": "patch",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/card/Card.vue",
+      "find": "'rounded-xl border bg-card text-card-foreground shadow'",
+      "replace": "'rounded-xl border-solid border-(length:--balsa-outline-border-width) bg-card text-card-foreground shadow-[var(--balsa-shadow-control)]'",
+      "reason": "Tailwind shadow utilities compile to literal offsets, so elevation cannot reach through a variable."
+    },
+    {
+      "file": "ui/card/CardFooter.vue",
+      "find": "'flex items-center p-6 pt-0'",
+      "replace": "'flex items-center p-balsa-2xl pt-0'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/card/CardHeader.vue",
+      "find": "'flex flex-col gap-y-1.5 p-6'",
+      "replace": "'flex flex-col gap-y-balsa-2xs p-balsa-2xl'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

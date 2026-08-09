@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "item": "@shadcn/calendar",
+  "wave": 5,
+  "status": "integrated-with-patch",
+  "upstream": {
+    "version": null,
+    "files": {
+      "ui/calendar/Calendar.vue": "sha256-66c103debe00ea62d881284c19b682c5b44c98ba49816b0fd14074f7c7ac6224",
+      "ui/calendar/CalendarCell.vue": "sha256-97416f2d5e72f8ac6c5bea9262755f3cdf1a9de5e9337ff35710d5c953a37cf2",
+      "ui/calendar/CalendarCellTrigger.vue": "sha256-cb07f64b58b687791c1e9d23a6b93425007cf9671bec1dd5ea3c090372338d18",
+      "ui/calendar/CalendarGrid.vue": "sha256-cac5a595417bbfe0b60ae5319648ac01fa5551570f4158cdb2a2e7ef9b940588",
+      "ui/calendar/CalendarGridBody.vue": "sha256-5ae6397b105432973fb709c0409871aa184cbc299f2f6be49df2d625001c0f30",
+      "ui/calendar/CalendarGridHead.vue": "sha256-4d26631413c604c3d79f9ec0d08dbd0602fa3ca94024ff7883ac02d71a5155d8",
+      "ui/calendar/CalendarGridRow.vue": "sha256-5ee73e1419d9029af762dbe06d9cc6bdeb21ccf3637669d5f61c11a6516ef141",
+      "ui/calendar/CalendarHeadCell.vue": "sha256-b89b2c20c3eaf036600061104508f08dd036b54ece34c709eff088c3c161aea3",
+      "ui/calendar/CalendarHeader.vue": "sha256-ee303835578c3b6c4ead913cf29bbd3931f43338d56667b65777b4edabde0d7e",
+      "ui/calendar/CalendarHeading.vue": "sha256-76a54d836d196cfa97a091e96e2d91b57ab33cc4874f1fe4f9c6334c8a74b693",
+      "ui/calendar/CalendarNextButton.vue": "sha256-c89ce1004880bd876dd60fca9cb05609596bc8897b46273d0a707c6b6bb3eec8",
+      "ui/calendar/CalendarPrevButton.vue": "sha256-2745e76f6c835f90653710c278d3230a9d20abb61da2193472c0650ca67ef0c0",
+      "ui/calendar/index.ts": "sha256-165d55307578095b9cf91f60199c718f5d213986a471fdf8336172cc2a4d9848"
+    }
+  },
+  "requires": {
+    "npmDependencies": [
+      "@vueuse/core",
+      "lucide-vue-next",
+      "reka-ui",
+      "vue"
+    ],
+    "undeclaredUpstreamDependencies": [
+      "lucide-vue-next",
+      "vue"
+    ],
+    "siblingImports": [
+      "@/registry/new-york/ui/button"
+    ]
+  },
+  "dimensions": {
+    "color": "bridge",
+    "radius": "adapter-scope",
+    "typography": "adapter-scope",
+    "motion": "adapter-scope",
+    "border": "unsupported",
+    "elevation": "unsupported",
+    "spacing": "patch",
+    "density": "unsupported",
+    "material": "unsupported"
+  },
+  "patches": [
+    {
+      "file": "ui/calendar/Calendar.vue",
+      "find": "\"flex flex-col gap-y-4 mt-4 sm:flex-row sm:gap-x-4 sm:gap-y-0\"",
+      "replace": "\"flex flex-col gap-y-balsa-lg mt-balsa-lg sm:flex-row sm:gap-x-4 sm:gap-y-0\"",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/calendar/CalendarGrid.vue",
+      "find": "'w-full border-collapse space-y-1'",
+      "replace": "'w-full border-collapse space-y-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    },
+    {
+      "file": "ui/calendar/CalendarHeader.vue",
+      "find": "'relative flex w-full items-center justify-between pt-1'",
+      "replace": "'relative flex w-full items-center justify-between pt-balsa-3xs'",
+      "reason": "A fixed Tailwind spacing step cannot follow the design system's spacing scale; the Balsa step carries the same value and derives from the base unit."
+    }
+  ],
+  "portal": "Does not teleport content.",
+  "rtl": "supported",
+  "reducedMotion": "supported",
+  "coverage": {
+    "visual": false,
+    "interaction": false,
+    "staticConformance": true
+  },
+  "limitations": [
+    "Control heights stay on the upstream scale; Balsa density is not a Tailwind grid unit.",
+    "Type scale stays on the upstream scale; Balsa defines no numeric type scale.",
+    "The Glass material is not applied; material direction is a composition decision."
+  ]
+}

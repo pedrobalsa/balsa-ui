@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "name": "device-verification-card",
+  "title": "DeviceVerificationCard",
+  "category": "composition",
+  "classification": "balsa-composition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Single-purpose one-time-code step with resend and explicit confirmation.",
+  "useFor": [
+    "Production application interfaces",
+    "Design Studio composition previews",
+    "Reusable product workflows"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Unrelated content forced into one surface",
+    "Pinned geometry or elevation that bypasses the active theme"
+  ],
+  "variants": [
+    "theme inherited"
+  ],
+  "sizes": [
+    "responsive"
+  ],
+  "states": [
+    "default",
+    "interactive",
+    "disabled where applicable"
+  ],
+  "composition": {
+    "root": "ApplicationCard",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "research": "https://auth0.com/docs/secure/multi-factor-authentication"
+  },
+  "accessibility": [
+    "Heading level follows the surrounding document hierarchy.",
+    "Interactive controls retain native keyboard and focus behavior through Balsa primitives.",
+    "Supporting text and status do not rely on color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-density-factor"
+  ],
+  "commonMistakes": [
+    "Pinning radius, border, or shadow instead of inheriting the design context.",
+    "Replacing the typed data contract with demo-only DOM.",
+    "Adding a second principal card surface."
+  ],
+  "publicApi": {
+    "source": "src/components/compositions/DeviceVerificationCard.vue",
+    "props": [
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Confirm this device\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Enter the six digits sent to ada@example.com.\""
+      },
+      {
+        "name": "length",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "6"
+      }
+    ],
+    "events": [
+      {
+        "name": "verify",
+        "type": "[code: string]"
+      },
+      {
+        "name": "resend",
+        "type": "[]"
+      }
+    ],
+    "slots": []
+  },
+  "examples": [
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport DeviceVerificationCard from \"@/components/compositions/DeviceVerificationCard.vue\";\n</script>\n\n<template>\n  <DeviceVerificationCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport DeviceVerificationCard from \"@/components/compositions/DeviceVerificationCard.vue\";\n</script>\n\n<template>\n  <DeviceVerificationCard title=\"Pattern placeholder\" />\n</template>"
+    }
+  ]
+}

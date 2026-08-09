@@ -66,9 +66,30 @@
     "Using ToggleGroup for unrelated one-shot actions."
   ],
   "examples": [
-    "Single alignment",
-    "Multiple formatting actions",
-    "Vertical connected group"
+    {
+      "id": "single",
+      "title": "Single selection",
+      "description": "Use single mode for one active alignment or view choice.",
+      "source": "<script setup lang=\"ts\">\nimport ToggleGroup from \"@/components/ui/ToggleGroup.vue\";\nimport { ref } from \"vue\";\nimport { AlignCenter, AlignLeft, AlignRight } from \"@lucide/vue\";\n\nconst alignment = ref(\"left\");\nconst options = [\n  { id: \"left\", label: \"Left\", icon: AlignLeft },\n  { id: \"center\", label: \"Center\", icon: AlignCenter },\n  { id: \"right\", label: \"Right\", icon: AlignRight },\n];\n</script>\n\n<template>\n  <ToggleGroup v-model=\"alignment\" :options=\"options\" label=\"Text alignment placeholder\" type=\"single\" />\n</template>"
+    },
+    {
+      "id": "multiple",
+      "title": "Multiple selection",
+      "description": "Multiple mode keeps independent formatting actions pressed together.",
+      "source": "<script setup lang=\"ts\">\nimport ToggleGroup from \"@/components/ui/ToggleGroup.vue\";\nimport { ref } from \"vue\";\nimport { AlignCenter, AlignLeft, AlignRight } from \"@lucide/vue\";\n\nconst alignment = ref([\"left\", \"center\"]);\nconst options = [\n  { id: \"left\", label: \"Left\", icon: AlignLeft },\n  { id: \"center\", label: \"Center\", icon: AlignCenter },\n  { id: \"right\", label: \"Right\", icon: AlignRight },\n];\n</script>\n\n<template>\n  <ToggleGroup v-model=\"alignment\" :options=\"options\" label=\"Text alignment placeholder\" type=\"multiple\" />\n</template>"
+    },
+    {
+      "id": "vertical",
+      "title": "Vertical",
+      "description": "Vertical orientation changes both layout and arrow-key direction.",
+      "source": "<script setup lang=\"ts\">\nimport ToggleGroup from \"@/components/ui/ToggleGroup.vue\";\nimport { ref } from \"vue\";\nimport { AlignCenter, AlignLeft, AlignRight } from \"@lucide/vue\";\n\nconst alignment = ref(\"right\");\nconst options = [\n  { id: \"left\", label: \"Left\", icon: AlignLeft },\n  { id: \"center\", label: \"Center\", icon: AlignCenter },\n  { id: \"right\", label: \"Right\", icon: AlignRight },\n];\n</script>\n\n<template>\n  <ToggleGroup v-model=\"alignment\" :options=\"options\" label=\"Text alignment placeholder\" type=\"single\" orientation=\"vertical\" />\n</template>"
+    },
+    {
+      "id": "required-selection",
+      "title": "Persistent single selection",
+      "description": "Disable empty selection when the surrounding task always requires one active mode.",
+      "source": "<script setup lang=\"ts\">\nimport ToggleGroup from \"@/components/ui/ToggleGroup.vue\";\nimport { ref } from \"vue\";\nimport { AlignCenter, AlignLeft, AlignRight } from \"@lucide/vue\";\n\nconst alignment = ref(\"center\");\nconst options = [\n  { id: \"left\", label: \"Left\", icon: AlignLeft },\n  { id: \"center\", label: \"Center\", icon: AlignCenter },\n  { id: \"right\", label: \"Right\", icon: AlignRight },\n];\n</script>\n\n<template>\n  <ToggleGroup v-model=\"alignment\" :options=\"options\" label=\"Text alignment placeholder\" type=\"single\" :allow-empty=\"false\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/ToggleGroup.vue",

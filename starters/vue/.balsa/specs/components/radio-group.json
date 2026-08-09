@@ -62,10 +62,30 @@
     "Removing native focus behavior from visually customized indicators."
   ],
   "examples": [
-    "Column choices",
-    "Inline choices",
-    "Descriptive cards",
-    "Invalid required group"
+    {
+      "id": "column",
+      "title": "Column choices",
+      "description": "A compact vertical group preserves native single-choice behavior.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" required hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "row",
+      "title": "Inline choices",
+      "description": "Short labels can wrap naturally across one row.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" layout=\"row\" size=\"sm\" required hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "cards",
+      "title": "Accent descriptive cards",
+      "description": "Accent selected material and paired foreground identify one richer option.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" layout=\"cards\" color=\"accent\" required rounded=\"xl\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Required error",
+      "description": "One explicit unvalidated message names the complete group.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" status=\"unvalidated\" required hint=\"Helper text placeholder.\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/RadioGroup.vue",

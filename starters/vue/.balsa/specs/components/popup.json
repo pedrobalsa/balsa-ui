@@ -56,10 +56,30 @@
     "Putting blocking confirmation in a non-modal popup."
   ],
   "examples": [
-    "Settings form",
-    "Aligned details",
-    "Trigger-width content",
-    "Contained preview"
+    {
+      "id": "settings",
+      "title": "Settings popup",
+      "description": "Interactive content receives focus and restores the trigger.",
+      "source": "<script setup lang=\"ts\">\nimport Popup from \"@/components/ui/Popup.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Popup id=\"settings-popup\" v-model=\"open\" label=\"Settings placeholder\">\n    <template #trigger>Open popup</template>\n    <h3>Settings placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </Popup>\n</template>"
+    },
+    {
+      "id": "aligned",
+      "title": "Start aligned",
+      "description": "Alignment follows the trigger before collision correction.",
+      "source": "<script setup lang=\"ts\">\nimport Popup from \"@/components/ui/Popup.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Popup id=\"settings-popup\" v-model=\"open\" label=\"Settings placeholder\" align=\"start\">\n    <template #trigger>Open popup</template>\n    <h3>Settings placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </Popup>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass material",
+      "description": "A low-rim translucent popup inherits its surrounding palette.",
+      "source": "<script setup lang=\"ts\">\nimport Popup from \"@/components/ui/Popup.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Popup id=\"settings-popup\" v-model=\"open\" label=\"Settings placeholder\" variant=\"glass\">\n    <template #trigger>Open popup</template>\n    <h3>Settings placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </Popup>\n</template>"
+    },
+    {
+      "id": "trigger",
+      "title": "Trigger width",
+      "description": "Content can adopt the measured trigger width.",
+      "source": "<script setup lang=\"ts\">\nimport Popup from \"@/components/ui/Popup.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Popup id=\"settings-popup\" v-model=\"open\" label=\"Settings placeholder\" size=\"trigger\">\n    <template #trigger>Wide trigger placeholder</template>\n    <h3>Settings placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </Popup>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Popup.vue",

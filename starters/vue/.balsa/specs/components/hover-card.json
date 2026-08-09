@@ -53,10 +53,30 @@
     "Inventing hover behavior on touch."
   ],
   "examples": [
-    "Profile preview",
-    "Link summary",
-    "Delayed preview",
-    "Collision flip"
+    {
+      "id": "summary",
+      "title": "Summary preview",
+      "description": "Hover or keyboard focus reveals supplementary copy.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    },
+    {
+      "id": "quick",
+      "title": "Quick preview",
+      "description": "Shorter delays remain cancellable across the pointer gap.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" :open-delay=\"100\" :close-delay=\"100\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    },
+    {
+      "id": "top",
+      "title": "Top placement",
+      "description": "Preferred placement flips when viewport space is insufficient.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" side=\"top\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass preview",
+      "description": "Glass material remains readable over the generated field.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" variant=\"glass\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/HoverCard.vue",

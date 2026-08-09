@@ -40,9 +40,18 @@
     "Using decorative icon-only links without accessible names."
   ],
   "examples": [
-    "Documentation footer",
-    "Footer with editable navigation sections",
-    "Footer with contacts and social links"
+    {
+      "id": "multiple-sections",
+      "title": "Multiple sections",
+      "description": "Footer navigation expands to the number of typed sections provided.",
+      "source": "<script setup lang=\"ts\">\nimport Footer from \"@/components/ui/Footer.vue\";\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"/\" };\nconst sections = [\n  {\n    \"title\": \"Section placeholder 01\",\n    \"links\": [\n      {\n        \"title\": \"Link placeholder 01\",\n        \"link\": \"#link-placeholder-01\"\n      },\n      {\n        \"title\": \"Link placeholder 02\",\n        \"link\": \"#link-placeholder-02\"\n      }\n    ]\n  },\n  {\n    \"title\": \"Section placeholder 02\",\n    \"links\": [\n      {\n        \"title\": \"Link placeholder 03\",\n        \"link\": \"#link-placeholder-03\"\n      },\n      {\n        \"title\": \"Link placeholder 04\",\n        \"link\": \"#link-placeholder-04\"\n      }\n    ]\n  }\n];\n</script>\n\n<template>\n  <Footer :legal-logo=\"logo\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" :sections=\"sections\" copyright=\"Placeholder copyright\" legal-text=\"Legal text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact navigation",
+      "description": "A single navigation section works for smaller product surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport Footer from \"@/components/ui/Footer.vue\";\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"/\" };\nconst sections = [\n  {\n    \"title\": \"Section placeholder\",\n    \"links\": [\n      {\n        \"title\": \"Link placeholder 01\",\n        \"link\": \"#link-placeholder-01\"\n      },\n      {\n        \"title\": \"Link placeholder 02\",\n        \"link\": \"#link-placeholder-02\"\n      },\n      {\n        \"title\": \"Link placeholder 03\",\n        \"link\": \"#link-placeholder-03\"\n      }\n    ]\n  }\n];\n</script>\n\n<template>\n  <Footer :legal-logo=\"logo\" description=\"Lorem ipsum dolor sit amet.\" :sections=\"sections\" copyright=\"Placeholder copyright\" legal-text=\"Legal text placeholder.\" />\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Footer.vue",

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "plan-comparison-card",
+  "type": "registry:ui",
+  "title": "PlanComparisonCard",
+  "description": "Plan capabilities compared across tiers with a billing period switch.",
+  "dependencies": [
+    "vue"
+  ],
+  "registryDependencies": [
+    "@balsa/application-card",
+    "@balsa/tabs",
+    "@balsa/table",
+    "@balsa/badge",
+    "@balsa/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/PlanComparisonCard.vue",
+      "type": "registry:ui",
+      "target": "src/components/compositions/PlanComparisonCard.vue",
+      "content": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Badge from \"../ui/Badge.vue\";\nimport Button from \"../ui/Button.vue\";\nimport Table from \"../ui/Table.vue\";\nimport Tabs, { type TabItem } from \"../ui/Tabs.vue\";\nimport CompositionRoot from \"./_CompositionRoot.vue\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface PlanRow { id: string; capability: string; starter: string; pro: string; scale: string }\n\n/**\n * Three plans across, one capability per row. Wide because the comparison is\n * horizontal — stacked, it stops being a comparison — and one and a half units\n * tall because the table needs its rows and nothing more.\n */\nconst props = withDefaults(defineProps<CompositionSurfaceProps & {\n  title?: string;\n  description?: string;\n  rows?: readonly PlanRow[];\n}>(), {\n  title: \"Compare plans\",\n  description: \"What changes as a workspace grows.\",\n  rows: () => [\n    { id: \"members\", capability: \"Members\", starter: \"3\", pro: \"25\", scale: \"Unlimited\" },\n    { id: \"environments\", capability: \"Environments\", starter: \"1\", pro: \"5\", scale: \"Unlimited\" },\n    { id: \"regions\", capability: \"Edge regions\", starter: \"1\", pro: \"6\", scale: \"All 14\" },\n    { id: \"retention\", capability: \"Log retention\", starter: \"3 days\", pro: \"30 days\", scale: \"1 year\" },\n    { id: \"support\", capability: \"Support\", starter: \"Community\", pro: \"4 hour response\", scale: \"Dedicated\" },\n    { id: \"builds\", capability: \"Concurrent builds\", starter: \"1\", pro: \"8\", scale: \"40\" },\n    { id: \"sso\", capability: \"Single sign-on\", starter: \"—\", pro: \"Google, Okta\", scale: \"Any SAML provider\" },\n  ],\n});\nconst emit = defineEmits<{ choose: [plan: string] }>();\n\nconst billing: readonly TabItem[] = [\n  { id: \"monthly\", label: \"Monthly\" },\n  { id: \"annual\", label: \"Annual, save 10%\" },\n];\nconst period = ref(\"monthly\");\n</script>\n\n<template>\n  <CompositionRoot v-bind=\"props\" data-composition=\"plan-comparison\">\n    <template #action><Badge variant=\"soft\">Current: Pro</Badge></template>\n    <div class=\"flex flex-1 flex-col gap-balsa-lg\">\n      <Tabs id=\"billing-period\" v-model=\"period\" :items=\"billing\" label=\"Billing period\" :panel-surface=\"false\">\n        <template #monthly><span class=\"sr-only\">Prices shown per member, per month.</span></template>\n        <template #annual><span class=\"sr-only\">Prices shown per member, billed once a year.</span></template>\n      </Tabs>\n      <Table caption=\"Plan comparison\" rounded=\"none\" class=\"w-full flex-1\">\n        <template #header>\n          <thead>\n            <tr>\n              <th scope=\"col\">Capability</th>\n              <th scope=\"col\">Starter</th>\n              <th scope=\"col\">Pro</th>\n              <th scope=\"col\">Scale</th>\n            </tr>\n          </thead>\n        </template>\n        <tbody>\n          <tr v-for=\"row in props.rows\" :key=\"row.id\">\n            <th scope=\"row\">{{ row.capability }}</th>\n            <td class=\"text-balsa-muted-foreground\">{{ row.starter }}</td>\n            <td class=\"font-medium\">{{ row.pro }}</td>\n            <td class=\"text-balsa-muted-foreground\">{{ row.scale }}</td>\n          </tr>\n        </tbody>\n      </Table>\n    </div>\n    <template #footer>\n      <div class=\"flex gap-balsa-md\">\n        <Button variant=\"soft\" class=\"flex-1\" @click=\"emit('choose', 'starter')\">Downgrade to Starter</Button>\n        <Button class=\"flex-1\" @click=\"emit('choose', 'scale')\">Move to Scale</Button>\n      </div>\n    </template>\n  </CompositionRoot>\n</template>\n"
+    }
+  ],
+  "meta": {
+    "framework": "vue",
+    "spec": "specs/components/plan-comparison-card.json",
+    "documentation": "docs/compositions/plan-comparison-card.md",
+    "example": "docs/compositions/plan-comparison-card.md",
+    "tokens": [
+      "--balsa-color-surface",
+      "--balsa-color-surface-foreground",
+      "--balsa-color-muted",
+      "--balsa-color-muted-foreground",
+      "--balsa-color-border",
+      "--balsa-radius-surface",
+      "--balsa-border-width",
+      "--balsa-border-opacity",
+      "--balsa-shadow-surface",
+      "--balsa-density-factor"
+    ]
+  }
+}

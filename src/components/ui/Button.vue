@@ -52,49 +52,23 @@ const resolvedShadow = computed<Shadow>(() =>
 );
 
 const sizeClasses: Record<ButtonSize, string[]> = {
-  sm: ["h-8", "gap-1.5", "text-sm"],
-  md: ["h-9", "gap-2", "text-sm"],
-  lg: ["h-10", "gap-2", "text-sm"],
-  xl: ["h-12", "gap-2.5", "text-base"],
-  "2xl": ["h-18", "gap-3", "text-xl"],
+  sm: ["h-8", "gap-balsa-2xs", "text-sm"],
+  md: ["h-9", "gap-balsa-xs", "text-sm"],
+  lg: ["h-10", "gap-balsa-xs", "text-sm"],
+  xl: ["h-12", "gap-balsa-sm", "text-base"],
+  "2xl": ["h-18", "gap-balsa-md", "text-xl"],
 };
 
-const paddingClasses: Record<
-  ButtonSize,
-  Record<ButtonIconPlacement, string>
-> = {
-  sm: {
-    none: "px-3",
-    prefix: "pl-2.5 pr-3",
-    suffix: "pl-3 pr-2.5",
-    both: "px-2.5",
-  },
-  md: {
-    none: "px-4",
-    prefix: "pl-3 pr-4",
-    suffix: "pl-4 pr-3",
-    both: "px-3",
-  },
-  lg: {
-    none: "px-6",
-    prefix: "pl-5 pr-6",
-    suffix: "pl-6 pr-5",
-    both: "px-5",
-  },
-  xl: {
-    none: "px-8",
-    prefix: "pl-7 pr-8",
-    suffix: "pl-8 pr-7",
-    both: "px-7",
-  },
-  "2xl": {
-    none: "px-10",
-    prefix: "pl-9 pr-10",
-    suffix: "pl-10 pr-9",
-    both: "px-9",
-  },
-};
-
+/*
+ * The inset is not here any more. It follows from the size, and from whether an
+ * icon sits beside it; both are published as data for the stylesheet to key on.
+ * See the icon-adjacency rule in balsa-theme.css.
+ *
+ * What stood here was a five-by-four table of literal padding classes in which
+ * the rule was implicit -- every icon-side value happened to be one step less
+ * than its text-side neighbour. Twenty numbers expressing one sentence, and the
+ * only place `28px`, `36px` and `14px` entered the vocabulary at all.
+ */
 const iconSizes: Record<ButtonSize, IconSize> = {
   sm: "sm",
   md: "sm",
@@ -148,12 +122,15 @@ const rootAttrs = computed(() => withoutClassAttribute(attrs));
 
 const classes = computed(() =>
   mergeClasses(
-    "inline-flex w-fit items-center justify-center font-balsa-body transition-colors duration-200 ease-in-out hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:border-balsa-disabled disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
+    // No `duration-200 ease-in-out`. The shared control rule already sets
+    // transition duration and easing from the motion tokens, and a literal
+    // utility outranks it -- so every button animated for a fixed 200ms at
+    // every motion setting, including the one that asks for none.
+    "inline-flex w-fit items-center justify-center font-balsa-body transition-colors hover:cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring disabled:border-balsa-disabled disabled:bg-balsa-disabled disabled:text-balsa-disabled-foreground",
     actionColorClasses[props.color][resolvedVariant.value],
-    resolvedVariant.value === "outline" ? ["border", "bg-transparent"] : [],
-    resolvedVariant.value === "glass" ? ["border"] : [],
+    resolvedVariant.value === "outline" ? ["bg-transparent"] : [],
+    resolvedVariant.value === "glass" ? [] : [],
     resolvedSize.value ? sizeClasses[resolvedSize.value] : [],
-    resolvedSize.value ? paddingClasses[resolvedSize.value][iconPlacement.value] : [],
     shapeClasses[resolvedShape.value],
     resolvedShape.value === "fab" && resolvedSize.value
       ? fabSizeClasses[resolvedSize.value]
@@ -183,6 +160,8 @@ const iconSize = computed<IconSize>(() => {
     :data-shape="resolvedShape"
     :data-color="props.color"
     :data-shadow="resolvedShadow"
+    :data-size="resolvedSize ?? undefined"
+    :data-icon="iconPlacement"
     :type="props.type"
     :disabled="isDisabled"
     :aria-busy="ariaBusy"

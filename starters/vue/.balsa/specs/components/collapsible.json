@@ -57,9 +57,24 @@
     "Placing required task content only inside the closed region."
   ],
   "examples": [
-    "Open details",
-    "Disabled disclosure",
-    "Custom trigger slot"
+    {
+      "id": "open",
+      "title": "Underline details",
+      "description": "The default underline keeps optional supporting information compact in context.",
+      "source": "<script setup lang=\"ts\">\nimport Collapsible from \"@/components/ui/Collapsible.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(true);\n</script>\n\n<template>\n  <Collapsible id=\"details-placeholder\" v-model=\"open\" title=\"Details placeholder\">\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Collapsible>\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft disclosure",
+      "description": "A soft material gives the retained detail a quieter hierarchy.",
+      "source": "<script setup lang=\"ts\">\nimport Collapsible from \"@/components/ui/Collapsible.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(true);\n</script>\n\n<template>\n  <Collapsible id=\"details-placeholder\" v-model=\"open\" title=\"Details placeholder\" variant=\"soft\" rounded=\"xl\">\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Collapsible>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled state preserves the current disclosure state and blocks activation.",
+      "source": "<script setup lang=\"ts\">\nimport Collapsible from \"@/components/ui/Collapsible.vue\";\nimport { ref } from \"vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Collapsible id=\"details-placeholder\" v-model=\"open\" title=\"Details placeholder\" disabled>\n    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Collapsible>\n</template>"
+    }
   ],
   "publicApi": {
     "source": "src/components/ui/Collapsible.vue",

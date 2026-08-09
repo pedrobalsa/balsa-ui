@@ -58,7 +58,7 @@ const controlClasses = computed(() => {
   };
 
   return [
-    "relative mt-0.5 shrink-0 cursor-pointer border transition-[border-color,background-color,box-shadow,opacity] after:absolute after:left-1 after:top-1 after:bg-balsa-muted-foreground after:transition-transform after:content-[''] peer-checked:border-balsa-primary peer-checked:bg-balsa-primary peer-checked:after:bg-balsa-primary-foreground peer-focus-visible:border-balsa-focus-ring peer-focus-visible:ring-2 peer-focus-visible:ring-balsa-focus-ring/30 peer-disabled:cursor-not-allowed peer-disabled:border-balsa-border peer-disabled:bg-balsa-disabled peer-disabled:after:bg-balsa-disabled-foreground",
+    "relative mt-balsa-4xs shrink-0 cursor-pointer transition-[border-color,background-color,box-shadow,opacity] after:absolute after:left-1 after:top-1 after:bg-balsa-muted-foreground after:transition-transform after:content-[''] peer-checked:border-balsa-primary peer-checked:bg-balsa-primary peer-checked:after:bg-balsa-primary-foreground peer-focus-visible:border-balsa-focus-ring peer-focus-visible:ring-2 peer-focus-visible:ring-balsa-focus-ring/30 peer-disabled:cursor-not-allowed peer-disabled:border-balsa-border peer-disabled:bg-balsa-disabled peer-disabled:after:bg-balsa-disabled-foreground",
     getChoiceTrackClasses(props.variant),
     sizeClasses[props.size],
     roundedClasses[props.rounded],
@@ -76,7 +76,7 @@ const controlClasses = computed(() => {
     :data-rounded="props.rounded"
     :data-variant="props.variant"
     :style="theme.explicitPresentation.value?.style"
-    class="flex items-start gap-3"
+    class="flex items-start gap-balsa-md"
   >
     <input
       :id="props.id"
