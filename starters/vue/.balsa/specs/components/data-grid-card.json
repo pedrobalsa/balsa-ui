@@ -153,6 +153,44 @@
       {
         "name": "rows",
         "type": "readonly DeploymentRow[] | undefined",
+        "shape": {
+          "type": "readonly DeploymentRow[]",
+          "items": {
+            "type": "DeploymentRow",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "service",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "environment",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "version",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "duration",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "started",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"d-108\", service: \"Atlas\", environment: \"Production\", version: \"4.12.0\", duration: \"1m 48s\", started: \"2 minutes ago\" }, { id: \"d-107\", service: \"Relay\", environment: \"Preview\", version: \"2.7.3\", duration: \"52s\", started: \"18 minutes ago\" }, { id: \"d-106\", service: \"Atlas\", environment: \"Preview\", version: \"4.12.0-rc.2\", duration: \"1m 31s\", started: \"1 hour ago\" }, { id: \"d-105\", service: \"Harbor\", environment: \"Production\", version: \"1.9.8\", duration: \"3m 04s\", started: \"3 hours ago\" }, { id: \"d-104\", service: \"Nova\", environment: \"Development\", version: \"0.4.1\", duration: \"41s\", started: \"5 hours ago\" }, { id: \"d-103\", service: \"Relay\", environment: \"Production\", version: \"2.7.2\", duration: \"58s\", started: \"Yesterday\" }, { id: \"d-102\", service: \"Quill\", environment: \"Preview\", version: \"3.0.0-beta.4\", duration: \"2m 12s\", started: \"Yesterday\" }, { id: \"d-101\", service: \"Atlas\", environment: \"Production\", version: \"4.11.6\", duration: \"1m 44s\", started: \"2 days ago\" }, { id: \"d-100\", service: \"Harbor\", environment: \"Development\", version: \"1.9.7\", duration: \"37s\", started: \"2 days ago\" }, ]"
       }

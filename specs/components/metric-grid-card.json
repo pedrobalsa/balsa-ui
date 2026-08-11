@@ -167,6 +167,29 @@
       {
         "name": "metrics",
         "type": "readonly CompositionMetric[] | undefined",
+        "shape": {
+          "type": "readonly CompositionMetric[]",
+          "items": {
+            "type": "CompositionMetric",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "detail",
+                "type": "string | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { label: \"Deployments\", value: \"128\", detail: \"+12 this week\" }, { label: \"Uptime\", value: \"99.99%\", detail: \"30 day window\" }, { label: \"Members\", value: \"24\", detail: \"3 online\" }, { label: \"Regions\", value: \"6\", detail: \"Global coverage\" }, { label: \"Build time\", value: \"42s\", detail: \"median\" }, { label: \"Error rate\", value: \"0.04%\", detail: \"last 24 hours\" }, { label: \"Requests\", value: \"8.1M\", detail: \"this week\" }, { label: \"Rollbacks\", value: \"2\", detail: \"this quarter\" }, ]"
       }

@@ -24,6 +24,7 @@ const props = withDefaults(
     suffixIcon?: IconComponent;
     disabled?: boolean;
     loading?: boolean;
+    analyticsEvent?: string;
     type?: "button" | "submit" | "reset";
     shadow?: Shadow;
     theme?: ThemeInput;
@@ -154,6 +155,7 @@ const iconSize = computed<IconSize>(() => {
   <button
     v-bind="rootAttrs"
     data-balsa="button"
+    :data-balsa-track="props.analyticsEvent?.trim() || undefined"
     :data-theme="theme.explicitPresentation.value?.id"
     :data-theme-base="theme.explicitPresentation.value?.base"
     :data-variant="resolvedVariant"

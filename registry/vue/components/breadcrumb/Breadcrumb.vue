@@ -6,6 +6,7 @@ import { computed } from "vue";
 import type { ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import Icon from "./Icon.vue";
+import type { NavigationLink } from "./navigation";
 
 export interface BreadcrumbItem {
   label: string;
@@ -37,6 +38,9 @@ const { props, theme } = useResolvedThemeProps(
   rawProps,
   { size: "sm" } as const,
 );
+const emit = defineEmits<{
+  navigate: [item: NavigationLink, event: MouseEvent];
+}>();
 
 const currentIndex = computed(() => {
   const explicitIndex = props.items.findIndex((item) => item.current);
@@ -69,6 +73,11 @@ function separatorText(): string {
 function linkRel(item: BreadcrumbItem): string | undefined {
   if (item.rel) return item.rel;
   return item.target === "_blank" ? "noreferrer" : undefined;
+}
+
+function navigate(item: BreadcrumbItem, event: MouseEvent): void {
+  if (!item.href) return;
+  emit("navigate", { title: item.label, link: item.href }, event);
 }
 
 function itemClasses(index: number): string[] {
@@ -104,6 +113,7 @@ function itemClasses(index: number): string[] {
             :target="item.target"
             :rel="linkRel(item)"
             :class="['inline-flex items-center rounded-balsa-control font-medium text-balsa-muted-foreground no-underline transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring', linkSizeClasses[props.size]]"
+            @click="navigate(item, $event)"
           >
             {{ item.label }}
           </a>

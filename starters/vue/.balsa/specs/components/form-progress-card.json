@@ -167,6 +167,29 @@
       {
         "name": "steps",
         "type": "readonly FormStep[] | undefined",
+        "shape": {
+          "type": "readonly FormStep[]",
+          "items": {
+            "type": "FormStep",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"profile\", label: \"Profile\", description: \"Complete\" }, { id: \"details\", label: \"Details\", description: \"Current step\" }, { id: \"review\", label: \"Review\", description: \"Not started\" }, { id: \"submit\", label: \"Submit\", description: \"Not started\" }, ]"
       },

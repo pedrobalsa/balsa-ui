@@ -5,9 +5,15 @@
 Balsa separates appearance into two independent, inheritable contracts:
 
 - **Palette** owns semantic color values and `color-scheme` through `data-palette`.
-- **Theme** owns component recipes, typography treatment, geometry, density, borders, material, elevation, and motion through `data-theme`.
+- **Theme** owns component recipes, typography treatment, geometry, control size,
+  spacing, borders, material, elevation, and motion through `data-theme`.
 
-`modern-flat` is the canonical default theme. `brutalism` and `glassmorphism` are complete alternatives expressed through the same seven typography, shape, density, border, elevation, motion, and material choices available to custom themes. Custom `defineTheme` definitions inherit from a built-in or another definition. Theme and palette selectors may be combined globally or on any subtree without mutating one another.
+`modern-flat` is the canonical default theme. `brutalism` and `glassmorphism` are
+complete alternatives expressed through the same eight typography, shape, control
+size, spacing, border, elevation, motion, and material choices available to custom
+themes. Custom `defineTheme` definitions inherit from a built-in or another
+definition. Theme and palette selectors may be combined globally or on any subtree
+without mutating one another.
 
 Public components expose `theme?: ThemeInput`. Built-in strings retain the existing attribute contract; custom scopes write `data-theme-base` and the complete token output derived from their options plus sparse exact overrides. Existing variants continue to express component intent, while typed derived and overridden defaults can set appearance when the component prop is omitted.
 

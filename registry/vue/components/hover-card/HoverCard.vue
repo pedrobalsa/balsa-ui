@@ -70,7 +70,7 @@ const variantClasses: Readonly<Record<LayerVariant, string[]>> = {
   surface: ["border-balsa-border-strong bg-balsa-surface-elevated text-balsa-surface-elevated-foreground"],
   outline: ["border-balsa-border-strong bg-balsa-background text-balsa-foreground"],
   soft: ["border-balsa-border bg-balsa-muted text-balsa-foreground"],
-  glass: ["border-balsa-border/70 bg-balsa-surface/80 text-balsa-surface-foreground backdrop-blur-md"],
+  glass: ["border-balsa-border/70 bg-balsa-surface/80 text-balsa-surface-foreground backdrop-balsa"],
 };
 const cardClasses = computed(() =>
   mergeClasses(

@@ -1,14 +1,18 @@
 # Design themes
 
-Themes control typography, shape, density, borders, elevation, motion, materials, and component appearance defaults. Palettes control semantic colors and remain independent.
+Themes control typography, shape, control size, spacing, borders, elevation, motion,
+materials, and component appearance defaults. Palettes control semantic colors and
+remain independent.
 
 ## Install
 
 ```sh
-npx balsa-ui@latest add balsa-theme
+npx balsa-ui@latest theme apply --list
+npx balsa-ui@latest theme apply modern-flat
 ```
 
-Import `balsa-foundation.css` and `balsa-theme.css`. The palette stylesheet is optional.
+The CLI installs and wires the foundation and theme stylesheets, then prints the
+exact activation handoff. The palette stylesheet remains optional.
 
 ## Use
 
@@ -75,14 +79,21 @@ export const editorial = defineTheme({
   options: {
     typography: "editorial",
     shape: "subtle",
-    density: "comfortable",
+    size: "comfortable",
+    spacing: "airy",
     elevation: "soft",
     material: "soft",
   },
 });
 ```
 
-The seven configurable directions are typography, shape, density, border, elevation, motion, and material. Border recipes are None (0px), Soft (1px at 55% of the active border-material opacity), Medium (1px at full recipe opacity), and Strong (2px at full recipe opacity). Each level updates structural, input, outlined, glass-control, and filled component boundaries together. Every built-in theme starts Compact: 32px application controls, 12px control insets, and a 4px spacing rhythm. Balanced and Comfortable are opt-in recipes for products that deliberately need more air.
+The eight configurable directions are typography, shape, control size (`size`),
+spacing, border, elevation, motion, and material. Border recipes are None (0px),
+Soft (1px at 55% of the active border-material opacity), Medium (1px at full recipe
+opacity), and Strong (2px at full recipe opacity). Each level updates structural,
+input, outlined, glass-control, and filled component boundaries together. Control
+size and surrounding spacing are independent: choose each for the product rather
+than relying on one density setting to move both.
 
 Modern Flat defaults to Soft borders and no elevation, keeping its hierarchy dependent on spacing, surface color, and typography instead of shadows.
 
@@ -146,5 +157,5 @@ The shell uses restrained fixed corners rather than the active panel radius.
 
 The footer copies a `balsa theme create` command containing the current portable
 configuration. Component and family defaults are intentionally left to Design
-Studio; the quick editor owns only typography, radius, density, borders, shadow,
-transitions, and material.
+Studio; the quick editor owns only typography, radius, control size, spacing,
+borders, shadow, transitions, and material.

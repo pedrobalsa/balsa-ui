@@ -47,7 +47,9 @@ Long description (for a directory entry body):
 
 > Balsa UI is an agent-native design-system layer and CLI for the shadcn-vue ecosystem. It publishes a compatible registry of Vue 3 components, compositions and blocks, plus machine-readable component contracts with exact TypeScript prop types, enumerated semantic unions and accessibility requirements, so coding agents can compose interfaces without guessing an API. Balsa items install through the shadcn CLI, or through the Balsa CLI, which additionally applies the design system and records installation provenance.
 
-The `components.json` snippet consumers need:
+The minimal `components.json` snippet consumers using other shadcn-compatible
+tooling need is below. `balsa init` writes the complete official-schema
+configuration automatically and preserves an existing file.
 
 ```json
 {

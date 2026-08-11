@@ -10,9 +10,15 @@
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { loadRegistry, readJson, rootDir, sourcePath } from "./registry-lib.mjs";
+import { loadRegistry, readJson, rootDir, sourcePath, writeJson } from "./registry-lib.mjs";
 
 export const defaultNamespace = "@balsa";
+const projectConfigurationTemplatePath = path.join(
+  rootDir,
+  "src",
+  "config",
+  "components-template.json",
+);
 
 /**
  * shadcn-vue publishes a style-scoped registry rather than the flat
@@ -23,23 +29,51 @@ export const builtinRegistries = {
   "@shadcn": "https://shadcn-vue.com/r/styles/{style}/{name}.json",
 };
 
-const defaultAliases = {
-  ui: "@/components/ui",
-  components: "@/components",
-  lib: "@/lib",
-  hooks: "@/composables",
-  utils: "@/lib/utils",
-};
-
 const aliasForType = {
   "registry:ui": "ui",
   "registry:component": "components",
   "registry:block": "components",
   "registry:composition": "components",
   "registry:lib": "lib",
-  "registry:hook": "hooks",
+  "registry:hook": "composables",
   "registry:theme": "lib",
 };
+
+function isRecord(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+/**
+ * One authored configuration for `balsa init`, resolver fallbacks, and starter
+ * generation. Its shape follows the current official shadcn-vue contract:
+ * https://www.shadcn-vue.com/docs/components-json and
+ * https://shadcn-vue.com/schema.json. Tailwind v4 intentionally uses an empty
+ * config path, while the stylesheet is resolved from the consumer project.
+ */
+export async function createProjectConfiguration({ stylesheet = "src/index.css" } = {}) {
+  const template = await readJson(projectConfigurationTemplatePath);
+  return {
+    ...template,
+    tailwind: { ...template.tailwind, css: stylesheet.split(path.sep).join("/") },
+    aliases: { ...template.aliases },
+    registries: { ...template.registries },
+  };
+}
+
+/** Create the standard config once; an existing project-owned file is untouched. */
+export async function ensureProjectConfiguration(cwd, options = {}) {
+  const target = path.join(cwd, "components.json");
+  try {
+    const existing = await readJson(target);
+    if (!isRecord(existing)) throw new Error("components.json must contain a JSON object.");
+    return { path: target, created: false, configuration: existing };
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+  const configuration = await createProjectConfiguration(options);
+  await writeJson(target, configuration);
+  return { path: target, created: true, configuration };
+}
 
 export function parseItemReference(reference) {
   const match = /^(@[a-z0-9-]+)\/(.+)$/.exec(reference);
@@ -57,15 +91,30 @@ export function parseItemReference(reference) {
  * registries, so a third-party registry needs no Balsa-specific configuration.
  */
 export async function loadProjectConfiguration(cwd) {
+  const defaults = await createProjectConfiguration();
   let componentsJson = {};
   try {
     componentsJson = await readJson(path.join(cwd, "components.json"));
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
+  if (!isRecord(componentsJson)) throw new Error("components.json must contain a JSON object.");
+  if (componentsJson.aliases !== undefined && !isRecord(componentsJson.aliases)) {
+    throw new Error("components.json aliases must be an object.");
+  }
+  if (componentsJson.registries !== undefined && !isRecord(componentsJson.registries)) {
+    throw new Error("components.json registries must be an object.");
+  }
+  const aliases = { ...defaults.aliases, ...(componentsJson.aliases ?? {}) };
+  // Read the old Balsa key while projects migrate to shadcn-vue's official
+  // `composables` name. Existing customized files remain valid and untouched.
+  if (componentsJson.aliases?.hooks && !componentsJson.aliases.composables) {
+    aliases.composables = componentsJson.aliases.hooks;
+  }
   return {
-    style: componentsJson.style ?? "new-york",
-    aliases: { ...defaultAliases, ...(componentsJson.aliases ?? {}) },
+    style: componentsJson.style ?? defaults.style,
+    tailwind: { ...defaults.tailwind, ...(componentsJson.tailwind ?? {}) },
+    aliases,
     registries: { ...builtinRegistries, ...(componentsJson.registries ?? {}) },
   };
 }
@@ -105,13 +154,18 @@ export function resolveFileTarget(configuration, item, file) {
   if (file.target) return file.target.split("\\").join("/");
 
   const aliasKey = aliasForType[file.type ?? item.type] ?? "components";
-  const alias = configuration.aliases[aliasKey] ?? defaultAliases[aliasKey];
+  const alias = configuration.aliases[aliasKey];
   const directory = aliasToDirectory(alias);
 
   // "ui/button/Button.vue" under the ui alias is "<ui>/button/Button.vue".
   const segments = file.path.split("\\").join("/").split("/");
-  const leading = { ui: "ui", components: "components", lib: "lib", hooks: "hooks" }[aliasKey];
-  if (segments.length > 1 && segments[0] === leading) segments.shift();
+  const leading = {
+    ui: ["ui"],
+    components: ["components"],
+    lib: ["lib"],
+    composables: ["hooks", "composables"],
+  }[aliasKey];
+  if (segments.length > 1 && leading?.includes(segments[0])) segments.shift();
 
   return [...directory.split(/[\\/]/), ...segments].join("/");
 }

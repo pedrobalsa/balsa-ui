@@ -128,6 +128,39 @@
       {
         "name": "series",
         "type": "readonly ChartSeries[]",
+        "shape": {
+          "type": "readonly ChartSeries[]",
+          "items": {
+            "type": "ChartSeries",
+            "fields": [
+              {
+                "name": "key",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "data",
+                "type": "readonly number[]",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "\"neutral\" | SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

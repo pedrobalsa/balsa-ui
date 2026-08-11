@@ -7,6 +7,7 @@ import {
   publicBaseUrl,
 } from "./agent-context.mjs";
 import { readJson, rootDir, writeJson } from "./registry-lib.mjs";
+import { createProjectConfiguration } from "./registry-resolve.mjs";
 
 const starterDir = path.join(rootDir, "starters", "vue");
 const legacyIconPackage = ["@", "mdi", "/font"].join("");
@@ -209,11 +210,8 @@ execFileSync(
 await writeJson(packageLockPath, pruneStarterLock(await readJson(packageLockPath)));
 
 const componentsPath = path.join(starterDir, "components.json");
-const components = await readJson(componentsPath);
-components.registries = {
-  ...(components.registries ?? {}),
-  "@balsa": `${publicBaseUrl}/r/{name}.json`,
-};
+const components = await createProjectConfiguration({ stylesheet: "src/index.css" });
+components.registries["@balsa"] = `${publicBaseUrl}/r/{name}.json`;
 await writeJson(componentsPath, components);
 await writeFile(
   path.join(starterDir, "AGENTS.md"),

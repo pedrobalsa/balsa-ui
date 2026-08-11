@@ -7,3 +7,5 @@ Use Link for navigation and Button for in-place actions. Link defaults to the se
 Link inherits the nearest `data-theme` and accepts `theme?: ThemeInput` for a local override. In Glassmorphism, the outline presentation shares the translucent raised-material body, semantic glass rim, and denser interaction states used by outline Buttons.
 
 Consumer root classes and styles are merged after Link defaults, so normal layout, sizing, typography, and radius utilities can customize the anchor without important modifiers.
+
+Link emits `navigate(item, event)` without cancelling the native click. `item` is a normalized `NavigationLink` using `label` (or `href` when no label is supplied) as its title, and `event` is the original `MouseEvent`. A router can prevent and handle unmodified internal clicks while new-tab gestures and external links keep native anchor behavior.

@@ -76,6 +76,11 @@ function scopedCustomProperties(scope: HTMLElement): Map<string, string> {
 }
 
 function forwardTo(element: HTMLElement, scope: HTMLElement): void {
+  // Vue Test Utils (and other embedded Vue hosts) append application roots to
+  // the same body used by teleports. They are independent scopes, not portal
+  // roots, so forwarding into them would leak this provider's presentation.
+  if (element.hasAttribute("data-v-app") || element.contains(scope)) return;
+
   // A Balsa layer resolves its own presentation on open; overwriting it would
   // replace a deliberate explicit theme with the ambient one.
   if (element.hasAttribute("data-balsa") || element.hasAttribute("data-theme")) return;

@@ -94,6 +94,17 @@ describe("agent documentation generation", () => {
     expect(formatComponentMarkdown(badge, spec)).toContain("one of:");
   });
 
+  it("publishes the fields of named array-item interfaces", async () => {
+    const select = catalog.items.find((item) => item.name === "select");
+    const spec = await loadComponentSpec(select);
+    const markdown = formatComponentMarkdown(select, spec);
+
+    expect(markdown).toContain("item `SelectOption`");
+    expect(markdown).toContain("`label: string`");
+    expect(markdown).toContain("`value: string`");
+    expect(markdown).toContain("`disabled?: boolean | undefined`");
+  });
+
   it("falls back to catalog identity when a specification is unusable", () => {
     const item = { name: "ghost", title: "Ghost", category: "component", description: "A fallback." };
 

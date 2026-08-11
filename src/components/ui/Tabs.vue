@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineOptions({ name: "BalsaTabs" });
 
-import { computed, watchEffect } from "vue";
+import { computed, useSlots, watchEffect } from "vue";
 import type { Shadow, ThemeInput } from "./theme";
 import { useResolvedThemeProps } from "./theme-context";
 import Icon, { type IconComponent, type IconSize } from "./Icon.vue";
@@ -52,6 +52,7 @@ const { props, theme } = useResolvedThemeProps(
 );
 
 const model = defineModel<string>({ default: "" });
+const slots = useSlots();
 
 const enabledItems = computed(() => props.items.filter((item) => !item.disabled));
 const activeItem = computed(() => {
@@ -63,6 +64,9 @@ const activeItem = computed(() => {
 });
 
 const activeId = computed(() => activeItem.value?.id ?? "");
+const hasPanelContent = computed(() =>
+  Boolean(slots.default || props.items.some((item) => slots[item.id])),
+);
 const activeTabId = computed(() => `${props.id}-${activeId.value}-tab`);
 const activePanelId = computed(() => `${props.id}-${activeId.value}-panel`);
 const resolvedRounded = computed<Rounded>(() =>
@@ -83,22 +87,22 @@ const roundedClasses: Readonly<Record<Rounded, string>> = {
 };
 const listClassesByType: Readonly<Record<TabsType, Record<TabsVariant, string[]>>> = {
   segmented: {
-    surface: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-border bg-balsa-muted p-balsa-3xs"],
-    outline: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-border-strong bg-transparent p-balsa-3xs"],
-    soft: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-primary/20 bg-balsa-primary/10 p-balsa-3xs"],
-    glass: ["flex w-fit max-w-full flex-wrap gap-balsa-3xs border-balsa-border/70 bg-balsa-surface/70 p-balsa-3xs backdrop-blur-md"],
+    surface: ["flex w-fit gap-balsa-3xs border-balsa-border bg-balsa-muted p-balsa-3xs"],
+    outline: ["flex w-fit gap-balsa-3xs border-balsa-border-strong bg-transparent p-balsa-3xs"],
+    soft: ["flex w-fit gap-balsa-3xs border-balsa-primary/20 bg-balsa-primary/10 p-balsa-3xs"],
+    glass: ["flex w-fit gap-balsa-3xs border-balsa-border/70 bg-balsa-surface/70 p-balsa-3xs backdrop-balsa"],
   },
   underline: {
     surface: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-border bg-transparent p-0"],
     outline: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b-2 border-balsa-border-strong bg-transparent p-0"],
     soft: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-primary/20 bg-balsa-primary/5 p-0"],
-    glass: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-border/70 bg-balsa-surface/50 p-0 backdrop-blur-md"],
+    glass: ["flex w-full min-w-0 items-end gap-balsa-3xs border-b border-balsa-border/70 bg-balsa-surface/50 p-0 backdrop-balsa"],
   },
   pills: {
-    surface: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
-    outline: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
-    soft: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
-    glass: ["flex w-fit max-w-full flex-wrap gap-balsa-xs border-0 bg-transparent p-0"],
+    surface: ["flex w-fit gap-balsa-xs border-0 bg-transparent p-0"],
+    outline: ["flex w-fit gap-balsa-xs border-0 bg-transparent p-0"],
+    soft: ["flex w-fit gap-balsa-xs border-0 bg-transparent p-0"],
+    glass: ["flex w-fit gap-balsa-xs border-0 bg-transparent p-0"],
   },
   tiles: {
     surface: ["grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] gap-balsa-xs border-0 bg-transparent p-0"],
@@ -112,40 +116,46 @@ const tabClassesByType: Readonly<Record<TabsType, Record<TabsVariant, Record<Tab
     surface: { active: ["bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail hover:bg-balsa-selected hover:text-balsa-selected-foreground"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-surface hover:text-balsa-foreground"] },
     outline: { active: ["bg-balsa-surface-elevated text-balsa-surface-elevated-foreground shadow-balsa-detail"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
     soft: { active: ["bg-balsa-primary/20 text-balsa-primary hover:bg-balsa-primary/25"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
-    glass: { active: ["border-balsa-border/70 bg-balsa-surface/80 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-surface/55 hover:text-balsa-foreground"] },
+    glass: { active: ["border-balsa-border/70 bg-balsa-surface/80 text-balsa-foreground shadow-balsa-detail backdrop-balsa"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-surface/55 hover:text-balsa-foreground"] },
   },
   underline: {
     surface: { active: ["-mb-px rounded-none border-b-2 border-balsa-primary text-balsa-foreground"], inactive: ["rounded-none text-balsa-muted-foreground hover:text-balsa-foreground"] },
     outline: { active: ["-mb-0.5 rounded-none border-b-2 border-balsa-primary text-balsa-foreground"], inactive: ["rounded-none text-balsa-muted-foreground hover:text-balsa-foreground"] },
     soft: { active: ["-mb-px rounded-none border-b-2 border-balsa-primary bg-balsa-primary/10 text-balsa-primary"], inactive: ["rounded-none text-balsa-muted-foreground hover:bg-balsa-primary/5 hover:text-balsa-primary"] },
-    glass: { active: ["-mb-px rounded-none border-b-2 border-balsa-primary bg-balsa-surface/60 text-balsa-foreground backdrop-blur-md"], inactive: ["rounded-none text-balsa-muted-foreground hover:bg-balsa-surface/45 hover:text-balsa-foreground"] },
+    glass: { active: ["-mb-px rounded-none border-b-2 border-balsa-primary bg-balsa-surface/60 text-balsa-foreground backdrop-balsa"], inactive: ["rounded-none text-balsa-muted-foreground hover:bg-balsa-surface/45 hover:text-balsa-foreground"] },
   },
   pills: {
     surface: { active: ["bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
     outline: { active: ["border-balsa-border-strong bg-balsa-surface text-balsa-surface-foreground shadow-balsa-detail"], inactive: ["border-transparent text-balsa-muted-foreground hover:border-balsa-border hover:text-balsa-foreground"] },
     soft: { active: ["bg-balsa-primary/20 text-balsa-primary"], inactive: ["text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
-    glass: { active: ["border-balsa-border/70 bg-balsa-surface/70 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["border-transparent text-balsa-muted-foreground hover:bg-balsa-surface/45 hover:text-balsa-foreground"] },
+    glass: { active: ["border-balsa-border/70 bg-balsa-surface/70 text-balsa-foreground shadow-balsa-detail backdrop-balsa"], inactive: ["border-transparent text-balsa-muted-foreground hover:bg-balsa-surface/45 hover:text-balsa-foreground"] },
   },
   tiles: {
     surface: { active: ["border-balsa-selected bg-balsa-selected text-balsa-selected-foreground shadow-balsa-detail"], inactive: ["border-transparent bg-balsa-muted text-balsa-muted-foreground hover:bg-balsa-surface hover:text-balsa-foreground"] },
     outline: { active: ["border-balsa-border-strong bg-balsa-surface text-balsa-surface-foreground shadow-balsa-detail"], inactive: ["border-balsa-border bg-transparent text-balsa-muted-foreground hover:bg-balsa-muted hover:text-balsa-foreground"] },
     soft: { active: ["border-balsa-primary/30 bg-balsa-primary/20 text-balsa-primary"], inactive: ["border-transparent bg-balsa-primary/5 text-balsa-muted-foreground hover:bg-balsa-primary/10 hover:text-balsa-primary"] },
-    glass: { active: ["border-balsa-border/70 bg-balsa-surface/75 text-balsa-foreground shadow-balsa-detail backdrop-blur-md"], inactive: ["border-balsa-border/50 bg-balsa-surface/40 text-balsa-muted-foreground backdrop-blur-md hover:bg-balsa-surface/60 hover:text-balsa-foreground"] },
+    glass: { active: ["border-balsa-border/70 bg-balsa-surface/75 text-balsa-foreground shadow-balsa-detail backdrop-balsa"], inactive: ["border-balsa-border/50 bg-balsa-surface/40 text-balsa-muted-foreground backdrop-balsa hover:bg-balsa-surface/60 hover:text-balsa-foreground"] },
   },
 };
 const panelVariantClasses: Readonly<Record<TabsVariant, string[]>> = {
   surface: ["border-balsa-border bg-balsa-surface text-balsa-surface-foreground"],
   outline: ["border-balsa-border-strong bg-transparent text-balsa-foreground"],
   soft: ["border-balsa-primary/20 bg-balsa-primary/5 text-balsa-foreground"],
-  glass: ["border-balsa-border/70 bg-balsa-surface/60 text-balsa-foreground backdrop-blur-md"],
+  glass: ["border-balsa-border/70 bg-balsa-surface/60 text-balsa-foreground backdrop-balsa"],
 };
 const tabListClasses = computed(() => [
   roundedClasses[props.type === "underline" ? "none" : resolvedRounded.value],
+  ...(props.type === "tiles"
+    ? []
+    : ["max-w-full flex-nowrap overflow-x-auto overflow-y-hidden overscroll-x-contain"]),
   ...listClassesByType[props.type][props.variant],
 ]);
+const panelIsSurfaced = computed(() => props.panelSurface && hasPanelContent.value);
 const panelClasses = computed(() => [
-  "mt-balsa-2xl min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring",
-  ...(props.panelSurface
+  ...(hasPanelContent.value
+    ? ["mt-balsa-2xl min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-balsa-focus-ring"]
+    : []),
+  ...(panelIsSurfaced.value
     ? [
         "overflow-hidden",
         roundedClasses[resolvedRounded.value],
@@ -154,7 +164,7 @@ const panelClasses = computed(() => [
       ]
     : []),
 ]);
-const panelSurfaceState = computed(() => (props.panelSurface ? "true" : "false"));
+const panelSurfaceState = computed(() => (panelIsSurfaced.value ? "true" : "false"));
 const tabClasses = computed(() =>
   Object.fromEntries(
     props.items.map((item) => {
@@ -171,7 +181,7 @@ const tabClasses = computed(() =>
       return [
         item.id,
         [
-          "inline-flex cursor-pointer items-center justify-center font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
+          "inline-flex shrink-0 cursor-pointer items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-balsa-focus-ring",
           geometry,
           shape,
           layout,
@@ -216,11 +226,11 @@ function selectEdgeItem(edge: "first" | "last"): void {
 }
 
 function handleKeydown(event: KeyboardEvent, id: string): void {
-  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+  if (event.key === "ArrowRight") {
     event.preventDefault();
     selectRelativeItem(id, 1);
   }
-  if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+  if (event.key === "ArrowLeft") {
     event.preventDefault();
     selectRelativeItem(id, -1);
   }
@@ -256,6 +266,7 @@ watchEffect(() => {
       data-balsa="tabs-list"
       :data-type="props.type"
       role="tablist"
+      aria-orientation="horizontal"
       :aria-label="props.label"
       :class="tabListClasses"
     >
@@ -284,7 +295,7 @@ watchEffect(() => {
       :id="activePanelId"
       :class="panelClasses"
       role="tabpanel"
-      tabindex="0"
+      :tabindex="hasPanelContent ? 0 : undefined"
       :aria-labelledby="activeTabId"
     >
       <slot :name="activeId" :active-id="activeId">

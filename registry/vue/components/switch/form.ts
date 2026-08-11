@@ -66,14 +66,14 @@ const fieldVariantClasses: Readonly<Record<FieldVariant, string>> = {
   outline: "border-balsa-input-border bg-balsa-background",
   surface: "border-balsa-input-border bg-balsa-input",
   soft: "border-transparent bg-balsa-muted",
-  glass: "border-balsa-border/70 bg-balsa-surface/70 backdrop-blur-md",
+  glass: "border-balsa-border/70 bg-balsa-surface/70 backdrop-balsa",
 };
 
 const fieldPopupVariantClasses: Readonly<Record<FieldVariant, string>> = {
   outline: "border-balsa-input-border bg-balsa-background",
   surface: "border-balsa-border-strong bg-balsa-surface-elevated",
   soft: "border-transparent bg-balsa-muted",
-  glass: "border-balsa-border/70 bg-balsa-surface/80 backdrop-blur-md",
+  glass: "border-balsa-border/70 bg-balsa-surface/80 backdrop-balsa",
 };
 
 export interface AnchoredPopupPosition {

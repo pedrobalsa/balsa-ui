@@ -5,7 +5,7 @@
   "category": "component",
   "classification": "balsa-addition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Provide responsive application navigation with compact item-anchored desktop menus plus controllable material, layout, and scroll behavior without coupling to a router or store.",
   "useFor": [
     "Application shells",
@@ -34,6 +34,7 @@
     "compact desktop dropdown open",
     "mobile menu open",
     "mobile group expanded",
+    "returned minimal reveal readability fade",
     "static",
     "fixed",
     "revealed by default",
@@ -42,7 +43,8 @@
   "accessibility": [
     "Uses labelled navigation landmarks and native links.",
     "Expandable controls expose aria-expanded, aria-controls, and accessible names.",
-    "Escape closes an open desktop dropdown and all destinations remain available without hover."
+    "Escape closes an open desktop dropdown and all destinations remain available without hover.",
+    "The navigate event exposes the original uncancelled MouseEvent so router integration can preserve modifier clicks and native fallback."
   ],
   "tokens": [
     "--balsa-color-background",
@@ -144,6 +146,34 @@
       {
         "name": "items",
         "type": "readonly NavigationGroup[]",
+        "shape": {
+          "type": "readonly NavigationGroup[]",
+          "items": {
+            "type": "NavigationGroup",
+            "fields": [
+              {
+                "name": "links",
+                "type": "readonly NavigationLink[] | undefined",
+                "required": false
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "shortDescription",
+                "type": "string | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {
@@ -303,7 +333,7 @@
     "events": [
       {
         "name": "navigate",
-        "type": "[item: NavigationLink]"
+        "type": "[item: NavigationLink, event: MouseEvent]"
       }
     ],
     "slots": [

@@ -6,9 +6,11 @@ import { detectLocalModifications, installRegistryItems } from "../scripts/insta
 import { createBackgroundConfiguration } from "../scripts/background-cli.mjs";
 import { applyThemeConfiguration, createThemeConfiguration, themePresets } from "../scripts/theme-cli.mjs";
 import {
+  applyBuiltInDesignSystem,
   createDesignSystemConfiguration,
   describeDesignSystem,
   formatDesignSystem,
+  loadBuiltInDesignSystems,
 } from "../scripts/design-system-cli.mjs";
 import { createPaletteConfiguration } from "../scripts/palette-cli.mjs";
 import {
@@ -28,7 +30,12 @@ import {
 } from "../scripts/agent-context.mjs";
 import { listTools, serveStdio } from "../scripts/mcp-server.mjs";
 import { readJson, rootDir } from "../scripts/registry-lib.mjs";
-import { createResolver, loadProjectConfiguration } from "../scripts/registry-resolve.mjs";
+import {
+  createResolver,
+  ensureProjectConfiguration,
+  loadProjectConfiguration,
+} from "../scripts/registry-resolve.mjs";
+import { installProjectDependencies } from "../scripts/package-manager.mjs";
 import { rewriteItemImports } from "../scripts/source-imports.mjs";
 import { listAdapters, loadAdapter } from "../scripts/apply-adapters.mjs";
 import {
@@ -67,6 +74,8 @@ Usage:
   balsa theme create <name> [--preset <theme> | --from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa palette create <name> [--from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa design-system show [--cwd <project>] [--json]
+  balsa design-system apply <name> [--cwd <project>] [--force] [--json]
+  balsa design-system apply --list [--json]
   balsa design-system create <name> [--from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa version
   balsa help
@@ -86,6 +95,7 @@ Examples:
   npx balsa-ui@latest background create hero --config <studio-payload>
   npx balsa-ui@latest theme create my-modern-flat-theme --preset modern-flat
   npx balsa-ui@latest palette create my-palette --config <studio-payload>
+  npx balsa-ui@latest design-system apply press
   npx balsa-ui@latest design-system create my-design-system --config <studio-payload>
 
 A bare item name resolves to @balsa. Declare other registries under "registries"
@@ -535,13 +545,15 @@ async function addItems(argv) {
       includeBridge: includesBridge,
     })
     : undefined;
-  const npmDependencies = await missingNpmDependencies(options.cwd, installed);
+  const dependencyInstallation = await installDependencies(options.cwd, installed);
   const result = {
     installed: installed.map((item) => item.reference ?? `@balsa/${item.name}`),
     project: options.cwd,
     stylesheet,
     agentContext: path.join(options.cwd, ".balsa"),
-    missingNpmDependencies: npmDependencies,
+    packageManager: dependencyInstallation.manager,
+    installedNpmDependencies: dependencyInstallation.installed,
+    missingNpmDependencies: dependencyInstallation.unresolved,
     adapterConflicts: installed.conflicts ?? [],
   };
   if (options.json) {
@@ -559,7 +571,7 @@ async function addItems(argv) {
       installed,
       stylesheet: includesTheme || includesPalette || includesBridge ? stylesheet : undefined,
       projectRoot: options.cwd,
-      npmDependencies,
+      dependencyInstallation,
     }).join("\n"),
   );
 }
@@ -589,6 +601,9 @@ function parseInitArguments(argv) {
 async function initializeProject(argv) {
   const options = parseInitArguments(argv);
   const diagnosis = await preflight(options.cwd, { json: options.json });
+  const componentsConfiguration = await ensureProjectConfiguration(options.cwd, {
+    stylesheet: diagnosis.stylesheet ?? "src/index.css",
+  });
   const names = ["balsa-theme", ...(options.palette ? ["balsa-palette"] : [])];
   const installed = await installRegistryItems({
     names,
@@ -597,14 +612,18 @@ async function initializeProject(argv) {
   });
   const stylesheet = await ensureStyleImports(options.cwd, options.palette);
   const agentInstructions = await ensureAgentInstructions(options.cwd);
-  const npmDependencies = await missingNpmDependencies(options.cwd, installed);
+  const dependencyInstallation = await installDependencies(options.cwd, installed);
   const result = {
     project: options.cwd,
     installed: installed.map((item) => item.reference ?? `@balsa/${item.name}`),
     stylesheet,
     agentInstructions,
     agentContext: path.join(options.cwd, ".balsa"),
-    missingNpmDependencies: npmDependencies,
+    componentsConfiguration: componentsConfiguration.path,
+    componentsConfigurationCreated: componentsConfiguration.created,
+    packageManager: dependencyInstallation.manager,
+    installedNpmDependencies: dependencyInstallation.installed,
+    missingNpmDependencies: dependencyInstallation.unresolved,
     problems: diagnosis.problems,
   };
   if (options.json) {
@@ -612,6 +631,11 @@ async function initializeProject(argv) {
     return;
   }
   console.log(`Initialized Balsa UI in ${options.cwd}`);
+  console.log(
+    componentsConfiguration.created
+      ? "Registry configuration: created components.json"
+      : "Registry configuration: preserved existing components.json",
+  );
   console.log(`Agent instructions: ${path.relative(options.cwd, agentInstructions)}`);
   console.log("Agent catalog and specifications: .balsa/");
   console.log(
@@ -619,9 +643,21 @@ async function initializeProject(argv) {
       installed,
       stylesheet,
       projectRoot: options.cwd,
-      npmDependencies,
+      dependencyInstallation,
     }).join("\n"),
   );
+}
+
+async function installDependencies(cwd, installedItems) {
+  const missing = await missingNpmDependencies(cwd, installedItems);
+  const result = await installProjectDependencies(cwd, missing);
+  const unresolved = await missingNpmDependencies(cwd, installedItems);
+  if (result.manager && unresolved.length) {
+    throw new Error(
+      `${result.manager} completed but package.json still lacks: ${unresolved.join(", ")}.`,
+    );
+  }
+  return { ...result, unresolved };
 }
 
 function parseBackgroundArguments(argv) {
@@ -923,7 +959,96 @@ async function showDesignSystem(argv) {
 
 async function runDesignSystemCommand(argv) {
   if (argv[0] === "show") return showDesignSystem(argv);
+  if (argv[0] === "apply") return applyDesignSystem(argv.slice(1));
   return createDesignSystem(argv);
+}
+
+async function applyDesignSystem(argv) {
+  const { json, values } = parseOutputFormat(argv);
+  let cwd = process.cwd();
+  let cwdSpecified = false;
+  let force = false;
+  let list = false;
+  const positional = [];
+  for (let index = 0; index < values.length; index += 1) {
+    const value = values[index];
+    if (value === "--cwd") {
+      const next = values[index + 1];
+      if (!next) throw new Error("--cwd requires a value.");
+      cwd = path.resolve(next);
+      cwdSpecified = true;
+      index += 1;
+      continue;
+    }
+    if (value === "--force") {
+      force = true;
+      continue;
+    }
+    if (value === "--list") {
+      list = true;
+      continue;
+    }
+    if (value.startsWith("-")) throw new Error(`Unknown option: ${value}`);
+    positional.push(value);
+  }
+
+  const systems = await loadBuiltInDesignSystems();
+  if (list) {
+    if (positional.length || force || cwdSpecified) {
+      throw new Error("Use --list by itself, optionally with --json.");
+    }
+    const available = systems.map(({ id, name }) => ({
+      id,
+      name,
+      apply: `npx balsa-ui@latest design-system apply ${id}`,
+    }));
+    if (json) printJson(available);
+    else for (const system of available) console.log(`${system.id.padEnd(12)} ${system.name}`);
+    return;
+  }
+  if (positional.length !== 1) {
+    throw new Error(
+      `Choose one design system: ${systems.map(({ id }) => id).join(", ")}.`
+      + " For example: balsa design-system apply press",
+    );
+  }
+
+  await preflight(cwd, { json });
+  const result = await applyBuiltInDesignSystem({ name: positional[0], cwd, force });
+  const moduleName = path.basename(result.themeTarget, ".ts");
+  const payload = {
+    preset: result.preset,
+    name: result.displayName,
+    theme: result.themeTarget,
+    palette: result.paletteTarget,
+    background: result.backgroundTarget,
+    identifier: result.identifier,
+    backgroundIdentifier: result.backgroundIdentifier,
+    stylesheet: result.stylesheet,
+    activate: `<html data-palette="${result.paletteId}" data-theme="${result.paletteId}">`,
+  };
+  if (json) {
+    printJson(payload);
+    return;
+  }
+  console.log(`Applied the ${result.displayName} design system.`);
+  console.log(`Created ${result.themeTarget}`);
+  console.log(`Created ${result.paletteTarget}`);
+  if (result.backgroundTarget) console.log(`Created ${result.backgroundTarget}`);
+  console.log(`Import: import { ${result.identifier} } from "@/themes/${moduleName}";`);
+  console.log(`Register: createDesignThemeStore({ themes: [${result.identifier}] });`);
+  if (result.backgroundTarget && result.backgroundIdentifier) {
+    const backgroundName = path.basename(result.backgroundTarget, ".ts");
+    console.log(
+      `Background: import { ${result.backgroundIdentifier} } from "@/backgrounds/${backgroundName}";`,
+    );
+  }
+  console.log(
+    result.stylesheet
+      ? `Configured styles: ${path.relative(result.projectRoot, result.stylesheet).split(path.sep).join("/")}`
+      : `No stylesheet entry point was found. Import "./styles/${path.basename(result.paletteTarget)}" after the Balsa foundation.`,
+  );
+  console.log(`Activate: ${payload.activate}`);
 }
 
 async function createDesignSystem(argv) {
@@ -933,6 +1058,7 @@ async function createDesignSystem(argv) {
   const moduleName = path.basename(result.themeTarget, ".ts");
   console.log(`Created ${result.themeTarget}`);
   console.log(`Created ${result.paletteTarget}`);
+  if (result.backgroundTarget) console.log(`Created ${result.backgroundTarget}`);
   console.log(`Import: import { ${result.identifier} } from "@/themes/${moduleName}";`);
   console.log(`Register: createDesignThemeStore({ themes: [${result.identifier}] });`);
   console.log(

@@ -73,18 +73,36 @@ function enumeratedValues(schema) {
  * "logo: BrandLogo" and knowing that a logo needs a title and an alt.
  */
 function describeShape(schema, depth = 0) {
-  if (!schema || typeof schema !== "object" || depth > 1) return undefined;
+  if (!schema || typeof schema !== "object" || depth > 3) return undefined;
   if (opaqueTypes.has(schema.type)) return undefined;
 
   if (schema.kind === "object") {
     const fields = Object.values(schema.schema ?? {})
       .slice(0, 25)
-      .map((field) => ({
-        name: field.name,
-        type: cleanType(field.type),
-        required: Boolean(field.required),
-      }));
+      .map((field) => {
+        const shape = field.schema?.kind === "array"
+          ? describeShape(field.schema, depth + 1)
+          : undefined;
+        return {
+          name: field.name,
+          type: cleanType(field.type),
+          required: Boolean(field.required),
+          ...(shape ? { shape } : {}),
+        };
+      });
     return fields.length ? { type: cleanType(schema.type), fields } : undefined;
+  }
+
+  if (schema.kind === "array" && Array.isArray(schema.schema)) {
+    const items = schema.schema
+      .filter((member) => typeof member === "object")
+      .slice(0, 6)
+      .map((member) => describeShape(member, depth + 1))
+      .filter(Boolean);
+    if (!items.length) return undefined;
+    return items.length === 1
+      ? { type: cleanType(schema.type), items: items[0] }
+      : { type: cleanType(schema.type), items: { type: "item", variants: items } };
   }
 
   if (schema.kind === "enum" && Array.isArray(schema.schema)) {

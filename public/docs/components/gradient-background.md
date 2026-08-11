@@ -60,7 +60,7 @@ Every preset defines every renderer value and has a stable seed. Preset defaults
 - `contour`: the terrain sliced into topographic bands, with `softness` setting line width.
 - `cellular`: Worley facets. The most expensive of the six; keep `patternComplexity` low on constrained hardware.
 
-`patternDensity` is the repeat count in each generator's own terms -- ribbon count, ring count, arm count, band count -- and `patternComplexity` sizes `blobs` and `cellular` instead. Because those numbers mean different things per generator, switching pattern in Background Studio brings that pattern's own starting values rather than carrying over numbers tuned for the last one.
+`patternDensity` is the repeat count in each generator's own terms -- ribbon count, ring count, arm count, band count -- and `patternComplexity` sizes `blobs` and `cellular` instead. Because those numbers mean different things per generator, switching pattern in Gradient Studio brings that pattern's own starting values rather than carrying over numbers tuned for the last one.
 
 ```vue
 <GradientBackground pattern="radial" :pattern-density="1.4" :wave="0.6" />
@@ -175,13 +175,13 @@ The canvas is decorative and exposes no information. Keep all content and contro
 
 ## Gradient Studio
 
-Open `/tools/gradient-studio` on the official site: a rounded live preview on the left, the editor beside it. Entering the Studio selects Glassmorphism, so a generated field is judged behind translucent surfaces from the first frame. Preview-side controls pause motion and reveal a Storefront, Dashboard, or Editorial simulation; choosing the active layout again hides it. Every simulation uses explicit placeholder or lorem-ipsum copy so it cannot be mistaken for real content.
+Open `/tools/gradient-studio` on the official site: a rounded live preview on the left, the editor beside it. Entering the Studio selects Glassmorphism, so a generated field is judged behind translucent surfaces from the first frame. Preview-side controls pause motion and offer Show UI, which loads the same reusable composition grid as Design Studio and the home screen; toggling it off returns the field to an unobstructed canvas.
 
 The editor opens on a grid of rendered preset miniatures rather than a list of names, since a preset is an artefact whose whole point is how it looks. Names appear on hover and on keyboard focus, and are always available to assistive technology. Below it the selected stops form one directly editable segmented color-picker strip, holding a two-stop minimum.
 
 Generation & form and Adjustments collapse into property rows. A row names its current value -- Calm, Balanced, Film -- and its menu offers the rest, so the Studio is usable without meeting a raw number; Advanced settings opens an anchored panel with that control's sliders, and Reset returns them to the selected preset. Pattern is the exception that does not merely merge values: switching generator brings that pattern's own starting values.
 
-There is no render quality or seed input. Quality stays automatic, and Randomize -- which varies the pattern the configuration is currently drawing -- is how a composition is rerolled. Save carries the exact configuration out as a CLI command, typed configuration and Vue usage, an agent prompt, or a still PNG.
+There is no render quality or seed input. Quality stays automatic, and Randomize -- which varies the pattern the configuration is currently drawing -- is how a composition is rerolled. Use opens an add-to-existing-project agent prompt and a Manual CLI path; its Export tab captures a still PNG in the selected size directly in the browser.
 
 Field layers and scale configure the fBM that constructs wave geometry. Noise amount, layers, and scale configure a separate stable luminance texture after the ribbon field is resolved, so editing noise no longer moves the waves. Grain and grain size remain an independent fine texture. Randomize varies both field and noise settings from the selected preset.
 

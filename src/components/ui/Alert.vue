@@ -118,35 +118,35 @@ const colorVariantClasses: Readonly<
     outline: ["border-balsa-border-strong", "bg-balsa-background", "text-balsa-foreground"],
     soft: ["border-balsa-border", "bg-balsa-muted", "text-balsa-foreground"],
     solid: ["border-balsa-inverse", "bg-balsa-inverse", "text-balsa-inverse-foreground"],
-    glass: ["border-balsa-border/60", "bg-balsa-surface/45", "text-balsa-surface-foreground", "backdrop-blur-md"],
+    glass: ["border-balsa-border/60", "bg-balsa-surface/45", "text-balsa-surface-foreground", "backdrop-balsa"],
   },
   info: {
     surface: ["border-balsa-info/40", "bg-balsa-surface", "text-balsa-surface-foreground"],
     outline: ["border-balsa-info", "bg-balsa-background", "text-balsa-foreground"],
     soft: ["border-balsa-info/25", "bg-balsa-info/15", "text-balsa-info"],
     solid: ["border-balsa-info", "bg-balsa-info", "text-balsa-info-foreground"],
-    glass: ["border-balsa-info/40", "bg-balsa-info/10", "text-balsa-info", "backdrop-blur-md"],
+    glass: ["border-balsa-info/40", "bg-balsa-info/10", "text-balsa-info", "backdrop-balsa"],
   },
   success: {
     surface: ["border-balsa-success/40", "bg-balsa-surface", "text-balsa-surface-foreground"],
     outline: ["border-balsa-success", "bg-balsa-background", "text-balsa-foreground"],
     soft: ["border-balsa-success/25", "bg-balsa-success/15", "text-balsa-success"],
     solid: ["border-balsa-success", "bg-balsa-success", "text-balsa-success-foreground"],
-    glass: ["border-balsa-success/40", "bg-balsa-success/10", "text-balsa-success", "backdrop-blur-md"],
+    glass: ["border-balsa-success/40", "bg-balsa-success/10", "text-balsa-success", "backdrop-balsa"],
   },
   warning: {
     surface: ["border-balsa-warning/40", "bg-balsa-surface", "text-balsa-surface-foreground"],
     outline: ["border-balsa-warning", "bg-balsa-background", "text-balsa-foreground"],
     soft: ["border-balsa-warning/25", "bg-balsa-warning/15", "text-balsa-warning"],
     solid: ["border-balsa-warning", "bg-balsa-warning", "text-balsa-warning-foreground"],
-    glass: ["border-balsa-warning/40", "bg-balsa-warning/10", "text-balsa-warning", "backdrop-blur-md"],
+    glass: ["border-balsa-warning/40", "bg-balsa-warning/10", "text-balsa-warning", "backdrop-balsa"],
   },
   destructive: {
     surface: ["border-balsa-destructive/40", "bg-balsa-surface", "text-balsa-surface-foreground"],
     outline: ["border-balsa-destructive", "bg-balsa-background", "text-balsa-foreground"],
     soft: ["border-balsa-destructive/25", "bg-balsa-destructive/15", "text-balsa-destructive"],
     solid: ["border-balsa-destructive", "bg-balsa-destructive", "text-balsa-destructive-foreground"],
-    glass: ["border-balsa-destructive/40", "bg-balsa-destructive/10", "text-balsa-destructive", "backdrop-blur-md"],
+    glass: ["border-balsa-destructive/40", "bg-balsa-destructive/10", "text-balsa-destructive", "backdrop-balsa"],
   },
 };
 const iconColorClasses: Readonly<Record<AlertColor, string>> = {
@@ -196,7 +196,7 @@ const classes = computed(() =>
     props.mode === "dialog"
       ? [
           "fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-auto shadow-balsa-surface outline-none",
-          "[&::backdrop]:bg-balsa-overlay [&::backdrop]:backdrop-blur-sm",
+          "[&::backdrop]:bg-balsa-overlay [&::backdrop]:backdrop-balsa-overlay",
           dialogSizeClasses[props.size],
           visible.value ? "" : "hidden",
         ]

@@ -226,17 +226,26 @@ export async function createBackgroundConfiguration({
   preset,
   from,
   inlineConfig,
+  /**
+   * An already-decoded configuration, for a caller that holds the object rather
+   * than a payload — `design-system create` carrying a preset's gradient. Still
+   * normalized against the published presets, so it is validated on exactly the
+   * same path as a payload arriving from the Studio.
+   */
+  config: providedConfig,
   force = false,
 }) {
   validateBackgroundName(name);
-  if ([preset, from, inlineConfig].filter(Boolean).length > 1) {
+  if ([preset, from, inlineConfig, providedConfig].filter(Boolean).length > 1) {
     throw new Error("Use only one of --preset, --from, or --config.");
   }
   const projectRoot = path.resolve(cwd ?? process.cwd());
   const presets = await loadBackgroundPresets();
   let config;
 
-  if (inlineConfig) {
+  if (providedConfig) {
+    config = normalizeCliBackgroundConfig(providedConfig, presets);
+  } else if (inlineConfig) {
     config = normalizeCliBackgroundConfig(
       decodeBackgroundInlineConfig(inlineConfig),
       presets,

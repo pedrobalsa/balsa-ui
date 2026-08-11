@@ -167,6 +167,44 @@
       {
         "name": "events",
         "type": "readonly ActivityEvent[] | undefined",
+        "shape": {
+          "type": "readonly ActivityEvent[]",
+          "items": {
+            "type": "ActivityEvent",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "actor",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "initials",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "action",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "time",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"1\", actor: \"Ada Lovelace\", initials: \"AL\", action: \"deployed\", target: \"Atlas to production\", time: \"8 minutes ago\" }, { id: \"2\", actor: \"Grace Hopper\", initials: \"GH\", action: \"updated\", target: \"environment variables\", time: \"42 minutes ago\" }, { id: \"3\", actor: \"Barbara Liskov\", initials: \"BL\", action: \"promoted\", target: \"Relay to preview\", time: \"2 hours ago\" }, { id: \"4\", actor: \"Margaret Hamilton\", initials: \"MH\", action: \"invited\", target: \"two collaborators\", time: \"Yesterday\" }, { id: \"5\", actor: \"Katherine Johnson\", initials: \"KJ\", action: \"archived\", target: \"the Nova sandbox\", time: \"Yesterday\" }, { id: \"6\", actor: \"Radia Perlman\", initials: \"RP\", action: \"rotated\", target: \"the deploy key\", time: \"2 days ago\" }, { id: \"7\", actor: \"Jean Bartik\", initials: \"JB\", action: \"connected\", target: \"a preview domain\", time: \"3 days ago\" }, ]"
       }

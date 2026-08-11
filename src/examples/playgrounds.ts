@@ -283,6 +283,7 @@ const button: PlaygroundDefinition = {
     suffixIcon: "none",
     disabled: false,
     loading: false,
+    analyticsEvent: "",
   },
   controls: [
     { key: "label", label: "Label", type: "text" },
@@ -349,6 +350,7 @@ const button: PlaygroundDefinition = {
     },
     { key: "disabled", label: "Disabled", type: "toggle" },
     { key: "loading", label: "Loading", type: "toggle" },
+    { key: "analyticsEvent", label: "Custom analytics event", type: "text" },
   ],
   source: (values) => {
     const icon = text(values, "icon");
@@ -364,6 +366,7 @@ const button: PlaygroundDefinition = {
       fab ? ` aria-label="${escapedAttribute(text(values, "label"))}"` : "",
       booleanAttribute("disabled", bool(values, "disabled")),
       booleanAttribute("loading", bool(values, "loading")),
+      optionalAttribute("analytics-event", text(values, "analyticsEvent"), ""),
     ].join("");
     return componentSource(
       "Button",
@@ -924,6 +927,7 @@ const slider: PlaygroundDefinition = {
     step: 5,
     orientation: "horizontal",
     size: "md",
+    showLabel: true,
     showValue: true,
     disabled: false,
     rounded: "full",
@@ -953,6 +957,7 @@ const slider: PlaygroundDefinition = {
         { label: "Large", value: "lg" },
       ],
     },
+    { key: "showLabel", label: "Show label", type: "toggle" },
     { key: "showValue", label: "Show value", type: "toggle" },
     { key: "disabled", label: "Disabled", type: "toggle" },
     { key: "rounded", label: "Rounded", type: "select", options: roundedOptions },
@@ -961,7 +966,7 @@ const slider: PlaygroundDefinition = {
     componentSource(
       "Slider",
       "@/components/ui/Slider.vue",
-      `<Slider id="range-placeholder" v-model="value" label="${escapedAttribute(text(values, "label"))}" :min="${number(values, "min")}" :max="${number(values, "max")}" :step="${number(values, "step")}"${optionalAttribute("orientation", text(values, "orientation"), "horizontal")}${optionalAttribute("size", text(values, "size"), "md")}${bool(values, "showValue") ? "" : ' :show-value="false"'}${booleanAttribute("disabled", bool(values, "disabled"))}${optionalAttribute("rounded", text(values, "rounded"), "full")} hint="Helper text placeholder." />`,
+      `<Slider id="range-placeholder" v-model="value" label="${escapedAttribute(text(values, "label"))}" :min="${number(values, "min")}" :max="${number(values, "max")}" :step="${number(values, "step")}"${optionalAttribute("orientation", text(values, "orientation"), "horizontal")}${optionalAttribute("size", text(values, "size"), "md")}${bool(values, "showLabel") ? "" : ' :show-label="false"'}${bool(values, "showValue") ? "" : ' :show-value="false"'}${booleanAttribute("disabled", bool(values, "disabled"))}${optionalAttribute("rounded", text(values, "rounded"), "full")} hint="Helper text placeholder." />`,
       `import { ref } from "vue";\n\nconst value = ref${bool(values, "range") ? "<[number, number]>([25, 75])" : "(50)"};`,
     ),
 };
@@ -2636,10 +2641,20 @@ const defaultFooterSections: readonly PlaygroundFooterSection[] = [
 const footer: PlaygroundDefinition = {
   defaults: {
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    variant: "inverse",
     sections: defaultFooterSections,
   },
   controls: [
     { key: "description", label: "Description", type: "text", wide: true },
+    {
+      key: "variant",
+      label: "Variant",
+      type: "select",
+      options: [
+        { label: "Inverse", value: "inverse" },
+        { label: "Surface", value: "surface" },
+      ],
+    },
     {
       key: "sections",
       label: "Navigation sections",
@@ -2659,7 +2674,7 @@ const footer: PlaygroundDefinition = {
     return componentSource(
       "Footer",
       "@/components/ui/Footer.vue",
-      `<Footer :legal-logo="logo" description="${escapedAttribute(text(values, "description"))}" :sections="sections" copyright="Placeholder copyright" legal-text="Legal text placeholder." />`,
+      `<Footer :legal-logo="logo" description="${escapedAttribute(text(values, "description"))}" :sections="sections" copyright="Placeholder copyright" legal-text="Legal text placeholder."${optionalAttribute("variant", text(values, "variant"), "inverse")} />`,
       `const logo = { title: "BALSA UI", alt: "Balsa UI placeholder", href: "/" };\nconst sections = ${JSON.stringify(sections, null, 2)};`,
     );
   },

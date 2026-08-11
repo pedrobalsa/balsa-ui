@@ -167,6 +167,44 @@
       {
         "name": "members",
         "type": "readonly MemberAccess[] | undefined",
+        "shape": {
+          "type": "readonly MemberAccess[]",
+          "items": {
+            "type": "MemberAccess",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "email",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "role",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "initials",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "status",
+                "type": "CompositionPaletteColor | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"ada\", name: \"Ada Lovelace\", email: \"ada@example.com\", role: \"Owner\", initials: \"AL\", status: \"accent\" }, { id: \"grace\", name: \"Grace Hopper\", email: \"grace@example.com\", role: \"Editor\", initials: \"GH\" }, { id: \"margaret\", name: \"Margaret Hamilton\", email: \"margaret@example.com\", role: \"Viewer\", initials: \"MH\" }, { id: \"barbara\", name: \"Barbara Liskov\", email: \"barbara@example.com\", role: \"Editor\", initials: \"BL\" }, { id: \"katherine\", name: \"Katherine Johnson\", email: \"katherine@example.com\", role: \"Editor\", initials: \"KJ\" }, { id: \"radia\", name: \"Radia Perlman\", email: \"radia@example.com\", role: \"Viewer\", initials: \"RP\" }, { id: \"jean\", name: \"Jean Bartik\", email: \"jean@example.com\", role: \"Viewer\", initials: \"JB\" }, { id: \"alan\", name: \"Alan Turing\", email: \"alan@example.com\", role: \"Viewer\", initials: \"AT\" }, { id: \"annie\", name: \"Annie Easley\", email: \"annie@example.com\", role: \"Viewer\", initials: \"AE\" }, ]"
       }

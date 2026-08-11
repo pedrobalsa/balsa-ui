@@ -167,6 +167,44 @@
       {
         "name": "rows",
         "type": "readonly ResourceRow[] | undefined",
+        "shape": {
+          "type": "readonly ResourceRow[]",
+          "items": {
+            "type": "ResourceRow",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "statusColor",
+                "type": "CompositionPaletteColor | undefined",
+                "required": false
+              },
+              {
+                "name": "detail",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "updated",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"atlas\", name: \"Atlas\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"2m ago\" }, { id: \"relay\", name: \"Relay\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"1h ago\" }, { id: \"nova\", name: \"Nova\", status: \"Paused\", detail: \"Development\", updated: \"Yesterday\" }, { id: \"quill\", name: \"Quill\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"Yesterday\" }, { id: \"harbor\", name: \"Harbor\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"3 days ago\" }, { id: \"beacon\", name: \"Beacon\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"3 days ago\" }, { id: \"ferry\", name: \"Ferry\", status: \"Paused\", detail: \"Development\", updated: \"Last week\" }, { id: \"kite\", name: \"Kite\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"Last week\" }, ]"
       }

@@ -274,40 +274,36 @@ onBeforeUnmount(() => {
       :theme="props.theme"
     >
       <template #header>
-        <thead>
-          <tr>
-            <th v-if="props.selection !== 'none'" scope="col"><span class="sr-only">Select row</span></th>
-            <th v-for="column in visibleColumns" :key="column.id" scope="col" :aria-sort="sortState(column)" :class="alignmentClass(column)">
-              <button v-if="column.sortable" type="button" class="inline-flex items-center gap-balsa-3xs hover:text-balsa-primary focus-visible:outline-2 focus-visible:outline-balsa-focus-ring" @click="toggleSort(column)">
-                {{ column.label }}
-                <Icon :icon="sortIcon(column)" size="md" />
-              </button>
-              <span v-else>{{ column.label }}</span>
-            </th>
-          </tr>
-        </thead>
-      </template>
-      <tbody>
-        <tr
-          v-for="(row, index) in pagedRows"
-          :key="keyFor(row, index)"
-          :data-selected="selected.includes(keyFor(row, index))"
-          class="data-[selected=true]:bg-balsa-selected data-[selected=true]:text-balsa-selected-foreground"
-        >
-          <td v-if="props.selection !== 'none'">
-            <input
-              :type="props.selection === 'single' ? 'radio' : 'checkbox'"
-              :name="props.selection === 'single' ? `${props.id}-selection` : undefined"
-              :checked="selected.includes(keyFor(row, index))"
-              :aria-label="`Select row ${keyFor(row, index)}`"
-              @change="toggleRow(row, index)"
-            />
-          </td>
-          <td v-for="column in visibleColumns" :key="column.id" :class="alignmentClass(column)">
-            <slot :name="`cell-${column.id}`" :row="row" :value="valueFor(row, column)" :column="column">{{ formatted(row, column) }}</slot>
-          </td>
+        <tr>
+          <th v-if="props.selection !== 'none'" scope="col"><span class="sr-only">Select row</span></th>
+          <th v-for="column in visibleColumns" :key="column.id" scope="col" :aria-sort="sortState(column)" :class="alignmentClass(column)">
+            <button v-if="column.sortable" type="button" class="inline-flex items-center gap-balsa-3xs hover:text-balsa-primary focus-visible:outline-2 focus-visible:outline-balsa-focus-ring" @click="toggleSort(column)">
+              {{ column.label }}
+              <Icon :icon="sortIcon(column)" size="md" />
+            </button>
+            <span v-else>{{ column.label }}</span>
+          </th>
         </tr>
-      </tbody>
+      </template>
+      <tr
+        v-for="(row, index) in pagedRows"
+        :key="keyFor(row, index)"
+        :data-selected="selected.includes(keyFor(row, index))"
+        class="data-[selected=true]:bg-balsa-selected data-[selected=true]:text-balsa-selected-foreground"
+      >
+        <td v-if="props.selection !== 'none'">
+          <input
+            :type="props.selection === 'single' ? 'radio' : 'checkbox'"
+            :name="props.selection === 'single' ? `${props.id}-selection` : undefined"
+            :checked="selected.includes(keyFor(row, index))"
+            :aria-label="`Select row ${keyFor(row, index)}`"
+            @change="toggleRow(row, index)"
+          />
+        </td>
+        <td v-for="column in visibleColumns" :key="column.id" :class="alignmentClass(column)">
+          <slot :name="`cell-${column.id}`" :row="row" :value="valueFor(row, column)" :column="column">{{ formatted(row, column) }}</slot>
+        </td>
+      </tr>
     </Table>
     <div v-if="hasFooterActions" class="flex flex-wrap items-center justify-between gap-balsa-md">
       <div v-if="filterableColumns" ref="filterAction" class="relative">

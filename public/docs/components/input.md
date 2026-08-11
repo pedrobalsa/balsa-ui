@@ -12,6 +12,8 @@ Use `type="percentage"` for a numeric 0â€“100 model value. It keeps the edi
 
 Configure validation with `status="validated"` or `status="unvalidated"`; use `statusMessage` to provide the explicit associated error text for an unvalidated field.
 
+`required` deliberately remains the native HTML constraint. If application code sets `status` during a form submit handler, put `novalidate` on that owning `<form>`: browsers run interactive constraint validation before dispatching `submit`, while `novalidate` lets the handler run and present Balsa's associated status message. The constraint APIs and `:valid`/`:invalid` states remain available. See the [HTML constraint-validation model](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#the-constraint-validation-api).
+
 Input inherits the nearest `data-theme` and accepts `theme?: ThemeInput` for a local override.
 
 Native-control classes are conflict-merged after the selected size and state defaults, so ordinary geometry utilities can replace them without important modifiers.

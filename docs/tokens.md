@@ -23,6 +23,8 @@ Balsa defines only the namespaced `balsa` Tailwind color utilities. It does not 
 | `--balsa-color-code` | `bg-balsa-code` | Consistently dark source and command surface; Glassmorphism derives a dark translucent material from it |
 | `--balsa-color-code-foreground` | `text-balsa-code-foreground` | Legible content on code surfaces |
 
+Importing the foundation paints `body` with the resolved background and foreground roles. That body background is propagated to the document canvas, so viewport gaps and overscroll do not fall through to the browser's default canvas; the zero-specificity base rule remains straightforward for an application to replace. This follows the [CSS Backgrounds 3 canvas-background model](https://www.w3.org/TR/css-backgrounds-3/#body-background), which recommends using the HTML body for the canvas background.
+
 ## Actions and feedback
 
 Primary, secondary, accent, and destructive actions each define their foreground and interaction states. Status roles are used only where success, warning, or information has actual meaning.
@@ -72,15 +74,22 @@ Automatic series order uses primary, secondary, accent, and neutral foreground o
 
 Shape, spacing, and depth are theme-owned Tailwind values. Public elevation uses `--balsa-shadow-sm`, `--balsa-shadow-md`, and `--balsa-shadow-lg`; the control, surface, and panel variables remain compatibility aliases. Components expose typed shadow levels when they own elevation, while `auto` retains the recipe and `--balsa-shadow-detail` remains internal.
 
-## Density and size rhythm
+## Control size and spacing rhythm
 
-Balsa uses a compact-first 4px rhythm aligned with common application-interface proportions. All built-in themes default to Compact; Balanced and Comfortable remain available as deliberate custom-theme choices.
+Balsa's three built-in theme bases use compact controls and balanced 4px spacing.
+Named systems and custom themes choose the two dimensions independently.
 
-| Density recipe | Action control height | Control inline space | Table row block space |
+| Size recipe | Action control height | Control inline space | Table density |
 | --- | --- | --- | --- |
-| Compact | 32px | 12px | 4px |
-| Balanced | 36px | 16px | 8px |
-| Comfortable | 40px | 20px | 12px |
+| Compact | 32px | 12px | compact |
+| Balanced | 36px | 16px | default |
+| Comfortable | 40px | 20px | comfortable |
+
+| Spacing recipe | Scale unit |
+| --- | --- |
+| Tight | 3.5px |
+| Balanced | 4px |
+| Airy | 4.5px |
 
 Component size props preserve relative hierarchy within that rhythm: `sm` is the default application size, `md` adds breathing room without increasing body-copy scale, and `lg` or `xl` are intentional emphasis sizes. Standard buttons, links, toggles, and text fields therefore keep 14px labels through their normal application sizes; larger text begins only at display-oriented presets. Cards and overlays use restrained 16px, 20px, and 24px content insets instead of responsive padding inflation.
 
@@ -88,9 +97,20 @@ The documentation and application shell follows the same rhythm with responsive 
 
 ## Theme material layer
 
-The public `--balsa-color-*` variables remain palette-owned. A design theme derives internal `--balsa-material-*` values from them for standard, raised, muted, action, input, selected, inverse, code, border, and overlay materials. Glassmorphism obtains its depth from translucent fills plus backdrop blur: standard, strong, input, and semantic action rims are low-opacity material colors, and shadows provide only restrained outer separation. It intentionally avoids inset shadows and universal painted gradients, allowing the same material recipe to remain glass-like over Light, Dark, and custom palette backgrounds. The Button `glass` variant and shared raised glass shells use theme-owned `--balsa-material-glass-control*` recipes; the base shell retains 50% of its semantic surface color so navigation and overlay text remain legible while the backdrop still reads through. `outline` remains the higher-boundary action treatment. Documentation-workbench layers use the same opacity-led system. The playground's preview canvas remains opaque while its explicit theme and palette boundary follows the active documentation selectors. Consumers should normally customize palette roles or select a theme instead of overriding material variables directly.
+The public `--balsa-color-*` variables remain palette-owned. A design theme derives internal `--balsa-material-*` values from them for standard, raised, muted, action, input, selected, inverse, code, border, and overlay materials. Glassmorphism obtains its depth from translucent fills plus backdrop blur: standard, strong, input, and semantic action rims are low-opacity material colors, and shadows provide only restrained outer separation. It intentionally avoids inset shadows and universal painted gradients, allowing the same material recipe to remain glass-like over Light, Dark, and custom palette backgrounds. The Button `glass` variant and shared raised glass shells use theme-owned `--balsa-material-glass-control*` recipes; the base shell retains 50% of its semantic surface color so navigation and overlay text remain legible while the backdrop still reads through. Nested glass reads the reduced `--balsa-backdrop-filter-contained` value because a filtered ancestor is the nearest Backdrop Root; it remains filtered so content painted inside that root, such as a local gradient behind a Card, can still contribute. This follows the [Filter Effects Level 2 Backdrop Root model](https://drafts.csswg.org/filter-effects-2/#backdrop-root), which also explains why a descendant cannot sample beyond that ancestor. `outline` remains the higher-boundary action treatment. Documentation-workbench layers use the same opacity-led system. The playground's preview canvas remains opaque while its explicit theme and palette boundary follows the active documentation selectors. Consumers should normally customize palette roles or select a theme instead of overriding material variables directly.
 
-Theme authors normally choose seven finite `ThemeOptions`: typography, shape, density, border, elevation, motion, and material. The border direction accepts None (0px), Soft (1px at 55% opacity), Medium (1px), and Strong (2px); each recipe controls the normal, outline, and solid theme-owned border widths together. Balsa deterministically derives typography, radii, borders, shadows, spacing, effects, transforms, semantic materials, and compatible component defaults from those choices. Structured `ThemeTokens` remain available under `overrides.tokens` for exceptional exact values. Numeric geometry uses pixels, motion uses milliseconds, and opacity is normalized from zero to one. Materials reference palette roles and serialize to `color-mix()`, so a custom theme never owns palette colors. See [Design themes](./themes.md) for inheritance, providers, recipes, and overrides.
+Theme authors normally choose eight finite `ThemeOptions`: typography, shape, size,
+spacing, border, elevation, motion, and material. Size controls control geometry while
+spacing controls the surrounding rhythm independently. The border direction accepts
+None (0px), Soft (1px at 55% opacity), Medium (1px), and Strong (2px); each recipe
+controls the normal, outline, and solid theme-owned border widths together. Balsa
+deterministically derives typography, radii, borders, shadows, spacing, effects,
+transforms, semantic materials, and compatible component defaults from those choices.
+Structured `ThemeTokens` remain available under `overrides.tokens` for exceptional
+exact values. Numeric geometry uses pixels, motion uses milliseconds, and opacity is
+normalized from zero to one. Materials reference palette roles and serialize to
+`color-mix()`, so a custom theme never owns palette colors. See
+[Design themes](./themes.md) for inheritance, providers, recipes, and overrides.
 
 The shape recipe publishes four radius utilities: `rounded-balsa-control` for
 controls, `rounded-balsa-surface` and `rounded-balsa-panel` for surfaces, and

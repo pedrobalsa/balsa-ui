@@ -14,6 +14,22 @@ const twMerge = extendTailwindMerge({
   extend: {
     theme: {
       radius: ["balsa-control", "balsa-surface", "balsa-panel"],
+      text: [
+        "balsa-2xs",
+        "balsa-xs",
+        "balsa-sm",
+        "balsa-base",
+        "balsa-prose",
+        "balsa-lg",
+        "balsa-xl",
+        "balsa-2xl",
+        "balsa-3xl",
+        "balsa-4xl",
+        "balsa-5xl",
+        "balsa-6xl",
+      ],
+      leading: ["balsa-tight", "balsa-snug", "balsa-normal", "balsa-relaxed", "balsa-prose"],
+      tracking: ["balsa-title", "balsa-normal", "balsa-label"],
       shadow: [
         "balsa-control",
         "balsa-surface",
@@ -42,6 +58,14 @@ const twMerge = extendTailwindMerge({
         "balsa-density-default",
         "balsa-density-comfortable",
       ],
+    },
+    classGroups: {
+      // `backdrop-balsa` is a custom utility rather than a value on a scale, so
+      // it has to join the group it competes with by name. Without this a
+      // caller's `backdrop-blur-none` and the component's `backdrop-balsa` both
+      // survive the merge and CSS order decides which blur wins — the same
+      // failure the spacing scale hit the moment it landed.
+      "backdrop-blur": ["backdrop-balsa", "backdrop-balsa-overlay"],
     },
   },
 });

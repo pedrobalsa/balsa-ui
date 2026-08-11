@@ -1,5 +1,16 @@
 <script setup lang="ts">
-import { computed, useAttrs } from "vue";
+import {
+  Comment,
+  Fragment,
+  Text,
+  computed,
+  defineComponent,
+  h,
+  isVNode,
+  useAttrs,
+  type PropType,
+  type VNodeArrayChildren,
+} from "vue";
 import Spinner from "./Spinner.vue";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { surfaceRoundedClasses, type SurfaceRounded } from "./form";
@@ -8,6 +19,49 @@ import type { SemanticColor } from "./types";
 import { useResolvedThemeProps } from "./theme-context";
 
 export type TableVariant = "surface" | "outline" | "soft" | "glass";
+type TableSectionTag = "thead" | "tbody" | "tfoot";
+const tableSectionTags: readonly string[] = ["thead", "tbody", "tfoot"];
+interface SlotShape { rendered: boolean; sectioned: boolean }
+function inspectSlotNodes(nodes: VNodeArrayChildren, shape: SlotShape = { rendered: false, sectioned: false }): SlotShape {
+  for (const node of nodes) {
+    if (node === null || node === undefined || typeof node === "boolean") continue;
+    if (Array.isArray(node)) {
+      inspectSlotNodes(node, shape);
+      continue;
+    }
+    if (!isVNode(node)) {
+      if (String(node).trim()) shape.rendered = true;
+      continue;
+    }
+    if (node.type === Comment) continue;
+    if (node.type === Text) {
+      if (String(node.children ?? "").trim()) shape.rendered = true;
+      continue;
+    }
+    // v-for and nested <slot /> arrive as fragments, so the real rows sit one level down.
+    if (node.type === Fragment) {
+      if (Array.isArray(node.children)) inspectSlotNodes(node.children, shape);
+      continue;
+    }
+    shape.rendered = true;
+    if (typeof node.type === "string" && tableSectionTags.includes(node.type)) shape.sectioned = true;
+  }
+  return shape;
+}
+const TableSection = defineComponent({
+  name: "BalsaTableSection",
+  props: { tag: { type: String as PropType<TableSectionTag>, required: true } },
+  setup(sectionProps, { slots }) {
+    return () => {
+      const nodes = slots.default?.() ?? [];
+      const shape = inspectSlotNodes(nodes);
+      // An empty slot must not leave a hollow section behind, and consumers who still hand us
+      // their own <thead>/<tbody> would end up with sections nested inside sections.
+      if (!shape.rendered || shape.sectioned) return nodes;
+      return h(sectionProps.tag, nodes);
+    };
+  },
+});
 export type TableDensity = "compact" | "default" | "comfortable";
 export type TableColor = "neutral" | SemanticColor;
 defineOptions({ name: "BalsaTable", inheritAttrs: false });
@@ -57,7 +111,7 @@ const variantClasses: Readonly<Record<TableVariant, string[]>> = {
   surface: ["border-balsa-border", "bg-balsa-surface"],
   outline: ["border-balsa-border-strong", "bg-transparent"],
   soft: ["border-transparent", "bg-balsa-muted"],
-  glass: ["border-balsa-border/60", "bg-balsa-surface/60", "backdrop-blur-md"],
+  glass: ["border-balsa-border/60", "bg-balsa-surface/60", "backdrop-balsa"],
 };
 const densityClasses: Readonly<Record<TableDensity, string>> = {
   compact: "text-xs",
@@ -68,7 +122,7 @@ const stickyHeaderClasses: Readonly<Record<TableVariant, string[]>> = {
   surface: ["[&_thead]:bg-balsa-surface"],
   outline: ["[&_thead]:bg-balsa-background"],
   soft: ["[&_thead]:bg-balsa-muted"],
-  glass: ["[&_thead]:bg-balsa-surface/80", "[&_thead]:backdrop-blur-md"],
+  glass: ["[&_thead]:bg-balsa-surface/80", "[&_thead]:backdrop-balsa"],
 };
 const headerColorClasses: Readonly<Record<TableColor, string[]>> = {
   neutral: [],
@@ -157,15 +211,15 @@ const tableClasses = computed(() => mergeClasses(
   >
     <table :class="tableClasses">
       <caption class="sr-only">{{ props.caption }}</caption>
-      <slot name="header" />
+      <TableSection tag="thead"><slot name="header" /></TableSection>
       <tbody v-if="props.loading">
         <tr><td :colspan="props.columnCount" class="text-center"><Spinner label="Loading rows" /></td></tr>
       </tbody>
       <tbody v-else-if="props.empty">
         <tr><td :colspan="props.columnCount" class="text-center text-balsa-muted-foreground"><slot name="empty">{{ props.emptyText }}</slot></td></tr>
       </tbody>
-      <slot v-else />
-      <slot name="footer" />
+      <TableSection v-else tag="tbody"><slot /></TableSection>
+      <TableSection tag="tfoot"><slot name="footer" /></TableSection>
     </table>
   </div>
 </template>

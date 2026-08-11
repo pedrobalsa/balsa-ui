@@ -119,6 +119,29 @@
       {
         "name": "options",
         "type": "readonly SelectOption[]",
+        "shape": {
+          "type": "readonly SelectOption[]",
+          "items": {
+            "type": "SelectOption",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

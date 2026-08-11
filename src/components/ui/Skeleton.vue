@@ -45,7 +45,7 @@ const lineCount = computed(() =>
 const variantClasses: Readonly<Record<SkeletonVariant, string[]>> = {
   muted: ["bg-balsa-muted"],
   soft: ["bg-balsa-primary/15"],
-  glass: ["border", "border-balsa-border/50", "bg-balsa-surface/45", "backdrop-blur-sm"],
+  glass: ["border", "border-balsa-border/50", "bg-balsa-surface/45", "backdrop-balsa"],
 };
 const animationClasses: Readonly<Record<SkeletonAnimation, string[]>> = {
   pulse: ["animate-pulse", "motion-reduce:animate-none"],

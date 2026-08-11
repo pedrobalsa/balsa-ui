@@ -83,6 +83,10 @@ function dispatchPointer(
   element.dispatchEvent(event);
 }
 
+function tableStructure(table: Element): string[] {
+  return Array.from(table.children, (child) => child.tagName);
+}
+
 describe("Balsa public components", () => {
   it("standardizes Lucide size, stroke, color, and decorative semantics", () => {
     const icon = mount(Icon, { props: { icon: Search, size: "lg", strokeWidth: 1.5 } }).get("svg");
@@ -727,7 +731,7 @@ describe("Balsa public components", () => {
     });
     await select.get('[role="combobox"]').trigger("click");
     expect(select.get('[data-balsa="select"]').attributes("data-variant")).toBe("glass");
-    expect(select.get('[role="listbox"]').classes()).toContain("backdrop-blur-md");
+    expect(select.get('[role="listbox"]').classes()).toContain("backdrop-balsa");
 
     const autocomplete = mount(Autocomplete, {
       props: {
@@ -739,7 +743,7 @@ describe("Balsa public components", () => {
     });
     await autocomplete.get('[role="combobox"]').trigger("focus");
     expect(autocomplete.get('[data-balsa="autocomplete"]').attributes("data-variant")).toBe("glass");
-    expect(autocomplete.get('[role="listbox"]').classes()).toContain("backdrop-blur-md");
+    expect(autocomplete.get('[role="listbox"]').classes()).toContain("backdrop-balsa");
 
     const checkbox = mount(Checkbox, {
       props: { id: "variant-checkbox", label: "Checkbox", variant: "soft" },
@@ -754,7 +758,7 @@ describe("Balsa public components", () => {
     const colorPicker = mount(ColorPicker, {
       props: { id: "variant-color", label: "Color", variant: "glass" },
     });
-    expect(colorPicker.get("#variant-color").classes()).toContain("backdrop-blur-md");
+    expect(colorPicker.get("#variant-color").classes()).toContain("backdrop-balsa");
   });
 
   it("renders navigable Breadcrumb ancestors and a labelled current page", () => {
@@ -788,6 +792,80 @@ describe("Balsa public components", () => {
     expect(wrapper.get("a").attributes("rel")).toBe("noreferrer");
   });
 
+  it("publishes a typed custom analytics event without changing button behavior", async () => {
+    const wrapper = mount(Button, {
+      props: { analyticsEvent: "cta" },
+      slots: { default: "Start" },
+    });
+
+    const button = wrapper.get("button");
+    expect(button.attributes("data-balsa-track")).toBe("cta");
+    await button.trigger("click");
+    expect(wrapper.emitted("click")).toHaveLength(1);
+  });
+
+  it("forwards anchor click events for router integration without replacing native links", async () => {
+    const preventNavigation = vi.fn((_item: unknown, event: MouseEvent) => {
+      event.preventDefault();
+    });
+
+    const link = mount(Link, {
+      props: {
+        href: "/docs",
+        label: "Documentation",
+        onNavigate: preventNavigation,
+      },
+      slots: { default: "Docs" },
+    });
+    await link.get("a").trigger("click");
+    expect(link.get("a").attributes("href")).toBe("/docs");
+    expect(link.emitted("navigate")?.[0]?.[0]).toEqual({
+      title: "Documentation",
+      link: "/docs",
+    });
+    expect(link.emitted("navigate")?.[0]?.[1]).toBeInstanceOf(MouseEvent);
+    expect((link.emitted("navigate")?.[0]?.[1] as MouseEvent).defaultPrevented).toBe(true);
+
+    const breadcrumb = mount(Breadcrumb, {
+      props: {
+        items: [{ label: "Docs", href: "/docs" }, { label: "Current" }],
+        onNavigate: preventNavigation,
+      },
+    });
+    await breadcrumb.get("a").trigger("click");
+    expect(breadcrumb.emitted("navigate")?.[0]?.[0]).toEqual({ title: "Docs", link: "/docs" });
+    expect(breadcrumb.emitted("navigate")?.[0]?.[1]).toBeInstanceOf(MouseEvent);
+
+    const navbar = mount(Navbar, {
+      props: {
+        logo: { title: "Example", alt: "Example home", href: "/" },
+        items: [{ title: "Docs", link: "/docs" }],
+        onNavigate: preventNavigation,
+      },
+    });
+    await navbar.get('a[href="/"]').trigger("click");
+    expect(navbar.emitted("navigate")?.[0]?.[0]).toEqual({
+      title: "Example home",
+      link: "/",
+    });
+    expect(navbar.emitted("navigate")?.[0]?.[1]).toBeInstanceOf(MouseEvent);
+
+    const footer = mount(Footer, {
+      props: {
+        legalLogo: { title: "Example", alt: "Example home", href: "/" },
+        description: "Example footer.",
+        sections: [{ title: "Product", links: [{ title: "Docs", link: "/docs" }] }],
+        copyright: "© Example",
+        onNavigate: preventNavigation,
+      },
+    });
+    await footer.get('a[href="/docs"]').trigger("click");
+    expect(footer.emitted("navigate")?.[0]?.[0]).toEqual({ title: "Docs", link: "/docs" });
+    expect(footer.emitted("navigate")?.[0]?.[1]).toBeInstanceOf(MouseEvent);
+
+    expect(preventNavigation).toHaveBeenCalledTimes(4);
+  });
+
   it("exposes typed size and square-geometry controls across visual primitives", () => {
     const badge = mount(Badge, {
       props: { size: "lg", rounded: "none" },
@@ -811,7 +889,7 @@ describe("Balsa public components", () => {
       "border",
       "border-balsa-primary/40",
       "bg-balsa-primary/10",
-      "backdrop-blur-md",
+      "backdrop-balsa",
     ]));
 
     const card = mount(Card, { props: { size: "sm", rounded: "none" } })
@@ -895,10 +973,12 @@ describe("Balsa public components", () => {
         size: "lg",
         rounded: "none",
       },
+      slots: { one: "Panel content" },
     });
     expect(tabs.get('[data-balsa="tabs-list"]').classes()).toContain("rounded-none");
     expect(tabs.get('[data-balsa="tabs-panel"]').classes()).toEqual(expect.arrayContaining(["rounded-none", "p-balsa-2xl"]));
     expect(tabs.get('[data-balsa="tabs-panel"]').attributes("data-surface")).toBe("true");
+    expect(tabs.get('[data-balsa="tabs-panel"]').attributes("tabindex")).toBe("0");
 
     const barePanelTabs = mount(Tabs, {
       props: {
@@ -907,6 +987,7 @@ describe("Balsa public components", () => {
         items: [{ id: "one", label: "One" }],
         panelSurface: false,
       },
+      slots: { one: "Bare panel content" },
     }).get('[data-balsa="tabs-panel"]');
     expect(barePanelTabs.attributes("data-surface")).toBe("false");
     expect(barePanelTabs.classes()).not.toEqual(expect.arrayContaining([
@@ -927,7 +1008,7 @@ describe("Balsa public components", () => {
     expect(underlineTabs.get('[data-balsa="tabs"]').attributes("data-variant")).toBe("glass");
     expect(underlineTabs.get('[data-balsa="tabs"]').attributes("data-type")).toBe("underline");
     expect(underlineTabs.get('[data-balsa="tabs"]').attributes("data-rounded")).toBe("none");
-    expect(underlineTabs.get('[data-balsa="tabs-list"]').classes()).toEqual(expect.arrayContaining(["border-b", "backdrop-blur-md", "rounded-none"]));
+    expect(underlineTabs.get('[data-balsa="tabs-list"]').classes()).toEqual(expect.arrayContaining(["border-b", "backdrop-balsa", "rounded-none"]));
     expect(underlineTabs.get('[role="tab"]').classes()).toEqual(expect.arrayContaining(["border-balsa-primary", "rounded-none"]));
 
     const customRoundedUnderline = mount(Tabs, {
@@ -952,6 +1033,7 @@ describe("Balsa public components", () => {
       },
     });
     expect(tileTabs.get('[data-balsa="tabs-list"]').classes()).toContain("grid");
+    expect(tileTabs.get('[data-balsa="tabs-list"]').classes()).not.toContain("overflow-x-auto");
     expect(tileTabs.get('[role="tab"]').classes()).toEqual(expect.arrayContaining(["flex-col", "bg-balsa-primary/20"]));
 
     const codeBlock = mount(CodeBlock, {
@@ -959,6 +1041,66 @@ describe("Balsa public components", () => {
     }).get('[data-balsa="code-block"]');
     expect(codeBlock.classes()).toContain("rounded-none");
     expect(codeBlock.attributes("data-size")).toBe("lg");
+  });
+
+  it("keeps narrow Tabs scrollable and an unslotted panel visually inert", () => {
+    const wrapper = mount(Tabs, {
+      attachTo: document.body,
+      props: {
+        id: "filter-tabs",
+        modelValue: "all",
+        items: [
+          { id: "all", label: "All sections" },
+          { id: "investigations", label: "Investigations" },
+          { id: "accountability", label: "Public accountability" },
+        ],
+        type: "underline",
+      },
+    });
+
+    const list = wrapper.get('[data-balsa="tabs-list"]');
+    expect(list.attributes("aria-orientation")).toBe("horizontal");
+    expect(list.classes()).toEqual(expect.arrayContaining([
+      "max-w-full",
+      "flex-nowrap",
+      "overflow-x-auto",
+      "overflow-y-hidden",
+      "overscroll-x-contain",
+    ]));
+    expect(wrapper.get('[role="tab"]').classes()).toEqual(expect.arrayContaining([
+      "shrink-0",
+      "whitespace-nowrap",
+      "focus-visible:-outline-offset-2",
+    ]));
+
+    const panel = wrapper.get('[data-balsa="tabs-panel"]');
+    expect(panel.attributes("data-surface")).toBe("false");
+    expect(panel.attributes("tabindex")).toBeUndefined();
+    expect(panel.classes()).not.toEqual(expect.arrayContaining([
+      "mt-balsa-2xl",
+      "border-balsa-border",
+      "bg-balsa-surface",
+    ]));
+
+    const tabs = wrapper.findAll('[role="tab"]');
+    const verticalArrow = new KeyboardEvent("keydown", {
+      key: "ArrowDown",
+      bubbles: true,
+      cancelable: true,
+    });
+    tabs[0]!.element.dispatchEvent(verticalArrow);
+    expect(verticalArrow.defaultPrevented).toBe(false);
+
+    const horizontalArrow = new KeyboardEvent("keydown", {
+      key: "ArrowRight",
+      bubbles: true,
+      cancelable: true,
+    });
+    tabs[0]!.element.dispatchEvent(horizontalArrow);
+    expect(horizontalArrow.defaultPrevented).toBe(true);
+    expect(wrapper.emitted("update:modelValue")?.at(-1)).toEqual(["investigations"]);
+    expect(document.activeElement).toBe(tabs[1]!.element);
+    wrapper.unmount();
   });
 
   it("composes application Card regions without freezing the Card theme contract", () => {
@@ -1040,9 +1182,11 @@ describe("Balsa public components", () => {
     expect(navbar.get('[data-balsa="navbar-surface"]').classes()).toEqual(expect.arrayContaining([
       "rounded-xl",
       "border-balsa-accent/30",
-      "backdrop-blur-md",
+      "backdrop-balsa",
       "shadow-balsa-control",
     ]));
+    expect(navbar.get("img").classes()).toContain("h-8");
+    expect(navbar.find('[data-balsa="navbar-reveal-fade"]').exists()).toBe(false);
     expect(navbar.get("nav").classes()).toEqual(expect.arrayContaining([
       "h-14",
       "px-balsa-lg",
@@ -1050,6 +1194,9 @@ describe("Balsa public components", () => {
       "lg:px-8",
     ]));
     expect(navbar.get("nav ul").classes()).toContain("justify-end");
+    const desktopItem = navbar.get("nav ul > li");
+    expect(desktopItem.classes()).toContain("shrink-0");
+    expect(desktopItem.get('a[href="/docs"]').classes()).toContain("whitespace-nowrap");
     expect(navbar.get("nav").attributes("style")).toContain("max-width: 90rem");
     await navbar.get("li").trigger("mouseenter");
     expect(navbar.get('[data-balsa="dropdown"]').classes()).toEqual(
@@ -1058,7 +1205,7 @@ describe("Balsa public components", () => {
         "mt-balsa-xs",
         "w-[min(22rem,calc(100vw-2rem))]",
         "border-balsa-accent/30",
-        "backdrop-blur-md",
+        "backdrop-balsa",
         "transition-[opacity,transform,visibility]",
         "opacity-100",
       ]),
@@ -1092,6 +1239,45 @@ describe("Balsa public components", () => {
       },
     }).get('[data-balsa="navbar"]');
     expect(defaultNavbar.attributes("data-behavior")).toBe("reveal");
+
+    const minimalRevealNavbar = mount(Navbar, {
+      props: {
+        logo: { src: "/logo.svg", alt: "Placeholder logo", href: "/" },
+        items,
+        type: "minimal",
+        behavior: "reveal",
+      },
+    });
+    expect(minimalRevealNavbar.find('[data-balsa="navbar-surface"]').exists()).toBe(false);
+    expect(minimalRevealNavbar.find('[data-balsa="navbar-reveal-fade"]').exists()).toBe(false);
+
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 128 });
+    window.dispatchEvent(new Event("scroll"));
+    await flushPromises();
+    expect(minimalRevealNavbar.find('[data-balsa="navbar-reveal-fade"]').exists()).toBe(false);
+
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 110 });
+    window.dispatchEvent(new Event("scroll"));
+    await flushPromises();
+    expect(minimalRevealNavbar.get('[data-balsa="navbar-reveal-fade"]').classes()).toEqual(
+      expect.arrayContaining([
+        "h-24",
+        "bg-gradient-to-b",
+        "from-balsa-background",
+        "via-balsa-background/85",
+        "to-transparent",
+      ]),
+    );
+
+    const minimalStaticNavbar = mount(Navbar, {
+      props: {
+        logo: { src: "/logo.svg", alt: "Placeholder logo", href: "/" },
+        items,
+        type: "minimal",
+        behavior: "static",
+      },
+    });
+    expect(minimalStaticNavbar.find('[data-balsa="navbar-reveal-fade"]').exists()).toBe(false);
 
     const alignedBar = mount(Navbar, {
       props: {
@@ -1144,7 +1330,7 @@ describe("Balsa public components", () => {
       "rounded-2xl",
       "w-[min(28rem,calc(100vw-2rem))]",
       "border-balsa-accent/30",
-      "backdrop-blur-md",
+      "backdrop-balsa",
       "opacity-100",
     ]));
     expect(dropdown.classes()).not.toContain("shadow-balsa-panel");
@@ -1191,6 +1377,22 @@ describe("Balsa public components", () => {
     expect(wrapper.text()).toContain("Product");
     expect(wrapper.text()).toContain("Company");
     expect(wrapper.text()).toContain("Built in the open.");
+
+    const surface = mount(Footer, {
+      props: {
+        legalLogo: { title: "BALSA UI", alt: "Example UI", href: "/home" },
+        description: "Open components for product teams.",
+        sections: [],
+        copyright: "© Example UI",
+        variant: "surface",
+      },
+    }).get('[data-balsa="footer"]');
+    expect(surface.attributes("data-variant")).toBe("surface");
+    expect(surface.classes()).toEqual(expect.arrayContaining([
+      "bg-balsa-surface",
+      "text-balsa-surface-foreground",
+    ]));
+    expect(surface.classes()).not.toContain("bg-balsa-inverse");
   });
 
   it("copies code and announces completion", async () => {
@@ -1289,6 +1491,32 @@ describe("Balsa public components", () => {
     expect(open.value).toBe(false);
   });
 
+  it("locks background wheel movement without canceling scrolling inside the dialog", async () => {
+    const wrapper = mount(Modal, {
+      attachTo: document.body,
+      props: {
+        id: "scrolling-modal",
+        title: "Scrollable task",
+        modelValue: false,
+      },
+      slots: {
+        default: '<div data-modal-scroll-content>Scrollable content</div>',
+      },
+    });
+    await wrapper.setProps({ modelValue: true });
+    await flushPromises();
+
+    const insideWheel = new WheelEvent("wheel", { bubbles: true, cancelable: true });
+    document.querySelector("[data-modal-scroll-content]")?.dispatchEvent(insideWheel);
+    expect(insideWheel.defaultPrevented).toBe(false);
+
+    const outsideWheel = new WheelEvent("wheel", { bubbles: true, cancelable: true });
+    document.body.dispatchEvent(outsideWheel);
+    expect(outsideWheel.defaultPrevented).toBe(true);
+
+    wrapper.unmount();
+  });
+
   it("renders Modal materials and leaves sheets without a bottom border", () => {
     const sheet = mount(Modal, {
       props: {
@@ -1345,7 +1573,7 @@ describe("Balsa public components", () => {
       "bg-balsa-accent/15",
       "text-balsa-foreground",
     ]));
-    expect(softPanel.classes()).not.toContain("backdrop-blur-md");
+    expect(softPanel.classes()).not.toContain("backdrop-balsa");
   });
 
   it("keeps Switch as the native boolean form control", async () => {
@@ -2351,6 +2579,34 @@ describe("Balsa public components", () => {
     expect(range.emitted("update:modelValue")?.at(-1)).toEqual([[20, 60]]);
   });
 
+  it("can visually hide a Slider label without removing its accessible name or reserving an empty label row", () => {
+    const withValue = mount(Slider, {
+      props: {
+        id: "media-position",
+        label: "Playback position",
+        showLabel: false,
+      },
+    });
+
+    expect(withValue.get("label").classes()).toContain("sr-only");
+    expect(withValue.get("output").text()).toBe("0");
+    expect(withValue.get('input[type="range"]').attributes("aria-labelledby"))
+      .toBe("media-position-label");
+
+    const bare = mount(Slider, {
+      props: {
+        id: "media-volume",
+        label: "Volume",
+        showLabel: false,
+        showValue: false,
+      },
+    });
+
+    expect(bare.get("label").classes()).toContain("sr-only");
+    expect(bare.find("output").exists()).toBe(false);
+    expect(bare.get("label").classes()).not.toContain("mb-balsa-xs");
+  });
+
   it("opens and dismisses Popup with linked dialog semantics", async () => {
     const wrapper = mount(Popup, {
       props: {
@@ -2895,7 +3151,7 @@ describe("Balsa public components", () => {
       });
 
       expect(wrapper.get('[data-balsa="carousel"]').attributes("data-variant")).toBe("glass");
-      expect(wrapper.get('[data-balsa="carousel-viewport"]').classes()).toContain("backdrop-blur-md");
+      expect(wrapper.get('[data-balsa="carousel-viewport"]').classes()).toContain("backdrop-balsa");
       expect(wrapper.get('[data-balsa="carousel-slide"]').element.style.flexBasis).toContain("100%");
       expect(wrapper.get('[data-balsa="carousel-arrows"]').classes()).toContain("absolute");
       expect(wrapper.get('[data-balsa="carousel-indicators"]').classes()).toContain("absolute");
@@ -2997,6 +3253,57 @@ describe("Balsa public components", () => {
     expect(loading.get("caption").text()).toBe("Rows placeholder");
     expect(loading.get("td").attributes("colspan")).toBe("3");
     expect(loading.get('[role="status"]').exists()).toBe(true);
+    expect(tableStructure(loading.get("table").element)).toEqual(["CAPTION", "TBODY"]);
+
+    const empty = mount(Table, {
+      props: { caption: "Rows placeholder", empty: true, columnCount: 3 },
+    });
+    expect(tableStructure(empty.get("table").element)).toEqual(["CAPTION", "TBODY"]);
+  });
+
+  it("wraps Table slot rows in thead, tbody, and tfoot sections", () => {
+    const wrapper = mount(Table, {
+      props: { caption: "Rows placeholder" },
+      slots: {
+        header: '<tr><th scope="col">Name placeholder</th></tr>',
+        default: "<tr><td>Value placeholder</td></tr>",
+        footer: "<tr><td>Total placeholder</td></tr>",
+      },
+    });
+
+    expect(tableStructure(wrapper.get("table").element)).toEqual(["CAPTION", "THEAD", "TBODY", "TFOOT"]);
+    expect(wrapper.get("thead th").text()).toBe("Name placeholder");
+    expect(wrapper.get("tbody td").text()).toBe("Value placeholder");
+    expect(wrapper.get("tfoot td").text()).toBe("Total placeholder");
+  });
+
+  it("leaves consumer-owned Table sections unwrapped", () => {
+    const wrapper = mount(Table, {
+      props: { caption: "Rows placeholder" },
+      slots: {
+        header: '<thead><tr><th scope="col">Name placeholder</th></tr></thead>',
+        default: "<tbody><tr><td>Value placeholder</td></tr></tbody>",
+      },
+    });
+
+    expect(tableStructure(wrapper.get("table").element)).toEqual(["CAPTION", "THEAD", "TBODY"]);
+    expect(wrapper.findAll("thead thead")).toHaveLength(0);
+    expect(wrapper.findAll("tbody tbody")).toHaveLength(0);
+  });
+
+  it("keeps DataTable rows inside semantic sections", () => {
+    const wrapper = mount(DataTable, {
+      props: {
+        id: "sections-placeholder",
+        caption: "Results placeholder",
+        columns: [{ id: "name", label: "Name placeholder" }],
+        data: [{ id: "row-1", name: "Row placeholder" }],
+        rowKey: "id",
+      },
+    });
+
+    expect(tableStructure(wrapper.get("table").element)).toEqual(["CAPTION", "THEAD", "TBODY"]);
+    expect(wrapper.get("tbody td").text()).toBe("Row placeholder");
   });
 
   it("colors Table headers and rows independently", () => {

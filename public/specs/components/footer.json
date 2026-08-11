@@ -5,7 +5,7 @@
   "category": "component",
   "classification": "balsa-addition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Close an application with brand context, grouped links, and optional contact or social information.",
   "useFor": [
     "Application shells",
@@ -21,23 +21,28 @@
     "links only",
     "with contacts",
     "with social links",
-    "variable navigation sections"
+    "variable navigation sections",
+    "inverse or application-surface treatment"
   ],
   "accessibility": [
     "Uses a semantic footer and labeled navigation landmark with native links.",
     "External social links receive accessible names and noreferrer protection.",
-    "The linked brand image or text title requires a meaningful accessible name."
+    "The linked brand image or text title requires a meaningful accessible name.",
+    "The navigate event exposes the original uncancelled MouseEvent so router integration can preserve modifier clicks and native fallback."
   ],
   "tokens": [
     "--balsa-color-inverse",
     "--balsa-color-inverse-foreground",
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
     "--balsa-color-border-strong"
   ],
   "commonMistakes": [
     "Hard-coding application data inside Footer.",
     "Assuming the navigation always has exactly three sections.",
     "Publishing placeholder contact information as real data.",
-    "Using decorative icon-only links without accessible names."
+    "Using decorative icon-only links without accessible names.",
+    "Overriding inverse palette tokens when the surface variant expresses the intended footer relationship."
   ],
   "examples": [
     {
@@ -124,6 +129,47 @@
       {
         "name": "sections",
         "type": "readonly FooterSection[]",
+        "shape": {
+          "type": "readonly FooterSection[]",
+          "items": {
+            "type": "FooterSection",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "links",
+                "type": "readonly NavigationLink[]",
+                "required": true,
+                "shape": {
+                  "type": "readonly NavigationLink[]",
+                  "items": {
+                    "type": "NavigationLink",
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "link",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "shortDescription",
+                        "type": "string | undefined",
+                        "required": false
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
         "required": true
       },
       {
@@ -134,12 +180,53 @@
       {
         "name": "contactGroups",
         "type": "readonly FooterContactGroup[] | undefined",
+        "shape": {
+          "type": "readonly FooterContactGroup[]",
+          "items": {
+            "type": "FooterContactGroup",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly FooterContactItem[]",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[]"
       },
       {
         "name": "socialLinks",
         "type": "readonly FooterSocialLink[] | undefined",
+        "shape": {
+          "type": "readonly FooterSocialLink[]",
+          "items": {
+            "type": "FooterSocialLink",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[]"
       },
@@ -169,6 +256,16 @@
         ],
         "required": false,
         "default": "\"Open source. Open code. Built for Vue.\""
+      },
+      {
+        "name": "variant",
+        "type": "FooterVariant | undefined",
+        "values": [
+          "surface",
+          "inverse"
+        ],
+        "required": false,
+        "default": "\"inverse\""
       },
       {
         "name": "theme",
@@ -216,7 +313,12 @@
         "required": false
       }
     ],
-    "events": [],
+    "events": [
+      {
+        "name": "navigate",
+        "type": "[item: NavigationLink, event: MouseEvent]"
+      }
+    ],
     "slots": []
   }
 }

@@ -46,6 +46,8 @@ const requiredData = [
   ".balsa/catalog-index.json",
   ".balsa/catalog.json",
   "registry.json",
+  "src/config/components-template.json",
+  "src/design-system/built-ins.json",
 ];
 for (const required of requiredData) {
   if (!packed.has(required)) missing.push(required);

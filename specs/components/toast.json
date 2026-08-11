@@ -99,6 +99,84 @@
       {
         "name": "modelValue",
         "type": "readonly ToastItem[] | undefined",
+        "shape": {
+          "type": "readonly ToastItem[]",
+          "items": {
+            "type": "ToastItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "color",
+                "type": "SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "variant",
+                "type": "ToastVariant | undefined",
+                "required": false
+              },
+              {
+                "name": "size",
+                "type": "ToastSize | undefined",
+                "required": false
+              },
+              {
+                "name": "rounded",
+                "type": "Rounded | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "actionLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "actionDismiss",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "dismissible",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "closeLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "duration",
+                "type": "number | undefined",
+                "required": false
+              },
+              {
+                "name": "sticky",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "event": "update:modelValue"
       }
     ],
@@ -231,6 +309,84 @@
       {
         "name": "modelValue",
         "type": "readonly ToastItem[] | undefined",
+        "shape": {
+          "type": "readonly ToastItem[]",
+          "items": {
+            "type": "ToastItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "color",
+                "type": "SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "variant",
+                "type": "ToastVariant | undefined",
+                "required": false
+              },
+              {
+                "name": "size",
+                "type": "ToastSize | undefined",
+                "required": false
+              },
+              {
+                "name": "rounded",
+                "type": "Rounded | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "actionLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "actionDismiss",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "dismissible",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "closeLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "duration",
+                "type": "number | undefined",
+                "required": false
+              },
+              {
+                "name": "sticky",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[]"
       }
@@ -241,12 +397,12 @@
         "type": "[value: readonly ToastItem[]]"
       },
       {
-        "name": "dismiss",
-        "type": "[item: ToastItem, reason: ToastDismissReason]"
-      },
-      {
         "name": "action",
         "type": "[item: ToastItem]"
+      },
+      {
+        "name": "dismiss",
+        "type": "[item: ToastItem, reason: ToastDismissReason]"
       }
     ],
     "slots": [

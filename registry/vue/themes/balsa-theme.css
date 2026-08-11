@@ -553,8 +553,8 @@
 
 [data-balsa="card"][data-balsa-playground] {
   box-shadow: var(--balsa-shadow-playground);
-  backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 [data-balsa="table"][data-density="compact"] {
@@ -835,18 +835,18 @@
 [data-balsa="select-popover"],
 [data-balsa="autocomplete-popover"],
 :where([data-balsa="button"])[data-variant="glass"] {
-  backdrop-filter: var(--balsa-backdrop-filter);
-  -webkit-backdrop-filter: var(--balsa-backdrop-filter);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+  backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
 }
 
 [data-balsa="modal-panel"][data-variant="glass"]:not([data-presentation="fullscreen"]) {
-  backdrop-filter: var(--balsa-backdrop-filter);
-  -webkit-backdrop-filter: var(--balsa-backdrop-filter);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+  backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
 }
 
 [data-balsa="modal-backdrop"] {
-  backdrop-filter: var(--balsa-overlay-filter);
   -webkit-backdrop-filter: var(--balsa-overlay-filter);
+  backdrop-filter: var(--balsa-overlay-filter);
 }
 
 [data-balsa="checkbox-control"] {
@@ -902,8 +902,8 @@
 }
 
 [data-balsa="toggle"][data-variant="glass"][data-state="off"] {
-  backdrop-filter: var(--balsa-backdrop-filter-contained);
   -webkit-backdrop-filter: var(--balsa-backdrop-filter-contained);
+  backdrop-filter: var(--balsa-backdrop-filter-contained);
 }
 
 [data-balsa="toggle"]:hover:not(:disabled) {
@@ -1106,12 +1106,19 @@ dialog[data-balsa="alert"][open] {
    becomes a Backdrop Root and prevents nested Dropdown glass from sampling
    the page beneath it. Navbar uses a sibling surface; playground hosts stay
    translucent but unfiltered. */
+/* The button entry excludes the solid variant. Its background is opaque in every
+   palette, so the filter composites nothing while still making the button a
+   backdrop root and a containing block for any fixed descendant. Measured: 22 of
+   the 29 buttons in the gallery were paying for a blur nothing could show
+   through.
+
+   This note lives above the rule rather than inside the selector list. A comment
+   between selectors is valid CSS and survives the dev server, and the production
+   minifier drops every selector before it — which silently deleted
+   `card[data-variant=glass]` from this group, so glass worked in development and
+   not in the built site. */
 :where(
   [data-balsa="card"][data-variant="glass"]:not([data-balsa-playground]),
-  /* Not the solid variant. Its background is opaque in every palette, so the
-     filter composites nothing while still making the button a backdrop root
-     and a containing block for any fixed descendant. Measured: 22 of the 29
-     buttons in the gallery were paying for a blur nothing could show through. */
   [data-balsa="button"]:not([data-variant="solid"]),
   [data-balsa="link"],
   [data-balsa-control],
@@ -1138,13 +1145,44 @@ dialog[data-balsa="alert"][open] {
   [data-balsa="theme-advanced"],
   [data-balsa="site-selected"]
 ) {
-  backdrop-filter: var(--balsa-backdrop-filter);
-  -webkit-backdrop-filter: var(--balsa-backdrop-filter);
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+  backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+
+  /* A filtered surface becomes the nearest Backdrop Root for everything below
+     it. Publish the reduced filter from the first child and let it follow that
+     root through arbitrary wrapper depth. */
+  & > * {
+    --balsa-backdrop-filter-context: var(--balsa-backdrop-filter-contained);
+  }
 }
 
+/*
+ * Glass nesting follows the Backdrop Root, not DOM adjacency.
+ *
+ * The problem is real: a filtered element becomes a backdrop root, so a glass
+ * surface inside another samples its parent rather than the page — blurring a
+ * flat translucent fill at full cost. The comment above says so for Dropdown and
+ * the mechanism is general.
+ *
+ * The first attempt copied elevation's law but published `none`: a container
+ * told its contents to remove the filter. A custom property inherits
+ * *indefinitely*, so publishing on `> *`
+ * suppressed every glass surface anywhere below a glass ancestor, however deep
+ * and however unrelated — 41 of the 42 glass cards on the home page lost their
+ * filter. Elevation gets away with the same mechanism only because the set of
+ * elements that read `--balsa-shadow-contained` is four components wide.
+ *
+ * The failure was the value, not the scope. Filter Effects Level 2 defines a
+ * descendant's backdrop from its nearest Backdrop Root through every intervening
+ * wrapper, so indefinite inheritance matches the rendering model. The contained
+ * 10px token preserves useful content painted inside that root while reducing
+ * the second pass instead of erasing it. See:
+ * https://drafts.csswg.org/filter-effects-2/#backdrop-root
+ */
+
 [data-balsa="dropdown"][data-variant="glass"] {
-  backdrop-filter: var(--balsa-backdrop-filter-contained);
   -webkit-backdrop-filter: var(--balsa-backdrop-filter-contained);
+  backdrop-filter: var(--balsa-backdrop-filter-contained);
 }
 
 /* Native range inputs preserve keyboard and form behavior while the visible

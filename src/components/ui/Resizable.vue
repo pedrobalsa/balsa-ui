@@ -72,7 +72,7 @@ const variantClasses: Readonly<Record<ResizableVariant, string[]>> = {
   surface: ["border-balsa-border", "bg-balsa-surface"],
   outline: ["border-balsa-border-strong", "bg-transparent"],
   soft: ["border-transparent", "bg-balsa-muted"],
-  glass: ["border-balsa-border/60", "bg-balsa-surface/55", "backdrop-blur-md"],
+  glass: ["border-balsa-border/60", "bg-balsa-surface/55", "backdrop-balsa"],
 };
 const handleSizeClasses: Readonly<
   Record<ResizableOrientation, Record<ResizableSize, string>>

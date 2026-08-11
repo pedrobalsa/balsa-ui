@@ -45,10 +45,10 @@ const { props, theme } = useResolvedThemeProps(
 );
 
 const variantClasses: Readonly<Record<DropdownVariant, string[]>> = {
-  surface: ["bg-balsa-background/90", "text-balsa-foreground", "backdrop-blur-xl"],
-  outline: ["bg-balsa-background/80", "text-balsa-foreground", "backdrop-blur-xl"],
-  soft: ["text-balsa-foreground", "backdrop-blur-xl"],
-  glass: ["text-balsa-surface-elevated-foreground", "backdrop-blur-md"],
+  surface: ["bg-balsa-background/90", "text-balsa-foreground", "backdrop-balsa"],
+  outline: ["bg-balsa-background/80", "text-balsa-foreground", "backdrop-balsa"],
+  soft: ["text-balsa-foreground", "backdrop-balsa"],
+  glass: ["text-balsa-surface-elevated-foreground", "backdrop-balsa"],
 };
 const colorClasses: Readonly<Record<ActionColor, Record<DropdownVariant, string[]>>> = {
   neutral: {

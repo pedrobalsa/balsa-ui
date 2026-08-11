@@ -28,7 +28,7 @@
           "registry": { "type": "string", "pattern": "^@balsa/" },
           "registryDependencies": { "type": "array", "items": { "type": "string" } },
           "npmDependencies": { "type": "array", "items": { "type": "string" } },
-          "tokens": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "tokens": { "type": "array", "items": { "type": "string" } },
           "documentation": { "type": "string" },
           "example": { "type": "string" },
           "source": { "type": "array", "items": { "type": "string" }, "minItems": 1 },

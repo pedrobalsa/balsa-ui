@@ -126,6 +126,29 @@
       {
         "name": "options",
         "type": "readonly ButtonGroupOption[]",
+        "shape": {
+          "type": "readonly ButtonGroupOption[]",
+          "items": {
+            "type": "ButtonGroupOption",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

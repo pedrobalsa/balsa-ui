@@ -34,7 +34,7 @@ The Balsa CLI installs from both registries, so it is the only command interface
 Decide in this order:
 
 1. **A Balsa block or composition matches the whole section.** Install it. It is themed, typed and accessible as a unit.
-2. **Balsa publishes the component.** Install it with a bare name: `balsa add select`. Every Balsa item responds to the active palette, theme, density, border, elevation and motion settings today.
+2. **Balsa publishes the component.** Install it with a bare name: `balsa add select`. Balsa items consume the active palette and theme contracts; inspect the selected specification for the exact component dimensions and defaults it owns.
 3. **Only shadcn-vue publishes it.** Install it namespaced: `balsa add @shadcn/stepper`. Roughly 25 upstream items have no Balsa equivalent, including `dialog`, `form`, `field`, `combobox`, `popover`, `sheet`, `stepper`, `number-field` and `tags-input`.
 4. **Neither publishes it.** Only then compose one from Balsa primitives.
 
@@ -46,7 +46,13 @@ npx balsa-ui@latest view @shadcn/stepper
 
 Two facts that change what you should choose:
 
-- An upstream component installed through `@shadcn/` is **not yet styled by the Balsa design system**. It renders correctly and uses standard shadcn variables, but Balsa's typography, density, border, elevation and material settings do not reach it until the adapter program lands. Prefer a Balsa equivalent when one exists and visual consistency matters.
+- An upstream component installed through `@shadcn/` always receives Balsa's color,
+  focus-ring, and base-radius bridge. Certified items can also receive typography,
+  spacing, border, elevation, motion, or material reach through their generated adapter
+  manifest and styling-only patch. Inspect `balsa design-system show` or the integration
+  documentation for the exact per-dimension result; unsupported dimensions remain
+  explicit. Prefer a Balsa equivalent when one exists and full design-system reach
+  matters.
 - `@balsa/button` and `@shadcn/button` can coexist: they occupy different directories. The collision is on the *import name* in your code, not on disk. If you install both, alias one at the import site.
 
 Each specification records a `classification`. `balsa-alternative` means Balsa implements something upstream also publishes, and names the `upstream` item it stands in for; `balsa-addition` means upstream has no equivalent; `balsa-composition` means it is built from other items. Do not add a new alternative to an upstream component without a documented reason.
@@ -62,7 +68,17 @@ npx balsa-ui@latest init
 npx balsa-ui@latest add <name>
 ```
 
-Use `init --palette` only when the application wants Balsa's explicit Dark and Light presets. Components work with the adaptive foundation without the optional palette. Registry dependencies install recursively, local agent context is synchronized under `.balsa/`, and the CLI reports any missing npm dependencies.
+To start from one of Balsa's complete named systems, list and apply it after init:
+
+```sh
+npx balsa-ui@latest design-system apply --list
+npx balsa-ui@latest design-system apply press
+npx balsa-ui@latest design-system show
+```
+
+The command installs editable palette, theme, and named-gradient source and reports the exact registration and activation handoff. Use `design-system create` only for a custom Design Studio payload.
+
+Use `init --palette` only when the application wants Balsa's explicit Dark and Light presets. Components work with the adaptive foundation without the optional palette. `init` creates a complete `components.json` only when one is missing; existing configuration stays project-owned. Registry dependencies resolve recursively, required npm packages install through the project's detected npm, pnpm, Yarn, or Bun manager, and local agent context is synchronized under `.balsa/`.
 
 Repository contributors can use `npm run registry:install -- <name> --cwd <vue-project>`.
 

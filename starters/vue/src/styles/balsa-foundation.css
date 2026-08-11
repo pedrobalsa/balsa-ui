@@ -132,6 +132,134 @@
   --color-balsa-chart-tooltip-foreground: var(--balsa-color-chart-tooltip-foreground, var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
 }
 
+/* CSS Backgrounds 3 recommends painting an HTML document's canvas through
+ * body: the user agent propagates that background to the otherwise elementless
+ * canvas. Keep this zero-specificity and in the base layer so an application
+ * can replace either value without fighting the design-system foundation.
+ * https://www.w3.org/TR/css-backgrounds-3/#body-background
+ */
+@layer base {
+  :where(body) {
+    background-color: var(--color-balsa-background);
+    color: var(--color-balsa-foreground);
+  }
+}
+
+/*
+ * The design system's backdrop filter, as a utility.
+ *
+ * Components reached for `backdrop-blur-md` — 62 times across 24 files — because
+ * it was the shortest thing to write. It is a fixed 12px that answers no token,
+ * so the material dimension never reached it: a component asked for glass at the
+ * Solid material and still blurred, and a theme setting a different radius was
+ * ignored. `Card` carries a comment explaining that blur is theme-owned and a
+ * utility would sit above it; the other twenty-four did it anyway.
+ *
+ * The fourth instance of a literal utility outranking the token rule beneath it,
+ * after `Kbd`'s `border`, the padding matrix and `Button`'s `duration-200`. The
+ * durable fix has been the same every time: make the token the shorter thing to
+ * write, rather than asking everyone to remember not to write the literal.
+ *
+ * The prefixed property comes first. The minifier keeps the last of a prefixed
+ * pair, and writing them the other way round is what shipped a production site
+ * with no glass at all.
+ */
+@utility backdrop-balsa {
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+  backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+
+  /* Once this element becomes a Backdrop Root, every surface below it samples
+     that root rather than the page. Keep the reduced value available through
+     arbitrary wrapper depth; the semantic surface rule in balsa-theme.css
+     publishes the same contract for token-driven surfaces without this class. */
+  & > * {
+    --balsa-backdrop-filter-context: var(--balsa-backdrop-filter-contained);
+  }
+}
+
+/* The scrim behind a modal or drawer, which is a different depth from a surface
+   and has its own token. */
+@utility backdrop-balsa-overlay {
+  -webkit-backdrop-filter: var(--balsa-overlay-filter);
+  backdrop-filter: var(--balsa-overlay-filter);
+}
+
+/*
+ * The type scale.
+ *
+ * Balsa shipped tokens for colour, spacing, radius, shadow and motion, and two
+ * font families — and nothing for size, line height or letter spacing. So the
+ * standing rule to use tokens rather than raw values was impossible to follow
+ * for type, and the first editorial application built on Balsa hand-picked
+ * `text-[1.1875rem]`, `leading-[1.75]` and `tracking-[0.12em]`: exactly the
+ * arbitrary-value habit the spacing work spent a phase removing.
+ *
+ * Measured before it was designed, the same way the spacing scale was. Across
+ * 69 shipped components: 190 font sizes drawn from five steps (`xs` 39, `sm`
+ * 107, `base` 22, `lg` 19, `xl` 3) and two arbitrary values. Across 47 site
+ * files: ten steps reaching `6xl`, because display sizes only appear on real
+ * pages. So the sizes below are the ones already in use — nothing has to move,
+ * and the migration is a rename rather than a redesign.
+ *
+ * What was missing was never the sizes. It was that **line height is a function
+ * of size, not a free choice**: 14 `leading-*` uses across 69 components means
+ * almost everything took Tailwind's default and no component's leading answered
+ * the design system at all. Ratios tighten as size grows — 1.6 at caption sizes
+ * down to 1.05 at display — because a long measure needs air between lines and
+ * a headline does not. Each step therefore carries its leading, and asking for
+ * `text-balsa-3xl` sets both.
+ *
+ * `prose` is the evidence-led step: the editorial application independently
+ * arrived at 19px on 1.75 for its article body, so long-form reading gets a
+ * named step rather than being approximated by `lg`.
+ */
+@theme {
+  --text-balsa-2xs: 0.6875rem;
+  --text-balsa-2xs--line-height: 1.6;
+  --text-balsa-2xs--letter-spacing: 0.01em;
+  --text-balsa-xs: 0.75rem;
+  --text-balsa-xs--line-height: 1.6;
+  --text-balsa-xs--letter-spacing: 0.01em;
+  --text-balsa-sm: 0.875rem;
+  --text-balsa-sm--line-height: 1.55;
+  --text-balsa-base: 1rem;
+  --text-balsa-base--line-height: 1.5;
+  --text-balsa-prose: 1.1875rem;
+  --text-balsa-prose--line-height: 1.75;
+  --text-balsa-lg: 1.125rem;
+  --text-balsa-lg--line-height: 1.55;
+  --text-balsa-xl: 1.25rem;
+  --text-balsa-xl--line-height: 1.5;
+  --text-balsa-2xl: 1.5rem;
+  --text-balsa-2xl--line-height: 1.35;
+  --text-balsa-2xl--letter-spacing: -0.01em;
+  --text-balsa-3xl: 1.875rem;
+  --text-balsa-3xl--line-height: 1.25;
+  --text-balsa-3xl--letter-spacing: -0.015em;
+  --text-balsa-4xl: 2.25rem;
+  --text-balsa-4xl--line-height: 1.2;
+  --text-balsa-4xl--letter-spacing: -0.02em;
+  --text-balsa-5xl: 3rem;
+  --text-balsa-5xl--line-height: 1.1;
+  --text-balsa-5xl--letter-spacing: -0.025em;
+  --text-balsa-6xl: 3.75rem;
+  --text-balsa-6xl--line-height: 1.05;
+  --text-balsa-6xl--letter-spacing: -0.03em;
+
+  /* Leading on its own, for the cases that set size elsewhere. */
+  --leading-balsa-tight: 1.15;
+  --leading-balsa-snug: 1.35;
+  --leading-balsa-normal: 1.5;
+  --leading-balsa-relaxed: 1.65;
+  --leading-balsa-prose: 1.75;
+
+  /* Tracking on its own. `label` is the small-caps/eyebrow case, the one
+     positive value the audit found in real use (`tracking-[0.12em]`). */
+  --tracking-balsa-title: -0.02em;
+  --tracking-balsa-normal: 0em;
+  --tracking-balsa-label: 0.12em;
+}
+
 :root {
   --balsa-color-chart-surface: var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c)));
   --balsa-color-chart-axis: var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));

@@ -47,7 +47,12 @@ npx balsa-ui@latest info input --markdown
 npx balsa-ui@latest add breadcrumb
 ```
 
-`init` installs the adaptive foundation and theme recipes, configures a recognized Tailwind stylesheet, and adds compact agent instructions without replacing existing `AGENTS.md` content. Use `init --palette` only for the explicit Dark and Light presets.
+`init` installs the adaptive foundation and theme recipes, creates a complete
+shadcn-vue-compatible `components.json` when none exists, configures the
+detected Tailwind stylesheet, installs required npm packages through the
+project's package manager, and adds compact agent instructions without
+replacing existing configuration or `AGENTS.md` content. Use `init --palette`
+only for the explicit Dark and Light presets.
 
 Generate a typed deterministic background from a built-in preset, the Studio's shell-safe inline handoff, or saved schema-one/schema-two JSON:
 
@@ -65,7 +70,14 @@ Repository contributors can run the equivalent deterministic local command:
 npm run registry:install -- breadcrumb --cwd ../my-vue-app
 ```
 
-Both commands recursively install `@balsa/balsa-theme` and `@balsa/balsa-foundation`, write source under the target project's `src/`, synchronize the compact catalog, specifications, and optional skill, and record hashes in `.balsa/installed.json`. Components do not install a palette. Import the adaptive foundation and design-theme recipes after Tailwind:
+Both commands recursively install `@balsa/balsa-theme` and
+`@balsa/balsa-foundation`, install their required npm packages through the
+`packageManager` declaration or nearest unambiguous lockfile, write source
+under the target project's `src/`, synchronize the compact catalog,
+specifications, and optional skill, and record hashes in
+`.balsa/installed.json`. Components do not install a palette. The CLI wires the
+adaptive foundation and design-theme recipes after Tailwind; this is the resulting
+order to inspect:
 
 ```css
 @import "tailwindcss";
@@ -80,16 +92,32 @@ manifest, protects differing files, and prints registration instructions
 without editing application entrypoints.
 
 Generate a complete design system — palette and theme together — from a Design
-Studio payload with `balsa design-system create <name>`. The command installs
-`balsa-theme` and `balsa-palette`, writes `src/themes/<name>.ts` alongside
-`src/styles/<name>-palette.css`, records both files in the installed manifest,
-protects differing files, and prints the import and activation instructions.
-Palette token values are restricted to plain hex, keyword, and standard color
-functions so a generated stylesheet can never carry arbitrary CSS.
+Studio payload with `balsa design-system create <name>`. Named systems need no
+payload:
 
-Install and import `balsa-palette` separately only when the project wants the explicit Dark/Light presets. Importing it is inert until a `data-palette` selector is applied.
+```sh
+npx balsa-ui@latest design-system apply --list
+npx balsa-ui@latest design-system apply press
+```
 
-Install npm dependencies reported by `registry.json` (`vue`, `tailwindcss`, and `@lucide/vue` for this example). The installed `.vue`, `.ts`, and `.css` files are ordinary editable source. If a target already differs from the canonical source, installation stops rather than overwriting customization.
+`design-system apply` carries the selected palette, complete theme recipe,
+exact token overrides, and its named gradient into editable consumer source.
+Both apply and create install `balsa-theme` and `balsa-palette`, write
+`src/themes/<name>.ts` alongside `src/styles/<name>-palette.css`, record the
+files in the installed manifest, protect differing files, and print import and
+activation instructions. Palette token values are restricted to plain hex,
+keyword, and standard color functions so a generated stylesheet can never
+carry arbitrary CSS.
+
+Install `balsa-palette` separately only when the project wants the explicit Dark/Light
+presets. The Balsa CLI wires its stylesheet automatically; it remains inert until a
+`data-palette` selector is applied.
+
+`balsa init` and `balsa add` install missing npm dependencies through the detected
+project package manager. Compatible shadcn-style or manual clients must honor the
+dependency metadata themselves. The installed `.vue`, `.ts`, and `.css` files are
+ordinary editable source. If a target already differs from the canonical source,
+installation stops rather than overwriting customization.
 
 Compatible shadcn-style tooling can consume `https://balsa-ui.com/r/<name>.json`. Agents start with the compact `/llms.txt` workflow and CLI search, then load one per-item specification or Markdown page. `/llms-full.txt` and the catalogs remain available for explicit bulk discovery.
 

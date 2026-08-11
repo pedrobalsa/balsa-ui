@@ -146,7 +146,7 @@ const cellVariantClasses: Readonly<Record<InputOTPVariant, string>> = {
   surface: "bg-balsa-input",
   soft: "",
   solid: "",
-  glass: "backdrop-blur-md",
+  glass: "backdrop-balsa",
 };
 const cellColorClasses: Readonly<Record<SemanticColor, Record<InputOTPVariant, string>>> = {
   primary: {

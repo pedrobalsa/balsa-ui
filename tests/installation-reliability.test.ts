@@ -10,11 +10,15 @@ import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { fakePackageManagerEnvironment } from "./helpers/fake-package-manager";
+
+let packageManagerEnvironment: NodeJS.ProcessEnv;
 
 function runCli(arguments_: readonly string[]) {
   return spawnSync(process.execPath, ["bin/balsa.mjs", ...arguments_], {
     cwd: process.cwd(),
     encoding: "utf8",
+    env: packageManagerEnvironment,
   });
 }
 
@@ -41,6 +45,7 @@ function createConsumer(options: { stylesheet?: boolean; vue?: boolean } = {}) {
 
 beforeEach(() => {
   target = mkdtempSync(resolve(tmpdir(), "balsa-install-"));
+  packageManagerEnvironment = fakePackageManagerEnvironment(target);
 });
 
 afterEach(() => {
@@ -117,14 +122,15 @@ describe("installation reliability", () => {
     );
   });
 
-  it("reports the three installation phases separately", () => {
+  it("reports dependency installation as its own completed phase", () => {
     createConsumer();
     const result = runCli(["add", "charts", "--cwd", target]);
 
     expect(result.status, result.stderr).toBe(0);
     expect(result.stdout).toContain("Component source installed:");
     expect(result.stdout).toContain("Stylesheet configured: src/index.css");
-    expect(result.stdout).toMatch(/npm dependencies unresolved: .*@unovis\/vue/);
+    expect(result.stdout).toMatch(/npm dependencies installed with npm: .*@unovis\/vue/);
+    expect(result.stdout).not.toContain("npm dependencies unresolved");
   });
 
   it("maps --implementation onto bare names but respects explicit namespaces", () => {

@@ -111,7 +111,7 @@ const variantClasses: Readonly<Record<CarouselVariant, string[]>> = {
   surface: ["border-balsa-border", "bg-balsa-surface"],
   outline: ["border-balsa-border-strong", "bg-transparent"],
   soft: ["border-balsa-border", "bg-balsa-muted"],
-  glass: ["border-balsa-border", "bg-balsa-surface/70", "backdrop-blur-md"],
+  glass: ["border-balsa-border", "bg-balsa-surface/70", "backdrop-balsa"],
 };
 const classes = computed(() =>
   mergeClasses("relative min-w-0", attrs.class),

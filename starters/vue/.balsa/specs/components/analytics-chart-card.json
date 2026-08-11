@@ -182,6 +182,29 @@
       {
         "name": "series",
         "type": "readonly CompositionChartSeries[] | undefined",
+        "shape": {
+          "type": "readonly CompositionChartSeries[]",
+          "items": {
+            "type": "CompositionChartSeries",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "data",
+                "type": "readonly number[]",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "CompositionPaletteColor | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { label: \"p95\", data: [268, 251, 244, 226, 231, 209, 198, 186], color: \"primary\" }, ]"
       }

@@ -9,7 +9,7 @@
     "name": "button"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Trigger an immediate user action.",
   "useFor": [
     "Form submission",
@@ -124,6 +124,12 @@
       "title": "Destructive",
       "description": "Reserve the destructive color for consequential actions.",
       "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button color=\"destructive\" :prefix-icon=\"undefined\">Action placeholder</Button>\n</template>"
+    },
+    {
+      "id": "analytics-event",
+      "title": "Custom analytics event",
+      "description": "Emit a deliberate business event in addition to the structural interaction when Analytics is installed.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button analytics-event=\"cta\">Start now</Button>\n</template>"
     }
   ],
   "publicApi": {
@@ -205,6 +211,14 @@
         ],
         "required": false,
         "default": "false"
+      },
+      {
+        "name": "analyticsEvent",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
       },
       {
         "name": "type",

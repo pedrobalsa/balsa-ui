@@ -16,7 +16,8 @@ interface ComponentExamplePreset {
   id: string;
   title: string;
   description: string;
-  config: PlaygroundValues;
+  config?: PlaygroundValues;
+  source?: string;
 }
 
 const compactFooterSections: readonly PlaygroundFooterSection[] = [
@@ -96,6 +97,57 @@ const examplePresets: Readonly<Record<string, readonly ComponentExamplePreset[]>
     { id: "decorative", title: "Decorative", description: "An unlabelled symbol inherits color and stays hidden from assistive technology.", config: { icon: "search", size: "md", strokeWidth: "2", label: "" } },
     { id: "labelled", title: "Labelled image", description: "Add a label only when the standalone symbol itself conveys content.", config: { icon: "help", size: "lg", strokeWidth: "1.5", label: "Help" } },
   ],
+  analytics: [
+    {
+      id: "ga4-provider",
+      title: "GA4 provider configuration",
+      description: "Forward structural and custom Balsa events to an existing Google tag after analytics consent is granted.",
+      source: `<script setup lang="ts">
+import { ref } from "vue";
+import BalsaAnalyticsProvider from "@/components/ui/BalsaAnalyticsProvider.vue";
+import Button from "@/components/ui/Button.vue";
+import { createGoogleAnalyticsAdapter } from "@/components/ui/analytics";
+
+const analyticsConsent = ref(false);
+const adapters = [
+  createGoogleAnalyticsAdapter({ sendTo: "G-XXXXXXXXXX" }),
+];
+</script>
+
+<template>
+  <BalsaAnalyticsProvider
+    :adapters="adapters"
+    :enabled="analyticsConsent"
+  >
+    <Button analytics-event="cta">
+      Start free trial
+    </Button>
+  </BalsaAnalyticsProvider>
+</template>`,
+    },
+    {
+      id: "custom-adapter",
+      title: "Application-owned adapter",
+      description: "Send the normalized event contract to a reviewed first-party destination without adding a visual playground.",
+      source: `<script setup lang="ts">
+import BalsaAnalyticsProvider from "@/components/ui/BalsaAnalyticsProvider.vue";
+import Button from "@/components/ui/Button.vue";
+import { createAnalyticsAdapter } from "@/components/ui/analytics";
+
+const firstParty = createAnalyticsAdapter("first-party", (event) => {
+  navigator.sendBeacon("/analytics", JSON.stringify(event));
+});
+</script>
+
+<template>
+  <BalsaAnalyticsProvider :adapters="[firstParty]">
+    <Button analytics-event="lead">
+      Request a demo
+    </Button>
+  </BalsaAnalyticsProvider>
+</template>`,
+    },
+  ],
   button: [
     {
       id: "soft",
@@ -138,6 +190,12 @@ const examplePresets: Readonly<Record<string, readonly ComponentExamplePreset[]>
       title: "Destructive",
       description: "Reserve the destructive color for consequential actions.",
       config: { color: "destructive", label: "Action placeholder", icon: "trash" },
+    },
+    {
+      id: "analytics-event",
+      title: "Custom analytics event",
+      description: "Emit a deliberate business event in addition to the structural interaction when Analytics is installed.",
+      config: { analyticsEvent: "cta", label: "Start now", icon: "none" },
     },
   ],
   "button-group": [
@@ -998,7 +1056,7 @@ const examplePresets: Readonly<Record<string, readonly ComponentExamplePreset[]>
     {
       id: "underline",
       title: "Underline navigation",
-      description: "Use an understated active indicator for familiar local views.",
+      description: "Use an understated active indicator; long tab lists scroll at narrow widths.",
       config: { type: "underline", variant: "surface", icons: true, active: "preview" },
     },
     {
@@ -1168,15 +1226,17 @@ const examplePresets: Readonly<Record<string, readonly ComponentExamplePreset[]>
 
 export function getComponentExamples(name: string): readonly ComponentExampleDefinition[] {
   const playground = getPlayground(name);
-  if (!playground) return [];
-
-  return (examplePresets[name] ?? []).map((example) => {
-    const config = { ...playground.defaults, ...example.config };
-    return {
-      ...example,
+  return (examplePresets[name] ?? []).flatMap((example) => {
+    const config = { ...playground?.defaults, ...example.config };
+    const source = example.source ?? playground?.source(config);
+    if (!source) return [];
+    return [{
+      id: example.id,
+      title: example.title,
+      description: example.description,
       config,
-      source: playground.source(config),
-    };
+      source,
+    }];
   });
 }
 

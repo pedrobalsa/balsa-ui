@@ -104,6 +104,34 @@
       {
         "name": "options",
         "type": "readonly ToggleGroupOption[]",
+        "shape": {
+          "type": "readonly ToggleGroupOption[]",
+          "items": {
+            "type": "ToggleGroupOption",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

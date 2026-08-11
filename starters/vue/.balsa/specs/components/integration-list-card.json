@@ -153,6 +153,39 @@
       {
         "name": "integrations",
         "type": "readonly Integration[] | undefined",
+        "shape": {
+          "type": "readonly Integration[]",
+          "items": {
+            "type": "Integration",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "detail",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "initials",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "enabled",
+                "type": "boolean",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"vcs\", name: \"Source control\", detail: \"Pushes trigger a preview build\", initials: \"SC\", enabled: true }, { id: \"chat\", name: \"Team chat\", detail: \"Deploy results to #atlas-deploys\", initials: \"TC\", enabled: true }, { id: \"pager\", name: \"On-call paging\", detail: \"Production failures only\", initials: \"OC\", enabled: true }, { id: \"issues\", name: \"Issue tracker\", detail: \"Link deploys to the work they close\", initials: \"IT\", enabled: false }, { id: \"warehouse\", name: \"Data warehouse\", detail: \"Nightly export of usage records\", initials: \"DW\", enabled: false }, { id: \"status\", name: \"Status page\", detail: \"Publishes incidents automatically\", initials: \"SP\", enabled: true }, ]"
       }

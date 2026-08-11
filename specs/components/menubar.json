@@ -100,6 +100,102 @@
       {
         "name": "menus",
         "type": "readonly MenubarMenu[]",
+        "shape": {
+          "type": "readonly MenubarMenu[]",
+          "items": {
+            "type": "MenubarMenu",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly MenuItem[]",
+                "required": true,
+                "shape": {
+                  "type": "readonly MenuItem[]",
+                  "items": {
+                    "type": "MenuItem",
+                    "fields": [
+                      {
+                        "name": "id",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "label",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "type",
+                        "type": "MenuItemType | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "icon",
+                        "type": "LucideIcon | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "labelFontFamily",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "shortcut",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "disabled",
+                        "type": "boolean | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "destructive",
+                        "type": "boolean | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "checked",
+                        "type": "boolean | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "value",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "group",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "children",
+                        "type": "readonly MenuItem[] | undefined",
+                        "required": false
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

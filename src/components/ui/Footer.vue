@@ -6,10 +6,13 @@ import type {
   FooterContactGroup,
   FooterSection,
   FooterSocialLink,
+  NavigationLink,
 } from "./navigation";
 import type { ThemeInput } from "./theme";
 import { useComponentTheme } from "./theme-context";
 import Icon from "./Icon.vue";
+
+export type FooterVariant = "surface" | "inverse";
 
 const props = withDefaults(
   defineProps<{
@@ -22,6 +25,7 @@ const props = withDefaults(
     leadTitle?: string;
     navigationLabel?: string;
     legalText?: string;
+    variant?: FooterVariant;
     theme?: ThemeInput;
   }>(),
   {
@@ -30,9 +34,21 @@ const props = withDefaults(
     leadTitle: "Balsa UI",
     navigationLabel: "Footer navigation",
     legalText: "Open source. Open code. Built for Vue.",
+    variant: "inverse",
   },
 );
+const emit = defineEmits<{
+  navigate: [item: NavigationLink, event: MouseEvent];
+}>();
 const theme = useComponentTheme("footer", "navigation", () => props.theme);
+const variantClasses: Readonly<Record<FooterVariant, string>> = {
+  surface: "bg-balsa-surface text-balsa-surface-foreground",
+  inverse: "bg-balsa-inverse text-balsa-inverse-foreground",
+};
+
+function navigate(title: string, link: string, event: MouseEvent): void {
+  emit("navigate", { title, link }, event);
+}
 </script>
 
 <template>
@@ -40,8 +56,10 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
     data-balsa="footer"
     :data-theme="theme.explicitPresentation.value?.id"
     :data-theme-base="theme.explicitPresentation.value?.base"
+    :data-variant="props.variant"
     :style="theme.explicitPresentation.value?.style"
-    class="relative z-10 w-full border-t border-balsa-border-strong bg-balsa-inverse text-balsa-inverse-foreground"
+    class="relative z-10 w-full border-t border-balsa-border-strong"
+    :class="variantClasses[props.variant]"
   >
     <div>
       <div
@@ -51,11 +69,12 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
           <a
             :href="props.legalLogo.href"
             :aria-label="props.legalLogo.alt"
-            class="mb-balsa-2xl inline-flex rounded-balsa-control focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-balsa-inverse-foreground"
+            class="mb-balsa-2xl inline-flex rounded-balsa-control focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+            @click="navigate(props.legalLogo.alt, props.legalLogo.href, $event)"
           >
             <span
               v-if="props.legalLogo.title"
-              class="font-balsa-title text-xl font-medium tracking-[0.12em] text-balsa-inverse-foreground"
+              class="font-balsa-title text-xl font-medium tracking-[0.12em] text-current"
             >
               {{ props.legalLogo.title }}
             </span>
@@ -67,7 +86,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
             />
           </a>
           <h3 class="sr-only">{{ props.leadTitle }}</h3>
-          <p class="max-w-sm text-sm text-balsa-inverse-foreground/75">{{ props.description }}</p>
+          <p class="max-w-sm text-sm text-current/75">{{ props.description }}</p>
           <div
             v-if="props.contactGroups.length"
             class="mt-balsa-3xl grid gap-x-balsa-3xl gap-y-balsa-2xl sm:grid-cols-2"
@@ -77,7 +96,7 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
               :key="group.title"
               class="min-w-0"
             >
-              <p class="text-balsa-inverse-foreground/75">{{ group.title }}</p>
+              <p class="text-current/75">{{ group.title }}</p>
               <ul class="space-y-balsa-xs">
                 <li v-for="item in group.items" :key="item.label">
                   <a
@@ -85,14 +104,15 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
                     :href="item.link"
                     :target="item.external ? '_blank' : undefined"
                     :rel="item.external ? 'noreferrer' : undefined"
-                    class="block text-sm font-semibold text-balsa-inverse-foreground no-underline decoration-balsa-inverse-foreground decoration-2 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
+                    class="block text-sm font-semibold text-current no-underline decoration-current decoration-2 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                    @click="navigate(item.label, item.link, $event)"
                   >
                     {{ item.label }}
                   </a>
-                  <span v-else class="block text-sm font-semibold text-balsa-inverse-foreground">
+                  <span v-else class="block text-sm font-semibold text-current">
                     {{ item.label }}
                   </span>
-                  <span v-if="item.detail" class="block text-xs text-balsa-inverse-foreground/75">
+                  <span v-if="item.detail" class="block text-xs text-current/75">
                     {{ item.detail }}
                   </span>
                 </li>
@@ -106,7 +126,8 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
                 :aria-label="social.title"
                 target="_blank"
                 rel="noreferrer"
-                class="flex cursor-pointer items-center justify-center text-balsa-inverse-foreground/75 no-underline transition-colors hover:text-balsa-inverse-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
+                class="flex cursor-pointer items-center justify-center text-current/75 no-underline transition-colors hover:text-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                @click="navigate(social.title, social.link, $event)"
               >
                 <Icon :icon="social.icon" size="xl" />
               </a>
@@ -123,12 +144,13 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
             :key="section.title"
             class="min-w-0"
           >
-            <h3 class="mb-balsa-xl text-base text-balsa-inverse-foreground">{{ section.title }}</h3>
+            <h3 class="mb-balsa-xl text-base text-current">{{ section.title }}</h3>
             <ul class="space-y-balsa-lg">
               <li v-for="link in section.links" :key="link.link">
                 <a
                   :href="link.link"
-                  class="text-sm font-medium text-balsa-inverse-foreground/75 no-underline decoration-balsa-inverse-foreground decoration-2 underline-offset-4 hover:text-balsa-inverse-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-inverse-foreground"
+                  class="text-sm font-medium text-current/75 no-underline decoration-current decoration-2 underline-offset-4 hover:text-current hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+                  @click="navigate(link.title, link.link, $event)"
                 >
                   {{ link.title }}
                 </a>
@@ -138,12 +160,12 @@ const theme = useComponentTheme("footer", "navigation", () => props.theme);
         </nav>
       </div>
     </div>
-    <div class="border-t border-balsa-inverse-foreground/25">
+    <div class="border-t border-current/25">
       <div
         class="mx-auto flex max-w-7xl flex-col gap-balsa-md px-balsa-xl py-balsa-xl sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12"
       >
-        <p class="text-xs text-balsa-inverse-foreground/75">{{ props.copyright }}</p>
-        <p class="text-xs text-balsa-inverse-foreground/75">{{ props.legalText }}</p>
+        <p class="text-xs text-current/75">{{ props.copyright }}</p>
+        <p class="text-xs text-current/75">{{ props.legalText }}</p>
       </div>
     </div>
   </footer>

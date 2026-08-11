@@ -5,6 +5,7 @@ import type { Shadow, ThemeInput } from "./theme";
 import { mergeClasses, withoutClassAttribute } from "./classes";
 import { useResolvedThemeProps } from "./theme-context";
 import Icon, { type IconComponent } from "./Icon.vue";
+import type { NavigationLink } from "./navigation";
 
 type LinkVariant = "text" | "solid" | "outline";
 type LinkSize = "sm" | "md" | "lg";
@@ -31,6 +32,9 @@ const rawProps = withDefaults(
     external: false,
   },
 );
+const emit = defineEmits<{
+  navigate: [item: NavigationLink, event: MouseEvent];
+}>();
 const { props, theme } = useResolvedThemeProps(
   "link",
   "controls",
@@ -68,6 +72,13 @@ const classes = computed(() =>
 
 const target = computed(() => (props.external ? "_blank" : undefined));
 const rel = computed(() => (props.external ? "noreferrer" : undefined));
+
+function navigate(event: MouseEvent): void {
+  emit("navigate", {
+    title: props.label ?? props.href,
+    link: props.href,
+  }, event);
+}
 </script>
 
 <template>
@@ -86,6 +97,7 @@ const rel = computed(() => (props.external ? "noreferrer" : undefined));
     :aria-label="props.label"
     :class="classes"
     :style="[attrs.style, theme.explicitPresentation.value?.style]"
+    @click="navigate"
   >
     <Icon
       v-if="props.prefixIcon"

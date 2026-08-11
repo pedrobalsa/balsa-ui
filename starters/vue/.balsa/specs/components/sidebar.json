@@ -118,6 +118,72 @@
       {
         "name": "groups",
         "type": "readonly SidebarGroup[]",
+        "shape": {
+          "type": "readonly SidebarGroup[]",
+          "items": {
+            "type": "SidebarGroup",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "items",
+                "type": "readonly SidebarItem[]",
+                "required": true,
+                "shape": {
+                  "type": "readonly SidebarItem[]",
+                  "items": {
+                    "type": "SidebarItem",
+                    "fields": [
+                      {
+                        "name": "id",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "label",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "href",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "icon",
+                        "type": "LucideIcon | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "badge",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "disabled",
+                        "type": "boolean | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "children",
+                        "type": "readonly SidebarItem[] | undefined",
+                        "required": false
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

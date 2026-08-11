@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "default": "balsa",
+  "designSystems": [
+    {
+      "id": "balsa",
+      "name": "Balsa",
+      "base": "dark",
+      "colors": {
+        "background": "#0f1012",
+        "foreground": "#f4f4f5",
+        "surface": "#191a1c",
+        "muted": "#2b2c2e",
+        "primary": "#f4f4f5",
+        "secondary": "#a1a1aa",
+        "accent": "#cbd5e1"
+      },
+      "themeBase": "modern-flat",
+      "options": {
+        "typography": "modern",
+        "shape": "rounded",
+        "size": "compact",
+        "spacing": "balanced",
+        "border": "soft",
+        "elevation": "none",
+        "motion": "balanced",
+        "material": "glass"
+      },
+      "overrides": {
+        "tokens": {
+          "typography": {
+            "titleFonts": ["Montserrat", "sans-serif"]
+          }
+        }
+      },
+      "gradient": "mesh-drift",
+      "gradientOverrides": {
+        "colors": ["#020304", "#191B1D", "#65696D", "#F8F9F7", "#34312D", "#FFFFFF"],
+        "grain": 0.255,
+        "grainSize": 1.4,
+        "effect": "ascii",
+        "effectScale": 10,
+        "effectMix": 1,
+        "effectColorMode": "gradient",
+        "effectCharacters": "BLSAblsa"
+      }
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "base": "dark",
+      "colors": {
+        "background": "#04070e",
+        "foreground": "#e6f7f0",
+        "surface": "#0a1721",
+        "muted": "#17303a",
+        "primary": "#3fd1a0",
+        "secondary": "#8a6fe8",
+        "accent": "#5eead4"
+      },
+      "themeBase": "glassmorphism",
+      "options": {
+        "typography": "modern",
+        "shape": "soft",
+        "size": "comfortable",
+        "border": "soft",
+        "elevation": "floating",
+        "motion": "fluid",
+        "material": "glass"
+      },
+      "gradient": "aurora-veil",
+      "gradientOverrides": {
+        "brightness": -0.16
+      },
+      "scrim": 0.22
+    },
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "base": "dark",
+      "colors": {
+        "background": "#00060a",
+        "foreground": "#d8ffe9",
+        "surface": "#04150f",
+        "muted": "#0d2c21",
+        "primary": "#3fd07e",
+        "secondary": "#0b6b3a",
+        "accent": "#7bf7b4"
+      },
+      "themeBase": "brutalism",
+      "options": {
+        "typography": "mono",
+        "shape": "square",
+        "size": "compact",
+        "border": "strong",
+        "elevation": "none",
+        "motion": "snappy",
+        "material": "glass"
+      },
+      "gradient": "terminal-rain"
+    },
+    {
+      "id": "press",
+      "name": "Press",
+      "base": "light",
+      "colors": {
+        "background": "#f6f5f1",
+        "foreground": "#111113",
+        "surface": "#ecebe5",
+        "muted": "#dbd9d1",
+        "primary": "#18181b",
+        "secondary": "#57534e",
+        "accent": "#9a2f22"
+      },
+      "themeBase": "modern-flat",
+      "options": {
+        "typography": "editorial",
+        "shape": "square",
+        "size": "comfortable",
+        "border": "medium",
+        "elevation": "none",
+        "motion": "snappy",
+        "material": "solid"
+      },
+      "gradient": "newsprint",
+      "gradientOverrides": {
+        "colors": ["#FBFAF7", "#F1EFE9", "#E2DFD6", "#D0CCC1", "#BBB6A8"],
+        "effectScale": 4,
+        "effectInk": "#57544B",
+        "effectPaper": "#FBFAF7",
+        "brightness": 0.26,
+        "contrast": 0.62,
+        "grain": 0.03
+      },
+      "scrim": 0.22
+    },
+    {
+      "id": "blueprint",
+      "name": "Blueprint",
+      "base": "dark",
+      "colors": {
+        "background": "#080a10",
+        "foreground": "#cbdbf7",
+        "surface": "#10192a",
+        "muted": "#1d2b46",
+        "primary": "#6e8fd6",
+        "secondary": "#2f4c86",
+        "accent": "#9db8ee"
+      },
+      "themeBase": "modern-flat",
+      "options": {
+        "typography": "mono",
+        "shape": "subtle",
+        "size": "compact",
+        "border": "medium",
+        "elevation": "soft",
+        "motion": "snappy",
+        "material": "solid"
+      },
+      "gradient": "plotter",
+      "gradientOverrides": {
+        "brightness": -0.2
+      },
+      "scrim": 0.22
+    },
+    {
+      "id": "ember",
+      "name": "Ember",
+      "base": "dark",
+      "colors": {
+        "background": "#120a04",
+        "foreground": "#ffe3b0",
+        "surface": "#1f1208",
+        "muted": "#372213",
+        "primary": "#f2a03d",
+        "secondary": "#b4530c",
+        "accent": "#ffd08a"
+      },
+      "themeBase": "modern-flat",
+      "options": {
+        "typography": "modern",
+        "shape": "soft",
+        "size": "comfortable",
+        "border": "none",
+        "elevation": "floating",
+        "motion": "fluid",
+        "material": "soft"
+      },
+      "gradient": "solar-bloom",
+      "gradientOverrides": {
+        "brightness": -0.14
+      }
+    },
+    {
+      "id": "vapor",
+      "name": "Vapor",
+      "base": "dark",
+      "colors": {
+        "background": "#080418",
+        "foreground": "#ffe9f7",
+        "surface": "#160b2f",
+        "muted": "#2b0f5e",
+        "primary": "#e8409b",
+        "secondary": "#7b1fa2",
+        "accent": "#3be8e1"
+      },
+      "themeBase": "glassmorphism",
+      "options": {
+        "typography": "modern",
+        "shape": "rounded",
+        "size": "balanced",
+        "border": "soft",
+        "elevation": "floating",
+        "motion": "fluid",
+        "material": "glass"
+      },
+      "gradient": "neon-drift"
+    },
+    {
+      "id": "clay",
+      "name": "Clay",
+      "base": "light",
+      "colors": {
+        "background": "#f7ebd9",
+        "foreground": "#241209",
+        "surface": "#efdcc3",
+        "muted": "#e0c7a5",
+        "primary": "#8f4a22",
+        "secondary": "#43210f",
+        "accent": "#c9803f"
+      },
+      "themeBase": "modern-flat",
+      "options": {
+        "typography": "editorial",
+        "shape": "soft",
+        "size": "comfortable",
+        "border": "none",
+        "elevation": "none",
+        "motion": "balanced",
+        "material": "soft"
+      },
+      "gradient": "terracotta-dune",
+      "gradientOverrides": {
+        "colors": ["#FBF3E6", "#F3E2C8", "#E8C79C", "#D8A671", "#C0854D"],
+        "brightness": 0.1,
+        "contrast": 0.82
+      }
+    }
+  ]
+}

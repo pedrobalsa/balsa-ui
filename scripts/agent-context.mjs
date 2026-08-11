@@ -279,15 +279,22 @@ function bulletSection(title, values, emptyText = "Not documented in this specif
 
 function shapeLines(shape, indent = "  ") {
   if (!shape) return [];
+  if (shape.items) {
+    return [
+      `${indent}- item \`${shape.items.type}\`:`,
+      ...shapeLines(shape.items, `${indent}  `),
+    ];
+  }
   if (shape.variants?.length) {
     return shape.variants.flatMap((variant) => [
       `${indent}- variant \`${variant.type}\`:`,
       ...shapeLines(variant, `${indent}  `),
     ]);
   }
-  return (shape.fields ?? []).map(
-    (field) => `${indent}- \`${field.name}${field.required ? "" : "?"}: ${field.type}\``,
-  );
+  return (shape.fields ?? []).flatMap((field) => [
+    `${indent}- \`${field.name}${field.required ? "" : "?"}: ${field.type}\``,
+    ...shapeLines(field.shape, `${indent}  `),
+  ]);
 }
 
 function propLines(props) {
@@ -410,7 +417,7 @@ export function formatComponentMarkdown(item, spec) {
     ...bulletSection("Avoid for", contract.avoidFor),
     ...bulletSection("Accessibility", contract.accessibility),
     ...publicApiSection(contract.publicApi),
-    ...bulletSection("Tokens", contract.tokens),
+    ...bulletSection("Tokens", contract.tokens, "No design tokens."),
     ...exampleSection(contract.examples),
     ...bulletSection("Common mistakes", contract.commonMistakes),
   ];

@@ -153,6 +153,44 @@
       {
         "name": "messages",
         "type": "readonly ThreadMessage[] | undefined",
+        "shape": {
+          "type": "readonly ThreadMessage[]",
+          "items": {
+            "type": "ThreadMessage",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "author",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "initials",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "time",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "body",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "own",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"1\", author: \"Grace Hopper\", initials: \"GH\", time: \"11:02\", body: \"The São Paulo edge is failing the second health check, so the rollout is holding at 10%.\" }, { id: \"2\", author: \"Ada Lovelace\", initials: \"AL\", time: \"11:06\", body: \"That matches the latency spike. I would rather roll back than push through it.\" }, { id: \"3\", author: \"Barbara Liskov\", initials: \"BL\", time: \"11:09\", body: \"Agreed. 4.11.6 is still warm in every region.\" }, ]"
       }

@@ -67,7 +67,7 @@ const layerPositionClasses = computed(() =>
 );
 const backdropClasses = computed(() => [
   layerPositionClasses.value,
-  "z-40 cursor-default bg-balsa-overlay backdrop-blur-sm",
+  "z-40 cursor-default bg-balsa-overlay backdrop-balsa",
 ]);
 
 const viewportClasses = computed(() => [
@@ -180,7 +180,7 @@ const panelLeaveActiveClass = computed(() =>
 );
 const closeButtonClasses = computed(() =>
   props.presentation === "fullscreen"
-    ? "absolute right-6 top-6 z-10 flex size-11 cursor-pointer items-center justify-center rounded-full border border-balsa-border bg-balsa-surface/70 text-balsa-surface-foreground shadow-balsa-surface backdrop-blur-xl transition-colors hover:bg-balsa-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
+    ? "absolute right-6 top-6 z-10 flex size-11 cursor-pointer items-center justify-center rounded-full border border-balsa-border bg-balsa-surface/70 text-balsa-surface-foreground shadow-balsa-surface backdrop-balsa transition-colors hover:bg-balsa-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
     : props.variant === "solid"
     ? "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-current/80 transition-colors hover:bg-current/10 hover:text-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
     : "absolute right-4 top-4 flex size-8 cursor-pointer items-center justify-center rounded-md text-balsa-muted-foreground transition-colors hover:bg-balsa-muted hover:text-balsa-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring",
@@ -245,6 +245,8 @@ function handleKeydown(event: KeyboardEvent): void {
 }
 
 function preventPageScroll(event: Event): void {
+  const target = event.target;
+  if (target instanceof Element && target.closest('[role="dialog"]')) return;
   event.preventDefault();
 }
 

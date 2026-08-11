@@ -55,7 +55,7 @@ const variantClasses: Readonly<Record<MenuVariant, string[]>> = {
   surface: ["border-balsa-border-strong bg-balsa-surface-elevated text-balsa-surface-elevated-foreground"],
   outline: ["border-balsa-border-strong bg-balsa-background text-balsa-foreground"],
   soft: ["border-balsa-border bg-balsa-muted text-balsa-foreground"],
-  glass: ["border-balsa-border/70 text-balsa-surface-foreground backdrop-blur-md"],
+  glass: ["border-balsa-border/70 text-balsa-surface-foreground backdrop-balsa"],
 };
 const colorClasses: Readonly<Record<ActionColor, Record<MenuVariant, string[]>>> = {
   neutral: {

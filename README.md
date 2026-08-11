@@ -11,7 +11,7 @@ npx balsa-ui@latest info input --markdown
 npx balsa-ui@latest add input button
 ```
 
-`init --palette` adds Balsa's explicit Dark and Light presets. Without it, components use the adaptive foundation and can coexist with an existing project palette.
+`init` creates a complete shadcn-vue-compatible `components.json` only when one is missing. `init` and `add` install required npm packages through the project's detected npm, pnpm, Yarn, or Bun manager while preserving existing configuration and source. `init --palette` adds Balsa's explicit Dark and Light presets; without it, components use the adaptive foundation and can coexist with an existing project palette.
 
 ## CLI reference
 
@@ -31,6 +31,8 @@ balsa theme apply --list
 balsa background create hero --preset obsidian-fold
 balsa palette create product --config PAYLOAD
 balsa design-system show
+balsa design-system apply --list
+balsa design-system apply press
 balsa version
 balsa help
 ```

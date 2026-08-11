@@ -2,12 +2,30 @@
 
 `.balsa/installed.json` records registry identity, installed version, source hash, and target paths. It is provenance data, not permission to overwrite source.
 
-A future updater must classify each file before proposing a change:
+`balsa diff` compares the originally installed source, the current registry source,
+and the application's editable copy before proposing a change:
 
-- **Unmodified:** current hash equals the installed hash; an exact or three-way update may be offered.
-- **Locally customized:** current hash differs; preserve it and generate a diff or merge proposal.
-- **Breaking registry change:** require migration notes and explicit confirmation regardless of local state.
-- **Token migration:** report semantic token changes separately from component code.
-- **Unknown provenance:** never infer ownership or overwrite; allow adoption only after explicit review.
+- **Unchanged:** neither the registry nor the application copy changed.
+- **Upstream:** the registry changed and the application copy did not.
+- **Local:** the application copy changed and the registry did not.
+- **Diverged:** both copies changed from the installed source.
+- **Missing:** a recorded application file no longer exists.
 
-The current installer has no automatic updater. It refuses differing existing files unless `--force` is deliberately supplied. Generated starter and smoke-fixture synchronization use `--force` only because those repository copies are declared generated artifacts.
+Inspect one item or the complete installation without writing source:
+
+```sh
+npx balsa-ui@latest diff
+npx balsa-ui@latest diff button
+```
+
+`balsa update` applies upstream-only changes and restores missing recorded files. It
+preserves local and diverged files, reporting each skipped path. Use `--force` only
+after reviewing the diff and explicitly choosing to replace application-owned source:
+
+```sh
+npx balsa-ui@latest update button
+npx balsa-ui@latest update button --force
+```
+
+Unknown provenance is never inferred. Install or adopt source deliberately before
+asking the lifecycle commands to manage it.

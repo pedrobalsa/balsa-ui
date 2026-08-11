@@ -167,6 +167,34 @@
       {
         "name": "items",
         "type": "readonly NotificationPreference[] | undefined",
+        "shape": {
+          "type": "readonly NotificationPreference[]",
+          "items": {
+            "type": "NotificationPreference",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "enabled",
+                "type": "boolean",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"failures\", label: \"Deploy failures\", description: \"Paged the moment a production build fails.\", enabled: true }, { id: \"quota\", label: \"Quota warnings\", description: \"Sent once usage passes 80% of the plan.\", enabled: true }, { id: \"mentions\", label: \"Mentions\", description: \"When someone names you in a review comment.\", enabled: true }, { id: \"digest\", label: \"Weekly digest\", description: \"One summary of everything, Monday at 09:00.\", enabled: false }, { id: \"budget\", label: \"Budget alerts\", description: \"When projected spend passes the monthly cap.\", enabled: true }, ]"
       }

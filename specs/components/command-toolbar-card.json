@@ -168,6 +168,44 @@
       {
         "name": "actions",
         "type": "readonly ToolbarAction[] | undefined",
+        "shape": {
+          "type": "readonly ToolbarAction[]",
+          "items": {
+            "type": "ToolbarAction",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon",
+                "required": true
+              },
+              {
+                "name": "shortcut",
+                "type": "readonly string[] | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"deploy\", label: \"Deploy Atlas\", description: \"Ship the current commit to production.\", icon: Rocket, shortcut: [\"Ctrl\", \"D\"] }, { id: \"logs\", label: \"Open logs\", description: \"Stream the last hour of output.\", icon: ScrollText, shortcut: [\"L\"] }, { id: \"rollback\", label: \"Roll back\", description: \"Return production to the previous build.\", icon: Undo2, shortcut: [\"Ctrl\", \"Z\"] }, { id: \"environment\", label: \"New environment\", description: \"Branch a preview from production.\", icon: Layers, shortcut: [\"E\"] }, { id: \"invite\", label: \"Invite collaborator\", description: \"Send an invitation by email.\", icon: UserPlus, shortcut: [\"I\"] }, { id: \"key\", label: \"Rotate deploy key\", description: \"Replace the key every runner uses.\", icon: KeyRound, shortcut: [\"Ctrl\", \"R\"] }, { id: \"search\", label: \"Search everything\", description: \"Projects, members, and settings.\", icon: Search, shortcut: [\"Ctrl\", \"K\"] }, { id: \"export\", label: \"Export audit log\", description: \"Download the last 90 days as CSV.\", icon: Download, shortcut: [\"Ctrl\", \"E\"] }, ]"
       }

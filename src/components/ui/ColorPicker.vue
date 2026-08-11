@@ -378,7 +378,7 @@ const triggerVariantClasses: Readonly<Record<FieldVariant, string>> = {
   outline: "border-balsa-border-strong",
   surface: "border-balsa-input-border ring-1 ring-balsa-input",
   soft: "border-transparent ring-2 ring-balsa-muted",
-  glass: "border-balsa-border/70 ring-1 ring-balsa-border/50 backdrop-blur-md",
+  glass: "border-balsa-border/70 ring-1 ring-balsa-border/50 backdrop-balsa",
 };
 const outsideLabelClasses = computed(() =>
   props.type === "palette"

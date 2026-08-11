@@ -113,6 +113,34 @@
       {
         "name": "options",
         "type": "readonly RadioGroupOption[]",
+        "shape": {
+          "type": "readonly RadioGroupOption[]",
+          "items": {
+            "type": "RadioGroupOption",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

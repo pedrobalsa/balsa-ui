@@ -1,9 +1,13 @@
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   aliasToDirectory,
   builtinRegistries,
+  createProjectConfiguration,
   createResolver,
+  ensureProjectConfiguration,
   findTargetCollisions,
   loadProjectConfiguration,
   parseItemReference,
@@ -13,7 +17,7 @@ import {
 
 const configuration = {
   style: "new-york",
-  aliases: { ui: "@/components/ui", components: "@/components", lib: "@/lib", hooks: "@/composables" },
+  aliases: { ui: "@/components/ui", components: "@/components", lib: "@/lib", composables: "@/composables" },
   registries: { ...builtinRegistries, "@acme": "https://acme.test/r/{name}.json" },
 };
 
@@ -190,6 +194,49 @@ describe("catalog audit", () => {
 });
 
 describe("project configuration", () => {
+  it("builds one complete shadcn-vue configuration around the detected stylesheet", async () => {
+    const created = await createProjectConfiguration({ stylesheet: "src/assets/main.css" });
+    expect(created).toEqual({
+      $schema: "https://shadcn-vue.com/schema.json",
+      style: "new-york",
+      typescript: true,
+      tailwind: {
+        config: "",
+        css: "src/assets/main.css",
+        baseColor: "neutral",
+        cssVariables: true,
+        prefix: "",
+      },
+      iconLibrary: "lucide",
+      aliases: {
+        components: "@/components",
+        ui: "@/components/ui",
+        lib: "@/lib",
+        utils: "@/lib/utils",
+        composables: "@/composables",
+      },
+      registries: builtinRegistries,
+    });
+  });
+
+  it("creates components.json once and never rewrites customized configuration", async () => {
+    const target = await mkdtemp(resolve(tmpdir(), "balsa-components-config-"));
+    try {
+      const first = await ensureProjectConfiguration(target, { stylesheet: "src/style.css" });
+      expect(first.created).toBe(true);
+      expect(JSON.parse(await readFile(resolve(target, "components.json"), "utf8")))
+        .toMatchObject({ tailwind: { css: "src/style.css" } });
+
+      const customized = '{\n    "style": "reka-mira",\n    "aliases": { "components": "@/product" }\n}\n';
+      await writeFile(resolve(target, "components.json"), customized, "utf8");
+      const second = await ensureProjectConfiguration(target);
+      expect(second.created).toBe(false);
+      expect(await readFile(resolve(target, "components.json"), "utf8")).toBe(customized);
+    } finally {
+      await rm(target, { recursive: true, force: true });
+    }
+  });
+
   it("merges declared registries over the built-in namespaces", async () => {
     const loaded = await loadProjectConfiguration("starters/vue");
     expect(loaded.registries["@balsa"]).toContain("balsa-ui.com");

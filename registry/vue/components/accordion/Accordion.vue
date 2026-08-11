@@ -63,7 +63,7 @@ const variantClasses: Readonly<Record<CollapsibleVariant, string[]>> = {
     "border-balsa-border/70",
     "bg-balsa-surface/60",
     "text-balsa-foreground",
-    "backdrop-blur-md",
+    "backdrop-balsa",
   ],
 };
 const rootClasses = computed(() =>

@@ -167,6 +167,34 @@
       {
         "name": "items",
         "type": "readonly OrderLine[] | undefined",
+        "shape": {
+          "type": "readonly OrderLine[]",
+          "items": {
+            "type": "OrderLine",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "detail",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "amount",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"pro\", label: \"Pro workspace\", detail: \"12 members\", amount: \"$240.00\" }, { id: \"storage\", label: \"Additional storage\", detail: \"500 GB\", amount: \"$35.00\" }, { id: \"regions\", label: \"Extra regions\", detail: \"3 beyond the plan\", amount: \"$45.00\" }, { id: \"support\", label: \"Priority support\", detail: \"4 hour response\", amount: \"$60.00\" }, { id: \"credit\", label: \"Annual commitment\", detail: \"-10% for 12 months\", amount: \"-$38.00\" }, ]"
       },

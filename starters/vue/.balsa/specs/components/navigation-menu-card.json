@@ -176,6 +176,24 @@
       {
         "name": "groups",
         "type": "readonly NavigationMenuGroup[] | undefined",
+        "shape": {
+          "type": "readonly NavigationMenuGroup[]",
+          "items": {
+            "type": "NavigationMenuGroup",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly NavigationMenuItem[]",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { label: \"Overview\", items: [{ id: \"dashboard\", label: \"Dashboard\", icon: LayoutDashboard }, { id: \"analytics\", label: \"Analytics\", icon: ChartLine }] }, { label: \"Build\", items: [{ id: \"projects\", label: \"Projects\", icon: Boxes }, { id: \"deployments\", label: \"Deployments\", icon: Rocket }, { id: \"environments\", label: \"Environments\", icon: Layers }] }, { label: \"Operate\", items: [{ id: \"activity\", label: \"Activity\", icon: ArrowLeftRight }, { id: \"alerts\", label: \"Alerts\", icon: Bell }, { id: \"logs\", label: \"Logs\", icon: ScrollText }] }, { label: \"Account\", items: [{ id: \"profile\", label: \"Profile\", icon: User }, { id: \"security\", label: \"Security\", icon: Shield }, { id: \"billing\", label: \"Billing\", icon: Receipt }] }, ]"
       }

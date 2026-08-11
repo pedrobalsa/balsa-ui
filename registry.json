@@ -215,6 +215,35 @@
       }
     },
     {
+      "name": "analytics",
+      "type": "registry:ui",
+      "title": "Analytics",
+      "description": "Provider-neutral interaction tracking for every data-balsa component, with consent gating, typed custom events, and adapters for GA4, Meta Pixel, LinkedIn Insight Tag, or application-owned destinations.",
+      "files": [
+        {
+          "path": "src/components/ui/BalsaAnalyticsProvider.vue",
+          "type": "registry:ui",
+          "target": "src/components/ui/BalsaAnalyticsProvider.vue"
+        },
+        {
+          "path": "src/components/ui/analytics.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/analytics.ts"
+        }
+      ],
+      "dependencies": [
+        "vue"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/analytics.json",
+        "documentation": "docs/components/analytics.md",
+        "example": "docs/components/analytics.md",
+        "component": "src/components/ui/BalsaAnalyticsProvider.vue"
+      }
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -1038,7 +1067,7 @@
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",
-      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and scroll locking.",
+      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and background scroll locking that preserves scrolling inside the dialog.",
       "files": [
         {
           "path": "src/components/ui/Modal.vue",
@@ -1136,6 +1165,11 @@
           "path": "src/components/ui/Breadcrumb.vue",
           "type": "registry:ui",
           "target": "src/components/ui/Breadcrumb.vue"
+        },
+        {
+          "path": "src/components/ui/navigation.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/navigation.ts"
         }
       ],
       "dependencies": [
@@ -1180,6 +1214,11 @@
           "path": "src/components/ui/classes.ts",
           "type": "registry:lib",
           "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/navigation.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/navigation.ts"
         }
       ],
       "dependencies": [
@@ -2606,7 +2645,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "Keyboard-accessible local panel switching with surface, outline, soft, and glass materials; segmented, square-underline, pill, and icon-tile layouts; and an optional bare content panel.",
+      "description": "Keyboard-accessible local and filter-panel switching with single-axis responsive overflow, inert unslotted panels, four materials, and segmented, underline, pill, or tile layouts.",
       "files": [
         {
           "path": "src/components/ui/Tabs.vue",

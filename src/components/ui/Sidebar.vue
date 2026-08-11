@@ -70,7 +70,7 @@ const variantClasses: Readonly<Record<SidebarVariant, string[]>> = {
   surface: ["border-balsa-border", "bg-balsa-surface", "text-balsa-foreground"],
   outline: ["border-balsa-border-strong", "bg-transparent", "text-balsa-foreground"],
   soft: ["border-transparent", "bg-balsa-muted", "text-balsa-foreground"],
-  glass: ["border-balsa-border/60", "bg-balsa-surface/60", "text-balsa-foreground", "backdrop-blur-md"],
+  glass: ["border-balsa-border/60", "bg-balsa-surface/60", "text-balsa-foreground", "backdrop-balsa"],
 };
 const rootAttrs = computed(() => withoutClassAttribute(attrs));
 const classes = computed(() =>

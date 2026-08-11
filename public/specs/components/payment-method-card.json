@@ -167,6 +167,34 @@
       {
         "name": "methods",
         "type": "readonly RadioGroupOption[] | undefined",
+        "shape": {
+          "type": "readonly RadioGroupOption[]",
+          "items": {
+            "type": "RadioGroupOption",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { label: \"Card on file\", value: \"card\", description: \"Charged on the first of each month\" }, { label: \"Invoice\", value: \"invoice\", description: \"Net 30, sent to billing@example.com\" }, { label: \"Prepaid credits\", value: \"credits\", description: \"4,200 credits remaining\" }, ]"
       }

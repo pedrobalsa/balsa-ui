@@ -5,7 +5,7 @@
   "category": "component",
   "classification": "balsa-addition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Navigate to another location with consistent Balsa styling and safe external-link behavior.",
   "useFor": [
     "Page navigation",
@@ -34,7 +34,8 @@
   "accessibility": [
     "Uses native anchor semantics.",
     "External links receive a new browsing context and noreferrer protection.",
-    "Icon-only usage requires the label prop."
+    "Icon-only usage requires the label prop.",
+    "The navigate event exposes the original uncancelled MouseEvent so router integration can preserve modifier clicks and native fallback."
   ],
   "tokens": [
     "--balsa-color-accent",
@@ -211,7 +212,12 @@
         "required": false
       }
     ],
-    "events": [],
+    "events": [
+      {
+        "name": "navigate",
+        "type": "[item: NavigationLink, event: MouseEvent]"
+      }
+    ],
     "slots": [
       {
         "name": "default",

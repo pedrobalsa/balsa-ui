@@ -52,7 +52,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  navigate: [item: NavigationLink];
+  navigate: [item: NavigationLink, event: MouseEvent];
 }>();
 const slots = useSlots();
 
@@ -60,6 +60,7 @@ const activeItem = ref<NavigationGroup>();
 const mobileOpen = ref(false);
 const expandedMobileItem = ref<string>();
 const isNavHidden = ref(false);
+const hasReturnedFromScroll = ref(false);
 const lastScrollY = ref(0);
 // Declared and assigned through the same bare setTimeout, so the two agree
 // whichever one is in scope. `window` is `Window & typeof globalThis`, so
@@ -111,10 +112,10 @@ const floatingLayoutClasses: Readonly<Record<NavbarFloatingLayout, string[]>> = 
   container: ["w-full"],
 };
 const variantClasses: Readonly<Record<NavbarVariant, string[]>> = {
-  surface: ["bg-balsa-background/90", "backdrop-blur-xl"],
-  outline: ["bg-balsa-background/80", "backdrop-blur-xl"],
-  soft: ["backdrop-blur-xl"],
-  glass: ["backdrop-blur-md", "shadow-balsa-control"],
+  surface: ["bg-balsa-background/90", "backdrop-balsa"],
+  outline: ["bg-balsa-background/80", "backdrop-balsa"],
+  soft: ["backdrop-balsa"],
+  glass: ["backdrop-balsa", "shadow-balsa-control"],
 };
 const colorClasses: Readonly<Record<ActionColor, Record<NavbarVariant, string[]>>> = {
   neutral: {
@@ -145,10 +146,10 @@ const behaviorClasses: Readonly<Record<NavbarBehavior, string[]>> = {
   reveal: ["fixed top-0"],
 };
 const mobileVariantClasses: Readonly<Record<NavbarVariant, string[]>> = {
-  surface: ["bg-balsa-background/90", "text-balsa-foreground", "backdrop-blur-xl"],
-  outline: ["bg-balsa-background/80", "text-balsa-foreground", "backdrop-blur-xl"],
-  soft: ["text-balsa-foreground", "backdrop-blur-xl"],
-  glass: ["text-balsa-surface-elevated-foreground", "backdrop-blur-md"],
+  surface: ["bg-balsa-background/90", "text-balsa-foreground", "backdrop-balsa"],
+  outline: ["bg-balsa-background/80", "text-balsa-foreground", "backdrop-balsa"],
+  soft: ["text-balsa-foreground", "backdrop-balsa"],
+  glass: ["text-balsa-surface-elevated-foreground", "backdrop-balsa"],
 };
 const itemsAlignmentClasses: Readonly<Record<NavbarItemsAlignment, string>> = {
   left: "justify-start",
@@ -167,7 +168,21 @@ const navigationLayoutClasses = computed(() =>
       // region rather than the page's centred container.
       : regionConfined.value
         ? "relative flex h-26 w-full items-center px-balsa-lg sm:px-6 lg:w-[var(--balsa-navbar-region,100%)] lg:px-8"
-        : "site-container relative flex h-14 items-center gap-balsa-lg",
+        /*
+         * Spelled out rather than borrowing `.site-container`.
+         *
+         * That class is defined in this repository's own `index.css`, which no
+         * consumer receives — they install the component and get the four Balsa
+         * stylesheets. So every installed navbar resolved an undefined class and
+         * silently lost centring, max width and padding: the bar sat flush left
+         * while the page's own container stayed centred, in every new project.
+         *
+         * The paddings are the token equivalents of what the class applied
+         * (16/24/32px at the default unit), so they now follow the spacing
+         * dimension instead of being frozen at the sizes the website happened to
+         * use.
+         */
+        : "relative mx-auto flex h-14 w-full max-w-7xl items-center gap-balsa-lg px-balsa-lg sm:px-balsa-2xl lg:px-balsa-3xl",
 );
 const materialClasses = computed(() => [
   ...variantClasses[resolvedVariant.value],
@@ -210,7 +225,13 @@ const floatingStyle = computed<Record<string, string> | undefined>(() =>
 );
 const navigationStyle = computed<Record<string, string> | undefined>(() => {
   const style: Record<string, string> = {};
-  if (props.contentMaxWidth) style.maxWidth = props.contentMaxWidth;
+  if (props.contentMaxWidth) {
+    style.maxWidth = props.contentMaxWidth;
+    // Constraining a width without centring it just moves the right edge. A
+    // caller passing `contentMaxWidth` is lining the bar up with their own
+    // container, which is centred.
+    style.marginInline = "auto";
+  }
   if (props.contentRegion) style["--balsa-navbar-region"] = props.contentRegion;
   return Object.keys(style).length ? style : undefined;
 });
@@ -249,6 +270,18 @@ const containerClasses = computed(() => [
  * the bar keeps its geometry and drops its fill.
  */
 const barMaterialVisible = computed(() => resolvedType.value !== "minimal");
+/**
+ * A minimal reveal header needs contrast only after it returns over a moving
+ * page field, not at the page origin. This follows the documentation shell's
+ * 6rem canvas edge fade and Tailwind's documented gradient-stop utilities:
+ * https://tailwindcss.com/docs/background-image#setting-gradient-color-stops
+ */
+const minimalRevealFadeVisible = computed(() =>
+  resolvedType.value === "minimal"
+  && resolvedBehavior.value === "reveal"
+  && hasReturnedFromScroll.value
+  && !isNavHidden.value,
+);
 const surfaceClasses = computed(() => [
   "pointer-events-none absolute z-0",
   ...surfaceTypeClasses[resolvedType.value],
@@ -287,6 +320,7 @@ function closeDesktopItem(): void {
 function toggleMobileMenu(): void {
   mobileOpen.value = !mobileOpen.value;
   isNavHidden.value = false;
+  hasReturnedFromScroll.value = false;
   if (!mobileOpen.value) expandedMobileItem.value = undefined;
 }
 
@@ -308,8 +342,8 @@ function mobileIcon(item: NavigationGroup) {
   return expandedMobileItem.value === item.link ? ChevronUp : ChevronDown;
 }
 
-function navigate(item: NavigationLink): void {
-  emit("navigate", item);
+function navigate(item: NavigationLink, event: MouseEvent): void {
+  emit("navigate", item, event);
   closeDesktopItem();
   mobileOpen.value = false;
   expandedMobileItem.value = undefined;
@@ -320,10 +354,13 @@ function updateRevealOnScroll(): void {
   const scrollDelta = scrollY - lastScrollY.value;
   if (resolvedBehavior.value !== "reveal" || mobileOpen.value) {
     isNavHidden.value = false;
+    hasReturnedFromScroll.value = false;
   } else if (scrollY <= 72 || scrollDelta < -8) {
     isNavHidden.value = false;
+    hasReturnedFromScroll.value = scrollY > 72;
   } else if (scrollDelta > 8) {
     isNavHidden.value = true;
+    hasReturnedFromScroll.value = false;
     closeDesktopItem();
   }
   lastScrollY.value = scrollY;
@@ -331,6 +368,7 @@ function updateRevealOnScroll(): void {
 
 watch(resolvedBehavior, () => {
   isNavHidden.value = false;
+  hasReturnedFromScroll.value = false;
   lastScrollY.value = window.scrollY;
 });
 
@@ -372,16 +410,22 @@ onBeforeUnmount(() => {
       :data-color="resolvedColor"
       :class="surfaceClasses"
     />
+    <div
+      v-if="minimalRevealFadeVisible"
+      aria-hidden="true"
+      data-balsa="navbar-reveal-fade"
+      class="pointer-events-none absolute inset-x-0 top-0 z-0 h-24 bg-gradient-to-b from-balsa-background via-balsa-background/85 to-transparent"
+    />
     <nav aria-label="Main navigation" :class="navigationLayoutClasses" :style="navigationStyle">
       <div :class="contentColumnClasses">
         <a
           :href="props.logo.href"
           :class="brandLinkClasses"
           :aria-label="props.logo.alt"
-          @click="navigate({ title: props.logo.alt, link: props.logo.href })"
+          @click="navigate({ title: props.logo.alt, link: props.logo.href }, $event)"
         >
           <span v-if="props.logo.title" :class="brandTitleClasses">{{ props.logo.title }}</span>
-          <img v-else :src="props.logo.src" alt="" class="h-9 w-full object-contain object-left" />
+          <img v-else :src="props.logo.src" alt="" class="h-8 w-full object-contain object-left" />
         </a>
 
         <ul :class="desktopItemsClasses">
@@ -409,7 +453,7 @@ onBeforeUnmount(() => {
                 <a
                   :href="link.link"
                   class="group flex items-start gap-balsa-md rounded-lg px-balsa-md py-balsa-sm text-inherit no-underline transition-colors hover:bg-balsa-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
-                  @click="navigate(link)"
+                  @click="navigate(link, $event)"
                 >
                   <span class="min-w-0 flex-1">
                     <span class="block text-sm font-medium">{{ link.title }}</span>
@@ -447,7 +491,7 @@ onBeforeUnmount(() => {
               <a
                 :href="item.link"
                 class="font-balsa-title text-lg font-medium text-balsa-foreground no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
-                @click="navigate(item)"
+                @click="navigate(item, $event)"
               >
                 {{ item.title }}
               </a>
@@ -468,7 +512,7 @@ onBeforeUnmount(() => {
                   <a
                     :href="link.link"
                     class="text-sm font-medium text-balsa-muted-foreground no-underline hover:text-balsa-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-balsa-focus-ring"
-                    @click="navigate(link)"
+                    @click="navigate(link, $event)"
                   >
                     {{ link.title }}
                   </a>

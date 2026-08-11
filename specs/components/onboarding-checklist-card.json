@@ -167,6 +167,34 @@
       {
         "name": "tasks",
         "type": "readonly OnboardingTask[] | undefined",
+        "shape": {
+          "type": "readonly OnboardingTask[]",
+          "items": {
+            "type": "OnboardingTask",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "complete",
+                "type": "boolean",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"profile\", label: \"Complete profile\", description: \"Add a name and workspace image.\", complete: true }, { id: \"team\", label: \"Invite your team\", description: \"Bring collaborators into the workspace.\", complete: true }, { id: \"project\", label: \"Create first project\", description: \"Start with a production or preview project.\", complete: false }, { id: \"domain\", label: \"Connect a domain\", description: \"Publish with your own address.\", complete: false }, { id: \"environment\", label: \"Add a preview environment\", description: \"Review changes before they reach production.\", complete: false }, { id: \"alerts\", label: \"Choose where alerts go\", description: \"Send deploy failures to the right people.\", complete: false }, ]"
       }

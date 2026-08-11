@@ -1,6 +1,9 @@
 import {
+  GRADIENT_BACKGROUND_EFFECTS,
+  GRADIENT_BACKGROUND_PATTERNS,
   getGradientBackgroundPreset,
   gradientBackgroundPatternDefaults,
+  gradientBackgroundPresetNames,
   normalizeGradientBackgroundConfig,
   parseGradientBackgroundConfig,
   randomGradientBackgroundSeed,
@@ -8,6 +11,12 @@ import {
   type BalsaBackgroundConfig,
   type GradientBackgroundPresetName,
 } from "../components/ui/gradient-background";
+import {
+  directionBlock,
+  projectContextInstruction,
+  type AgentCreationSource,
+  type AgentProjectContext,
+} from "../agent/studio-workflows";
 
 export interface GradientExportSize {
   label: string;
@@ -201,19 +210,21 @@ export function encodeGradientInlineConfig(
 
 export function buildGradientCliCommand(
   value: BalsaBackgroundConfig,
+  name = "studio-background",
 ): string {
-  return `npx balsa-ui@latest background create studio-background --config ${encodeGradientInlineConfig(value)}`;
+  return `npx balsa-ui@latest background create ${name} --config ${encodeGradientInlineConfig(value)}`;
 }
 
-export function buildGradientCliUsage(): string {
+export function buildGradientCliUsage(name = "studio-background"): string {
+  const identifier = name.replace(/-([a-z0-9])/g, (_, character: string) => character.toUpperCase());
   return `<script setup lang="ts">
 import GradientBackground from "@/components/ui/GradientBackground.vue";
-import { studioBackground } from "@/backgrounds/studio-background";
+import { ${identifier} } from "@/backgrounds/${name}";
 </script>
 
 <template>
   <section class="relative isolate min-h-screen overflow-hidden">
-    <GradientBackground :config="studioBackground" />
+    <GradientBackground :config="${identifier}" />
     <div class="relative z-10">
       <!-- Your content -->
     </div>
@@ -239,6 +250,54 @@ Then import GradientBackground from "@/components/ui/GradientBackground.vue". Ke
 \`\`\`json
 ${serialized}
 \`\`\``;
+}
+
+export function buildGradientProjectPrompt(
+  value: BalsaBackgroundConfig,
+  name: string,
+  context: AgentProjectContext,
+): string {
+  return `${projectContextInstruction(context, "gradient background")}
+
+Use this exact Balsa UI procedural background; do not rewrite its shader or approximate its values.
+
+Run this command from the Vue project root:
+
+\`\`\`sh
+${buildGradientCliCommand(value, name)}
+\`\`\`
+
+Then import GradientBackground from "@/components/ui/GradientBackground.vue" and the generated configuration from "@/backgrounds/${name}". Keep the canvas decorative and pointer-transparent, place application content above it, and preserve reduced-motion behavior. Review differing generated files before replacement and preserve unrelated project source.
+
+${buildGradientCliUsage(name)}`;
+}
+
+/** Prompt an agent for the exact versioned payload Gradient Studio consumes. */
+export function buildGradientCreationPrompt(
+  source: AgentCreationSource,
+  direction: string,
+): string {
+  const example = serializeGradientBackgroundConfig(
+    getGradientBackgroundPreset("obsidian-fold"),
+  );
+  const imageInstruction = source === "image"
+    ? "Extract the image's color relationships, flow direction, repetition, texture, and contrast. Do not reproduce logos, text, people, or copyrighted illustration details; map the visual character to Balsa's procedural controls."
+    : "Translate the direction into a reusable procedural field, not a one-off illustration.";
+
+  return `Create a Balsa UI GradientBackground configuration that I can paste directly into Gradient Studio.
+
+Read the official agent instructions at https://balsa-ui.com/llms.txt and the GradientBackground reference at https://balsa-ui.com/docs/components/gradient-background before choosing values. ${imageInstruction}
+
+${directionBlock(source, direction, "gradient background")}
+
+Return only one complete JSON object, with no Markdown fence, commentary, CSS, shader code, or Vue source. Keep schemaVersion 3, use two to six six-digit hexadecimal colors, and preserve every field in the example. Choose a published preset as the fallback vocabulary, then tune the exact controls rather than inventing fields.
+
+Published presets: ${gradientBackgroundPresetNames.join(", ")}
+Patterns: ${GRADIENT_BACKGROUND_PATTERNS.join(" | ")}
+Effects: ${GRADIENT_BACKGROUND_EFFECTS.join(" | ")}
+
+Use this exact complete object shape:
+${example}`;
 }
 
 export function buildGradientTypedConfiguration(

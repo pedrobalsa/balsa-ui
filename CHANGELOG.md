@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0
+
+- Released `balsa-ui@0.6.0`. There are no breaking component or configuration
+  changes in this release: no existing prop, event, slot, model, item name, or
+  configuration field was removed or renamed. The release adds the optional,
+  consent-gated Analytics item; completes the unified visual Library and its
+  implementation comparisons; makes CLI onboarding and named design-system
+  application self-contained; expands the certified shadcn-vue showcase wave;
+  and refines Design Studio, Gradient Studio, navigation, overlays, and responsive
+  Tabs behavior. Analytics starts at item version 0.1.0. Breadcrumb, Button,
+  Footer, Link, Modal, Navbar, and Slider move to 0.1.1 for additive contracts or
+  behavior fixes, while Tabs moves to 0.1.2; every other retained item version is
+  unchanged.
+
 ## 0.5.0
 
 - Released `balsa-ui@0.5.0`. Breaking: the theme recipe option formerly named `density` is now `size`, because control size and surrounding spacing are independent dimensions. Rename `options.density` to `options.size` in typed `defineTheme` calls and authored theme modules. Schema-one theme/design-system payloads and CLI input still accept `density` and normalize it to `size`; the `density` props on Table and DataTable and the legacy `--balsa-spacing-density-*` tokens did not move. The composition catalog also removes `account-security-card`, `action-list-card`, `appointment-card`, `balance-summary-card`, `empty-state-card`, `file-upload-card`, `invite-members-card`, `payout-method-card`, `savings-goal-card`, `schedule-card`, `transaction-list-card`, `transfer-funds-card`, and `usage-summary-card` after a provenance audit found them derivative of an upstream gallery. They have no compatibility aliases: keep an already installed local copy if it is intentionally customized, or use `balsa search` to choose and install one of the rebuilt production patterns. Finally, `search --json` now returns ranked Balsa and certified-upstream results with `kind`, `score`, and `matched`; machine consumers that require only Balsa entries should filter out `kind: "upstream"` rather than relying on the previous result set or order.

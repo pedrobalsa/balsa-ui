@@ -244,8 +244,8 @@
         "type": "AlertInitialFocus | undefined",
         "values": [
           "close",
-          "dialog",
-          "action"
+          "action",
+          "dialog"
         ],
         "required": false,
         "default": "\"action\""

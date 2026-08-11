@@ -9,7 +9,7 @@
     "name": "dialog"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Temporarily focus attention on a short decision, task, or viewport simulation above the current page.",
   "useFor": [
     "Confirmations",
@@ -48,7 +48,7 @@
   "accessibility": [
     "A title is required and labels the dialog.",
     "Escape and backdrop click close the modal.",
-    "Open full-page modals lock page scrolling.",
+    "Open full-page modals lock background scrolling while preserving wheel and touch scrolling inside the dialog.",
     "Keyboard focus is trapped while open and returns to the triggering element after close."
   ],
   "tokens": [

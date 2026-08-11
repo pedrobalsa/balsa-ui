@@ -1121,9 +1121,27 @@ function typographyTokens(option: ThemeTypographyOption): NonNullable<ThemeToken
     };
   }
   if (option === "editorial") {
+    const serifFonts = ["Georgia", "Cambria", "Times New Roman", "serif"];
     return {
-      titleFonts: ["Georgia", "Cambria", "Times New Roman", "serif"],
-      bodyFonts: systemFonts,
+      titleFonts: serifFonts,
+      /*
+       * Body copy is set in the serif, which is the whole of what the word
+       * editorial means: a newspaper sets its *prose* in a serif, and the
+       * headline face follows from that rather than the other way round.
+       *
+       * This read `systemFonts` until an editorial application was built on it,
+       * and the only route to serif prose was applying `font-balsa-title` to
+       * paragraphs — using the title token for body text because nothing else
+       * existed. `mono` and `system` both set all three faces; this was the one
+       * option that did not follow its own name.
+       */
+      bodyFonts: serifFonts,
+      /*
+       * Controls stay in the sans deliberately, and this is the one asymmetry
+       * worth keeping. Serif for reading and sans for interface chrome is the
+       * conventional editorial pairing: a serif gives up too much at the small
+       * sizes and tight measures a label or a button occupies.
+       */
       controlFonts: systemFonts,
       titleLetterSpacing: -0.2,
       titleTextTransform: "none",

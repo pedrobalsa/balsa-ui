@@ -454,7 +454,7 @@ onBeforeUnmount(() => {
       shadow="lg"
       :prefix-icon="Maximize"
       :aria-label="props.fullscreenLabel"
-      class="absolute bottom-3 right-3 border border-balsa-border bg-balsa-background/90 text-balsa-foreground shadow-balsa-lg backdrop-blur-xl hover:bg-balsa-background active:bg-balsa-muted"
+      class="absolute bottom-3 right-3 border border-balsa-border bg-balsa-background/90 text-balsa-foreground shadow-balsa-lg backdrop-balsa hover:bg-balsa-background active:bg-balsa-muted"
       @click="openFullscreen"
     />
     <Teleport v-if="teleportTarget" :to="teleportTarget">

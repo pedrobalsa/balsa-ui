@@ -153,6 +153,39 @@
       {
         "name": "regions",
         "type": "readonly ServiceStatus[] | undefined",
+        "shape": {
+          "type": "readonly ServiceStatus[]",
+          "items": {
+            "type": "ServiceStatus",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "region",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "state",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "latency",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "CompositionPaletteColor | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"iad\", region: \"Washington\", state: \"Healthy\", latency: \"18 ms\", color: \"primary\" }, { id: \"fra\", region: \"Frankfurt\", state: \"Healthy\", latency: \"24 ms\", color: \"primary\" }, { id: \"gru\", region: \"São Paulo\", state: \"Degraded\", latency: \"96 ms\", color: \"secondary\" }, { id: \"syd\", region: \"Sydney\", state: \"Healthy\", latency: \"41 ms\", color: \"primary\" }, ]"
       }

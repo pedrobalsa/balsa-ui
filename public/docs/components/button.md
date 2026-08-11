@@ -9,3 +9,5 @@ Use `shape="fab"` for an icon-only floating action. Its `sm`, `md`, `lg`, and `x
 Use `prefixIcon` for a leading `IconComponent` and `suffixIcon` for a trailing one. Import individual symbols from `@lucide/vue`; the playground's generated source binds only the selected component.
 
 Consumer classes are merged after Button defaults, so normal width, height, padding, typography, radius, and layout utilities can replace preset values. Use `:size="null"` when supplying a complete custom size; consumer `style` attributes are forwarded to the native button.
+
+When the optional Analytics item is installed, `analytics-event="cta"` emits a named `cta` event in addition to the automatic `balsa_interaction`. Without Analytics the prop only publishes the inert provider-neutral `data-balsa-track` hook; Button never imports or initializes a vendor SDK.

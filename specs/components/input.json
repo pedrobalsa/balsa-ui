@@ -53,7 +53,8 @@
   "accessibility": [
     "Always provide a unique id and visible label.",
     "Invalid feedback exposes aria-invalid and role alert.",
-    "Loading disables the native control and exposes aria-busy."
+    "Loading disables the native control and exposes aria-busy.",
+    "Use novalidate on the owning form when submit-driven application code controls status feedback; native required validation otherwise runs before submit."
   ],
   "tokens": [
     "--balsa-color-input",
@@ -69,7 +70,8 @@
   "commonMistakes": [
     "Omitting the id or label.",
     "Using placeholder text as the only label.",
-    "Using error color without a text message."
+    "Using error color without a text message.",
+    "Expecting a submit handler to set status for an empty required field without disabling interactive validation on the owning form."
   ],
   "examples": [
     {

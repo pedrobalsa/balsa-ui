@@ -24,6 +24,7 @@ const rawProps = withDefaults(
     rounded?: Rounded;
     disabled?: boolean;
     required?: boolean;
+    showLabel?: boolean;
     showValue?: boolean;
     name?: string;
     hint?: string;
@@ -38,6 +39,7 @@ const rawProps = withDefaults(
     orientation: "horizontal",
     disabled: false,
     required: false,
+    showLabel: true,
     showValue: true,
   },
 );
@@ -72,6 +74,18 @@ const percentages = computed<[number, number]>(() => [
   percentage(values.value[1]),
 ]);
 const hintId = computed(() => props.hint ? `${props.id}-hint` : undefined);
+const headerClasses = computed(() => [
+  "mb-balsa-xs flex items-center gap-balsa-lg",
+  props.showLabel ? "justify-between" : "justify-end",
+]);
+const headerLabelClasses = computed(() =>
+  props.showLabel ? "text-sm font-medium text-balsa-foreground" : "sr-only",
+);
+const standaloneLabelClasses = computed(() =>
+  props.showLabel
+    ? "mb-balsa-xs block text-sm font-medium text-balsa-foreground"
+    : "sr-only",
+);
 const rootClasses = computed(() =>
   mergeClasses(
     props.orientation === "vertical" ? "inline-flex min-h-64 flex-col" : "w-full",
@@ -216,15 +230,24 @@ function handleThumbPointerEnd(event: PointerEvent): void {
     :data-rounded="props.rounded"
     :class="rootClasses"
   >
-    <div class="mb-balsa-xs flex items-center justify-between gap-balsa-lg">
-      <label :id="`${props.id}-label`" :for="`${props.id}-0`" class="text-sm font-medium text-balsa-foreground">
+    <div v-if="props.showValue" :class="headerClasses">
+      <label :id="`${props.id}-label`" :for="`${props.id}-0`" :class="headerLabelClasses">
         {{ props.label }}
         <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
       </label>
-      <output v-if="props.showValue" class="text-sm tabular-nums text-balsa-muted-foreground">
+      <output class="text-sm tabular-nums text-balsa-muted-foreground">
         {{ displayValue }}
       </output>
     </div>
+    <label
+      v-else
+      :id="`${props.id}-label`"
+      :for="`${props.id}-0`"
+      :class="standaloneLabelClasses"
+    >
+      {{ props.label }}
+      <span v-if="props.required" class="text-balsa-primary" aria-hidden="true">*</span>
+    </label>
 
     <div ref="controlElement" class="group" :class="controlClasses">
       <span :class="trackClasses" aria-hidden="true"></span>

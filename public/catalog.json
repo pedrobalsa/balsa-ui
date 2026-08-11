@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseVersion": "0.5.0",
+  "releaseVersion": "0.6.0",
   "framework": "vue",
   "generatedFrom": [
     "registry.json",
@@ -32,6 +32,28 @@
       "framework": "vue"
     },
     {
+      "name": "analytics",
+      "title": "Analytics",
+      "category": "component",
+      "classification": "balsa-addition",
+      "description": "Provider-neutral interaction tracking for every data-balsa component, with consent gating, typed custom events, and adapters for GA4, Meta Pixel, LinkedIn Insight Tag, or application-owned destinations.",
+      "status": "beta",
+      "version": "0.1.0",
+      "registry": "@balsa/analytics",
+      "registryDependencies": [],
+      "npmDependencies": [
+        "vue"
+      ],
+      "tokens": [],
+      "documentation": "docs/components/analytics.md",
+      "example": "docs/components/analytics.md",
+      "source": [
+        "src/components/ui/BalsaAnalyticsProvider.vue",
+        "src/components/ui/analytics.ts"
+      ],
+      "framework": "vue"
+    },
+    {
       "name": "button",
       "title": "Button",
       "category": "component",
@@ -42,7 +64,7 @@
       },
       "description": "Typed action control with solid, soft, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and Lucide icons.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/button",
       "registryDependencies": [
         "@balsa/icon",
@@ -296,7 +318,7 @@
       },
       "description": "Single-value and independently draggable bounded-range native sliders with horizontal and vertical orientation, formatted output, three sizes, minimum thumb gaps, keyboard, pointer, touch, and form behavior.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/slider",
       "registryDependencies": [
         "@balsa/icon",
@@ -699,9 +721,9 @@
         "registry": "@shadcn",
         "name": "dialog"
       },
-      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and scroll locking.",
+      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and background scroll locking that preserves scrolling inside the dialog.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/modal",
       "registryDependencies": [
         "@balsa/icon",
@@ -789,7 +811,7 @@
       },
       "description": "Typed compact hierarchy navigation with linked ancestors, a current-page state, selectable separators, and accessible ordered-list semantics.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/breadcrumb",
       "registryDependencies": [
         "@balsa/icon",
@@ -809,7 +831,8 @@
       "documentation": "docs/components/breadcrumb.md",
       "example": "docs/components/breadcrumb.md",
       "source": [
-        "src/components/ui/Breadcrumb.vue"
+        "src/components/ui/Breadcrumb.vue",
+        "src/components/ui/navigation.ts"
       ],
       "framework": "vue"
     },
@@ -820,7 +843,7 @@
       "classification": "balsa-addition",
       "description": "Typed sized navigation link with text, solid, and outline presentations, optional square geometry, and safe external-link behavior.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/link",
       "registryDependencies": [
         "@balsa/icon",
@@ -843,7 +866,8 @@
       "source": [
         "src/components/ui/Link.vue",
         "src/components/ui/types.ts",
-        "src/components/ui/classes.ts"
+        "src/components/ui/classes.ts",
+        "src/components/ui/navigation.ts"
       ],
       "framework": "vue"
     },
@@ -2042,9 +2066,9 @@
         "registry": "@shadcn",
         "name": "tabs"
       },
-      "description": "Keyboard-accessible local panel switching with surface, outline, soft, and glass materials; segmented, square-underline, pill, and icon-tile layouts; and an optional bare content panel.",
+      "description": "Keyboard-accessible local and filter-panel switching with single-axis responsive overflow, inert unslotted panels, four materials, and segmented, underline, pill, or tile layouts.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "registry": "@balsa/tabs",
       "registryDependencies": [
         "@balsa/icon",
@@ -2145,7 +2169,7 @@
       "classification": "balsa-addition",
       "description": "Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/navbar",
       "registryDependencies": [
         "@balsa/icon",
@@ -2185,7 +2209,7 @@
       "classification": "balsa-addition",
       "description": "Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.",
       "status": "beta",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "registry": "@balsa/footer",
       "registryDependencies": [
         "@balsa/icon",
@@ -2198,6 +2222,8 @@
       "tokens": [
         "--balsa-color-inverse",
         "--balsa-color-inverse-foreground",
+        "--balsa-color-surface",
+        "--balsa-color-surface-foreground",
         "--balsa-color-border-strong"
       ],
       "documentation": "docs/components/footer.md",

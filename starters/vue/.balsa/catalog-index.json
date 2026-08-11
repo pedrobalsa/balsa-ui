@@ -1,13 +1,20 @@
 {
   "schemaVersion": 1,
   "framework": "vue",
-  "itemCount": 95,
+  "itemCount": 96,
   "items": [
     {
       "name": "icon",
       "title": "Icon",
       "category": "component",
       "description": "Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.",
+      "status": "beta"
+    },
+    {
+      "name": "analytics",
+      "title": "Analytics",
+      "category": "component",
+      "description": "Provider-neutral interaction tracking for every data-balsa component, with consent gating, typed custom events, and adapters for GA4, Meta Pixel, LinkedIn Insight Tag, or application-owned destinations.",
       "status": "beta"
     },
     {
@@ -126,7 +133,7 @@
       "name": "modal",
       "title": "Modal",
       "category": "component",
-      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and scroll locking.",
+      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and background scroll locking that preserves scrolling inside the dialog.",
       "status": "beta"
     },
     {
@@ -371,7 +378,7 @@
       "name": "tabs",
       "title": "Tabs",
       "category": "component",
-      "description": "Keyboard-accessible local panel switching with surface, outline, soft, and glass materials; segmented, square-underline, pill, and icon-tile layouts; and an optional bare content panel.",
+      "description": "Keyboard-accessible local and filter-panel switching with single-axis responsive overflow, inert unslotted panels, four materials, and segmented, underline, pill, or tile layouts.",
       "status": "beta"
     },
     {

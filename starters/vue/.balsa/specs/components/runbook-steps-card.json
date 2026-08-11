@@ -153,6 +153,34 @@
       {
         "name": "steps",
         "type": "readonly AccordionItem[] | undefined",
+        "shape": {
+          "type": "readonly AccordionItem[]",
+          "items": {
+            "type": "AccordionItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "content",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"freeze\", title: \"1 · Freeze the pipeline\", content: \"Pause queued deploys so nothing lands on top of the rollback. Anything mid-build finishes but does not promote.\" }, { id: \"confirm\", title: \"2 · Confirm the last good build\", content: \"Check the deployment history for the newest build that passed two consecutive health checks in every region.\" }, { id: \"promote\", title: \"3 · Promote it\", content: \"Promote that build to production. The rollout holds at 10% until the health check passes twice, as it does for any deploy.\" }, { id: \"verify\", title: \"4 · Verify each region\", content: \"Watch p95 latency and error rate per region. São Paulo recovers last because it is furthest from the origin.\" }, { id: \"unfreeze\", title: \"5 · Unfreeze and write it up\", content: \"Resume the pipeline, then record what happened while it is still fresh.\" }, ]"
       }

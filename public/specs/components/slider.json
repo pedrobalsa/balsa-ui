@@ -9,7 +9,7 @@
     "name": "slider"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Choose one numeric value by default or a bounded numeric range through native keyboard, pointer, touch, and form behavior.",
   "useFor": [
     "Approximate numeric settings",
@@ -40,7 +40,8 @@
   "accessibility": [
     "Native range inputs preserve keyboard, pointer, touch, and form semantics.",
     "Range thumbs expose explicit minimum and maximum accessible names and remain independently draggable.",
-    "Visible output can be formatted without changing the numeric model."
+    "Visible output can be formatted without changing the numeric model.",
+    "A visually hidden label remains explicitly associated when showLabel is false."
   ],
   "tokens": [
     "--balsa-color-muted",
@@ -52,7 +53,7 @@
   ],
   "commonMistakes": [
     "Using a slider when exact typed entry is required.",
-    "Omitting a visible label.",
+    "Omitting the required accessible label instead of visually hiding it when context makes visible text redundant.",
     "Creating a two-thumb range whose thumbs can cross or lose their minimum gap."
   ],
   "examples": [
@@ -191,6 +192,16 @@
         ],
         "required": false,
         "default": "false"
+      },
+      {
+        "name": "showLabel",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
       },
       {
         "name": "showValue",

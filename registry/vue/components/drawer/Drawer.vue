@@ -77,7 +77,7 @@ const variantClasses: Readonly<Record<LayerVariant, string[]>> = {
   surface: ["border-balsa-border-strong bg-balsa-surface-elevated text-balsa-surface-elevated-foreground"],
   outline: ["border-balsa-border-strong bg-balsa-background text-balsa-foreground"],
   soft: ["border-balsa-border bg-balsa-muted text-balsa-foreground"],
-  glass: ["border-balsa-border/70 bg-balsa-surface/85 text-balsa-surface-foreground backdrop-blur-md"],
+  glass: ["border-balsa-border/70 bg-balsa-surface/85 text-balsa-surface-foreground backdrop-balsa"],
 };
 const sideClasses: Readonly<Record<DrawerSide, string[]>> = {
   bottom: ["bottom-0 left-0 right-0 top-auto border-b-0"],
@@ -110,7 +110,7 @@ const sizeClasses: Readonly<Record<DrawerSize, Record<"vertical" | "horizontal",
 };
 const drawerClasses = computed(() =>
   mergeClasses(
-    "inset-auto m-0 flex max-w-none flex-col border p-0 shadow-balsa-panel outline-none open:flex transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none [&::backdrop]:bg-balsa-overlay [&::backdrop]:backdrop-blur-sm",
+    "inset-auto m-0 flex max-w-none flex-col border p-0 shadow-balsa-panel outline-none open:flex transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none [&::backdrop]:bg-balsa-overlay [&::backdrop]:backdrop-balsa-overlay",
     props.contained ? "absolute z-50" : "fixed",
     vertical.value ? "h-auto w-full" : "h-full max-h-none",
     sideClasses[props.side],
@@ -140,7 +140,7 @@ const handleClasses = computed(() => [
   handlePositionClasses[props.side],
 ]);
 const containedBackdropClasses = computed(() => [
-  "absolute inset-0 z-40 bg-balsa-overlay backdrop-blur-sm transition-opacity duration-200 motion-reduce:transition-none",
+  "absolute inset-0 z-40 bg-balsa-overlay backdrop-balsa transition-opacity duration-200 motion-reduce:transition-none",
   motionState.value === "open" ? "opacity-100" : "opacity-0",
 ]);
 const headerClasses = computed(() => [

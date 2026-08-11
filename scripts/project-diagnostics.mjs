@@ -159,7 +159,13 @@ export async function inspectProject(cwd) {
  * about the others. Reporting them separately is what lets an agent tell
  * "Balsa did not install" from "npm has not run yet".
  */
-export function formatInstallationPhases({ installed, stylesheet, projectRoot, npmDependencies }) {
+export function formatInstallationPhases({
+  installed,
+  stylesheet,
+  projectRoot,
+  npmDependencies,
+  dependencyInstallation,
+}) {
   const lines = [];
   lines.push(
     installed.length
@@ -171,11 +177,20 @@ export function formatInstallationPhases({ installed, stylesheet, projectRoot, n
       ? `Stylesheet configured: ${path.relative(projectRoot, stylesheet).split(path.sep).join("/")}`
       : "Stylesheet configured: no -- add the Balsa style imports after Tailwind manually",
   );
-  lines.push(
-    npmDependencies.length
-      ? `npm dependencies unresolved: ${npmDependencies.join(" ")} (run: npm install ${npmDependencies.join(" ")})`
-      : "npm dependencies unresolved: none",
-  );
+  const unresolved = dependencyInstallation?.unresolved ?? npmDependencies ?? [];
+  const installedDependencies = dependencyInstallation?.installed ?? [];
+  if (unresolved.length) {
+    lines.push(
+      `npm dependencies unresolved: ${unresolved.join(" ")}`
+      + (dependencyInstallation?.reason ? ` — ${dependencyInstallation.reason}` : ""),
+    );
+  } else if (installedDependencies.length) {
+    lines.push(
+      `npm dependencies installed with ${dependencyInstallation.manager}: ${installedDependencies.join(" ")}`,
+    );
+  } else {
+    lines.push("npm dependencies: already satisfied");
+  }
   return lines;
 }
 
