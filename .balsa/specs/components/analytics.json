@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "name": "analytics",
+  "title": "Analytics",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Observe interactions across installed Balsa components and route normalized or custom events to application-selected analytics providers.",
+  "useFor": [
+    "One-place interaction analytics for Balsa components",
+    "GA4 and Meta custom-event forwarding",
+    "LinkedIn event-specific conversion tracking",
+    "Application-owned analytics adapters"
+  ],
+  "avoidFor": [
+    "Loading vendor scripts or deciding consent on behalf of the application",
+    "Collecting field values, visible text, destinations, or personal data automatically",
+    "Treating every interaction as a marketing conversion",
+    "Server-side or offline conversion delivery"
+  ],
+  "states": [
+    "enabled",
+    "disabled",
+    "automatic-disabled"
+  ],
+  "composition": {
+    "automaticEvent": "Interactive descendants of data-balsa roots emit balsa_interaction with balsa_component, balsa_component_path, and balsa_action.",
+    "customEvent": "Button analyticsEvent and the data-balsa-track hook emit a second named event without suppressing the automatic event.",
+    "privacyBoundary": "Automatic collection never reads visible text, form values, URLs, or identifiers; context and transforms are explicit application code.",
+    "providerBoundary": "Adapters call already-configured browser tags and never inject tracking scripts. LinkedIn sends only explicitly mapped conversion events."
+  },
+  "accessibility": [
+    "The provider renders no element and does not alter component semantics, focus, keyboard handling, or default browser behavior.",
+    "Tracking runs after normal bubbling and never prevents or synthesizes an interaction.",
+    "The application remains responsible for consent, disclosure, retention, and provider configuration.",
+    "Disabled and loading controls retain their native Balsa behavior and do not create successful user interactions."
+  ],
+  "tokens": [],
+  "commonMistakes": [
+    "Loading GA4, Meta Pixel, or the LinkedIn Insight Tag from the adapter instead of using the provider's official installation and consent flow.",
+    "Passing form values, email addresses, full URLs, or other sensitive data through context or a transform.",
+    "Mapping the automatic balsa_interaction event to a LinkedIn conversion instead of mapping a deliberate business event such as cta or lead.",
+    "Mounting more than one document-scoped provider and duplicating events."
+  ],
+  "examples": [
+    {
+      "id": "ga4-provider",
+      "title": "GA4 provider configuration",
+      "description": "Forward structural and custom Balsa events to an existing Google tag after analytics consent is granted.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport BalsaAnalyticsProvider from \"@/components/ui/BalsaAnalyticsProvider.vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport { createGoogleAnalyticsAdapter } from \"@/components/ui/analytics\";\n\nconst analyticsConsent = ref(false);\nconst adapters = [\n  createGoogleAnalyticsAdapter({ sendTo: \"G-XXXXXXXXXX\" }),\n];\n</script>\n\n<template>\n  <BalsaAnalyticsProvider\n    :adapters=\"adapters\"\n    :enabled=\"analyticsConsent\"\n  >\n    <Button analytics-event=\"cta\">\n      Start free trial\n    </Button>\n  </BalsaAnalyticsProvider>\n</template>"
+    },
+    {
+      "id": "custom-adapter",
+      "title": "Application-owned adapter",
+      "description": "Send the normalized event contract to a reviewed first-party destination without adding a visual playground.",
+      "source": "<script setup lang=\"ts\">\nimport BalsaAnalyticsProvider from \"@/components/ui/BalsaAnalyticsProvider.vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport { createAnalyticsAdapter } from \"@/components/ui/analytics\";\n\nconst firstParty = createAnalyticsAdapter(\"first-party\", (event) => {\n  navigator.sendBeacon(\"/analytics\", JSON.stringify(event));\n});\n</script>\n\n<template>\n  <BalsaAnalyticsProvider :adapters=\"[firstParty]\">\n    <Button analytics-event=\"lead\">\n      Request a demo\n    </Button>\n  </BalsaAnalyticsProvider>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/BalsaAnalyticsProvider.vue",
+    "props": [
+      {
+        "name": "adapters",
+        "type": "readonly AnalyticsAdapter[] | undefined",
+        "shape": {
+          "type": "readonly AnalyticsAdapter[]",
+          "items": {
+            "type": "AnalyticsAdapter",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "track",
+                "type": "(event: BalsaAnalyticsEvent) => void | Promise<void>",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "enabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "automatic",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "context",
+        "type": "Readonly<Record<string, unknown>> | undefined",
+        "values": [
+          "Readonly<Record<string, unknown>>"
+        ],
+        "required": false,
+        "default": "{}"
+      },
+      {
+        "name": "transform",
+        "type": "AnalyticsTransform | undefined",
+        "required": false
+      },
+      {
+        "name": "onError",
+        "type": "((error: unknown, context: AnalyticsErrorContext) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

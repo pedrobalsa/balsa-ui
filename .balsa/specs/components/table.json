@@ -9,7 +9,7 @@
     "name": "table"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Present consumer-authored semantic tabular markup in a responsive Balsa surface with independently configurable header and row colors.",
   "useFor": [
     "Comparison data",

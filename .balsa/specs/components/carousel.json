@@ -87,6 +87,24 @@
       {
         "name": "items",
         "type": "readonly CarouselItem[]",
+        "shape": {
+          "type": "readonly CarouselItem[]",
+          "items": {
+            "type": "CarouselItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

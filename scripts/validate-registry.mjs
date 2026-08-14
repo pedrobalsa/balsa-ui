@@ -304,6 +304,28 @@ try {
   await access(
     path.join(rootDir, "starters", "vue", ".agents", "skills", "balsa-ui", "SKILL.md"),
   );
+  await access(
+    path.join(
+      rootDir,
+      "starters",
+      "vue",
+      ".agents",
+      "skills",
+      "balsa-template-design",
+      "SKILL.md",
+    ),
+  );
+  await access(
+    path.join(
+      rootDir,
+      "starters",
+      "vue",
+      ".balsa",
+      "skills",
+      "balsa-template-design",
+      "LICENSE.txt",
+    ),
+  );
 } catch (error) {
   errors.push(`Vue starter agent context is incomplete (${error.message})`);
 }

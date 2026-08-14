@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "framework": "vue",
-  "itemCount": 96,
+  "itemCount": 97,
   "items": [
     {
       "name": "icon",
@@ -414,6 +414,13 @@
       "title": "GradientBackground",
       "category": "component",
       "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "status": "beta"
+    },
+    {
+      "name": "text-3d",
+      "title": "Text3D",
+      "category": "component",
+      "description": "Palette-aware and theme-aware extruded display text with finite presets, materials, environments and fonts, optional drag, wheel zoom and rotation, lifecycle fallbacks, and still PNG capture.",
       "status": "beta"
     },
     {

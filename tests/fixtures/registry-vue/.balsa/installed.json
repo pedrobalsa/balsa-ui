@@ -6,7 +6,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-c1db867797794bd4730024d78b27b091de089a341f034d13f17e8cfd2200ef0f",
       "installedSourceHash": "sha256-c1db867797794bd4730024d78b27b091de089a341f034d13f17e8cfd2200ef0f",
       "dependencies": [
@@ -41,7 +41,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ccbaac5715da9b7e199048e604b8ee297835e607427d3321bbaa669d7ba321ce",
       "installedSourceHash": "sha256-ccbaac5715da9b7e199048e604b8ee297835e607427d3321bbaa669d7ba321ce",
       "dependencies": [
@@ -65,7 +65,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-2aca83c907ce9be963e3cfa653edd804eaf0fdabfe4b3b5cf0736f9878d7fe59",
       "installedSourceHash": "sha256-2aca83c907ce9be963e3cfa653edd804eaf0fdabfe4b3b5cf0736f9878d7fe59",
       "dependencies": [
@@ -86,7 +86,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.2.1",
       "contractVersion": "0.2.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4d5c2d0619ad06498d93a2aab89aca3cdead75150375cf8df06dbfaf07595194",
       "installedSourceHash": "sha256-4d5c2d0619ad06498d93a2aab89aca3cdead75150375cf8df06dbfaf07595194",
       "dependencies": [
@@ -113,7 +113,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-3ec40d7465d1829d12310d03d0a487b0c8e9bc39d544f6c0541d3d8cfc4804ac",
       "installedSourceHash": "sha256-3ec40d7465d1829d12310d03d0a487b0c8e9bc39d544f6c0541d3d8cfc4804ac",
       "dependencies": [
@@ -137,7 +137,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-96c4a3492ccd98cbc896b27815ea96d0025c3ef3e78704a0e5fb787af012a4dd",
       "installedSourceHash": "sha256-96c4a3492ccd98cbc896b27815ea96d0025c3ef3e78704a0e5fb787af012a4dd",
       "dependencies": [
@@ -159,7 +159,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-733eb8b411f6cff5aff4cb436eda32604f1b15ed4973de8df7a4448bcb0ab8d2",
       "installedSourceHash": "sha256-733eb8b411f6cff5aff4cb436eda32604f1b15ed4973de8df7a4448bcb0ab8d2",
       "dependencies": [
@@ -180,7 +180,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-1126407a414bc1b8366a3e95266a6cc1f78ce2690d65e841c9024cf5fc0249a6",
       "installedSourceHash": "sha256-1126407a414bc1b8366a3e95266a6cc1f78ce2690d65e841c9024cf5fc0249a6",
       "dependencies": [
@@ -205,7 +205,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a2d2e07995c4e94a1e646159ba24a59c5e612cd722bd095cfd05c646dc1dd5c1",
       "installedSourceHash": "sha256-a2d2e07995c4e94a1e646159ba24a59c5e612cd722bd095cfd05c646dc1dd5c1",
       "dependencies": [
@@ -226,7 +226,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-67615540b1431f3b32db3095e1aac877663a7af74d36b06cf18c33522ba9480e",
       "installedSourceHash": "sha256-67615540b1431f3b32db3095e1aac877663a7af74d36b06cf18c33522ba9480e",
       "dependencies": [
@@ -250,7 +250,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-30e61a14a8aee9562073c9575a8d8ffcd74cb95c20aceb4b17c64387ffe79b30",
       "installedSourceHash": "sha256-30e61a14a8aee9562073c9575a8d8ffcd74cb95c20aceb4b17c64387ffe79b30",
       "dependencies": [
@@ -270,7 +270,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-e136170373ed8ad45bc97bc18d97df01feda4ac692d14240b52634e5cc167b64",
       "installedSourceHash": "sha256-e136170373ed8ad45bc97bc18d97df01feda4ac692d14240b52634e5cc167b64",
       "dependencies": [
@@ -293,7 +293,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-33727fff1ca3506ea407fa1bdc450361c2240a1fbc009f2cf2199458a656bc13",
       "installedSourceHash": "sha256-33727fff1ca3506ea407fa1bdc450361c2240a1fbc009f2cf2199458a656bc13",
       "dependencies": [
@@ -314,7 +314,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ef6e68d10e3fc3ad62ef2329f31d34ce3b3c095b68fc677c9f30ff9d9524e53d",
       "installedSourceHash": "sha256-ef6e68d10e3fc3ad62ef2329f31d34ce3b3c095b68fc677c9f30ff9d9524e53d",
       "dependencies": [
@@ -337,7 +337,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-e32908d2ec641e3653772567a94e6fb304e2aeddecd18a247dd6c95895eaa5a6",
       "installedSourceHash": "sha256-e32908d2ec641e3653772567a94e6fb304e2aeddecd18a247dd6c95895eaa5a6",
       "dependencies": [
@@ -359,7 +359,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ede30d5a56494d182b169bc352ea93d30f901a598d560800e646a060d12bc778",
       "installedSourceHash": "sha256-ede30d5a56494d182b169bc352ea93d30f901a598d560800e646a060d12bc778",
       "dependencies": [
@@ -383,7 +383,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.2.0",
       "contractVersion": "0.2.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-b2613afae388911b450aca1f0f15c95f65c725844322e19b7101986b72a5cfb5",
       "installedSourceHash": "sha256-b2613afae388911b450aca1f0f15c95f65c725844322e19b7101986b72a5cfb5",
       "dependencies": [
@@ -408,7 +408,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-5f539a72a3056b42191dde1482ea92a17c2852e84ec1dae9f06ea2b1b124e341",
       "installedSourceHash": "sha256-5f539a72a3056b42191dde1482ea92a17c2852e84ec1dae9f06ea2b1b124e341",
       "dependencies": [
@@ -435,7 +435,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-421e991eff53f180a7d13a181c72ef822cb576870820a3d7ba087bd9a05fd6bb",
       "installedSourceHash": "sha256-421e991eff53f180a7d13a181c72ef822cb576870820a3d7ba087bd9a05fd6bb",
       "dependencies": [
@@ -459,7 +459,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.2.0",
       "contractVersion": "0.2.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-e6dae461eb0c2903f157fc7a64fc594edeb519dd2b1f357aaca9247543beee61",
       "installedSourceHash": "sha256-e6dae461eb0c2903f157fc7a64fc594edeb519dd2b1f357aaca9247543beee61",
       "dependencies": [
@@ -483,7 +483,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4a91204f28d531ed9e5274dc7746d34a0646ff3016aa07d2e9ef695cb5028217",
       "installedSourceHash": "sha256-4a91204f28d531ed9e5274dc7746d34a0646ff3016aa07d2e9ef695cb5028217",
       "dependencies": [
@@ -507,7 +507,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4e7845724add2bf6431d4d966855aae0fcb152e5d6cc2353138c11e10a7acd6b",
       "installedSourceHash": "sha256-4e7845724add2bf6431d4d966855aae0fcb152e5d6cc2353138c11e10a7acd6b",
       "dependencies": [
@@ -530,7 +530,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-7d31b924b7de1b6998b79d486c2d94027b5cfab7a3eee599244bd738ff3c77b6",
       "installedSourceHash": "sha256-7d31b924b7de1b6998b79d486c2d94027b5cfab7a3eee599244bd738ff3c77b6",
       "dependencies": [
@@ -554,7 +554,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-5c3840f4cae45a82fbba2e0fb68eb0fc297162a37e2585fd7ec9205afa0dea72",
       "installedSourceHash": "sha256-5c3840f4cae45a82fbba2e0fb68eb0fc297162a37e2585fd7ec9205afa0dea72",
       "dependencies": [
@@ -578,7 +578,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-844cb96fe7e7e932a41d2f94ec7c48c05ba66e0dd44979b6cfbc99ac18406d34",
       "installedSourceHash": "sha256-844cb96fe7e7e932a41d2f94ec7c48c05ba66e0dd44979b6cfbc99ac18406d34",
       "dependencies": [
@@ -607,7 +607,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-68a51b33346a3976e43a0f30b76c576a9d08d6edfbc2a764dbf309c9154694b4",
       "installedSourceHash": "sha256-68a51b33346a3976e43a0f30b76c576a9d08d6edfbc2a764dbf309c9154694b4",
       "dependencies": [
@@ -632,7 +632,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-765858e8a6aa48db74d0c000c378d015868fbfa84cb250559bce1f279796f8e3",
       "installedSourceHash": "sha256-765858e8a6aa48db74d0c000c378d015868fbfa84cb250559bce1f279796f8e3",
       "dependencies": [
@@ -660,7 +660,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-d2d8a7c6c2a768c4db914e22d6860c2d9fa6547373470a48668dba759618c5f5",
       "installedSourceHash": "sha256-d2d8a7c6c2a768c4db914e22d6860c2d9fa6547373470a48668dba759618c5f5",
       "dependencies": [
@@ -681,7 +681,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-250841a2959afcd97e51bd4c1f535a0cefb3190eee1748a90161241e1c82b2fe",
       "installedSourceHash": "sha256-250841a2959afcd97e51bd4c1f535a0cefb3190eee1748a90161241e1c82b2fe",
       "dependencies": [
@@ -709,7 +709,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ddf58a870d842e46f674d0a5b187ad61fb2bc5d8bc1fb820ef7bb90ff406aef7",
       "installedSourceHash": "sha256-ddf58a870d842e46f674d0a5b187ad61fb2bc5d8bc1fb820ef7bb90ff406aef7",
       "dependencies": [
@@ -734,7 +734,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-2844b041fe90d98eeaebf350e01251b9fce17abe433e8998ae758a3d0282e292",
       "installedSourceHash": "sha256-2844b041fe90d98eeaebf350e01251b9fce17abe433e8998ae758a3d0282e292",
       "dependencies": [
@@ -755,7 +755,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-bfceca18df59464c4fc594d4addcc99af85978d43f220b78d7f888ed2e119160",
       "installedSourceHash": "sha256-bfceca18df59464c4fc594d4addcc99af85978d43f220b78d7f888ed2e119160",
       "dependencies": [
@@ -779,7 +779,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.2.0",
       "contractVersion": "0.2.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-20eaa045df34aeb9a7040666950fec171219d0995e8f5a8f30b6a8bc95354fd4",
       "installedSourceHash": "sha256-20eaa045df34aeb9a7040666950fec171219d0995e8f5a8f30b6a8bc95354fd4",
       "dependencies": [
@@ -803,7 +803,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.2.0",
       "contractVersion": "0.2.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4ae3c50e98224fc603231fc6ac1af4197e93f33da1ce4df7799e87e73b1b2529",
       "installedSourceHash": "sha256-4ae3c50e98224fc603231fc6ac1af4197e93f33da1ce4df7799e87e73b1b2529",
       "dependencies": [
@@ -826,7 +826,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-08c8490fd2bcba22bf9042c94ec696eaa9d317220242f3a5515c5b5b72b6e681",
       "installedSourceHash": "sha256-08c8490fd2bcba22bf9042c94ec696eaa9d317220242f3a5515c5b5b72b6e681",
       "dependencies": [
@@ -846,7 +846,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-2a90a48dfb7db1c54cc24670f277427a4b8d5302c402c60717164fae73b8a46e",
       "installedSourceHash": "sha256-2a90a48dfb7db1c54cc24670f277427a4b8d5302c402c60717164fae73b8a46e",
       "dependencies": [
@@ -870,7 +870,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-67f16e19d537da506838b7f41693c0f0a9685b77e014f87ce5ea4d21f5f5f4f8",
       "installedSourceHash": "sha256-67f16e19d537da506838b7f41693c0f0a9685b77e014f87ce5ea4d21f5f5f4f8",
       "dependencies": [
@@ -896,7 +896,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-5fe33e7dc8bf2076ec1f98495d81c0a32b393ed73f4d1d6d9540916a7a489ab2",
       "installedSourceHash": "sha256-5fe33e7dc8bf2076ec1f98495d81c0a32b393ed73f4d1d6d9540916a7a489ab2",
       "dependencies": [
@@ -921,7 +921,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.2.0",
       "contractVersion": "0.2.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a77218bdce00228eab34bde8ead0b5d877c342d705abc256b5a31324964a976d",
       "installedSourceHash": "sha256-a77218bdce00228eab34bde8ead0b5d877c342d705abc256b5a31324964a976d",
       "dependencies": [
@@ -945,7 +945,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-5367f9dca3a0fdc9aa99531b1cc83ce044d6b0f911cf10e2f40333a26c5a4e96",
       "installedSourceHash": "sha256-5367f9dca3a0fdc9aa99531b1cc83ce044d6b0f911cf10e2f40333a26c5a4e96",
       "dependencies": [
@@ -968,7 +968,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a7aeac9d6eabda2e0125ca7b99a77770a9f3af98173fdc6fd8df5e7ec5b54652",
       "installedSourceHash": "sha256-a7aeac9d6eabda2e0125ca7b99a77770a9f3af98173fdc6fd8df5e7ec5b54652",
       "dependencies": [
@@ -992,7 +992,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-bfed047cca56c0a65a8ae0e010f3399ca9b657973d49cde78cfaf0f9d8b43658",
       "installedSourceHash": "sha256-bfed047cca56c0a65a8ae0e010f3399ca9b657973d49cde78cfaf0f9d8b43658",
       "dependencies": [
@@ -1018,7 +1018,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.3.0",
       "contractVersion": "0.3.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a0ed69656d660b39d9dde0af441f25f0147433dc0d54b53b1bba96873e3e91a1",
       "installedSourceHash": "sha256-a0ed69656d660b39d9dde0af441f25f0147433dc0d54b53b1bba96873e3e91a1",
       "dependencies": [
@@ -1051,7 +1051,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-fc51fd9d5ebe2424eacf811ada7f4c9db0042303f6afac76582178266591c79f",
       "installedSourceHash": "sha256-fc51fd9d5ebe2424eacf811ada7f4c9db0042303f6afac76582178266591c79f",
       "dependencies": [
@@ -1075,7 +1075,7 @@
       "namespace": "@balsa",
       "origin": "https://balsa-ui.com/r/balsa-theme.json",
       "installedVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-0ca022139579ea14124f8139c87fb41c91e50bf46b5156eb21f3a5a69cc44449",
       "installedSourceHash": "sha256-0ca022139579ea14124f8139c87fb41c91e50bf46b5156eb21f3a5a69cc44449",
       "dependencies": [
@@ -1101,7 +1101,7 @@
       "namespace": "@balsa",
       "origin": "https://balsa-ui.com/r/balsa-foundation.json",
       "installedVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4e20f4ad5ea63bdce72e6785a52d2119053d2cfc7d6a691b8e5739a188309512",
       "installedSourceHash": "sha256-4e20f4ad5ea63bdce72e6785a52d2119053d2cfc7d6a691b8e5739a188309512",
       "dependencies": [
@@ -1118,7 +1118,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-d2cf6ae165aa5730d8a9259e6f52429f4d1e740885a552c32efebd9f4378910a",
       "installedSourceHash": "sha256-d2cf6ae165aa5730d8a9259e6f52429f4d1e740885a552c32efebd9f4378910a",
       "dependencies": [
@@ -1140,7 +1140,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-88152bf6936ef8a8b623ae4962f942ecf0d0e540243c5ef6311667615f03b2b7",
       "installedSourceHash": "sha256-88152bf6936ef8a8b623ae4962f942ecf0d0e540243c5ef6311667615f03b2b7",
       "dependencies": [
@@ -1159,7 +1159,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-d16058524e06befd7b02d00a6bcd9ec67f8c0813848cae73e9c00f3ab258268e",
       "installedSourceHash": "sha256-d16058524e06befd7b02d00a6bcd9ec67f8c0813848cae73e9c00f3ab258268e",
       "dependencies": [
@@ -1181,7 +1181,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-5f69c78826b4a71cfd32d613981218cbbd09d61a7f1c709a15ecd7a7ff391d0e",
       "installedSourceHash": "sha256-5f69c78826b4a71cfd32d613981218cbbd09d61a7f1c709a15ecd7a7ff391d0e",
       "dependencies": [
@@ -1205,7 +1205,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-94e7ef8cd661fe6f97692b9aa7f2c4b1bf491bf9cc277d02a8c1c49a062d625f",
       "installedSourceHash": "sha256-94e7ef8cd661fe6f97692b9aa7f2c4b1bf491bf9cc277d02a8c1c49a062d625f",
       "dependencies": [
@@ -1227,7 +1227,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-6c23cb21655f8f2830c3fa7d456c84a3f7ba3c6d9946e01663d806d1071473c6",
       "installedSourceHash": "sha256-6c23cb21655f8f2830c3fa7d456c84a3f7ba3c6d9946e01663d806d1071473c6",
       "dependencies": [
@@ -1252,7 +1252,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-87f05424921aba41ea201dc0e93b88f743f412b5010d030e9e274cf9e66fc99d",
       "installedSourceHash": "sha256-87f05424921aba41ea201dc0e93b88f743f412b5010d030e9e274cf9e66fc99d",
       "dependencies": [
@@ -1277,7 +1277,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-080f3c75d466aedd657e6dd9d7dd7a16c8179f70c43d5ab4465be07fb62deb1a",
       "installedSourceHash": "sha256-080f3c75d466aedd657e6dd9d7dd7a16c8179f70c43d5ab4465be07fb62deb1a",
       "dependencies": [
@@ -1300,7 +1300,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-040960828d47ed773aae138ef238d6848f648da7deb2b28d7b8cdb918e9c245e",
       "installedSourceHash": "sha256-040960828d47ed773aae138ef238d6848f648da7deb2b28d7b8cdb918e9c245e",
       "dependencies": [
@@ -1324,7 +1324,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-be02f5568b78e5f2883a397a058170b898d69fe7067d003e0ceffa09389311ff",
       "installedSourceHash": "sha256-be02f5568b78e5f2883a397a058170b898d69fe7067d003e0ceffa09389311ff",
       "dependencies": [
@@ -1347,7 +1347,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a5601bcdae7cee4f92b4ede186e37bd6b66fc5243e9a447a967d39523f7bc936",
       "installedSourceHash": "sha256-a5601bcdae7cee4f92b4ede186e37bd6b66fc5243e9a447a967d39523f7bc936",
       "dependencies": [
@@ -1371,7 +1371,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-f6cd755931d47e826e9eda2ea1928b834d3700bb92b76c6226f19305a886ab29",
       "installedSourceHash": "sha256-f6cd755931d47e826e9eda2ea1928b834d3700bb92b76c6226f19305a886ab29",
       "dependencies": [
@@ -1394,7 +1394,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-c58441adbbc269414df6ffa0b42d8aa2f0b09f343c23cb9536dac3c6f2104bfb",
       "installedSourceHash": "sha256-c58441adbbc269414df6ffa0b42d8aa2f0b09f343c23cb9536dac3c6f2104bfb",
       "dependencies": [
@@ -1418,7 +1418,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-8c57b69ad9224c593bdf07999214db3f01cdabf585f73c00dbdd85829a4ca3b9",
       "installedSourceHash": "sha256-8c57b69ad9224c593bdf07999214db3f01cdabf585f73c00dbdd85829a4ca3b9",
       "dependencies": [
@@ -1442,7 +1442,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-89c5eacb30c0ebf3abb33b480b8dde7de512ae9541c0bfee14a3eea444ecf046",
       "installedSourceHash": "sha256-89c5eacb30c0ebf3abb33b480b8dde7de512ae9541c0bfee14a3eea444ecf046",
       "dependencies": [
@@ -1468,7 +1468,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ff2ec51c733bef765dc221a3e36f337ca595ecf2f94b996e7fb0c81f448c5c94",
       "installedSourceHash": "sha256-ff2ec51c733bef765dc221a3e36f337ca595ecf2f94b996e7fb0c81f448c5c94",
       "dependencies": [
@@ -1491,7 +1491,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-82680f63c4081d783e62486ba7ed102a044ed1d50eb9d4745268a45fda24c549",
       "installedSourceHash": "sha256-82680f63c4081d783e62486ba7ed102a044ed1d50eb9d4745268a45fda24c549",
       "dependencies": [
@@ -1513,7 +1513,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-fdc05eb67b4136cc99bb991a2a3849fef44a2313d0b1668804870d32983d4102",
       "installedSourceHash": "sha256-fdc05eb67b4136cc99bb991a2a3849fef44a2313d0b1668804870d32983d4102",
       "dependencies": [
@@ -1538,7 +1538,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-897d6d047b062da5c0f57bdd07493509c069ad413701fac0360fa3b37254b7a2",
       "installedSourceHash": "sha256-897d6d047b062da5c0f57bdd07493509c069ad413701fac0360fa3b37254b7a2",
       "dependencies": [
@@ -1561,7 +1561,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4a85413050c5fe1def4a6fa2b5261d3f84ddf2d2e99e5cef326a5ccc646c3619",
       "installedSourceHash": "sha256-4a85413050c5fe1def4a6fa2b5261d3f84ddf2d2e99e5cef326a5ccc646c3619",
       "dependencies": [
@@ -1584,7 +1584,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-4db743a5ae4be9ea275d12730a75bad6a36e5c568a8a9672be4ddc3da001411c",
       "installedSourceHash": "sha256-4db743a5ae4be9ea275d12730a75bad6a36e5c568a8a9672be4ddc3da001411c",
       "dependencies": [
@@ -1609,7 +1609,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ef7e3dcd4d0fbbf0312209dac2a220f05ba08638308211f5e304607bbc594a7d",
       "installedSourceHash": "sha256-ef7e3dcd4d0fbbf0312209dac2a220f05ba08638308211f5e304607bbc594a7d",
       "dependencies": [
@@ -1627,7 +1627,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a2187bcdb820024818f48fa30d38463cfdf00a394ae802b94fe9e454fe2c985f",
       "installedSourceHash": "sha256-a2187bcdb820024818f48fa30d38463cfdf00a394ae802b94fe9e454fe2c985f",
       "dependencies": [
@@ -1647,7 +1647,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-9797cde80e1bae09af6264ed43c9f7c935b22a41a06e04e1a068d1c696d79de9",
       "installedSourceHash": "sha256-9797cde80e1bae09af6264ed43c9f7c935b22a41a06e04e1a068d1c696d79de9",
       "dependencies": [
@@ -1669,7 +1669,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-c0eb47adfbf213a64050faa292328e7c11dd64a10318158112709914d8e02bec",
       "installedSourceHash": "sha256-c0eb47adfbf213a64050faa292328e7c11dd64a10318158112709914d8e02bec",
       "dependencies": [
@@ -1690,7 +1690,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-0aeffe740c18f27ddca099fcdf054cbc8bbe43f5098e57e74b95cdcec9b69d69",
       "installedSourceHash": "sha256-0aeffe740c18f27ddca099fcdf054cbc8bbe43f5098e57e74b95cdcec9b69d69",
       "dependencies": [
@@ -1712,7 +1712,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-c7c99371fe3eb30c6d23c79eea42b4a3e3ceba66074697cdc3c4312aacd49def",
       "installedSourceHash": "sha256-c7c99371fe3eb30c6d23c79eea42b4a3e3ceba66074697cdc3c4312aacd49def",
       "dependencies": [
@@ -1733,7 +1733,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ca3cd24c82b5d78d7421f82e7555f74c3f158c122d37369a947e9bb243efcc7b",
       "installedSourceHash": "sha256-ca3cd24c82b5d78d7421f82e7555f74c3f158c122d37369a947e9bb243efcc7b",
       "dependencies": [
@@ -1755,7 +1755,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-548fca8988360992e0385092d849617fc2825d8bc4681c9df641722598bd803b",
       "installedSourceHash": "sha256-548fca8988360992e0385092d849617fc2825d8bc4681c9df641722598bd803b",
       "dependencies": [
@@ -1777,7 +1777,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-1a7e8b6a927323bc911e674282a9a21bbe13d05f4cacfd3b3ad4b99c44b71cd2",
       "installedSourceHash": "sha256-1a7e8b6a927323bc911e674282a9a21bbe13d05f4cacfd3b3ad4b99c44b71cd2",
       "dependencies": [
@@ -1802,7 +1802,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-02fcc3f21c568a41589da8c99be29b20d023abce8ebe904b3c7ddf34532514e0",
       "installedSourceHash": "sha256-02fcc3f21c568a41589da8c99be29b20d023abce8ebe904b3c7ddf34532514e0",
       "dependencies": [
@@ -1824,7 +1824,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-644fb287dbe94c190111196f54bbe8e512a403e147923f4935ae6a660cab38a1",
       "installedSourceHash": "sha256-644fb287dbe94c190111196f54bbe8e512a403e147923f4935ae6a660cab38a1",
       "dependencies": [
@@ -1844,7 +1844,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-e771fef4606953dc2e6cfb0bca5b22d6858037cb25242642ed9a9457221097a4",
       "installedSourceHash": "sha256-e771fef4606953dc2e6cfb0bca5b22d6858037cb25242642ed9a9457221097a4",
       "dependencies": [
@@ -1864,7 +1864,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-72866f318463ef2cefe97ea7bcec662ab0e7ea80121ea1ec5518ebd9ea13ec91",
       "installedSourceHash": "sha256-72866f318463ef2cefe97ea7bcec662ab0e7ea80121ea1ec5518ebd9ea13ec91",
       "dependencies": [
@@ -1886,7 +1886,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-f66765496b4fd6eac1ea32698f92d8222b3ce47fe613122a2f122f409bf961dd",
       "installedSourceHash": "sha256-f66765496b4fd6eac1ea32698f92d8222b3ce47fe613122a2f122f409bf961dd",
       "dependencies": [
@@ -1909,7 +1909,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-b0d43da2ce8423da2b2925b85c44180dd25069363a83ac8c33b9181218e7bc8a",
       "installedSourceHash": "sha256-b0d43da2ce8423da2b2925b85c44180dd25069363a83ac8c33b9181218e7bc8a",
       "dependencies": [
@@ -1931,7 +1931,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.2",
       "contractVersion": "0.1.2",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-195f887b0a5497276c94d8ccdf9c90cbb944060124f4fea32491d46aaca993db",
       "installedSourceHash": "sha256-195f887b0a5497276c94d8ccdf9c90cbb944060124f4fea32491d46aaca993db",
       "dependencies": [
@@ -1952,7 +1952,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-ac5f4f3c4f4bc2b8ad3a320d6081888425bfbc7ceada64fabd08ec3bdcb390a9",
       "installedSourceHash": "sha256-ac5f4f3c4f4bc2b8ad3a320d6081888425bfbc7ceada64fabd08ec3bdcb390a9",
       "dependencies": [
@@ -1975,7 +1975,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-a8cba688f028d986eae409ade9273e2b8b14a543e3fb7752efd7e691dab39f2a",
       "installedSourceHash": "sha256-a8cba688f028d986eae409ade9273e2b8b14a543e3fb7752efd7e691dab39f2a",
       "dependencies": [
@@ -1999,7 +1999,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-218fd8c58fb0be08a07b0b1117ade07d0beb444defe63b08c520d0d305d44592",
       "installedSourceHash": "sha256-218fd8c58fb0be08a07b0b1117ade07d0beb444defe63b08c520d0d305d44592",
       "dependencies": [
@@ -2019,7 +2019,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-37e55d53c5893668e76c5f98a73453248f69d022de3c0347c95d5e7d08c1fdc5",
       "installedSourceHash": "sha256-37e55d53c5893668e76c5f98a73453248f69d022de3c0347c95d5e7d08c1fdc5",
       "dependencies": [
@@ -2044,7 +2044,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-9d7e98bc94773cdcfd1ad4b9e5bfcea7e6c9a7d5b718b403ca7fc275353aeedf",
       "installedSourceHash": "sha256-9d7e98bc94773cdcfd1ad4b9e5bfcea7e6c9a7d5b718b403ca7fc275353aeedf",
       "dependencies": [
@@ -2066,7 +2066,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-7af10a064d73219f404681272335218315c58d0fb5bbe2d424dd321e34056e14",
       "installedSourceHash": "sha256-7af10a064d73219f404681272335218315c58d0fb5bbe2d424dd321e34056e14",
       "dependencies": [
@@ -2088,7 +2088,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-692a690c78eaf00bd25113c0bd88ce580d6c7fd4a2fbc178ce273c5b19bbdfa3",
       "installedSourceHash": "sha256-692a690c78eaf00bd25113c0bd88ce580d6c7fd4a2fbc178ce273c5b19bbdfa3",
       "dependencies": [
@@ -2109,7 +2109,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-dc4fd2370b90ab82352ced894165641af804640a3c62d17db93d429ddd4cd10b",
       "installedSourceHash": "sha256-dc4fd2370b90ab82352ced894165641af804640a3c62d17db93d429ddd4cd10b",
       "dependencies": [
@@ -2130,7 +2130,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.6.0",
+      "designSystemVersion": "0.7.1",
       "originalSourceHash": "sha256-dcaaf8bc842f09ceda728ae5141d8c77768e2278711285e773041c275782d6e3",
       "installedSourceHash": "sha256-dcaaf8bc842f09ceda728ae5141d8c77768e2278711285e773041c275782d6e3",
       "dependencies": [

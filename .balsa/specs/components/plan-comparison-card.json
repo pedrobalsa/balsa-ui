@@ -153,6 +153,39 @@
       {
         "name": "rows",
         "type": "readonly PlanRow[] | undefined",
+        "shape": {
+          "type": "readonly PlanRow[]",
+          "items": {
+            "type": "PlanRow",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "capability",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "starter",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "pro",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "scale",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"members\", capability: \"Members\", starter: \"3\", pro: \"25\", scale: \"Unlimited\" }, { id: \"environments\", capability: \"Environments\", starter: \"1\", pro: \"5\", scale: \"Unlimited\" }, { id: \"regions\", capability: \"Edge regions\", starter: \"1\", pro: \"6\", scale: \"All 14\" }, { id: \"retention\", capability: \"Log retention\", starter: \"3 days\", pro: \"30 days\", scale: \"1 year\" }, { id: \"support\", capability: \"Support\", starter: \"Community\", pro: \"4 hour response\", scale: \"Dedicated\" }, { id: \"builds\", capability: \"Concurrent builds\", starter: \"1\", pro: \"8\", scale: \"40\" }, { id: \"sso\", capability: \"Single sign-on\", starter: \"—\", pro: \"Google, Okta\", scale: \"Any SAML provider\" }, ]"
       }

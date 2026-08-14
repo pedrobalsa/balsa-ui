@@ -159,6 +159,29 @@
       {
         "name": "series",
         "type": "readonly UsageSeries[] | undefined",
+        "shape": {
+          "type": "readonly UsageSeries[]",
+          "items": {
+            "type": "UsageSeries",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "data",
+                "type": "readonly number[]",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "CompositionPaletteColor | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { label: \"Compute\", data: [96, 104, 112, 119, 108, 121, 128, 141, 137, 162, 158, 174], color: \"primary\" }, { label: \"Bandwidth\", data: [41, 46, 52, 63, 49, 58, 64, 71, 88, 74, 92, 96], color: \"secondary\" }, { label: \"Storage\", data: [14, 15, 17, 18, 19, 21, 22, 24, 27, 29, 31, 35], color: \"accent\" }, ]"
       }

@@ -5,7 +5,7 @@
   "category": "composition",
   "classification": "balsa-composition",
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Asset preview, publication status, and replacement action.",
   "useFor": [
     "Production application interfaces",

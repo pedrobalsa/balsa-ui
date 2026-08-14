@@ -9,7 +9,7 @@
     "name": "alert"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Communicate important inline feedback or present a focused alert-dialog decision.",
   "useFor": [
     "System and form feedback",
@@ -244,8 +244,8 @@
         "type": "AlertInitialFocus | undefined",
         "values": [
           "close",
-          "dialog",
-          "action"
+          "action",
+          "dialog"
         ],
         "required": false,
         "default": "\"action\""

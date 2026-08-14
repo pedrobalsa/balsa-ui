@@ -2867,6 +2867,142 @@ const gradientBackground: PlaygroundDefinition = {
   ),
 };
 
+const text3D: PlaygroundDefinition = {
+  defaults: {
+    text: "Text placeholder",
+    preset: "liquid-chrome",
+    fontMode: "theme",
+    font: "space-grotesk",
+    fontWeight: "700",
+    material: "metallic",
+    environment: "studio",
+    colorMode: "palette",
+    colorA: "#F4F4F5",
+    colorB: "#A1A1AA",
+    colorC: "#71717A",
+    interactive: true,
+    poseMode: "pointer",
+    quality: "auto",
+    paused: false,
+  },
+  controls: [
+    { key: "text", label: "Text", type: "text", wide: true },
+    {
+      key: "preset",
+      label: "Preset",
+      type: "select",
+      options: [
+        { label: "Liquid Chrome", value: "liquid-chrome" },
+        { label: "Chrome Balloon", value: "chrome-balloon" },
+        { label: "Polished Chrome", value: "polished-chrome" },
+        { label: "Brushed Steel", value: "brushed-steel" },
+        { label: "Frosted Pane", value: "frosted-pane" },
+      ],
+    },
+    {
+      key: "fontMode",
+      label: "Font source",
+      type: "select",
+      options: [
+        { label: "Active theme", value: "theme" },
+        { label: "Custom font", value: "custom" },
+      ],
+    },
+    {
+      key: "font",
+      label: "Font",
+      type: "select",
+      options: [
+        { label: "Space Grotesk", value: "space-grotesk" },
+        { label: "Inter", value: "inter" },
+        { label: "Noto Sans", value: "noto-sans" },
+        { label: "Roboto", value: "roboto" },
+        { label: "Open Sans", value: "open-sans" },
+        { label: "Source Sans 3", value: "source-sans-3" },
+        { label: "Lato", value: "lato" },
+        { label: "Montserrat", value: "montserrat" },
+        { label: "Poppins", value: "poppins" },
+        { label: "Raleway", value: "raleway" },
+        { label: "Oswald", value: "oswald" },
+        { label: "Playfair Display", value: "playfair-display" },
+        { label: "Rubik Spray Paint", value: "rubik-spray-paint" },
+      ],
+    },
+    {
+      key: "fontWeight",
+      label: "Font weight",
+      type: "select",
+      options: [
+        { label: "Regular", value: "400" },
+        { label: "Bold", value: "700" },
+      ],
+    },
+    {
+      key: "material",
+      label: "Material",
+      type: "select",
+      options: [
+        { label: "Metallic", value: "metallic" },
+        { label: "Solid", value: "solid" },
+        { label: "Glass", value: "glass" },
+      ],
+    },
+    {
+      key: "environment",
+      label: "Environment",
+      type: "select",
+      options: [
+        { label: "Studio", value: "studio" },
+        { label: "Rim", value: "rim" },
+        { label: "Soft", value: "soft" },
+        { label: "Dramatic", value: "dramatic" },
+        { label: "Neon", value: "neon" },
+      ],
+    },
+    {
+      key: "colorMode",
+      label: "Color source",
+      type: "select",
+      options: [
+        { label: "Active palette", value: "palette" },
+        { label: "Custom colors", value: "custom" },
+      ],
+    },
+    { key: "colorA", label: "Body", type: "color" },
+    { key: "colorB", label: "Highlight", type: "color" },
+    { key: "colorC", label: "Rim", type: "color" },
+    { key: "interactive", label: "Pointer drag", type: "toggle" },
+    {
+      key: "poseMode",
+      label: "Motion",
+      type: "select",
+      options: [
+        { label: "Static", value: "static" },
+        { label: "Follow cursor", value: "pointer" },
+        { label: "Auto-rotate", value: "auto-rotate" },
+        { label: "Float", value: "float" },
+      ],
+    },
+    {
+      key: "quality",
+      label: "Quality",
+      type: "select",
+      options: [
+        { label: "Automatic", value: "auto" },
+        { label: "Low", value: "low" },
+        { label: "Medium", value: "medium" },
+        { label: "High", value: "high" },
+      ],
+    },
+    { key: "paused", label: "Paused", type: "toggle" },
+  ],
+  source: (values) => componentSource(
+    "Text3D",
+    "@/components/ui/Text3D.vue",
+    `<section class="h-96 overflow-hidden rounded-balsa-surface bg-balsa-background">\n    <Text3D text="${escapedAttribute(text(values, "text"))}" preset="${escapedAttribute(text(values, "preset"))}" font-mode="${escapedAttribute(text(values, "fontMode"))}" font="${escapedAttribute(text(values, "font"))}" :font-weight="${number(values, "fontWeight")}" material="${escapedAttribute(text(values, "material"))}" environment="${escapedAttribute(text(values, "environment"))}" color-mode="${escapedAttribute(text(values, "colorMode"))}" :colors='["${escapedAttribute(text(values, "colorA"))}", "${escapedAttribute(text(values, "colorB"))}", "${escapedAttribute(text(values, "colorC"))}"]'${booleanAttribute("interactive", bool(values, "interactive"))}${optionalAttribute("pose-mode", text(values, "poseMode"), "pointer")} quality="${escapedAttribute(text(values, "quality"))}"${booleanAttribute("paused", bool(values, "paused"))} />\n  </section>`,
+  ),
+};
+
 const productionCompositionPlaygroundMetadata = [
   ["image-compare-card","ImageCompareCard"],
   ["inbox-thread-card","InboxThreadCard"],
@@ -2981,6 +3117,7 @@ export const playgrounds: Readonly<Record<string, PlaygroundDefinition>> = {
   textarea,
   breadcrumb,
   "gradient-background": gradientBackground,
+  "text-3d": text3D,
 };
 
 export function getPlayground(name: string): PlaygroundDefinition | undefined {

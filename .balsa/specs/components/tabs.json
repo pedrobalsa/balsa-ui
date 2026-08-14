@@ -9,12 +9,13 @@
     "name": "tabs"
   },
   "status": "beta",
-  "version": "0.1.0",
-  "purpose": "Switch between related local panels without navigating away, with compact navigation or visual-choice layouts and square underline geometry.",
+  "version": "0.1.2",
+  "purpose": "Switch between related local or filtered result panels without navigating away, with compact responsive navigation and square underline geometry.",
   "useFor": [
     "Related peer views",
     "Compact content segmentation",
-    "Local settings categories"
+    "Local settings categories",
+    "Filtered result panels"
   ],
   "avoidFor": [
     "Primary site navigation",
@@ -28,8 +29,9 @@
   ],
   "accessibility": [
     "Implements tablist, tab, and tabpanel roles.",
-    "Arrow, Home, and End keys move focus among enabled tabs.",
-    "Each tab is linked to its labelled panel."
+    "Left, Right, Home, and End keys move focus among enabled tabs without consuming vertical page-scrolling keys.",
+    "Each tab is linked to its labelled panel.",
+    "Non-tile tab lists scroll horizontally when their labels exceed the available width without exposing a cross-axis scrollbar."
   ],
   "variants": [
     "surface",
@@ -56,13 +58,14 @@
   "commonMistakes": [
     "Using Tabs as page navigation.",
     "Hiding essential comparison content in separate panels.",
-    "Changing tab ids between renders."
+    "Changing tab ids between renders.",
+    "Rendering filtered results outside the associated tab panel."
   ],
   "examples": [
     {
       "id": "underline",
       "title": "Underline navigation",
-      "description": "Use an understated active indicator for familiar local views.",
+      "description": "Use an understated active indicator; long tab lists scroll at narrow widths.",
       "source": "<script setup lang=\"ts\">\nimport Tabs from \"@/components/ui/Tabs.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeTab = ref(\"preview\");\nconst items = [\n  { id: \"preview\", label: \"Tab placeholder 01\", icon: Eye },\n  { id: \"source\", label: \"Tab placeholder 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <Tabs id=\"component-view\" v-model=\"activeTab\" :items=\"items\" label=\"Tabs placeholder\" type=\"underline\">\n    <template #preview>Lorem ipsum dolor sit amet.</template>\n    <template #source>Consectetur adipiscing elit.</template>\n  </Tabs>\n</template>"
     },
     {
@@ -105,6 +108,34 @@
       {
         "name": "items",
         "type": "readonly TabItem[]",
+        "shape": {
+          "type": "readonly TabItem[]",
+          "items": {
+            "type": "TabItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

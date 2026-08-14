@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.7.1
+
+- Released `balsa-ui@0.7.1` as a packaging-only patch release. No component
+  API, configuration schema, or registry item version changed. `balsa add
+  text-3d` failed for anyone installing from npm: the item declares 84 files,
+  76 of them typeface JSON under `public/fonts/typeface/`, and that directory
+  was missing from the published package. Local installation reads every
+  declared file and has no network fallback, so the command exited with
+  `ENOENT` on the first typeface. Installing from the hosted registry was
+  unaffected, because `/r/<name>.json` embeds file content at build time,
+  which is why the failure was visible only through the npm CLI. Upgrade to
+  install `text-3d`; nothing else in 0.7.0 was affected and no reinstall of
+  previously installed components is required.
+
+## 0.7.0
+
+- Released `balsa-ui@0.7.0` as a breaking pre-1.0 minor release. Text3D moves
+  to item version 0.7.0; no other registry item version changes. Additive
+  Text3D work in this release includes camera `zoom`, `gradientPreset`, runtime
+  Google Fonts through `fontFamily`, composited/text/backdrop PNG export
+  layers, and a `text-3d add` workflow that installs the component before
+  writing a scene.
+
 ## 0.6.0
 
 - Released `balsa-ui@0.6.0`. There are no breaking component or configuration

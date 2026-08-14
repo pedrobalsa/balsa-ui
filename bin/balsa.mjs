@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { detectLocalModifications, installRegistryItems } from "../scripts/install-registry.mjs";
 import { createBackgroundConfiguration } from "../scripts/background-cli.mjs";
+import { createText3DConfiguration } from "../scripts/text-3d-cli.mjs";
 import { applyThemeConfiguration, createThemeConfiguration, themePresets } from "../scripts/theme-cli.mjs";
 import {
   applyBuiltInDesignSystem,
@@ -71,6 +72,7 @@ Usage:
   balsa theme apply <preset> [--name <id>] [--cwd <project>] [--force] [--json]
   balsa theme apply --list
   balsa background create <name> [--preset <preset> | --from <file> | --config <payload>] [--cwd <project>] [--force]
+  balsa text-3d add <name> [--preset <preset> | --from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa theme create <name> [--preset <theme> | --from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa palette create <name> [--from <file> | --config <payload>] [--cwd <project>] [--force]
   balsa design-system show [--cwd <project>] [--json]
@@ -93,6 +95,7 @@ Examples:
   npx balsa-ui@latest background create hero --preset obsidian-fold
   npx balsa-ui@latest background create hero --from ./balsa-background.json
   npx balsa-ui@latest background create hero --config <studio-payload>
+  npx balsa-ui@latest text-3d add hero-text --config <studio-payload>
   npx balsa-ui@latest theme create my-modern-flat-theme --preset modern-flat
   npx balsa-ui@latest palette create my-palette --config <studio-payload>
   npx balsa-ui@latest design-system apply press
@@ -691,6 +694,37 @@ function parseBackgroundArguments(argv) {
   return { name, cwd, preset, from, inlineConfig, force };
 }
 
+function parseText3DArguments(argv) {
+  const [subcommand, name, ...options] = argv;
+  if (subcommand !== "add" || !name) {
+    throw new Error("Usage: balsa text-3d add <name> [--preset <preset> | --from <file> | --config <payload>] [--cwd <project>] [--force]");
+  }
+  let cwd = process.cwd();
+  let preset;
+  let from;
+  let inlineConfig;
+  let force = false;
+  for (let index = 0; index < options.length; index += 1) {
+    const value = options[index];
+    if (["--cwd", "--preset", "--from", "--config"].includes(value)) {
+      const next = options[index + 1];
+      if (!next) throw new Error(`${value} requires a value.`);
+      if (value === "--cwd") cwd = path.resolve(next);
+      if (value === "--preset") preset = next;
+      if (value === "--from") from = path.resolve(next);
+      if (value === "--config") inlineConfig = next;
+      index += 1;
+      continue;
+    }
+    if (value === "--force") {
+      force = true;
+      continue;
+    }
+    throw new Error(`Unknown option: ${value}`);
+  }
+  return { name, cwd, preset, from, inlineConfig, force };
+}
+
 function parseThemeArguments(argv) {
   const [subcommand, name, ...options] = argv;
   if (subcommand !== "create" || !name) {
@@ -732,6 +766,38 @@ async function createBackground(argv) {
   ];
   if (npmDependencies.length) {
     console.log(`Required npm dependencies: ${npmDependencies.join(", ")}`);
+  }
+}
+
+async function addText3D(argv) {
+  const options = parseText3DArguments(argv);
+  await preflight(options.cwd, { json: false });
+  const result = await createText3DConfiguration(options);
+  const includesTheme = result.installed.some((item) => item.name === "balsa-theme");
+  const stylesheet = includesTheme
+    ? await ensureStyleImports(options.cwd)
+    : undefined;
+  const dependencyInstallation = await installDependencies(options.cwd, result.installed);
+  const moduleName = path.basename(result.relativeTarget, ".ts");
+  const typefaceCount = result.installed
+    .flatMap((item) => item.files ?? [])
+    .filter((file) => (file.target ?? file.path ?? "").includes("fonts/typeface"))
+    .length;
+  console.log(`Created ${result.relativeTarget}`);
+  console.log(`Import: import { ${result.identifier} } from "@/text-3d/${moduleName}";`);
+  console.log(`Use: <Text3D :config="${result.identifier}" />`);
+  console.log(
+    formatInstallationPhases({
+      installed: result.installed,
+      stylesheet,
+      projectRoot: options.cwd,
+      dependencyInstallation,
+    }).join("\n"),
+  );
+  if (typefaceCount) {
+    console.log(
+      `Typeface assets installed: ${String(typefaceCount)} JSON files under public/fonts/typeface.`,
+    );
   }
 }
 
@@ -1120,6 +1186,7 @@ export const commands = {
   view: viewItem,
   add: addItems,
   background: createBackground,
+  "text-3d": addText3D,
   theme: runThemeCommand,
   palette: createPalette,
   "design-system": runDesignSystemCommand,

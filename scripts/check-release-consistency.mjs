@@ -7,12 +7,42 @@
 import { readFile, readdir } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { commands } from "../bin/balsa.mjs";
 import { readJson, rootDir, loadRegistry } from "./registry-lib.mjs";
 
-const errors = [];
-const packageJson = await readJson(path.join(rootDir, "package.json"));
-const registry = await loadRegistry();
+/**
+ * `balsa add`, `npx balsa add`, `npx balsa-ui@latest search`,
+ * `npx balsa-ui background create`, `balsa-ui@latest text-3d`.
+ *
+ * `balsa-ui` without `npx` or `@version` is the product name, not an
+ * invocation — "stay with balsa-ui alone" is prose. Command names may contain
+ * digits (`text-3d`); a leading `$` is a prompt placeholder and a leading `.`
+ * is a path (`.balsa directory`).
+ */
+export const documentedCommandPatternSource =
+  String.raw`(?<![\w$@/.-])(?:npx[ \t]+balsa-ui(?:@[a-z0-9.]+)?|(?:npx[ \t]+)?balsa(?:-ui@[a-z0-9.]+)?)[ \t]+([a-z][a-z0-9-]*)`;
+
+export const documentedCommandProse = new Set([
+  "ui",
+  "and",
+  "the",
+  "is",
+  "cli",
+  "component",
+  "components",
+  "registry",
+]);
+
+export function documentedCliCommands(text) {
+  const pattern = new RegExp(documentedCommandPatternSource, "g");
+  const names = [];
+  for (const match of text.matchAll(pattern)) {
+    const command = match[1];
+    if (!documentedCommandProse.has(command)) names.push(command);
+  }
+  return names;
+}
 
 async function documentationSources() {
   const sources = [
@@ -21,6 +51,7 @@ async function documentationSources() {
     "public/agent/quick-start.md",
     "README.md",
     "skills/balsa-ui/SKILL.md",
+    "skills/balsa-template-design/SKILL.md",
   ];
   // Directories are discovered rather than listed file by file, so website
   // content is covered wherever it lives. The public export carries a subset of
@@ -49,153 +80,152 @@ async function documentationSources() {
   return sources;
 }
 
-// `balsa add`, `npx balsa-ui@latest search`, `npx balsa-ui background create`.
-// The subcommand must sit on the same line, and a `$`-prefixed token is a prompt
-// placeholder rather than an invocation.
-// A leading dot makes it a path, not an invocation: `.balsa directory` names a
-// folder, `balsa add` names a command.
-const commandPattern =
-  /(?<![\w$@/.-])(?:npx[ \t]+)?balsa(?:-ui)?(?:@[a-z0-9.]+)?[ \t]+([a-z][a-z-]*)/g;
-const prose = new Set(["ui", "and", "the", "is", "cli", "component", "components", "registry"]);
+async function checkReleaseConsistency() {
+  const errors = [];
+  const packageJson = await readJson(path.join(rootDir, "package.json"));
+  const registry = await loadRegistry();
 
-for (const source of await documentationSources()) {
-  let text;
-  try {
-    text = await readFile(path.join(rootDir, source), "utf8");
-  } catch (error) {
-    if (error.code === "ENOENT") continue;
-    throw error;
-  }
-  for (const match of text.matchAll(commandPattern)) {
-    const command = match[1];
-    if (prose.has(command)) continue;
-    if (!Object.hasOwn(commands, command)) {
-      errors.push(
-        `${source}: documents \`balsa ${command}\`, which this CLI does not support.`
-        + ` Publish the CLI before the documentation that advertises it.`,
-      );
+  for (const source of await documentationSources()) {
+    let text;
+    try {
+      text = await readFile(path.join(rootDir, source), "utf8");
+    } catch (error) {
+      if (error.code === "ENOENT") continue;
+      throw error;
+    }
+    for (const command of documentedCliCommands(text)) {
+      if (!Object.hasOwn(commands, command)) {
+        errors.push(
+          `${source}: documents \`balsa ${command}\`, which this CLI does not support.`
+          + ` Publish the CLI before the documentation that advertises it.`,
+        );
+      }
     }
   }
-}
 
-// registry.json follows the shadcn registry schema, which has no release
-// version, so the Balsa-owned catalog is where the npm version is stamped.
-for (const relativePath of [
-  ".balsa/catalog.json",
-  "public/catalog.json",
-  "starters/vue/.balsa/catalog.json",
-]) {
+  // registry.json follows the shadcn registry schema, which has no release
+  // version, so the Balsa-owned catalog is where the npm version is stamped.
+  for (const relativePath of [
+    ".balsa/catalog.json",
+    "public/catalog.json",
+    "starters/vue/.balsa/catalog.json",
+  ]) {
+    try {
+      const catalog = await readJson(path.join(rootDir, relativePath));
+      if (catalog.releaseVersion !== packageJson.version) {
+        errors.push(
+          `${relativePath} releaseVersion ${JSON.stringify(catalog.releaseVersion)} does not match package.json ${packageJson.version}.`
+          + ` Rebuild the registry and resynchronize the starter before releasing.`,
+        );
+      }
+      if (catalog.items.length !== registry.items.filter((item) => item.meta?.spec).length) {
+        errors.push(`${relativePath} item count is stale against registry.json.`);
+      }
+    } catch (error) {
+      if (error.code === "ENOENT") {
+        errors.push(`${relativePath} is missing. Run npm run registry:build && npm run starter:sync.`);
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  // The published index is how registry tooling and directory listings discover
+  // the namespace without knowing item names in advance.
   try {
-    const catalog = await readJson(path.join(rootDir, relativePath));
-    if (catalog.releaseVersion !== packageJson.version) {
+    const index = await readJson(path.join(rootDir, "public", "r", "registry.json"));
+    if (index.version !== packageJson.version) {
       errors.push(
-        `${relativePath} releaseVersion ${JSON.stringify(catalog.releaseVersion)} does not match package.json ${packageJson.version}.`
-        + ` Rebuild the registry and resynchronize the starter before releasing.`,
+        `public/r/registry.json version ${JSON.stringify(index.version)} does not match package.json ${packageJson.version}.`,
       );
     }
-    if (catalog.items.length !== registry.items.filter((item) => item.meta?.spec).length) {
-      errors.push(`${relativePath} item count is stale against registry.json.`);
+    if (index.items?.length !== registry.items.length) {
+      errors.push(
+        `public/r/registry.json lists ${index.items?.length} items but registry.json has ${registry.items.length}.`,
+      );
+    }
+    if (index.homepage !== packageJson.homepage) {
+      errors.push("public/r/registry.json homepage does not match package.json.");
     }
   } catch (error) {
     if (error.code === "ENOENT") {
-      errors.push(`${relativePath} is missing. Run npm run registry:build && npm run starter:sync.`);
+      errors.push("public/r/registry.json is missing. Run npm run registry:build.");
     } else {
       throw error;
     }
   }
-}
 
-// The published index is how registry tooling and directory listings discover
-// the namespace without knowing item names in advance.
-try {
-  const index = await readJson(path.join(rootDir, "public", "r", "registry.json"));
-  if (index.version !== packageJson.version) {
+  // The reverse direction matters too. Proving a documented command exists stops
+  // the website advertising something nobody can run; proving a shipped command
+  // is documented stops a release adding a command nobody can discover.
+  const documentedCommands = new Set();
+  for (const source of await documentationSources()) {
+    let text;
+    try {
+      text = await readFile(path.join(rootDir, source), "utf8");
+    } catch (error) {
+      if (error.code === "ENOENT") continue;
+      throw error;
+    }
+    for (const command of documentedCliCommands(text)) documentedCommands.add(command);
+  }
+
+  // `help` and `version` are conventions every CLI carries; the rest are Balsa's
+  // own surface and have to be findable.
+  const undocumented = Object.keys(commands)
+    .filter((command) => !["help", "version"].includes(command))
+    .filter((command) => !documentedCommands.has(command));
+  if (undocumented.length) {
     errors.push(
-      `public/r/registry.json version ${JSON.stringify(index.version)} does not match package.json ${packageJson.version}.`,
+      `These commands ship but are not documented anywhere: ${undocumented.join(", ")}.`
+      + ` Documentation is part of the release, not a follow-up to it.`,
     );
   }
-  if (index.items?.length !== registry.items.length) {
+
+  if (registry.homepage !== packageJson.homepage) {
     errors.push(
-      `public/r/registry.json lists ${index.items?.length} items but registry.json has ${registry.items.length}.`,
+      `registry.json homepage ${JSON.stringify(registry.homepage)} does not match package.json ${JSON.stringify(packageJson.homepage)}.`,
     );
   }
-  if (index.homepage !== packageJson.homepage) {
-    errors.push("public/r/registry.json homepage does not match package.json.");
+
+  // Every command the public documentation tells a user to run must actually run.
+  const readOnlyInvocations = [
+    ["version"],
+    ["help"],
+    ["list"],
+    ["list", "--json"],
+    ["search", "settings form"],
+    ["search", "settings form", "--json"],
+    ["info", "button", "--markdown"],
+    ["info", "button", "--json"],
+    ["docs", "button", "--markdown"],
+    ["view", "button", "--json"],
+    ["doctor", "--json", "--cwd", rootDir],
+    ["theme", "apply", "--list"],
+  ];
+
+  for (const invocation of readOnlyInvocations) {
+    const result = spawnSync(process.execPath, [path.join(rootDir, "bin", "balsa.mjs"), ...invocation], {
+      cwd: rootDir,
+      encoding: "utf8",
+    });
+    if (result.status !== 0) {
+      errors.push(
+        `Documented command \`balsa ${invocation.join(" ")}\` exited ${result.status}: ${(result.stderr ?? "").trim().split("\n")[0]}`,
+      );
+    }
   }
-} catch (error) {
-  if (error.code === "ENOENT") {
-    errors.push("public/r/registry.json is missing. Run npm run registry:build.");
+
+  if (errors.length) {
+    console.error(errors.map((error) => `- ${error}`).join("\n"));
+    process.exitCode = 1;
   } else {
-    throw error;
-  }
-}
-
-// The reverse direction matters too. Proving a documented command exists stops
-// the website advertising something nobody can run; proving a shipped command
-// is documented stops a release adding a command nobody can discover.
-const documentedCommands = new Set();
-for (const source of await documentationSources()) {
-  let text;
-  try {
-    text = await readFile(path.join(rootDir, source), "utf8");
-  } catch (error) {
-    if (error.code === "ENOENT") continue;
-    throw error;
-  }
-  for (const match of text.matchAll(commandPattern)) documentedCommands.add(match[1]);
-}
-
-// `help` and `version` are conventions every CLI carries; the rest are Balsa's
-// own surface and have to be findable.
-const undocumented = Object.keys(commands)
-  .filter((command) => !["help", "version"].includes(command))
-  .filter((command) => !documentedCommands.has(command));
-if (undocumented.length) {
-  errors.push(
-    `These commands ship but are not documented anywhere: ${undocumented.join(", ")}.`
-    + ` Documentation is part of the release, not a follow-up to it.`,
-  );
-}
-
-if (registry.homepage !== packageJson.homepage) {
-  errors.push(
-    `registry.json homepage ${JSON.stringify(registry.homepage)} does not match package.json ${JSON.stringify(packageJson.homepage)}.`,
-  );
-}
-
-// Every command the public documentation tells a user to run must actually run.
-const readOnlyInvocations = [
-  ["version"],
-  ["help"],
-  ["list"],
-  ["list", "--json"],
-  ["search", "settings form"],
-  ["search", "settings form", "--json"],
-  ["info", "button", "--markdown"],
-  ["info", "button", "--json"],
-  ["docs", "button", "--markdown"],
-  ["view", "button", "--json"],
-  ["doctor", "--json", "--cwd", rootDir],
-  ["theme", "apply", "--list"],
-];
-
-for (const invocation of readOnlyInvocations) {
-  const result = spawnSync(process.execPath, [path.join(rootDir, "bin", "balsa.mjs"), ...invocation], {
-    cwd: rootDir,
-    encoding: "utf8",
-  });
-  if (result.status !== 0) {
-    errors.push(
-      `Documented command \`balsa ${invocation.join(" ")}\` exited ${result.status}: ${(result.stderr ?? "").trim().split("\n")[0]}`,
+    console.log(
+      `Release surfaces are consistent: ${Object.keys(commands).length} CLI commands, registry and npm at ${packageJson.version}, ${readOnlyInvocations.length} documented commands executed.`,
     );
   }
 }
 
-if (errors.length) {
-  console.error(errors.map((error) => `- ${error}`).join("\n"));
-  process.exitCode = 1;
-} else {
-  console.log(
-    `Release surfaces are consistent: ${Object.keys(commands).length} CLI commands, registry and npm at ${packageJson.version}, ${readOnlyInvocations.length} documented commands executed.`,
-  );
-}
+const invokedDirectly = process.argv[1]
+  && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (invokedDirectly) await checkReleaseConsistency();

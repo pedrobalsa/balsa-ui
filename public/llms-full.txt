@@ -24,6 +24,7 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Optional complete component listing](https://balsa-ui.com/llms-full.txt)
 - [Installation](https://balsa-ui.com/docs/installation)
 - [CLI](https://balsa-ui.com/docs/cli)
+- [Template design skill](https://balsa-ui.com/agent/skills/balsa-template-design/SKILL.md)
 
 ## Components
 
@@ -86,6 +87,7 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Navbar](https://balsa-ui.com/docs/components/navbar.md): Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.
 - [Footer](https://balsa-ui.com/docs/components/footer.md): Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.
 - [GradientBackground](https://balsa-ui.com/docs/components/gradient-background.md): Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.
+- [Text3D](https://balsa-ui.com/docs/components/text-3d.md): Palette-aware and theme-aware extruded display text with finite presets, materials, environments and fonts, optional drag, wheel zoom and rotation, lifecycle fallbacks, and still PNG capture.
 - [AnalyticsChartCard](https://balsa-ui.com/docs/components/analytics-chart-card.md): Trend visualization with period context and semantic delta.
 - [MetricGridCard](https://balsa-ui.com/docs/components/metric-grid-card.md): Aligned operational KPIs with labels, values, and supporting detail.
 - [ResourceTableCard](https://balsa-ui.com/docs/components/resource-table-card.md): Resource index with status, metadata, row selection, and creation action.

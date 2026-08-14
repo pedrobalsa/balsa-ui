@@ -9,7 +9,7 @@
     "name": "resizable"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Divide available space into two panels whose boundary can be adjusted by pointer or keyboard.",
   "useFor": [
     "Editor panes",

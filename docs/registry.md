@@ -64,6 +64,17 @@ npx balsa-ui@latest background create hero --from ./balsa-background.json
 
 Gradient Studio supplies the complete `--config` command, so exact-current import needs no intermediate download. The background command installs the `gradient-background` registry item and its support files through the same safe installer, writes `src/backgrounds/<name>.ts`, records provenance, and refuses a differing generated file unless `--force` is explicit.
 
+Generate a typed 3D text configuration from 3D Text Studio's shell-safe inline
+handoff, a built-in preset, or saved JSON:
+
+```sh
+npx balsa-ui@latest text-3d add hero-text --config STUDIO_PAYLOAD
+npx balsa-ui@latest text-3d add hero-text --preset liquid-chrome
+npx balsa-ui@latest text-3d add hero-text --from ./balsa-text-3d.json
+```
+
+The command installs the `text-3d` registry item and its support files through the same safe installer if they are missing — `three`, `@types/three`, `fontkit`, and 76 typeface JSON assets — writes `src/text-3d/<name>.ts`, records provenance, and refuses a differing generated file unless `--force` is explicit.
+
 Repository contributors can run the equivalent deterministic local command:
 
 ```sh
@@ -74,7 +85,7 @@ Both commands recursively install `@balsa/balsa-theme` and
 `@balsa/balsa-foundation`, install their required npm packages through the
 `packageManager` declaration or nearest unambiguous lockfile, write source
 under the target project's `src/`, synchronize the compact catalog,
-specifications, and optional skill, and record hashes in
+specifications, and Balsa component and template-design skills, and record hashes in
 `.balsa/installed.json`. Components do not install a palette. The CLI wires the
 adaptive foundation and design-theme recipes after Tailwind; this is the resulting
 order to inspect:

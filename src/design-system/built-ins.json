@@ -33,16 +33,12 @@
           }
         }
       },
-      "gradient": "mesh-drift",
+      "gradient": "obsidian-fold",
       "gradientOverrides": {
         "colors": ["#020304", "#191B1D", "#65696D", "#F8F9F7", "#34312D", "#FFFFFF"],
-        "grain": 0.255,
-        "grainSize": 1.4,
+        "direction": -133,
         "effect": "ascii",
-        "effectScale": 10,
-        "effectMix": 1,
-        "effectColorMode": "gradient",
-        "effectCharacters": "BLSAblsa"
+        "effectCharacters": " BLSAblsa"
       }
     },
     {

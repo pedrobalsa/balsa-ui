@@ -1,0 +1,4 @@
+interface:
+  display_name: "Balsa UI"
+  short_description: "Build Vue interfaces from the Balsa open-code registry"
+  default_prompt: "Use Balsa UI metadata and editable registry source to implement this Vue interface."

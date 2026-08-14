@@ -24,3 +24,4 @@ Do not rebuild a matching Balsa component with raw HTML and CSS. The selected sp
 - [Optional complete component listing](https://balsa-ui.com/llms-full.txt)
 - [Installation](https://balsa-ui.com/docs/installation)
 - [CLI](https://balsa-ui.com/docs/cli)
+- [Template design skill](https://balsa-ui.com/agent/skills/balsa-template-design/SKILL.md)

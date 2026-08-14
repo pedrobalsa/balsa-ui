@@ -176,16 +176,30 @@ describe("Balsa CLI agent workflow", () => {
       expect(instructions).toContain("Preserve this guidance.");
       expect(instructions).toContain("balsa-ui-agent-context:start");
       expect(instructions).toContain('balsa-ui@latest search "<intent>"');
+      expect(instructions).toContain("$balsa-template-design");
       expect(existsSync(resolve(target, ".balsa/catalog-index.json"))).toBe(true);
       expect(existsSync(resolve(target, ".balsa/specs/components/button.json"))).toBe(true);
       expect(existsSync(resolve(target, ".agents/skills/balsa-ui/SKILL.md"))).toBe(true);
       expect(existsSync(resolve(target, ".balsa/skills/balsa-ui/SKILL.md"))).toBe(true);
+      expect(
+        existsSync(resolve(target, ".agents/skills/balsa-template-design/SKILL.md")),
+      ).toBe(true);
+      expect(
+        existsSync(resolve(target, ".agents/skills/balsa-template-design/LICENSE.txt")),
+      ).toBe(true);
+      expect(
+        existsSync(resolve(target, ".balsa/skills/balsa-template-design/SKILL.md")),
+      ).toBe(true);
       const initializedTypecheck = typecheckConsumer(target);
       expect(initializedTypecheck.status, initializedTypecheck.stderr).toBe(0);
 
       writeFileSync(
         resolve(target, ".agents/skills/balsa-ui/SKILL.md"),
         "Project-owned Balsa guidance.\n",
+      );
+      writeFileSync(
+        resolve(target, ".agents/skills/balsa-template-design/SKILL.md"),
+        "Project-owned template direction.\n",
       );
       const add = runCli(["add", "button", "--cwd", target, "--json"], env);
       expect(add.status, add.stderr).toBe(0);
@@ -197,6 +211,12 @@ describe("Balsa CLI agent workflow", () => {
       expect(
         readFileSync(resolve(target, ".agents/skills/balsa-ui/SKILL.md"), "utf8"),
       ).toBe("Project-owned Balsa guidance.\n");
+      expect(
+        readFileSync(
+          resolve(target, ".agents/skills/balsa-template-design/SKILL.md"),
+          "utf8",
+        ),
+      ).toBe("Project-owned template direction.\n");
       const updatedCss = readFileSync(resolve(target, "src/index.css"), "utf8");
       expect(updatedCss).not.toContain("balsa-icons.css");
       expect(existsSync(resolve(target, "src/styles/balsa-icons.css"))).toBe(false);

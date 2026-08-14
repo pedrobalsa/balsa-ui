@@ -153,12 +153,58 @@
       {
         "name": "groups",
         "type": "readonly CommandGroup[] | undefined",
+        "shape": {
+          "type": "readonly CommandGroup[]",
+          "items": {
+            "type": "CommandGroup",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly CommandItem[]",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"projects\", label: \"Projects\", items: [ { id: \"atlas\", label: \"Atlas\", icon: Boxes, shortcut: \"1\" }, { id: \"relay\", label: \"Relay\", icon: Boxes, shortcut: \"2\" }, { id: \"harbor\", label: \"Harbor\", icon: Boxes, shortcut: \"3\" }, ], }, { id: \"actions\", label: \"Actions\", items: [ { id: \"deploy\", label: \"Deploy the current commit\", icon: Rocket }, { id: \"branch\", label: \"Open a preview branch\", icon: GitBranch }, { id: \"logs\", label: \"Stream production logs\", icon: ScrollText }, ], }, ]"
       },
       {
         "name": "recents",
         "type": "readonly { id: string; label: string; detail: string; }[] | undefined",
+        "shape": {
+          "type": "readonly { id: string; label: string; detail: string; }[]",
+          "items": {
+            "type": "{ id: string; label: string; detail: string; }",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "detail",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"atlas-logs\", label: \"Atlas production logs\", detail: \"8 minutes ago\" }, { id: \"relay-preview\", label: \"Relay preview branch\", detail: \"1 hour ago\" }, { id: \"members\", label: \"Members and roles\", detail: \"Yesterday\" }, ]"
       }

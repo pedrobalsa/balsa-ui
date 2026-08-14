@@ -189,6 +189,34 @@
       {
         "name": "slots",
         "type": "readonly ScheduleSlot[] | undefined",
+        "shape": {
+          "type": "readonly ScheduleSlot[]",
+          "items": {
+            "type": "ScheduleSlot",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "time",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "taken",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"08\", time: \"08:00\", label: \"Early, before either inbox\" }, { id: \"09\", time: \"09:00\", label: \"Before the standup\" }, { id: \"10\", time: \"10:00\", label: \"Held for the release review\", taken: true }, { id: \"11\", time: \"11:00\", label: \"Overlaps both time zones\" }, { id: \"14\", time: \"14:00\", label: \"After lunch in Frankfurt\" }, { id: \"15\", time: \"15:00\", label: \"Quiet hour on both calendars\" }, { id: \"16\", time: \"16:00\", label: \"Held for on-call handover\", taken: true }, { id: \"17\", time: \"17:00\", label: \"Last hour of the Frankfurt day\" }, ]"
       }

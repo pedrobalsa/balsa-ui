@@ -16,7 +16,7 @@ export const agentCreationSourceOptions = [
 
 export function projectContextInstruction(
   context: AgentProjectContext,
-  artifact: "design system" | "gradient background",
+  artifact: "design system" | "gradient background" | "3D text",
 ): string {
   if (context === "start-project") {
     return `Start a new Vue 3 project that uses this ${artifact} from its first screen. Inspect the workspace first; if no Vue project exists, create one with the project's preferred package manager, then run Balsa initialization before applying the artifact.`;
@@ -30,7 +30,7 @@ export function projectContextInstruction(
 export function directionBlock(
   source: AgentCreationSource,
   direction: string,
-  artifact: "design system" | "gradient background",
+  artifact: "design system" | "gradient background" | "3D text",
 ): string {
   if (source === "image") {
     return `Use the image attached to this conversation as the visual reference. If no image is attached, ask for it before continuing. Recreate the complete ${artifact} expressed by the image as closely as Balsa's schema allows.`;

@@ -2,7 +2,7 @@
   "$schema": "https://shadcn-vue.com/schema/registry.json",
   "name": "balsa-ui",
   "homepage": "https://balsa-ui.com",
-  "version": "0.6.0",
+  "version": "0.7.1",
   "items": [
     {
       "name": "balsa-foundation",
@@ -2903,6 +2903,458 @@
         "spec": "specs/components/gradient-background.json",
         "documentation": "docs/components/gradient-background.md",
         "example": "docs/components/gradient-background.md",
+        "tokens": [
+          "--balsa-color-background",
+          "--balsa-color-surface",
+          "--balsa-color-primary",
+          "--balsa-color-secondary",
+          "--balsa-color-accent"
+        ]
+      }
+    },
+    {
+      "name": "text-3d",
+      "type": "registry:ui",
+      "title": "Text3D",
+      "description": "Palette-aware and theme-aware extruded display text with finite presets, materials, environments and fonts, optional drag, wheel zoom and rotation, lifecycle fallbacks, and still PNG capture.",
+      "dependencies": [
+        "vue",
+        "three",
+        "@types/three",
+        "fontkit",
+        "@types/fontkit"
+      ],
+      "registryDependencies": [
+        "@balsa/gradient-background",
+        "@balsa/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Text3D.vue",
+          "type": "registry:ui",
+          "target": "src/components/ui/Text3D.vue"
+        },
+        {
+          "path": "src/components/ui/text-3d.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-presets.json",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-presets.json"
+        },
+        {
+          "path": "src/components/ui/text-3d-environments.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-environments.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-liquid-geometry.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-liquid-geometry.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-renderer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-renderer.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-fonts.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-fonts.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-typeface.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-typeface.ts"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/rubik-spray-paint-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/rubik-spray-paint-400.json"
+        }
+      ],
+      "meta": {
+        "framework": "vue",
+        "spec": "specs/components/text-3d.json",
+        "documentation": "docs/components/text-3d.md",
+        "example": "docs/components/text-3d.md",
         "tokens": [
           "--balsa-color-background",
           "--balsa-color-surface",

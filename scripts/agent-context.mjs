@@ -484,35 +484,54 @@ async function copyAgentSpecs(targetRoot, catalog) {
   }
 }
 
-async function copyAgentSkill(targetRoot, force = false) {
-  const source = await readFile(sourcePath("skills/balsa-ui/SKILL.md"), "utf8");
-  const canonicalTarget = path.join(
-    targetRoot,
-    ".balsa",
-    "skills",
-    "balsa-ui",
-    "SKILL.md",
-  );
-  await mkdir(path.dirname(canonicalTarget), { recursive: true });
-  await writeFile(canonicalTarget, source, "utf8");
+const agentSkills = [
+  {
+    name: "balsa-ui",
+    files: ["SKILL.md", "agents/openai.yaml"],
+  },
+  {
+    name: "balsa-template-design",
+    files: ["SKILL.md", "LICENSE.txt", "agents/openai.yaml"],
+  },
+];
 
-  const discoveryTarget = path.join(
-    targetRoot,
-    ".agents",
-    "skills",
-    "balsa-ui",
-    "SKILL.md",
-  );
-  if (!force) {
-    try {
-      const existing = await readFile(discoveryTarget, "utf8");
-      if (existing !== source) return;
-    } catch (error) {
-      if (error.code !== "ENOENT") throw error;
-    }
+async function writeSkillFiles(targetRoot, directory, skill) {
+  for (const file of skill.files) {
+    const source = await readFile(
+      sourcePath(path.join("skills", skill.name, file)),
+      "utf8",
+    );
+    const target = path.join(targetRoot, directory, "skills", skill.name, file);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, source, "utf8");
   }
-  await mkdir(path.dirname(discoveryTarget), { recursive: true });
-  await writeFile(discoveryTarget, source, "utf8");
+}
+
+async function copyAgentSkills(targetRoot, force = false) {
+  for (const skill of agentSkills) {
+    await writeSkillFiles(targetRoot, ".balsa", skill);
+
+    const canonicalSkill = await readFile(
+      sourcePath(path.join("skills", skill.name, "SKILL.md")),
+      "utf8",
+    );
+    const discoverySkill = path.join(
+      targetRoot,
+      ".agents",
+      "skills",
+      skill.name,
+      "SKILL.md",
+    );
+    if (!force) {
+      try {
+        const existing = await readFile(discoverySkill, "utf8");
+        if (existing !== canonicalSkill) continue;
+      } catch (error) {
+        if (error.code !== "ENOENT") throw error;
+      }
+    }
+    await writeSkillFiles(targetRoot, ".agents", skill);
+  }
 }
 
 export async function syncAgentContext(targetRoot, { forceSkill = false } = {}) {
@@ -523,7 +542,7 @@ export async function syncAgentContext(targetRoot, { forceSkill = false } = {}) 
     createCatalogIndex(catalog),
   );
   await copyAgentSpecs(targetRoot, catalog);
-  await copyAgentSkill(targetRoot, forceSkill);
+  await copyAgentSkills(targetRoot, forceSkill);
   await mkdir(path.join(targetRoot, ".balsa"), { recursive: true });
   await writeFile(
     path.join(targetRoot, ".balsa", "README.md"),
@@ -538,6 +557,8 @@ export async function syncAgentContext(targetRoot, { forceSkill = false } = {}) 
       "npx balsa-ui@latest info input --markdown",
       "npx balsa-ui@latest add input button",
       "```",
+      "",
+      "For new templates, showcases, blocks, or visually driven pages, use the companion `balsa-template-design` skill installed under `.agents/skills/` together with `balsa-ui`.",
       "",
       "Installed source belongs to this application. Preserve local changes and do not use `--force` without reviewing the diff.",
       "",
@@ -556,6 +577,7 @@ function agentInstructions() {
     "- Install matching items with `npx balsa-ui@latest add <name>` before implementing the interface. Do not rebuild a Balsa-covered control with raw HTML and CSS.",
     "- The specification is sufficient for normal composition. Inspect installed component source only when changing its behavior.",
     "- Use semantic Balsa tokens and preserve component accessibility behavior and typed APIs.",
+    "- For new templates, showcases, blocks, or visually driven pages, use `$balsa-template-design` with `$balsa-ui` before coding. The companion skill is installed under `.agents/skills/`.",
     "- Treat installed files as application source. Never use `--force` without reviewing local differences.",
     "- Validate application changes with the repository's existing lint, test, typecheck, and build commands.",
     agentBlockEnd,

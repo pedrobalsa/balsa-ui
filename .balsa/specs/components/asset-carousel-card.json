@@ -153,6 +153,34 @@
       {
         "name": "slides",
         "type": "readonly AssetSlide[] | undefined",
+        "shape": {
+          "type": "readonly AssetSlide[]",
+          "items": {
+            "type": "AssetSlide",
+            "fields": [
+              {
+                "name": "caption",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "preset",
+                "type": "\"silver-dunes\" | \"solar-bloom\" | \"mesh-drift\" | \"aurora-veil\"",
+                "required": true
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
         "required": false,
         "default": "[ { id: \"hero\", label: \"Hero banner\", caption: \"2560 × 1440 · approved\", preset: \"mesh-drift\" }, { id: \"social\", label: \"Social card\", caption: \"1200 × 630 · in review\", preset: \"aurora-veil\" }, { id: \"email\", label: \"Email header\", caption: \"1080 × 400 · approved\", preset: \"silver-dunes\" }, { id: \"docs\", label: \"Docs cover\", caption: \"1600 × 900 · draft\", preset: \"solar-bloom\" }, ]"
       }

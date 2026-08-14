@@ -1222,6 +1222,33 @@ const firstParty = createAnalyticsAdapter("first-party", (event) => {
       config: { colorMode: "palette", seed: 8031, paused: true },
     },
   ],
+  "text-3d": [
+    {
+      id: "palette-title",
+      title: "Palette title",
+      description: "The scene follows the nearest palette and active title font.",
+      config: {
+        text: "Balsa",
+        preset: "liquid-chrome",
+        colorMode: "palette",
+        fontMode: "theme",
+        paused: true,
+      },
+    },
+    {
+      id: "glass-preset",
+      title: "Glass preset",
+      description: "A finite glass preset uses a deliberate environment and render quality.",
+      config: {
+        text: "Clarity",
+        preset: "frosted-pane",
+        material: "glass",
+        environment: "soft",
+        quality: "medium",
+        poseMode: "auto-rotate",
+      },
+    },
+  ],
 };
 
 export function getComponentExamples(name: string): readonly ComponentExampleDefinition[] {

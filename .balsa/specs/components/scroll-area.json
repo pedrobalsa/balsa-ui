@@ -9,7 +9,7 @@
     "name": "scroll-area"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "purpose": "Constrain overflowing content in a labelled native scroll viewport with Balsa scrollbar treatment.",
   "useFor": [
     "Long lists inside bounded panels",

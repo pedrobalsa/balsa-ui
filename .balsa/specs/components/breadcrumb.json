@@ -9,7 +9,7 @@
     "name": "breadcrumb"
   },
   "status": "beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "purpose": "Show the current location in a compact hierarchy while linking every applicable ancestor.",
   "useFor": [
     "Documentation hierarchies",
@@ -34,7 +34,8 @@
   "accessibility": [
     "Renders a labelled navigation landmark and ordered list.",
     "The resolved current item exposes aria-current=page.",
-    "Separators are hidden from assistive technology."
+    "Separators are hidden from assistive technology.",
+    "The navigate event exposes the original uncancelled MouseEvent so router integration can preserve modifier clicks and native fallback."
   ],
   "tokens": [
     "--balsa-color-foreground",
@@ -68,6 +69,39 @@
       {
         "name": "items",
         "type": "readonly BreadcrumbItem[]",
+        "shape": {
+          "type": "readonly BreadcrumbItem[]",
+          "items": {
+            "type": "BreadcrumbItem",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "href",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "target",
+                "type": "\"_blank\" | \"_self\" | \"_parent\" | \"_top\" | undefined",
+                "required": false
+              },
+              {
+                "name": "rel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "current",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {
@@ -145,7 +179,12 @@
         "required": false
       }
     ],
-    "events": [],
+    "events": [
+      {
+        "name": "navigate",
+        "type": "[item: NavigationLink, event: MouseEvent]"
+      }
+    ],
     "slots": []
   }
 }

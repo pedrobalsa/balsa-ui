@@ -9,4 +9,6 @@ npx balsa-ui@latest info input --markdown
 npx balsa-ui@latest add input button
 ```
 
+For new templates, showcases, blocks, or visually driven pages, use the companion `balsa-template-design` skill installed under `.agents/skills/` together with `balsa-ui`.
+
 Installed source belongs to this application. Preserve local changes and do not use `--force` without reviewing the diff.

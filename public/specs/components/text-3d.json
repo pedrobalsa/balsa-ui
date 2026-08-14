@@ -1,0 +1,859 @@
+{
+  "schemaVersion": 1,
+  "name": "text-3d",
+  "title": "Text3D",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.7.0",
+  "purpose": "Render palette-aware, theme-aware extruded display text with finite materials, independently authored reflected-light cards, environments, bundled or runtime Google Fonts, presets, four exclusive motion modes, and a legible fallback.",
+  "useFor": [
+    "Hero and campaign display type",
+    "Short product or feature titles that benefit from dimensional material",
+    "Reproducible 3D text artwork exported as a still PNG"
+  ],
+  "avoidFor": [
+    "Body copy or long-form reading",
+    "Text whose meaning depends on motion or dimensional rendering",
+    "Many simultaneous WebGL text scenes"
+  ],
+  "variants": [
+    "metallic material",
+    "solid material",
+    "glass material",
+    "studio environment",
+    "rim environment",
+    "soft environment",
+    "dramatic environment",
+    "neon environment",
+    "color backdrop",
+    "gradient backdrop",
+    "environment backdrop",
+    "zero to four reflection cards",
+    "static pose",
+    "pointer follow",
+    "auto-rotate",
+    "float",
+    "theme font mode",
+    "custom font mode",
+    "palette color mode",
+    "custom color mode",
+    "left alignment",
+    "center alignment",
+    "right alignment",
+    "Space Grotesk font",
+    "Inter font",
+    "Noto Sans font",
+    "Roboto font",
+    "Open Sans font",
+    "Source Sans 3 font",
+    "Lato font",
+    "Montserrat font",
+    "Poppins font",
+    "Raleway font",
+    "Oswald font",
+    "Playfair Display font",
+    "Rubik Spray Paint font",
+    "arbitrary Google Fonts family"
+  ],
+  "states": [
+    "authored pose drag",
+    "authored wheel zoom",
+    "static pose",
+    "follow cursor",
+    "auto-rotate",
+    "floating drift",
+    "explicit lifecycle pause",
+    "reduced motion",
+    "font loading",
+    "font load failure",
+    "remote family loading",
+    "remote family unavailable",
+    "offscreen",
+    "document hidden",
+    "WebGL unavailable",
+    "context lost"
+  ],
+  "composition": {
+    "renderer": "One Three.js WebGLRenderer lays out generated typeface glyphs as extruded geometry, frames them with a perspective camera, and applies the selected physical material. Liquid Chrome evaluates one C1 height field on a shared 2D domain so the two halves meet at a vertical-tangent silhouette: each stroke is a self-similar ellipse of local half-width W, with half-thickness A(W) = min(W, 0.2 × size). Chrome Balloon deliberately retains independent front/back Poisson caps, the zero-height cap boundary, and pinched foil seam. Each named mode supplies a structurally distinct four-to-six-card HDR environment generated through PMREM, up to three broad area lights, neutral fill, optional single shadow key, and internal AgX exposure; zero to four authored cards replace independent color, azimuth, width, and intensity controls without replacing the mode's spatial character.",
+    "configuration": "Additive schema-one BalsaText3DConfig applies the selected preset first, serializable config second, overrides third, and individual component props last. rotationX, rotationY, and rotationZ define the base pose. zoom is a camera-framing multiplier whose default 1 is the fit a scene used before the field existed; it dollies the perspective camera and is not size, so it never rebuilds glyph geometry. poseMode is a public Vue prop that defaults to pointer and independently selects exactly one of static, pointer, auto-rotate, or float as a transient motion offset. gradientPreset is authored on config or overrides, not as a Vue prop: empty keeps the derived blobs room; a named GradientBackground preset replaces it; unknown names normalize to empty. A drag commits the base pose in every mode; a wheel burst commits zoom once after the gesture settles, through the same update:pose path. wheelZoom is a Vue prop, not a saved scene field: modifier (the embed default) requires Ctrl/Cmd + wheel so a plain wheel scrolls the page; always zooms on a plain wheel and is what 3D Text Studio sets because its preview fills the viewport. Existing schema-one payloads without poseMode map autoRotate true to auto-rotate and every other value to static; the legacy pose value also normalizes to static. Normalized autoRotate remains a deprecated synchronized mirror. Payloads without reflection, backdrop, fontFamily, gradientPreset, or zoom fields continue to normalize to safe legacy-lighting, color-backdrop, shipped-typeface, derived-gradient-room, and zoom-1 defaults; newer schemas reject.",
+    "presets": [
+      "liquid-chrome",
+      "chrome-balloon",
+      "polished-chrome",
+      "brushed-steel",
+      "frosted-pane"
+    ],
+    "fonts": "Thirteen finite families are shipped as generated Three.js typeface JSON assets across the 300 to 900 weight ramp; per-family coverage is recorded in text-3d-fonts.ts and a weight a family does not generate resolves to its nearest shipped face. Rubik Spray Paint supplies one authored 400 face, so every requested weight resolves to that shipped outline. Theme mode maps the inherited title family to the finite set; custom mode pins the selected family. Under custom mode a non-empty fontFamily names any family published on Google Fonts: the key-free CSS2 endpoint is asked for that weight subset to the scene's characters, the returned binary is parsed by a lazily imported fontkit, and text-3d-typeface.ts converts its outlines on the same terms the shipped assets were generated on. Remote families are cached by name, weight and character coverage; an unpublished family, a blocked request, or an offline browser falls back to the shipped typeface named by font and is never cached.",
+    "fallback": "Selectable semantic text remains in the DOM while the font loads and whenever WebGL or the font asset is unavailable; reduced motion pins every mode to the configured static pose without removing the rendered still.",
+    "background": "The color backdrop fills the Text3D canvas, the environment backdrop exposes the renderer's bounded procedural room, and the gradient backdrop mounts the public GradientBackground behind a transparent Text3D canvas. Empty gradientPreset builds that field from the active material and reflection palette with the tuned blobs room; a named gradientPreset mounts that GradientBackground preset instead. The default Liquid Chrome preset pairs its pearl, cyan, blush, and white material and reflected-light palette with the named holographic-flow field. Still capture defaults to compositing the real gradient capture below the transparent text capture at the requested size. capturePng also accepts layer text for glyphs with alpha and no backdrop, and layer gradient for the backdrop field alone.",
+    "placement": "Text3D is h-full w-full and therefore takes its size from the containing block. That block must have a definite height: a wrapping div with auto height makes the child's percentage height compute to auto, which is the classic blank first-run canvas for a WebGL component (CSS 2.1 §10.5, https://www.w3.org/TR/CSS22/visudet.html#the-height-property). Give a hero wordmark a viewport-relative block such as h-[min(70vh,36rem)]; an inline accent a fixed replaced box such as inline-block h-16 w-40 inside the heading; a fixed-size block literal dimensions such as h-96 or size-80; a full-bleed background layer absolute inset-0 inside a relative min-h-svh ancestor. min-h-96 also works because the minimum is definite. No extra layout props are required.",
+    "studioEditor": "Background style is one Design Studio-style Select carrying Solid, Gradient, and Reflection environment. The bottom overlay uses the same 44px borderless semantic surface, control radius, and panel shadow as the top overlay; one ButtonGroup selects static, follow cursor, auto-rotate, or float, followed by a vertical Separator and an icon-only Reset pose action. Reset restores the active preset's authored rotations and zoom through the editor config and clears transient motion. The Pose section exposes zoom as a ranged slider alongside the rotations, so framing is adjustable without a wheel. The studio preview sets wheelZoom to always so a plain wheel dollies the camera; an embedded Text3D keeps the modifier default and does not trap page scroll. Font is a curated shipped-family picker with no Advanced settings action. Type owns weight, alignment, size, letter spacing, and line height in the sidebar toolbar, with a typography-only Reset. Environment menus end in anchored Advanced settings for lighting sliders and reflection-card layout. Extrusion bevel recipes keep size, thickness, and segments behind Advanced settings. The Color stops strip keeps a two-stop minimum and six-stop maximum; its first three values map to the fixed public material tuple and its remaining values recolor the current Environment cards without changing layout. Preset selection replaces the complete authored scene."
+  },
+  "accessibility": [
+    "The readable text is present in normal semantic DOM while the canvas and visual fallback are aria-hidden.",
+    "Pose drag, cursor following, and wheel zoom are optional and never required to read the text.",
+    "An embedded canvas ignores a plain wheel (wheelZoom modifier) so it cannot trap page scroll; Ctrl/Cmd + wheel zooms. 3D Text Studio opts into always because its preview fills the viewport.",
+    "Reduced-motion users receive the configured static pose in every mode. Zoom is camera framing, not motion, and remains available.",
+    "Forced-colors mode hides the canvas and presents the text with the system CanvasText color.",
+    "Font-loading and WebGL failures preserve a selectable flat-text fallback."
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent"
+  ],
+  "commonMistakes": [
+    "Using Text3D for paragraph content rather than short display text.",
+    "Mounting Text3D in a container with no explicit height, which collapses the canvas to nothing.",
+    "Setting custom colors while leaving colorMode as palette and expecting them to override inherited roles.",
+    "Adding reflection colors to the three-value material color tuple instead of authoring bounded reflection cards.",
+    "Treating reflection cards as a gradient painted on the mesh rather than light sources in the surrounding environment.",
+    "Setting a custom font while leaving fontMode as theme and expecting it to override the active title font.",
+    "Expecting a Google Fonts fontFamily to resolve offline or through a content-security policy that blocks the Google Fonts stylesheet or font origins.",
+    "Removing the shipped public typeface assets even though the loader fetches them at runtime.",
+    "Using any motion mode as the only way to reveal information.",
+    "Expecting a plain wheel over an embedded Text3D to zoom the scene — hold Ctrl or Cmd, or set the zoom field. 3D Text Studio zooms on a plain wheel because its preview fills the viewport."
+  ],
+  "examples": [
+    {
+      "id": "palette-title",
+      "title": "Palette title",
+      "description": "The scene follows the nearest palette and active title font.",
+      "source": "<script setup lang=\"ts\">\nimport Text3D from \"@/components/ui/Text3D.vue\";\n</script>\n\n<template>\n  <section class=\"h-96 overflow-hidden rounded-balsa-surface bg-balsa-background\">\n    <Text3D text=\"Balsa\" preset=\"liquid-chrome\" font-mode=\"theme\" font=\"space-grotesk\" :font-weight=\"700\" material=\"metallic\" environment=\"studio\" color-mode=\"palette\" :colors='[\"#F4F4F5\", \"#A1A1AA\", \"#71717A\"]' interactive quality=\"auto\" paused />\n  </section>\n</template>"
+    },
+    {
+      "id": "glass-preset",
+      "title": "Glass preset",
+      "description": "A finite glass preset uses a deliberate environment and render quality.",
+      "source": "<script setup lang=\"ts\">\nimport Text3D from \"@/components/ui/Text3D.vue\";\n</script>\n\n<template>\n  <section class=\"h-96 overflow-hidden rounded-balsa-surface bg-balsa-background\">\n    <Text3D text=\"Clarity\" preset=\"frosted-pane\" font-mode=\"theme\" font=\"space-grotesk\" :font-weight=\"700\" material=\"glass\" environment=\"soft\" color-mode=\"palette\" :colors='[\"#F4F4F5\", \"#A1A1AA\", \"#71717A\"]' interactive pose-mode=\"auto-rotate\" quality=\"medium\" />\n  </section>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Text3D.vue",
+    "props": [
+      {
+        "name": "preset",
+        "type": "\"liquid-chrome\" | \"chrome-balloon\" | \"polished-chrome\" | \"brushed-steel\" | \"frosted-pane\" | undefined",
+        "values": [
+          "liquid-chrome",
+          "chrome-balloon",
+          "polished-chrome",
+          "brushed-steel",
+          "frosted-pane"
+        ],
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "Text3DConfigInput | undefined",
+        "shape": {
+          "type": "Text3DConfigInput",
+          "fields": [
+            {
+              "name": "size",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "seed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "shadow",
+              "type": "boolean | undefined",
+              "required": false
+            },
+            {
+              "name": "text",
+              "type": "string | undefined",
+              "required": false
+            },
+            {
+              "name": "zoom",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "preset",
+              "type": "\"liquid-chrome\" | \"chrome-balloon\" | \"polished-chrome\" | \"brushed-steel\" | \"frosted-pane\" | undefined",
+              "required": false
+            },
+            {
+              "name": "colorMode",
+              "type": "\"palette\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "quality",
+              "type": "\"auto\" | \"medium\" | \"low\" | \"high\" | undefined",
+              "required": false
+            },
+            {
+              "name": "fontMode",
+              "type": "\"theme\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "font",
+              "type": "\"rubik-spray-paint\" | \"montserrat\" | \"playfair-display\" | \"space-grotesk\" | \"inter\" | \"noto-sans\" | \"roboto\" | \"open-sans\" | \"source-sans-3\" | \"lato\" | \"poppins\" | \"raleway\" | \"oswald\" | undefined",
+              "required": false
+            },
+            {
+              "name": "fontFamily",
+              "type": "string | undefined",
+              "required": false
+            },
+            {
+              "name": "fontWeight",
+              "type": "300 | 400 | 800 | 700 | 500 | 600 | 900 | undefined",
+              "required": false
+            },
+            {
+              "name": "letterSpacing",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "lineHeight",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "alignment",
+              "type": "\"center\" | \"right\" | \"left\" | undefined",
+              "required": false
+            },
+            {
+              "name": "material",
+              "type": "\"solid\" | \"glass\" | \"metallic\" | undefined",
+              "required": false
+            },
+            {
+              "name": "metalness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "roughness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "clearcoat",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "clearcoatRoughness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "transmission",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "ior",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "thickness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "glow",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "depth",
+              "type": "number | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "overrides",
+        "type": "Text3DDirectOverrides | undefined",
+        "shape": {
+          "type": "Text3DDirectOverrides",
+          "fields": [
+            {
+              "name": "colors",
+              "type": "readonly string[] | undefined",
+              "required": false
+            },
+            {
+              "name": "reflections",
+              "type": "readonly Partial<Text3DReflection>[] | undefined",
+              "required": false
+            },
+            {
+              "name": "size",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "seed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "shadow",
+              "type": "boolean | undefined",
+              "required": false
+            },
+            {
+              "name": "text",
+              "type": "string | undefined",
+              "required": false
+            },
+            {
+              "name": "zoom",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "colorMode",
+              "type": "\"palette\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "quality",
+              "type": "\"auto\" | \"medium\" | \"low\" | \"high\" | undefined",
+              "required": false
+            },
+            {
+              "name": "fontMode",
+              "type": "\"theme\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "font",
+              "type": "\"rubik-spray-paint\" | \"montserrat\" | \"playfair-display\" | \"space-grotesk\" | \"inter\" | \"noto-sans\" | \"roboto\" | \"open-sans\" | \"source-sans-3\" | \"lato\" | \"poppins\" | \"raleway\" | \"oswald\" | undefined",
+              "required": false
+            },
+            {
+              "name": "fontFamily",
+              "type": "string | undefined",
+              "required": false
+            },
+            {
+              "name": "fontWeight",
+              "type": "300 | 400 | 800 | 700 | 500 | 600 | 900 | undefined",
+              "required": false
+            },
+            {
+              "name": "letterSpacing",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "lineHeight",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "alignment",
+              "type": "\"center\" | \"right\" | \"left\" | undefined",
+              "required": false
+            },
+            {
+              "name": "material",
+              "type": "\"solid\" | \"glass\" | \"metallic\" | undefined",
+              "required": false
+            },
+            {
+              "name": "metalness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "roughness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "clearcoat",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "clearcoatRoughness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "transmission",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "ior",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "thickness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "glow",
+              "type": "number | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "seed",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "text",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "fontMode",
+        "type": "\"theme\" | \"custom\" | undefined",
+        "values": [
+          "theme",
+          "custom"
+        ],
+        "required": false
+      },
+      {
+        "name": "font",
+        "type": "\"rubik-spray-paint\" | \"montserrat\" | \"playfair-display\" | \"space-grotesk\" | \"inter\" | \"noto-sans\" | \"roboto\" | \"open-sans\" | \"source-sans-3\" | \"lato\" | \"poppins\" | \"raleway\" | \"oswald\" | undefined",
+        "values": [
+          "rubik-spray-paint",
+          "montserrat",
+          "playfair-display",
+          "space-grotesk",
+          "inter",
+          "noto-sans",
+          "roboto",
+          "open-sans",
+          "source-sans-3",
+          "lato",
+          "poppins",
+          "raleway",
+          "oswald"
+        ],
+        "required": false
+      },
+      {
+        "name": "fontFamily",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "fontWeight",
+        "type": "300 | 400 | 800 | 700 | 500 | 600 | 900 | undefined",
+        "values": [
+          "300",
+          "400",
+          "800",
+          "700",
+          "500",
+          "600",
+          "900"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "letterSpacing",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "lineHeight",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "alignment",
+        "type": "\"center\" | \"right\" | \"left\" | undefined",
+        "values": [
+          "center",
+          "right",
+          "left"
+        ],
+        "required": false
+      },
+      {
+        "name": "material",
+        "type": "\"solid\" | \"glass\" | \"metallic\" | undefined",
+        "values": [
+          "solid",
+          "glass",
+          "metallic"
+        ],
+        "required": false
+      },
+      {
+        "name": "colorMode",
+        "type": "\"palette\" | \"custom\" | undefined",
+        "values": [
+          "palette",
+          "custom"
+        ],
+        "required": false
+      },
+      {
+        "name": "colors",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "metalness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "roughness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "clearcoat",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "clearcoatRoughness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "transmission",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "ior",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "thickness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "glow",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "depth",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "bevelEnabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "bevelSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "bevelThickness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "bevelSegments",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "curveSegments",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "environment",
+        "type": "\"soft\" | \"studio\" | \"rim\" | \"dramatic\" | \"neon\" | undefined",
+        "values": [
+          "soft",
+          "studio",
+          "rim",
+          "dramatic",
+          "neon"
+        ],
+        "required": false
+      },
+      {
+        "name": "lightIntensity",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "ambientIntensity",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "lightAngle",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "reflectionStrength",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "rotationX",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "rotationY",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "rotationZ",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "zoom",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "interactive",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "poseMode",
+        "type": "\"pointer\" | \"static\" | \"auto-rotate\" | \"float\" | undefined",
+        "values": [
+          "pointer",
+          "static",
+          "auto-rotate",
+          "float"
+        ],
+        "required": false
+      },
+      {
+        "name": "autoRotate",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "autoRotateSpeed",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "damping",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "background",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "quality",
+        "type": "\"auto\" | \"medium\" | \"low\" | \"high\" | undefined",
+        "values": [
+          "auto",
+          "medium",
+          "low",
+          "high"
+        ],
+        "required": false
+      },
+      {
+        "name": "paused",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "wheelZoom",
+        "type": "\"always\" | \"modifier\" | undefined",
+        "values": [
+          "always",
+          "modifier"
+        ],
+        "required": false,
+        "default": "\"modifier\"",
+        "description": "`modifier` (default) zooms only with Ctrl/Cmd + wheel so a hero in a\nscrolling page never traps the reader. `always` zooms on a plain wheel;\n3D Text Studio opts into that because its preview fills the viewport."
+      }
+    ],
+    "events": [
+      {
+        "name": "update:pose",
+        "type": "[pose: Text3DPose]"
+      }
+    ],
+    "slots": [],
+    "exposed": [
+      {
+        "name": "capturePng",
+        "type": "(options?: Text3DCaptureOptions) => Promise<Blob>"
+      },
+      {
+        "name": "renderStill",
+        "type": "() => void"
+      },
+      {
+        "name": "resetPose",
+        "type": "() => void"
+      }
+    ]
+  }
+}

@@ -9,7 +9,7 @@
     "name": "chart"
   },
   "status": "beta",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "purpose": "Compose accessible, theme-aware Unovis charts through a finite facade or Balsa's lower-level chart primitives.",
   "useFor": [
     "Trends",
@@ -128,6 +128,39 @@
       {
         "name": "series",
         "type": "readonly ChartSeries[]",
+        "shape": {
+          "type": "readonly ChartSeries[]",
+          "items": {
+            "type": "ChartSeries",
+            "fields": [
+              {
+                "name": "key",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "data",
+                "type": "readonly number[]",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "\"neutral\" | SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
         "required": true
       },
       {

@@ -1,11 +1,32 @@
 ---
 name: balsa-ui
-description: Discover, install, compose, add, update, and validate Balsa UI open-code components for Vue applications. Use when implementing or reviewing Vue UI that should follow Balsa components, compositions, blocks, semantic tokens, registry metadata, accessibility rules, or installed-source update safety.
+description: Build, fix, review, install, and validate Balsa UI open-code components for Vue applications. Use for focused Balsa repository maintenance, Vue UI built from Balsa components, compositions or blocks, semantic tokens, registry metadata, accessibility behavior, and installed-source update safety. Scale the workflow from direct small fixes to the companion orchestrate-agents skill for independent multi-part work when it is available.
 ---
 
 # Work with Balsa UI
 
-## Install and discover before building
+## Scale the work first
+
+- For a small fix to existing code, work directly. Read the target, its selected
+  specification when the public contract matters, and the nearest focused test. Make the
+  smallest coherent edit, run the focused test while iterating, then run the repository's
+  required changed-area gate once before handoff. Do not initialize Balsa, search the whole
+  catalog, research a new design relationship, or update public artifacts when the fix does
+  not affect them.
+- For new UI or an unfamiliar component choice, use the discovery workflow below. Research
+  established practice only before choosing a new scale, ratio, nesting rule, or default
+  proportion; record the source with that decision.
+- For a new template, block, showcase, demo, or visually led page, load and follow the
+  companion `$balsa-template-design` skill before discovery and implementation. It owns art
+  direction and the anti-template critique; this skill owns Balsa selection, contracts,
+  accessibility, source placement, and validation.
+- For a broad task with independent, separately verifiable pieces, use
+  `$orchestrate-agents` when that companion skill is installed. Let its protocol choose the
+  other Codex account or Claude, isolate parallel writers, and verify their work before
+  integration. Do not delegate a small edit; preparing and reviewing the brief would make it
+  slower.
+
+## Discover before building new UI
 
 1. In a consumer Vue project without `.balsa/`, run `npx balsa-ui@latest init` before writing common controls or surfaces.
 2. Search by intent with the CLI. Do not load either catalog into context merely to discover an item.
@@ -27,37 +48,20 @@ questions — `search_components`, `component_contract`, `design_system`, `proje
 and `plan_update` return the same answers without a subprocess. Installing is not among
 them: run the CLI for that, so a refusal is visible and `--force` stays a deliberate act.
 
-## Choose between Balsa and shadcn-vue
+## Use an upstream component only as a fallback
 
-The Balsa CLI installs from both registries, so it is the only command interface you need. Do not run the shadcn CLI as a second step, and do not hand-write a component either registry already publishes.
+Prefer a Balsa block, composition, or primitive. If Balsa has no suitable item, use the
+Balsa CLI to inspect and install a namespaced upstream item such as
+`npx balsa-ui@latest view @shadcn/stepper` followed by
+`npx balsa-ui@latest add @shadcn/stepper`. Do not run a second registry CLI.
 
-Decide in this order:
+Upstream items receive Balsa's universal color, focus-ring, and base-radius bridge. Additional
+design-system reach varies by adapter; inspect `balsa design-system show` or the integration
+documentation when that difference matters. Prefer the Balsa implementation when both exist.
 
-1. **A Balsa block or composition matches the whole section.** Install it. It is themed, typed and accessible as a unit.
-2. **Balsa publishes the component.** Install it with a bare name: `balsa add select`. Balsa items consume the active palette and theme contracts; inspect the selected specification for the exact component dimensions and defaults it owns.
-3. **Only shadcn-vue publishes it.** Install it namespaced: `balsa add @shadcn/stepper`. Roughly 25 upstream items have no Balsa equivalent, including `dialog`, `form`, `field`, `combobox`, `popover`, `sheet`, `stepper`, `number-field` and `tags-input`.
-4. **Neither publishes it.** Only then compose one from Balsa primitives.
-
-Before installing an unfamiliar item, inspect what it will write:
-
-```sh
-npx balsa-ui@latest view @shadcn/stepper
-```
-
-Two facts that change what you should choose:
-
-- An upstream component installed through `@shadcn/` always receives Balsa's color,
-  focus-ring, and base-radius bridge. Certified items can also receive typography,
-  spacing, border, elevation, motion, or material reach through their generated adapter
-  manifest and styling-only patch. Inspect `balsa design-system show` or the integration
-  documentation for the exact per-dimension result; unsupported dimensions remain
-  explicit. Prefer a Balsa equivalent when one exists and full design-system reach
-  matters.
-- `@balsa/button` and `@shadcn/button` can coexist: they occupy different directories. The collision is on the *import name* in your code, not on disk. If you install both, alias one at the import site.
-
-Each specification records a `classification`. `balsa-alternative` means Balsa implements something upstream also publishes, and names the `upstream` item it stands in for; `balsa-addition` means upstream has no equivalent; `balsa-composition` means it is built from other items. Do not add a new alternative to an upstream component without a documented reason.
-
-Balsa's contracts describe design-system behavior, theme dimensions, composition guidance and accessibility expectations. They do not restate upstream API documentation. When you need upstream's own reference for a `@shadcn/` item, read it at its source rather than expecting Balsa to mirror it.
+When authoring registry metadata, preserve the specification's classification and require a
+documented reason before adding a Balsa alternative to an upstream item. Consult upstream
+documentation only for an upstream item's own API; Balsa does not mirror it.
 
 ## Install
 
@@ -96,14 +100,17 @@ Treat installed files as application source. Preserve local edits; never use `--
 This section applies only inside the Balsa UI repository.
 
 1. Edit canonical source under `src/`; never edit `registry/vue` or `public/r` directly.
-2. Add or update its specification under `specs/components` and documentation under `docs/components`.
-3. Update `registry.json`, including files, target paths, npm/registry dependencies, framework, tokens, documentation, and example.
-4. Add focused behavior/accessibility tests. Update the routed interactive playground, generated example source, installation/usage reference, and homepage showcase when the behavior appears there.
-5. Run `npm run check:changed` for the local completion gate. It selects relevant lint, focused tests, type checks/builds, and registry generation/validation. Use direct commands only when diagnosing a failure.
-6. Record public contract changes in `CHANGELOG.md` and current state in `progress.md`.
+2. Add focused behavior or accessibility coverage for the changed behavior.
+3. Update `specs/components`, `docs/components`, `registry.json`, examples, playgrounds,
+   showcases, `CHANGELOG.md`, and `progress.md` only where the change makes their current
+   claims inaccurate. A private implementation fix that preserves the public contract and
+   documented behavior does not require mechanical edits to all of them.
+4. Run the nearest focused test while iterating. Run `npm run check:changed` once as the local
+   completion gate; use broader commands only to diagnose a failure or when explicitly
+   required by the repository rules.
 
 ## Validate
 
-Run `npm run check:changed` for ordinary agent work. Run `npm run check` only in CI, for release preparation, packaging/installer/starter integration work, or when the user explicitly requests the complete distribution gate. For a focused registry change, also inspect `git diff` and scan for legacy or private branding, private endpoints, secrets, proprietary assets, and company-specific rules.
+Run `npm run check:changed` once for ordinary completed agent work. Run `npm run check` only in CI, for release preparation, packaging/installer/starter integration work, or when the user explicitly requests the complete distribution gate. For a focused registry change, also inspect `git diff` and scan for legacy or private branding, private endpoints, secrets, proprietary assets, and company-specific rules.
 
 Common mistakes: duplicating canonical implementations, editing generated artifacts, bypassing an existing item with styled raw HTML, wrapping Input in FormField and duplicating labels, inventing variants without metadata, or overwriting customized installed source.
