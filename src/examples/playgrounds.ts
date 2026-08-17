@@ -68,6 +68,12 @@ export interface PlaygroundDefinition {
   defaults: PlaygroundValues;
   controls: readonly PlaygroundControl[];
   source: (values: PlaygroundValues) => string;
+  /**
+   * Generated source for consumer frameworks other than the default registry
+   * target. The default target keeps using `source`. Omit a framework to show
+   * the undocumented-sample fallback rather than another framework's snippet.
+   */
+  sourceByFramework?: Readonly<Record<string, (values: PlaygroundValues) => string>>;
 }
 
 const actionColorOptions: readonly PlaygroundOption[] = [

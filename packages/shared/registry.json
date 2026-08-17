@@ -1,0 +1,155 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry.json",
+  "name": "balsa-ui-shared",
+  "homepage": "https://balsa-ui.com",
+  "items": [
+    {
+      "name": "balsa-foundation",
+      "type": "registry:theme",
+      "title": "Balsa color foundation",
+      "description": "Palette-optional adaptive color fallbacks, CSS derivation recipes, and collision-safe namespaced Tailwind CSS 4 utilities.",
+      "files": [
+        {
+          "path": "src/styles/balsa-foundation.css",
+          "type": "registry:style",
+          "target": "src/styles/balsa-foundation.css"
+        }
+      ],
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [],
+      "meta": {
+        "framework": "shared",
+        "sourceColors": [
+          "background",
+          "foreground",
+          "surface",
+          "muted",
+          "primary",
+          "secondary",
+          "accent"
+        ],
+        "utilityNamespace": "balsa"
+      }
+    },
+    {
+      "name": "balsa-palette",
+      "type": "registry:theme",
+      "title": "Balsa palette",
+      "description": "Optional explicit Dark and Light seven-color presets for the independently installable Balsa color foundation.",
+      "files": [
+        {
+          "path": "src/styles/balsa-palette.css",
+          "type": "registry:style",
+          "target": "src/styles/balsa-palette.css"
+        }
+      ],
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/balsa-foundation"
+      ],
+      "meta": {
+        "framework": "shared",
+        "tokens": [
+          "--balsa-color-background",
+          "--balsa-color-foreground",
+          "--balsa-color-surface",
+          "--balsa-color-muted",
+          "--balsa-color-primary",
+          "--balsa-color-secondary",
+          "--balsa-color-accent"
+        ]
+      }
+    },
+    {
+      "name": "balsa-theme",
+      "type": "registry:theme",
+      "title": "Balsa design theme stylesheet",
+      "description": "CSS-only design-theme geometry, type, borders, depth, material, motion, and interactions. Framework adapters publish their typed theme runtime separately.",
+      "files": [
+        {
+          "path": "src/styles/balsa-theme.css",
+          "type": "registry:style",
+          "target": "src/styles/balsa-theme.css"
+        }
+      ],
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/balsa-foundation"
+      ],
+      "meta": {
+        "framework": "shared"
+      }
+    },
+    {
+      "name": "balsa-shadcn-bridge",
+      "type": "registry:theme",
+      "title": "Balsa shadcn token bridge",
+      "description": "Maps the active Balsa design system onto the standard shadcn semantic variables so components installed from compatible registries follow the Balsa palette, focus ring, and base radius.",
+      "files": [
+        {
+          "path": "src/styles/balsa-shadcn-bridge.css",
+          "type": "registry:style",
+          "target": "src/styles/balsa-shadcn-bridge.css"
+        }
+      ],
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/balsa-foundation",
+        "@balsa/shared/balsa-theme"
+      ],
+      "meta": {
+        "framework": "shared",
+        "utilityNamespace": "balsa"
+      }
+    },
+    {
+      "name": "theme-core",
+      "type": "registry:theme",
+      "title": "Balsa theme core",
+      "description": "Framework-neutral design-theme types, defineTheme validation, inheritance resolution, recipe derivation, and themePresentation serialization.",
+      "files": [
+        {
+          "path": "src/theme-core/theme-core.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/theme-core.ts"
+        },
+        {
+          "path": "src/theme-core/theme-component-contracts.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/theme-component-contracts.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "meta": {
+        "framework": "shared"
+      }
+    },
+    {
+      "name": "portal-core",
+      "type": "registry:theme",
+      "title": "Balsa portal core",
+      "description": "Framework-neutral portal-target validation, presentation capture, and dedicated portal-host lifecycle.",
+      "files": [
+        {
+          "path": "src/portal-core/portal-core.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/portal-core.ts"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "meta": {
+        "framework": "shared"
+      }
+    }
+  ]
+}

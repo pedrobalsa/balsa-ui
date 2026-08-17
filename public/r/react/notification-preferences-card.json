@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "notification-preferences-card",
+  "type": "registry:ui",
+  "title": "NotificationPreferencesCard",
+  "description": "Independently controlled notification channels with concise explanations.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/switch",
+    "@balsa/react/radio-group",
+    "@balsa/react/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/NotificationPreferencesCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/NotificationPreferencesCard.tsx",
+      "content": "import { useState, type HTMLAttributes } from \"react\";\nimport { Button } from \"../ui/Button\";\nimport { RadioGroup } from \"../ui/RadioGroup\";\nimport { Switch } from \"../ui/Switch\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionOption, CompositionSurfaceProps } from \"./composition\";\n\nexport interface NotificationPreference {\n  id: string;\n  label: string;\n  description: string;\n  enabled: boolean;\n}\n\nconst defaultItems: readonly NotificationPreference[] = [\n  { id: \"failures\", label: \"Deploy failures\", description: \"Paged the moment a production build fails.\", enabled: true },\n  { id: \"quota\", label: \"Quota warnings\", description: \"Sent once usage passes 80% of the plan.\", enabled: true },\n  { id: \"mentions\", label: \"Mentions\", description: \"When someone names you in a review comment.\", enabled: true },\n  { id: \"digest\", label: \"Weekly digest\", description: \"One summary of everything, Monday at 09:00.\", enabled: false },\n  { id: \"budget\", label: \"Budget alerts\", description: \"When projected spend passes the monthly cap.\", enabled: true },\n];\n\nconst defaultChannels: readonly CompositionOption[] = [\n  { label: \"Email — ada@example.com\", value: \"email\" },\n  { label: \"Slack — #atlas-deploys\", value: \"slack\" },\n  { label: \"Webhook — hooks.example.com\", value: \"webhook\" },\n];\n\nexport interface NotificationPreferencesCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\" | \"onChange\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  items?: readonly NotificationPreference[];\n  onChange?: (id: string, enabled: boolean) => void;\n  onSave?: (channel: string) => void;\n}\n\nexport function NotificationPreferencesCard({\n  title = \"Delivery preferences\",\n  description = \"Where workspace events reach you.\",\n  items = defaultItems,\n  headingLevel,\n  shadow,\n  theme,\n  onChange,\n  onSave,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: NotificationPreferencesCardProps) {\n  void _dataBalsa;\n  const [values, setValues] = useState<Record<string, boolean>>(() =>\n    Object.fromEntries(items.map((item) => [item.id, item.enabled])),\n  );\n  const [channel, setChannel] = useState(\"email\");\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"notification-preferences\"\n      footer={<Button className=\"w-full\" onClick={() => onSave?.(channel)}>Save preferences</Button>}\n    >\n      <div className=\"flex-1 divide-y divide-balsa-border\">\n        {items.map((item) => (\n          <div key={item.id} className=\"py-balsa-lg first:pt-0 last:pb-0\">\n            <Switch\n              id={`notification-${item.id}`}\n              checked={values[item.id] ?? item.enabled}\n              label={item.label}\n              hint={item.description}\n              onCheckedChange={(enabled) => {\n                setValues((current) => ({ ...current, [item.id]: enabled }));\n                onChange?.(item.id, enabled);\n              }}\n            />\n          </div>\n        ))}\n      </div>\n      <div className=\"mt-balsa-xl border-balsa-border pt-balsa-xl [border-top-width:var(--balsa-border-width)]\">\n        <RadioGroup\n          id=\"notification-channel\"\n          label=\"Send everything to\"\n          options={defaultChannels}\n          value={channel}\n          onValueChange={setChannel}\n        />\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

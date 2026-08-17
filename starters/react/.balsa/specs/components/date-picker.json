@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "name": "date-picker",
+  "title": "DatePicker",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose a single date or range from a labelled field and collision-safe calendar popup.",
+  "useFor": [
+    "Form dates",
+    "Date ranges",
+    "Locale-formatted date fields"
+  ],
+  "avoidFor": [
+    "Time selection",
+    "Free-text parsing",
+    "Timezone conversion"
+  ],
+  "states": [
+    "empty",
+    "selected",
+    "range pending",
+    "disabled",
+    "unvalidated"
+  ],
+  "accessibility": [
+    "The visible label names the popup trigger.",
+    "Calendar supplies complete grid keyboard behavior.",
+    "Popup supplies Escape, outside dismissal, focus entry, and restoration, including Glassmorphism backdrop blur."
+  ],
+  "variants": [
+    "single",
+    "range"
+  ],
+  "sizes": [
+    "popup field"
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring"
+  ],
+  "commonMistakes": [
+    "Parsing locale-ambiguous text.",
+    "Omitting visible error feedback.",
+    "Using DatePicker for time values."
+  ],
+  "examples": [
+    {
+      "id": "single",
+      "title": "Single date field",
+      "description": "A labelled field opens the complete Calendar interaction.",
+      "source": "<script setup lang=\"ts\">\nimport DatePicker from \"@/components/ui/DatePicker.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(null);\n</script>\n\n<template>\n  <DatePicker id=\"due-date-placeholder\" v-model=\"date\" label=\"Due date placeholder\" mode=\"single\" locale=\"en-US\" />\n</template>"
+    },
+    {
+      "id": "range",
+      "title": "Date range field",
+      "description": "The popup remains open until both range boundaries exist.",
+      "source": "<script setup lang=\"ts\">\nimport DatePicker from \"@/components/ui/DatePicker.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(null);\n</script>\n\n<template>\n  <DatePicker id=\"due-date-placeholder\" v-model=\"date\" label=\"Due date placeholder\" mode=\"range\" locale=\"en-US\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid date field",
+      "description": "Explicit feedback accompanies the destructive trigger state.",
+      "source": "<script setup lang=\"ts\">\nimport DatePicker from \"@/components/ui/DatePicker.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(null);\n</script>\n\n<template>\n  <DatePicker id=\"due-date-placeholder\" v-model=\"date\" label=\"Due date placeholder\" mode=\"single\" locale=\"en-US\" required status=\"unvalidated\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/DatePicker.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "\"range\" | \"single\" | undefined",
+        "values": [
+          "range",
+          "single"
+        ],
+        "required": false,
+        "default": "\"single\""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"en-US\""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Choose a date\""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "DatePickerStatus | undefined",
+        "values": [
+          "default",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Choose a valid date.\""
+      },
+      {
+        "name": "min",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "disabledDates",
+        "type": "((date: Date) => boolean) | undefined",
+        "required": false
+      },
+      {
+        "name": "clearable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false,
+        "default": "null"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: CalendarModelValue]"
+      }
+    ],
+    "slots": []
+  }
+}

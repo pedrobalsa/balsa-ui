@@ -1,0 +1,214 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/DatePicker.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "\"single\" | \"range\" | undefined",
+        "values": [
+          "single",
+          "range"
+        ],
+        "required": false
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "status",
+        "type": "DatePickerStatus | undefined",
+        "values": [
+          "default",
+          "unvalidated"
+        ],
+        "required": false
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "min",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "disabledDates",
+        "type": "((date: Date) => boolean) | undefined",
+        "required": false
+      },
+      {
+        "name": "clearable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: CalendarModelValue) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "data-balsa",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "data-palette",
+        "type": "string | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

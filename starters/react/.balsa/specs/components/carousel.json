@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "name": "carousel",
+  "title": "Carousel",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "carousel"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Browse a typed collection through an accessible, draggable, snapping viewport with configurable presentation and navigation placement.",
+  "useFor": [
+    "Related media cards",
+    "Compact featured collections",
+    "Sequential visual browsing"
+  ],
+  "avoidFor": [
+    "Critical content available only through autoplay",
+    "Long textual lists",
+    "Primary navigation"
+  ],
+  "states": [
+    "empty",
+    "first",
+    "middle",
+    "last",
+    "dragging",
+    "paused autoplay"
+  ],
+  "accessibility": [
+    "The root is a labelled region and each item is a named slide group.",
+    "Previous, next, and indicator actions use native buttons independently of pointer dragging.",
+    "Autoplay pauses for pointer, focus, dragging, and document visibility."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "typed slides per view and pixel gap"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border",
+    "--balsa-color-primary",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Autoplaying essential information too quickly.",
+    "Omitting concise slide labels.",
+    "Showing too many slides for the available width."
+  ],
+  "examples": [
+    {
+      "id": "cards",
+      "title": "Card collection",
+      "description": "Two visible slides keep adjacent content discoverable.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"start\" :slides-per-view=\"2\" :gap=\"16\" :autoplay=\"0\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    },
+    {
+      "id": "single",
+      "title": "Focused slide",
+      "description": "One slide per view gives each item the full content width.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"center\" :slides-per-view=\"1\" :gap=\"16\" :autoplay=\"0\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    },
+    {
+      "id": "loop",
+      "title": "Looping autoplay",
+      "description": "Opt-in autoplay loops and pauses for pointer or focus interaction.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"start\" :slides-per-view=\"2\" :gap=\"16\" loop :autoplay=\"4000\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    },
+    {
+      "id": "empty",
+      "title": "Empty collection",
+      "description": "An explicit empty state replaces navigation and indicators.",
+      "source": "<script setup lang=\"ts\">\nimport Carousel from \"@/components/ui/Carousel.vue\";\nconst items = [\n  { id: \"slide-1\", label: \"Card placeholder 1\" },\n  { id: \"slide-2\", label: \"Card placeholder 2\" },\n  { id: \"slide-3\", label: \"Card placeholder 3\" },\n  { id: \"slide-4\", label: \"Card placeholder 4\" },\n  { id: \"slide-5\", label: \"Card placeholder 5\" },\n];\n</script>\n\n<template>\n  <Carousel :items=\"items\" label=\"Cards placeholder\" orientation=\"horizontal\" align=\"start\" :slides-per-view=\"1\" :gap=\"16\" :autoplay=\"0\">\n    <template #item=\"{ item }\"><article class=\"p-balsa-2xl\">{{ item.label }}</article></template>\n  </Carousel>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Carousel.vue",
+    "props": [
+      {
+        "name": "items",
+        "type": "readonly CarouselItem[]",
+        "shape": {
+          "type": "readonly CarouselItem[]",
+          "items": {
+            "type": "CarouselItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "CarouselVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "CarouselOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "align",
+        "type": "CarouselAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"start\""
+      },
+      {
+        "name": "loop",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "slidesPerView",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "gap",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "16"
+      },
+      {
+        "name": "controls",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "arrowsPosition",
+        "type": "CarouselArrowsPosition | undefined",
+        "values": [
+          "inside",
+          "bottom-start",
+          "bottom-end"
+        ],
+        "required": false,
+        "default": "\"bottom-start\""
+      },
+      {
+        "name": "indicators",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "indicatorsPosition",
+        "type": "CarouselIndicatorsPosition | undefined",
+        "values": [
+          "inside",
+          "bottom-start",
+          "bottom-end",
+          "bottom-center"
+        ],
+        "required": false,
+        "default": "\"bottom-end\""
+      },
+      {
+        "name": "autoplay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No carousel items.\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "select",
+        "type": "[index: number, item: CarouselItem]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "item",
+        "type": "{ item: CarouselItem; index: number; }"
+      },
+      {
+        "name": "empty",
+        "type": "{}"
+      }
+    ]
+  }
+}

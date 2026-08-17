@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "environment-switcher-card",
+  "type": "registry:ui",
+  "title": "EnvironmentSwitcherCard",
+  "description": "Searchable environment picker with the current selection stated.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/autocomplete",
+    "@balsa/react/badge",
+    "@balsa/react/button",
+    "@balsa/react/balsa-theme"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/EnvironmentSwitcherCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/EnvironmentSwitcherCard.tsx",
+      "content": "import { useState, type HTMLAttributes } from \"react\";\nimport { Autocomplete } from \"../ui/Autocomplete\";\nimport { Badge } from \"../ui/Badge\";\nimport { Button } from \"../ui/Button\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nconst defaultEnvironments: readonly string[] = [\n  \"atlas-production\",\n  \"atlas-preview\",\n  \"atlas-staging\",\n  \"relay-production\",\n  \"relay-preview\",\n  \"harbor-production\",\n  \"harbor-development\",\n  \"nova-development\",\n  \"quill-preview\",\n];\n\nexport interface EnvironmentSwitcherCardProps\n  extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  environments?: readonly string[];\n  onSwitch?: (environment: string) => void;\n}\n\nexport function EnvironmentSwitcherCard({\n  title = \"Switch environment\",\n  description = \"Everything below applies to the one you pick.\",\n  environments = defaultEnvironments,\n  headingLevel,\n  shadow,\n  theme,\n  onSwitch,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: EnvironmentSwitcherCardProps) {\n  void _dataBalsa;\n  const [target, setTarget] = useState(\"atlas-production\");\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"environment-switcher\"\n      action={<Badge color=\"primary\" variant=\"soft\">Live</Badge>}\n    >\n      <div className=\"flex flex-1 flex-col justify-between gap-balsa-lg\">\n        <Autocomplete\n          id=\"environment-target\"\n          value={target}\n          onValueChange={(value) => {\n            if (typeof value === \"string\") setTarget(value);\n          }}\n          label=\"Environment\"\n          suggestions={environments}\n          placeholder=\"Start typing a project or environment\"\n          hint=\"Nine environments across five projects.\"\n        />\n        <Button className=\"w-full\" onClick={() => onSwitch?.(target)}>\n          Switch to this environment\n        </Button>\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

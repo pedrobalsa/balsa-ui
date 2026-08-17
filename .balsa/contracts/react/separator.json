@@ -1,0 +1,117 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Separator.tsx",
+    "props": [
+      {
+        "name": "orientation",
+        "type": "SeparatorOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "SeparatorVariant | undefined",
+        "values": [
+          "solid",
+          "dashed",
+          "dotted"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SeparatorSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "SeparatorAlign | undefined",
+        "values": [
+          "start",
+          "center",
+          "end"
+        ],
+        "required": false
+      },
+      {
+        "name": "decorative",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

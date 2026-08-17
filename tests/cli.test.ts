@@ -13,9 +13,11 @@ import { spawnSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 import { fakePackageManagerEnvironment } from "./helpers/fake-package-manager";
 
-function runCli(arguments_: readonly string[], env?: NodeJS.ProcessEnv) {
-  return spawnSync(process.execPath, ["bin/balsa.mjs", ...arguments_], {
-    cwd: process.cwd(),
+const cliPath = resolve(process.cwd(), "bin/balsa.mjs");
+
+function runCli(arguments_: readonly string[], env?: NodeJS.ProcessEnv, cwd = process.cwd()) {
+  return spawnSync(process.execPath, [cliPath, ...arguments_], {
+    cwd,
     encoding: "utf8",
     env,
   });
@@ -89,6 +91,76 @@ describe("Balsa CLI agent workflow", () => {
     expect(info.stdout).toContain("## Use for");
     expect(info.stdout).toContain("## Public API");
     expect(info.stdout).toContain("npx balsa-ui@latest add button");
+
+    const qualified = runCli(["info", "@balsa/button", "--markdown"]);
+    expect(qualified.status, qualified.stderr).toBe(0);
+    expect(qualified.stdout).toContain("# Button");
+  });
+
+  it("looks up items from a v1 catalog in the consumer working directory", () => {
+    const target = mkdtempSync(resolve(tmpdir(), "balsa-v1-catalog-"));
+    try {
+      mkdirSync(resolve(target, ".balsa"), { recursive: true });
+      writeFileSync(
+        resolve(target, ".balsa/catalog.json"),
+        `${JSON.stringify({
+          schemaVersion: 1,
+          releaseVersion: "0.7.0",
+          framework: "vue",
+          generatedFrom: ["registry.json", "specs/components/*.json"],
+          items: [
+            {
+              name: "installed-v1-probe",
+              title: "Installed V1 Probe",
+              category: "component",
+              classification: "balsa-addition",
+              description: "A uniquely named v1 catalog probe.",
+              status: "beta",
+              version: "0.1.0",
+              registry: "@balsa/installed-v1-probe",
+              registryDependencies: [],
+              npmDependencies: [],
+              tokens: [],
+              documentation: "docs/components/button.md",
+              example: "docs/components/button.md",
+              source: ["src/components/ui/Button.vue"],
+            },
+            {
+              name: "button",
+              title: "Button",
+              category: "component",
+              classification: "balsa-addition",
+              description: "Typed action control.",
+              status: "beta",
+              version: "0.1.0",
+              registry: "@balsa/button",
+              registryDependencies: [],
+              npmDependencies: [],
+              tokens: [],
+              documentation: "docs/components/button.md",
+              example: "docs/components/button.md",
+              source: ["src/components/ui/Button.vue"],
+            },
+          ],
+        }, null, 2)}\n`,
+      );
+
+      const search = runCli(["search", "installed-v1-probe", "--json"], undefined, target);
+      expect(search.status, search.stderr).toBe(0);
+      const results = JSON.parse(search.stdout) as Array<{ name: string }>;
+      expect(results.some((item) => item.name === "installed-v1-probe")).toBe(true);
+
+      const packageOnly = runCli(["search", "image-compare-card", "--json"], undefined, target);
+      expect(packageOnly.status, packageOnly.stderr).toBe(0);
+      const packageResults = JSON.parse(packageOnly.stdout) as Array<{ name: string }>;
+      expect(packageResults.some((item) => item.name === "image-compare-card")).toBe(false);
+
+      const info = runCli(["info", "button", "--markdown"], undefined, target);
+      expect(info.status, info.stderr).toBe(0);
+      expect(info.stdout).toContain("# Button");
+    } finally {
+      rmSync(target, { recursive: true, force: true });
+    }
   });
 
   it("initializes styles and local agent context without replacing existing instructions", () => {

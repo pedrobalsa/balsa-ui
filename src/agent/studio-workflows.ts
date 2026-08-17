@@ -1,4 +1,5 @@
-import type { SelectOption } from "../components/ui/Select.vue";
+import type { SelectOption } from "@/components/ui/Select.vue";
+import { frameworkProjectCopy } from "../framework/copy";
 
 export type AgentProjectContext = "start-project" | "add-existing" | "replace-current";
 export type AgentCreationSource = "description" | "image";
@@ -18,13 +19,14 @@ export function projectContextInstruction(
   context: AgentProjectContext,
   artifact: "design system" | "gradient background" | "3D text",
 ): string {
+  const projectCopy = frameworkProjectCopy();
   if (context === "start-project") {
-    return `Start a new Vue 3 project that uses this ${artifact} from its first screen. Inspect the workspace first; if no Vue project exists, create one with the project's preferred package manager, then run Balsa initialization before applying the artifact.`;
+    return `Start a new ${projectCopy.project} that uses this ${artifact} from its first screen. Inspect the workspace first; if no ${projectCopy.project} exists, create one with the project's preferred package manager, then run Balsa initialization before applying the artifact.`;
   }
   if (context === "replace-current") {
     return `Replace the currently active ${artifact} with this one. Inspect the existing Balsa configuration and generated targets first, show any differing-file diff before replacement, update the existing activation points, and preserve unrelated components and application code.`;
   }
-  return `Add this ${artifact} to the existing Vue 3 project as an additional named option. Inspect the project before editing, preserve the active design until the new artifact is registered successfully, and do not overwrite customized source.`;
+  return `Add this ${artifact} to the existing ${projectCopy.project} as an additional named option. Inspect the project before editing, preserve the active design until the new artifact is registered successfully, and do not overwrite customized source.`;
 }
 
 export function directionBlock(

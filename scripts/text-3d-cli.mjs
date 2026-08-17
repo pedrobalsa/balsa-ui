@@ -5,26 +5,14 @@ import path from "node:path";
 import { installRegistryItems } from "./install-registry.mjs";
 import {
   readJson,
-  rootDir,
+  sourcePath,
   targetPath,
   writeJson,
 } from "./registry-lib.mjs";
 
 const schemaVersion = 1;
-const presetPath = path.join(
-  rootDir,
-  "src",
-  "components",
-  "ui",
-  "text-3d-presets.json",
-);
-const gradientPresetPath = path.join(
-  rootDir,
-  "src",
-  "components",
-  "ui",
-  "gradient-background-presets.json",
-);
+const presetPath = sourcePath("src/components/ui/text-3d-presets.json");
+const gradientPresetPath = sourcePath("src/components/ui/gradient-background-presets.json");
 const hexColor = /^#[\da-f]{6}$/i;
 const qualityValues = new Set(["auto", "low", "medium", "high"]);
 const colorModeValues = new Set(["custom", "palette"]);

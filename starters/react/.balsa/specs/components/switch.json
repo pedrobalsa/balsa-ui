@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "name": "switch",
+  "title": "Switch",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "switch"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Control an immediately applied boolean setting with native form and switch semantics.",
+  "useFor": [
+    "Preferences",
+    "Feature switches",
+    "Immediately applied settings"
+  ],
+  "avoidFor": [
+    "Delayed form confirmation",
+    "Irreversible actions",
+    "Pressed toolbar actions"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "on",
+    "off",
+    "required",
+    "disabled"
+  ],
+  "composition": {
+    "control": "A native checkbox with role switch is associated with the visible label and optional hint.",
+    "migration": "This is the renamed former boolean Toggle. The toggle name now refers to a pressed-state button."
+  },
+  "accessibility": [
+    "Associate every switch with a stable id and visible label.",
+    "Keep supporting text connected through aria-describedby.",
+    "Preserve native required and disabled semantics."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using Switch for a delayed confirmation.",
+    "Hiding the visible label.",
+    "Importing the new Toggle as a compatibility alias."
+  ],
+  "examples": [
+    {
+      "id": "off",
+      "title": "Off",
+      "description": "The model controls the immediate on or off state.",
+      "source": "<script setup lang=\"ts\">\nimport Switch from \"@/components/ui/Switch.vue\";\nimport { ref } from \"vue\";\n\nconst enabled = ref(false);\n</script>\n\n<template>\n  <Switch id=\"placeholder-switch\" v-model=\"enabled\" label=\"Switch placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "on",
+      "title": "On",
+      "description": "The selected treatment clearly communicates an enabled setting.",
+      "source": "<script setup lang=\"ts\">\nimport Switch from \"@/components/ui/Switch.vue\";\nimport { ref } from \"vue\";\n\nconst enabled = ref(true);\n</script>\n\n<template>\n  <Switch id=\"placeholder-switch\" v-model=\"enabled\" label=\"Switch placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled state keeps the current value visible and immutable.",
+      "source": "<script setup lang=\"ts\">\nimport Switch from \"@/components/ui/Switch.vue\";\nimport { ref } from \"vue\";\n\nconst enabled = ref(true);\n</script>\n\n<template>\n  <Switch id=\"placeholder-switch\" v-model=\"enabled\" label=\"Switch placeholder\" hint=\"Helper text placeholder.\" disabled />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Switch.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "size",
+        "type": "SwitchSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      }
+    ],
+    "slots": []
+  }
+}

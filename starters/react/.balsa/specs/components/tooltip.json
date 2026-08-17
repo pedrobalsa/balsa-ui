@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "name": "tooltip",
+  "title": "Tooltip",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "tooltip"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Describe a focusable interface element with compact, non-interactive supplementary content on pointer hover or keyboard focus.",
+  "useFor": [
+    "Control descriptions",
+    "Abbreviations",
+    "Compact supplementary details"
+  ],
+  "avoidFor": [
+    "Interactive content",
+    "Essential instructions",
+    "Touch-only disclosure"
+  ],
+  "types": [
+    "top",
+    "right",
+    "bottom",
+    "left"
+  ],
+  "states": [
+    "closed",
+    "opening",
+    "open",
+    "closing",
+    "disabled"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The focusable trigger references the visible tooltip with aria-describedby.",
+    "Tooltip content never receives focus or pointer interaction.",
+    "Escape and blur dismiss the tooltip without changing trigger focus."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Putting interactive controls inside a tooltip.",
+    "Using a tooltip as the only source of essential instructions.",
+    "Making touch access depend on hover alone."
+  ],
+  "examples": [
+    {
+      "id": "details",
+      "title": "Supplementary detail",
+      "description": "Pointer hover and keyboard focus reveal a brief non-interactive description.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    },
+    {
+      "id": "quick",
+      "title": "Quick tooltip",
+      "description": "Short delays provide faster contextual feedback.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" :open-delay=\"100\" :close-delay=\"100\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    },
+    {
+      "id": "bottom",
+      "title": "Bottom placement",
+      "description": "Preferred placement changes while preserving viewport collision correction.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" side=\"bottom\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass material",
+      "description": "A translucent tooltip keeps its compact supplementary treatment.",
+      "source": "<script setup lang=\"ts\">\nimport Tooltip from \"@/components/ui/Tooltip.vue\";\n</script>\n\n<template>\n  <Tooltip id=\"more-information\" label=\"More information placeholder\" variant=\"glass\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>More information placeholder</template>\n    Tooltip content placeholder\n  </Tooltip>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Tooltip.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "side",
+        "type": "AnchoredSide | undefined",
+        "values": [
+          "bottom",
+          "top",
+          "right",
+          "left"
+        ],
+        "required": false,
+        "default": "\"top\""
+      },
+      {
+        "name": "align",
+        "type": "AnchoredAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"center\""
+      },
+      {
+        "name": "sideOffset",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "8"
+      },
+      {
+        "name": "openDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "300"
+      },
+      {
+        "name": "closeDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "180"
+      },
+      {
+        "name": "variant",
+        "type": "LayerVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "trigger",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

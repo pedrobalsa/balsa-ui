@@ -8,9 +8,11 @@ import {
   toValue,
 } from "vue";
 import {
+  createThemeScope,
   defaultDesignTheme,
   isDesignTheme,
-  resolveTheme,
+  resolveComponentTheme,
+  resolveThemeValue,
   themePresentation,
   type DesignTheme,
   type ResolvedThemeDefinition,
@@ -18,6 +20,7 @@ import {
   type ThemeFamily,
   type ThemeInput,
   type ThemePresentation,
+  type ThemeScopeState,
   type ThemeVisualDefaults,
 } from "./theme";
 
@@ -29,17 +32,18 @@ export interface BalsaThemeContext {
 export const balsaThemeContextKey: InjectionKey<BalsaThemeContext> =
   Symbol("balsa-theme-context");
 
-function createThemeContext(input: ComputedRef<ThemeInput>): BalsaThemeContext {
-  return {
-    input,
-    resolved: computed(() => resolveTheme(input.value)),
-  };
+function toScopeState(context: BalsaThemeContext): ThemeScopeState {
+  return createThemeScope(context.input.value);
 }
 
 export function provideBalsaTheme(
   input: MaybeRefOrGetter<ThemeInput>,
 ): BalsaThemeContext {
-  const context = createThemeContext(computed(() => toValue(input)));
+  const scope = computed(() => createThemeScope(toValue(input)));
+  const context: BalsaThemeContext = {
+    input: computed(() => scope.value.input),
+    resolved: computed(() => scope.value.resolved),
+  };
   provide(balsaThemeContextKey, context);
   return context;
 }
@@ -69,30 +73,27 @@ export function useComponentTheme(
   explicitTheme: MaybeRefOrGetter<ThemeInput | undefined>,
 ): ComponentThemeResolver {
   const parent = useBalsaThemeContext();
-  const input = computed<ThemeInput>(() =>
-    toValue(explicitTheme) ?? parent?.input.value ?? defaultDesignTheme
-  );
-  const context = createThemeContext(input);
+  const state = computed(() => resolveComponentTheme({
+    component,
+    family,
+    explicit: toValue(explicitTheme),
+    parent: parent ? toScopeState(parent) : undefined,
+  }));
+  const context: BalsaThemeContext = {
+    input: computed(() => state.value.input),
+    resolved: computed(() => state.value.resolved),
+  };
   provide(balsaThemeContextKey, context);
 
-  const presentation = computed(() => themePresentation(input.value));
-  const explicitPresentation = computed(() =>
-    toValue(explicitTheme) === undefined ? undefined : presentation.value
-  );
-  const defaults = computed<ThemeVisualDefaults>(() => ({
-    ...context.resolved.value.defaults.families?.[family],
-    ...context.resolved.value.defaults.components?.[component],
-  }));
-
   return {
-    input,
+    input: context.input,
     resolved: context.resolved,
-    presentation,
-    explicitPresentation,
-    defaults,
+    presentation: computed(() => state.value.presentation),
+    explicitPresentation: computed(() => state.value.explicitPresentation),
+    defaults: computed(() => state.value.defaults),
     inheritedFromContext: Boolean(parent),
     presentationForPortal(boundary?: Element | null): ThemePresentation {
-      if (toValue(explicitTheme) !== undefined || parent) return presentation.value;
+      if (toValue(explicitTheme) !== undefined || parent) return state.value.presentation;
       const host = boundary?.parentElement ?? boundary;
       const themedAncestor = host?.closest<HTMLElement>(
         "[data-theme], [data-theme-base]",
@@ -101,16 +102,14 @@ export function useComponentTheme(
         ?? themedAncestor?.dataset.theme;
       return isDesignTheme(legacyTheme)
         ? themePresentation(legacyTheme)
-        : presentation.value;
+        : state.value.presentation;
     },
     resolve<T>(
       key: keyof ThemeVisualDefaults,
       explicitValue: T | undefined,
       fallback: T,
     ): T {
-      if (explicitValue !== undefined) return explicitValue;
-      const configured = defaults.value[key];
-      return configured === undefined ? fallback : configured as T;
+      return resolveThemeValue(state.value, key, explicitValue, fallback);
     },
   };
 }

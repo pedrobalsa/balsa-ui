@@ -1,20 +1,21 @@
-import type { BalsaBackgroundConfig } from "../components/ui/gradient-background";
+import type { BalsaBackgroundConfig } from "@/components/ui/gradient-background";
 import {
   defineTheme,
   isDesignTheme,
   normalizeThemeDefinition,
   themeOptionDefinitions,
   type ThemeOverrides,
-} from "../components/ui/theme";
+} from "@/components/ui/theme";
 import {
   directionBlock,
   projectContextInstruction,
   type AgentCreationSource,
   type AgentProjectContext,
 } from "../agent/studio-workflows";
+import { frameworkProjectCopy } from "../framework/copy";
 import { paletteColorDefinitions, type PaletteColors } from "../palette/derive";
 import type { PaletteCliConfig } from "../palette/palette-store";
-import type { DesignThemeDraft } from "../theme/theme-store";
+import type { DesignThemeDraft } from "@/theme/theme-store";
 
 export const DESIGN_SYSTEM_SCHEMA_VERSION = 1 as const;
 
@@ -269,7 +270,8 @@ export function parseDesignSystemStudioConfig(source: string | unknown): DesignS
 }
 
 export function buildPaletteAgentPrompt(name: string, config: PaletteCliConfig): string {
-  return `Add this exact Balsa UI palette to my Vue 3 project.
+  const projectCopy = frameworkProjectCopy();
+  return `Add this exact Balsa UI palette to my ${projectCopy.project}.
 
 Run this command from the project root:
 
@@ -289,7 +291,8 @@ ${customizationClause}`;
 }
 
 export function buildThemeAgentPrompt(name: string, config: ThemeCliConfig): string {
-  return `Add this exact Balsa UI theme to my Vue 3 project.
+  const projectCopy = frameworkProjectCopy();
+  return `Add this exact Balsa UI theme to my ${projectCopy.project}.
 
 Run this command from the project root:
 

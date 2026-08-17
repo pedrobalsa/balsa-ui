@@ -1,15 +1,18 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { address, defaultRegistryTarget } from "../bin/registry-targets.mjs";
 import { createCatalogIndex } from "./agent-context.mjs";
-import { loadRegistry, readJson, rootDir, sourcePath, writeJson } from "./registry-lib.mjs";
+import { catalogSchemaVersion } from "./catalog.mjs";
+import { loadRegistry, readJson, repoPath, rootDir, writeJson } from "./registry-lib.mjs";
 
 export async function buildCatalog() {
+  const target = defaultRegistryTarget;
   const registry = await loadRegistry();
   const publicItems = registry.items.filter((item) => item.meta?.spec);
   const items = [];
 
   for (const item of publicItems) {
-    const spec = await readJson(sourcePath(item.meta.spec));
+    const spec = await readJson(repoPath(item.meta.spec));
     items.push({
       name: spec.name,
       title: spec.title,
@@ -19,7 +22,7 @@ export async function buildCatalog() {
       description: item.description,
       status: spec.status,
       version: spec.version,
-      registry: `@balsa/${item.name}`,
+      registry: address(target, item.name),
       registryDependencies: item.registryDependencies,
       npmDependencies: item.dependencies,
       tokens: spec.tokens,
@@ -27,6 +30,7 @@ export async function buildCatalog() {
       example: item.meta.documentation,
       source: item.files.map((file) => file.path),
       framework: item.meta.framework,
+      specification: item.meta.spec,
     });
   }
 
@@ -35,9 +39,9 @@ export async function buildCatalog() {
   // gate prove the registry and the package ship together.
   const packageJson = await readJson(path.join(rootDir, "package.json"));
   const catalog = {
-    schemaVersion: 1,
+    schemaVersion: catalogSchemaVersion,
     releaseVersion: packageJson.version,
-    framework: "vue",
+    frameworks: [target],
     generatedFrom: ["registry.json", "specs/components/*.json"],
     items,
   };

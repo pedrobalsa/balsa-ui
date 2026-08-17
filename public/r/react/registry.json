@@ -1,0 +1,4050 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "balsa-ui-react",
+  "homepage": "https://balsa-ui.com",
+  "version": "0.8.0",
+  "items": [
+    {
+      "name": "balsa-theme",
+      "type": "registry:theme",
+      "title": "Balsa design themes",
+      "description": "Typed inheritable design themes with React context, scoped providers, and Lucide icons for theme pickers. Installs the shared CSS theme stylesheet and framework-neutral theme core.",
+      "dependencies": [
+        "react",
+        "tailwindcss",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/theme-core",
+        "@balsa/shared/balsa-theme",
+        "@balsa/shared/balsa-foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/theme.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/theme.ts"
+        },
+        {
+          "path": "src/components/ui/theme-context.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/theme-context.ts"
+        },
+        {
+          "path": "src/components/ui/BalsaThemeProvider.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/BalsaThemeProvider.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "balsa-portal-scope",
+      "type": "registry:theme",
+      "title": "Balsa portal scope",
+      "description": "Owns one dedicated portal host and React context so overlays can createPortal without guessing body children.",
+      "dependencies": [
+        "react",
+        "react-dom"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/portal-core",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/BalsaPortalScope.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/BalsaPortalScope.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.",
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/Icon.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Icon.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Typed action control with solid, soft, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and Lucide icons.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Button.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Button.tsx"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button group",
+      "description": "Connected mutually exclusive actions with semantic color, a Glassmorphism-aware surface-to-glass default, explicit surface, solid, outline, glass, and compact code treatments; rounded or pill outer shapes; four shared sizes; responsive labels; and accessible pressed state.",
+      "dependencies": [
+        "react"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ButtonGroup.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ButtonGroup.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Compact status, category, and metadata label with solid, soft, outline, and low-rim translucent glass styles, three sizes, and optional square geometry.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Badge.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Badge.tsx"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "Typed sized navigation link with text, solid, and outline presentations, optional square geometry, and safe external-link behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Link.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Link.tsx"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/navigation.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/navigation.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Semantic single-key and chord notation with individually rendered soft-default key caps, typed materials and sizes, configurable geometry, and accessible symbolic labels.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Kbd.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Kbd.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Decorative or semantic horizontal and vertical separation with typed line styles, thicknesses, orientation, and optional aligned horizontal label content.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Separator.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Separator.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Screen-reader-hidden text, rectangle, and circle loading placeholders with typed materials, sizing, geometry, pulse or wave motion, and reduced-motion fallback.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Skeleton.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Skeleton.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Accessible indeterminate loading status with five sizes, semantic color, three speeds, hidden or visible label placement, and reduced-motion fallback.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Spinner.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Spinner.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Resilient labelled identity image with deterministic or custom fallback, image lifecycle state, delayed fallback, typed shapes and four sizes.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Avatar.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Avatar.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Typed inline feedback and native top-layer alert-dialog presentation with five statuses, five materials, persistent dismissal policy, focus restoration, sizing, geometry, and theme inheritance.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Alert.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Alert.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Labelled determinate or indeterminate task completion with safe value normalization, formatted value text, typed variants, semantic colors, sizing, geometry, and reduced-motion behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Progress.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Progress.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Typed compact hierarchy navigation with linked ancestors, a current-page state, selectable separators, and accessible ordered-list semantics.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Breadcrumb.tsx"
+        },
+        {
+          "path": "src/components/ui/navigation.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/navigation.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Consistent semantic surface with six variants, typed action-intent color, configurable corners, size or padding, and shadow for grouping related content and actions.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Card.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Card.tsx"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "footer",
+      "type": "registry:ui",
+      "title": "Footer",
+      "description": "Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Footer.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Footer.tsx"
+        },
+        {
+          "path": "src/components/ui/navigation.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/navigation.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; password, phone, monetary, and percentage modes; validation feedback; and loading states.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Input.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Input.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Accessible multi-line input with outline, surface, soft, and glass materials; typed size and radius; rows; auto expansion; capped height; resize behavior; and validation feedback.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Textarea.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Textarea.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Native binary form selection with outline, surface, soft, and glass unchecked-control treatments, associated label, hint, three sizes, and configurable corners.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Checkbox.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Checkbox.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Single-value and independently draggable bounded-range native sliders with horizontal and vertical orientation, formatted output, three sizes, minimum thumb gaps, keyboard, pointer, touch, and form behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Slider.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Slider.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Native boolean setting control with switch semantics, typed materials, three sizes, configurable corners, form naming, required state, and associated guidance.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Switch.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Switch.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Single controlled underline-default disclosure with native semantics, fully retracted inert closed content, typed materials, natural-height motion, sizing, configurable corners, disabled state, and semantic headings.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Collapsible.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Collapsible.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Keyboard-accessible local and filter-panel switching with single-axis responsive overflow, inert unslotted panels, four materials, and segmented, underline, pill, or tile layouts.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Tabs.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Tabs.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Accessible native mutually exclusive choices with typed options, a default column layout, semantic selected colors, row and selected-card layouts, shared form validation, sizing, geometry, and loading behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/RadioGroup.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/RadioGroup.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Accessible pressed-state action with typed surface, solid, outline, glass, and outline-to-solid icon treatments; semantic action colors; four sizes; and configurable corners.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Toggle.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Toggle.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "ToggleGroup",
+      "description": "Connected single or multiple pressed-state actions with typed options, orientation, disabled items, immutable models, and complete roving keyboard focus.",
+      "dependencies": [
+        "react"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/toggle",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ToggleGroup.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ToggleGroup.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "One labelled native text input with typed start/end text or Lucide addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/InputGroup.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/InputGroup.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Connected options-driven disclosure collection with single or multiple models, semantic headings, disabled items, complete vertical keyboard navigation, and shared typed materials.",
+      "dependencies": [
+        "react"
+      ],
+      "registryDependencies": [
+        "@balsa/react/collapsible",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Accordion.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Accordion.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Clamped result navigation with bounded siblings, semantic ellipses, action-label or icon-only controls, localization, sizing, geometry, and native accessibility.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Pagination.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Pagination.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Responsive slot-first semantic table with typed materials, density, independently configurable header and row colors, stripes, hover, gridlines, sticky header, geometry, and valid loading or empty rows.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/spinner",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Table.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Table.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code block",
+      "description": "Theme-aware sized dark source and command presentation with configurable corners, text-style expansion controls, and accessible icon-only copy.",
+      "dependencies": [
+        "react",
+        "highlight.js",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/CodeBlock.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/CodeBlock.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:ui",
+      "title": "Dropdown",
+      "description": "Compact anchored panel for a small group of related links or actions, with typed semantic color, surface, outline, soft, and glass materials, configurable width and geometry, and safe alignment.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Dropdown.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Dropdown.tsx"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "popup",
+      "type": "registry:ui",
+      "title": "Popup",
+      "description": "Collision-aware interactive rich content anchored to a native button with portal or contained rendering, focus entry/restoration, dismissal, typed materials, sizing, and geometry.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Popup.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Popup.tsx"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "Delayed pointer-hover and keyboard-focus previews that preserve focus, bridge pointer movement, collision-flip, escape clipping, and inherit Balsa materials and geometry.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/HoverCard.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/HoverCard.tsx"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Collision-aware non-interactive supplementary descriptions for pointer hover and keyboard focus, with typed timing, materials, geometry, portal or contained rendering, and theme inheritance.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Tooltip.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Tooltip.tsx"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and background scroll locking that preserves scrolling inside the dialog.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope",
+        "@balsa/react/icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Modal.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Modal.tsx"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "Native modal edge panel with four sides, three extents, scrollable slots, focus/scroll management, dismissal policy, handle drag, and contained previews.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope",
+        "@balsa/react/icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Drawer.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Drawer.tsx"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Labelled native scroll viewport with typed axes, scrollbar visibility and width, optional edge fades, geometry, native events, and exposed scroll methods.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ScrollArea.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ScrollArea.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "attachment",
+      "type": "registry:ui",
+      "title": "Attachment",
+      "description": "Labelled native file selection with drag/drop, immutable single or multiple models, type/size/count validation, loading/error states, metadata, and accessible removal.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Attachment.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Attachment.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Two-panel pointer and keyboard resize group with controlled percentage, horizontal or vertical orientation, safe limits, typed materials, handle sizes, and geometry.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Resizable.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Resizable.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "One accessible fixed-length native verification-code input with semantic-colored visual cells, numeric or alphanumeric filtering, paste and caret editing, optional masking and grouping, surface/outline/soft/solid/glass materials, completion events, and shared form states.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/InputOTP.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/InputOTP.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Locale-aware single, multiple, and range date-only selection with disabled rules, one or two months, fixed weeks, outside days, and complete grid keyboard navigation.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Calendar.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Calendar.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "Typed accessible Balsa-owned drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Carousel.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Carousel.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "navbar",
+      "type": "registry:ui",
+      "title": "Navbar",
+      "description": "Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/dropdown",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Navbar.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Navbar.tsx"
+        },
+        {
+          "path": "src/components/ui/NavbarExpandableItem.tsx",
+          "type": "registry:component",
+          "target": "src/components/ui/NavbarExpandableItem.tsx"
+        },
+        {
+          "path": "src/components/ui/navigation.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/navigation.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "Typed grouped application navigation with active state, nested items, expanded/rail/offcanvas desktop modes, shortcut, slots, and Drawer-backed mobile behavior.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/drawer",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Sidebar.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Sidebar.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Keyboard-accessible outline, surface, soft, or glass single or multiple selection with compact sizing, configurable corners, fixed-height gapped options, and an overflow-safe top-layer listbox.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Select.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Select.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "title": "Autocomplete",
+      "description": "Editable outline, surface, soft, or glass single- or multiple-value combobox with shared field sizing, configurable corners, removable selected suggestions, and an overflow-safe suggestion list.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Autocomplete.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Autocomplete.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "DatePicker",
+      "description": "Labelled locale-formatted single or range date field composing Calendar and collision-safe Popup with validation, disabled dates, clear action, dismissal, focus restoration, and Glassmorphism backdrop blur.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/calendar",
+        "@balsa/react/popup",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DatePicker.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/DatePicker.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Declarative viewport-level notification stack with primary-by-default typed items, custom icons, bounded rendering, semantic live regions, timed and sticky lifetimes, pause/resume policies, actions, Escape dismissal, position-aware transitions, responsive placement, and teleported theme inheritance.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Toast.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Toast.tsx"
+        },
+        {
+          "path": "src/components/ui/ToastViewport.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ToastViewport.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals. Ships PropertySelect, the full-width caption-over-value property row built on the same trigger.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DropdownMenu.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/DropdownMenu.tsx"
+        },
+        {
+          "path": "src/components/ui/MenuList.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/MenuList.tsx"
+        },
+        {
+          "path": "src/components/ui/PropertySelect.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/PropertySelect.tsx"
+        },
+        {
+          "path": "src/components/ui/menu.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/menu.ts"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "Persistent application menus with horizontal roving focus, open-menu transfer, typed shared menu content, portals, and complete keyboard behavior.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Menubar.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Menubar.tsx"
+        },
+        {
+          "path": "src/components/ui/MenuList.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/MenuList.tsx"
+        },
+        {
+          "path": "src/components/ui/menu.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/menu.ts"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "command-menu",
+      "type": "registry:ui",
+      "title": "Command Menu",
+      "description": "Inline dropdown or on-demand dialog grouped command filtering with combobox/listbox semantics, active-descendant navigation, hotkey opening, loading, empty states, and typed sizing.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/modal",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/CommandMenu.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/CommandMenu.tsx"
+        },
+        {
+          "path": "src/components/ui/CommandList.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/CommandList.tsx"
+        },
+        {
+          "path": "src/components/ui/command.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/command.ts"
+        },
+        {
+          "path": "src/components/ui/anchored-layer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/anchored-layer.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "ColorPicker",
+      "description": "Accessible contrast-safe outline, surface, soft, or glass color field or grouped palette trigger with a custom saturation, hue, and editable HEX, RGB, or HSL color-code popover.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/button",
+        "@balsa/react/input",
+        "@balsa/react/select",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ColorPicker.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ColorPicker.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Pointer- and keyboard-positioned typed context actions with viewport collision handling and the complete shared Balsa menu semantics.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/ContextMenu.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ContextMenu.tsx"
+        },
+        {
+          "path": "src/components/ui/MenuList.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/MenuList.tsx"
+        },
+        {
+          "path": "src/components/ui/menu.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/menu.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        },
+        {
+          "path": "src/components/ui/types.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/types.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "settings-card",
+      "type": "registry:ui",
+      "title": "SettingsCard",
+      "description": "Related workspace settings with explicit reset and save actions.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/button",
+        "@balsa/react/select",
+        "@balsa/react/switch",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/SettingsCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/SettingsCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "command-palette-card",
+      "type": "registry:ui",
+      "title": "CommandPaletteCard",
+      "description": "Grouped command palette that reaches projects, actions, and settings from one search.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/command-menu",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/CommandPaletteCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/CommandPaletteCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "profile-form-card",
+      "type": "registry:ui",
+      "title": "ProfileFormCard",
+      "description": "Labelled profile fields with picture, handle, time zone, and biography.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/input",
+        "@balsa/react/select",
+        "@balsa/react/textarea",
+        "@balsa/react/avatar",
+        "@balsa/react/button",
+        "@balsa/react/switch",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ProfileFormCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ProfileFormCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "environment-switcher-card",
+      "type": "registry:ui",
+      "title": "EnvironmentSwitcherCard",
+      "description": "Searchable environment picker with the current selection stated.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/autocomplete",
+        "@balsa/react/badge",
+        "@balsa/react/button",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/EnvironmentSwitcherCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/EnvironmentSwitcherCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "DataTable",
+      "description": "Typed columns and rows with render slots, controlled sorting, bottom quick field and advanced filters, pagination, selection, visibility, independent header and row colors, density, loading, empty state, and responsive semantic markup.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/button",
+        "@balsa/react/input",
+        "@balsa/react/select",
+        "@balsa/react/table",
+        "@balsa/react/pagination",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/DataTable.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/DataTable.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "data-grid-card",
+      "type": "registry:ui",
+      "title": "DataGridCard",
+      "description": "Sortable, selectable, paginated table of records with real columns.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/data-table",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/DataGridCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/DataGridCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "preview",
+      "type": "registry:ui",
+      "title": "Preview",
+      "description": "Isolated natural or exact logical viewport with fit scaling, synchronized design context, accessible iframe title, and chromeless fullscreen review.",
+      "dependencies": [
+        "react",
+        "react-dom",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/button",
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme",
+        "@balsa/react/balsa-portal-scope"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Preview.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Preview.tsx"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "analytics",
+      "type": "registry:ui",
+      "title": "Analytics",
+      "description": "Provider-neutral interaction tracking for every data-balsa component, with consent gating, typed custom events, and adapters for GA4, Meta Pixel, LinkedIn Insight Tag, or application-owned destinations.",
+      "dependencies": [
+        "react"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/BalsaAnalyticsProvider.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/BalsaAnalyticsProvider.tsx"
+        },
+        {
+          "path": "src/components/ui/analytics.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/analytics.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "charts",
+      "type": "registry:ui",
+      "title": "Charts",
+      "description": "Composable responsive Unovis line, area, grouped or stacked bar, donut, and doughnut charts with contrast-safe semantic series, polished interactions, explicit states, and complete semantic table alternatives.",
+      "dependencies": [
+        "react",
+        "@unovis/react",
+        "@unovis/ts",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/spinner",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Charts.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Charts.tsx"
+        },
+        {
+          "path": "src/components/ui/ChartContainer.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ChartContainer.tsx"
+        },
+        {
+          "path": "src/components/ui/ChartCrosshair.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ChartCrosshair.tsx"
+        },
+        {
+          "path": "src/components/ui/ChartLegendContent.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ChartLegendContent.tsx"
+        },
+        {
+          "path": "src/components/ui/ChartTooltip.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ChartTooltip.tsx"
+        },
+        {
+          "path": "src/components/ui/ChartTooltipContent.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/ChartTooltipContent.tsx"
+        },
+        {
+          "path": "src/components/ui/chart.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/chart.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "src/components/ui/form.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/form.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "gradient-background",
+      "type": "registry:ui",
+      "title": "GradientBackground",
+      "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
+      "dependencies": [
+        "react",
+        "three",
+        "@types/three",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/GradientBackground.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/GradientBackground.tsx"
+        },
+        {
+          "path": "src/components/ui/gradient-background.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-renderer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-renderer.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-shader.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-shader.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-effects-shader.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-effects-shader.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-glyphs.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-glyphs.ts"
+        },
+        {
+          "path": "src/components/ui/gradient-background-presets.json",
+          "type": "registry:lib",
+          "target": "src/components/ui/gradient-background-presets.json"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "text-3d",
+      "type": "registry:ui",
+      "title": "Text3D",
+      "description": "Palette-aware and theme-aware extruded display text with finite presets, materials, environments and fonts, optional drag, wheel zoom and rotation, lifecycle fallbacks, and still PNG capture.",
+      "dependencies": [
+        "react",
+        "three",
+        "@types/three",
+        "fontkit",
+        "@types/fontkit",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/gradient-background",
+        "@balsa/react/balsa-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/Text3D.tsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/Text3D.tsx"
+        },
+        {
+          "path": "src/components/ui/text-3d.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-presets.json",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-presets.json"
+        },
+        {
+          "path": "src/components/ui/text-3d-environments.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-environments.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-liquid-geometry.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-liquid-geometry.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-renderer.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-renderer.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-fonts.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-fonts.ts"
+        },
+        {
+          "path": "src/components/ui/text-3d-typeface.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/text-3d-typeface.ts"
+        },
+        {
+          "path": "src/components/ui/classes.ts",
+          "type": "registry:lib",
+          "target": "src/components/ui/classes.ts"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/space-grotesk-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/space-grotesk-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/inter-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/inter-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/noto-sans-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/noto-sans-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/roboto-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/roboto-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/open-sans-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/open-sans-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/source-sans-3-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/source-sans-3-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/lato-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/lato-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/montserrat-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/montserrat-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/poppins-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/poppins-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/raleway-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/raleway-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-300.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-300.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/oswald-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/oswald-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-400.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-500.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-500.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-600.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-600.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-700.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-700.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-800.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-800.json"
+        },
+        {
+          "path": "public/fonts/typeface/playfair-display-900.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/playfair-display-900.json"
+        },
+        {
+          "path": "public/fonts/typeface/rubik-spray-paint-400.json",
+          "type": "registry:lib",
+          "target": "public/fonts/typeface/rubik-spray-paint-400.json"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "application-card",
+      "type": "registry:block",
+      "title": "ApplicationCard",
+      "description": "Structured application surface with a repeatable header, action, body, and footer rhythm that inherits Card material, geometry, borders, density, and elevation.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/card"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ApplicationCard.tsx",
+          "type": "registry:block",
+          "target": "src/components/compositions/ApplicationCard.tsx"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "error-state-card",
+      "type": "registry:ui",
+      "title": "ErrorStateCard",
+      "description": "Recoverable failure with request context and retry action.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/application-card",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ErrorStateCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ErrorStateCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "loading-state-card",
+      "type": "registry:ui",
+      "title": "LoadingStateCard",
+      "description": "Stable skeleton geometry with accessible busy semantics.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/skeleton"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/LoadingStateCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/LoadingStateCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "metric-grid-card",
+      "type": "registry:ui",
+      "title": "MetricGridCard",
+      "description": "Aligned operational KPIs with labels, values, and supporting detail.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/MetricGridCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/MetricGridCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "storage-usage-card",
+      "type": "registry:ui",
+      "title": "StorageUsageCard",
+      "description": "Half-height single measurement with the bar that puts it in context.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/progress"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/StorageUsageCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/StorageUsageCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "form-progress-card",
+      "type": "registry:ui",
+      "title": "FormProgressCard",
+      "description": "Linear multistep progress with current-step semantics.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/application-card"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/FormProgressCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/FormProgressCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "incident-alert-card",
+      "type": "registry:ui",
+      "title": "IncidentAlertCard",
+      "description": "Half-height incident banner with acknowledge and open actions.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/alert",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/IncidentAlertCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/IncidentAlertCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "service-health-card",
+      "type": "registry:ui",
+      "title": "ServiceHealthCard",
+      "description": "Half-height status strip reporting state and latency per region.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ServiceHealthCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ServiceHealthCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "activity-timeline-card",
+      "type": "registry:ui",
+      "title": "ActivityTimelineCard",
+      "description": "Chronological actor, action, target, and time event stream.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/avatar"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ActivityTimelineCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ActivityTimelineCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "runbook-steps-card",
+      "type": "registry:ui",
+      "title": "RunbookStepsCard",
+      "description": "Ordered procedure where only the step in hand is expanded.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/accordion",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/RunbookStepsCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/RunbookStepsCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "release-notes-card",
+      "type": "registry:ui",
+      "title": "ReleaseNotesCard",
+      "description": "Scrollable release history with version, date, and change notes.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/scroll-area",
+        "@balsa/react/separator",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ReleaseNotesCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ReleaseNotesCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "device-verification-card",
+      "type": "registry:ui",
+      "title": "DeviceVerificationCard",
+      "description": "Single-purpose one-time-code step with resend and explicit confirmation.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/input-otp",
+        "@balsa/react/button",
+        "@balsa/react/link"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/DeviceVerificationCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/DeviceVerificationCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "analytics-chart-card",
+      "type": "registry:ui",
+      "title": "AnalyticsChartCard",
+      "description": "Trend visualization with period context and semantic delta.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/badge",
+        "@balsa/react/charts"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/AnalyticsChartCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/AnalyticsChartCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "asset-carousel-card",
+      "type": "registry:ui",
+      "title": "AssetCarouselCard",
+      "description": "Browsable run of captured assets with captions and review status.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/carousel",
+        "@balsa/react/gradient-background",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/AssetCarouselCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/AssetCarouselCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "split-workspace-card",
+      "type": "registry:ui",
+      "title": "SplitWorkspaceCard",
+      "description": "Resizable split of a file list against the diff it selects.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/scroll-area",
+        "@balsa/react/code-block",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/SplitWorkspaceCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/SplitWorkspaceCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "integration-list-card",
+      "type": "registry:ui",
+      "title": "IntegrationListCard",
+      "description": "Connected services, each with the single control that governs it.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/switch",
+        "@balsa/react/avatar"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/IntegrationListCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/IntegrationListCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "usage-breakdown-card",
+      "type": "registry:ui",
+      "title": "UsageBreakdownCard",
+      "description": "Stacked bars attributing billed usage to categories over time.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/charts"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/UsageBreakdownCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/UsageBreakdownCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "api-key-card",
+      "type": "registry:ui",
+      "title": "ApiKeyCard",
+      "description": "One-time secret with copy, provenance, and revocation.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/code-block",
+        "@balsa/react/badge",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ApiKeyCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ApiKeyCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "onboarding-checklist-card",
+      "type": "registry:ui",
+      "title": "OnboardingChecklistCard",
+      "description": "Setup tasks with progress and complete/current/future state.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/button",
+        "@balsa/react/checkbox",
+        "@balsa/react/progress"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/OnboardingChecklistCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/OnboardingChecklistCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "command-toolbar-card",
+      "type": "registry:ui",
+      "title": "CommandToolbarCard",
+      "description": "Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/application-card",
+        "@balsa/react/button",
+        "@balsa/react/kbd"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/CommandToolbarCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/CommandToolbarCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "notification-preferences-card",
+      "type": "registry:ui",
+      "title": "NotificationPreferencesCard",
+      "description": "Independently controlled notification channels with concise explanations.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/switch",
+        "@balsa/react/radio-group",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/NotificationPreferencesCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/NotificationPreferencesCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "member-access-card",
+      "type": "registry:ui",
+      "title": "MemberAccessCard",
+      "description": "People, identity, role, and access metadata in a scannable list.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/avatar",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/MemberAccessCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/MemberAccessCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "navigation-menu-card",
+      "type": "registry:ui",
+      "title": "NavigationMenuCard",
+      "description": "Sectioned local navigation with an explicit current destination.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/application-card"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/NavigationMenuCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/NavigationMenuCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "order-summary-card",
+      "type": "registry:ui",
+      "title": "OrderSummaryCard",
+      "description": "Line items, calculated totals, and order confirmation.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/OrderSummaryCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/OrderSummaryCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "payment-method-card",
+      "type": "registry:ui",
+      "title": "PaymentMethodCard",
+      "description": "Selectable saved payment methods and a focused continuation action.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/button",
+        "@balsa/react/radio-group"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/PaymentMethodCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/PaymentMethodCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "subscription-card",
+      "type": "registry:ui",
+      "title": "SubscriptionCard",
+      "description": "Plan, renewal, included usage, and management action.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/application-card",
+        "@balsa/react/badge",
+        "@balsa/react/button",
+        "@balsa/react/progress"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/SubscriptionCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/SubscriptionCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "media-preview-card",
+      "type": "registry:ui",
+      "title": "MediaPreviewCard",
+      "description": "Asset preview, publication status, and replacement action.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/gradient-background",
+        "@balsa/react/application-card",
+        "@balsa/react/badge",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/MediaPreviewCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/MediaPreviewCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "resource-table-card",
+      "type": "registry:ui",
+      "title": "ResourceTableCard",
+      "description": "Resource index with status, metadata, row selection, and creation action.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/badge",
+        "@balsa/react/button",
+        "@balsa/react/table"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ResourceTableCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ResourceTableCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "schedule-planner-card",
+      "type": "registry:ui",
+      "title": "SchedulePlannerCard",
+      "description": "Calendar paired with the bookable hours for the chosen day.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/calendar",
+        "@balsa/react/avatar",
+        "@balsa/react/badge",
+        "@balsa/react/button",
+        "@balsa/react/icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/SchedulePlannerCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/SchedulePlannerCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "inbox-thread-card",
+      "type": "registry:ui",
+      "title": "InboxThreadCard",
+      "description": "Message thread with author, timing, and an inline reply.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/avatar",
+        "@balsa/react/button",
+        "@balsa/react/textarea"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/InboxThreadCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/InboxThreadCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "filter-panel-card",
+      "type": "registry:ui",
+      "title": "FilterPanelCard",
+      "description": "Grouped filters across checkboxes and a range, with reset and apply.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/accordion",
+        "@balsa/react/checkbox",
+        "@balsa/react/slider",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/FilterPanelCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/FilterPanelCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "plan-comparison-card",
+      "type": "registry:ui",
+      "title": "PlanComparisonCard",
+      "description": "Plan capabilities compared across tiers with a billing period switch.",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/tabs",
+        "@balsa/react/table",
+        "@balsa/react/badge",
+        "@balsa/react/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/PlanComparisonCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/PlanComparisonCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    },
+    {
+      "name": "image-compare-card",
+      "type": "registry:ui",
+      "title": "ImageCompareCard",
+      "description": "Before-and-after comparison where the reader sets the split.",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/application-card",
+        "@balsa/react/resizable",
+        "@balsa/react/gradient-background",
+        "@balsa/react/icon",
+        "@balsa/react/badge"
+      ],
+      "files": [
+        {
+          "path": "src/components/compositions/ImageCompareCard.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/ImageCompareCard.tsx"
+        },
+        {
+          "path": "src/components/compositions/_CompositionRoot.tsx",
+          "type": "registry:component",
+          "target": "src/components/compositions/_CompositionRoot.tsx"
+        },
+        {
+          "path": "src/components/compositions/composition.ts",
+          "type": "registry:lib",
+          "target": "src/components/compositions/composition.ts"
+        }
+      ],
+      "meta": {
+        "framework": "react"
+      }
+    }
+  ]
+}

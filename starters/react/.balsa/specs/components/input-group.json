@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "name": "input-group",
+  "title": "Input Group",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "input-group"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Connect typed text or icon addons and contextual actions to one labelled text-like input.",
+  "useFor": [
+    "URLs and domains",
+    "Currency or unit affixes",
+    "Search fields with contextual actions"
+  ],
+  "avoidFor": [
+    "Unrelated controls",
+    "Multiple independently labelled inputs",
+    "Replacing helper or error text"
+  ],
+  "types": [
+    "inline",
+    "stacked"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated"
+  ],
+  "sizes": [
+    "sm",
+    "md"
+  ],
+  "accessibility": [
+    "A visible label is associated with the one native input.",
+    "The native control remains first in DOM focus order while addons may display before it.",
+    "Loading and validation reuse Balsa's shared busy, invalid, description, and error semantics."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-success",
+    "--balsa-color-destructive",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using addon text as the only input label.",
+    "Putting a full form inside an addon.",
+    "Using inline layout when long addon text needs a stacked row."
+  ],
+  "examples": [
+    {
+      "id": "url",
+      "title": "URL prefix",
+      "description": "Short semantic text can connect to the start of one labelled field.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" start-text=\"https://\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "currency",
+      "title": "Currency suffix",
+      "description": "A trailing unit remains visually connected without becoming a second input.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" start-text=\"$\" end-text=\"USD\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "stacked",
+      "title": "Stacked addons",
+      "description": "Block rows give longer contextual content enough room on narrow layouts.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" layout=\"stacked\" start-text=\"Address prefix placeholder\" end-text=\"Address suffix placeholder\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid grouped field",
+      "description": "One error boundary and explicit message cover the native control and addons.",
+      "source": "<script setup lang=\"ts\">\nimport InputGroup from \"@/components/ui/InputGroup.vue\";\nimport { ref } from \"vue\";\n\nconst address = ref(\"\");\n</script>\n\n<template>\n  <InputGroup id=\"address-placeholder\" v-model=\"address\" label=\"Address placeholder\" start-text=\"https://\" end-text=\".example\" status=\"unvalidated\" placeholder=\"value-placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/InputGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "\"text\" | \"email\" | \"url\" | \"search\" | undefined",
+        "values": [
+          "text",
+          "email",
+          "url",
+          "search"
+        ],
+        "required": false,
+        "default": "\"text\""
+      },
+      {
+        "name": "layout",
+        "type": "InputGroupLayout | undefined",
+        "values": [
+          "inline",
+          "stacked"
+        ],
+        "required": false,
+        "default": "\"inline\""
+      },
+      {
+        "name": "startText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "endText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "startIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "endIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "autocomplete",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "start",
+        "type": "{}"
+      },
+      {
+        "name": "end",
+        "type": "{}"
+      }
+    ]
+  }
+}

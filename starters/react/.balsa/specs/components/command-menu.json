@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "name": "command-menu",
+  "title": "Command Menu",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "command"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Filter and invoke grouped commands through an inline query with an anchored dropdown or on-demand dialog.",
+  "useFor": [
+    "Application command palettes",
+    "Fast navigation",
+    "Grouped searchable actions"
+  ],
+  "avoidFor": [
+    "Free-form search results",
+    "Data entry",
+    "Hidden-only critical actions"
+  ],
+  "types": [
+    "inline",
+    "dialog"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "loading",
+    "empty",
+    "filtered"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "The inline query opens its anchored dropdown on focus, click, typing, or arrow navigation and closes on selection, Escape, Tab, or outside press.",
+    "The query uses combobox and active-descendant semantics against one listbox.",
+    "Dialog mode uses the established modal focus, scroll, and restoration contract."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Using labels as unique identifiers.",
+    "Hiding critical commands only behind a hotkey.",
+    "Changing the command model during internal filtering."
+  ],
+  "examples": [
+    {
+      "id": "inline",
+      "title": "Inline commands",
+      "description": "The editable query opens a filtered dropdown of grouped commands.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" size=\"sm\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "dialog",
+      "title": "Dialog palette",
+      "description": "Modal mode opens on request and adds the platform command hotkey.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open commands placeholder</Button>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" mode=\"dialog\" @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading keeps the query present with an announced status.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" loading @select=\"handleSelect\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass palette",
+      "description": "The command surface uses the same semantic selected material.",
+      "source": "<script setup lang=\"ts\">\nimport CommandMenu from \"@/components/ui/CommandMenu.vue\";\nimport { ref } from \"vue\";\nimport type { CommandGroup } from \"@/components/ui/command\";\n\nconst open = ref(false);\nconst query = ref(\"\");\nconst groups: readonly CommandGroup[] = [\n  { id: \"commands\", label: \"Commands placeholder\", items: [\n    { id: \"home\", label: \"Home placeholder\", keywords: [\"start\",\"navigation\"], shortcut: \"H\" },\n    { id: \"docs\", label: \"Docs placeholder\", keywords: [\"guide\",\"reference\"], shortcut: \"D\" },\n    { id: \"create\", label: \"Create placeholder\", keywords: [\"new\",\"action\"], shortcut: \"C\" },\n  ] },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <CommandMenu id=\"command-palette\" v-model=\"open\" v-model:query=\"query\" label=\"Commands placeholder\" :groups=\"groups\" variant=\"glass\" @select=\"handleSelect\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/CommandMenu.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      },
+      {
+        "name": "query",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:query"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "groups",
+        "type": "readonly CommandGroup[]",
+        "shape": {
+          "type": "readonly CommandGroup[]",
+          "items": {
+            "type": "CommandGroup",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly CommandItem[]",
+                "required": true,
+                "shape": {
+                  "type": "readonly CommandItem[]",
+                  "items": {
+                    "type": "CommandItem",
+                    "fields": [
+                      {
+                        "name": "id",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "label",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "keywords",
+                        "type": "readonly string[] | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "icon",
+                        "type": "LucideIcon | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "shortcut",
+                        "type": "string | undefined",
+                        "required": false
+                      },
+                      {
+                        "name": "disabled",
+                        "type": "boolean | undefined",
+                        "required": false
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "CommandMenuMode | undefined",
+        "values": [
+          "inline",
+          "dialog"
+        ],
+        "required": false,
+        "default": "\"inline\""
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Command menu\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Search commands\""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "variant",
+        "type": "LayerVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CommandMenuSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "hotkey",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"k\""
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "query",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      },
+      {
+        "name": "select",
+        "type": "[item: CommandItem]"
+      },
+      {
+        "name": "update:query",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "empty",
+        "type": "{}"
+      },
+      {
+        "name": "loading",
+        "type": "{}"
+      }
+    ]
+  }
+}

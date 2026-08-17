@@ -6,89 +6,108 @@
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
-import { loadRegistry, rootDir, sourcePath } from "./registry-lib.mjs";
+import { fileURLToPath } from "node:url";
+import { registryTargetConfigurations } from "../bin/registry-targets.mjs";
+import { itemPath, readJson, repoPath, rootDir } from "./registry-lib.mjs";
 
 const importPattern = /(?:from\s+|import\s*\()\s*["'](\.\.?\/[^"']+)["']/g;
-export const requiredData = [
+
+export const requiredCliData = [
   ".balsa/catalog-index.json",
   ".balsa/catalog.json",
   "registry.json",
+  "packages/shared/registry.json",
+  "packages/react/registry.json",
   "skills/balsa-ui/SKILL.md",
   "skills/balsa-template-design/SKILL.md",
   "skills/balsa-template-design/LICENSE.txt",
   "src/config/components-template.json",
+  "src/config/components-template-react.json",
   "src/design-system/built-ins.json",
 ];
 
-function packagePath(relativePath) {
-  return path.relative(rootDir, sourcePath(relativePath)).replaceAll("\\", "/");
+/**
+ * Resolve a repository-relative source the same way the installer does, then
+ * project it back to the posix path npm records in the tarball. Target-scoped
+ * UI source packs from `packages/vue/...`; styles and the theme core pack from
+ * `packages/shared/...`; fonts follow the target's prefix-to-root map.
+ */
+export function packedPathFromSource(relativePath, options) {
+  return path.relative(rootDir, itemPath(relativePath, options)).replaceAll("\\", "/");
 }
 
-export async function collectCliModules(entry = "bin/balsa.mjs") {
-  const queue = [entry];
+/**
+ * Canonical files the published CLI reads when installing from the tarball:
+ * every `files[].path` on every configured target's item source, plus
+ * `specs/components/<name>.json` for items that declare `meta.spec`.
+ */
+export async function collectRegistryRuntimePaths() {
+  const files = new Set();
+  const specs = new Set();
+
+  for (const [target, configuration] of Object.entries(registryTargetConfigurations())) {
+    if (!configuration.itemSource) continue;
+    const registry = await readJson(repoPath(configuration.itemSource));
+    for (const item of registry.items ?? []) {
+      for (const file of item.files ?? []) {
+        if (typeof file?.path === "string" && file.path) {
+          files.add(packedPathFromSource(file.path, { target }));
+        }
+      }
+      if (typeof item.meta?.spec === "string" && item.meta.spec) {
+        specs.add(path.relative(rootDir, repoPath(`specs/components/${item.name}.json`)).replaceAll("\\", "/"));
+      }
+    }
+  }
+
+  return { files, specs };
+}
+
+export async function findMissingPackedRuntimeFiles(packed) {
+  const queue = ["bin/balsa.mjs"];
   const visited = new Set();
+  const missing = [];
 
   while (queue.length) {
     const relative = queue.shift();
     if (visited.has(relative)) continue;
     visited.add(relative);
+    if (!packed.has(relative)) {
+      missing.push(relative);
+      continue;
+    }
 
-    const source = await readFile(sourcePath(relative), "utf8");
+    const source = await readFile(path.join(rootDir, relative), "utf8");
     for (const match of source.matchAll(importPattern)) {
       const imported = path.posix.normalize(path.posix.join(path.posix.dirname(relative), match[1]));
       if (imported.endsWith(".mjs")) queue.push(imported);
     }
   }
 
-  return [...visited];
-}
+  for (const required of requiredCliData) {
+    if (!packed.has(required)) missing.push(required);
+  }
+  if (![...packed].some((entry) => entry.startsWith("adapters/"))) {
+    missing.push("adapters/**");
+  }
 
-export async function collectPackageRuntimeRequirements(registry) {
-  const registrySources = registry.items.flatMap((item) =>
-    item.files.map((file) => packagePath(file.path))
-  );
-  const componentSpecs = registry.items
-    .filter((item) => item.meta?.spec)
-    .map((item) => packagePath(`specs/components/${item.name}.json`));
-
-  return {
-    cliModules: await collectCliModules(),
-    cliData: requiredData,
-    registrySources,
-    componentSpecs,
-  };
-}
-
-export async function verifyPackedRuntime(packed, registry) {
-  const requirements = await collectPackageRuntimeRequirements(registry);
-  const missing = [
-    ...requirements.cliModules.filter((entry) => !packed.has(entry)),
-    ...requirements.cliData.filter((entry) => !packed.has(entry)),
-    ...requirements.registrySources.filter((entry) => !packed.has(entry)),
-    ...requirements.componentSpecs.filter((entry) => !packed.has(entry)),
-  ];
-  const hasAdapters = [...packed].some((entry) => entry.startsWith("adapters/"));
-  if (!hasAdapters) missing.push("adapters/**");
-
-  if (missing.length) {
-    throw new Error(
-      `npm tarball is missing CLI runtime files:\n${[...new Set(missing)].map((entry) => `- ${entry}`).join("\n")}`,
-    );
+  const { files, specs } = await collectRegistryRuntimePaths();
+  for (const required of files) {
+    if (!packed.has(required)) missing.push(required);
+  }
+  for (const required of specs) {
+    if (!packed.has(required)) missing.push(required);
   }
 
   return {
-    packedFiles: packed.size,
-    cliModules: requirements.cliModules.length,
-    cliData: requirements.cliData.length,
-    registrySourceReferences: requirements.registrySources.length,
-    registrySources: new Set(requirements.registrySources).size,
-    componentSpecs: requirements.componentSpecs.length,
-    adapters: hasAdapters,
+    missing: [...new Set(missing)],
+    visited,
+    files,
+    specs,
   };
 }
 
-export async function runPackageRuntimeCheck() {
+async function main() {
   const npmExecPath = process.env.npm_execpath;
   if (!npmExecPath) {
     throw new Error("Run the package runtime check through `npm run package:check`.");
@@ -101,16 +120,19 @@ export async function runPackageRuntimeCheck() {
   );
   const [pack] = JSON.parse(packOutput);
   const packed = new Set(pack.files.map((entry) => entry.path.replaceAll("\\", "/")));
-  const report = await verifyPackedRuntime(packed, await loadRegistry());
+  const { missing, visited, files, specs } = await findMissingPackedRuntimeFiles(packed);
+
+  if (missing.length) {
+    throw new Error(
+      `npm tarball is missing CLI runtime files:\n${missing.map((entry) => `- ${entry}`).join("\n")}`,
+    );
+  }
 
   console.log(
-    `Verified ${report.cliModules} CLI modules, ${report.cliData} CLI data files, `
-      + `${report.registrySourceReferences} registry source references `
-      + `(${report.registrySources} unique files), ${report.componentSpecs} component specs, `
-      + `and adapters/ across ${report.packedFiles} packed files.`,
+    `Verified ${visited.size} CLI modules, ${files.size} registry sources, and ${specs.size} component specs across ${packed.size} packed files.`,
   );
 }
 
-const isMain = process.argv[1]
-  && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url;
-if (isMain) await runPackageRuntimeCheck();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await main();
+}

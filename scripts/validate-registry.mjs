@@ -2,20 +2,40 @@ import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import {
+  defaultRegistryTarget,
+  generatedDirectory,
+  namespace,
+  parseTargetAddress,
+  registryTargetConfigurations,
+  route,
+} from "../bin/registry-targets.mjs";
+import {
   formatComponentMarkdown,
   publicBaseUrl,
   publicDocumentationUrl,
 } from "./agent-context.mjs";
+import { catalogInvariantErrors, itemSpecificationPath } from "./catalog.mjs";
+import { parseItemReference } from "./registry-resolve.mjs";
 import {
-  generatedDirectory,
+  generatedItemDirectory,
+  itemPath,
   loadRegistry,
-  localDependencyName,
+  loadTargetRegistry,
   readJson,
+  repoPath,
   rootDir,
-  sourcePath,
 } from "./registry-lib.mjs";
 
 const allowedTypes = new Set(["registry:theme", "registry:ui", "registry:component", "registry:block"]);
+const target = defaultRegistryTarget;
+const targetNamespace = namespace(target);
+const generatedRoot = path.join(rootDir, "registry", generatedDirectory(target));
+const publicArtifactPath = (name) => path.join(
+  rootDir,
+  "public",
+  ...route(target, name).split("/").filter(Boolean),
+);
+const publicRegistryRoot = path.dirname(publicArtifactPath("registry"));
 const registry = await loadRegistry();
 const names = new Set();
 const errors = [];
@@ -23,6 +43,26 @@ const ajv = new Ajv2020({ allErrors: true });
 const validateSpec = ajv.compile(await readJson(path.join(rootDir, "specs", "component.schema.json")));
 const validateCatalog = ajv.compile(await readJson(path.join(rootDir, "specs", "catalog.schema.json")));
 const validateManifest = ajv.compile(await readJson(path.join(rootDir, "specs", "installed-manifest.schema.json")));
+
+async function assertBalsaDependencyExists(label, dependency, currentTarget, currentRegistry) {
+  if (/^https?:\/\//.test(dependency)) return;
+  const parsed = parseItemReference(dependency);
+  if (parsed.namespace !== targetNamespace) return;
+  let dependencyTarget;
+  let itemName;
+  try {
+    ({ target: dependencyTarget, itemName } = parseTargetAddress(parsed.name));
+  } catch {
+    errors.push(`${label}: missing registry dependency ${dependency}`);
+    return;
+  }
+  const source = dependencyTarget === currentTarget
+    ? currentRegistry
+    : await loadTargetRegistry(dependencyTarget);
+  if (!source?.items.some((candidate) => candidate.name === itemName)) {
+    errors.push(`${label}: missing registry dependency ${dependency}`);
+  }
+}
 
 const documentationSections = [
   "## Use for",
@@ -61,7 +101,16 @@ function schemaErrors(label, validator) {
 }
 
 async function sourceFiles(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
+  // Guarded roots differ by layout: the public export flattens Vue to the
+  // repository root, so `packages/vue/src` exists only in the private checkout.
+  // A missing root means nothing to scan, not a broken validator.
+  let entries;
+  try {
+    entries = await readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
   const nested = await Promise.all(entries.map((entry) => {
     const target = path.join(directory, entry.name);
     return entry.isDirectory() ? sourceFiles(target) : [target];
@@ -78,8 +127,10 @@ const guardedFiles = [
   path.join(rootDir, "package-lock.json"),
   path.join(rootDir, "registry.json"),
   ...await sourceFiles(path.join(rootDir, "src")),
-  ...await sourceFiles(path.join(rootDir, "registry", "vue")),
-  ...await sourceFiles(path.join(rootDir, "public", "r")),
+  ...await sourceFiles(path.join(rootDir, "packages", "vue", "src")),
+  ...await sourceFiles(path.join(rootDir, "packages", "shared", "src")),
+  ...await sourceFiles(generatedRoot),
+  ...await sourceFiles(publicRegistryRoot),
   ...await sourceFiles(path.join(rootDir, "starters", "vue", "src")),
   ...await sourceFiles(path.join(rootDir, "tests", "fixtures", "registry-vue", "src")),
   path.join(rootDir, "starters", "vue", "package.json"),
@@ -105,13 +156,12 @@ for (const item of registry.items) {
   names.add(item.name);
   if (!allowedTypes.has(item.type)) errors.push(`${item.name}: unsupported type ${item.type}`);
   if (!item.description || !item.files?.length) errors.push(`${item.name}: description and files are required`);
-  if (item.meta?.framework !== "vue") errors.push(`${item.name}: framework must be vue`);
+  if (item.meta?.framework !== target) {
+    errors.push(`${item.name}: framework must be ${target}`);
+  }
 
   for (const dependency of item.registryDependencies ?? []) {
-    const localName = localDependencyName(dependency);
-    if (localName && !registry.items.some((candidate) => candidate.name === localName)) {
-      errors.push(`${item.name}: missing registry dependency ${dependency}`);
-    }
+    await assertBalsaDependencyExists(item.name, dependency, target, registry);
   }
 
   for (const file of item.files ?? []) {
@@ -121,7 +171,7 @@ for (const item of registry.items) {
     if (file.path.endsWith(".vue")) {
       const base = path.basename(file.path, ".vue");
       if (/^[A-Z][a-z0-9]*$/.test(base)) {
-        const source = await readFile(sourcePath(file.path), "utf8");
+        const source = await readFile(itemPath(file.path, { target }), "utf8");
         if (!/defineOptions\(\{[^}]*name:\s*"[A-Z][a-z0-9]*[A-Z]/.test(source)) {
           errors.push(
             `${item.name}: ${base}.vue is single-word and must declare a multi-word defineOptions name`,
@@ -130,8 +180,10 @@ for (const item of registry.items) {
       }
     }
     try {
-      const canonical = await readFile(sourcePath(file.path));
-      const mirror = await readFile(path.join(rootDir, generatedDirectory(item), path.basename(file.target)));
+      const canonical = await readFile(itemPath(file.path, { target }));
+      const mirror = await readFile(
+        path.join(rootDir, generatedItemDirectory(item, target), path.basename(file.target)),
+      );
       if (!canonical.equals(mirror)) errors.push(`${item.name}: generated mirror is stale for ${file.path}`);
     } catch (error) {
       errors.push(`${item.name}: cannot read ${file.path} (${error.message})`);
@@ -140,18 +192,18 @@ for (const item of registry.items) {
 
   if (item.meta?.spec) {
     try {
-      const spec = await readJson(sourcePath(item.meta.spec));
+      const spec = await readJson(repoPath(item.meta.spec));
       if (!validateSpec(spec)) errors.push(...schemaErrors(`${item.name} spec`, validateSpec));
       if (spec.schemaVersion !== 1 || spec.name !== item.name) errors.push(`${item.name}: spec identity mismatch`);
-      await access(sourcePath(item.meta.documentation));
-      await access(sourcePath(item.meta.example));
+      await access(repoPath(item.meta.documentation));
+      await access(repoPath(item.meta.example));
     } catch (error) {
       errors.push(`${item.name}: invalid metadata reference (${error.message})`);
     }
   }
 
   try {
-    const built = await readJson(path.join(rootDir, "public", "r", `${item.name}.json`));
+    const built = await readJson(publicArtifactPath(item.name));
     if (built.name !== item.name || built.files.length !== item.files.length) {
       errors.push(`${item.name}: built registry JSON is stale`);
     }
@@ -168,6 +220,7 @@ for (const item of registry.items) {
 
 const catalog = await readJson(path.join(rootDir, ".balsa", "catalog.json"));
 if (!validateCatalog(catalog)) errors.push(...schemaErrors("catalog", validateCatalog));
+errors.push(...catalogInvariantErrors(catalog));
 const expectedCatalogCount = registry.items.filter((item) => item.meta?.spec).length;
 if (catalog.items.length !== expectedCatalogCount) errors.push("Catalog item count does not match public specs");
 try {
@@ -178,6 +231,9 @@ try {
   }
   if (publicIndex.itemCount !== expectedCatalogCount || publicIndex.items.length !== expectedCatalogCount) {
     errors.push("Public compact catalog is stale");
+  }
+  if (JSON.stringify(publicIndex.frameworks) !== JSON.stringify(catalog.frameworks)) {
+    errors.push("Public compact catalog frameworks do not match the complete catalog");
   }
   const llms = await readFile(path.join(rootDir, "public", "llms.txt"), "utf8");
   const llmsFull = await readFile(
@@ -205,14 +261,11 @@ try {
     errors.push("sitemap.xml: canonical root and documentation URLs are missing");
   }
   for (const item of catalog.items) {
-    const canonicalSpec = await readJson(
-      sourcePath(`specs/components/${item.name}.json`),
-    );
-    const publicSpec = await readJson(
-      path.join(rootDir, "public", "specs", "components", `${item.name}.json`),
-    );
+    const specPath = itemSpecificationPath(item);
+    const canonicalSpec = await readJson(repoPath(specPath));
+    const publicSpec = await readJson(path.join(rootDir, "public", specPath));
     const canonicalDocs = await readFile(
-      sourcePath(item.documentation),
+      repoPath(item.documentation),
     );
     const publicDocs = await readFile(
       path.join(rootDir, "public", "docs", "components", `${item.name}.md`),
@@ -282,10 +335,13 @@ try {
   if (JSON.stringify(starterPackageLock).includes('"balsaui"')) {
     errors.push("Vue starter lockfile still contains the monorepo filesystem dependency");
   }
-  if (starterRegistry.registries?.["@balsa"] !== `${publicBaseUrl}/r/{name}.json`) {
+  if (starterRegistry.registries?.[targetNamespace] !== `${publicBaseUrl}${route(target, "{name}")}`) {
     errors.push("Vue starter does not use the public Balsa registry");
   }
   if (starterCatalog.items.length !== expectedCatalogCount) {
+    errors.push("Vue starter agent catalog is stale");
+  }
+  if (starterCatalog.schemaVersion !== catalog.schemaVersion) {
     errors.push("Vue starter agent catalog is stale");
   }
   if (starterMain.includes("@fontsource/")) {
@@ -328,6 +384,76 @@ try {
   );
 } catch (error) {
   errors.push(`Vue starter agent context is incomplete (${error.message})`);
+}
+
+for (const [targetName, configuration] of Object.entries(registryTargetConfigurations())) {
+  if (targetName === defaultRegistryTarget || !configuration.itemSource) continue;
+  const targetRegistry = await loadTargetRegistry(targetName);
+  if (!targetRegistry?.items?.length) continue;
+  const hostedPath = (name) => path.join(
+    rootDir,
+    "public",
+    ...route(targetName, name).split("/").filter(Boolean),
+  );
+  const seen = new Set();
+  for (const item of targetRegistry.items) {
+    if (seen.has(item.name)) errors.push(`${targetName}/${item.name}: duplicate item`);
+    seen.add(item.name);
+    if (!allowedTypes.has(item.type)) {
+      errors.push(`${targetName}/${item.name}: unsupported type ${item.type}`);
+    }
+    if (!item.description || !item.files?.length) {
+      errors.push(`${targetName}/${item.name}: description and files are required`);
+    }
+    if (item.meta?.framework !== targetName) {
+      errors.push(`${targetName}/${item.name}: framework must be ${targetName}`);
+    }
+    for (const dependency of item.registryDependencies ?? []) {
+      await assertBalsaDependencyExists(
+        `${targetName}/${item.name}`,
+        dependency,
+        targetName,
+        targetRegistry,
+      );
+    }
+    for (const file of item.files ?? []) {
+      try {
+        const canonical = await readFile(itemPath(file.path, { target: targetName }));
+        const mirror = await readFile(
+          path.join(rootDir, generatedItemDirectory(item, targetName), path.basename(file.target)),
+        );
+        if (!canonical.equals(mirror)) {
+          errors.push(`${targetName}/${item.name}: generated mirror is stale for ${file.path}`);
+        }
+      } catch (error) {
+        errors.push(`${targetName}/${item.name}: cannot read ${file.path} (${error.message})`);
+      }
+    }
+    try {
+      const built = await readJson(hostedPath(item.name));
+      if (built.$schema !== configuration.itemSchemaUrl) {
+        errors.push(`${targetName}/${item.name}: hosted item schema does not match the target`);
+      }
+      if (built.name !== item.name || built.files.length !== item.files.length) {
+        errors.push(`${targetName}/${item.name}: built registry JSON is stale`);
+      }
+      if (built.files.some((file) => file.content?.includes("\r\n"))) {
+        errors.push(
+          `${targetName}/${item.name}: built registry JSON embeds CRLF line endings, so the published payload depends on the build machine`,
+        );
+      }
+    } catch (error) {
+      errors.push(`${targetName}/${item.name}: built registry JSON is missing (${error.message})`);
+    }
+  }
+  try {
+    const index = await readJson(hostedPath("registry"));
+    if (index.$schema !== configuration.indexSchemaUrl) {
+      errors.push(`${targetName}: hosted index schema does not match the target`);
+    }
+  } catch (error) {
+    errors.push(`${targetName}: hosted registry index is missing (${error.message})`);
+  }
 }
 
 if (errors.length) {

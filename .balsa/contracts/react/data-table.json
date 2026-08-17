@@ -1,0 +1,365 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/DataTable.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "caption",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "columns",
+        "type": "readonly DataTableColumn<Row>[]",
+        "shape": {
+          "type": "readonly DataTableColumn<Row>[]",
+          "items": {
+            "type": "DataTableColumn<Row>",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "key",
+                "type": "(keyof Row & string) | undefined",
+                "required": false
+              },
+              {
+                "name": "align",
+                "type": "\"right\" | \"left\" | \"center\" | undefined",
+                "required": false
+              },
+              {
+                "name": "sortable",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "filterable",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "hidden",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "format",
+                "type": "((value: unknown, row: Row) => string) | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "data",
+        "type": "readonly Row[]",
+        "required": true
+      },
+      {
+        "name": "rowKey",
+        "type": "(keyof Row & string) | ((row: Row, index: number) => string)",
+        "required": true
+      },
+      {
+        "name": "data-balsa",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "data-palette",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "selection",
+        "type": "DataTableSelection | undefined",
+        "values": [
+          "none",
+          "multiple",
+          "single"
+        ],
+        "required": false
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "TableVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "density",
+        "type": "TableDensity | undefined",
+        "values": [
+          "default",
+          "compact",
+          "comfortable"
+        ],
+        "required": false
+      },
+      {
+        "name": "headerColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "neutral",
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false
+      },
+      {
+        "name": "rowColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "neutral",
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false
+      },
+      {
+        "name": "striped",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "gridlines",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "sort",
+        "type": "DataTableSort | null | undefined",
+        "shape": {
+          "type": "DataTableSort | null | undefined",
+          "fields": [
+            {
+              "name": "column",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "direction",
+              "type": "\"asc\" | \"desc\"",
+              "required": true
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "defaultSort",
+        "type": "DataTableSort | null | undefined",
+        "shape": {
+          "type": "DataTableSort | null | undefined",
+          "fields": [
+            {
+              "name": "column",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "direction",
+              "type": "\"asc\" | \"desc\"",
+              "required": true
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "onSortChange",
+        "type": "((value: DataTableSort | null) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "filters",
+        "type": "Readonly<Record<string, string>> | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultFilters",
+        "type": "Readonly<Record<string, string>> | undefined",
+        "required": false
+      },
+      {
+        "name": "onFiltersChange",
+        "type": "((value: Readonly<Record<string, string>>) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "page",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultPage",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "onPageChange",
+        "type": "((value: number) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "selected",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultSelected",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "onSelectedChange",
+        "type": "((value: readonly string[]) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "visibleColumns",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultVisibleColumns",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "onVisibleColumnsChange",
+        "type": "((value: readonly string[]) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "onRowSelect",
+        "type": "((row: Row, key: string) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "renderCell",
+        "type": "((context: DataTableCellContext<Row>) => ReactNode) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

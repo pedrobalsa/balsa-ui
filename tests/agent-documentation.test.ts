@@ -144,9 +144,9 @@ describe("agent documentation generation", () => {
     expect(unknownItemError(catalog, "zzzzzzzzzz").message).toContain("balsa search");
   });
 
-  it("reports a missing specification by name and expected path", async () => {
+  it("requires the catalog's explicit specification path", async () => {
     await expect(loadComponentSpec({ name: "not-a-balsa-item" })).rejects.toThrow(
-      /specs\/components\/not-a-balsa-item\.json/,
+      /not-a-balsa-item: catalog item is missing specification/,
     );
   });
 });

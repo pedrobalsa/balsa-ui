@@ -17,7 +17,9 @@ import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { createServer } from "vite";
-import { readJson, rootDir, sourcePath } from "./registry-lib.mjs";
+import { itemSpecificationPath } from "./catalog.mjs";
+import { readJson, repoPath, rootDir } from "./registry-lib.mjs";
+import { createSiteTypeScriptPaths, createSiteViteAliases } from "./site-aliases.mjs";
 
 const checkOnly = process.argv.includes("--check");
 const typecheck = process.argv.includes("--typecheck");
@@ -28,7 +30,7 @@ async function loadExampleModule() {
     root: rootDir,
     logLevel: "error",
     server: { middlewareMode: true },
-    resolve: { alias: { "@": path.join(rootDir, "src") } },
+    resolve: { alias: createSiteViteAliases(rootDir) },
   });
   try {
     return {
@@ -98,7 +100,7 @@ if (typecheck) {
       compilerOptions: {
         noEmit: true,
         types: ["vite/client"],
-        paths: { "@/*": [`${path.join(rootDir, "src").split("\\").join("/")}/*`] },
+        paths: createSiteTypeScriptPaths(rootDir),
       },
       include: ["./*.vue"],
     }, null, 2)}\n`,
@@ -123,8 +125,11 @@ if (typecheck) {
 }
 
 const stale = [];
+const specificationByName = new Map(
+  catalog.items.map((item) => [item.name, itemSpecificationPath(item)]),
+);
 for (const [name, examples] of generated) {
-  const specPath = sourcePath(`specs/components/${name}.json`);
+  const specPath = repoPath(specificationByName.get(name));
   const spec = JSON.parse(await readFile(specPath, "utf8"));
   if (JSON.stringify(spec.examples) === JSON.stringify(examples)) continue;
   stale.push(name);

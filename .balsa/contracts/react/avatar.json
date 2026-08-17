@@ -1,0 +1,119 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Avatar.tsx",
+    "props": [
+      {
+        "name": "src",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "fallback",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AvatarSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "shape",
+        "type": "AvatarShape | undefined",
+        "values": [
+          "rounded",
+          "circle",
+          "square"
+        ],
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "\"eager\" | \"lazy\" | undefined",
+        "values": [
+          "eager",
+          "lazy"
+        ],
+        "required": false
+      },
+      {
+        "name": "fallbackDelay",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "badge",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "onLoadState",
+        "type": "((state: AvatarLoadState) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

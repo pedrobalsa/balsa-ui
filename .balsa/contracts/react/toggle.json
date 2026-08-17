@@ -1,0 +1,186 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Toggle.tsx",
+    "props": [
+      {
+        "name": "variant",
+        "type": "ToggleVariant | undefined",
+        "values": [
+          "solid",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "neutral",
+          "primary",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "ToggleSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "prefixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "suffixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "ToggleIcon | undefined",
+        "values": [
+          "bookmark",
+          "heart",
+          "star",
+          "pin",
+          "bell",
+          "flag"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ToggleType | undefined",
+        "values": [
+          "button",
+          "submit",
+          "reset",
+          "icon"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: boolean) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

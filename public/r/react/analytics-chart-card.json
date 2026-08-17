@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "analytics-chart-card",
+  "type": "registry:ui",
+  "title": "AnalyticsChartCard",
+  "description": "Trend visualization with period context and semantic delta.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/badge",
+    "@balsa/react/charts"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/AnalyticsChartCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/AnalyticsChartCard.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { Badge } from \"../ui/Badge\";\nimport { Charts } from \"../ui/Charts\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionPaletteColor, CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionChartSeries {\n  label: string;\n  data: readonly number[];\n  color?: CompositionPaletteColor;\n}\n\nconst defaultLabels: readonly string[] = [\"Wk 1\", \"Wk 2\", \"Wk 3\", \"Wk 4\", \"Wk 5\", \"Wk 6\", \"Wk 7\", \"Wk 8\"];\nconst defaultSeries: readonly CompositionChartSeries[] = [\n  { label: \"p95\", data: [268, 251, 244, 226, 231, 209, 198, 186], color: \"primary\" },\n];\n\nexport interface AnalyticsChartCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  delta?: string;\n  labels?: readonly string[];\n  series?: readonly CompositionChartSeries[];\n}\n\nexport function AnalyticsChartCard({\n  title = \"Request latency\",\n  description = \"p95 across every region\",\n  delta = \"-18%\",\n  labels = defaultLabels,\n  series = defaultSeries,\n  headingLevel,\n  shadow,\n  theme,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: AnalyticsChartCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"analytics-chart\"\n      action={<Badge color=\"accent\" variant=\"soft\">{delta}</Badge>}\n    >\n      <p className=\"flex items-baseline gap-balsa-xs\">\n        <strong className=\"text-2xl font-semibold tabular-nums\">186 ms</strong>\n        <span className=\"text-xs text-balsa-muted-foreground\">p95, down from 268 ms</span>\n      </p>\n      <div className=\"min-h-0\">\n        <Charts\n          title=\"Milliseconds per request\"\n          labels={labels}\n          series={series}\n          type=\"area\"\n          showLegend={false}\n          showXAxis={false}\n          showYAxis={false}\n          showGrid={false}\n          showCaption={false}\n          height={196}\n        />\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

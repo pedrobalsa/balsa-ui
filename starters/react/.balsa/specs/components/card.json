@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "name": "card",
+  "title": "Card",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "card"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Group related content and actions on a consistent neutral Balsa surface, with semantic color reserved for meaningful state.",
+  "useFor": [
+    "Grouped content",
+    "Feature summaries",
+    "Contained forms or previews"
+  ],
+  "avoidFor": [
+    "Every page section",
+    "Unrelated content",
+    "Interactive behavior without an inner control"
+  ],
+  "variants": [
+    "surface",
+    "elevated",
+    "muted",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "padding-none",
+    "padding-sm",
+    "padding-md",
+    "padding-lg"
+  ],
+  "states": [
+    "shadowed",
+    "shadowless"
+  ],
+  "accessibility": [
+    "Card is a visual container and does not invent landmark semantics.",
+    "Use semantic headings and controls inside it.",
+    "Each variant supplies an intentional paired surface and foreground."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-muted",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "radius.surface",
+    "shadow.surface"
+  ],
+  "commonMistakes": [
+    "Making the entire Card clickable without link semantics.",
+    "Nesting many cards only for spacing.",
+    "Using semantic Card colors as decorative variety rather than action or status meaning.",
+    "Using unrelated content in one card.",
+    "Using important padding or shadow overrides instead of the typed props and normal consumer utilities."
+  ],
+  "examples": [
+    {
+      "id": "elevated",
+      "title": "Elevated",
+      "description": "Elevated cards separate focused content from the surrounding surface.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"elevated\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Outline cards group content without adding depth.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"outline\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft",
+      "description": "Soft cards add a restrained semantic color wash.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"soft\" color=\"secondary\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Glass cards preserve background detail with a restrained semantic rim.",
+      "source": "<script setup lang=\"ts\">\nimport Card from \"@/components/ui/Card.vue\";\n</script>\n\n<template>\n  <Card variant=\"glass\" color=\"accent\">\n    <h3 class=\"mb-balsa-xs\">Heading placeholder</h3>\n    <p class=\"text-sm opacity-80\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>\n  </Card>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Card.vue",
+    "props": [
+      {
+        "name": "variant",
+        "type": "CardVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "elevated",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "padding",
+        "type": "CardPadding | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CardSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | ThemeShadow | undefined",
+        "values": [
+          "false",
+          "true",
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "name": "context-menu",
+  "title": "Context Menu",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "context-menu"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Open typed actions at a pointer or keyboard context request on a target region, with collision-safe viewport or contained-target positioning, semantic color, and configurable panel geometry.",
+  "useFor": [
+    "Canvas actions",
+    "Row actions",
+    "Editor context operations"
+  ],
+  "avoidFor": [
+    "Primary actions",
+    "Hidden-only functionality",
+    "Native text editing commands"
+  ],
+  "types": [
+    "action",
+    "checkbox",
+    "radio",
+    "submenu"
+  ],
+  "states": [
+    "closed",
+    "open",
+    "disabled",
+    "checked",
+    "highlighted"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "Pointer context requests open at their coordinates and clamp to the viewport or contained target.",
+    "ContextMenu and Shift+F10 open against the focusable target.",
+    "The shared menu engine provides roles, roving focus, typeahead, dismissal, and restoration."
+  ],
+  "tokens": [
+    "--balsa-color-selected",
+    "--balsa-color-selected-foreground",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Making actions available only through context click.",
+    "Overriding native text-field context menus.",
+    "Failing to label the target region."
+  ],
+  "examples": [
+    {
+      "id": "pointer",
+      "title": "Pointer request",
+      "description": "Right-click opens at the requested coordinates.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    },
+    {
+      "id": "keyboard",
+      "title": "Keyboard request",
+      "description": "Shift+F10 and ContextMenu open against the target with an accent rim and softer corners.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" variant=\"outline\" color=\"accent\" rounded=\"2xl\" @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass menu",
+      "description": "Teleported material preserves theme and palette context.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" variant=\"glass\" @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Native fallback",
+      "description": "Disabled mode leaves the browser context menu intact.",
+      "source": "<script setup lang=\"ts\">\nimport ContextMenu from \"@/components/ui/ContextMenu.vue\";\nimport type { MenuItem } from \"@/components/ui/menu\";\n\nconst items: readonly MenuItem[] = [\n  { id: \"edit\", label: \"Edit placeholder\" },\n  { id: \"visible\", label: \"Visible placeholder\", type: \"checkbox\", checked: true },\n  { id: \"separator\", type: \"separator\" },\n  { id: \"remove\", label: \"Remove placeholder\", destructive: true },\n];\n\nfunction handleSelect(item: unknown): void {\n  console.info(\"Selected\", item);\n}\n</script>\n\n<template>\n  <ContextMenu id=\"canvas-menu\" label=\"Canvas actions placeholder\" :items=\"items\" disabled @select=\"handleSelect\">\n    <div class=\"grid min-h-48 place-items-center rounded-xl border border-dashed border-balsa-border-strong\">Right-click placeholder</div>\n  </ContextMenu>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/ContextMenu.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly MenuItem[]",
+        "shape": {
+          "type": "readonly MenuItem[]",
+          "items": {
+            "type": "MenuItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "type",
+                "type": "MenuItemType | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "labelFontFamily",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "shortcut",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "destructive",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "checked",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "value",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "group",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "children",
+                "type": "readonly MenuItem[] | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "MenuVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      },
+      {
+        "name": "select",
+        "type": "[selection: MenuSelection]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

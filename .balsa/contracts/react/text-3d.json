@@ -1,0 +1,540 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Text3D.tsx",
+    "props": [
+      {
+        "name": "data-balsa",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "preset",
+        "type": "\"liquid-chrome\" | \"chrome-balloon\" | \"polished-chrome\" | \"brushed-steel\" | \"frosted-pane\" | undefined",
+        "values": [
+          "liquid-chrome",
+          "chrome-balloon",
+          "polished-chrome",
+          "brushed-steel",
+          "frosted-pane"
+        ],
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "Text3DConfigInput | undefined",
+        "required": false
+      },
+      {
+        "name": "overrides",
+        "type": "Text3DDirectOverrides | undefined",
+        "shape": {
+          "type": "Text3DDirectOverrides | undefined",
+          "fields": [
+            {
+              "name": "colors",
+              "type": "readonly string[] | undefined",
+              "required": false
+            },
+            {
+              "name": "reflections",
+              "type": "readonly Partial<Text3DReflection>[] | undefined",
+              "required": false
+            },
+            {
+              "name": "size",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "text",
+              "type": "string | undefined",
+              "required": false
+            },
+            {
+              "name": "shadow",
+              "type": "boolean | undefined",
+              "required": false
+            },
+            {
+              "name": "seed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "colorMode",
+              "type": "\"palette\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "quality",
+              "type": "\"auto\" | \"low\" | \"medium\" | \"high\" | undefined",
+              "required": false
+            },
+            {
+              "name": "fontMode",
+              "type": "\"theme\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "font",
+              "type": "\"rubik-spray-paint\" | \"montserrat\" | \"playfair-display\" | \"space-grotesk\" | \"inter\" | \"noto-sans\" | \"roboto\" | \"open-sans\" | \"source-sans-3\" | \"lato\" | \"poppins\" | \"raleway\" | \"oswald\" | undefined",
+              "required": false
+            },
+            {
+              "name": "fontFamily",
+              "type": "string | undefined",
+              "required": false
+            },
+            {
+              "name": "fontWeight",
+              "type": "400 | 800 | 700 | 300 | 500 | 600 | 900 | undefined",
+              "required": false
+            },
+            {
+              "name": "letterSpacing",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "lineHeight",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "alignment",
+              "type": "\"right\" | \"left\" | \"center\" | undefined",
+              "required": false
+            },
+            {
+              "name": "material",
+              "type": "\"solid\" | \"glass\" | \"metallic\" | undefined",
+              "required": false
+            },
+            {
+              "name": "metalness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "roughness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "clearcoat",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "clearcoatRoughness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "transmission",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "ior",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "thickness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "glow",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "depth",
+              "type": "number | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "seed",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "text",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "fontMode",
+        "type": "\"theme\" | \"custom\" | undefined",
+        "values": [
+          "theme",
+          "custom"
+        ],
+        "required": false
+      },
+      {
+        "name": "font",
+        "type": "\"rubik-spray-paint\" | \"montserrat\" | \"playfair-display\" | \"space-grotesk\" | \"inter\" | \"noto-sans\" | \"roboto\" | \"open-sans\" | \"source-sans-3\" | \"lato\" | \"poppins\" | \"raleway\" | \"oswald\" | undefined",
+        "values": [
+          "rubik-spray-paint",
+          "montserrat",
+          "playfair-display",
+          "space-grotesk",
+          "inter",
+          "noto-sans",
+          "roboto",
+          "open-sans",
+          "source-sans-3",
+          "lato",
+          "poppins",
+          "raleway",
+          "oswald"
+        ],
+        "required": false
+      },
+      {
+        "name": "fontFamily",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "fontWeight",
+        "type": "400 | 800 | 700 | 300 | 500 | 600 | 900 | undefined",
+        "values": [
+          "400",
+          "800",
+          "700",
+          "300",
+          "500",
+          "600",
+          "900"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "letterSpacing",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "lineHeight",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "alignment",
+        "type": "\"right\" | \"left\" | \"center\" | undefined",
+        "values": [
+          "right",
+          "left",
+          "center"
+        ],
+        "required": false
+      },
+      {
+        "name": "material",
+        "type": "\"solid\" | \"glass\" | \"metallic\" | undefined",
+        "values": [
+          "solid",
+          "glass",
+          "metallic"
+        ],
+        "required": false
+      },
+      {
+        "name": "colorMode",
+        "type": "\"palette\" | \"custom\" | undefined",
+        "values": [
+          "palette",
+          "custom"
+        ],
+        "required": false
+      },
+      {
+        "name": "colors",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "metalness",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "roughness",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "clearcoat",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "clearcoatRoughness",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "transmission",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "ior",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "thickness",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "glow",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "depth",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "bevelEnabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "bevelSize",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "bevelThickness",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "bevelSegments",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "curveSegments",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "environment",
+        "type": "\"soft\" | \"studio\" | \"rim\" | \"dramatic\" | \"neon\" | undefined",
+        "values": [
+          "soft",
+          "studio",
+          "rim",
+          "dramatic",
+          "neon"
+        ],
+        "required": false
+      },
+      {
+        "name": "lightIntensity",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "ambientIntensity",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "lightAngle",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "reflectionStrength",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "rotationX",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "rotationY",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "rotationZ",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "zoom",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "interactive",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "poseMode",
+        "type": "\"static\" | \"pointer\" | \"auto-rotate\" | \"float\" | undefined",
+        "values": [
+          "static",
+          "pointer",
+          "auto-rotate",
+          "float"
+        ],
+        "required": false
+      },
+      {
+        "name": "autoRotate",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "autoRotateSpeed",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "damping",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "background",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "quality",
+        "type": "\"auto\" | \"low\" | \"medium\" | \"high\" | undefined",
+        "values": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "required": false
+      },
+      {
+        "name": "paused",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "wheelZoom",
+        "type": "\"always\" | \"modifier\" | undefined",
+        "values": [
+          "always",
+          "modifier"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "onPoseChange",
+        "type": "((pose: Text3DPose) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "name": "kbd",
+  "title": "Kbd",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "kbd"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present one keyboard key or a complete key chord as compact semantic input notation with a soft default material.",
+  "useFor": [
+    "Keyboard shortcuts",
+    "Command hints",
+    "Key instructions inside actions or text"
+  ],
+  "avoidFor": [
+    "Clickable controls",
+    "Generic metadata labels",
+    "Status communication"
+  ],
+  "states": [
+    "single key",
+    "key chord"
+  ],
+  "accessibility": [
+    "Uses the semantic kbd element.",
+    "An accessible label can expand symbolic chords.",
+    "Separators between supplied keys are decorative."
+  ],
+  "variants": [
+    "raised",
+    "outline",
+    "soft"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-muted",
+    "radius.control",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using Kbd as a clickable button.",
+    "Showing a shortcut the application does not implement.",
+    "Leaving a symbolic chord ambiguous to assistive technology."
+  ],
+  "examples": [
+    {
+      "id": "chord",
+      "title": "Modifier chord",
+      "description": "Render every key in a shortcut as a distinct semantic cap.",
+      "source": "<script setup lang=\"ts\">\nimport Kbd from \"@/components/ui/Kbd.vue\";\nconst keys = [\"Ctrl\",\"Shift\",\"P\"];\n</script>\n\n<template>\n  <p class=\"flex items-center gap-balsa-xs\">Press <Kbd :keys=\"keys\" separator=\"+\" accessible-label=\"Control plus Shift plus P\" /> to open the placeholder command menu.</p>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline keys",
+      "description": "Outline keeps shortcut guidance quiet inside dense surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport Kbd from \"@/components/ui/Kbd.vue\";\nconst keys = [\"Alt\",\"Enter\"];\n</script>\n\n<template>\n  <p class=\"flex items-center gap-balsa-xs\">Press <Kbd :keys=\"keys\" separator=\"+\" accessible-label=\"Alt plus Enter\" variant=\"outline\" /> to open the placeholder command menu.</p>\n</template>"
+    },
+    {
+      "id": "soft",
+      "title": "Soft key",
+      "description": "A soft key cap works naturally inside supporting prose.",
+      "source": "<script setup lang=\"ts\">\nimport Kbd from \"@/components/ui/Kbd.vue\";\nconst keys = [\"Esc\"];\n</script>\n\n<template>\n  <p class=\"flex items-center gap-balsa-xs\">Press <Kbd :keys=\"keys\" separator=\"+\" accessible-label=\"Escape\" size=\"sm\" /> to open the placeholder command menu.</p>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Kbd.vue",
+    "props": [
+      {
+        "name": "keys",
+        "type": "readonly string[] | undefined",
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "separator",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"+\""
+      },
+      {
+        "name": "variant",
+        "type": "KbdVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "raised"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "KbdSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

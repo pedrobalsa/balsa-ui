@@ -20,7 +20,7 @@ import path from "node:path";
 import { chromium } from "playwright";
 import { applyAdapter, loadAdapter } from "./apply-adapters.mjs";
 import { createResolver, loadProjectConfiguration } from "./registry-resolve.mjs";
-import { rootDir } from "./registry-lib.mjs";
+import { itemPath, rootDir } from "./registry-lib.mjs";
 import { stringLiterals } from "./source-literals.mjs";
 
 const workDir = path.join(rootDir, "node_modules", ".tmp", "conformance");
@@ -104,14 +104,14 @@ function sampleClassLists(item, limit = 12) {
 
 async function buildStylesheet(classLists) {
   await mkdir(workDir, { recursive: true });
-  const styles = path.join(rootDir, "src", "styles");
+  const stylesheet = (name) => itemPath(`src/styles/${name}`).split("\\").join("/");
   await writeFile(
     path.join(workDir, "input.css"),
     [
       '@import "tailwindcss";',
-      `@import "${path.join(styles, "balsa-foundation.css").split("\\").join("/")}";`,
-      `@import "${path.join(styles, "balsa-theme.css").split("\\").join("/")}";`,
-      `@import "${path.join(styles, "balsa-shadcn-bridge.css").split("\\").join("/")}";`,
+      `@import "${stylesheet("balsa-foundation.css")}";`,
+      `@import "${stylesheet("balsa-theme.css")}";`,
+      `@import "${stylesheet("balsa-shadcn-bridge.css")}";`,
       "",
     ].join("\n"),
     "utf8",

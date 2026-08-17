@@ -1,16 +1,5 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "compilerOptions": {
-    "types": [
-      "vite/client"
-    ],
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
-  },
   "include": [
     "src/background/**/*.ts",
     "src/components/ui/**/*.ts",
@@ -18,5 +7,31 @@
     "src/components/compositions/**/*.ts",
     "src/components/compositions/**/*.vue",
     "src/theme/**/*.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "types": [
+      "vite/client"
+    ],
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/components/ui/*": [
+        "./src/components/ui/*"
+      ],
+      "@/components/compositions/*": [
+        "./src/components/compositions/*"
+      ],
+      "@/theme/*": [
+        "./src/theme/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  }
 }

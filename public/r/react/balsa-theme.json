@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "balsa-theme",
+  "type": "registry:theme",
+  "title": "Balsa design themes",
+  "description": "Typed inheritable design themes with React context, scoped providers, and Lucide icons for theme pickers. Installs the shared CSS theme stylesheet and framework-neutral theme core.",
+  "dependencies": [
+    "react",
+    "tailwindcss",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@balsa/shared/theme-core",
+    "@balsa/shared/balsa-theme",
+    "@balsa/shared/balsa-foundation"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/theme.ts",
+      "type": "registry:lib",
+      "target": "src/components/ui/theme.ts",
+      "content": "import { Blend, Grid3X3, LayoutDashboard } from \"lucide-react\";\nimport { designThemeCatalog } from \"./theme-core\";\n\nexport {\n  defaultDesignTheme,\n  defineTheme,\n  deriveThemeRecipe,\n  isDesignTheme,\n  isThemeDefinition,\n  normalizeThemeDefinition,\n  normalizeThemePresetConfig,\n  publicRoundedCoverage,\n  publicShadowCoverage,\n  publicThemeCoverage,\n  resolveTheme,\n  resolveComponentTheme,\n  resolveThemeValue,\n  createThemeScope,\n  serializeThemeDefinition,\n  serializeThemeTokens,\n  themeComponentSizeOptions,\n  themeDefaultPropCoverage,\n  themeOptionDefinitions,\n  themePresentation,\n  builtInThemeOptions,\n} from \"./theme-core\";\n\nexport type {\n  BalsaThemePresetConfig,\n  ComponentThemeRequest,\n  ComponentThemeState,\n  DerivedThemeRecipe,\n  DesignTheme,\n  ResolvedThemeDefinition,\n  ResolvedThemeOptions,\n  Rounded,\n  Shadow,\n  ThemeBorderOption,\n  ThemeColorReference,\n  ThemeComponentName,\n  ThemeDefaults,\n  ThemeDefinition,\n  ThemeDensityOption,\n  ThemeEasing,\n  ThemeElevationOption,\n  ThemeFamily,\n  ThemeFamilyDefault,\n  ThemeInput,\n  ThemeMaterial,\n  ThemeMaterialKey,\n  ThemeMaterialOption,\n  ThemeMotionOption,\n  ThemeOptions,\n  ThemeOverrides,\n  ThemePaletteRole,\n  ThemePresentation,\n  ThemeScopeState,\n  ThemeShadowLayer,\n  ThemeShapeOption,\n  ThemeSizeOption,\n  ThemeSpacingOption,\n  ThemeTokens,\n  ThemeTransform,\n  ThemeTypographyOption,\n  ThemeVisualDefaults,\n} from \"./theme-core\";\n\nconst [modernFlat, brutalism, glassmorphism] = designThemeCatalog;\n\n/**\n * React public catalog: the same built-in metadata the core owns, plus Lucide\n * icon components for anything that renders a theme picker.\n */\nexport const designThemes = [\n  {\n    ...modernFlat,\n    icon: LayoutDashboard,\n  },\n  {\n    ...brutalism,\n    icon: Grid3X3,\n  },\n  {\n    ...glassmorphism,\n    icon: Blend,\n  },\n] as const;\n"
+    },
+    {
+      "path": "src/components/ui/theme-context.ts",
+      "type": "registry:lib",
+      "target": "src/components/ui/theme-context.ts",
+      "content": "import { createContext, useContext, useState } from \"react\";\nimport {\n  resolveComponentTheme,\n  resolveThemeValue,\n  type ComponentThemeState,\n  type ThemeComponentName,\n  type ThemeFamily,\n  type ThemeInput,\n  type ThemeScopeState,\n  type ThemeVisualDefaults,\n} from \"./theme\";\n\nexport const BalsaThemeContext = createContext<ThemeScopeState | undefined>(undefined);\n\nexport function useBalsaThemeContext(): ThemeScopeState | undefined {\n  return useContext(BalsaThemeContext);\n}\n\nexport function useComponentTheme(\n  component: ThemeComponentName,\n  family: ThemeFamily,\n  explicitTheme?: ThemeInput,\n): ComponentThemeState {\n  const parent = useBalsaThemeContext();\n  return resolveComponentTheme({\n    component,\n    family,\n    explicit: explicitTheme,\n    parent,\n  });\n}\n\nexport function resolveComponentThemeValue<\n  K extends keyof ThemeVisualDefaults,\n  T,\n>(\n  state: ComponentThemeState,\n  key: K,\n  explicitValue: T | undefined,\n  fallback: T,\n): T {\n  return resolveThemeValue(state, key, explicitValue, fallback);\n}\n\ntype ResolvedThemeProps<P, F> = Omit<P, keyof F> & {\n  [K in keyof F]-?: K extends keyof P ? Exclude<P[K], undefined> : never;\n};\n\nexport function useResolvedThemeProps<\n  P extends { theme?: ThemeInput },\n  F extends Partial<{\n    [K in keyof P & keyof ThemeVisualDefaults]: Exclude<P[K], undefined>;\n  }>,\n>(\n  component: ThemeComponentName,\n  family: ThemeFamily,\n  rawProps: P,\n  fallbacks: F,\n): {\n  props: ResolvedThemeProps<P, F>;\n  theme: ComponentThemeState;\n} {\n  const theme = useComponentTheme(component, family, rawProps.theme);\n  const resolvedFallbacks = Object.fromEntries(\n    (Object.keys(fallbacks) as Array<keyof F>).map((key) => [\n      key,\n      resolveThemeValue<keyof ThemeVisualDefaults, unknown>(\n        theme,\n        key as keyof ThemeVisualDefaults,\n        rawProps[key as keyof P],\n        fallbacks[key],\n      ),\n    ]),\n  );\n  const props = {\n    ...rawProps,\n    ...resolvedFallbacks,\n  } as ResolvedThemeProps<P, F>;\n\n  return { props, theme };\n}\n\nexport interface ControllableStateOptions<T> {\n  value: T | undefined;\n  defaultValue: T;\n  onChange?: (value: T) => void;\n}\n\nexport function useControllableState<T>({\n  value,\n  defaultValue,\n  onChange,\n}: ControllableStateOptions<T>): readonly [T, (value: T) => void] {\n  const isControlled = value !== undefined;\n  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);\n  const currentValue = isControlled ? value : uncontrolledValue;\n\n  function setValue(nextValue: T): void {\n    if (!isControlled) setUncontrolledValue(nextValue);\n    onChange?.(nextValue);\n  }\n\n  return [currentValue, setValue] as const;\n}\n"
+    },
+    {
+      "path": "src/components/ui/BalsaThemeProvider.tsx",
+      "type": "registry:ui",
+      "target": "src/components/ui/BalsaThemeProvider.tsx",
+      "content": "import { useMemo, type CSSProperties, type HTMLAttributes, type ReactNode } from \"react\";\nimport { BalsaThemeContext } from \"./theme-context\";\nimport { createThemeScope, type ThemeDefaults, type ThemeInput } from \"./theme\";\n\nexport interface BalsaThemeProviderProps extends HTMLAttributes<HTMLDivElement> {\n  theme: ThemeInput;\n  defaults?: ThemeDefaults;\n  children?: ReactNode;\n}\n\nexport function BalsaThemeProvider({\n  theme,\n  defaults,\n  children,\n  className,\n  style,\n  ...domProps\n}: BalsaThemeProviderProps) {\n  const scope = useMemo(\n    () => createThemeScope(theme, defaults),\n    [theme, defaults],\n  );\n\n  return (\n    <BalsaThemeContext.Provider value={scope}>\n      <div\n        {...domProps}\n        data-balsa=\"theme-provider\"\n        data-theme={scope.presentation.id}\n        data-theme-base={scope.presentation.base}\n        style={{ ...scope.presentation.style, ...style } as CSSProperties}\n        className={[\"contents\", className].filter(Boolean).join(\" \")}\n      >\n        {children}\n      </div>\n    </BalsaThemeContext.Provider>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

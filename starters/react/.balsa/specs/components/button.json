@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "name": "button",
+  "title": "Button",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "button"
+  },
+  "status": "beta",
+  "version": "0.1.1",
+  "purpose": "Trigger an immediate user action.",
+  "useFor": [
+    "Form submission",
+    "Confirming an action",
+    "Primary or secondary page actions",
+    "Icon-only floating actions"
+  ],
+  "avoidFor": [
+    "Navigation between pages",
+    "Passive status display",
+    "Icon-only actions without an accessible name"
+  ],
+  "variants": [
+    "solid",
+    "soft",
+    "outline",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+    "custom"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading"
+  ],
+  "composition": {
+    "iconPosition": [
+      "prefix",
+      "suffix",
+      "both"
+    ],
+    "shapes": [
+      "rounded",
+      "pill",
+      "fab"
+    ],
+    "brutalismGeometry": "The default rounded shape resolves to rounded-none in Brutalism; pill, FAB, and consumer radius classes remain deliberate overrides.",
+    "fabBehavior": "Render a square, circular, padding-free icon action on the shared 32px, 36px, 40px, and 48px application scale, with an intentional 72px 2xl display tier and proportionally sized icons; consumers own floating placement and must provide an accessible name.",
+    "loadingBehavior": "Disable interaction, expose aria-busy, and replace the leading icon with a spinner.",
+    "neutralColor": "Neutral is the chrome color: a filled neutral action uses the inverse pair and every quieter treatment resolves to the plain foreground, so toolbar and shell controls do not compete with the content they frame."
+  },
+  "accessibility": [
+    "Use native button semantics.",
+    "Provide visible text or an accessible name.",
+    "FAB-shaped icon-only actions require an accessible name.",
+    "Loading and disabled states must block interaction and not rely only on color."
+  ],
+  "tokens": [
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-primary-hover",
+    "--balsa-color-primary-active",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "spacing.control-inline"
+  ],
+  "commonMistakes": [
+    "Creating a clickable div instead of Button.",
+    "Using Button for navigation.",
+    "Adding unregistered colors or variants.",
+    "Using outline when a lower-contrast translucent glass action is intended.",
+    "Putting visible text inside a FAB-shaped button or omitting its accessible name."
+  ],
+  "examples": [
+    {
+      "id": "soft",
+      "title": "Soft",
+      "description": "Use the soft variant for a low-emphasis action with a palette-tinted fill.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button variant=\"soft\">button</Button>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Use the outline variant when the action needs a visible semantic boundary.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button variant=\"outline\" color=\"secondary\">button</Button>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Use the glass variant for a translucent action with a restrained rim.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button variant=\"glass\" :prefix-icon=\"undefined\">button</Button>\n</template>"
+    },
+    {
+      "id": "large-pill",
+      "title": "Large pill",
+      "description": "Combine the large size, pill shape, and an optional icon.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\nimport { ArrowRight } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Button size=\"lg\" shape=\"pill\" :prefix-icon=\"ArrowRight\">button</Button>\n</template>"
+    },
+    {
+      "id": "fab",
+      "title": "2XL floating action button",
+      "description": "Use the 2XL FAB for a display-level 72px icon action with an accessible label.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\nimport { Plus } from \"@lucide/vue\";\n</script>\n\n<template>\n  <Button size=\"2xl\" shape=\"fab\" :prefix-icon=\"Plus\" aria-label=\"Add placeholder\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading preserves the action label while blocking interaction.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button loading>button</Button>\n</template>"
+    },
+    {
+      "id": "destructive",
+      "title": "Destructive",
+      "description": "Reserve the destructive color for consequential actions.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button color=\"destructive\" :prefix-icon=\"undefined\">Action placeholder</Button>\n</template>"
+    },
+    {
+      "id": "analytics-event",
+      "title": "Custom analytics event",
+      "description": "Emit a deliberate business event in addition to the structural interaction when Analytics is installed.",
+      "source": "<script setup lang=\"ts\">\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Button analytics-event=\"cta\">Start now</Button>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Button.vue",
+    "props": [
+      {
+        "name": "variant",
+        "type": "ButtonVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "outline",
+          "glass"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "ButtonSize | null | undefined",
+        "values": [
+          "null",
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "shape",
+        "type": "ButtonShape | undefined",
+        "values": [
+          "rounded",
+          "pill",
+          "fab"
+        ],
+        "required": false
+      },
+      {
+        "name": "prefixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "suffixIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "analyticsEvent",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+        "values": [
+          "button",
+          "submit",
+          "reset"
+        ],
+        "required": false,
+        "default": "\"button\""
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

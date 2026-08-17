@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "activity-timeline-card",
+  "type": "registry:ui",
+  "title": "ActivityTimelineCard",
+  "description": "Chronological actor, action, target, and time event stream.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/avatar"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ActivityTimelineCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/ActivityTimelineCard.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { Avatar } from \"../ui/Avatar\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface ActivityEvent {\n  id: string;\n  actor: string;\n  initials: string;\n  action: string;\n  target: string;\n  time: string;\n}\n\nconst defaultEvents: readonly ActivityEvent[] = [\n  { id: \"1\", actor: \"Ada Lovelace\", initials: \"AL\", action: \"deployed\", target: \"Atlas to production\", time: \"8 minutes ago\" },\n  { id: \"2\", actor: \"Grace Hopper\", initials: \"GH\", action: \"updated\", target: \"environment variables\", time: \"42 minutes ago\" },\n  { id: \"3\", actor: \"Barbara Liskov\", initials: \"BL\", action: \"promoted\", target: \"Relay to preview\", time: \"2 hours ago\" },\n  { id: \"4\", actor: \"Margaret Hamilton\", initials: \"MH\", action: \"invited\", target: \"two collaborators\", time: \"Yesterday\" },\n  { id: \"5\", actor: \"Katherine Johnson\", initials: \"KJ\", action: \"archived\", target: \"the Nova sandbox\", time: \"Yesterday\" },\n  { id: \"6\", actor: \"Radia Perlman\", initials: \"RP\", action: \"rotated\", target: \"the deploy key\", time: \"2 days ago\" },\n  { id: \"7\", actor: \"Jean Bartik\", initials: \"JB\", action: \"connected\", target: \"a preview domain\", time: \"3 days ago\" },\n];\n\nexport interface ActivityTimelineCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  events?: readonly ActivityEvent[];\n}\n\nexport function ActivityTimelineCard({\n  title = \"Recent activity\",\n  description = \"Changes across this workspace.\",\n  events = defaultEvents,\n  headingLevel,\n  shadow,\n  theme,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: ActivityTimelineCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"activity-timeline\"\n    >\n      <ol className=\"relative grid flex-1 content-between gap-balsa-xl before:absolute before:bottom-4 before:left-4 before:top-4 before:w-px before:bg-balsa-border\">\n        {events.map((event) => (\n          <li key={event.id} className=\"relative flex gap-balsa-md\">\n            <Avatar label={event.actor} fallback={event.initials} size=\"sm\" className=\"z-10\" />\n            <p className=\"min-w-0 pt-balsa-3xs text-sm\">\n              <strong className=\"font-medium\">{event.actor}</strong> {event.action}{\" \"}\n              <span className=\"font-medium\">{event.target}</span>\n              <span className=\"mt-balsa-3xs block text-xs text-balsa-muted-foreground\">{event.time}</span>\n            </p>\n          </li>\n        ))}\n      </ol>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

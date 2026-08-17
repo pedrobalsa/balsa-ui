@@ -1,0 +1,164 @@
+{
+  "publicApi": {
+    "source": "src/components/compositions/ApplicationCard.tsx",
+    "props": [
+      {
+        "name": "data-balsa",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "headingLevel",
+        "type": "HeadingLevel | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "CardVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "elevated",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ApplicationCardColor | undefined",
+        "values": [
+          "neutral",
+          "primary",
+          "secondary",
+          "accent"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CardSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | ThemeShadow | undefined",
+        "values": [
+          "false",
+          "true",
+          "sm",
+          "md",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "header",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

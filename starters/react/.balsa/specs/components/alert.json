@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "name": "alert",
+  "title": "Alert",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "alert"
+  },
+  "status": "beta",
+  "version": "0.2.0",
+  "purpose": "Communicate important inline feedback or present a focused alert-dialog decision.",
+  "useFor": [
+    "System and form feedback",
+    "Warnings and success confirmation",
+    "Focused consequential decisions"
+  ],
+  "avoidFor": [
+    "Routine helper text",
+    "Unrelated page chrome",
+    "Transient feedback better served by Toast"
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "solid",
+    "glass"
+  ],
+  "types": [
+    "inline",
+    "dialog"
+  ],
+  "states": [
+    "hidden",
+    "visible",
+    "dismissed"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "Inline mode uses alert semantics and does not move focus.",
+    "Dialog mode uses native modal alertdialog semantics, labels, initial focus, Escape handling, and focus restoration.",
+    "Persistent alerts disable every built-in dismissal path while retaining a clear task-specific action.",
+    "Every icon is decorative because the visible title and description communicate status."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive",
+    "--balsa-color-overlay",
+    "radius.surface",
+    "shadow.surface",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using dialog mode for passive information.",
+    "Making a persistent dialog without a clear task-specific action.",
+    "Using success or warning color without matching content meaning."
+  ],
+  "examples": [
+    {
+      "id": "information",
+      "title": "Inline information",
+      "description": "A surfaced information callout keeps supporting feedback in normal flow.",
+      "source": "<script setup lang=\"ts\">\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Alert id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" color=\"info\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-info text-balsa-info hover:bg-balsa-info/15 active:bg-balsa-info/25\" @click=\"close\">action</Button>\n    </template>\n  </Alert>\n</template>"
+    },
+    {
+      "id": "success",
+      "title": "Success feedback",
+      "description": "Success color is reserved for a completed outcome.",
+      "source": "<script setup lang=\"ts\">\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Alert id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" color=\"success\" variant=\"soft\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-success text-balsa-success hover:bg-balsa-success/15 active:bg-balsa-success/25\" @click=\"close\">action</Button>\n    </template>\n  </Alert>\n</template>"
+    },
+    {
+      "id": "warning",
+      "title": "Dismissible warning",
+      "description": "A visible close action lets users remove warning feedback that is not persistent.",
+      "source": "<script setup lang=\"ts\">\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n</script>\n\n<template>\n  <Alert id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" color=\"warning\" variant=\"outline\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-warning text-balsa-warning hover:bg-balsa-warning/15 active:bg-balsa-warning/25\" @click=\"close\">action</Button>\n    </template>\n  </Alert>\n</template>"
+    },
+    {
+      "id": "decision",
+      "title": "Destructive alert dialog",
+      "description": "Dialog mode moves a consequential decision into the native top layer.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Alert from \"@/components/ui/Alert.vue\";\nimport Button from \"@/components/ui/Button.vue\";\n\nconst open = ref(false);\n</script>\n\n<template>\n  <Button @click=\"open = true\">Open alert placeholder</Button>\n  <Alert v-model=\"open\" id=\"feedback-alert\" title=\"Alert heading placeholder\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" mode=\"dialog\" color=\"destructive\">\n    <template #actions=\"{ close }\">\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-destructive text-balsa-destructive hover:bg-balsa-destructive/15 active:bg-balsa-destructive/25\" @click=\"close\">Cancel placeholder</Button>\n      <Button variant=\"outline\" color=\"secondary\" class=\"border-balsa-destructive text-balsa-destructive hover:bg-balsa-destructive/15 active:bg-balsa-destructive/25\" @click=\"open = false\">Confirm placeholder</Button>\n    </template>\n  </Alert>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Alert.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "AlertMode | undefined",
+        "values": [
+          "inline",
+          "dialog"
+        ],
+        "required": false,
+        "default": "\"inline\""
+      },
+      {
+        "name": "color",
+        "type": "AlertColor | undefined",
+        "values": [
+          "neutral",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "variant",
+        "type": "AlertVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AlertSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "SurfaceRounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "auto",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "persistent",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Dismiss alert\""
+      },
+      {
+        "name": "outsideDismiss",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "escapeDismiss",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "initialFocus",
+        "type": "AlertInitialFocus | undefined",
+        "values": [
+          "close",
+          "action",
+          "dialog"
+        ],
+        "required": false,
+        "default": "\"action\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "unknown[]"
+      },
+      {
+        "name": "dismiss",
+        "type": "[]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "actions",
+        "type": "{ close: () => void; }"
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "inbox-thread-card",
+  "type": "registry:ui",
+  "title": "InboxThreadCard",
+  "description": "Message thread with author, timing, and an inline reply.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/avatar",
+    "@balsa/react/button",
+    "@balsa/react/textarea"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/InboxThreadCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/InboxThreadCard.tsx",
+      "content": "import { useState, type HTMLAttributes } from \"react\";\nimport { Avatar } from \"../ui/Avatar\";\nimport { Button } from \"../ui/Button\";\nimport { Textarea } from \"../ui/Textarea\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface ThreadMessage {\n  id: string;\n  author: string;\n  initials: string;\n  time: string;\n  body: string;\n  own?: boolean;\n}\n\n/**\n * A conversation and the box to answer it. The thread takes the height because\n * a single message is a notification, not a thread — the reply field sits at\n * the bottom where the reader ends up.\n */\nconst defaultMessages: readonly ThreadMessage[] = [\n  { id: \"1\", author: \"Grace Hopper\", initials: \"GH\", time: \"11:02\", body: \"The São Paulo edge is failing the second health check, so the rollout is holding at 10%.\" },\n  { id: \"2\", author: \"Ada Lovelace\", initials: \"AL\", time: \"11:06\", body: \"That matches the latency spike. I would rather roll back than push through it.\" },\n  { id: \"3\", author: \"Barbara Liskov\", initials: \"BL\", time: \"11:09\", body: \"Agreed. 4.11.6 is still warm in every region.\" },\n];\n\nexport interface InboxThreadCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  messages?: readonly ThreadMessage[];\n  onSend?: (body: string) => void;\n}\n\nexport function InboxThreadCard({\n  title = \"Rollback discussion\",\n  description = \"Atlas 4.12.0 · three people watching.\",\n  messages = defaultMessages,\n  headingLevel,\n  shadow,\n  theme,\n  onSend,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: InboxThreadCardProps) {\n  void _dataBalsa;\n  const [reply, setReply] = useState(\"\");\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"inbox-thread\"\n      footer={\n        <Button className=\"w-full\" disabled={!reply} onClick={() => onSend?.(reply)}>\n          Post reply\n        </Button>\n      }\n    >\n      <ol className=\"grid flex-1 content-start gap-balsa-lg\" role=\"list\">\n        {messages.map((message) => (\n          <li key={message.id} className=\"flex gap-balsa-md\">\n            <Avatar label={message.author} fallback={message.initials} size=\"sm\" className=\"mt-balsa-4xs shrink-0\" />\n            <div className=\"min-w-0\">\n              <p className=\"flex items-baseline gap-balsa-xs\">\n                <strong className=\"truncate text-sm font-medium\">{message.author}</strong>\n                <span className=\"shrink-0 text-xs tabular-nums text-balsa-muted-foreground\">{message.time}</span>\n              </p>\n              <p className=\"mt-balsa-3xs text-sm text-balsa-muted-foreground\">{message.body}</p>\n            </div>\n          </li>\n        ))}\n      </ol>\n      <div className=\"mt-balsa-lg\">\n        <Textarea\n          id=\"thread-reply\"\n          value={reply}\n          label=\"Reply\"\n          rows={2}\n          placeholder=\"Write a reply\"\n          onValueChange={setReply}\n        />\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

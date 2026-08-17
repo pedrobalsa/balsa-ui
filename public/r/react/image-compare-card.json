@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "image-compare-card",
+  "type": "registry:ui",
+  "title": "ImageCompareCard",
+  "description": "Before-and-after comparison where the reader sets the split.",
+  "dependencies": [
+    "react",
+    "lucide-react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/resizable",
+    "@balsa/react/gradient-background",
+    "@balsa/react/icon",
+    "@balsa/react/badge"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ImageCompareCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/ImageCompareCard.tsx",
+      "content": "import { ImageOff } from \"lucide-react\";\nimport { type HTMLAttributes } from \"react\";\nimport { Badge } from \"../ui/Badge\";\nimport { GradientBackground } from \"../ui/GradientBackground\";\nimport { Icon } from \"../ui/Icon\";\nimport { Resizable } from \"../ui/Resizable\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * Before and after, with the divider between them.\n *\n * This is what Resizable is for: the reader decides how much of each to see,\n * and there is no correct split for the component to default to. The left side\n * keeps an explicit image placeholder because it stands for an asset that is\n * genuinely missing; the right is a palette gradient because it stands for one\n * that exists.\n */\nexport interface ImageCompareCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  beforeLabel?: string;\n  afterLabel?: string;\n}\n\nexport function ImageCompareCard({\n  title = \"Before and after\",\n  description = \"Drag the divider to compare the replacement against the original.\",\n  beforeLabel = \"Original, not yet uploaded\",\n  afterLabel = \"Proposed replacement\",\n  headingLevel,\n  shadow,\n  theme,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: ImageCompareCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"image-compare\"\n      action={<Badge variant=\"soft\">Awaiting sign-off</Badge>}\n    >\n      <Resizable\n        id=\"artwork-compare\"\n        defaultValue={50}\n        label=\"Original against replacement\"\n        min={20}\n        max={80}\n        className=\"min-h-64 flex-1 grid-rows-1\"\n        first={\n          <figure className=\"relative grid h-full place-items-center overflow-hidden bg-balsa-muted\">\n            <div className=\"absolute inset-0 opacity-40 [background-image:linear-gradient(135deg,transparent_25%,var(--balsa-color-border)_25%,var(--balsa-color-border)_50%,transparent_50%,transparent_75%,var(--balsa-color-border)_75%)] [background-size:2rem_2rem]\" />\n            <Icon icon={ImageOff} size=\"xl\" className=\"relative text-balsa-muted-foreground\" />\n            <figcaption className=\"absolute inset-x-0 bottom-0 truncate bg-balsa-surface/80 px-balsa-md py-balsa-xs text-xs text-balsa-muted-foreground\">\n              {beforeLabel}\n            </figcaption>\n          </figure>\n        }\n        second={\n          <figure className=\"relative h-full overflow-hidden bg-balsa-muted\">\n            <GradientBackground colorMode=\"palette\" preset=\"aurora-veil\" speed={0} className=\"absolute inset-0\" />\n            <figcaption className=\"absolute inset-x-0 bottom-0 truncate bg-balsa-surface/80 px-balsa-md py-balsa-xs text-xs text-balsa-muted-foreground\">\n              {afterLabel}\n            </figcaption>\n          </figure>\n        }\n      />\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

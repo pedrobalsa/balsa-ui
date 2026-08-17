@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 1,
+  "name": "select",
+  "title": "Select",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "select"
+  },
+  "status": "beta",
+  "version": "0.1.1",
+  "purpose": "Choose one or more values from a finite, typed option list.",
+  "useFor": [
+    "Short finite option lists",
+    "Single or multiple selection",
+    "Forms requiring styled listbox behavior"
+  ],
+  "avoidFor": [
+    "Free-form input",
+    "Very large searchable datasets"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated"
+  ],
+  "composition": {
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "styling": "Consumer class and style attributes merge onto the combobox trigger while shared helpers preserve the Balsa field language.",
+    "popup": "The listbox uses the browser top layer when available so overflow containers do not clip it. Its option rows retain one fixed height with a small gap between rows; selected material uses 80% opacity without changing row geometry.",
+    "multiple": "Set multiple to keep the listbox open while selected options are toggled and emit an array model.",
+    "customContent": "Typed selected and option slots can add concise visual context while the option label remains the accessible selection identity."
+  },
+  "accessibility": [
+    "Associates its label, hint, and validation feedback with the trigger.",
+    "Implements combobox and listbox keyboard behavior.",
+    "Multiple mode exposes aria-multiselectable and keeps the listbox open while Enter or Space toggles the active option.",
+    "Invalid state exposes aria-invalid and an alert message.",
+    "The top-layer listbox remains structurally associated with its trigger."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-selected",
+    "--balsa-color-destructive",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Providing duplicate option values.",
+    "Using Select when Autocomplete is needed.",
+    "Omitting a stable id and visible label."
+  ],
+  "examples": [
+    {
+      "id": "multiple",
+      "title": "Multiple",
+      "description": "Keep the list open while users toggle several selected options.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref([\"option-01\", \"option-02\"]);\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" multiple />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact",
+      "description": "The small size fits dense property and filter panels.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required selection uses the same field contract as other inputs.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" required />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid",
+      "description": "Unvalidated state keeps feedback attached to the control.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading communicates that options are not ready yet.",
+      "source": "<script setup lang=\"ts\">\nimport Select from \"@/components/ui/Select.vue\";\nimport { ref } from \"vue\";\n\nconst role = ref(\"option-02\");\nconst roles = [\n  { label: \"Option placeholder 01\", value: \"option-01\" },\n  { label: \"Option placeholder 02\", value: \"option-02\" },\n  { label: \"Option placeholder 03\", value: \"option-03\" },\n];\n</script>\n\n<template>\n  <Select id=\"demo-role\" v-model=\"role\" label=\"Select placeholder\" :options=\"roles\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Select.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "SelectModelValue | undefined",
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "options",
+        "type": "readonly SelectOption[]",
+        "shape": {
+          "type": "readonly SelectOption[]",
+          "items": {
+            "type": "SelectOption",
+            "fields": [
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "value",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "SelectModelValue | undefined",
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: SelectModelValue]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "selected",
+        "type": "{ option: SelectOption | undefined; options: readonly SelectOption[]; text: string; }"
+      },
+      {
+        "name": "option",
+        "type": "{ option: SelectOption; selected: boolean; active: boolean; }"
+      }
+    ]
+  }
+}

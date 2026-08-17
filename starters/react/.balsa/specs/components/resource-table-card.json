@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "name": "resource-table-card",
+  "title": "ResourceTableCard",
+  "category": "composition",
+  "classification": "balsa-composition",
+  "status": "beta",
+  "version": "0.1.1",
+  "purpose": "Resource index with status, metadata, row selection, and creation action.",
+  "useFor": [
+    "Production application interfaces",
+    "Design Studio composition previews",
+    "Reusable product workflows"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Unrelated content forced into one surface",
+    "Pinned geometry or elevation that bypasses the active theme"
+  ],
+  "variants": [
+    "theme inherited"
+  ],
+  "sizes": [
+    "responsive"
+  ],
+  "states": [
+    "default",
+    "interactive",
+    "disabled where applicable"
+  ],
+  "composition": {
+    "root": "ApplicationCard",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "research": "https://shopify.dev/docs/api/app-home/patterns/templates/resource-index"
+  },
+  "accessibility": [
+    "Heading level follows the surrounding document hierarchy.",
+    "Interactive controls retain native keyboard and focus behavior through Balsa primitives.",
+    "Supporting text and status do not rely on color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-density-factor"
+  ],
+  "commonMistakes": [
+    "Pinning radius, border, or shadow instead of inheriting the design context.",
+    "Replacing the typed data contract with demo-only DOM.",
+    "Adding a second principal card surface."
+  ],
+  "examples": [
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport ResourceTableCard from \"@/components/compositions/ResourceTableCard.vue\";\n</script>\n\n<template>\n  <ResourceTableCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport ResourceTableCard from \"@/components/compositions/ResourceTableCard.vue\";\n</script>\n\n<template>\n  <ResourceTableCard title=\"Pattern placeholder\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/compositions/ResourceTableCard.vue",
+    "props": [
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Projects\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Search, review, and manage shared resources.\""
+      },
+      {
+        "name": "rows",
+        "type": "readonly ResourceRow[] | undefined",
+        "shape": {
+          "type": "readonly ResourceRow[]",
+          "items": {
+            "type": "ResourceRow",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "statusColor",
+                "type": "CompositionPaletteColor | undefined",
+                "required": false
+              },
+              {
+                "name": "detail",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "updated",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[ { id: \"atlas\", name: \"Atlas\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"2m ago\" }, { id: \"relay\", name: \"Relay\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"1h ago\" }, { id: \"nova\", name: \"Nova\", status: \"Paused\", detail: \"Development\", updated: \"Yesterday\" }, { id: \"quill\", name: \"Quill\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"Yesterday\" }, { id: \"harbor\", name: \"Harbor\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"3 days ago\" }, { id: \"beacon\", name: \"Beacon\", status: \"Ready\", statusColor: \"primary\", detail: \"Production\", updated: \"3 days ago\" }, { id: \"ferry\", name: \"Ferry\", status: \"Paused\", detail: \"Development\", updated: \"Last week\" }, { id: \"kite\", name: \"Kite\", status: \"Review\", statusColor: \"secondary\", detail: \"Preview\", updated: \"Last week\" }, ]"
+      }
+    ],
+    "events": [
+      {
+        "name": "select",
+        "type": "[id: string]"
+      },
+      {
+        "name": "create",
+        "type": "[]"
+      }
+    ],
+    "slots": []
+  }
+}

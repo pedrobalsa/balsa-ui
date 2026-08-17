@@ -1,0 +1,339 @@
+/* Balsa UI shared color foundation.
+ *
+ * The seven --balsa-color-* anchors are optional. When they are absent,
+ * Balsa utilities resolve to neutral defaults through the host color-scheme.
+ * Every derived --balsa-color-* role remains an explicit consumer override.
+ */
+
+/*
+ * The resolved role layer: every palette role with its derivation applied.
+ *
+ * A material recipe refers to a palette role -- `color("accent-hover", 0.94)`
+ * becomes `color-mix(in oklab, var(--balsa-color-accent-hover) 94%, transparent)`.
+ * A palette defines the anchors and not the derived roles, so that `var()` had
+ * nothing to resolve, and a `var()` on an undefined custom property with no
+ * fallback is invalid at computed-value time: the whole declaration computes to
+ * the guaranteed-invalid value and the material variable silently disappears.
+ *
+ * Measured consequence before this existed: at the Glass material `accent` was
+ * 92% translucent while `accent-hover` and `accent-active` stayed fully opaque,
+ * so a glass accent surface snapped to solid on hover. The same for `secondary`,
+ * `code`, `inverse` and `selected`. Nothing errored -- an invalid custom
+ * property just is not there.
+ *
+ * These carry the derivation so a material always has something to resolve, and
+ * a palette that defines a role explicitly still wins.
+ *
+ * Deliberately a plain rule rather than part of the `@theme inline` block
+ * below. Those aliases are inlined into utilities and resolve at the element
+ * that uses them, which is what lets a palette apply to a subtree. These
+ * resolve where they are declared, which matches the material layer -- written
+ * as inline styles on the theme root and already root-scoped. Moving the
+ * aliases onto these would quietly narrow subtree palettes to the root, so the
+ * derivations appear in both places on purpose. `tests/theme.test.ts` fails if
+ * the two ever disagree.
+ */
+:root {
+  --balsa-role-background: var(--balsa-color-background, light-dark(#fafafa, #0f1012));
+  --balsa-role-foreground: var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5));
+  --balsa-role-surface: var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c));
+  --balsa-role-surface-foreground: var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-surface-elevated: var(--balsa-color-surface-elevated, light-dark(color-mix(in oklab, var(--balsa-color-surface, #f1f1f1) 30%, white), color-mix(in oklab, var(--balsa-color-surface, #191a1c) 96%, var(--balsa-color-foreground, #f4f4f5))));
+  --balsa-role-surface-elevated-foreground: var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-muted: var(--balsa-color-muted, light-dark(#e0e0e1, #2b2c2e));
+  --balsa-role-muted-foreground: var(--balsa-color-muted-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 72%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-inverse: var(--balsa-color-inverse, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-inverse-foreground: var(--balsa-color-inverse-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+
+  --balsa-role-primary: var(--balsa-color-primary, light-dark(#18181b, #f4f4f5));
+  --balsa-role-primary-foreground: var(--balsa-color-primary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-primary-hover: var(--balsa-color-primary-hover, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-primary-active: var(--balsa-color-primary-active, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-secondary: var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa));
+  --balsa-role-secondary-foreground: var(--balsa-color-secondary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-secondary-hover: var(--balsa-color-secondary-hover, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-secondary-active: var(--balsa-color-secondary-active, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-accent: var(--balsa-color-accent, light-dark(#475569, #cbd5e1));
+  --balsa-role-accent-foreground: var(--balsa-color-accent-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-accent-hover: var(--balsa-color-accent-hover, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --balsa-role-accent-active: var(--balsa-color-accent-active, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+
+  --balsa-role-destructive: var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5));
+  --balsa-role-destructive-foreground: var(--balsa-color-destructive-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-success: var(--balsa-color-success, light-dark(#166534, #86efac));
+  --balsa-role-success-foreground: var(--balsa-color-success-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-warning: var(--balsa-color-warning, light-dark(#854d0e, #fde68a));
+  --balsa-role-warning-foreground: var(--balsa-color-warning-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --balsa-role-info: var(--balsa-color-info, light-dark(#1d4ed8, #93c5fd));
+  --balsa-role-info-foreground: var(--balsa-color-info-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+
+  --balsa-role-input: var(--balsa-color-input, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 28%, var(--balsa-color-surface, #f1f1f1)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 62%, var(--balsa-color-surface, #191a1c))));
+  --balsa-role-input-border: var(--balsa-color-input-border, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --balsa-role-selected: var(--balsa-color-selected, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
+  --balsa-role-border: var(--balsa-color-border, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 86%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 80%, var(--balsa-color-foreground, #f4f4f5))));
+  --balsa-role-border-strong: var(--balsa-color-border-strong, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --balsa-role-code: var(--balsa-color-code, light-dark(var(--balsa-color-foreground, #18181b), color-mix(in oklab, var(--balsa-color-background, #0f1012) 96%, var(--balsa-color-foreground, #f4f4f5))));
+  --balsa-role-code-foreground: var(--balsa-color-code-foreground, light-dark(var(--balsa-color-background, #fafafa), var(--balsa-color-foreground, #f4f4f5)));
+}
+
+@theme inline {
+  --color-balsa-background: var(--balsa-material-background, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-foreground: var(--balsa-material-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-surface: var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c)));
+  --color-balsa-surface-foreground: var(--balsa-material-surface-foreground, var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-surface-elevated: var(--balsa-material-surface-elevated, var(--balsa-color-surface-elevated, light-dark(color-mix(in oklab, var(--balsa-color-surface, #f1f1f1) 30%, white), color-mix(in oklab, var(--balsa-color-surface, #191a1c) 96%, var(--balsa-color-foreground, #f4f4f5)))));
+  --color-balsa-surface-elevated-foreground: var(--balsa-material-surface-elevated-foreground, var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-muted: var(--balsa-material-muted, var(--balsa-color-muted, light-dark(#e0e0e1, #2b2c2e)));
+  --color-balsa-muted-foreground: var(--balsa-material-muted-foreground, var(--balsa-color-muted-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 72%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-inverse: var(--balsa-material-inverse, var(--balsa-color-inverse, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-inverse-foreground: var(--balsa-material-inverse-foreground, var(--balsa-color-inverse-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-code: var(--balsa-material-code, var(--balsa-color-code, light-dark(var(--balsa-color-foreground, #18181b), color-mix(in oklab, var(--balsa-color-background, #0f1012) 96%, var(--balsa-color-foreground, #f4f4f5)))));
+  --color-balsa-code-foreground: var(--balsa-color-code-foreground, light-dark(var(--balsa-color-background, #fafafa), var(--balsa-color-foreground, #f4f4f5)));
+
+  --color-balsa-primary: var(--balsa-material-primary, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-primary-foreground: var(--balsa-material-primary-foreground, var(--balsa-color-primary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-primary-hover: var(--balsa-material-primary-hover, var(--balsa-color-primary-hover, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-primary-active: var(--balsa-material-primary-active, var(--balsa-color-primary-active, color-mix(in oklab, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-secondary: var(--balsa-material-secondary, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)));
+  --color-balsa-secondary-foreground: var(--balsa-material-secondary-foreground, var(--balsa-color-secondary-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-secondary-hover: var(--balsa-material-secondary-hover, var(--balsa-color-secondary-hover, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-secondary-active: var(--balsa-material-secondary-active, var(--balsa-color-secondary-active, color-mix(in oklab, var(--balsa-color-secondary, light-dark(#52525b, #a1a1aa)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-accent: var(--balsa-material-accent, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)));
+  --color-balsa-accent-foreground: var(--balsa-material-accent-foreground, var(--balsa-color-accent-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-accent-hover: var(--balsa-material-accent-hover, var(--balsa-color-accent-hover, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+  --color-balsa-accent-active: var(--balsa-material-accent-active, var(--balsa-color-accent-active, color-mix(in oklab, var(--balsa-color-accent, light-dark(#475569, #cbd5e1)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012)))));
+
+  --color-balsa-destructive: var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5));
+  --color-balsa-destructive-foreground: var(--balsa-color-destructive-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-destructive-hover: var(--balsa-color-destructive-hover, color-mix(in oklab, var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5)) 90%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-destructive-active: var(--balsa-color-destructive-active, color-mix(in oklab, var(--balsa-color-destructive, light-dark(#b91c1c, #fca5a5)) 82%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-success: var(--balsa-color-success, light-dark(#166534, #86efac));
+  --color-balsa-success-foreground: var(--balsa-color-success-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-warning: var(--balsa-color-warning, light-dark(#854d0e, #fde68a));
+  --color-balsa-warning-foreground: var(--balsa-color-warning-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-info: var(--balsa-color-info, light-dark(#1d4ed8, #93c5fd));
+  --color-balsa-info-foreground: var(--balsa-color-info-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+
+  --color-balsa-border: color-mix(in oklab, var(--balsa-material-border, var(--balsa-color-border, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 86%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 80%, var(--balsa-color-foreground, #f4f4f5))))) var(--balsa-border-opacity, 100%), transparent);
+  --color-balsa-border-strong: color-mix(in oklab, var(--balsa-material-border-strong, var(--balsa-color-border-strong, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))))) var(--balsa-border-opacity, 100%), transparent);
+  --color-balsa-input: var(--balsa-material-input, var(--balsa-color-input, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 28%, var(--balsa-color-surface, #f1f1f1)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 62%, var(--balsa-color-surface, #191a1c)))));
+  --color-balsa-input-foreground: var(--balsa-color-input-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-input-border: color-mix(in oklab, var(--balsa-material-input-border, var(--balsa-color-input-border, color-mix(in oklab, var(--balsa-color-background, light-dark(#fafafa, #0f1012)) 58%, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))))) var(--balsa-border-opacity, 100%), transparent);
+  --color-balsa-focus-ring: var(--balsa-color-focus-ring, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5)));
+  --color-balsa-selected: var(--balsa-material-selected, var(--balsa-color-selected, var(--balsa-color-primary, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-selected-foreground: var(--balsa-color-selected-foreground, var(--balsa-color-background, light-dark(#fafafa, #0f1012)));
+  --color-balsa-disabled: var(--balsa-color-disabled, light-dark(color-mix(in oklab, var(--balsa-color-background, #fafafa) 90%, var(--balsa-color-foreground, #18181b)), color-mix(in oklab, var(--balsa-color-background, #0f1012) 84%, var(--balsa-color-foreground, #f4f4f5))));
+  --color-balsa-disabled-foreground: var(--balsa-color-disabled-foreground, color-mix(in oklab, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)) 66%, var(--balsa-color-background, light-dark(#fafafa, #0f1012))));
+  --color-balsa-overlay: var(--balsa-color-overlay, light-dark(color-mix(in oklab, var(--balsa-color-foreground, #18181b) 60%, transparent), color-mix(in oklab, var(--balsa-color-background, #0f1012) 72%, transparent)));
+  --color-balsa-chart-surface: var(--balsa-color-chart-surface, var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c))));
+  --color-balsa-chart-axis: var(--balsa-color-chart-axis, var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+  --color-balsa-chart-grid: var(--balsa-color-chart-grid, color-mix(in oklab, var(--balsa-color-border, light-dark(#d4d4d8, #3f3f46)) 70%, transparent));
+  --color-balsa-chart-tooltip: var(--balsa-color-chart-tooltip, var(--balsa-color-surface-elevated, light-dark(#ffffff, #202124)));
+  --color-balsa-chart-tooltip-foreground: var(--balsa-color-chart-tooltip-foreground, var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5))));
+}
+
+/* CSS Backgrounds 3 recommends painting an HTML document's canvas through
+ * body: the user agent propagates that background to the otherwise elementless
+ * canvas. Keep this zero-specificity and in the base layer so an application
+ * can replace either value without fighting the design-system foundation.
+ * https://www.w3.org/TR/css-backgrounds-3/#body-background
+ */
+@layer base {
+  :where(body) {
+    background-color: var(--color-balsa-background);
+    color: var(--color-balsa-foreground);
+  }
+}
+
+/*
+ * The design system's backdrop filter, as a utility.
+ *
+ * Components reached for `backdrop-blur-md` — 62 times across 24 files — because
+ * it was the shortest thing to write. It is a fixed 12px that answers no token,
+ * so the material dimension never reached it: a component asked for glass at the
+ * Solid material and still blurred, and a theme setting a different radius was
+ * ignored. `Card` carries a comment explaining that blur is theme-owned and a
+ * utility would sit above it; the other twenty-four did it anyway.
+ *
+ * The fourth instance of a literal utility outranking the token rule beneath it,
+ * after `Kbd`'s `border`, the padding matrix and `Button`'s `duration-200`. The
+ * durable fix has been the same every time: make the token the shorter thing to
+ * write, rather than asking everyone to remember not to write the literal.
+ *
+ * The prefixed property comes first. The minifier keeps the last of a prefixed
+ * pair, and writing them the other way round is what shipped a production site
+ * with no glass at all.
+ */
+@utility backdrop-balsa {
+  -webkit-backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+  backdrop-filter: var(--balsa-backdrop-filter-context, var(--balsa-backdrop-filter));
+
+  /* Once this element becomes a Backdrop Root, every surface below it samples
+     that root rather than the page. Keep the reduced value available through
+     arbitrary wrapper depth; the semantic surface rule in balsa-theme.css
+     publishes the same contract for token-driven surfaces without this class. */
+  & > * {
+    --balsa-backdrop-filter-context: var(--balsa-backdrop-filter-contained);
+  }
+}
+
+/* The scrim behind a modal or drawer, which is a different depth from a surface
+   and has its own token. */
+@utility backdrop-balsa-overlay {
+  -webkit-backdrop-filter: var(--balsa-overlay-filter);
+  backdrop-filter: var(--balsa-overlay-filter);
+}
+
+/*
+ * The type scale.
+ *
+ * Balsa shipped tokens for colour, spacing, radius, shadow and motion, and two
+ * font families — and nothing for size, line height or letter spacing. So the
+ * standing rule to use tokens rather than raw values was impossible to follow
+ * for type, and the first editorial application built on Balsa hand-picked
+ * `text-[1.1875rem]`, `leading-[1.75]` and `tracking-[0.12em]`: exactly the
+ * arbitrary-value habit the spacing work spent a phase removing.
+ *
+ * Measured before it was designed, the same way the spacing scale was. Across
+ * 69 shipped components: 190 font sizes drawn from five steps (`xs` 39, `sm`
+ * 107, `base` 22, `lg` 19, `xl` 3) and two arbitrary values. Across 47 site
+ * files: ten steps reaching `6xl`, because display sizes only appear on real
+ * pages. So the sizes below are the ones already in use — nothing has to move,
+ * and the migration is a rename rather than a redesign.
+ *
+ * What was missing was never the sizes. It was that **line height is a function
+ * of size, not a free choice**: 14 `leading-*` uses across 69 components means
+ * almost everything took Tailwind's default and no component's leading answered
+ * the design system at all. Ratios tighten as size grows — 1.6 at caption sizes
+ * down to 1.05 at display — because a long measure needs air between lines and
+ * a headline does not. Each step therefore carries its leading, and asking for
+ * `text-balsa-3xl` sets both.
+ *
+ * `prose` is the evidence-led step: the editorial application independently
+ * arrived at 19px on 1.75 for its article body, so long-form reading gets a
+ * named step rather than being approximated by `lg`.
+ */
+@theme {
+  --text-balsa-2xs: 0.6875rem;
+  --text-balsa-2xs--line-height: 1.6;
+  --text-balsa-2xs--letter-spacing: 0.01em;
+  --text-balsa-xs: 0.75rem;
+  --text-balsa-xs--line-height: 1.6;
+  --text-balsa-xs--letter-spacing: 0.01em;
+  --text-balsa-sm: 0.875rem;
+  --text-balsa-sm--line-height: 1.55;
+  --text-balsa-base: 1rem;
+  --text-balsa-base--line-height: 1.5;
+  --text-balsa-prose: 1.1875rem;
+  --text-balsa-prose--line-height: 1.75;
+  --text-balsa-lg: 1.125rem;
+  --text-balsa-lg--line-height: 1.55;
+  --text-balsa-xl: 1.25rem;
+  --text-balsa-xl--line-height: 1.5;
+  --text-balsa-2xl: 1.5rem;
+  --text-balsa-2xl--line-height: 1.35;
+  --text-balsa-2xl--letter-spacing: -0.01em;
+  --text-balsa-3xl: 1.875rem;
+  --text-balsa-3xl--line-height: 1.25;
+  --text-balsa-3xl--letter-spacing: -0.015em;
+  --text-balsa-4xl: 2.25rem;
+  --text-balsa-4xl--line-height: 1.2;
+  --text-balsa-4xl--letter-spacing: -0.02em;
+  --text-balsa-5xl: 3rem;
+  --text-balsa-5xl--line-height: 1.1;
+  --text-balsa-5xl--letter-spacing: -0.025em;
+  --text-balsa-6xl: 3.75rem;
+  --text-balsa-6xl--line-height: 1.05;
+  --text-balsa-6xl--letter-spacing: -0.03em;
+
+  /* Leading on its own, for the cases that set size elsewhere. */
+  --leading-balsa-tight: 1.15;
+  --leading-balsa-snug: 1.35;
+  --leading-balsa-normal: 1.5;
+  --leading-balsa-relaxed: 1.65;
+  --leading-balsa-prose: 1.75;
+
+  /* Tracking on its own. `label` is the small-caps/eyebrow case, the one
+     positive value the audit found in real use (`tracking-[0.12em]`). */
+  --tracking-balsa-title: -0.02em;
+  --tracking-balsa-normal: 0em;
+  --tracking-balsa-label: 0.12em;
+}
+
+:root {
+  --balsa-color-chart-surface: var(--balsa-material-surface, var(--balsa-color-surface, light-dark(#f1f1f1, #191a1c)));
+  --balsa-color-chart-axis: var(--balsa-color-surface-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-color-chart-grid: color-mix(in oklab, var(--balsa-color-border, light-dark(#d4d4d8, #3f3f46)) 70%, transparent);
+  --balsa-color-chart-tooltip: var(--balsa-color-surface-elevated, light-dark(#ffffff, #202124));
+  --balsa-color-chart-tooltip-foreground: var(--balsa-color-surface-elevated-foreground, var(--balsa-color-foreground, light-dark(#18181b, #f4f4f5)));
+  --balsa-color-chart-interaction: var(--balsa-color-primary, light-dark(#18181b, #f4f4f5));
+  --balsa-chart-marker-size: 0.5rem;
+  --balsa-chart-marker-radius: 999px;
+  --balsa-chart-interaction-opacity: 0.16;
+}
+
+[data-balsa="chart-container"] {
+  position: relative;
+  --vis-font-family: var(--balsa-font-body, ui-sans-serif, system-ui, sans-serif);
+  --vis-axis-grid-color: var(--balsa-color-chart-grid);
+  --vis-axis-tick-color: var(--balsa-color-chart-grid);
+  --vis-axis-tick-label-color: var(--balsa-color-chart-axis);
+  --vis-axis-label-color: var(--balsa-color-chart-axis);
+  --vis-axis-grid-opacity: 0.8;
+  --vis-axis-grid-line-dasharray: 3 4;
+  --vis-axis-tick-label-font-size: 11px;
+  --vis-axis-tick-label-weight: 500;
+  --vis-axis-tick-label-hide-transition: opacity var(--balsa-motion-fast, 160ms) var(--balsa-motion-easing, ease);
+  --vis-crosshair-line-stroke-color: var(--balsa-color-chart-interaction);
+  --vis-crosshair-line-stroke-opacity: 0.35;
+  --vis-crosshair-circle-stroke-color: var(--balsa-color-chart-surface);
+  --vis-crosshair-circle-stroke-width: 2px;
+  --vis-tooltip-background-color: var(--balsa-color-chart-tooltip);
+  --vis-tooltip-border-color: var(--balsa-color-border);
+  --vis-tooltip-text-color: var(--balsa-color-chart-tooltip-foreground);
+  --vis-tooltip-border-radius: var(--balsa-radius-control, 0.5rem);
+  --vis-tooltip-padding: 0;
+  --vis-tooltip-transition-duration: var(--balsa-motion-fast, 160ms);
+  --vis-tooltip-box-shadow: var(--balsa-shadow-overlay, 0 12px 30px rgb(0 0 0 / 0.18));
+  --vis-donut-background-color: color-mix(in oklab, var(--balsa-color-chart-grid) 45%, transparent);
+  --vis-donut-segment-stroke-color: var(--balsa-color-chart-surface);
+  --vis-donut-segment-stroke-width: 2px;
+}
+
+.balsa-chart-tooltip-content {
+  min-width: 9rem;
+  padding: 0.625rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.balsa-chart-tooltip-label {
+  margin-bottom: 0.375rem;
+  font-weight: 700;
+}
+
+.balsa-chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.125rem;
+}
+
+.balsa-chart-tooltip-row strong {
+  margin-left: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.balsa-chart-tooltip-marker {
+  width: var(--balsa-chart-marker-size);
+  height: var(--balsa-chart-marker-size);
+  border-radius: var(--balsa-chart-marker-radius);
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-balsa="chart-container"] {
+    --vis-axis-tick-label-hide-transition: none;
+    --vis-tooltip-transition-duration: 0ms;
+  }
+}

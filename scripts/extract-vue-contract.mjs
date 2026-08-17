@@ -1,0 +1,182 @@
+/**
+ * Derive a catalog item's public API from Vue SFC source via vue-component-meta.
+ * The schema walkers are the historical Vue path; changing them reformats
+ * committed specifications and breaks the contracts:check meaning.
+ */
+import { access } from "node:fs/promises";
+import path from "node:path";
+import { createChecker } from "vue-component-meta";
+import { rootDir } from "./registry-lib.mjs";
+
+export async function resolveTsconfig() {
+  for (const candidate of ["tsconfig.app.json", "tsconfig.json"]) {
+    const target = path.join(rootDir, candidate);
+    try {
+      await access(target);
+      return target;
+    } catch {
+      // Try the next candidate.
+    }
+  }
+  throw new Error("No tsconfig.app.json or tsconfig.json found.");
+}
+
+/** Vue's built-in attributes are not part of an item's contract. */
+function isAuthored(prop) {
+  return !prop.global;
+}
+
+function cleanType(type) {
+  return type.replace(/\s+/g, " ").trim();
+}
+
+/**
+ * Structural types the compiler can expand but nobody needs expanded; `Date`
+ * alone would contribute forty methods and bury the contract.
+ */
+const opaqueTypes = new Set([
+  "Date", "RegExp", "Error", "Element", "HTMLElement", "Event", "File", "Blob",
+  "Function", "Promise", "Node", "URL", "FormData",
+]);
+
+/**
+ * A named alias tells an agent nothing about which values are legal. When the
+ * compiler can enumerate the union, publish the members -- but only when every
+ * member is a literal. A partial list is worse than none, because it reads as
+ * complete.
+ */
+function enumeratedValues(schema) {
+  if (!schema || typeof schema !== "object") return undefined;
+  if (schema.kind !== "enum" || !Array.isArray(schema.schema)) return undefined;
+  const members = schema.schema.filter((value) => value !== "undefined");
+  if (!members.length || members.length > 40) return undefined;
+  if (!members.every((value) => typeof value === "string")) return undefined;
+  if (members.some((value) => /[{}()[\]]/.test(value))) return undefined;
+  return members.map((value) => value.replace(/^"|"$/g, ""));
+}
+
+/**
+ * Expand an object-shaped prop to its fields. This is the difference between
+ * "logo: BrandLogo" and knowing that a logo needs a title and an alt.
+ */
+function describeShape(schema, depth = 0) {
+  if (!schema || typeof schema !== "object" || depth > 3) return undefined;
+  if (opaqueTypes.has(schema.type)) return undefined;
+
+  if (schema.kind === "object") {
+    const fields = Object.values(schema.schema ?? {})
+      .slice(0, 25)
+      .map((field) => {
+        const shape = field.schema?.kind === "array"
+          ? describeShape(field.schema, depth + 1)
+          : undefined;
+        return {
+          name: field.name,
+          type: cleanType(field.type),
+          required: Boolean(field.required),
+          ...(shape ? { shape } : {}),
+        };
+      });
+    return fields.length ? { type: cleanType(schema.type), fields } : undefined;
+  }
+
+  if (schema.kind === "array" && Array.isArray(schema.schema)) {
+    const items = schema.schema
+      .filter((member) => typeof member === "object")
+      .slice(0, 6)
+      .map((member) => describeShape(member, depth + 1))
+      .filter(Boolean);
+    if (!items.length) return undefined;
+    return items.length === 1
+      ? { type: cleanType(schema.type), items: items[0] }
+      : { type: cleanType(schema.type), items: { type: "item", variants: items } };
+  }
+
+  if (schema.kind === "enum" && Array.isArray(schema.schema)) {
+    const variants = schema.schema
+      .filter((member) => typeof member === "object")
+      .slice(0, 6)
+      .map((member) => describeShape(member, depth + 1))
+      .filter(Boolean);
+    if (!variants.length) return undefined;
+    return variants.length === 1
+      ? variants[0]
+      : { type: cleanType(schema.type), variants };
+  }
+
+  return undefined;
+}
+
+function describeProp(prop) {
+  const values = enumeratedValues(prop.schema);
+  const shape = values ? undefined : describeShape(prop.schema);
+  return {
+    name: prop.name,
+    type: cleanType(prop.type),
+    ...(values ? { values } : {}),
+    ...(shape ? { shape } : {}),
+    required: Boolean(prop.required),
+    ...(prop.default !== undefined && prop.default !== "undefined"
+      ? { default: cleanType(String(prop.default)) }
+      : {}),
+    ...(prop.description ? { description: prop.description.trim() } : {}),
+  };
+}
+
+/**
+ * `v-model` is a prop and an event by convention rather than by declaration,
+ * so it has to be recovered from the pair. Naming it explicitly is what stops
+ * an agent guessing the model type.
+ */
+function describeModels(props, events) {
+  const models = [];
+  for (const prop of props) {
+    const updateEvent = prop.name === "modelValue"
+      ? "update:modelValue"
+      : `update:${prop.name}`;
+    if (!events.some((event) => event.name === updateEvent)) continue;
+    models.push({
+      name: prop.name,
+      type: prop.type,
+      ...(prop.values ? { values: prop.values } : {}),
+      ...(prop.shape ? { shape: prop.shape } : {}),
+      event: updateEvent,
+    });
+  }
+  return models;
+}
+
+export async function createVueContractExtractor() {
+  const checker = createChecker(await resolveTsconfig(), {
+    forceUseTs: true,
+    schema: { ignore: [] },
+  });
+
+  return {
+    extract(componentAbsPath, relativePath) {
+      const meta = checker.getComponentMeta(componentAbsPath);
+      const props = meta.props.filter(isAuthored).map(describeProp);
+      const events = meta.events.map((event) => ({
+        name: event.name,
+        ...(event.type ? { type: cleanType(event.type) } : {}),
+      }));
+      const slots = meta.slots.map((slot) => ({
+        name: slot.name,
+        ...(slot.type ? { type: cleanType(slot.type) } : {}),
+      }));
+      const exposed = meta.exposed
+        .filter((entry) => !entry.name.startsWith("$"))
+        .map((entry) => ({ name: entry.name, type: cleanType(entry.type) }));
+      const models = describeModels(props, events);
+
+      return {
+        source: relativePath,
+        ...(models.length ? { models } : {}),
+        props,
+        events,
+        slots,
+        ...(exposed.length ? { exposed } : {}),
+      };
+    },
+  };
+}

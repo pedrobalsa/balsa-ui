@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "scroll-area"
+  },
+  "status": "beta",
+  "version": "0.2.0",
+  "purpose": "Constrain overflowing content in a labelled native scroll viewport with Balsa scrollbar treatment.",
+  "useFor": [
+    "Long lists inside bounded panels",
+    "Horizontal media rows",
+    "Two-axis work surfaces"
+  ],
+  "avoidFor": [
+    "Whole-page scrolling",
+    "Content that should reflow instead",
+    "Hidden essential content without a visible scroll cue"
+  ],
+  "states": [
+    "resting",
+    "hovered",
+    "focused",
+    "scrolling"
+  ],
+  "accessibility": [
+    "The focusable viewport is a labelled region.",
+    "Native browser wheel, touch, pointer, and keyboard scrolling remain intact.",
+    "Programmatic methods operate the same native viewport."
+  ],
+  "variants": [
+    "auto",
+    "always",
+    "hover"
+  ],
+  "sizes": [
+    "thin",
+    "regular"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Nesting same-axis scroll regions without need.",
+    "Omitting a meaningful region label.",
+    "Using edge fades where they obscure important content."
+  ],
+  "examples": [
+    {
+      "id": "vertical",
+      "title": "Vertical list",
+      "description": "A labelled native viewport contains a long stacked collection.",
+      "source": "<script setup lang=\"ts\">\nimport ScrollArea from \"@/components/ui/ScrollArea.vue\";\n</script>\n\n<template>\n  <ScrollArea label=\"Scrollable items placeholder\" orientation=\"vertical\" visibility=\"auto\" size=\"regular\" class=\"h-64 w-full\">\n    <div class=\"min-w-[42rem] space-y-balsa-md p-balsa-lg\">\n      <p v-for=\"item in 12\" :key=\"item\">Item placeholder {{ item }}</p>\n    </div>\n  </ScrollArea>\n</template>"
+    },
+    {
+      "id": "horizontal",
+      "title": "Horizontal row",
+      "description": "Horizontal overflow preserves fixed-width item cards and native gestures.",
+      "source": "<script setup lang=\"ts\">\nimport ScrollArea from \"@/components/ui/ScrollArea.vue\";\n</script>\n\n<template>\n  <ScrollArea label=\"Scrollable items placeholder\" orientation=\"horizontal\" visibility=\"always\" size=\"thin\" class=\"h-64 w-full\">\n    <div class=\"min-w-[42rem] space-y-balsa-md p-balsa-lg\">\n      <p v-for=\"item in 12\" :key=\"item\">Item placeholder {{ item }}</p>\n    </div>\n  </ScrollArea>\n</template>"
+    },
+    {
+      "id": "fade",
+      "title": "Edge cue",
+      "description": "An optional fade indicates additional offscreen content without replacing the scrollbar.",
+      "source": "<script setup lang=\"ts\">\nimport ScrollArea from \"@/components/ui/ScrollArea.vue\";\n</script>\n\n<template>\n  <ScrollArea label=\"Scrollable items placeholder\" orientation=\"both\" visibility=\"hover\" size=\"regular\" edge-fade class=\"h-64 w-full\">\n    <div class=\"min-w-[42rem] space-y-balsa-md p-balsa-lg\">\n      <p v-for=\"item in 12\" :key=\"item\">Item placeholder {{ item }}</p>\n    </div>\n  </ScrollArea>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/ScrollArea.vue",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "orientation",
+        "type": "ScrollAreaOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical",
+          "both"
+        ],
+        "required": false,
+        "default": "\"vertical\""
+      },
+      {
+        "name": "visibility",
+        "type": "ScrollAreaVisibility | undefined",
+        "values": [
+          "auto",
+          "always",
+          "hover"
+        ],
+        "required": false,
+        "default": "\"auto\""
+      },
+      {
+        "name": "size",
+        "type": "ScrollAreaSize | undefined",
+        "values": [
+          "thin",
+          "regular"
+        ],
+        "required": false
+      },
+      {
+        "name": "edgeFade",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "SurfaceRounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "auto",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "scroll",
+        "type": "[event: Event]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ],
+    "exposed": [
+      {
+        "name": "viewport",
+        "type": "HTMLElement | null"
+      },
+      {
+        "name": "scrollTo",
+        "type": "(options: ScrollAreaScrollOptions) => void"
+      },
+      {
+        "name": "scrollBy",
+        "type": "(options: ScrollAreaScrollOptions) => void"
+      }
+    ]
+  }
+}

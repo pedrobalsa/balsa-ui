@@ -1,0 +1,3696 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": [
+    ".balsa/catalog.json",
+    "consumerFrameworks()",
+    "canonical item source"
+  ],
+  "rules": [
+    {
+      "id": "theme-tokens",
+      "title": "Theme tokens, not raw values",
+      "description": "Source uses balsa-* / --balsa-* rather than hex colors or hardcoded px spacing."
+    },
+    {
+      "id": "identity-attribute",
+      "title": "Identity attribute",
+      "description": "Renders data-balsa=<item-name> on a host element."
+    },
+    {
+      "id": "theme-resolution",
+      "title": "Theme resolution",
+      "description": "Appearance resolves through the target's documented theme path."
+    }
+  ],
+  "frameworks": {
+    "vue": {
+      "counts": {
+        "full": 91,
+        "partial": 6,
+        "none": 0
+      },
+      "ruleStatuses": {
+        "theme-tokens": {
+          "pass": 91,
+          "fail": 6,
+          "not-applicable": 0
+        },
+        "identity-attribute": {
+          "pass": 58,
+          "fail": 0,
+          "not-applicable": 39
+        },
+        "theme-resolution": {
+          "pass": 56,
+          "fail": 0,
+          "not-applicable": 41
+        }
+      },
+      "unavailable": 0,
+      "failingRules": [
+        {
+          "rule": "theme-tokens",
+          "count": 6,
+          "examples": [
+            "button-group",
+            "color-picker",
+            "gradient-background",
+            "preview",
+            "spinner",
+            "text-3d"
+          ]
+        }
+      ],
+      "items": [
+        {
+          "name": "accordion",
+          "registry": "@balsa/accordion",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "activity-timeline-card",
+          "registry": "@balsa/activity-timeline-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "alert",
+          "registry": "@balsa/alert",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "analytics",
+          "registry": "@balsa/analytics",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "item has no renderable host"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "item does not expose a theme prop"
+            }
+          }
+        },
+        {
+          "name": "analytics-chart-card",
+          "registry": "@balsa/analytics-chart-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "api-key-card",
+          "registry": "@balsa/api-key-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "application-card",
+          "registry": "@balsa/application-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "asset-carousel-card",
+          "registry": "@balsa/asset-carousel-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "attachment",
+          "registry": "@balsa/attachment",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "autocomplete",
+          "registry": "@balsa/autocomplete",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "avatar",
+          "registry": "@balsa/avatar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "badge",
+          "registry": "@balsa/badge",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "breadcrumb",
+          "registry": "@balsa/breadcrumb",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "button",
+          "registry": "@balsa/button",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "button-group",
+          "registry": "@balsa/button-group",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hardcoded px (2px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "calendar",
+          "registry": "@balsa/calendar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "card",
+          "registry": "@balsa/card",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "carousel",
+          "registry": "@balsa/carousel",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "charts",
+          "registry": "@balsa/charts",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "checkbox",
+          "registry": "@balsa/checkbox",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "code-block",
+          "registry": "@balsa/code-block",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "collapsible",
+          "registry": "@balsa/collapsible",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "color-picker",
+          "registry": "@balsa/color-picker",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hex color (#000000); hardcoded px (10px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "command-menu",
+          "registry": "@balsa/command-menu",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "command-palette-card",
+          "registry": "@balsa/command-palette-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "command-toolbar-card",
+          "registry": "@balsa/command-toolbar-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "context-menu",
+          "registry": "@balsa/context-menu",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "data-grid-card",
+          "registry": "@balsa/data-grid-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "data-table",
+          "registry": "@balsa/data-table",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "date-picker",
+          "registry": "@balsa/date-picker",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "device-verification-card",
+          "registry": "@balsa/device-verification-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "drawer",
+          "registry": "@balsa/drawer",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "dropdown",
+          "registry": "@balsa/dropdown",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "dropdown-menu",
+          "registry": "@balsa/dropdown-menu",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "environment-switcher-card",
+          "registry": "@balsa/environment-switcher-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "error-state-card",
+          "registry": "@balsa/error-state-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "filter-panel-card",
+          "registry": "@balsa/filter-panel-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "footer",
+          "registry": "@balsa/footer",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "form-progress-card",
+          "registry": "@balsa/form-progress-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "gradient-background",
+          "registry": "@balsa/gradient-background",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hex color (#F5F5F4); hardcoded px (96px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "hover-card",
+          "registry": "@balsa/hover-card",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "icon",
+          "registry": "@balsa/icon",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "item does not expose a theme prop"
+            }
+          }
+        },
+        {
+          "name": "image-compare-card",
+          "registry": "@balsa/image-compare-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "inbox-thread-card",
+          "registry": "@balsa/inbox-thread-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "incident-alert-card",
+          "registry": "@balsa/incident-alert-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "input",
+          "registry": "@balsa/input",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "input-group",
+          "registry": "@balsa/input-group",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "input-otp",
+          "registry": "@balsa/input-otp",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "integration-list-card",
+          "registry": "@balsa/integration-list-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "kbd",
+          "registry": "@balsa/kbd",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "link",
+          "registry": "@balsa/link",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "loading-state-card",
+          "registry": "@balsa/loading-state-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "media-preview-card",
+          "registry": "@balsa/media-preview-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "member-access-card",
+          "registry": "@balsa/member-access-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "menubar",
+          "registry": "@balsa/menubar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "metric-grid-card",
+          "registry": "@balsa/metric-grid-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "modal",
+          "registry": "@balsa/modal",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "navbar",
+          "registry": "@balsa/navbar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "navigation-menu-card",
+          "registry": "@balsa/navigation-menu-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "notification-preferences-card",
+          "registry": "@balsa/notification-preferences-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "onboarding-checklist-card",
+          "registry": "@balsa/onboarding-checklist-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "order-summary-card",
+          "registry": "@balsa/order-summary-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "pagination",
+          "registry": "@balsa/pagination",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "payment-method-card",
+          "registry": "@balsa/payment-method-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "plan-comparison-card",
+          "registry": "@balsa/plan-comparison-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "popup",
+          "registry": "@balsa/popup",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "preview",
+          "registry": "@balsa/preview",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hardcoded px (1px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useComponentTheme"
+            }
+          }
+        },
+        {
+          "name": "profile-form-card",
+          "registry": "@balsa/profile-form-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "progress",
+          "registry": "@balsa/progress",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "radio-group",
+          "registry": "@balsa/radio-group",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "release-notes-card",
+          "registry": "@balsa/release-notes-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "resizable",
+          "registry": "@balsa/resizable",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "resource-table-card",
+          "registry": "@balsa/resource-table-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "runbook-steps-card",
+          "registry": "@balsa/runbook-steps-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "schedule-planner-card",
+          "registry": "@balsa/schedule-planner-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "scroll-area",
+          "registry": "@balsa/scroll-area",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "select",
+          "registry": "@balsa/select",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "separator",
+          "registry": "@balsa/separator",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "service-health-card",
+          "registry": "@balsa/service-health-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "settings-card",
+          "registry": "@balsa/settings-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "sidebar",
+          "registry": "@balsa/sidebar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "skeleton",
+          "registry": "@balsa/skeleton",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "slider",
+          "registry": "@balsa/slider",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "spinner",
+          "registry": "@balsa/spinner",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hardcoded px (3px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "split-workspace-card",
+          "registry": "@balsa/split-workspace-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "storage-usage-card",
+          "registry": "@balsa/storage-usage-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "subscription-card",
+          "registry": "@balsa/subscription-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "switch",
+          "registry": "@balsa/switch",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "table",
+          "registry": "@balsa/table",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "tabs",
+          "registry": "@balsa/tabs",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "text-3d",
+          "registry": "@balsa/text-3d",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hex color (#FFFFFF); hardcoded px (96px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "item does not expose a theme prop"
+            }
+          }
+        },
+        {
+          "name": "textarea",
+          "registry": "@balsa/textarea",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "toast",
+          "registry": "@balsa/toast",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "toggle",
+          "registry": "@balsa/toggle",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "toggle-group",
+          "registry": "@balsa/toggle-group",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "tooltip",
+          "registry": "@balsa/tooltip",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "usage-breakdown-card",
+          "registry": "@balsa/usage-breakdown-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        }
+      ]
+    },
+    "react": {
+      "counts": {
+        "full": 92,
+        "partial": 5,
+        "none": 0
+      },
+      "ruleStatuses": {
+        "theme-tokens": {
+          "pass": 92,
+          "fail": 5,
+          "not-applicable": 0
+        },
+        "identity-attribute": {
+          "pass": 58,
+          "fail": 0,
+          "not-applicable": 39
+        },
+        "theme-resolution": {
+          "pass": 56,
+          "fail": 1,
+          "not-applicable": 40
+        }
+      },
+      "unavailable": 0,
+      "failingRules": [
+        {
+          "rule": "theme-tokens",
+          "count": 5,
+          "examples": [
+            "button-group",
+            "color-picker",
+            "gradient-background",
+            "spinner",
+            "text-3d"
+          ]
+        },
+        {
+          "rule": "theme-resolution",
+          "count": 1,
+          "examples": [
+            "text-3d"
+          ]
+        }
+      ],
+      "items": [
+        {
+          "name": "accordion",
+          "registry": "@balsa/accordion",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "activity-timeline-card",
+          "registry": "@balsa/activity-timeline-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "alert",
+          "registry": "@balsa/alert",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "analytics",
+          "registry": "@balsa/analytics",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "item has no renderable host"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "item does not expose a theme prop"
+            }
+          }
+        },
+        {
+          "name": "analytics-chart-card",
+          "registry": "@balsa/analytics-chart-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "api-key-card",
+          "registry": "@balsa/api-key-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "application-card",
+          "registry": "@balsa/application-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "asset-carousel-card",
+          "registry": "@balsa/asset-carousel-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "attachment",
+          "registry": "@balsa/attachment",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "autocomplete",
+          "registry": "@balsa/autocomplete",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "avatar",
+          "registry": "@balsa/avatar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "badge",
+          "registry": "@balsa/badge",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "breadcrumb",
+          "registry": "@balsa/breadcrumb",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "button",
+          "registry": "@balsa/button",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "button-group",
+          "registry": "@balsa/button-group",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hardcoded px (2px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "calendar",
+          "registry": "@balsa/calendar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "card",
+          "registry": "@balsa/card",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "carousel",
+          "registry": "@balsa/carousel",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "charts",
+          "registry": "@balsa/charts",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "checkbox",
+          "registry": "@balsa/checkbox",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "code-block",
+          "registry": "@balsa/code-block",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "collapsible",
+          "registry": "@balsa/collapsible",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "color-picker",
+          "registry": "@balsa/color-picker",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hex color (#000000); hardcoded px (10px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "command-menu",
+          "registry": "@balsa/command-menu",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "command-palette-card",
+          "registry": "@balsa/command-palette-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "command-toolbar-card",
+          "registry": "@balsa/command-toolbar-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "context-menu",
+          "registry": "@balsa/context-menu",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "data-grid-card",
+          "registry": "@balsa/data-grid-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "data-table",
+          "registry": "@balsa/data-table",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "date-picker",
+          "registry": "@balsa/date-picker",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "device-verification-card",
+          "registry": "@balsa/device-verification-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "drawer",
+          "registry": "@balsa/drawer",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "dropdown",
+          "registry": "@balsa/dropdown",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "dropdown-menu",
+          "registry": "@balsa/dropdown-menu",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "environment-switcher-card",
+          "registry": "@balsa/environment-switcher-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "error-state-card",
+          "registry": "@balsa/error-state-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "filter-panel-card",
+          "registry": "@balsa/filter-panel-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "footer",
+          "registry": "@balsa/footer",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "form-progress-card",
+          "registry": "@balsa/form-progress-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "gradient-background",
+          "registry": "@balsa/gradient-background",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hex color (#F5F5F4); hardcoded px (96px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "hover-card",
+          "registry": "@balsa/hover-card",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "icon",
+          "registry": "@balsa/icon",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "item does not expose a theme prop"
+            }
+          }
+        },
+        {
+          "name": "image-compare-card",
+          "registry": "@balsa/image-compare-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "inbox-thread-card",
+          "registry": "@balsa/inbox-thread-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "incident-alert-card",
+          "registry": "@balsa/incident-alert-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "input",
+          "registry": "@balsa/input",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "input-group",
+          "registry": "@balsa/input-group",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "input-otp",
+          "registry": "@balsa/input-otp",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "integration-list-card",
+          "registry": "@balsa/integration-list-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "kbd",
+          "registry": "@balsa/kbd",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "link",
+          "registry": "@balsa/link",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "loading-state-card",
+          "registry": "@balsa/loading-state-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "media-preview-card",
+          "registry": "@balsa/media-preview-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "member-access-card",
+          "registry": "@balsa/member-access-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "menubar",
+          "registry": "@balsa/menubar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "metric-grid-card",
+          "registry": "@balsa/metric-grid-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "modal",
+          "registry": "@balsa/modal",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "navbar",
+          "registry": "@balsa/navbar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "navigation-menu-card",
+          "registry": "@balsa/navigation-menu-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "notification-preferences-card",
+          "registry": "@balsa/notification-preferences-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "onboarding-checklist-card",
+          "registry": "@balsa/onboarding-checklist-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "order-summary-card",
+          "registry": "@balsa/order-summary-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "pagination",
+          "registry": "@balsa/pagination",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "payment-method-card",
+          "registry": "@balsa/payment-method-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "plan-comparison-card",
+          "registry": "@balsa/plan-comparison-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "popup",
+          "registry": "@balsa/popup",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "preview",
+          "registry": "@balsa/preview",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "profile-form-card",
+          "registry": "@balsa/profile-form-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "progress",
+          "registry": "@balsa/progress",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "radio-group",
+          "registry": "@balsa/radio-group",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "release-notes-card",
+          "registry": "@balsa/release-notes-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "resizable",
+          "registry": "@balsa/resizable",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "resource-table-card",
+          "registry": "@balsa/resource-table-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "runbook-steps-card",
+          "registry": "@balsa/runbook-steps-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "schedule-planner-card",
+          "registry": "@balsa/schedule-planner-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "scroll-area",
+          "registry": "@balsa/scroll-area",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "select",
+          "registry": "@balsa/select",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "separator",
+          "registry": "@balsa/separator",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "service-health-card",
+          "registry": "@balsa/service-health-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "settings-card",
+          "registry": "@balsa/settings-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "sidebar",
+          "registry": "@balsa/sidebar",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "skeleton",
+          "registry": "@balsa/skeleton",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "slider",
+          "registry": "@balsa/slider",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "spinner",
+          "registry": "@balsa/spinner",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hardcoded px (3px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "split-workspace-card",
+          "registry": "@balsa/split-workspace-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "storage-usage-card",
+          "registry": "@balsa/storage-usage-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "subscription-card",
+          "registry": "@balsa/subscription-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        },
+        {
+          "name": "switch",
+          "registry": "@balsa/switch",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "table",
+          "registry": "@balsa/table",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "tabs",
+          "registry": "@balsa/tabs",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "text-3d",
+          "registry": "@balsa/text-3d",
+          "category": "component",
+          "level": "partial",
+          "rules": {
+            "theme-tokens": {
+              "status": "fail",
+              "reason": "hex color (#000000); hardcoded px (96px)"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "fail",
+              "reason": "does not call useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "textarea",
+          "registry": "@balsa/textarea",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "toast",
+          "registry": "@balsa/toast",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "toggle",
+          "registry": "@balsa/toggle",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "toggle-group",
+          "registry": "@balsa/toggle-group",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "tooltip",
+          "registry": "@balsa/tooltip",
+          "category": "component",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "pass"
+            },
+            "theme-resolution": {
+              "status": "pass",
+              "detail": "useResolvedThemeProps"
+            }
+          }
+        },
+        {
+          "name": "usage-breakdown-card",
+          "registry": "@balsa/usage-breakdown-card",
+          "category": "composition",
+          "level": "full",
+          "rules": {
+            "theme-tokens": {
+              "status": "pass"
+            },
+            "identity-attribute": {
+              "status": "not-applicable",
+              "reason": "compositions are graphs over primitives that already carry data-balsa"
+            },
+            "theme-resolution": {
+              "status": "not-applicable",
+              "reason": "compositions forward theme to primitives rather than resolving appearance themselves"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

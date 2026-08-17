@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { diffInstalled, diffStateSummary } from "../scripts/diff-installed.mjs";
 import { hashContent } from "../scripts/install-registry.mjs";
+import { sourcePath } from "../scripts/registry-lib.mjs";
 
 /**
  * An update is only safe if it can tell three states apart: what the install
@@ -45,7 +46,7 @@ beforeEach(() => {
   mkdirSync(resolve(root, "src/components/ui"), { recursive: true });
   mkdirSync(resolve(root, ".balsa"), { recursive: true });
   writeFileSync(resolve(root, "components.json"), JSON.stringify({ style: "new-york", aliases: {} }), "utf8");
-  cpSync(resolve(process.cwd(), component), resolve(root, component));
+  cpSync(sourcePath(component), resolve(root, component));
   pristine = readFileSync(resolve(root, component), "utf8");
   pristineHash = hashContent([pristine]);
   recordInstall();

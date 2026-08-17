@@ -1,0 +1,184 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/ColorPicker.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "data-balsa",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "data-palette",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ColorPickerType | undefined",
+        "values": [
+          "field",
+          "palette"
+        ],
+        "required": false
+      },
+      {
+        "name": "labelPosition",
+        "type": "ColorPickerLabelPosition | undefined",
+        "values": [
+          "inside",
+          "outside"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "ColorPickerSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "actions",
+        "type": "((close: () => void) => ReactNode) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

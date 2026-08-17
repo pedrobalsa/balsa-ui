@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "name": "resizable",
+  "title": "Resizable",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "resizable"
+  },
+  "status": "beta",
+  "version": "0.2.0",
+  "purpose": "Divide available space into two panels whose boundary can be adjusted by pointer or keyboard.",
+  "useFor": [
+    "Editor panes",
+    "Master-detail layouts",
+    "Side-by-side comparison"
+  ],
+  "avoidFor": [
+    "Content that cannot tolerate a constrained panel",
+    "More than two peers without nested groups",
+    "Primary mobile navigation"
+  ],
+  "states": [
+    "idle",
+    "focused handle",
+    "dragging",
+    "disabled"
+  ],
+  "accessibility": [
+    "The handle uses separator semantics with orientation and current percentage.",
+    "Arrow keys resize by step while Home and End move to limits.",
+    "Both panels preserve normal document and focus order."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Setting minimum above maximum.",
+    "Hiding the handle without another visible boundary.",
+    "Using Resizable where responsive stacking is clearer."
+  ],
+  "examples": [
+    {
+      "id": "horizontal",
+      "title": "Horizontal workspace",
+      "description": "A direct separator allocates width, while its second pane demonstrates a nested vertical split.",
+      "source": "<script setup lang=\"ts\">\nimport Resizable from \"@/components/ui/Resizable.vue\";\nimport { ref } from \"vue\";\n\nconst split = ref(42);\nconst secondarySplit = ref(52);\n</script>\n\n<template>\n  <Resizable id=\"workspace-placeholder\" v-model=\"split\" label=\"Resize placeholder panels\" orientation=\"horizontal\" :min=\"15\" :max=\"85\" :step=\"5\" class=\"h-80\">\n    <template #first><div class=\"p-balsa-2xl\">First panel placeholder</div></template>\n    <template #second>\n      <Resizable id=\"workspace-secondary-placeholder\" v-model=\"secondarySplit\" label=\"Resize secondary placeholder panels\" orientation=\"vertical\" :min=\"25\" :max=\"75\" :step=\"5\" rounded=\"none\" class=\"size-full border-0\">\n        <template #first><div class=\"p-balsa-2xl\">Second panel placeholder</div></template>\n        <template #second><div class=\"p-balsa-2xl\">Third panel placeholder</div></template>\n      </Resizable>\n    </template>\n  </Resizable>\n</template>"
+    },
+    {
+      "id": "vertical",
+      "title": "Vertical workspace",
+      "description": "Vertical orientation allocates height with the same keyboard contract.",
+      "source": "<script setup lang=\"ts\">\nimport Resizable from \"@/components/ui/Resizable.vue\";\nimport { ref } from \"vue\";\n\nconst split = ref(58);\nconst secondarySplit = ref(52);\n</script>\n\n<template>\n  <Resizable id=\"workspace-placeholder\" v-model=\"split\" label=\"Resize placeholder panels\" orientation=\"vertical\" :min=\"15\" :max=\"85\" :step=\"5\" variant=\"outline\" class=\"h-80\">\n    <template #first><div class=\"p-balsa-2xl\">First panel placeholder</div></template>\n    <template #second>\n      <Resizable id=\"workspace-secondary-placeholder\" v-model=\"secondarySplit\" label=\"Resize secondary placeholder panels\" orientation=\"vertical\" :min=\"25\" :max=\"75\" :step=\"5\" variant=\"outline\" rounded=\"none\" class=\"size-full border-0\">\n        <template #first><div class=\"p-balsa-2xl\">Second panel placeholder</div></template>\n        <template #second><div class=\"p-balsa-2xl\">Third panel placeholder</div></template>\n      </Resizable>\n    </template>\n  </Resizable>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass split",
+      "description": "Glass material inherits an expressive background without changing resize behavior.",
+      "source": "<script setup lang=\"ts\">\nimport Resizable from \"@/components/ui/Resizable.vue\";\nimport { ref } from \"vue\";\n\nconst split = ref(35);\nconst secondarySplit = ref(52);\n</script>\n\n<template>\n  <Resizable id=\"workspace-placeholder\" v-model=\"split\" label=\"Resize placeholder panels\" orientation=\"horizontal\" :min=\"15\" :max=\"85\" :step=\"5\" variant=\"glass\" rounded=\"2xl\" class=\"h-80\">\n    <template #first><div class=\"p-balsa-2xl\">First panel placeholder</div></template>\n    <template #second>\n      <Resizable id=\"workspace-secondary-placeholder\" v-model=\"secondarySplit\" label=\"Resize secondary placeholder panels\" orientation=\"vertical\" :min=\"25\" :max=\"75\" :step=\"5\" variant=\"glass\" rounded=\"none\" class=\"size-full border-0\">\n        <template #first><div class=\"p-balsa-2xl\">Second panel placeholder</div></template>\n        <template #second><div class=\"p-balsa-2xl\">Third panel placeholder</div></template>\n      </Resizable>\n    </template>\n  </Resizable>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Resizable.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "orientation",
+        "type": "ResizableOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false,
+        "default": "\"horizontal\""
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "10"
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "90"
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "5"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "showGrip",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "variant",
+        "type": "ResizableVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "ResizableSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "SurfaceRounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "auto",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "50"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: number]"
+      },
+      {
+        "name": "resize",
+        "type": "[value: number]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "first",
+        "type": "{}"
+      },
+      {
+        "name": "second",
+        "type": "{}"
+      }
+    ]
+  }
+}

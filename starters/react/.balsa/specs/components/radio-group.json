@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "name": "radio-group",
+  "title": "Radio Group",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "radio-group"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose exactly one value from a visible, labelled set of mutually exclusive options with semantic selected color treatment.",
+  "useFor": [
+    "Short mutually exclusive choices",
+    "Plans or delivery methods",
+    "Settings with descriptions"
+  ],
+  "avoidFor": [
+    "Zero-or-more choices",
+    "Immediate binary settings",
+    "Long searchable option collections"
+  ],
+  "types": [
+    "column",
+    "row",
+    "cards"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "required"
+  ],
+  "sizes": [
+    "sm",
+    "md"
+  ],
+  "accessibility": [
+    "A native fieldset and legend name the group.",
+    "Native radio inputs preserve Arrow-key selection and one Tab stop for the checked option.",
+    "Hints and explicit errors are associated with every choice."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-border",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using cards without a visible legend.",
+    "Using radio choices when multiple values may be selected.",
+    "Removing native focus behavior from visually customized indicators."
+  ],
+  "examples": [
+    {
+      "id": "column",
+      "title": "Column choices",
+      "description": "A compact vertical group preserves native single-choice behavior.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" required hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "row",
+      "title": "Inline choices",
+      "description": "Short labels can wrap naturally across one row.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" layout=\"row\" size=\"sm\" required hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "cards",
+      "title": "Accent descriptive cards",
+      "description": "Accent selected material and paired foreground identify one richer option.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" layout=\"cards\" color=\"accent\" required rounded=\"xl\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Required error",
+      "description": "One explicit unvalidated message names the complete group.",
+      "source": "<script setup lang=\"ts\">\nimport RadioGroup from \"@/components/ui/RadioGroup.vue\";\nimport { ref } from \"vue\";\n\nconst choice = ref(\"option-01\");\nconst options = [\n  { value: \"option-01\", label: \"Option placeholder 01\", description: \"Lorem ipsum dolor sit amet.\" },\n  { value: \"option-02\", label: \"Option placeholder 02\", description: \"Consectetur adipiscing elit.\" },\n  { value: \"option-03\", label: \"Option placeholder 03\", description: \"Sed do eiusmod tempor.\" },\n];\n</script>\n\n<template>\n  <RadioGroup id=\"choice-placeholder\" v-model=\"choice\" label=\"Choice placeholder\" :options=\"options\" status=\"unvalidated\" required hint=\"Helper text placeholder.\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/RadioGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "options",
+        "type": "readonly RadioGroupOption[]",
+        "shape": {
+          "type": "readonly RadioGroupOption[]",
+          "items": {
+            "type": "RadioGroupOption",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "RadioGroupLayout | undefined",
+        "values": [
+          "column",
+          "row",
+          "cards"
+        ],
+        "required": false,
+        "default": "\"column\""
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": []
+  }
+}

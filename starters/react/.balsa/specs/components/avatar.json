@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "name": "avatar",
+  "title": "Avatar",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "avatar"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Represent a person or entity through a resilient image with an accessible text fallback.",
+  "useFor": [
+    "People and organization identity",
+    "Profile lists",
+    "Compact ownership cues"
+  ],
+  "avoidFor": [
+    "Decorative photography",
+    "Clickable controls without a link or button",
+    "Status without a visible status explanation"
+  ],
+  "states": [
+    "idle fallback",
+    "loading",
+    "loaded",
+    "image error"
+  ],
+  "accessibility": [
+    "The root exposes one image role and accessible label.",
+    "The source image is decorative inside the labelled root.",
+    "Fallback text remains visible when the source is missing, delayed, or fails."
+  ],
+  "variants": [
+    "circle",
+    "rounded",
+    "square"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "tokens": [
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Omitting a meaningful label.",
+    "Making the avatar itself interactive instead of wrapping it in a semantic control.",
+    "Using a fallback that does not identify the represented entity."
+  ],
+  "examples": [
+    {
+      "id": "fallback",
+      "title": "Initials fallback",
+      "description": "A deterministic text fallback keeps identity visible without an image source.",
+      "source": "<script setup lang=\"ts\">\nimport Avatar from \"@/components/ui/Avatar.vue\";\n</script>\n\n<template>\n  <Avatar label=\"Person placeholder\" fallback=\"PP\" size=\"lg\" :fallback-delay=\"0\" />\n</template>"
+    },
+    {
+      "id": "rounded",
+      "title": "Rounded entity",
+      "description": "Rounded geometry works for organization or workspace identity.",
+      "source": "<script setup lang=\"ts\">\nimport Avatar from \"@/components/ui/Avatar.vue\";\n</script>\n\n<template>\n  <Avatar label=\"Organization placeholder\" fallback=\"OP\" size=\"xl\" shape=\"rounded\" :fallback-delay=\"0\" />\n</template>"
+    },
+    {
+      "id": "error",
+      "title": "Image error fallback",
+      "description": "A failed source returns immediately to the accessible fallback.",
+      "source": "<script setup lang=\"ts\">\nimport Avatar from \"@/components/ui/Avatar.vue\";\n</script>\n\n<template>\n  <Avatar src=\"/missing-avatar-placeholder.jpg\" label=\"Person placeholder\" fallback=\"PP\" size=\"lg\" :fallback-delay=\"0\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Avatar.vue",
+    "props": [
+      {
+        "name": "src",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "fallback",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AvatarSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "shape",
+        "type": "AvatarShape | undefined",
+        "values": [
+          "rounded",
+          "square",
+          "circle"
+        ],
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "\"lazy\" | \"eager\" | undefined",
+        "values": [
+          "lazy",
+          "eager"
+        ],
+        "required": false,
+        "default": "\"lazy\""
+      },
+      {
+        "name": "fallbackDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "loadState",
+        "type": "[state: AvatarLoadState]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "fallback",
+        "type": "{}"
+      },
+      {
+        "name": "badge",
+        "type": "{}"
+      }
+    ]
+  }
+}

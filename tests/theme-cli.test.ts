@@ -17,7 +17,7 @@ import {
   themeExportIdentifier,
   validateThemeName,
 } from "../scripts/theme-cli.mjs";
-import { themeOptionDefinitions } from "../src/components/ui/theme";
+import { themeOptionDefinitions } from "@/components/ui/theme";
 
 const temporaryRoot = resolve(process.cwd(), ".tmp");
 mkdirSync(temporaryRoot, { recursive: true });

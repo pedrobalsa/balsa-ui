@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "name": "data-grid-card",
+  "title": "DataGridCard",
+  "category": "composition",
+  "classification": "balsa-composition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Sortable, selectable, paginated table of records with real columns.",
+  "useFor": [
+    "Production application interfaces",
+    "Design Studio composition previews",
+    "Reusable product workflows"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Unrelated content forced into one surface",
+    "Pinned geometry or elevation that bypasses the active theme"
+  ],
+  "variants": [
+    "theme inherited"
+  ],
+  "sizes": [
+    "responsive"
+  ],
+  "states": [
+    "default",
+    "interactive",
+    "disabled where applicable"
+  ],
+  "composition": {
+    "root": "ApplicationCard",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "research": "https://vercel.com/docs/deployments"
+  },
+  "accessibility": [
+    "Heading level follows the surrounding document hierarchy.",
+    "Interactive controls retain native keyboard and focus behavior through Balsa primitives.",
+    "Supporting text and status do not rely on color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-density-factor"
+  ],
+  "commonMistakes": [
+    "Pinning radius, border, or shadow instead of inheriting the design context.",
+    "Replacing the typed data contract with demo-only DOM.",
+    "Adding a second principal card surface."
+  ],
+  "publicApi": {
+    "source": "src/components/compositions/DataGridCard.vue",
+    "props": [
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Deployment history\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Every build that reached an environment, newest first.\""
+      },
+      {
+        "name": "rows",
+        "type": "readonly DeploymentRow[] | undefined",
+        "shape": {
+          "type": "readonly DeploymentRow[]",
+          "items": {
+            "type": "DeploymentRow",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "service",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "environment",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "version",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "duration",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "started",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[ { id: \"d-108\", service: \"Atlas\", environment: \"Production\", version: \"4.12.0\", duration: \"1m 48s\", started: \"2 minutes ago\" }, { id: \"d-107\", service: \"Relay\", environment: \"Preview\", version: \"2.7.3\", duration: \"52s\", started: \"18 minutes ago\" }, { id: \"d-106\", service: \"Atlas\", environment: \"Preview\", version: \"4.12.0-rc.2\", duration: \"1m 31s\", started: \"1 hour ago\" }, { id: \"d-105\", service: \"Harbor\", environment: \"Production\", version: \"1.9.8\", duration: \"3m 04s\", started: \"3 hours ago\" }, { id: \"d-104\", service: \"Nova\", environment: \"Development\", version: \"0.4.1\", duration: \"41s\", started: \"5 hours ago\" }, { id: \"d-103\", service: \"Relay\", environment: \"Production\", version: \"2.7.2\", duration: \"58s\", started: \"Yesterday\" }, { id: \"d-102\", service: \"Quill\", environment: \"Preview\", version: \"3.0.0-beta.4\", duration: \"2m 12s\", started: \"Yesterday\" }, { id: \"d-101\", service: \"Atlas\", environment: \"Production\", version: \"4.11.6\", duration: \"1m 44s\", started: \"2 days ago\" }, { id: \"d-100\", service: \"Harbor\", environment: \"Development\", version: \"1.9.7\", duration: \"37s\", started: \"2 days ago\" }, ]"
+      }
+    ],
+    "events": [
+      {
+        "name": "inspect",
+        "type": "[id: string]"
+      }
+    ],
+    "slots": []
+  },
+  "examples": [
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport DataGridCard from \"@/components/compositions/DataGridCard.vue\";\n</script>\n\n<template>\n  <DataGridCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport DataGridCard from \"@/components/compositions/DataGridCard.vue\";\n</script>\n\n<template>\n  <DataGridCard title=\"Pattern placeholder\" />\n</template>"
+    }
+  ]
+}

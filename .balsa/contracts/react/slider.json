@@ -1,0 +1,444 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Slider.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "min",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "step",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "minStepsBetweenThumbs",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "SliderOrientation | undefined",
+        "values": [
+          "horizontal",
+          "vertical"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SliderSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showLabel",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "formatValue",
+        "type": "((value: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "SliderModelValue | undefined",
+        "shape": {
+          "type": "SliderModelValue | undefined",
+          "fields": [
+            {
+              "name": "0",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "1",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "length",
+              "type": "2",
+              "required": true
+            },
+            {
+              "name": "toString",
+              "type": "() => string",
+              "required": true
+            },
+            {
+              "name": "toLocaleString",
+              "type": "{ (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }",
+              "required": true
+            },
+            {
+              "name": "pop",
+              "type": "() => number | undefined",
+              "required": true
+            },
+            {
+              "name": "push",
+              "type": "(...items: number[]) => number",
+              "required": true
+            },
+            {
+              "name": "concat",
+              "type": "{ (...items: ConcatArray<number>[]): number[]; (...items: (number | ConcatArray<number>)[]): number[]; }",
+              "required": true
+            },
+            {
+              "name": "join",
+              "type": "(separator?: string | undefined) => string",
+              "required": true
+            },
+            {
+              "name": "reverse",
+              "type": "() => number[]",
+              "required": true
+            },
+            {
+              "name": "shift",
+              "type": "() => number | undefined",
+              "required": true
+            },
+            {
+              "name": "slice",
+              "type": "(start?: number | undefined, end?: number | undefined) => number[]",
+              "required": true
+            },
+            {
+              "name": "sort",
+              "type": "(compareFn?: ((a: number, b: number) => number) | undefined) => [number, number]",
+              "required": true
+            },
+            {
+              "name": "splice",
+              "type": "{ (start: number, deleteCount?: number | undefined): number[]; (start: number, deleteCount: number, ...items: number[]): number[]; }",
+              "required": true
+            },
+            {
+              "name": "unshift",
+              "type": "(...items: number[]) => number",
+              "required": true
+            },
+            {
+              "name": "indexOf",
+              "type": "(searchElement: number, fromIndex?: number | undefined) => number",
+              "required": true
+            },
+            {
+              "name": "lastIndexOf",
+              "type": "(searchElement: number, fromIndex?: number | undefined) => number",
+              "required": true
+            },
+            {
+              "name": "every",
+              "type": "{ <S extends number>(predicate: (value: number, index: number, array: number[]) => value is S, thisArg?: any): this is S[]; (predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any): boolean; }",
+              "required": true
+            },
+            {
+              "name": "some",
+              "type": "(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any) => boolean",
+              "required": true
+            },
+            {
+              "name": "forEach",
+              "type": "(callbackfn: (value: number, index: number, array: number[]) => void, thisArg?: any) => void",
+              "required": true
+            },
+            {
+              "name": "map",
+              "type": "<U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]",
+              "required": true
+            },
+            {
+              "name": "filter",
+              "type": "{ <S extends number>(predicate: (value: number, index: number, array: number[]) => value is S, thisArg?: any): S[]; (predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any): number[]; }",
+              "required": true
+            },
+            {
+              "name": "reduce",
+              "type": "{ (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number): number; (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number, initialValue: number): number; <U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: number[]) => U, initialValue: U): U; }",
+              "required": true
+            },
+            {
+              "name": "reduceRight",
+              "type": "{ (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number): number; (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number, initialValue: number): number; <U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: number[]) => U, initialValue: U): U; }",
+              "required": true
+            },
+            {
+              "name": "find",
+              "type": "{ <S extends number>(predicate: (value: number, index: number, obj: number[]) => value is S, thisArg?: any): S | undefined; (predicate: (value: number, index: number, obj: number[]) => unknown, thisArg?: any): number | undefined; }",
+              "required": true
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "SliderModelValue | undefined",
+        "shape": {
+          "type": "SliderModelValue | undefined",
+          "fields": [
+            {
+              "name": "0",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "1",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "length",
+              "type": "2",
+              "required": true
+            },
+            {
+              "name": "toString",
+              "type": "() => string",
+              "required": true
+            },
+            {
+              "name": "toLocaleString",
+              "type": "{ (): string; (locales: string | string[], options?: (NumberFormatOptions & DateTimeFormatOptions) | undefined): string; }",
+              "required": true
+            },
+            {
+              "name": "pop",
+              "type": "() => number | undefined",
+              "required": true
+            },
+            {
+              "name": "push",
+              "type": "(...items: number[]) => number",
+              "required": true
+            },
+            {
+              "name": "concat",
+              "type": "{ (...items: ConcatArray<number>[]): number[]; (...items: (number | ConcatArray<number>)[]): number[]; }",
+              "required": true
+            },
+            {
+              "name": "join",
+              "type": "(separator?: string | undefined) => string",
+              "required": true
+            },
+            {
+              "name": "reverse",
+              "type": "() => number[]",
+              "required": true
+            },
+            {
+              "name": "shift",
+              "type": "() => number | undefined",
+              "required": true
+            },
+            {
+              "name": "slice",
+              "type": "(start?: number | undefined, end?: number | undefined) => number[]",
+              "required": true
+            },
+            {
+              "name": "sort",
+              "type": "(compareFn?: ((a: number, b: number) => number) | undefined) => [number, number]",
+              "required": true
+            },
+            {
+              "name": "splice",
+              "type": "{ (start: number, deleteCount?: number | undefined): number[]; (start: number, deleteCount: number, ...items: number[]): number[]; }",
+              "required": true
+            },
+            {
+              "name": "unshift",
+              "type": "(...items: number[]) => number",
+              "required": true
+            },
+            {
+              "name": "indexOf",
+              "type": "(searchElement: number, fromIndex?: number | undefined) => number",
+              "required": true
+            },
+            {
+              "name": "lastIndexOf",
+              "type": "(searchElement: number, fromIndex?: number | undefined) => number",
+              "required": true
+            },
+            {
+              "name": "every",
+              "type": "{ <S extends number>(predicate: (value: number, index: number, array: number[]) => value is S, thisArg?: any): this is S[]; (predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any): boolean; }",
+              "required": true
+            },
+            {
+              "name": "some",
+              "type": "(predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any) => boolean",
+              "required": true
+            },
+            {
+              "name": "forEach",
+              "type": "(callbackfn: (value: number, index: number, array: number[]) => void, thisArg?: any) => void",
+              "required": true
+            },
+            {
+              "name": "map",
+              "type": "<U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]",
+              "required": true
+            },
+            {
+              "name": "filter",
+              "type": "{ <S extends number>(predicate: (value: number, index: number, array: number[]) => value is S, thisArg?: any): S[]; (predicate: (value: number, index: number, array: number[]) => unknown, thisArg?: any): number[]; }",
+              "required": true
+            },
+            {
+              "name": "reduce",
+              "type": "{ (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number): number; (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number, initialValue: number): number; <U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: number[]) => U, initialValue: U): U; }",
+              "required": true
+            },
+            {
+              "name": "reduceRight",
+              "type": "{ (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number): number; (callbackfn: (previousValue: number, currentValue: number, currentIndex: number, array: number[]) => number, initialValue: number): number; <U>(callbackfn: (previousValue: U, currentValue: number, currentIndex: number, array: number[]) => U, initialValue: U): U; }",
+              "required": true
+            },
+            {
+              "name": "find",
+              "type": "{ <S extends number>(predicate: (value: number, index: number, obj: number[]) => value is S, thisArg?: any): S | undefined; (predicate: (value: number, index: number, obj: number[]) => unknown, thisArg?: any): number | undefined; }",
+              "required": true
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: SliderModelValue) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

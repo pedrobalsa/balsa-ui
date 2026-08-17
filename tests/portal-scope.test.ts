@@ -1,7 +1,7 @@
 import { enableAutoUnmount, mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it } from "vitest";
 import { nextTick } from "vue";
-import BalsaPortalScope from "../src/components/ui/BalsaPortalScope.vue";
+import BalsaPortalScope from "@/components/ui/BalsaPortalScope.vue";
 
 /** Let the MutationObserver deliver its records. */
 async function flushObserver() {

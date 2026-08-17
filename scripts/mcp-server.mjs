@@ -31,19 +31,20 @@
 import path from "node:path";
 import { createInterface } from "node:readline";
 import {
+  findCatalogItem,
   formatComponentMarkdown,
   kindLabels,
   loadCatalog,
   loadComponentSpec,
   searchCatalog,
   searchKinds,
-  unknownItemError,
 } from "./agent-context.mjs";
 import { listAdapters, loadAdapter } from "./apply-adapters.mjs";
 import { describeDesignSystem, formatDesignSystem } from "./design-system-cli.mjs";
 import { diffInstalled, diffStateSummary, planUpdate } from "./diff-installed.mjs";
 import { detectLocalModifications } from "./install-registry.mjs";
 import { formatProblems, inspectInstallation, inspectProject } from "./project-diagnostics.mjs";
+import { detectProjectFramework } from "./project-framework.mjs";
 import { loadProjectConfiguration } from "./registry-resolve.mjs";
 
 /**
@@ -100,15 +101,22 @@ export const tools = [
           description: "Restrict to these kinds of result.",
         },
         limit: { type: "integer", minimum: 1, description: "Maximum results. Defaults to 10." },
+        framework: {
+          type: "string",
+          description: "Restrict to this registry target, for example \"vue\".",
+        },
       },
       required: ["query"],
     },
     async handler(args) {
       const query = String(args.query ?? "").trim();
       if (!query) throw new Error("Search for a component purpose or name.");
-      const results = searchCatalog(await loadCatalog(), query, {
+      const cwd = resolveProject(args);
+      const framework = args.framework ?? (await detectProjectFramework(cwd)).framework;
+      const results = searchCatalog(await loadCatalog(cwd), query, {
         kinds: args.kind,
         limit: typeof args.limit === "number" ? args.limit : 10,
+        framework,
         upstreamItems: await certifiedUpstreamItems(),
       });
       if (!results.length) {
@@ -133,13 +141,22 @@ export const tools = [
       + " examples and known mistakes. Read this instead of guessing an API.",
     inputSchema: {
       type: "object",
-      properties: { name: { type: "string", description: "Catalog item name, e.g. \"select\"." } },
+      properties: {
+        name: {
+          type: "string",
+          description: "Catalog item name or registry reference, e.g. \"select\" or \"@balsa/select\".",
+        },
+        framework: {
+          type: "string",
+          description: "Restrict to this registry target, for example \"vue\".",
+        },
+      },
       required: ["name"],
     },
     async handler(args) {
-      const catalog = await loadCatalog();
-      const item = catalog.items.find((candidate) => candidate.name === args.name);
-      if (!item) throw unknownItemError(catalog, String(args.name));
+      const catalog = await loadCatalog(resolveProject(args));
+      const framework = args.framework ?? (await detectProjectFramework(resolveProject(args))).framework;
+      const item = findCatalogItem(catalog, args.name, { framework });
       return formatComponentMarkdown(item, await loadComponentSpec(item));
     },
   },
@@ -167,6 +184,9 @@ export const tools = [
 
       const lines = [
         `Project: ${diagnosis.projectRoot}`,
+        `Framework: ${diagnosis.framework ?? diagnosis.problems.find((problem) =>
+          problem.code === "unknown-framework" || problem.code === "ambiguous-framework"
+        )?.code ?? "undetected"}`,
         `Style: ${configuration.style}`,
         `Registries: ${Object.keys(configuration.registries).join(", ")}`,
         `Stylesheet: ${diagnosis.stylesheet ?? "none found"}`,

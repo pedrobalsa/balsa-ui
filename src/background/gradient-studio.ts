@@ -10,13 +10,14 @@ import {
   serializeGradientBackgroundConfig,
   type BalsaBackgroundConfig,
   type GradientBackgroundPresetName,
-} from "../components/ui/gradient-background";
+} from "@/components/ui/gradient-background";
 import {
   directionBlock,
   projectContextInstruction,
   type AgentCreationSource,
   type AgentProjectContext,
 } from "../agent/studio-workflows";
+import { frameworkProjectCopy } from "../framework/copy";
 
 export interface GradientExportSize {
   label: string;
@@ -237,9 +238,10 @@ export function buildGradientAgentPrompt(
   value: BalsaBackgroundConfig,
 ): string {
   const serialized = serializeGradientBackgroundConfig(value);
-  return `Add this exact Balsa UI procedural background to my Vue 3 application.
+  const projectCopy = frameworkProjectCopy();
+  return `Add this exact Balsa UI procedural background to my ${projectCopy.project}.
 
-First obtain the public GradientBackground component and its support files by running this command from the Vue project root:
+First obtain the public GradientBackground component and its support files by running this command from ${projectCopy.projectRoot}:
 
 \`\`\`sh
 npx balsa-ui@latest add gradient-background
@@ -257,11 +259,12 @@ export function buildGradientProjectPrompt(
   name: string,
   context: AgentProjectContext,
 ): string {
+  const projectCopy = frameworkProjectCopy();
   return `${projectContextInstruction(context, "gradient background")}
 
 Use this exact Balsa UI procedural background; do not rewrite its shader or approximate its values.
 
-Run this command from the Vue project root:
+Run this command from ${projectCopy.projectRoot}:
 
 \`\`\`sh
 ${buildGradientCliCommand(value, name)}

@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "name": "footer",
+  "title": "Footer",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.1",
+  "purpose": "Close an application with brand context, grouped links, and optional contact or social information.",
+  "useFor": [
+    "Application shells",
+    "Documentation sites",
+    "Grouped secondary navigation"
+  ],
+  "avoidFor": [
+    "Primary task actions",
+    "Unconfirmed contact information",
+    "A second primary navigation experience"
+  ],
+  "states": [
+    "links only",
+    "with contacts",
+    "with social links",
+    "variable navigation sections",
+    "inverse or application-surface treatment"
+  ],
+  "accessibility": [
+    "Uses a semantic footer and labeled navigation landmark with native links.",
+    "External social links receive accessible names and noreferrer protection.",
+    "The linked brand image or text title requires a meaningful accessible name.",
+    "The navigate event exposes the original uncancelled MouseEvent so router integration can preserve modifier clicks and native fallback."
+  ],
+  "tokens": [
+    "--balsa-color-inverse",
+    "--balsa-color-inverse-foreground",
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-border-strong"
+  ],
+  "commonMistakes": [
+    "Hard-coding application data inside Footer.",
+    "Assuming the navigation always has exactly three sections.",
+    "Publishing placeholder contact information as real data.",
+    "Using decorative icon-only links without accessible names.",
+    "Overriding inverse palette tokens when the surface variant expresses the intended footer relationship."
+  ],
+  "examples": [
+    {
+      "id": "multiple-sections",
+      "title": "Multiple sections",
+      "description": "Footer navigation expands to the number of typed sections provided.",
+      "source": "<script setup lang=\"ts\">\nimport Footer from \"@/components/ui/Footer.vue\";\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"/\" };\nconst sections = [\n  {\n    \"title\": \"Section placeholder 01\",\n    \"links\": [\n      {\n        \"title\": \"Link placeholder 01\",\n        \"link\": \"#link-placeholder-01\"\n      },\n      {\n        \"title\": \"Link placeholder 02\",\n        \"link\": \"#link-placeholder-02\"\n      }\n    ]\n  },\n  {\n    \"title\": \"Section placeholder 02\",\n    \"links\": [\n      {\n        \"title\": \"Link placeholder 03\",\n        \"link\": \"#link-placeholder-03\"\n      },\n      {\n        \"title\": \"Link placeholder 04\",\n        \"link\": \"#link-placeholder-04\"\n      }\n    ]\n  }\n];\n</script>\n\n<template>\n  <Footer :legal-logo=\"logo\" description=\"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\" :sections=\"sections\" copyright=\"Placeholder copyright\" legal-text=\"Legal text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact navigation",
+      "description": "A single navigation section works for smaller product surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport Footer from \"@/components/ui/Footer.vue\";\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"/\" };\nconst sections = [\n  {\n    \"title\": \"Section placeholder\",\n    \"links\": [\n      {\n        \"title\": \"Link placeholder 01\",\n        \"link\": \"#link-placeholder-01\"\n      },\n      {\n        \"title\": \"Link placeholder 02\",\n        \"link\": \"#link-placeholder-02\"\n      },\n      {\n        \"title\": \"Link placeholder 03\",\n        \"link\": \"#link-placeholder-03\"\n      }\n    ]\n  }\n];\n</script>\n\n<template>\n  <Footer :legal-logo=\"logo\" description=\"Lorem ipsum dolor sit amet.\" :sections=\"sections\" copyright=\"Placeholder copyright\" legal-text=\"Legal text placeholder.\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Footer.vue",
+    "props": [
+      {
+        "name": "legalLogo",
+        "type": "BrandLogo",
+        "shape": {
+          "type": "BrandLogo",
+          "variants": [
+            {
+              "type": "BrandImage",
+              "fields": [
+                {
+                  "name": "src",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "title",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "type": "BrandTitle",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "src",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "sections",
+        "type": "readonly FooterSection[]",
+        "shape": {
+          "type": "readonly FooterSection[]",
+          "items": {
+            "type": "FooterSection",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "links",
+                "type": "readonly NavigationLink[]",
+                "required": true,
+                "shape": {
+                  "type": "readonly NavigationLink[]",
+                  "items": {
+                    "type": "NavigationLink",
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "link",
+                        "type": "string",
+                        "required": true
+                      },
+                      {
+                        "name": "shortDescription",
+                        "type": "string | undefined",
+                        "required": false
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "copyright",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "contactGroups",
+        "type": "readonly FooterContactGroup[] | undefined",
+        "shape": {
+          "type": "readonly FooterContactGroup[]",
+          "items": {
+            "type": "FooterContactGroup",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly FooterContactItem[]",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "socialLinks",
+        "type": "readonly FooterSocialLink[] | undefined",
+        "shape": {
+          "type": "readonly FooterSocialLink[]",
+          "items": {
+            "type": "FooterSocialLink",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[]"
+      },
+      {
+        "name": "leadTitle",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Balsa UI\""
+      },
+      {
+        "name": "navigationLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Footer navigation\""
+      },
+      {
+        "name": "legalText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Open source. Open code. Built for Vue.\""
+      },
+      {
+        "name": "variant",
+        "type": "FooterVariant | undefined",
+        "values": [
+          "surface",
+          "inverse"
+        ],
+        "required": false,
+        "default": "\"inverse\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "navigate",
+        "type": "[item: NavigationLink, event: MouseEvent]"
+      }
+    ],
+    "slots": []
+  }
+}

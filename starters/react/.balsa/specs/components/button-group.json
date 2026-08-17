@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "name": "button-group",
+  "title": "ButtonGroup",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "button-group"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present a connected set of mutually exclusive actions with one selected item.",
+  "useFor": [
+    "View switching",
+    "Compact mode selection",
+    "Related mutually exclusive actions"
+  ],
+  "avoidFor": [
+    "Independent actions",
+    "Multiple simultaneous selections",
+    "Long or wrapping option labels"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "variants": [
+    "surface",
+    "solid",
+    "outline",
+    "glass",
+    "code"
+  ],
+  "states": [
+    "theme-aware default",
+    "selected",
+    "compact labels",
+    "rounded or pill shape"
+  ],
+  "composition": {
+    "dependency": "Button",
+    "selection": "Exactly one option id is represented by modelValue and aria-pressed. An omitted variant resolves from surface to glass under the nearest Glassmorphism theme. The default rounded shape resolves to rounded-none in Brutalism. In the neutral surface, outline, and glass variants, color emphasizes the selected option only and unselected options stay muted-neutral until hover; the solid variant tints every option.",
+    "codeSurface": "The code variant provides the compact code-foreground treatment used by CodeBlock header actions, with a compact control radius in every design theme."
+  },
+  "accessibility": [
+    "Provide an accessible group label.",
+    "Expose the selected option with aria-pressed.",
+    "Retain accessible button names when collapseLabels hides visible labels."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-foreground",
+    "--balsa-color-border-strong",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "--balsa-code-control-radius",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using ButtonGroup for unrelated actions.",
+    "Providing duplicate option ids.",
+    "Omitting the group label.",
+    "Reaching through the group with nested important selectors instead of using its typed code variant.",
+    "Expecting color to tint unselected options in the neutral surface, outline, and glass variants."
+  ],
+  "examples": [
+    {
+      "id": "solid",
+      "title": "Solid",
+      "description": "Use a solid group for the primary mode switch in a local workbench.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" size=\"md\" variant=\"solid\" />\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outline",
+      "description": "Use an outline group for secondary choices that should remain visibly connected.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" color=\"secondary\" variant=\"outline\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass",
+      "description": "Use glass for a low-rim connected choice over a translucent Glassmorphism surface.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" color=\"accent\" variant=\"glass\" />\n</template>"
+    },
+    {
+      "id": "extra-large",
+      "title": "Extra large",
+      "description": "Use extra large only when a mode switch needs to lead a spacious local area.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" size=\"xl\" />\n</template>"
+    },
+    {
+      "id": "pill",
+      "title": "Pill",
+      "description": "Use pill ends only when the surrounding layout calls for a fully rounded connected control.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" shape=\"pill\" />\n</template>"
+    },
+    {
+      "id": "text-only",
+      "title": "Text only",
+      "description": "Icons can be omitted when the option labels are already concise.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\n\nconst activeView = ref(\"code\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\" },\n  { id: \"code\", label: \"Option 02\" },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" />\n</template>"
+    },
+    {
+      "id": "collapsed",
+      "title": "Collapsed labels",
+      "description": "Collapse labels for constrained toolbars while retaining the accessible group label.",
+      "source": "<script setup lang=\"ts\">\nimport ButtonGroup from \"@/components/ui/ButtonGroup.vue\";\nimport { ref } from \"vue\";\nimport { Code2, Eye } from \"@lucide/vue\";\n\nconst activeView = ref(\"preview\");\nconst viewOptions = [\n  { id: \"preview\", label: \"Option 01\", icon: Eye },\n  { id: \"code\", label: \"Option 02\", icon: Code2 },\n];\n</script>\n\n<template>\n  <ButtonGroup v-model=\"activeView\" :options=\"viewOptions\" label=\"Options placeholder\" collapse-labels />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/ButtonGroup.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string",
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "options",
+        "type": "readonly ButtonGroupOption[]",
+        "shape": {
+          "type": "readonly ButtonGroupOption[]",
+          "items": {
+            "type": "ButtonGroupOption",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "size",
+        "type": "ButtonSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "ButtonGroupVariant | undefined",
+        "values": [
+          "solid",
+          "outline",
+          "glass",
+          "surface",
+          "code"
+        ],
+        "required": false
+      },
+      {
+        "name": "shape",
+        "type": "ButtonGroupShape | undefined",
+        "values": [
+          "rounded",
+          "pill"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "collapseLabels",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": []
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "balsa-portal-scope",
+  "type": "registry:theme",
+  "title": "Balsa portal scope",
+  "description": "Owns one dedicated portal host and React context so overlays can createPortal without guessing body children.",
+  "dependencies": [
+    "react",
+    "react-dom"
+  ],
+  "registryDependencies": [
+    "@balsa/shared/portal-core",
+    "@balsa/react/balsa-theme"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/BalsaPortalScope.tsx",
+      "type": "registry:ui",
+      "target": "src/components/ui/BalsaPortalScope.tsx",
+      "content": "import {\n  Children,\n  createContext,\n  useContext,\n  useId,\n  useLayoutEffect,\n  useRef,\n  useState,\n  type ReactNode,\n} from \"react\";\nimport { createPortal } from \"react-dom\";\nimport {\n  capturePortalPresentation,\n  createPortalHost,\n  resolvePortalParent,\n  type PortalHostController,\n  type PortalParent,\n} from \"./portal-core\";\nimport { useBalsaThemeContext } from \"./theme-context\";\n\nexport class BalsaPortalScopeUsageError extends Error {\n  readonly code = \"BALSA_PORTAL_SCOPE_USAGE\" as const;\n\n  constructor(message: string) {\n    super(message);\n    this.name = \"BalsaPortalScopeUsageError\";\n  }\n}\n\nexport interface BalsaPortalScopeValue {\n  readonly host: HTMLElement;\n  readonly scopeId: string;\n  readonly disabled: boolean;\n}\n\nexport const BalsaPortalContext = createContext<BalsaPortalScopeValue | undefined>(undefined);\n\nexport function useBalsaPortalScope(): BalsaPortalScopeValue | undefined {\n  return useContext(BalsaPortalContext);\n}\n\nexport interface BalsaPortalScopeProps {\n  to?: PortalParent;\n  id?: string;\n  disabled?: boolean;\n  children?: ReactNode;\n}\n\nexport function BalsaPortalScope({\n  to,\n  id,\n  disabled = false,\n  children,\n}: BalsaPortalScopeProps) {\n  const generatedId = useId();\n  const scopeId = id ?? generatedId;\n  const theme = useBalsaThemeContext();\n  const sourceRef = useRef<HTMLDivElement | null>(null);\n  const [controller, setController] = useState<PortalHostController | null>(null);\n\n  if (Children.count(children) < 1) {\n    throw new BalsaPortalScopeUsageError(\n      \"BalsaPortalScope must wrap content; self-closing use is invalid.\",\n    );\n  }\n\n  if (typeof document !== \"undefined\" && !disabled) {\n    resolvePortalParent(document, to ?? document.body);\n  }\n\n  useLayoutEffect(() => {\n    if (disabled || typeof document === \"undefined\") {\n      setController(null);\n      return;\n    }\n\n    const parent = resolvePortalParent(document, to ?? document.body);\n    const source = sourceRef.current;\n    if (!source) return;\n    const snapshot = capturePortalPresentation(source, theme?.presentation);\n    const next = createPortalHost(document, parent, scopeId, snapshot);\n    setController(next);\n\n    const observer = new MutationObserver(() => {\n      next.update(capturePortalPresentation(source, theme?.presentation));\n    });\n    observer.observe(source, {\n      attributes: true,\n      attributeFilter: [\"style\", \"data-theme\", \"data-theme-base\", \"data-palette\", \"data-balsa-adapt\"],\n    });\n\n    return () => {\n      observer.disconnect();\n      next.destroy();\n      setController(null);\n    };\n  }, [disabled, to, scopeId, theme]);\n\n  const value = controller\n    ? { host: controller.host, scopeId, disabled }\n    : undefined;\n\n  return (\n    <BalsaPortalContext.Provider value={value}>\n      <div ref={sourceRef} data-balsa=\"portal-scope\" className=\"contents\">\n        {children}\n      </div>\n      {controller && !disabled ? createPortal(null, controller.host) : null}\n    </BalsaPortalContext.Provider>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

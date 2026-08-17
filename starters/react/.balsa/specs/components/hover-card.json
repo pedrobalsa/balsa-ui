@@ -1,0 +1,286 @@
+{
+  "schemaVersion": 1,
+  "name": "hover-card",
+  "title": "Hover Card",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "hover-card"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Preview supplementary content from pointer hover or keyboard focus without moving focus.",
+  "useFor": [
+    "Profile previews",
+    "Link summaries",
+    "Supplementary metadata"
+  ],
+  "avoidFor": [
+    "Essential actions",
+    "Touch-only disclosure",
+    "Blocking content"
+  ],
+  "types": [
+    "top",
+    "right",
+    "bottom",
+    "left"
+  ],
+  "states": [
+    "closed",
+    "opening",
+    "open",
+    "closing",
+    "disabled"
+  ],
+  "sizes": [],
+  "accessibility": [
+    "The focusable trigger references the open preview.",
+    "Focus never moves into hover content.",
+    "Cancellable delays keep the card open while the pointer crosses into it."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "radius.control",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Putting essential controls in hover-only content.",
+    "Using zero close delay across a pointer gap.",
+    "Inventing hover behavior on touch."
+  ],
+  "examples": [
+    {
+      "id": "summary",
+      "title": "Summary preview",
+      "description": "Hover or keyboard focus reveals supplementary copy.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    },
+    {
+      "id": "quick",
+      "title": "Quick preview",
+      "description": "Shorter delays remain cancellable across the pointer gap.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" :open-delay=\"100\" :close-delay=\"100\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    },
+    {
+      "id": "top",
+      "title": "Top placement",
+      "description": "Preferred placement flips when viewport space is insufficient.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" side=\"top\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass preview",
+      "description": "Glass material remains readable over the generated field.",
+      "source": "<script setup lang=\"ts\">\nimport HoverCard from \"@/components/ui/HoverCard.vue\";\n</script>\n\n<template>\n  <HoverCard id=\"summary-preview\" label=\"Summary placeholder\" variant=\"glass\" :open-delay=\"300\" :close-delay=\"180\">\n    <template #trigger>Hover placeholder</template>\n    <h3>Preview heading placeholder</h3>\n    <p class=\"mt-balsa-xs text-sm text-balsa-muted-foreground\">Lorem ipsum dolor sit amet.</p>\n  </HoverCard>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/HoverCard.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "side",
+        "type": "AnchoredSide | undefined",
+        "values": [
+          "bottom",
+          "top",
+          "right",
+          "left"
+        ],
+        "required": false,
+        "default": "\"bottom\""
+      },
+      {
+        "name": "align",
+        "type": "AnchoredAlign | undefined",
+        "values": [
+          "end",
+          "center",
+          "start"
+        ],
+        "required": false,
+        "default": "\"center\""
+      },
+      {
+        "name": "sideOffset",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "8"
+      },
+      {
+        "name": "openDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "300"
+      },
+      {
+        "name": "closeDelay",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "180"
+      },
+      {
+        "name": "variant",
+        "type": "LayerVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: boolean]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "trigger",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      }
+    ]
+  }
+}

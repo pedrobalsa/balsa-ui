@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "name": "preview",
+  "title": "Preview",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Render Vue content in an isolated responsive, preset, or exact logical viewport with bounded or content-preserving height.",
+  "useFor": [
+    "Responsive component demonstrations",
+    "Device-size simulations",
+    "Full-page template review",
+    "Fullscreen design review"
+  ],
+  "avoidFor": [
+    "Untrusted remote documents",
+    "Application navigation",
+    "Content that depends on the parent document DOM"
+  ],
+  "states": [
+    "responsive",
+    "desktop",
+    "tablet",
+    "mobile",
+    "fixed scaled",
+    "natural height",
+    "fullscreen"
+  ],
+  "accessibility": [
+    "The isolated frame has a required title.",
+    "Natural-height previews disable iframe scrolling, forward wheel or touch input to the nearest marked or scrollable owner, and emit the delta for observation.",
+    "The fullscreen trigger uses a near-opaque semantic background/foreground pair, thin boundary, and elevation so it remains distinguishable over arbitrary preview content.",
+    "Fullscreen is a labelled chromeless dialog with one close action.",
+    "Palette and theme state synchronize into the frame document."
+  ],
+  "variants": [
+    "responsive",
+    "desktop",
+    "tablet",
+    "mobile",
+    "fixed"
+  ],
+  "sizes": [
+    "responsive width",
+    "16:9 or consumer-defined aspect ratio",
+    "1600px desktop maximum",
+    "768px tablet maximum",
+    "390px mobile maximum",
+    "consumer-defined logical width and height"
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-foreground",
+    "--balsa-color-border",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Treating CSS transform scale as logical viewport width without iframe isolation.",
+    "Nesting an additional iframe scrollbar around an autoHeight preview.",
+    "Omitting a descriptive frame title.",
+    "Placing essential controls only in fullscreen."
+  ],
+  "examples": [
+    {
+      "id": "mobile",
+      "title": "Mobile viewport",
+      "description": "Exact logical mobile dimensions evaluate responsive CSS before scaling.",
+      "source": "<script setup lang=\"ts\">\nimport Preview from \"@/components/ui/Preview.vue\";\n</script>\n\n<template>\n  <Preview title=\"Interface placeholder\" viewport=\"fixed\" :width=\"390\" :height=\"844\" :max-width=\"1600\" :max-height=\"480\" auto-height>\n    <div class=\"p-balsa-3xl\">Responsive interface placeholder</div>\n  </Preview>\n</template>"
+    },
+    {
+      "id": "desktop",
+      "title": "Desktop viewport",
+      "description": "A wide logical canvas scales into the bounded documentation workbench.",
+      "source": "<script setup lang=\"ts\">\nimport Preview from \"@/components/ui/Preview.vue\";\n</script>\n\n<template>\n  <Preview title=\"Interface placeholder\" viewport=\"fixed\" :width=\"1366\" :height=\"768\" :max-width=\"1600\" :max-height=\"480\" auto-height>\n    <div class=\"p-balsa-3xl\">Responsive interface placeholder</div>\n  </Preview>\n</template>"
+    },
+    {
+      "id": "responsive",
+      "title": "Responsive canvas",
+      "description": "Natural mode follows the available consumer width.",
+      "source": "<script setup lang=\"ts\">\nimport Preview from \"@/components/ui/Preview.vue\";\n</script>\n\n<template>\n  <Preview title=\"Interface placeholder\" viewport=\"responsive\" :width=\"900\" :height=\"520\" :max-width=\"1600\" :max-height=\"480\" auto-height>\n    <div class=\"p-balsa-3xl\">Responsive interface placeholder</div>\n  </Preview>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Preview.vue",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "viewport",
+        "type": "PreviewViewport | undefined",
+        "values": [
+          "fixed",
+          "responsive",
+          "desktop",
+          "tablet",
+          "mobile"
+        ],
+        "required": false,
+        "default": "\"responsive\""
+      },
+      {
+        "name": "width",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1366"
+      },
+      {
+        "name": "height",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "768"
+      },
+      {
+        "name": "aspectRatio",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "maxWidth",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "maxHeight",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "480"
+      },
+      {
+        "name": "autoHeight",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "fit",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "edgeToEdge",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "fullscreen",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "fullscreenLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Open fullscreen preview\""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Close fullscreen preview\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "previewScroll",
+        "type": "[deltaY: number]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "fullscreen",
+        "type": "{}"
+      }
+    ]
+  }
+}

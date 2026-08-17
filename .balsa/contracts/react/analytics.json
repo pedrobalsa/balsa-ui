@@ -1,0 +1,70 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/BalsaAnalyticsProvider.tsx",
+    "props": [
+      {
+        "name": "adapters",
+        "type": "readonly AnalyticsAdapter[] | undefined",
+        "shape": {
+          "type": "readonly AnalyticsAdapter[] | undefined",
+          "items": {
+            "type": "AnalyticsAdapter",
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "track",
+                "type": "(event: BalsaAnalyticsEvent) => void | Promise<void>",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false
+      },
+      {
+        "name": "enabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "automatic",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "context",
+        "type": "Readonly<Record<string, unknown>> | undefined",
+        "required": false
+      },
+      {
+        "name": "transform",
+        "type": "AnalyticsTransform | undefined",
+        "required": false
+      },
+      {
+        "name": "onError",
+        "type": "((error: unknown, context: AnalyticsErrorContext) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

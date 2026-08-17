@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { itemPath } from "../scripts/registry-lib.mjs";
 import {
   adapterBridge,
   chartBridge,
@@ -11,9 +11,9 @@ import {
   sidebarBridge,
 } from "../scripts/theme-bridge.mjs";
 
-const foundation = readFileSync(resolve(process.cwd(), "src/styles/balsa-foundation.css"), "utf8");
-const theme = readFileSync(resolve(process.cwd(), "src/styles/balsa-theme.css"), "utf8");
-const bridge = readFileSync(resolve(process.cwd(), "src/styles/balsa-shadcn-bridge.css"), "utf8");
+const foundation = readFileSync(itemPath("src/styles/balsa-foundation.css"), "utf8");
+const theme = readFileSync(itemPath("src/styles/balsa-theme.css"), "utf8");
+const bridge = readFileSync(itemPath("src/styles/balsa-shadcn-bridge.css"), "utf8");
 
 /**
  * The semantic variables an upstream shadcn component styles itself from. A

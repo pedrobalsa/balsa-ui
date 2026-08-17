@@ -1,7 +1,9 @@
 {
-  "schemaVersion": 1,
-  "releaseVersion": "0.7.1",
-  "framework": "vue",
+  "schemaVersion": 2,
+  "releaseVersion": "0.8.0",
+  "frameworks": [
+    "vue"
+  ],
   "generatedFrom": [
     "registry.json",
     "specs/components/*.json"
@@ -29,7 +31,8 @@
       "source": [
         "src/components/ui/Icon.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/icon.json"
     },
     {
       "name": "analytics",
@@ -51,7 +54,8 @@
         "src/components/ui/BalsaAnalyticsProvider.vue",
         "src/components/ui/analytics.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/analytics.json"
     },
     {
       "name": "button",
@@ -94,7 +98,8 @@
         "src/components/ui/types.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/button.json"
     },
     {
       "name": "button-group",
@@ -134,7 +139,8 @@
       "source": [
         "src/components/ui/ButtonGroup.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/button-group.json"
     },
     {
       "name": "input",
@@ -176,7 +182,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/input.json"
     },
     {
       "name": "input-group",
@@ -216,7 +223,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/input-group.json"
     },
     {
       "name": "input-otp",
@@ -261,7 +269,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/input-otp.json"
     },
     {
       "name": "radio-group",
@@ -305,7 +314,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/radio-group.json"
     },
     {
       "name": "slider",
@@ -343,7 +353,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/slider.json"
     },
     {
       "name": "popup",
@@ -381,7 +392,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/popup.json"
     },
     {
       "name": "hover-card",
@@ -419,7 +431,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/hover-card.json"
     },
     {
       "name": "tooltip",
@@ -457,7 +470,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/tooltip.json"
     },
     {
       "name": "dropdown-menu",
@@ -504,7 +518,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/dropdown-menu.json"
     },
     {
       "name": "context-menu",
@@ -547,7 +562,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/context-menu.json"
     },
     {
       "name": "menubar",
@@ -589,7 +605,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/menubar.json"
     },
     {
       "name": "command-menu",
@@ -632,7 +649,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/command-menu.json"
     },
     {
       "name": "drawer",
@@ -671,7 +689,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/drawer.json"
     },
     {
       "name": "color-picker",
@@ -710,7 +729,8 @@
       "source": [
         "src/components/ui/ColorPicker.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/color-picker.json"
     },
     {
       "name": "modal",
@@ -756,7 +776,8 @@
       "source": [
         "src/components/ui/Modal.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/modal.json"
     },
     {
       "name": "textarea",
@@ -798,7 +819,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/textarea.json"
     },
     {
       "name": "breadcrumb",
@@ -834,7 +856,8 @@
         "src/components/ui/Breadcrumb.vue",
         "src/components/ui/navigation.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/breadcrumb.json"
     },
     {
       "name": "link",
@@ -869,7 +892,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/navigation.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/link.json"
     },
     {
       "name": "badge",
@@ -904,7 +928,8 @@
         "src/components/ui/types.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/badge.json"
     },
     {
       "name": "card",
@@ -945,7 +970,8 @@
         "src/components/ui/types.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/card.json"
     },
     {
       "name": "application-card",
@@ -978,7 +1004,8 @@
       "source": [
         "src/components/compositions/ApplicationCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/application-card.json"
     },
     {
       "name": "select",
@@ -1018,7 +1045,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/select.json"
     },
     {
       "name": "autocomplete",
@@ -1060,7 +1088,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/autocomplete.json"
     },
     {
       "name": "checkbox",
@@ -1098,7 +1127,8 @@
         "src/components/ui/Checkbox.vue",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/checkbox.json"
     },
     {
       "name": "switch",
@@ -1136,7 +1166,8 @@
         "src/components/ui/Switch.vue",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/switch.json"
     },
     {
       "name": "toggle",
@@ -1178,7 +1209,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/toggle.json"
     },
     {
       "name": "toggle-group",
@@ -1215,7 +1247,8 @@
       "source": [
         "src/components/ui/ToggleGroup.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/toggle-group.json"
     },
     {
       "name": "collapsible",
@@ -1254,7 +1287,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/collapsible.json"
     },
     {
       "name": "accordion",
@@ -1289,7 +1323,8 @@
       "source": [
         "src/components/ui/Accordion.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/accordion.json"
     },
     {
       "name": "kbd",
@@ -1326,7 +1361,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/kbd.json"
     },
     {
       "name": "avatar",
@@ -1360,7 +1396,8 @@
         "src/components/ui/Avatar.vue",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/avatar.json"
     },
     {
       "name": "pagination",
@@ -1398,7 +1435,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/pagination.json"
     },
     {
       "name": "resizable",
@@ -1435,7 +1473,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/resizable.json"
     },
     {
       "name": "scroll-area",
@@ -1472,7 +1511,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/scroll-area.json"
     },
     {
       "name": "preview",
@@ -1501,7 +1541,8 @@
       "source": [
         "src/components/ui/Preview.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/preview.json"
     },
     {
       "name": "carousel",
@@ -1539,7 +1580,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/carousel.json"
     },
     {
       "name": "sidebar",
@@ -1579,7 +1621,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/sidebar.json"
     },
     {
       "name": "attachment",
@@ -1618,7 +1661,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/attachment.json"
     },
     {
       "name": "table",
@@ -1662,7 +1706,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/table.json"
     },
     {
       "name": "calendar",
@@ -1698,7 +1743,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/calendar.json"
     },
     {
       "name": "date-picker",
@@ -1731,7 +1777,8 @@
       "source": [
         "src/components/ui/DatePicker.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/date-picker.json"
     },
     {
       "name": "data-table",
@@ -1773,7 +1820,8 @@
       "source": [
         "src/components/ui/DataTable.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/data-table.json"
     },
     {
       "name": "charts",
@@ -1825,7 +1873,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/charts.json"
     },
     {
       "name": "separator",
@@ -1858,7 +1907,8 @@
         "src/components/ui/Separator.vue",
         "src/components/ui/classes.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/separator.json"
     },
     {
       "name": "skeleton",
@@ -1895,7 +1945,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/skeleton.json"
     },
     {
       "name": "spinner",
@@ -1929,7 +1980,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/spinner.json"
     },
     {
       "name": "progress",
@@ -1967,7 +2019,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/progress.json"
     },
     {
       "name": "alert",
@@ -2010,7 +2063,8 @@
         "src/components/ui/classes.ts",
         "src/components/ui/form.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/alert.json"
     },
     {
       "name": "toast",
@@ -2055,7 +2109,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/toast.json"
     },
     {
       "name": "tabs",
@@ -2093,7 +2148,8 @@
       "source": [
         "src/components/ui/Tabs.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/tabs.json"
     },
     {
       "name": "code-block",
@@ -2122,7 +2178,8 @@
       "source": [
         "src/components/ui/CodeBlock.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/code-block.json"
     },
     {
       "name": "dropdown",
@@ -2160,7 +2217,8 @@
         "src/components/ui/form.ts",
         "src/components/ui/types.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/dropdown.json"
     },
     {
       "name": "navbar",
@@ -2200,7 +2258,8 @@
         "src/components/ui/NavbarExpandableItem.vue",
         "src/components/ui/navigation.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/navbar.json"
     },
     {
       "name": "footer",
@@ -2232,7 +2291,8 @@
         "src/components/ui/Footer.vue",
         "src/components/ui/navigation.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/footer.json"
     },
     {
       "name": "gradient-background",
@@ -2269,7 +2329,8 @@
         "src/components/ui/gradient-background-glyphs.ts",
         "src/components/ui/gradient-background-presets.json"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/gradient-background.json"
     },
     {
       "name": "text-3d",
@@ -2386,7 +2447,8 @@
         "public/fonts/typeface/playfair-display-900.json",
         "public/fonts/typeface/rubik-spray-paint-400.json"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/text-3d.json"
     },
     {
       "name": "analytics-chart-card",
@@ -2425,7 +2487,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/analytics-chart-card.json"
     },
     {
       "name": "metric-grid-card",
@@ -2462,7 +2525,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/metric-grid-card.json"
     },
     {
       "name": "resource-table-card",
@@ -2502,7 +2566,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/resource-table-card.json"
     },
     {
       "name": "settings-card",
@@ -2542,7 +2607,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/settings-card.json"
     },
     {
       "name": "notification-preferences-card",
@@ -2580,7 +2646,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/notification-preferences-card.json"
     },
     {
       "name": "member-access-card",
@@ -2619,7 +2686,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/member-access-card.json"
     },
     {
       "name": "navigation-menu-card",
@@ -2657,7 +2725,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/navigation-menu-card.json"
     },
     {
       "name": "error-state-card",
@@ -2696,7 +2765,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/error-state-card.json"
     },
     {
       "name": "loading-state-card",
@@ -2734,7 +2804,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/loading-state-card.json"
     },
     {
       "name": "media-preview-card",
@@ -2773,7 +2844,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/media-preview-card.json"
     },
     {
       "name": "payment-method-card",
@@ -2812,7 +2884,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/payment-method-card.json"
     },
     {
       "name": "subscription-card",
@@ -2853,7 +2926,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/subscription-card.json"
     },
     {
       "name": "order-summary-card",
@@ -2891,7 +2965,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/order-summary-card.json"
     },
     {
       "name": "onboarding-checklist-card",
@@ -2931,7 +3006,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/onboarding-checklist-card.json"
     },
     {
       "name": "form-progress-card",
@@ -2969,7 +3045,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/form-progress-card.json"
     },
     {
       "name": "activity-timeline-card",
@@ -3007,7 +3084,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/activity-timeline-card.json"
     },
     {
       "name": "command-toolbar-card",
@@ -3047,7 +3125,8 @@
         "src/components/compositions/_CompositionRoot.vue",
         "src/components/compositions/composition.ts"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/command-toolbar-card.json"
     },
     {
       "name": "data-grid-card",
@@ -3082,7 +3161,8 @@
       "source": [
         "src/components/compositions/DataGridCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/data-grid-card.json"
     },
     {
       "name": "schedule-planner-card",
@@ -3119,7 +3199,8 @@
       "source": [
         "src/components/compositions/SchedulePlannerCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/schedule-planner-card.json"
     },
     {
       "name": "command-palette-card",
@@ -3155,7 +3236,8 @@
       "source": [
         "src/components/compositions/CommandPaletteCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/command-palette-card.json"
     },
     {
       "name": "asset-carousel-card",
@@ -3192,7 +3274,8 @@
       "source": [
         "src/components/compositions/AssetCarouselCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/asset-carousel-card.json"
     },
     {
       "name": "split-workspace-card",
@@ -3229,7 +3312,8 @@
       "source": [
         "src/components/compositions/SplitWorkspaceCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/split-workspace-card.json"
     },
     {
       "name": "release-notes-card",
@@ -3266,7 +3350,8 @@
       "source": [
         "src/components/compositions/ReleaseNotesCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/release-notes-card.json"
     },
     {
       "name": "device-verification-card",
@@ -3303,7 +3388,8 @@
       "source": [
         "src/components/compositions/DeviceVerificationCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/device-verification-card.json"
     },
     {
       "name": "service-health-card",
@@ -3338,7 +3424,8 @@
       "source": [
         "src/components/compositions/ServiceHealthCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/service-health-card.json"
     },
     {
       "name": "storage-usage-card",
@@ -3373,7 +3460,8 @@
       "source": [
         "src/components/compositions/StorageUsageCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/storage-usage-card.json"
     },
     {
       "name": "inbox-thread-card",
@@ -3410,7 +3498,8 @@
       "source": [
         "src/components/compositions/InboxThreadCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/inbox-thread-card.json"
     },
     {
       "name": "filter-panel-card",
@@ -3448,7 +3537,8 @@
       "source": [
         "src/components/compositions/FilterPanelCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/filter-panel-card.json"
     },
     {
       "name": "incident-alert-card",
@@ -3485,7 +3575,8 @@
       "source": [
         "src/components/compositions/IncidentAlertCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/incident-alert-card.json"
     },
     {
       "name": "plan-comparison-card",
@@ -3523,7 +3614,8 @@
       "source": [
         "src/components/compositions/PlanComparisonCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/plan-comparison-card.json"
     },
     {
       "name": "profile-form-card",
@@ -3562,7 +3654,8 @@
       "source": [
         "src/components/compositions/ProfileFormCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/profile-form-card.json"
     },
     {
       "name": "usage-breakdown-card",
@@ -3597,7 +3690,8 @@
       "source": [
         "src/components/compositions/UsageBreakdownCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/usage-breakdown-card.json"
     },
     {
       "name": "environment-switcher-card",
@@ -3634,7 +3728,8 @@
       "source": [
         "src/components/compositions/EnvironmentSwitcherCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/environment-switcher-card.json"
     },
     {
       "name": "api-key-card",
@@ -3671,7 +3766,8 @@
       "source": [
         "src/components/compositions/ApiKeyCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/api-key-card.json"
     },
     {
       "name": "integration-list-card",
@@ -3707,7 +3803,8 @@
       "source": [
         "src/components/compositions/IntegrationListCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/integration-list-card.json"
     },
     {
       "name": "runbook-steps-card",
@@ -3743,7 +3840,8 @@
       "source": [
         "src/components/compositions/RunbookStepsCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/runbook-steps-card.json"
     },
     {
       "name": "image-compare-card",
@@ -3782,7 +3880,8 @@
       "source": [
         "src/components/compositions/ImageCompareCard.vue"
       ],
-      "framework": "vue"
+      "framework": "vue",
+      "specification": "specs/components/image-compare-card.json"
     }
   ]
 }

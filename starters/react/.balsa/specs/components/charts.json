@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "name": "charts",
+  "title": "Charts",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "chart"
+  },
+  "status": "beta",
+  "version": "0.3.0",
+  "purpose": "Compose accessible, theme-aware Unovis charts through a finite facade or Balsa's lower-level chart primitives.",
+  "useFor": [
+    "Trends",
+    "Category comparisons",
+    "Part-to-whole summaries"
+  ],
+  "avoidFor": [
+    "Data without an accessible table",
+    "Unsupported facade options",
+    "Decorative unlabeled plots"
+  ],
+  "states": [
+    "data",
+    "loading",
+    "empty",
+    "error",
+    "zero-size"
+  ],
+  "accessibility": [
+    "Figure caption names the chart.",
+    "The visual plot is supplementary to a complete semantic table.",
+    "Graphical boundaries reach 3:1 and chart text reaches 4.5:1 against the owning surface.",
+    "Series differ through marker, dash, order, or grouping as well as color.",
+    "Motion follows theme tokens and reduced-motion preference."
+  ],
+  "variants": [
+    "line",
+    "area",
+    "bar-grouped",
+    "bar-stacked",
+    "donut",
+    "doughnut-alias"
+  ],
+  "sizes": [
+    "responsive positive-size container with optional width and height"
+  ],
+  "tokens": [
+    "--balsa-color-chart-surface",
+    "--balsa-color-chart-axis",
+    "--balsa-color-chart-grid",
+    "--balsa-color-chart-tooltip",
+    "--balsa-color-chart-tooltip-foreground",
+    "--balsa-color-chart-interaction",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-foreground"
+  ],
+  "commonMistakes": [
+    "Relying on the plot alone.",
+    "Using arbitrary raw colors.",
+    "Using feedback roles without explicit meaning.",
+    "Encoding series only by color.",
+    "Rendering Unovis into a zero-size container."
+  ],
+  "examples": [
+    {
+      "id": "bar",
+      "title": "Bar comparison",
+      "description": "Semantic series colors compare categories.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"bar\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" :height=\"320\" />\n</template>"
+    },
+    {
+      "id": "line",
+      "title": "Line trend",
+      "description": "Line geometry communicates change over ordered labels.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"line\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" :height=\"320\" />\n</template>"
+    },
+    {
+      "id": "doughnut",
+      "title": "Doughnut summary",
+      "description": "A finite part-to-whole form shares the same data table.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"doughnut\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" :height=\"320\" />\n</template>"
+    },
+    {
+      "id": "table",
+      "title": "Visible data",
+      "description": "The semantic alternative can remain visibly available.",
+      "source": "<script setup lang=\"ts\">\nimport Charts from \"@/components/ui/Charts.vue\";\nconst labels = [\"Alpha placeholder\", \"Beta placeholder\", \"Gamma placeholder\", \"Delta placeholder\"];\nconst colors = [\"primary\", \"secondary\"] as const;\nconst series = [\n  { label: \"Primary series placeholder\", data: [18, 32, 24, 41] },\n  { label: \"Secondary series placeholder\", data: [12, 22, 30, 28] },\n];\n</script>\n\n<template>\n  <Charts title=\"Metrics placeholder\" type=\"bar\" bar-mode=\"grouped\" :labels=\"labels\" :series=\"series\" :colors=\"colors\" show-table :height=\"320\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Charts.vue",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ChartsType | undefined",
+        "values": [
+          "bar",
+          "line",
+          "area",
+          "donut",
+          "doughnut"
+        ],
+        "required": false,
+        "default": "\"bar\""
+      },
+      {
+        "name": "labels",
+        "type": "readonly string[]",
+        "required": true
+      },
+      {
+        "name": "series",
+        "type": "readonly ChartSeries[]",
+        "shape": {
+          "type": "readonly ChartSeries[]",
+          "items": {
+            "type": "ChartSeries",
+            "fields": [
+              {
+                "name": "key",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "data",
+                "type": "readonly number[]",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "\"neutral\" | SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "colors",
+        "type": "readonly SemanticColor[] | undefined",
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "ChartConfig | undefined",
+        "values": [
+          "ChartConfig"
+        ],
+        "required": false
+      },
+      {
+        "name": "barMode",
+        "type": "ChartsBarMode | undefined",
+        "values": [
+          "stacked",
+          "grouped"
+        ],
+        "required": false,
+        "default": "\"grouped\""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "error",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No chart data.\""
+      },
+      {
+        "name": "showGrid",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showXAxis",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showYAxis",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showTooltip",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showLegend",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showCaption",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showTable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "responsive",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "areaFill",
+        "type": "ChartsAreaFill | undefined",
+        "values": [
+          "solid",
+          "none",
+          "gradient"
+        ],
+        "required": false,
+        "default": "\"gradient\"",
+        "description": "How the band under an area series is painted."
+      },
+      {
+        "name": "width",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "260"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "labelFormatter",
+        "type": "((label: string, index: number) => string) | undefined",
+        "required": false,
+        "default": "label"
+      },
+      {
+        "name": "valueFormatter",
+        "type": "((value: number, series: ChartSeries, index: number) => string) | undefined",
+        "required": false,
+        "default": "new Intl.NumberFormat().format(value)"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "center",
+        "type": "{}"
+      }
+    ]
+  }
+}

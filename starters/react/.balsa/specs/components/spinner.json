@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "name": "spinner",
+  "title": "Spinner",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "spinner"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Announce and visualize an indeterminate operation with no measurable completion value.",
+  "useFor": [
+    "Short indeterminate operations",
+    "Inline action processing",
+    "Loading labels and overlays"
+  ],
+  "avoidFor": [
+    "Known completion percentages",
+    "Long content-loading layouts",
+    "Decorative motion"
+  ],
+  "states": [
+    "indeterminate"
+  ],
+  "accessibility": [
+    "Uses a polite status role with an accessible label.",
+    "Visible labels are hidden from duplicate announcement.",
+    "Animation stops under reduced motion while the ring remains visible."
+  ],
+  "sizes": [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
+  "tokens": [
+    "--balsa-color-info",
+    "--balsa-color-foreground",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using Spinner for determinate progress.",
+    "Removing the accessible loading label.",
+    "Using several unrelated spinners in one compact region."
+  ],
+  "examples": [
+    {
+      "id": "hidden-label",
+      "title": "Compact status",
+      "description": "Keep the loading name accessible when visual space is tight.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "inline",
+      "title": "Inline label",
+      "description": "A visible right-hand label provides immediate process context.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" label-position=\"right\" />\n</template>"
+    },
+    {
+      "id": "stacked",
+      "title": "Stacked label",
+      "description": "Bottom placement supports centered loading regions.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" label-position=\"bottom\" color=\"primary\" size=\"lg\" />\n</template>"
+    },
+    {
+      "id": "fast",
+      "title": "Fast compact action",
+      "description": "Fast motion can indicate a short inline operation.",
+      "source": "<script setup lang=\"ts\">\nimport Spinner from \"@/components/ui/Spinner.vue\";\n</script>\n\n<template>\n  <Spinner label=\"Loading placeholder\" label-position=\"right\" size=\"sm\" speed=\"fast\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Spinner.vue",
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Loading\""
+      },
+      {
+        "name": "labelPosition",
+        "type": "SpinnerLabelPosition | undefined",
+        "values": [
+          "bottom",
+          "right",
+          "hidden"
+        ],
+        "required": false,
+        "default": "\"hidden\""
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"info\""
+      },
+      {
+        "name": "size",
+        "type": "SpinnerSize | undefined",
+        "values": [
+          "md",
+          "xs",
+          "sm",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "speed",
+        "type": "SpinnerSpeed | undefined",
+        "values": [
+          "normal",
+          "slow",
+          "fast"
+        ],
+        "required": false,
+        "default": "\"normal\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

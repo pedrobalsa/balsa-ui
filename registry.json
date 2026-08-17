@@ -81,11 +81,6 @@
           "target": "src/components/ui/theme.ts"
         },
         {
-          "path": "src/components/ui/theme-component-contracts.ts",
-          "type": "registry:lib",
-          "target": "src/components/ui/theme-component-contracts.ts"
-        },
-        {
           "path": "src/components/ui/theme-context.ts",
           "type": "registry:lib",
           "target": "src/components/ui/theme-context.ts"
@@ -107,7 +102,8 @@
         "@lucide/vue"
       ],
       "registryDependencies": [
-        "@balsa/balsa-foundation"
+        "@balsa/balsa-foundation",
+        "@balsa/shared/theme-core"
       ],
       "meta": {
         "framework": "vue",

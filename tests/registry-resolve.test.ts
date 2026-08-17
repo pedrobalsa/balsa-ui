@@ -79,13 +79,17 @@ describe("file targets", () => {
     expect(target).toBe("src/components/ui/button/Button.vue");
   });
 
-  it("uses an explicit target verbatim", () => {
+  it("maps React registry:hook files onto the hooks alias", () => {
     const target = resolveFileTarget(
-      configuration,
-      { type: "registry:ui" },
-      { path: "src/components/ui/Button.vue", target: "src/components/ui/Button.vue" },
+      {
+        ...configuration,
+        aliases: { ...configuration.aliases, hooks: "@/hooks" },
+      },
+      { type: "registry:hook" },
+      { path: "hooks/use-example.ts", type: "registry:hook", target: "" },
+      "react",
     );
-    expect(target).toBe("src/components/ui/Button.vue");
+    expect(target).toBe("src/hooks/use-example.ts");
   });
 });
 
@@ -219,6 +223,39 @@ describe("project configuration", () => {
     });
   });
 
+  it("builds a shadcn React configuration with hooks aliases and optional RSC", async () => {
+    const created = await createProjectConfiguration({
+      stylesheet: "src/app/globals.css",
+      framework: "react",
+      rsc: true,
+    });
+    expect(created).toEqual({
+      $schema: "https://ui.shadcn.com/schema.json",
+      style: "new-york",
+      rsc: true,
+      tsx: true,
+      tailwind: {
+        config: "",
+        css: "src/app/globals.css",
+        baseColor: "neutral",
+        cssVariables: true,
+        prefix: "",
+      },
+      iconLibrary: "lucide",
+      aliases: {
+        components: "@/components",
+        ui: "@/components/ui",
+        lib: "@/lib",
+        utils: "@/lib/utils",
+        hooks: "@/hooks",
+      },
+      registries: {
+        "@balsa": "https://balsa-ui.com/r/{name}.json",
+        "@shadcn": "https://ui.shadcn.com/r/styles/{style}/{name}.json",
+      },
+    });
+  });
+
   it("creates components.json once and never rewrites customized configuration", async () => {
     const target = await mkdtemp(resolve(tmpdir(), "balsa-components-config-"));
     try {
@@ -242,5 +279,28 @@ describe("project configuration", () => {
     expect(loaded.registries["@balsa"]).toContain("balsa-ui.com");
     expect(loaded.registries["@shadcn"]).toBe(builtinRegistries["@shadcn"]);
     expect(loaded.style).toBe("new-york");
+  });
+});
+
+describe("resolved references", () => {
+  it("records the requested qualified address rather than the payload's bare name", async () => {
+    const resolver = createResolver({ configuration });
+    const items = await resolver.resolve(["@balsa/react/button"]);
+    const item = items.find((entry) => entry.reference === "@balsa/react/button");
+    expect(item).toBeDefined();
+    expect(item?.name).toBe("button");
+    expect(item?.files[0]?.target).toBe("src/components/ui/Button.tsx");
+  });
+
+  it("keeps Vue addresses as @balsa/<name>", async () => {
+    const resolver = createResolver({ configuration, local: false, fetchItem: fakeRegistry({
+      "https://balsa-ui.com/r/button.json": {
+        name: "button",
+        type: "registry:ui",
+        files: [{ path: "ui/button/Button.vue", type: "registry:ui", target: "src/components/ui/Button.vue", content: "vue" }],
+      },
+    }) });
+    const [item] = await resolver.resolve(["@balsa/button"]);
+    expect(item.reference).toBe("@balsa/button");
   });
 });

@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "name": "accordion",
+  "title": "Accordion",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "accordion"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Coordinate a vertical collection of heading disclosures with single or multiple expansion.",
+  "useFor": [
+    "Frequently asked questions",
+    "Grouped settings details",
+    "Progressive disclosure lists"
+  ],
+  "avoidFor": [
+    "Peer views that need tab semantics",
+    "Sequential workflows",
+    "Side-by-side comparison content"
+  ],
+  "states": [
+    "open",
+    "closed",
+    "disabled"
+  ],
+  "accessibility": [
+    "Composes labelled Collapsible regions under semantic headings.",
+    "ArrowUp and ArrowDown wrap focus among enabled triggers.",
+    "Home and End move to the first and last enabled trigger."
+  ],
+  "variants": [
+    "underline",
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "single",
+    "multiple"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-focus-ring",
+    "radius.surface",
+    "shadow.control"
+  ],
+  "commonMistakes": [
+    "Using duplicate item ids.",
+    "Passing an array model to single mode or a string model to multiple mode.",
+    "Putting unrelated actions in disclosure headings."
+  ],
+  "examples": [
+    {
+      "id": "single",
+      "title": "Single disclosure",
+      "description": "Single mode keeps one related answer open at a time.",
+      "source": "<script setup lang=\"ts\">\nimport Accordion from \"@/components/ui/Accordion.vue\";\nimport { ref } from \"vue\";\n\nconst openItems = ref<string | readonly string[]>(\"first\");\nconst items = [\n  {\n    \"id\": \"first\",\n    \"title\": \"Question placeholder 01\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n  },\n  {\n    \"id\": \"second\",\n    \"title\": \"Question placeholder 02\",\n    \"content\": \"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"\n  },\n  {\n    \"id\": \"third\",\n    \"title\": \"Question placeholder 03\",\n    \"content\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco.\",\n    \"disabled\": true\n  }\n];\n</script>\n\n<template>\n  <Accordion id=\"questions-placeholder\" v-model=\"openItems\" :items=\"items\" type=\"single\" />\n</template>"
+    },
+    {
+      "id": "multiple",
+      "title": "Multiple disclosures",
+      "description": "Multiple mode lets readers retain several answers for comparison.",
+      "source": "<script setup lang=\"ts\">\nimport Accordion from \"@/components/ui/Accordion.vue\";\nimport { ref } from \"vue\";\n\nconst openItems = ref<string | readonly string[]>([\"first\"]);\nconst items = [\n  {\n    \"id\": \"first\",\n    \"title\": \"Question placeholder 01\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n  },\n  {\n    \"id\": \"second\",\n    \"title\": \"Question placeholder 02\",\n    \"content\": \"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"\n  },\n  {\n    \"id\": \"third\",\n    \"title\": \"Question placeholder 03\",\n    \"content\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco.\",\n    \"disabled\": true\n  }\n];\n</script>\n\n<template>\n  <Accordion id=\"questions-placeholder\" v-model=\"openItems\" :items=\"items\" type=\"multiple\" />\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass collection",
+      "description": "Glass keeps the connected surface translucent over an expressive background.",
+      "source": "<script setup lang=\"ts\">\nimport Accordion from \"@/components/ui/Accordion.vue\";\nimport { ref } from \"vue\";\n\nconst openItems = ref<string | readonly string[]>(\"first\");\nconst items = [\n  {\n    \"id\": \"first\",\n    \"title\": \"Question placeholder 01\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\"\n  },\n  {\n    \"id\": \"second\",\n    \"title\": \"Question placeholder 02\",\n    \"content\": \"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\"\n  },\n  {\n    \"id\": \"third\",\n    \"title\": \"Question placeholder 03\",\n    \"content\": \"Ut enim ad minim veniam, quis nostrud exercitation ullamco.\",\n    \"disabled\": true\n  }\n];\n</script>\n\n<template>\n  <Accordion id=\"questions-placeholder\" v-model=\"openItems\" :items=\"items\" type=\"single\" variant=\"glass\" rounded=\"2xl\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Accordion.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | readonly string[]",
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly AccordionItem[]",
+        "shape": {
+          "type": "readonly AccordionItem[]",
+          "items": {
+            "type": "AccordionItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "content",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "disabled",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "AccordionType | undefined",
+        "values": [
+          "multiple",
+          "single"
+        ],
+        "required": false,
+        "default": "\"single\""
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Accordion\""
+      },
+      {
+        "name": "variant",
+        "type": "CollapsibleVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "underline"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CollapsibleSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "headingLevel",
+        "type": "CollapsibleHeadingLevel | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false,
+        "default": "3"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | readonly string[]",
+        "required": true
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | readonly string[]]"
+      }
+    ],
+    "slots": []
+  }
+}

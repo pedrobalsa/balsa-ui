@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "name": "calendar",
+  "title": "Calendar",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "calendar"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Choose date-only values from a locale-aware keyboard grid.",
+  "useFor": [
+    "Date selection",
+    "Date ranges",
+    "Multiple date selection"
+  ],
+  "avoidFor": [
+    "Time selection",
+    "Ambiguous free-text dates",
+    "Scheduling time zones"
+  ],
+  "states": [
+    "single",
+    "multiple",
+    "range",
+    "disabled dates"
+  ],
+  "accessibility": [
+    "Uses grid, row, columnheader, and gridcell semantics.",
+    "One day owns roving focus.",
+    "Arrows, Home, End, PageUp, and PageDown move focus."
+  ],
+  "variants": [
+    "single",
+    "multiple",
+    "range"
+  ],
+  "sizes": [
+    "one or two months"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-selected",
+    "--balsa-color-focus-ring"
+  ],
+  "commonMistakes": [
+    "Passing time-bearing values without day normalization.",
+    "Using a visual disabled style without the predicate.",
+    "Adding a selection mode without complete model behavior."
+  ],
+  "examples": [
+    {
+      "id": "single",
+      "title": "Single date",
+      "description": "One roving-focus grid selects one normalized local day.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"single\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"1\" />\n</template>"
+    },
+    {
+      "id": "range",
+      "title": "Date range",
+      "description": "Range mode retains a start while the user chooses its end.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"range\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"1\" />\n</template>"
+    },
+    {
+      "id": "multiple",
+      "title": "Multiple dates",
+      "description": "Immutable multiple selection toggles independent days.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"multiple\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"1\" />\n</template>"
+    },
+    {
+      "id": "two-months",
+      "title": "Two months",
+      "description": "A paired grid supports wider range comparison.",
+      "source": "<script setup lang=\"ts\">\nimport Calendar from \"@/components/ui/Calendar.vue\";\nimport { ref } from \"vue\";\nimport type { CalendarModelValue } from \"@/components/ui/Calendar.vue\";\n\nconst date = ref<CalendarModelValue>(new Date(2026, 6, 25));\n</script>\n\n<template>\n  <Calendar id=\"calendar-placeholder\" v-model=\"date\" label=\"Date placeholder\" mode=\"range\" locale=\"en-US\" :week-starts-on=\"0\" :months=\"2\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Calendar.vue",
+    "models": [
+      {
+        "name": "month",
+        "type": "Date | undefined",
+        "event": "update:month"
+      },
+      {
+        "name": "modelValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "CalendarMode | undefined",
+        "values": [
+          "range",
+          "multiple",
+          "single"
+        ],
+        "required": false,
+        "default": "\"single\""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"en-US\""
+      },
+      {
+        "name": "weekStartsOn",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "month",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "min",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "Date | undefined",
+        "required": false
+      },
+      {
+        "name": "disabledDates",
+        "type": "((date: Date) => boolean) | undefined",
+        "required": false
+      },
+      {
+        "name": "outsideDays",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "fixedWeeks",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "months",
+        "type": "2 | 1 | undefined",
+        "values": [
+          "2",
+          "1"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "CalendarModelValue | undefined",
+        "shape": {
+          "type": "CalendarRange",
+          "fields": [
+            {
+              "name": "start",
+              "type": "Date | undefined",
+              "required": false
+            },
+            {
+              "name": "end",
+              "type": "Date | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false,
+        "default": "null"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: CalendarModelValue]"
+      },
+      {
+        "name": "select",
+        "type": "[value: CalendarModelValue]"
+      },
+      {
+        "name": "update:month",
+        "type": "[month: Date]"
+      }
+    ],
+    "slots": []
+  }
+}

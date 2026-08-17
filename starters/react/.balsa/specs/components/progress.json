@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "name": "progress",
+  "title": "Progress",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "progress"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Communicate determinate task completion or a labelled indeterminate process.",
+  "useFor": [
+    "Uploads and imports",
+    "Multi-step completion",
+    "Measurable background tasks"
+  ],
+  "avoidFor": [
+    "Instant actions",
+    "Values that are not task completion",
+    "Interactive range selection"
+  ],
+  "states": [
+    "loading",
+    "complete",
+    "indeterminate"
+  ],
+  "accessibility": [
+    "Uses progressbar semantics with min, max, current value, and value text.",
+    "Indeterminate state omits aria-valuenow.",
+    "A required visible label names the process."
+  ],
+  "variants": [
+    "solid",
+    "soft",
+    "striped"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-info",
+    "--balsa-color-muted",
+    "--balsa-color-foreground",
+    "radius.control",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Passing a non-positive max.",
+    "Using Progress as an interactive Slider.",
+    "Showing a percentage when the operation is indeterminate."
+  ],
+  "examples": [
+    {
+      "id": "determinate",
+      "title": "Determinate upload",
+      "description": "A finite value communicates measurable completion.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"58\" />\n</template>"
+    },
+    {
+      "id": "complete",
+      "title": "Completed task",
+      "description": "Success color and a full value communicate completion.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"100\" color=\"success\" />\n</template>"
+    },
+    {
+      "id": "indeterminate",
+      "title": "Indeterminate process",
+      "description": "Null value removes aria-valuenow and animates an incomplete indicator.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"null\" variant=\"soft\" />\n</template>"
+    },
+    {
+      "id": "striped",
+      "title": "Striped progress",
+      "description": "Striped motion gives a long-running active transfer extra movement.",
+      "source": "<script setup lang=\"ts\">\nimport Progress from \"@/components/ui/Progress.vue\";\n</script>\n\n<template>\n  <Progress label=\"Upload placeholder\" :value=\"72\" variant=\"striped\" color=\"accent\" size=\"lg\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Progress.vue",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "number | null | undefined",
+        "values": [
+          "null",
+          "number"
+        ],
+        "required": false,
+        "default": "null"
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "100"
+      },
+      {
+        "name": "showValue",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "formatValue",
+        "type": "((value: number, max: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "indeterminateLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"In progress\""
+      },
+      {
+        "name": "variant",
+        "type": "ProgressVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "striped"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"info\""
+      },
+      {
+        "name": "size",
+        "type": "ProgressSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 1,
+  "name": "textarea",
+  "title": "Textarea",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "textarea"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Collect multi-line text with a visible label, validation feedback, and deliberate editing geometry.",
+  "useFor": [
+    "Notes and descriptions",
+    "Messages",
+    "Multi-line configuration",
+    "Longer free-form responses"
+  ],
+  "avoidFor": [
+    "Short values",
+    "Selecting fixed options",
+    "Rich-text editing"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "auto-expanding"
+  ],
+  "composition": {
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "rounded": [
+      "none",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+      "2xl",
+      "3xl",
+      "full"
+    ],
+    "sizing": "rows supplies the native initial height. autoExpand grows to content and, when maxHeight is reached, scrolls internally. resizable selects none, vertical, or both-axis manual resizing."
+  },
+  "accessibility": [
+    "Always provide a unique id and visible label.",
+    "Invalid feedback exposes aria-invalid and role alert.",
+    "Loading disables editing and exposes aria-busy.",
+    "Auto expansion does not move focus or replace native textarea semantics."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-success",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-disabled",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using a textarea for short values that fit Input.",
+    "Enabling autoExpand without a maxHeight for unbounded user-generated content.",
+    "Using both-axis resizing in constrained layouts.",
+    "Using placeholder text as the only label."
+  ],
+  "examples": [
+    {
+      "id": "auto-expand",
+      "title": "Auto-expanding notes",
+      "description": "Grow with content while keeping a practical height cap.",
+      "source": "<script setup lang=\"ts\">\nimport Textarea from \"@/components/ui/Textarea.vue\";\nimport { ref } from \"vue\";\n\nconst notes = ref(\"\");\n</script>\n\n<template>\n  <Textarea id=\"notes\" v-model=\"notes\" label=\"Textarea placeholder\" :rows=\"4\" auto-expand :max-height=\"220\" resizable=\"none\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "resizable",
+      "title": "Manual resize",
+      "description": "Allow vertical resizing for an open-ended response.",
+      "source": "<script setup lang=\"ts\">\nimport Textarea from \"@/components/ui/Textarea.vue\";\nimport { ref } from \"vue\";\n\nconst notes = ref(\"\");\n</script>\n\n<template>\n  <Textarea id=\"notes\" v-model=\"notes\" label=\"Textarea placeholder\" :rows=\"6\" :max-height=\"280\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Validation feedback",
+      "description": "Use the shared unvalidated state for an actionable error.",
+      "source": "<script setup lang=\"ts\">\nimport Textarea from \"@/components/ui/Textarea.vue\";\nimport { ref } from \"vue\";\n\nconst notes = ref(\"\");\n</script>\n\n<template>\n  <Textarea id=\"notes\" v-model=\"notes\" label=\"Textarea placeholder\" :rows=\"4\" :max-height=\"280\" status=\"unvalidated\" required hint=\"Helper text placeholder.\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Textarea.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "rows",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "4"
+      },
+      {
+        "name": "autoExpand",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "maxHeight",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "resizable",
+        "type": "TextareaResize | undefined",
+        "values": [
+          "none",
+          "vertical",
+          "both"
+        ],
+        "required": false,
+        "default": "\"vertical\""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "autocomplete",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "maxlength",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "minlength",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "readonly",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": []
+  }
+}

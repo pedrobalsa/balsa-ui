@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 2,
+  "components": {
+    "@balsa/shared/balsa-foundation": {
+      "registry": "@balsa/shared/balsa-foundation",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-foundation.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-4e20f4ad5ea63bdce72e6785a52d2119053d2cfc7d6a691b8e5739a188309512",
+      "installedSourceHash": "sha256-4e20f4ad5ea63bdce72e6785a52d2119053d2cfc7d6a691b8e5739a188309512",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/styles/balsa-foundation.css",
+      "files": [
+        "src/styles/balsa-foundation.css"
+      ]
+    },
+    "@balsa/shared/balsa-palette": {
+      "registry": "@balsa/shared/balsa-palette",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-palette.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
+      "installedSourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/balsa-foundation"
+      ],
+      "targetPath": "src/styles/balsa-palette.css",
+      "files": [
+        "src/styles/balsa-palette.css"
+      ]
+    },
+    "@balsa/react/icon": {
+      "registry": "@balsa/react/icon",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/icon.json",
+      "installedVersion": "0.1.0",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-4ea15c19a90732e57688a9b3e185d8cd524cabf83a70cee4f04172abd129f6b7",
+      "installedSourceHash": "sha256-4ea15c19a90732e57688a9b3e185d8cd524cabf83a70cee4f04172abd129f6b7",
+      "dependencies": [
+        "react",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "targetPath": "src/components/ui/Icon.tsx",
+      "files": [
+        "src/components/ui/Icon.tsx"
+      ]
+    },
+    "@balsa/shared/theme-core": {
+      "registry": "@balsa/shared/theme-core",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/theme-core.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-c5a73abb4144b466786c0995cab45c7c4e3f292c6c5c332452dcaa8c478d207a",
+      "installedSourceHash": "sha256-c5a73abb4144b466786c0995cab45c7c4e3f292c6c5c332452dcaa8c478d207a",
+      "dependencies": [],
+      "registryDependencies": [],
+      "targetPath": "src/components/ui/theme-core.ts",
+      "files": [
+        "src/components/ui/theme-core.ts",
+        "src/components/ui/theme-component-contracts.ts"
+      ]
+    },
+    "@balsa/shared/balsa-theme": {
+      "registry": "@balsa/shared/balsa-theme",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-theme.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-e61223ea49bdcaf72e8f2da1fc7f9b82958a77fd4c898aea558e6033ac50a351",
+      "installedSourceHash": "sha256-e61223ea49bdcaf72e8f2da1fc7f9b82958a77fd4c898aea558e6033ac50a351",
+      "dependencies": [
+        "tailwindcss"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/balsa-foundation"
+      ],
+      "targetPath": "src/styles/balsa-theme.css",
+      "files": [
+        "src/styles/balsa-theme.css"
+      ]
+    },
+    "@balsa/react/balsa-theme": {
+      "registry": "@balsa/react/balsa-theme",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/balsa-theme.json",
+      "installedVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-08a9326c36fa6027bcb5e40ef31d47346b23a05db5911e6c56e9ec215db0870d",
+      "installedSourceHash": "sha256-08a9326c36fa6027bcb5e40ef31d47346b23a05db5911e6c56e9ec215db0870d",
+      "dependencies": [
+        "react",
+        "tailwindcss",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@balsa/shared/theme-core",
+        "@balsa/shared/balsa-theme",
+        "@balsa/shared/balsa-foundation"
+      ],
+      "targetPath": "src/components/ui/theme.ts",
+      "files": [
+        "src/components/ui/theme.ts",
+        "src/components/ui/theme-context.ts",
+        "src/components/ui/BalsaThemeProvider.tsx"
+      ]
+    },
+    "@balsa/react/input": {
+      "registry": "@balsa/react/input",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/input.json",
+      "installedVersion": "0.1.0",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-e2f3297e6c44ec8b3614ff75e6ec32bbede06901e851e945c7da2ef11542a796",
+      "installedSourceHash": "sha256-e2f3297e6c44ec8b3614ff75e6ec32bbede06901e851e945c7da2ef11542a796",
+      "dependencies": [
+        "react",
+        "lucide-react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/icon",
+        "@balsa/react/balsa-theme"
+      ],
+      "targetPath": "src/components/ui/Input.tsx",
+      "files": [
+        "src/components/ui/Input.tsx",
+        "src/components/ui/form.ts",
+        "src/components/ui/classes.ts"
+      ]
+    },
+    "@balsa/react/card": {
+      "registry": "@balsa/react/card",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/card.json",
+      "installedVersion": "0.1.0",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-2611540df43a9fe5ae5b13f38ac0315854d4dd491f2ac432bee4a85e3a1e8b6b",
+      "installedSourceHash": "sha256-2611540df43a9fe5ae5b13f38ac0315854d4dd491f2ac432bee4a85e3a1e8b6b",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/balsa-theme"
+      ],
+      "targetPath": "src/components/ui/Card.tsx",
+      "files": [
+        "src/components/ui/Card.tsx",
+        "src/components/ui/types.ts",
+        "src/components/ui/classes.ts"
+      ]
+    },
+    "@balsa/react/application-card": {
+      "registry": "@balsa/react/application-card",
+      "namespace": "@balsa",
+      "origin": "https://balsa-ui.com/r/application-card.json",
+      "installedVersion": "0.1.0",
+      "contractVersion": "0.1.0",
+      "designSystemVersion": "0.8.0",
+      "originalSourceHash": "sha256-d3f640405e896cd7fafb99f9d4aaf9aa3c4968a469d8cc6e05595d1bc191f693",
+      "installedSourceHash": "sha256-d3f640405e896cd7fafb99f9d4aaf9aa3c4968a469d8cc6e05595d1bc191f693",
+      "dependencies": [
+        "react",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "@balsa/react/card"
+      ],
+      "targetPath": "src/components/compositions/ApplicationCard.tsx",
+      "files": [
+        "src/components/compositions/ApplicationCard.tsx"
+      ]
+    }
+  }
+}

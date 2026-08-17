@@ -1,0 +1,279 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Charts.tsx",
+    "props": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ChartsType | undefined",
+        "values": [
+          "line",
+          "area",
+          "bar",
+          "donut",
+          "doughnut"
+        ],
+        "required": false
+      },
+      {
+        "name": "labels",
+        "type": "readonly string[]",
+        "required": true
+      },
+      {
+        "name": "series",
+        "type": "readonly ChartSeries[]",
+        "shape": {
+          "type": "readonly ChartSeries[]",
+          "items": {
+            "type": "ChartSeries",
+            "fields": [
+              {
+                "name": "key",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "data",
+                "type": "readonly number[]",
+                "required": true
+              },
+              {
+                "name": "color",
+                "type": "\"neutral\" | SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "colors",
+        "type": "readonly SemanticColor[] | undefined",
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "ChartConfig | undefined",
+        "required": false
+      },
+      {
+        "name": "barMode",
+        "type": "ChartsBarMode | undefined",
+        "values": [
+          "stacked",
+          "grouped"
+        ],
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "error",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "showGrid",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showXAxis",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showYAxis",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showTooltip",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showLegend",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showCaption",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showTable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "responsive",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "areaFill",
+        "type": "ChartsAreaFill | undefined",
+        "values": [
+          "solid",
+          "none",
+          "gradient"
+        ],
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "labelFormatter",
+        "type": "((label: string, index: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "valueFormatter",
+        "type": "((value: number, series: ChartSeries, index: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "center",
+        "type": "ReactNode",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

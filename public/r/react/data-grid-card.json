@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-grid-card",
+  "type": "registry:ui",
+  "title": "DataGridCard",
+  "description": "Sortable, selectable, paginated table of records with real columns.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/data-table",
+    "@balsa/react/balsa-theme"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/DataGridCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/DataGridCard.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { DataTable, type DataTableColumn } from \"../ui/DataTable\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface DeploymentRow {\n  [column: string]: string;\n  id: string;\n  service: string;\n  environment: string;\n  version: string;\n  duration: string;\n  started: string;\n}\n\nconst defaultRows: readonly DeploymentRow[] = [\n  { id: \"d-108\", service: \"Atlas\", environment: \"Production\", version: \"4.12.0\", duration: \"1m 48s\", started: \"2 minutes ago\" },\n  { id: \"d-107\", service: \"Relay\", environment: \"Preview\", version: \"2.7.3\", duration: \"52s\", started: \"18 minutes ago\" },\n  { id: \"d-106\", service: \"Atlas\", environment: \"Preview\", version: \"4.12.0-rc.2\", duration: \"1m 31s\", started: \"1 hour ago\" },\n  { id: \"d-105\", service: \"Harbor\", environment: \"Production\", version: \"1.9.8\", duration: \"3m 04s\", started: \"3 hours ago\" },\n  { id: \"d-104\", service: \"Nova\", environment: \"Development\", version: \"0.4.1\", duration: \"41s\", started: \"5 hours ago\" },\n  { id: \"d-103\", service: \"Relay\", environment: \"Production\", version: \"2.7.2\", duration: \"58s\", started: \"Yesterday\" },\n  { id: \"d-102\", service: \"Quill\", environment: \"Preview\", version: \"3.0.0-beta.4\", duration: \"2m 12s\", started: \"Yesterday\" },\n  { id: \"d-101\", service: \"Atlas\", environment: \"Production\", version: \"4.11.6\", duration: \"1m 44s\", started: \"2 days ago\" },\n  { id: \"d-100\", service: \"Harbor\", environment: \"Development\", version: \"1.9.7\", duration: \"37s\", started: \"2 days ago\" },\n];\n\nconst columns: readonly DataTableColumn<DeploymentRow>[] = [\n  { id: \"service\", label: \"Service\", key: \"service\", sortable: true },\n  { id: \"environment\", label: \"Environment\", key: \"environment\", sortable: true, filterable: true },\n  { id: \"version\", label: \"Version\", key: \"version\" },\n  { id: \"duration\", label: \"Duration\", key: \"duration\", align: \"right\", sortable: true },\n  { id: \"started\", label: \"Started\", key: \"started\", align: \"right\" },\n];\n\nexport interface DataGridCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  rows?: readonly DeploymentRow[];\n  onInspect?: (id: string) => void;\n}\n\nexport function DataGridCard({\n  title = \"Deployment history\",\n  description = \"Every build that reached an environment, newest first.\",\n  rows = defaultRows,\n  headingLevel,\n  shadow,\n  theme,\n  onInspect,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: DataGridCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"data-grid\"\n    >\n      <DataTable\n        id=\"deployment-history\"\n        caption=\"Deployment history\"\n        columns={columns}\n        data={rows}\n        rowKey=\"id\"\n        selection=\"multiple\"\n        pageSize={4}\n        striped\n        className=\"flex min-h-0 flex-1 flex-col [&>[data-balsa=table]]:min-h-0 [&>[data-balsa=table]]:flex-1 [&_table]:h-full\"\n        onRowSelect={(row) => onInspect?.(row.id)}\n      />\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

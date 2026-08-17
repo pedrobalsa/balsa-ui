@@ -1,0 +1,4 @@
+interface:
+  display_name: "Balsa Template Design"
+  short_description: "Create distinctive Balsa templates without generic AI styling"
+  default_prompt: "Use $balsa-template-design with $balsa-ui to create a distinctive, production-ready Balsa template from this brief."

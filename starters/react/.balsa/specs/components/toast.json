@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 1,
+  "name": "toast",
+  "title": "Toast",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "sonner"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present transient, non-blocking notifications in a viewport-level managed stack.",
+  "useFor": [
+    "Background-operation feedback",
+    "Saved or completed confirmations",
+    "Recoverable errors with a concise action"
+  ],
+  "avoidFor": [
+    "Information required to complete a form",
+    "Consequential confirmation decisions",
+    "Persistent page-level guidance"
+  ],
+  "variants": [
+    "surface",
+    "soft",
+    "outline",
+    "glass"
+  ],
+  "types": [
+    "top-start",
+    "top-center",
+    "top-end",
+    "bottom-start",
+    "bottom-center",
+    "bottom-end"
+  ],
+  "states": [
+    "timed",
+    "sticky",
+    "paused",
+    "dismissed"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "accessibility": [
+    "Non-destructive items use polite status semantics while destructive items use assertive alert semantics.",
+    "The viewport never moves focus and Escape dismisses the newest dismissible toast.",
+    "Timers pause for hover, focus, window blur, and hidden documents so actions remain reachable."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-primary",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive",
+    "radius.surface",
+    "shadow.surface",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using Toast for feedback a user must retain.",
+    "Adding several unrelated actions to one toast.",
+    "Using a short duration for long descriptions or keyboard actions."
+  ],
+  "examples": [
+    {
+      "id": "success",
+      "title": "Success notification",
+      "description": "A polite success item confirms a completed background action.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"success\",\n      variant: \"surface\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n      actionLabel: \"Undo placeholder\",\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"bottom-end\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    },
+    {
+      "id": "action",
+      "title": "Actionable information",
+      "description": "One concise action remains reachable while the timer is paused by focus.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"info\",\n      variant: \"soft\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n      actionLabel: \"Undo placeholder\",\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"bottom-start\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    },
+    {
+      "id": "destructive",
+      "title": "Sticky destructive feedback",
+      "description": "Assertive destructive feedback stays until explicitly dismissed.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"destructive\",\n      variant: \"outline\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"top-end\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    },
+    {
+      "id": "center",
+      "title": "Top-center notification",
+      "description": "Centered placement remains viewport-safe at narrow widths.",
+      "source": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport Button from \"@/components/ui/Button.vue\";\nimport ToastViewport, { type ToastItem } from \"@/components/ui/ToastViewport.vue\";\n\nconst notifications = ref<readonly ToastItem[]>([]);\nlet sequence = 0;\n\nfunction notify(): void {\n  sequence += 1;\n  notifications.value = [\n    ...notifications.value,\n    {\n      id: `notification-${sequence}`,\n      title: \"Notification heading placeholder\",\n      description: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\n      color: \"accent\",\n      variant: \"glass\",\n      size: \"md\",\n      rounded: \"lg\",\n      duration: 5000,\n      sticky: true,\n      dismissible: true,\n      actionLabel: \"Undo placeholder\",\n    },\n  ];\n}\n</script>\n\n<template>\n  <Button @click=\"notify\">Show notification placeholder</Button>\n  <ToastViewport\n    v-model=\"notifications\"\n    position=\"top-center\"\n    @action=\"(item) => console.info(item.id)\"\n  />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/ToastViewport.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "readonly ToastItem[] | undefined",
+        "shape": {
+          "type": "readonly ToastItem[]",
+          "items": {
+            "type": "ToastItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "color",
+                "type": "SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "variant",
+                "type": "ToastVariant | undefined",
+                "required": false
+              },
+              {
+                "name": "size",
+                "type": "ToastSize | undefined",
+                "required": false
+              },
+              {
+                "name": "rounded",
+                "type": "Rounded | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "actionLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "actionDismiss",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "dismissible",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "closeLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "duration",
+                "type": "number | undefined",
+                "required": false
+              },
+              {
+                "name": "sticky",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Notifications\""
+      },
+      {
+        "name": "position",
+        "type": "ToastPosition | undefined",
+        "values": [
+          "bottom-start",
+          "bottom-end",
+          "bottom-center",
+          "top-start",
+          "top-center",
+          "top-end"
+        ],
+        "required": false,
+        "default": "\"bottom-end\""
+      },
+      {
+        "name": "limit",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "5"
+      },
+      {
+        "name": "duration",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "5000"
+      },
+      {
+        "name": "pauseOnHover",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "pauseOnFocus",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "contained",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "teleportTo",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"body\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "readonly ToastItem[] | undefined",
+        "shape": {
+          "type": "readonly ToastItem[]",
+          "items": {
+            "type": "ToastItem",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "color",
+                "type": "SemanticColor | undefined",
+                "required": false
+              },
+              {
+                "name": "variant",
+                "type": "ToastVariant | undefined",
+                "required": false
+              },
+              {
+                "name": "size",
+                "type": "ToastSize | undefined",
+                "required": false
+              },
+              {
+                "name": "rounded",
+                "type": "Rounded | undefined",
+                "required": false
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon | undefined",
+                "required": false
+              },
+              {
+                "name": "actionLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "actionDismiss",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "dismissible",
+                "type": "boolean | undefined",
+                "required": false
+              },
+              {
+                "name": "closeLabel",
+                "type": "string | undefined",
+                "required": false
+              },
+              {
+                "name": "duration",
+                "type": "number | undefined",
+                "required": false
+              },
+              {
+                "name": "sticky",
+                "type": "boolean | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[]"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: readonly ToastItem[]]"
+      },
+      {
+        "name": "action",
+        "type": "[item: ToastItem]"
+      },
+      {
+        "name": "dismiss",
+        "type": "[item: ToastItem, reason: ToastDismissReason]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "action",
+        "type": "{ item: ToastItem; dismiss: () => void; run: () => void; }"
+      }
+    ]
+  }
+}

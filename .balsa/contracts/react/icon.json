@@ -1,0 +1,46 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Icon.tsx",
+    "props": [
+      {
+        "name": "icon",
+        "type": "LucideIcon",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "IconSize | undefined",
+        "values": [
+          "xs",
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ],
+        "required": false
+      },
+      {
+        "name": "strokeWidth",
+        "type": "IconStrokeWidth | undefined",
+        "values": [
+          "1.5",
+          "2",
+          "2.5"
+        ],
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

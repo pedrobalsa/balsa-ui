@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "name": "code-block",
+  "title": "Code block",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Present source code or commands with accessible compact text actions and icon-only copy.",
+  "useFor": [
+    "Installation commands",
+    "Short source examples",
+    "Configuration snippets"
+  ],
+  "avoidFor": [
+    "Editable code input",
+    "Rich syntax-editor workflows",
+    "Prose quotations"
+  ],
+  "states": [
+    "idle",
+    "copied",
+    "wrapped",
+    "scrollable",
+    "numbered",
+    "highlighted",
+    "collapsed",
+    "expanded",
+    "inline single-line command"
+  ],
+  "accessibility": [
+    "Uses preformatted code semantics.",
+    "Syntax color supplements rather than replaces the source text.",
+    "Optional line numbers are hidden from assistive technology and excluded from copied source.",
+    "Collapsed previews retain the complete source in the document and expose keyboard-accessible See more and Show less actions.",
+    "The copy result is announced through a polite live region.",
+    "The icon-only copy control has a stable accessible name.",
+    "Header actions retain their own accessible group names.",
+    "The Glassmorphism material remains dark, gives labels and outline header actions an explicit code-surface contrast context, and restores an opaque code surface for increased contrast or reduced transparency."
+  ],
+  "tokens": [
+    "--balsa-color-code",
+    "--balsa-color-code-foreground",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using it as an editable editor.",
+    "Putting unexplained secrets in examples.",
+    "Forcing wrapping for long commands that must remain exact.",
+    "Making the Glassmorphism surface so transparent that it no longer reads as a consistently dark code surface."
+  ],
+  "examples": [
+    {
+      "id": "collapsed-preview",
+      "title": "Collapsed preview",
+      "description": "Long source can start compact and expand over a bottom fade.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"const background = '#101114';\nconst foreground = '#f4f4f5';\nconst surface = '#18191d';\nconst primary = '#f5f5f4';\nconst secondary = '#a1a1aa';\nconst accent = '#93c5fd';\" label=\"Configuration\" language=\"shell\" :collapsed-lines=\"5\" />\n</template>"
+    },
+    {
+      "id": "line-numbers",
+      "title": "Line numbers",
+      "description": "Visual line numbers can support longer reference examples.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"const placeholder = true;\nconst value = placeholder ? 1 : 0;\" label=\"Vue\" language=\"shell\" line-numbers />\n</template>"
+    },
+    {
+      "id": "wrapped",
+      "title": "Wrapped",
+      "description": "Wrapped code keeps long commands within narrow layouts.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"echo &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor&quot;\" label=\"Code placeholder\" language=\"shell\" wrap />\n</template>"
+    },
+    {
+      "id": "read-only",
+      "title": "Without copy",
+      "description": "Hide the copy action when the snippet is illustrative rather than reusable.",
+      "source": "<script setup lang=\"ts\">\nimport CodeBlock from \"@/components/ui/CodeBlock.vue\";\n</script>\n\n<template>\n  <CodeBlock code=\"echo &quot;Lorem ipsum placeholder&quot;\" label=\"Code placeholder\" language=\"shell\" :copyable=\"false\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/CodeBlock.vue",
+    "props": [
+      {
+        "name": "code",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "language",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"text\""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "CodeBlockLayout | undefined",
+        "values": [
+          "inline",
+          "block"
+        ],
+        "required": false,
+        "default": "\"block\""
+      },
+      {
+        "name": "copyable",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "wrap",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "lineNumbers",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "collapsedLines",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CodeBlockSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "{}"
+      }
+    ]
+  }
+}

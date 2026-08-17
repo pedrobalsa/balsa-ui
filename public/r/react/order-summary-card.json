@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "order-summary-card",
+  "type": "registry:ui",
+  "title": "OrderSummaryCard",
+  "description": "Line items, calculated totals, and order confirmation.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/OrderSummaryCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/OrderSummaryCard.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { Button } from \"../ui/Button\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface OrderLine {\n  id: string;\n  label: string;\n  detail?: string;\n  amount: string;\n}\n\nconst defaultItems: readonly OrderLine[] = [\n  { id: \"pro\", label: \"Pro workspace\", detail: \"12 members\", amount: \"$240.00\" },\n  { id: \"storage\", label: \"Additional storage\", detail: \"500 GB\", amount: \"$35.00\" },\n  { id: \"regions\", label: \"Extra regions\", detail: \"3 beyond the plan\", amount: \"$45.00\" },\n  { id: \"support\", label: \"Priority support\", detail: \"4 hour response\", amount: \"$60.00\" },\n  { id: \"credit\", label: \"Annual commitment\", detail: \"-10% for 12 months\", amount: \"-$38.00\" },\n];\n\nexport interface OrderSummaryCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  items?: readonly OrderLine[];\n  subtotal?: string;\n  tax?: string;\n  total?: string;\n  onConfirm?: () => void;\n}\n\nexport function OrderSummaryCard({\n  title = \"Order summary\",\n  description = \"Review charges before confirming.\",\n  items = defaultItems,\n  subtotal = \"$342.00\",\n  tax = \"$27.36\",\n  total = \"$369.36\",\n  headingLevel,\n  shadow,\n  theme,\n  onConfirm,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: OrderSummaryCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"order-summary\"\n      footer={<Button className=\"w-full\" onClick={onConfirm}>Confirm order</Button>}\n    >\n      <ul className=\"divide-y divide-balsa-border\" role=\"list\">\n        {items.map((item) => (\n          <li key={item.id} className=\"flex justify-between gap-balsa-lg py-balsa-md first:pt-0\">\n            <span>\n              <strong className=\"block text-sm font-medium\">{item.label}</strong>\n              <span className=\"text-xs text-balsa-muted-foreground\">{item.detail}</span>\n            </span>\n            <strong className=\"text-sm font-medium tabular-nums\">{item.amount}</strong>\n          </li>\n        ))}\n      </ul>\n      <dl className=\"mt-balsa-lg divide-y divide-balsa-border rounded-balsa-control bg-balsa-muted px-balsa-md text-sm\">\n        <div className=\"flex justify-between py-balsa-md\">\n          <dt>Subtotal</dt>\n          <dd className=\"tabular-nums\">{subtotal}</dd>\n        </div>\n        <div className=\"flex justify-between py-balsa-md\">\n          <dt>Tax</dt>\n          <dd className=\"tabular-nums\">{tax}</dd>\n        </div>\n        <div className=\"flex justify-between py-balsa-md font-semibold\">\n          <dt>Total</dt>\n          <dd className=\"tabular-nums\">{total}</dd>\n        </div>\n      </dl>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

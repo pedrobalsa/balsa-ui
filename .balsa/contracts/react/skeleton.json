@@ -1,0 +1,114 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Skeleton.tsx",
+    "props": [
+      {
+        "name": "shape",
+        "type": "SkeletonShape | undefined",
+        "values": [
+          "text",
+          "circle",
+          "rect"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "SkeletonVariant | undefined",
+        "values": [
+          "soft",
+          "glass",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SkeletonSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "animation",
+        "type": "SkeletonAnimation | undefined",
+        "values": [
+          "none",
+          "pulse",
+          "wave"
+        ],
+        "required": false
+      },
+      {
+        "name": "lines",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

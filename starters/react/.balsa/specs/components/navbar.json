@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "name": "navbar",
+  "title": "Navbar",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.1",
+  "purpose": "Provide responsive application navigation with compact item-anchored desktop menus plus controllable material, layout, and scroll behavior without coupling to a router or store.",
+  "useFor": [
+    "Application shells",
+    "Grouped desktop navigation",
+    "Responsive primary navigation"
+  ],
+  "avoidFor": [
+    "In-page section navigation",
+    "Router-specific logic inside the primitive",
+    "Unstructured large link inventories"
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "bar",
+    "floating",
+    "minimal"
+  ],
+  "states": [
+    "material on the bar",
+    "region-confined content column",
+    "compact desktop dropdown open",
+    "mobile menu open",
+    "mobile group expanded",
+    "returned minimal reveal readability fade",
+    "static",
+    "fixed",
+    "revealed by default",
+    "hidden on downward scroll"
+  ],
+  "accessibility": [
+    "Uses labelled navigation landmarks and native links.",
+    "Expandable controls expose aria-expanded, aria-controls, and accessible names.",
+    "Escape closes an open desktop dropdown and all destinations remain available without hover.",
+    "The navigate event exposes the original uncancelled MouseEvent so router integration can preserve modifier clicks and native fallback."
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-foreground",
+    "--balsa-color-surface",
+    "--balsa-color-surface-elevated",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-destructive",
+    "--balsa-color-muted",
+    "--balsa-color-focus-ring",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Coupling Navbar to a specific router.",
+    "Passing duplicate destination links.",
+    "Using the compact dropdown for a large unstructured navigation inventory.",
+    "Using fixed or reveal behavior without reserving space or scroll margin for page content.",
+    "Overriding Glassmorphism's floating glass treatment without a deliberate reason."
+  ],
+  "examples": [
+    {
+      "id": "floating-glass",
+      "title": "Floating glass",
+      "description": "An inset translucent slab keeps surrounding background detail visible.",
+      "source": "<script setup lang=\"ts\">\nimport Navbar from \"@/components/ui/Navbar.vue\";\nimport Link from \"@/components/ui/Link.vue\";\n\n// Placeholder navigation data for this documentation example.\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"#top\" };\nconst items = [\n  {\n    title: \"Product\",\n    link: \"#product\",\n    links: [\n      { title: \"Overview\", link: \"#overview\", shortDescription: \"A concise product introduction.\" },\n      { title: \"Release notes\", link: \"#releases\", shortDescription: \"What changed in the latest version.\" },\n    ],\n  },\n  { title: \"Solutions\", link: \"#solutions\" },\n  { title: \"Resources\", link: \"#resources\" },\n];\n</script>\n\n<template>\n  <Navbar :logo=\"logo\" :items=\"items\" type=\"floating\" variant=\"glass\" behavior=\"fixed\">\n  <template #actions>\n    <Link href=\"#sign-in\" size=\"sm\">Sign in</Link>\n    <Link href=\"#get-started\" variant=\"solid\" size=\"sm\">Get started</Link>\n  </template>\n</Navbar>\n</template>"
+    },
+    {
+      "id": "reveal",
+      "title": "Reveal on scroll",
+      "description": "The header steps away while reading down and returns when the reader moves up.",
+      "source": "<script setup lang=\"ts\">\nimport Navbar from \"@/components/ui/Navbar.vue\";\nimport Link from \"@/components/ui/Link.vue\";\n\n// Placeholder navigation data for this documentation example.\nconst logo = { title: \"BALSA UI\", alt: \"Balsa UI placeholder\", href: \"#top\" };\nconst items = [\n  {\n    title: \"Product\",\n    link: \"#product\",\n    links: [\n      { title: \"Overview\", link: \"#overview\", shortDescription: \"A concise product introduction.\" },\n      { title: \"Release notes\", link: \"#releases\", shortDescription: \"What changed in the latest version.\" },\n    ],\n  },\n  { title: \"Solutions\", link: \"#solutions\" },\n  { title: \"Resources\", link: \"#resources\" },\n];\n</script>\n\n<template>\n  <Navbar :logo=\"logo\" :items=\"items\" type=\"bar\" variant=\"surface\">\n  <template #actions>\n    <Link href=\"#sign-in\" size=\"sm\">Sign in</Link>\n    <Link href=\"#get-started\" variant=\"solid\" size=\"sm\">Get started</Link>\n  </template>\n</Navbar>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Navbar.vue",
+    "props": [
+      {
+        "name": "logo",
+        "type": "BrandLogo",
+        "shape": {
+          "type": "BrandLogo",
+          "variants": [
+            {
+              "type": "BrandImage",
+              "fields": [
+                {
+                  "name": "src",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "title",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "type": "BrandTitle",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "src",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly NavigationGroup[]",
+        "shape": {
+          "type": "readonly NavigationGroup[]",
+          "items": {
+            "type": "NavigationGroup",
+            "fields": [
+              {
+                "name": "links",
+                "type": "readonly NavigationLink[] | undefined",
+                "required": false
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "shortDescription",
+                "type": "string | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "NavbarVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "NavbarType | undefined",
+        "values": [
+          "bar",
+          "floating",
+          "minimal"
+        ],
+        "required": false
+      },
+      {
+        "name": "behavior",
+        "type": "NavbarBehavior | undefined",
+        "values": [
+          "fixed",
+          "static",
+          "reveal"
+        ],
+        "required": false
+      },
+      {
+        "name": "floatingLayout",
+        "type": "NavbarFloatingLayout | undefined",
+        "values": [
+          "inset",
+          "container"
+        ],
+        "required": false
+      },
+      {
+        "name": "floatingMaxWidth",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "contentMaxWidth",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "itemsAlignment",
+        "type": "NavbarItemsAlignment | undefined",
+        "values": [
+          "center",
+          "right",
+          "left"
+        ],
+        "required": false
+      },
+      {
+        "name": "contentRegion",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "description": "Optional CSS width for the desktop navigation region while the bar itself\nstays full width, for a route whose page reserves the remainder. The\ncontent centres inside the region and takes a taller row, reading as chrome\nover a full-bleed page; below `lg` it always spans the bar."
+      },
+      {
+        "name": "fixed",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [
+      {
+        "name": "navigate",
+        "type": "[item: NavigationLink, event: MouseEvent]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "{}"
+      }
+    ]
+  }
+}

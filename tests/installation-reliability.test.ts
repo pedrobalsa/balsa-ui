@@ -56,7 +56,7 @@ describe("installation reliability", () => {
   // Installing into a directory that is not an npm project yet is legitimate;
   // Balsa creates what it needs. The problems are reported, never fatal.
   it("reports what a bare target is missing but still installs", () => {
-    const result = runCli(["add", "button", "--cwd", target]);
+    const result = runCli(["add", "@balsa/button", "--cwd", target]);
 
     expect(result.status, result.stderr).toBe(0);
     expect(result.stderr).toContain("missing-package-json");
@@ -75,7 +75,7 @@ describe("installation reliability", () => {
     };
     expect(report.ready).toBe(false);
     const codes = report.problems.map((problem) => problem.code);
-    expect(codes).toContain("missing-vue");
+    expect(codes).toContain("unknown-framework");
     expect(codes).toContain("missing-stylesheet");
     for (const problem of report.problems) {
       expect(problem.fix.length).toBeGreaterThan(0);

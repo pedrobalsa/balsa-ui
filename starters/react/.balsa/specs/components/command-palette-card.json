@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "name": "command-palette-card",
+  "title": "CommandPaletteCard",
+  "category": "composition",
+  "classification": "balsa-composition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Grouped command palette that reaches projects, actions, and settings from one search.",
+  "useFor": [
+    "Production application interfaces",
+    "Design Studio composition previews",
+    "Reusable product workflows"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Unrelated content forced into one surface",
+    "Pinned geometry or elevation that bypasses the active theme"
+  ],
+  "variants": [
+    "theme inherited"
+  ],
+  "sizes": [
+    "responsive"
+  ],
+  "states": [
+    "default",
+    "interactive",
+    "disabled where applicable"
+  ],
+  "composition": {
+    "root": "ApplicationCard",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "research": "https://linear.app/docs"
+  },
+  "accessibility": [
+    "Heading level follows the surrounding document hierarchy.",
+    "Interactive controls retain native keyboard and focus behavior through Balsa primitives.",
+    "Supporting text and status do not rely on color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-muted",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-density-factor"
+  ],
+  "commonMistakes": [
+    "Pinning radius, border, or shadow instead of inheriting the design context.",
+    "Replacing the typed data contract with demo-only DOM.",
+    "Adding a second principal card surface."
+  ],
+  "publicApi": {
+    "source": "src/components/compositions/CommandPaletteCard.vue",
+    "props": [
+      {
+        "name": "headingLevel",
+        "type": "2 | 3 | 4 | 5 | 6 | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Jump to anything\""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"One search across projects, people and settings.\""
+      },
+      {
+        "name": "groups",
+        "type": "readonly CommandGroup[] | undefined",
+        "shape": {
+          "type": "readonly CommandGroup[]",
+          "items": {
+            "type": "CommandGroup",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly CommandItem[]",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[ { id: \"projects\", label: \"Projects\", items: [ { id: \"atlas\", label: \"Atlas\", icon: Boxes, shortcut: \"1\" }, { id: \"relay\", label: \"Relay\", icon: Boxes, shortcut: \"2\" }, { id: \"harbor\", label: \"Harbor\", icon: Boxes, shortcut: \"3\" }, ], }, { id: \"actions\", label: \"Actions\", items: [ { id: \"deploy\", label: \"Deploy the current commit\", icon: Rocket }, { id: \"branch\", label: \"Open a preview branch\", icon: GitBranch }, { id: \"logs\", label: \"Stream production logs\", icon: ScrollText }, ], }, ]"
+      },
+      {
+        "name": "recents",
+        "type": "readonly { id: string; label: string; detail: string; }[] | undefined",
+        "shape": {
+          "type": "readonly { id: string; label: string; detail: string; }[]",
+          "items": {
+            "type": "{ id: string; label: string; detail: string; }",
+            "fields": [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "detail",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false,
+        "default": "[ { id: \"atlas-logs\", label: \"Atlas production logs\", detail: \"8 minutes ago\" }, { id: \"relay-preview\", label: \"Relay preview branch\", detail: \"1 hour ago\" }, { id: \"members\", label: \"Members and roles\", detail: \"Yesterday\" }, ]"
+      }
+    ],
+    "events": [
+      {
+        "name": "select",
+        "type": "[id: string]"
+      }
+    ],
+    "slots": []
+  },
+  "examples": [
+    {
+      "id": "default",
+      "title": "Default pattern",
+      "description": "Use the default typed pattern as a production-ready starting point.",
+      "source": "<script setup lang=\"ts\">\nimport CommandPaletteCard from \"@/components/compositions/CommandPaletteCard.vue\";\n</script>\n\n<template>\n  <CommandPaletteCard title=\"Pattern placeholder\" />\n</template>"
+    },
+    {
+      "id": "inherited-design",
+      "title": "Inherited design",
+      "description": "The same composition follows the nearest Balsa theme and palette without pinned presentation.",
+      "source": "<script setup lang=\"ts\">\nimport CommandPaletteCard from \"@/components/compositions/CommandPaletteCard.vue\";\n</script>\n\n<template>\n  <CommandPaletteCard title=\"Pattern placeholder\" />\n</template>"
+    }
+  ]
+}

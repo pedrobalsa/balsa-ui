@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0
+
+- Released `balsa-ui@0.8.0`, the release that makes React a supported consumer framework.
+  **There are no breaking changes for existing Vue consumers.** `@balsa/<name>` remains
+  Vue's permanent unqualified address, `/r/<name>.json` still serves it, and every
+  documentation URL keeps its existing path. Nothing installed from 0.7.x needs to be
+  reinstalled or re-addressed. The rest of this entry is additive.
+
 ## 0.7.1
 
 - Released `balsa-ui@0.7.1` as a packaging-only patch release. No component

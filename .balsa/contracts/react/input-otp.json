@@ -1,0 +1,219 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/InputOTP.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "length",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "InputOTPMode | undefined",
+        "values": [
+          "numeric",
+          "alphanumeric"
+        ],
+        "required": false
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "mask",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "grouped",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "separatorEvery",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "separator",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "sm",
+          "md"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "InputOTPVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "onComplete",
+        "type": "((value: string) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "cell",
+        "type": "((slot: InputOTPCellSlot) => ReactNode) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

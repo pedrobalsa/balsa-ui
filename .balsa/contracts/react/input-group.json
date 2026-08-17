@@ -1,0 +1,182 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/InputGroup.tsx",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "InputGroupType | undefined",
+        "values": [
+          "text",
+          "email",
+          "url",
+          "search"
+        ],
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "InputGroupLayout | undefined",
+        "values": [
+          "inline",
+          "stacked"
+        ],
+        "required": false
+      },
+      {
+        "name": "startText",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "endText",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "startIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "endIcon",
+        "type": "LucideIcon | undefined",
+        "required": false
+      },
+      {
+        "name": "start",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "end",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "sm",
+          "md"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

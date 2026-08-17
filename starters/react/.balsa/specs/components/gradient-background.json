@@ -1,0 +1,684 @@
+{
+  "schemaVersion": 1,
+  "name": "gradient-background",
+  "title": "GradientBackground",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.2.1",
+  "purpose": "Render a deterministic, slowly animated procedural field behind application content, optionally redrawn as ASCII glyphs or print-style marks, without requiring image or video input.",
+  "useFor": [
+    "Page and hero backgrounds",
+    "Atmospheric depth behind Glassmorphism surfaces",
+    "Reproducible generated artwork exported from Gradient Studio"
+  ],
+  "avoidFor": [
+    "Motion-dependent information",
+    "Dense content without a protective surface",
+    "Multiple simultaneous full-viewport renderers"
+  ],
+  "variants": [
+    "custom colors",
+    "palette-aware colors",
+    "ribbon pattern",
+    "radial pattern",
+    "conic pattern",
+    "blobs pattern",
+    "contour pattern",
+    "cellular pattern",
+    "ascii effect",
+    "halftone effect",
+    "dots effect",
+    "lines effect",
+    "dither effect",
+    "crosshatch effect"
+  ],
+  "states": [
+    "animated",
+    "paused",
+    "reduced motion",
+    "offscreen",
+    "document hidden",
+    "WebGL fallback",
+    "context lost",
+    "effect without a glyph atlas"
+  ],
+  "composition": {
+    "renderer": "One Three.js WebGLRenderer, orthographic camera, and full-screen plane. The gradient draws straight to the canvas while no effect is selected; choosing one adds a WebGLRenderTarget and a second full-screen pass that reads the first as a texture.",
+    "configuration": "Versioned schema-three BalsaBackgroundConfig with automatic schema-one and schema-two migration, preset defaults, configuration overrides, and direct prop overrides in that order.",
+    "noiseSeparation": "Structural field octaves and frequency shape waves independently from visible noise amount, octaves, and frequency; fine grain remains a separate final texture treatment.",
+    "seedSafety": "The renderer maps full-range configuration seeds into a small deterministic shader-safe range before hashing so floating-point precision cannot collapse procedural noise.",
+    "studioSimulations": "Gradient Studio renders the field in a rounded preview beside its editor, and can lay structurally distinct Storefront, Dashboard, and Editorial shells over it; every simulated label, metric, byline, and content string is explicit placeholder or lorem-ipsum copy rather than plausible live content.",
+    "studioHandoff": "Gradient Studio exports from a Save modal over the preview: a Balsa CLI command encoding the exact current configuration with no intermediate download, manual typed configuration and Vue usage with optional JSON exchange, an agent prompt that obtains GradientBackground through the public add command first, and still PNG capture at common dimensions.",
+    "presets": [
+      "obsidian-fold",
+      "silver-dunes",
+      "cloud-dancer",
+      "holographic-flow",
+      "liquid-metal",
+      "smoke-field",
+      "iridescent-flow",
+      "solar-bloom",
+      "mesh-drift",
+      "terminal-rain",
+      "newsprint",
+      "plotter",
+      "aurora-veil",
+      "terracotta-dune",
+      "neon-drift"
+    ],
+    "patterns": "One compiled program per pattern, all sharing the same domain warp and one uniforms object, so warp, scale, direction, and the octave counts behave identically across generators. patternDensity is the repeat count each generator reads in its own terms; patternComplexity sizes blobs and cellular instead.",
+    "effects": "Effects redraw the finished gradient on a lattice measured in CSS pixels, so mark density survives device pixel ratio changes and PNG capture at another size. Color follows the gradient, an ink and paper duotone pair, or ink laid over the field; effectMix of zero renders the field exactly as the gradient pass drew it. Grain is applied in whichever pass runs last, so a cell effect cannot flatten it to one sample per cell.",
+    "asciiAtlas": "ASCII builds its glyph atlas at runtime from the effectCharacters string and orders the columns by measured ink coverage, so the luminance-to-glyph mapping rises monotonically whatever order the characters were typed in. Where no canvas is available the effect degrades to a dot mark.",
+    "grain": "Grain is applied in whichever pass renders last, so a cell effect cannot flatten it to one sample per cell, and it uses a hash of its own rather than the field's -- the field's ends on a product of two fractions, which smooths away inside fBM but reads as visible hyperbolic structure per pixel. grainSize is measured in CSS pixels, so grain holds its size across display densities and PNG capture.",
+    "studioEditor": "Controls collapse into property rows that name their current value and offer the rest in a menu, with an Advanced settings panel anchored to the row for the raw sliders. Presets are chosen from a grid of rendered miniatures rather than by name, and the Studio exposes no render quality or seed input -- quality stays automatic and Randomize rerolls the composition."
+  },
+  "accessibility": [
+    "The canvas is decorative, aria-hidden, non-interactive, and pointer-transparent.",
+    "Reduced-motion users receive one static rendered frame.",
+    "Forced-colors users receive a system-color fallback.",
+    "No meaning or control state depends on background motion.",
+    "Duotone and ink effect colors receive the same contrast repair as the gradient stops, because content ends up sitting on them rather than on the ramp."
+  ],
+  "tokens": [
+    "--balsa-color-background",
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent"
+  ],
+  "commonMistakes": [
+    "Placing readable content directly over high-contrast forms without a surface.",
+    "Running several full-viewport instances when one shared background is enough.",
+    "Coupling the primitive to an application palette or theme store.",
+    "Using more than six or fewer than two color stops.",
+    "Measuring effect cell size in device pixels, which changes mark density between displays and between a preview and its exported PNG.",
+    "Running the cellular pattern at a high complexity on low-power hardware when a cheaper generator would read the same.",
+    "Measuring grain in device pixels, which halves its size on a 2x display and makes it read as barely there."
+  ],
+  "examples": [
+    {
+      "id": "silver-dunes",
+      "title": "Silver Dunes",
+      "description": "A restrained monochrome preset supports foreground surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport GradientBackground from \"@/components/ui/GradientBackground.vue\";\n</script>\n\n<template>\n  <section class=\"relative isolate min-h-96 overflow-hidden\">\n    <GradientBackground preset=\"silver-dunes\" :seed=\"2411\" color-mode=\"custom\" :colors='[\"#050506\", \"#D7D8DA\"]' :speed=\"0.05\" :scale=\"1.18\" :warp=\"1.12\" pattern=\"ribbon\" :pattern-density=\"2.35\" effect=\"none\" :effect-scale=\"10\" :field-octaves=\"4\" :field-frequency=\"0.78\" :noise-amount=\"0.05\" :noise-octaves=\"4\" :noise-frequency=\"1.1\" :grain=\"0.06\" quality=\"auto\" />\n    <div class=\"relative z-10 p-10\">Content placeholder</div>\n  </section>\n</template>"
+    },
+    {
+      "id": "palette-mode",
+      "title": "Palette mode",
+      "description": "Palette mode derives its colors from the nearest palette boundary.",
+      "source": "<script setup lang=\"ts\">\nimport GradientBackground from \"@/components/ui/GradientBackground.vue\";\n</script>\n\n<template>\n  <section class=\"relative isolate min-h-96 overflow-hidden\">\n    <GradientBackground preset=\"obsidian-fold\" :seed=\"8031\" color-mode=\"palette\" :colors='[\"#050506\", \"#D7D8DA\"]' :speed=\"0.075\" :scale=\"1.18\" :warp=\"1.12\" pattern=\"ribbon\" :pattern-density=\"2.35\" effect=\"none\" :effect-scale=\"10\" :field-octaves=\"4\" :field-frequency=\"0.78\" :noise-amount=\"0.05\" :noise-octaves=\"4\" :noise-frequency=\"1.1\" :grain=\"0.06\" quality=\"auto\" paused />\n    <div class=\"relative z-10 p-10\">Content placeholder</div>\n  </section>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/GradientBackground.vue",
+    "props": [
+      {
+        "name": "preset",
+        "type": "\"obsidian-fold\" | \"silver-dunes\" | \"cloud-dancer\" | \"holographic-flow\" | \"liquid-metal\" | \"smoke-field\" | \"iridescent-flow\" | \"solar-bloom\" | \"mesh-drift\" | \"terminal-rain\" | \"newsprint\" | \"plotter\" | \"aurora-veil\" | \"terracotta-dune\" | \"neon-drift\" | undefined",
+        "values": [
+          "obsidian-fold",
+          "silver-dunes",
+          "cloud-dancer",
+          "holographic-flow",
+          "liquid-metal",
+          "smoke-field",
+          "iridescent-flow",
+          "solar-bloom",
+          "mesh-drift",
+          "terminal-rain",
+          "newsprint",
+          "plotter",
+          "aurora-veil",
+          "terracotta-dune",
+          "neon-drift"
+        ],
+        "required": false
+      },
+      {
+        "name": "config",
+        "type": "GradientBackgroundConfigInput | undefined",
+        "shape": {
+          "type": "GradientBackgroundConfigInput",
+          "fields": [
+            {
+              "name": "direction",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "scale",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "seed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "speed",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "wave",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "preset",
+              "type": "\"obsidian-fold\" | \"silver-dunes\" | \"cloud-dancer\" | \"holographic-flow\" | \"liquid-metal\" | \"smoke-field\" | \"iridescent-flow\" | \"solar-bloom\" | \"mesh-drift\" | \"terminal-rain\" | \"newsprint\" | \"plotter\" | \"aurora-veil\" | \"terracotta-dune\" | \"neon-drift\" | undefined",
+              "required": false
+            },
+            {
+              "name": "colorMode",
+              "type": "\"palette\" | \"custom\" | undefined",
+              "required": false
+            },
+            {
+              "name": "warp",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "softness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "grain",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "grainSize",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "contrast",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "brightness",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "fieldOctaves",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "fieldFrequency",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "noiseAmount",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "noiseOctaves",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "noiseFrequency",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "warpFrequency",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "pattern",
+              "type": "\"ribbon\" | \"radial\" | \"blobs\" | \"contour\" | \"conic\" | \"cellular\" | undefined",
+              "required": false
+            },
+            {
+              "name": "patternDensity",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "patternCenterX",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "patternCenterY",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "patternComplexity",
+              "type": "number | undefined",
+              "required": false
+            },
+            {
+              "name": "effect",
+              "type": "\"none\" | \"lines\" | \"ascii\" | \"halftone\" | \"dither\" | \"dots\" | \"crosshatch\" | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "seed",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "colorMode",
+        "type": "\"palette\" | \"custom\" | undefined",
+        "values": [
+          "palette",
+          "custom"
+        ],
+        "required": false
+      },
+      {
+        "name": "colors",
+        "type": "readonly string[] | undefined",
+        "required": false
+      },
+      {
+        "name": "contentContrast",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "contentColor",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "scrim",
+        "type": "number | boolean | undefined",
+        "values": [
+          "number",
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "scrimColor",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "speed",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "scale",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "warp",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "wave",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "softness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "grain",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "grainSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "contrast",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "brightness",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "direction",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "fieldOctaves",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "fieldFrequency",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "noiseAmount",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "noiseOctaves",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "noiseFrequency",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "warpFrequency",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "pattern",
+        "type": "\"ribbon\" | \"radial\" | \"blobs\" | \"contour\" | \"conic\" | \"cellular\" | undefined",
+        "values": [
+          "ribbon",
+          "radial",
+          "blobs",
+          "contour",
+          "conic",
+          "cellular"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternDensity",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternCenterX",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternCenterY",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "patternComplexity",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effect",
+        "type": "\"none\" | \"lines\" | \"ascii\" | \"halftone\" | \"dither\" | \"dots\" | \"crosshatch\" | undefined",
+        "values": [
+          "none",
+          "lines",
+          "ascii",
+          "halftone",
+          "dither",
+          "dots",
+          "crosshatch"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectScale",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectAngle",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectMix",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectColorMode",
+        "type": "\"gradient\" | \"duotone\" | \"ink\" | undefined",
+        "values": [
+          "gradient",
+          "duotone",
+          "ink"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectInk",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectPaper",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectInvert",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectLevels",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectShape",
+        "type": "\"round\" | \"square\" | \"cross\" | undefined",
+        "values": [
+          "round",
+          "square",
+          "cross"
+        ],
+        "required": false
+      },
+      {
+        "name": "effectCharacters",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "quality",
+        "type": "\"auto\" | \"medium\" | \"low\" | \"high\" | undefined",
+        "values": [
+          "auto",
+          "medium",
+          "low",
+          "high"
+        ],
+        "required": false
+      },
+      {
+        "name": "paused",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [],
+    "exposed": [
+      {
+        "name": "capturePng",
+        "type": "(options?: GradientBackgroundCaptureOptions) => Promise<Blob>"
+      },
+      {
+        "name": "renderStill",
+        "type": "() => void"
+      }
+    ]
+  }
+}

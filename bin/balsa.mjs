@@ -18,6 +18,7 @@ import {
   compactCatalogItem,
   ensureAgentInstructions,
   ensureStyleImports,
+  findCatalogItem,
   formatCatalogList,
   formatComponentMarkdown,
   loadCatalog,
@@ -27,10 +28,11 @@ import {
   requiredNpmDependencies,
   searchCatalog,
   searchKinds,
-  unknownItemError,
+  syncAgentContext,
 } from "../scripts/agent-context.mjs";
 import { listTools, serveStdio } from "../scripts/mcp-server.mjs";
 import { readJson, rootDir } from "../scripts/registry-lib.mjs";
+import { address } from "../bin/registry-targets.mjs";
 import {
   createResolver,
   ensureProjectConfiguration,
@@ -52,14 +54,21 @@ import {
   inspectInstallation,
   inspectProject,
 } from "../scripts/project-diagnostics.mjs";
+import {
+  catalogFrameworkOption,
+  detectProjectFramework,
+  frameworkDetectionError,
+  projectHasPackage,
+  writeProjectFramework,
+} from "../scripts/project-framework.mjs";
 
 const { version: cliVersion } = await readJson(path.join(rootDir, "package.json"));
 
 const help = `Balsa UI CLI
 
 Usage:
-  balsa init [--palette] [--cwd <project>] [--force] [--json]
-  balsa add <item|@registry/item> [more-items] [--implementation <registry>] [--cwd <project>] [--force]
+  balsa init [--palette] [--framework <vue|react>] [--cwd <project>] [--force] [--json]
+  balsa add <item|@registry/item> [more-items] [--framework <vue|react>] [--implementation <registry>] [--cwd <project>] [--force]
   balsa list [--json]
   balsa search <terms> [--kind <kind,...>] [--limit <n>] [--json]
   balsa info <item> [--json | --markdown]
@@ -111,6 +120,7 @@ function parseAddArguments(argv) {
   let force = false;
   let json = false;
   let implementation;
+  let framework;
 
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
@@ -125,6 +135,12 @@ function parseAddArguments(argv) {
       const selected = argv[index + 1];
       if (!selected) throw new Error("--implementation requires a registry name, for example balsa or shadcn.");
       implementation = selected.startsWith("@") ? selected : `@${selected}`;
+      index += 1;
+      continue;
+    }
+    if (value === "--framework") {
+      framework = argv[index + 1];
+      if (!framework) throw new Error("--framework requires vue or react.");
       index += 1;
       continue;
     }
@@ -154,10 +170,11 @@ function parseAddArguments(argv) {
       cwd,
       force,
       json,
+      framework,
     };
   }
 
-  return { names, cwd, force, json };
+  return { names, cwd, force, json, framework };
 }
 
 function printJson(value) {
@@ -179,11 +196,15 @@ async function listItems(argv) {
   const { json, values } = parseOutputFormat(argv);
   if (values.length) throw new Error(`Unknown option: ${values[0]}`);
   const catalog = await loadCatalog();
+  const detection = await detectProjectFramework(process.cwd());
+  const items = detection.framework
+    ? catalog.items.filter((item) => item.framework === detection.framework || item.framework === "shared")
+    : catalog.items;
   if (json) {
-    printJson(catalog.items.map(compactCatalogItem));
+    printJson(items.map(compactCatalogItem));
     return;
   }
-  console.log(formatCatalogList(catalog.items));
+  console.log(formatCatalogList(items));
 }
 
 /**
@@ -251,6 +272,7 @@ async function searchItems(argv) {
     kinds,
     limit,
     upstreamItems: await certifiedUpstreamItems(),
+    ...catalogFrameworkOption(await detectProjectFramework(process.cwd())),
   });
 
   if (json) {
@@ -289,8 +311,9 @@ async function describeItem(argv) {
     throw new Error("Choose one item, for example: balsa info select --markdown");
   }
   const catalog = await loadCatalog();
-  const item = catalog.items.find((candidate) => candidate.name === values[0]);
-  if (!item) throw unknownItemError(catalog, values[0]);
+  const item = findCatalogItem(catalog, values[0], catalogFrameworkOption(
+    await detectProjectFramework(process.cwd()),
+  ));
   const spec = await loadComponentSpec(item);
   if (json) {
     printJson({ ...compactCatalogItem(item), contract: spec });
@@ -306,8 +329,8 @@ async function describeItem(argv) {
  * here would trade a confusing install for an unusable one. `balsa doctor` is
  * the command that treats these as pass/fail.
  */
-async function preflight(cwd, { json = false } = {}) {
-  const diagnosis = await inspectProject(cwd);
+async function preflight(cwd, { json = false, framework } = {}) {
+  const diagnosis = await inspectProject(cwd, { framework });
   if (diagnosis.problems.length && !json) {
     console.warn(`${formatProblems(diagnosis.problems).join("\n")}\n`);
   }
@@ -333,7 +356,7 @@ async function runDoctor(argv) {
     printJson({
       project: diagnosis.projectRoot,
       cliVersion,
-      framework: diagnosis.packageJson?.dependencies?.vue ? "vue" : undefined,
+      framework: diagnosis.framework,
       style: configuration.style,
       aliases: configuration.aliases,
       registries: Object.keys(configuration.registries),
@@ -427,8 +450,8 @@ async function viewItem(argv) {
   const dependencies = resolved.filter((candidate) => candidate !== item);
 
   const catalog = await loadCatalog();
-  const catalogItem = catalog.items.find(
-    (candidate) => candidate.name === item.name && item.namespace === "@balsa",
+  const catalogItem = catalog.items.find((candidate) =>
+    candidate.registry === item.reference
   );
 
   const result = {
@@ -537,8 +560,18 @@ async function applyTheme(argv) {
 
 async function addItems(argv) {
   const options = parseAddArguments(argv);
-  await preflight(options.cwd, { json: options.json });
-  const installed = await installRegistryItems(options);
+  const needsFramework = options.names.some((name) => !name.startsWith("@"));
+  const detection = await detectProjectFramework(options.cwd, { framework: options.framework });
+  if (needsFramework && detection.code) throw frameworkDetectionError(detection);
+  const names = needsFramework
+    ? options.names.map((name) => (name.startsWith("@") ? name : address(detection.framework, name)))
+    : options.names;
+  await preflight(options.cwd, { json: options.json, framework: detection.framework });
+  const installed = await installRegistryItems({
+    ...options,
+    names,
+    framework: detection.framework,
+  });
   const includesTheme = installed.some((item) => item.name === "balsa-theme");
   const includesPalette = installed.some((item) => item.name === "balsa-palette");
   const includesBridge = installed.some((item) => item.name === "balsa-shadcn-bridge");
@@ -584,6 +617,7 @@ function parseInitArguments(argv) {
   let force = false;
   let palette = false;
   let json = false;
+  let framework;
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === "--cwd") {
@@ -593,31 +627,56 @@ function parseInitArguments(argv) {
       index += 1;
       continue;
     }
+    if (value === "--framework") {
+      framework = argv[index + 1];
+      if (!framework) throw new Error("--framework requires vue or react.");
+      index += 1;
+      continue;
+    }
     if (value === "--force") force = true;
     else if (value === "--palette") palette = true;
     else if (value === "--json") json = true;
     else throw new Error(`Unknown option: ${value}`);
   }
-  return { cwd, force, palette, json };
+  return { cwd, force, palette, json, framework };
 }
 
 async function initializeProject(argv) {
   const options = parseInitArguments(argv);
-  const diagnosis = await preflight(options.cwd, { json: options.json });
+  const detection = await detectProjectFramework(options.cwd, { framework: options.framework });
+  if (detection.code) throw frameworkDetectionError(detection);
+
+  const diagnosis = await preflight(options.cwd, {
+    json: options.json,
+    framework: detection.framework,
+  });
+  await writeProjectFramework(options.cwd, detection.framework);
   const componentsConfiguration = await ensureProjectConfiguration(options.cwd, {
     stylesheet: diagnosis.stylesheet ?? "src/index.css",
+    framework: detection.framework,
+    rsc: detection.framework === "react" && projectHasPackage(diagnosis.packageJson, "next"),
   });
-  const names = ["balsa-theme", ...(options.palette ? ["balsa-palette"] : [])];
-  const installed = await installRegistryItems({
-    names,
-    cwd: options.cwd,
-    force: options.force,
-  });
-  const stylesheet = await ensureStyleImports(options.cwd, options.palette);
+
+  let installed = [];
+  let stylesheet;
+  if (detection.framework === "vue") {
+    const names = ["balsa-theme", ...(options.palette ? ["balsa-palette"] : [])];
+    installed = await installRegistryItems({
+      names,
+      cwd: options.cwd,
+      force: options.force,
+      framework: detection.framework,
+    });
+    stylesheet = await ensureStyleImports(options.cwd, options.palette);
+  } else {
+    await syncAgentContext(options.cwd);
+  }
+
   const agentInstructions = await ensureAgentInstructions(options.cwd);
   const dependencyInstallation = await installDependencies(options.cwd, installed);
   const result = {
     project: options.cwd,
+    framework: detection.framework,
     installed: installed.map((item) => item.reference ?? `@balsa/${item.name}`),
     stylesheet,
     agentInstructions,
@@ -1219,6 +1278,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         {
           error: error.message,
           cliVersion,
+          ...(error.code ? { code: error.code } : {}),
           ...(error.installed ? { installed: error.installed } : {}),
         },
         null,

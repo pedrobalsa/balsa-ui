@@ -1,0 +1,8 @@
+{
+  "name": "@balsa-ui/react",
+  "private": true,
+  "version": "0.0.0",
+  "description": "React adapter source for Balsa UI theme and controls.",
+  "license": "MIT",
+  "type": "module"
+}

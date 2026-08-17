@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "onboarding-checklist-card",
+  "type": "registry:ui",
+  "title": "OnboardingChecklistCard",
+  "description": "Setup tasks with progress and complete/current/future state.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/button",
+    "@balsa/react/checkbox",
+    "@balsa/react/progress"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/OnboardingChecklistCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/OnboardingChecklistCard.tsx",
+      "content": "import { useState, type HTMLAttributes } from \"react\";\nimport { Button } from \"../ui/Button\";\nimport { Checkbox } from \"../ui/Checkbox\";\nimport { Progress } from \"../ui/Progress\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface OnboardingTask {\n  id: string;\n  label: string;\n  description: string;\n  complete: boolean;\n}\n\nconst defaultTasks: readonly OnboardingTask[] = [\n  { id: \"profile\", label: \"Complete profile\", description: \"Add a name and workspace image.\", complete: true },\n  { id: \"team\", label: \"Invite your team\", description: \"Bring collaborators into the workspace.\", complete: true },\n  { id: \"project\", label: \"Create first project\", description: \"Start with a production or preview project.\", complete: false },\n  { id: \"domain\", label: \"Connect a domain\", description: \"Publish with your own address.\", complete: false },\n  { id: \"environment\", label: \"Add a preview environment\", description: \"Review changes before they reach production.\", complete: false },\n  { id: \"alerts\", label: \"Choose where alerts go\", description: \"Send deploy failures to the right people.\", complete: false },\n];\n\nexport interface OnboardingChecklistCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  tasks?: readonly OnboardingTask[];\n  onContinue?: () => void;\n}\n\nexport function OnboardingChecklistCard({\n  title = \"Set up your workspace\",\n  description = \"Complete these tasks to get ready for launch.\",\n  tasks = defaultTasks,\n  headingLevel,\n  shadow,\n  theme,\n  onContinue,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: OnboardingChecklistCardProps) {\n  void _dataBalsa;\n  const [values, setValues] = useState<Record<string, boolean>>(() =>\n    Object.fromEntries(tasks.map((task) => [task.id, task.complete])),\n  );\n  const completed = Object.values(values).filter(Boolean).length;\n  const percent = tasks.length === 0 ? 0 : Math.round((completed / tasks.length) * 100);\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"onboarding-checklist\"\n      footer={<Button className=\"w-full\" onClick={onContinue}>Continue setup</Button>}\n    >\n      <Progress label=\"Setup progress\" value={percent} color=\"primary\" showValue />\n      <div className=\"mt-balsa-xl flex flex-1 flex-col justify-between divide-y divide-balsa-border\">\n        {tasks.map((task) => (\n          <div key={task.id} className=\"py-balsa-md\">\n            <Checkbox\n              id={`onboarding-${task.id}`}\n              checked={values[task.id] ?? task.complete}\n              label={task.label}\n              hint={task.description}\n              onCheckedChange={(complete) => {\n                setValues((current) => ({ ...current, [task.id]: complete }));\n              }}\n            />\n          </div>\n        ))}\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

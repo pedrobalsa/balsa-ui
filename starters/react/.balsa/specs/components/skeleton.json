@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "name": "skeleton",
+  "title": "Skeleton",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "skeleton"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Reserve the shape of pending content without exposing placeholder noise to assistive technology.",
+  "useFor": [
+    "Initial content loading",
+    "Layout-preserving card placeholders",
+    "Text, media, and avatar placeholders"
+  ],
+  "avoidFor": [
+    "Unknown-duration blocking operations",
+    "Short button actions",
+    "Replacing useful loading labels"
+  ],
+  "states": [
+    "pulse",
+    "wave",
+    "static"
+  ],
+  "accessibility": [
+    "Skeleton output is aria-hidden.",
+    "The owning content region should expose aria-busy.",
+    "Motion stops when reduced motion is requested."
+  ],
+  "variants": [
+    "muted",
+    "soft",
+    "glass"
+  ],
+  "types": [
+    "text",
+    "rect",
+    "circle"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-muted",
+    "--balsa-color-primary",
+    "--balsa-color-surface",
+    "radius.surface",
+    "motion.duration"
+  ],
+  "commonMistakes": [
+    "Using Skeleton without aria-busy on the owning region.",
+    "Showing a placeholder shape unlike the final content.",
+    "Animating already-loaded content."
+  ],
+  "examples": [
+    {
+      "id": "text",
+      "title": "Text placeholder",
+      "description": "Several lines reserve the rhythm of pending copy.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"text\" animation=\"wave\" :lines=\"4\" />\n  </div>\n</template>"
+    },
+    {
+      "id": "media",
+      "title": "Media placeholder",
+      "description": "A rounded rectangle reserves a pending visual region.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"rect\" size=\"lg\" :lines=\"3\" />\n  </div>\n</template>"
+    },
+    {
+      "id": "avatar",
+      "title": "Avatar placeholder",
+      "description": "Circle shape and size presets match common identity geometry.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"circle\" size=\"lg\" :lines=\"3\" />\n  </div>\n</template>"
+    },
+    {
+      "id": "glass",
+      "title": "Glass placeholder",
+      "description": "A translucent wave stays legible over expressive palette fields.",
+      "source": "<script setup lang=\"ts\">\nimport Skeleton from \"@/components/ui/Skeleton.vue\";\n</script>\n\n<template>\n  <div aria-busy=\"true\" aria-label=\"Loading content placeholder\" class=\"w-full max-w-md\">\n    <Skeleton shape=\"rect\" variant=\"glass\" animation=\"wave\" :lines=\"3\" />\n  </div>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Skeleton.vue",
+    "props": [
+      {
+        "name": "shape",
+        "type": "SkeletonShape | undefined",
+        "values": [
+          "text",
+          "circle",
+          "rect"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "SkeletonVariant | undefined",
+        "values": [
+          "soft",
+          "glass",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SkeletonSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "animation",
+        "type": "SkeletonAnimation | undefined",
+        "values": [
+          "none",
+          "pulse",
+          "wave"
+        ],
+        "required": false,
+        "default": "\"pulse\""
+      },
+      {
+        "name": "lines",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

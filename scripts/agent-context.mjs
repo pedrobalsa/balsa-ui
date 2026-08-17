@@ -1,9 +1,10 @@
 import { access, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { itemSpecificationPath, normalizeCatalog } from "./catalog.mjs";
 import {
   readJson,
+  repoPath,
   rootDir,
-  sourcePath,
   writeJson,
 } from "./registry-lib.mjs";
 import { importedPackages } from "./source-imports.mjs";
@@ -24,7 +25,7 @@ const stylesheetCandidates = [
 export function createCatalogIndex(catalog) {
   return {
     schemaVersion: catalog.schemaVersion,
-    framework: catalog.framework,
+    frameworks: catalog.frameworks,
     itemCount: catalog.items.length,
     items: catalog.items.map((item) => ({
       name: item.name,
@@ -32,12 +33,34 @@ export function createCatalogIndex(catalog) {
       category: item.category,
       description: item.description,
       status: item.status,
+      framework: item.framework,
+      registry: item.registry,
     })),
   };
 }
 
-export async function loadCatalog() {
-  return readJson(catalogPath);
+export async function loadPackageCatalog() {
+  return normalizeCatalog(await readJson(catalogPath));
+}
+
+/**
+ * Lookup reads a consumer `.balsa/catalog.json` when the working directory has
+ * one, including schema 1, and otherwise uses the package catalog. Generation
+ * and agent-context sync always go through `loadPackageCatalog` so a stale
+ * installed catalog cannot be republished as canonical.
+ */
+export async function loadCatalog(cwd = process.cwd()) {
+  const consumerPath = path.join(path.resolve(cwd), ".balsa", "catalog.json");
+  if (path.resolve(consumerPath) === path.resolve(catalogPath)) {
+    return loadPackageCatalog();
+  }
+  try {
+    await access(consumerPath);
+  } catch (error) {
+    if (error.code === "ENOENT") return loadPackageCatalog();
+    throw error;
+  }
+  return normalizeCatalog(await readJson(consumerPath));
 }
 
 function searchableText(item) {
@@ -128,7 +151,7 @@ function matchReasons(item, terms) {
  * and what does it adapt".
  */
 export function searchCatalog(catalog, query, options = {}) {
-  const { kinds, limit, upstreamItems = [] } = options;
+  const { kinds, limit, upstreamItems = [], framework } = options;
 
   const candidates = [
     ...catalog.items,
@@ -144,6 +167,14 @@ export function searchCatalog(catalog, query, options = {}) {
   const scored = candidates
     .map((item) => {
       const kind = kindOf(item);
+      if (
+        framework
+        && item.framework
+        && item.framework !== framework
+        && item.framework !== "shared"
+      ) {
+        return undefined;
+      }
       if (kinds?.length && !kinds.includes(kind)) return undefined;
       if (!terms.length) return { item, kind, score: 0, reasons: [] };
 
@@ -214,6 +245,30 @@ export function unknownItemError(catalog, name) {
   return new Error(`Unknown Balsa registry item: ${name}. ${hint}`);
 }
 
+export function findCatalogItem(catalog, query, options = {}) {
+  const requested = String(query ?? "").trim();
+  const { framework } = options;
+  const items = framework
+    ? catalog.items.filter((item) => item.framework === framework || item.framework === "shared")
+    : catalog.items;
+
+  if (requested.startsWith("@")) {
+    const item = items.find((candidate) => candidate.registry === requested);
+    if (!item) throw unknownItemError(catalog, requested);
+    return item;
+  }
+
+  const matches = items.filter((candidate) => candidate.name === requested);
+  if (matches.length === 1) return matches[0];
+  if (matches.length > 1) {
+    const refs = [...new Set(matches.map((item) => item.registry).filter(Boolean))].sort();
+    throw new Error(
+      `Ambiguous Balsa registry item: ${requested}. Specify one of: ${refs.join(", ")}.`,
+    );
+  }
+  throw unknownItemError(catalog, requested);
+}
+
 export function compactCatalogItem(item) {
   return {
     name: item.name,
@@ -227,7 +282,7 @@ export function compactCatalogItem(item) {
     install: `npx balsa-ui@latest add ${item.name}`,
     documentation: publicDocumentationUrl(item),
     markdown: `${publicBaseUrl}/docs/components/${item.name}.md`,
-    specification: `${publicBaseUrl}/specs/components/${item.name}.json`,
+    specification: `${publicBaseUrl}/${item.specification || `specs/components/${item.name}.json`}`,
     registryDependencies: item.registryDependencies,
     npmDependencies: item.npmDependencies,
   };
@@ -425,12 +480,13 @@ export function formatComponentMarkdown(item, spec) {
 }
 
 export async function loadComponentSpec(item) {
+  const relative = itemSpecificationPath(item);
   try {
-    return await readJson(sourcePath(`specs/components/${item.name}.json`));
+    return await readJson(repoPath(relative));
   } catch (error) {
     if (error.code === "ENOENT") {
       throw new Error(
-        `No Balsa specification is published for ${item.name}. Expected specs/components/${item.name}.json.`,
+        `No Balsa specification is published for ${item.name}. Expected ${relative}.`,
       );
     }
     if (error instanceof SyntaxError) {
@@ -443,15 +499,15 @@ export async function loadComponentSpec(item) {
 }
 
 async function copyAgentSpecs(targetRoot, catalog) {
+  const published = new Set();
+  const directories = new Set();
+
   for (const item of catalog.items) {
-    const source = sourcePath(`specs/components/${item.name}.json`);
-    const target = path.join(
-      targetRoot,
-      ".balsa",
-      "specs",
-      "components",
-      `${item.name}.json`,
-    );
+    const specPath = itemSpecificationPath(item);
+    const source = repoPath(specPath);
+    const target = path.join(targetRoot, ".balsa", specPath);
+    published.add(path.normalize(target));
+    directories.add(path.dirname(target));
     // Every install synchronizes the whole catalog. Rewriting specifications
     // that did not change is the bulk of that work and touches the consumer's
     // file timestamps for no reason.
@@ -469,17 +525,18 @@ async function copyAgentSpecs(targetRoot, catalog) {
   // than a missing one: an agent reads it, believes the component exists, and
   // writes an install command that cannot resolve. The directory has to mirror
   // the catalog, not accumulate it.
-  const directory = path.join(targetRoot, ".balsa", "specs", "components");
-  const published = new Set(catalog.items.map((item) => `${item.name}.json`));
-  let present = [];
-  try {
-    present = await readdir(directory);
-  } catch (error) {
-    if (error.code !== "ENOENT") throw error;
-  }
-  for (const file of present) {
-    if (file.endsWith(".json") && !published.has(file)) {
-      await rm(path.join(directory, file));
+  for (const directory of directories) {
+    let present = [];
+    try {
+      present = await readdir(directory);
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    for (const file of present) {
+      const candidate = path.normalize(path.join(directory, file));
+      if (file.endsWith(".json") && !published.has(candidate)) {
+        await rm(candidate);
+      }
     }
   }
 }
@@ -498,7 +555,7 @@ const agentSkills = [
 async function writeSkillFiles(targetRoot, directory, skill) {
   for (const file of skill.files) {
     const source = await readFile(
-      sourcePath(path.join("skills", skill.name, file)),
+      repoPath(path.join("skills", skill.name, file)),
       "utf8",
     );
     const target = path.join(targetRoot, directory, "skills", skill.name, file);
@@ -512,7 +569,7 @@ async function copyAgentSkills(targetRoot, force = false) {
     await writeSkillFiles(targetRoot, ".balsa", skill);
 
     const canonicalSkill = await readFile(
-      sourcePath(path.join("skills", skill.name, "SKILL.md")),
+      repoPath(path.join("skills", skill.name, "SKILL.md")),
       "utf8",
     );
     const discoverySkill = path.join(
@@ -535,7 +592,7 @@ async function copyAgentSkills(targetRoot, force = false) {
 }
 
 export async function syncAgentContext(targetRoot, { forceSkill = false } = {}) {
-  const catalog = await loadCatalog();
+  const catalog = await loadPackageCatalog();
   await writeJson(path.join(targetRoot, ".balsa", "catalog.json"), catalog);
   await writeJson(
     path.join(targetRoot, ".balsa", "catalog-index.json"),

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { itemPath } from "../scripts/registry-lib.mjs";
 import {
   GRADIENT_BACKGROUND_EFFECTS,
   GRADIENT_BACKGROUND_MINIMUM_CONTRAST,
@@ -21,15 +21,15 @@ import {
   resolveGradientBackgroundPaletteColors,
   serializeGradientBackgroundConfig,
   type GradientBackgroundPresetName,
-} from "../src/components/ui/gradient-background";
+} from "@/components/ui/gradient-background";
 import {
   normalizeGradientBackgroundShaderSeed,
   resolveGradientBackgroundCellPixels,
   resolveGradientBackgroundQuality,
-} from "../src/components/ui/gradient-background-renderer";
-import { buildGradientBackgroundFragmentShader } from "../src/components/ui/gradient-background-shader";
-import { buildGradientBackgroundEffectFragmentShader } from "../src/components/ui/gradient-background-effects-shader";
-import { createGradientBackgroundGlyphAtlas } from "../src/components/ui/gradient-background-glyphs";
+} from "@/components/ui/gradient-background-renderer";
+import { buildGradientBackgroundFragmentShader } from "@/components/ui/gradient-background-shader";
+import { buildGradientBackgroundEffectFragmentShader } from "@/components/ui/gradient-background-effects-shader";
+import { createGradientBackgroundGlyphAtlas } from "@/components/ui/gradient-background-glyphs";
 
 function relativeLuminance(color: string): number {
   const match = color.match(/^#([\da-f]{6})$/i);
@@ -549,7 +549,7 @@ describe("GradientBackground configuration", () => {
 
   it("separates structural fBM from visible surface noise in the shader", () => {
     const shader = readFileSync(
-      resolve(process.cwd(), "src/components/ui/gradient-background-shader.ts"),
+      itemPath("src/components/ui/gradient-background-shader.ts"),
       "utf8",
     );
     expect(shader).toContain("fieldFbm(warped * uFieldFrequency");
@@ -580,10 +580,7 @@ describe("GradientBackground configuration", () => {
       ]);
     boundary.remove();
 
-    const source = readFileSync(
-      resolve(process.cwd(), "src/components/ui/GradientBackground.vue"),
-      "utf8",
-    );
+    const source = readFileSync(itemPath("src/components/ui/GradientBackground.vue"), "utf8");
     expect(source).not.toContain("palette-store");
     expect(source).not.toContain("theme-store");
   });

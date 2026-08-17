@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "name": "application-card",
+  "title": "ApplicationCard",
+  "category": "composition",
+  "classification": "balsa-composition",
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Compose a repeatable application surface anatomy while delegating material, geometry, borders, density, and elevation to Card and the active Balsa theme.",
+  "useFor": [
+    "Dashboard panels",
+    "Contained forms",
+    "Metrics and data summaries",
+    "Application sections with optional actions or metadata"
+  ],
+  "avoidFor": [
+    "Decorative variant galleries",
+    "Content without a meaningful grouping",
+    "Clickable containers that compete with inner controls"
+  ],
+  "variants": [
+    "surface",
+    "elevated",
+    "muted",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "header only",
+    "header and action",
+    "body",
+    "footer metadata",
+    "shadowed",
+    "shadowless"
+  ],
+  "composition": {
+    "root": "Card",
+    "regions": [
+      "header",
+      "action",
+      "body",
+      "footer"
+    ],
+    "themeDelegation": [
+      "variant",
+      "color",
+      "size",
+      "rounded",
+      "shadow",
+      "theme"
+    ]
+  },
+  "accessibility": [
+    "The composition remains a visual container and does not invent landmark semantics.",
+    "headingLevel keeps the generated title in the surrounding document hierarchy.",
+    "The header, action, body, and footer slots preserve consumer-owned semantic content."
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-surface-foreground",
+    "--balsa-color-border",
+    "--balsa-radius-surface",
+    "--balsa-border-width",
+    "--balsa-outline-border-width",
+    "--balsa-border-opacity",
+    "--balsa-shadow-surface",
+    "--balsa-shadow-panel"
+  ],
+  "commonMistakes": [
+    "Pinning shadow or radius to make one example look correct instead of inheriting the active theme.",
+    "Nesting another Card only to create body spacing.",
+    "Using a heading level that breaks the surrounding hierarchy.",
+    "Using derived feedback colors instead of neutral, primary, secondary, or accent source-palette roles."
+  ],
+  "examples": [
+    {
+      "id": "summary",
+      "title": "Dashboard summary",
+      "description": "A compact header and metadata footer establish the repeated application rhythm.",
+      "source": "<script setup lang=\"ts\">\nimport ApplicationCard from \"@/components/compositions/ApplicationCard.vue\";\n</script>\n\n<template>\n  <ApplicationCard title=\"Workspace placeholder\" description=\"Lorem ipsum dolor sit amet.\">\n    <strong class=\"text-3xl\">92%</strong>\n    <template #footer>Metadata placeholder</template>\n  </ApplicationCard>\n</template>"
+    },
+    {
+      "id": "elevated",
+      "title": "Elevated task",
+      "description": "Use elevation only when the panel is meaningfully stacked above its surroundings.",
+      "source": "<script setup lang=\"ts\">\nimport ApplicationCard from \"@/components/compositions/ApplicationCard.vue\";\n</script>\n\n<template>\n  <ApplicationCard title=\"Workspace placeholder\" description=\"Lorem ipsum dolor sit amet.\" variant=\"elevated\" size=\"lg\">\n    <strong class=\"text-3xl\">92%</strong>\n    <template #footer>Metadata placeholder</template>\n  </ApplicationCard>\n</template>"
+    },
+    {
+      "id": "outline",
+      "title": "Outlined grouping",
+      "description": "Outline preserves grouping without adding a filled application surface.",
+      "source": "<script setup lang=\"ts\">\nimport ApplicationCard from \"@/components/compositions/ApplicationCard.vue\";\n</script>\n\n<template>\n  <ApplicationCard title=\"Workspace placeholder\" description=\"Lorem ipsum dolor sit amet.\" variant=\"outline\" :shadow=\"false\">\n    <strong class=\"text-3xl\">92%</strong>\n    <template #footer>Metadata placeholder</template>\n  </ApplicationCard>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/compositions/ApplicationCard.vue",
+    "props": [
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "headingLevel",
+        "type": "HeadingLevel | undefined",
+        "values": [
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "required": false,
+        "default": "2"
+      },
+      {
+        "name": "variant",
+        "type": "CardVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface",
+          "elevated",
+          "muted"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ApplicationCardColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent"
+        ],
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CardSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "boolean | ThemeShadow | undefined",
+        "values": [
+          "false",
+          "true",
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "header",
+        "type": "{}"
+      },
+      {
+        "name": "action",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "footer",
+        "type": "{}"
+      }
+    ]
+  }
+}

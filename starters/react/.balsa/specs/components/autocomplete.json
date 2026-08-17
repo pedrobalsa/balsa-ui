@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "name": "autocomplete",
+  "title": "Autocomplete",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "combobox"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Enter text with filtered suggestions and keyboard navigation, or choose one or more suggestions while retaining a searchable query.",
+  "useFor": [
+    "Searchable suggestion lists",
+    "Assisted free-form entry",
+    "Finding an item by partial text",
+    "Searchable multiple selection"
+  ],
+  "avoidFor": [
+    "A short fixed list without filtering",
+    "Remote search without a loading strategy"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "open",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated"
+  ],
+  "composition": {
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "styling": "Consumer class and style attributes merge onto the native input while shared helpers preserve the Balsa field language.",
+    "multiple": "Set multiple to bind a string array, keep the query editable, toggle suggestions without closing the list, and render removable selected-value actions.",
+    "popup": "The suggestion list uses a manually controlled browser top-layer popover when available so overflow containers do not clip it and a focus click cannot light-dismiss it."
+  },
+  "accessibility": [
+    "Uses editable combobox semantics with an associated listbox.",
+    "Arrow keys, Enter, Escape, and Tab follow expected combobox behavior; Backspace removes the final selected value only when a multiple-mode query is empty.",
+    "Multiple mode exposes aria-multiselectable and gives every selected value an accessible remove action.",
+    "The active suggestion is exposed through aria-activedescendant.",
+    "The top-layer suggestion list remains structurally associated with its input."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-selected",
+    "--balsa-color-destructive",
+    "radius.control",
+    "shadow.surface"
+  ],
+  "commonMistakes": [
+    "Using suggestions as an inaccessible visual-only menu.",
+    "Omitting a stable id and visible label.",
+    "Using it for a tiny fixed list."
+  ],
+  "examples": [
+    {
+      "id": "medium",
+      "title": "Medium",
+      "description": "Use medium sizing when search-assisted entry is a primary field.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required state is exposed through the shared field presentation.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" size=\"sm\" required />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid",
+      "description": "Unvalidated state communicates an unacceptable value.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading blocks input while suggestions are prepared.",
+      "source": "<script setup lang=\"ts\">\nimport Autocomplete from \"@/components/ui/Autocomplete.vue\";\nimport { ref } from \"vue\";\n\nconst framework = ref(\"Suggestion 01\");\nconst frameworks = [\"Suggestion 01\", \"Suggestion 02\", \"Suggestion 03\", \"Suggestion 04\"];\n</script>\n\n<template>\n  <Autocomplete id=\"demo-framework\" v-model=\"framework\" label=\"Search placeholder\" :suggestions=\"frameworks\" size=\"sm\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Autocomplete.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "AutocompleteModelValue | undefined",
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "suggestions",
+        "type": "readonly string[]",
+        "required": true
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "AutocompleteModelValue | undefined",
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: AutocompleteModelValue]"
+      }
+    ],
+    "slots": []
+  }
+}

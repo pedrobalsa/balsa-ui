@@ -10,33 +10,29 @@
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { loadRegistry, readJson, rootDir, sourcePath, writeJson } from "./registry-lib.mjs";
+import {
+  aliasForType,
+  defaultRegistryTarget,
+  isConsumerFramework,
+  namespace,
+  parseTargetAddress,
+  route,
+} from "../bin/registry-targets.mjs";
+import { itemPath, loadTargetRegistry, readJson, rootDir, writeJson } from "./registry-lib.mjs";
 
-export const defaultNamespace = "@balsa";
-const projectConfigurationTemplatePath = path.join(
-  rootDir,
-  "src",
-  "config",
-  "components-template.json",
-);
+export const defaultNamespace = namespace(defaultRegistryTarget);
+const projectConfigurationTemplates = Object.freeze({
+  vue: path.join(rootDir, "src", "config", "components-template.json"),
+  react: path.join(rootDir, "src", "config", "components-template-react.json"),
+});
 
 /**
  * shadcn-vue publishes a style-scoped registry rather than the flat
  * `{name}.json` layout Balsa uses, so every namespace carries its own template.
  */
 export const builtinRegistries = {
-  "@balsa": "https://balsa-ui.com/r/{name}.json",
+  [defaultNamespace]: `https://balsa-ui.com${route(defaultRegistryTarget, "{name}")}`,
   "@shadcn": "https://shadcn-vue.com/r/styles/{style}/{name}.json",
-};
-
-const aliasForType = {
-  "registry:ui": "ui",
-  "registry:component": "components",
-  "registry:block": "components",
-  "registry:composition": "components",
-  "registry:lib": "lib",
-  "registry:hook": "composables",
-  "registry:theme": "lib",
 };
 
 function isRecord(value) {
@@ -50,14 +46,23 @@ function isRecord(value) {
  * https://shadcn-vue.com/schema.json. Tailwind v4 intentionally uses an empty
  * config path, while the stylesheet is resolved from the consumer project.
  */
-export async function createProjectConfiguration({ stylesheet = "src/index.css" } = {}) {
-  const template = await readJson(projectConfigurationTemplatePath);
-  return {
+export async function createProjectConfiguration({
+  stylesheet = "src/index.css",
+  framework = defaultRegistryTarget,
+  rsc,
+} = {}) {
+  const templatePath = projectConfigurationTemplates[
+    isConsumerFramework(framework) ? framework : defaultRegistryTarget
+  ];
+  const template = await readJson(templatePath);
+  const configuration = {
     ...template,
     tailwind: { ...template.tailwind, css: stylesheet.split(path.sep).join("/") },
     aliases: { ...template.aliases },
     registries: { ...template.registries },
   };
+  if (framework === "react") configuration.rsc = Boolean(rsc);
+  return configuration;
 }
 
 /** Create the standard config once; an existing project-owned file is untouched. */
@@ -90,8 +95,10 @@ export function parseItemReference(reference) {
  * A project's components.json is the shadcn-standard place to declare extra
  * registries, so a third-party registry needs no Balsa-specific configuration.
  */
-export async function loadProjectConfiguration(cwd) {
-  const defaults = await createProjectConfiguration();
+export async function loadProjectConfiguration(cwd, { framework } = {}) {
+  const defaults = await createProjectConfiguration({
+    framework: framework ?? defaultRegistryTarget,
+  });
   let componentsJson = {};
   try {
     componentsJson = await readJson(path.join(cwd, "components.json"));
@@ -150,10 +157,10 @@ export function aliasToDirectory(alias) {
  * type's alias root, with the type directory repeated as the first segment.
  * Balsa items publish an explicit target and are used verbatim.
  */
-export function resolveFileTarget(configuration, item, file) {
+export function resolveFileTarget(configuration, item, file, target = defaultRegistryTarget) {
   if (file.target) return file.target.split("\\").join("/");
 
-  const aliasKey = aliasForType[file.type ?? item.type] ?? "components";
+  const aliasKey = aliasForType(file.type ?? item.type, target);
   const alias = configuration.aliases[aliasKey];
   const directory = aliasToDirectory(alias);
 
@@ -164,10 +171,20 @@ export function resolveFileTarget(configuration, item, file) {
     components: ["components"],
     lib: ["lib"],
     composables: ["hooks", "composables"],
+    hooks: ["hooks", "composables"],
   }[aliasKey];
   if (segments.length > 1 && leading?.includes(segments[0])) segments.shift();
 
   return [...directory.split(/[\\/]/), ...segments].join("/");
+}
+
+function balsaTargetForName(itemNamespace, name) {
+  if (itemNamespace !== defaultNamespace) return undefined;
+  try {
+    return parseTargetAddress(name).target;
+  } catch {
+    return undefined;
+  }
 }
 
 async function fetchRegistryItem(url) {
@@ -195,41 +212,54 @@ async function fetchRegistryItem(url) {
  * the published site being current.
  */
 async function loadLocalBalsaItem(name) {
-  const registry = await loadRegistry();
-  const item = registry.items.find((candidate) => candidate.name === name);
+  let target;
+  let itemName;
+  try {
+    ({ target, itemName } = parseTargetAddress(name));
+  } catch {
+    return undefined;
+  }
+  const registry = await loadTargetRegistry(target);
+  const item = registry?.items.find((candidate) => candidate.name === itemName);
   if (!item) return undefined;
   return {
     ...item,
     files: await Promise.all(
       item.files.map(async (file) => ({
         ...file,
-        content: await readFile(sourcePath(file.path), "utf8"),
+        content: await readFile(itemPath(file.path, { target }), "utf8"),
       })),
     ),
   };
 }
 
-export function createResolver({ configuration, local = true, fetchItem = fetchRegistryItem }) {
+export function createResolver({
+  configuration,
+  local = true,
+  fetchItem = fetchRegistryItem,
+  target = defaultRegistryTarget,
+}) {
   const cache = new Map();
 
-  async function load(namespace, name) {
-    const key = `${namespace}/${name}`;
+  async function load(itemNamespace, name) {
+    const key = `${itemNamespace}/${name}`;
     if (cache.has(key)) return cache.get(key);
 
     let item;
-    if (local && namespace === defaultNamespace) {
+    if (local && itemNamespace === defaultNamespace) {
       item = await loadLocalBalsaItem(name);
     }
     if (!item) {
-      item = await fetchItem(registryUrl(configuration, namespace, name));
+      item = await fetchItem(registryUrl(configuration, itemNamespace, name));
     }
+    const itemTarget = balsaTargetForName(itemNamespace, name) ?? target;
     const resolved = {
       ...item,
-      namespace,
-      reference: `${namespace}/${item.name}`,
+      namespace: itemNamespace,
+      reference: `${itemNamespace}/${name}`,
       files: (item.files ?? []).map((file) => ({
         ...file,
-        target: resolveFileTarget(configuration, item, file),
+        target: resolveFileTarget(configuration, item, file, itemTarget),
       })),
     };
     cache.set(key, resolved);
@@ -271,7 +301,7 @@ export function createResolver({ configuration, local = true, fetchItem = fetchR
               reference: dependency,
               files: (remote.files ?? []).map((file) => ({
                 ...file,
-                target: resolveFileTarget(configuration, remote, file),
+                target: resolveFileTarget(configuration, remote, file, target),
               })),
             });
           }

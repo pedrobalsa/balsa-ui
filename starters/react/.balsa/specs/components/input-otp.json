@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "name": "input-otp",
+  "title": "Input OTP",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "input-otp"
+  },
+  "status": "beta",
+  "version": "0.2.0",
+  "purpose": "Collect one fixed-length verification code through a coherent accessible input with semantic-colored visual cells.",
+  "useFor": [
+    "One-time verification codes",
+    "Short recovery codes",
+    "Fixed-length numeric or alphanumeric tokens"
+  ],
+  "avoidFor": [
+    "Passwords",
+    "Arbitrary long identifiers",
+    "Separate unrelated digit fields"
+  ],
+  "types": [
+    "numeric",
+    "alphanumeric"
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "solid",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "complete"
+  ],
+  "sizes": [
+    "sm",
+    "md"
+  ],
+  "accessibility": [
+    "One native input owns the label, name, autocomplete, validity, and form value.",
+    "Visual cells and separators are hidden from assistive technology.",
+    "Paste, arrows, Backspace, Delete, and ordinary text editing act on one logical code."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using one Tab stop per cell.",
+    "Disabling one-time-code autocomplete.",
+    "Masking a code without an alternate way to verify entry."
+  ],
+  "examples": [
+    {
+      "id": "numeric",
+      "title": "Six-digit code",
+      "description": "One numeric field drives six accessible visual cells.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"6\" required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    },
+    {
+      "id": "grouped",
+      "title": "Accent grouped code",
+      "description": "An accent color and decorative separators improve scanning without creating extra form controls.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"6\" grouped variant=\"solid\" color=\"accent\" required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    },
+    {
+      "id": "masked",
+      "title": "Masked code",
+      "description": "Masking changes only the visual cells while the logical value stays editable.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"6\" mask required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    },
+    {
+      "id": "recovery",
+      "title": "Recovery token",
+      "description": "Alphanumeric filtering supports short fixed-length recovery tokens.",
+      "source": "<script setup lang=\"ts\">\nimport InputOTP from \"@/components/ui/InputOTP.vue\";\nimport { ref } from \"vue\";\n\nconst code = ref(\"\");\n\nfunction handleComplete(value: string): void {\n  console.info(\"Code complete\", value);\n}\n</script>\n\n<template>\n  <InputOTP id=\"code-placeholder\" v-model=\"code\" label=\"Verification code placeholder\" :length=\"8\" mode=\"alphanumeric\" grouped required hint=\"Helper text placeholder.\" @complete=\"handleComplete\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/InputOTP.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "length",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "6"
+      },
+      {
+        "name": "mode",
+        "type": "InputOTPMode | undefined",
+        "values": [
+          "numeric",
+          "alphanumeric"
+        ],
+        "required": false,
+        "default": "\"numeric\""
+      },
+      {
+        "name": "fluid",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "description": "Share the available width between cells instead of fixing their size."
+      },
+      {
+        "name": "mask",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "grouped",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "separatorEvery",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "0"
+      },
+      {
+        "name": "separator",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"–\""
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "InputOTPVariant | undefined",
+        "values": [
+          "solid",
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "SemanticColor | undefined",
+        "values": [
+          "primary",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"primary\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "autocomplete",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"one-time-code\""
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      },
+      {
+        "name": "complete",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "cell",
+        "type": "{ index: number; value: string; active: boolean; }"
+      }
+    ]
+  }
+}

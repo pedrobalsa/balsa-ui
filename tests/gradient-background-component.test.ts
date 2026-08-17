@@ -23,7 +23,7 @@ const glyphState = vi.hoisted(() => ({
  * Standing in for it is what makes the component's build-and-dispose lifecycle
  * observable at all.
  */
-vi.mock("../src/components/ui/gradient-background-glyphs", () => ({
+vi.mock("@/components/ui/gradient-background-glyphs", () => ({
   GRADIENT_BACKGROUND_GLYPH_ASPECT: 1.8,
   createGradientBackgroundGlyphAtlas: vi.fn((characters: string) => {
     glyphState.created.push(characters);
@@ -39,7 +39,7 @@ vi.mock("../src/components/ui/gradient-background-glyphs", () => ({
   }),
 }));
 
-vi.mock("../src/components/ui/gradient-background-renderer", () => ({
+vi.mock("@/components/ui/gradient-background-renderer", () => ({
   GradientBackgroundRenderer: class {
     update = vi.fn();
     resize = vi.fn();
@@ -59,7 +59,7 @@ vi.mock("../src/components/ui/gradient-background-renderer", () => ({
   },
 }));
 
-import GradientBackground from "../src/components/ui/GradientBackground.vue";
+import GradientBackground from "@/components/ui/GradientBackground.vue";
 
 class ResizeObserverMock {
   static instances: ResizeObserverMock[] = [];

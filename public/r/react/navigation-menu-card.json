@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navigation-menu-card",
+  "type": "registry:ui",
+  "title": "NavigationMenuCard",
+  "description": "Sectioned local navigation with an explicit current destination.",
+  "dependencies": [
+    "react",
+    "lucide-react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/icon",
+    "@balsa/react/application-card"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/NavigationMenuCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/NavigationMenuCard.tsx",
+      "content": "import {\n  ArrowLeftRight,\n  Bell,\n  Boxes,\n  ChartLine,\n  Circle,\n  Layers,\n  LayoutDashboard,\n  Receipt,\n  Rocket,\n  ScrollText,\n  Shield,\n  User,\n} from \"lucide-react\";\nimport { type HTMLAttributes } from \"react\";\nimport { Icon, type IconComponent } from \"../ui/Icon\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface NavigationMenuItem {\n  id: string;\n  label: string;\n  icon?: IconComponent;\n}\n\nexport interface NavigationMenuGroup {\n  label: string;\n  items: readonly NavigationMenuItem[];\n}\n\n/**\n * The default groups fill a 1x2 tile, which is the tile a sidebar navigation\n * is designed for: a nav that fits in one unit is a menu, not a sidebar.\n */\nconst defaultGroups: readonly NavigationMenuGroup[] = [\n  { label: \"Overview\", items: [{ id: \"dashboard\", label: \"Dashboard\", icon: LayoutDashboard }, { id: \"analytics\", label: \"Analytics\", icon: ChartLine }] },\n  { label: \"Build\", items: [{ id: \"projects\", label: \"Projects\", icon: Boxes }, { id: \"deployments\", label: \"Deployments\", icon: Rocket }, { id: \"environments\", label: \"Environments\", icon: Layers }] },\n  { label: \"Operate\", items: [{ id: \"activity\", label: \"Activity\", icon: ArrowLeftRight }, { id: \"alerts\", label: \"Alerts\", icon: Bell }, { id: \"logs\", label: \"Logs\", icon: ScrollText }] },\n  { label: \"Account\", items: [{ id: \"profile\", label: \"Profile\", icon: User }, { id: \"security\", label: \"Security\", icon: Shield }, { id: \"billing\", label: \"Billing\", icon: Receipt }] },\n];\n\nexport interface NavigationMenuCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  activeId?: string;\n  groups?: readonly NavigationMenuGroup[];\n  onNavigate?: (id: string) => void;\n}\n\nexport function NavigationMenuCard({\n  title = \"Workspace sidebar\",\n  description = \"Every destination in this workspace, grouped by the work it belongs to.\",\n  activeId = \"dashboard\",\n  groups = defaultGroups,\n  headingLevel,\n  shadow,\n  theme,\n  onNavigate,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: NavigationMenuCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"navigation-menu\"\n    >\n      <nav aria-label={title} className=\"grid flex-1 content-start gap-balsa-lg\">\n        {groups.map((group) => (\n          <section key={group.label}>\n            <small className=\"text-balsa-muted-foreground\">{group.label}</small>\n            <ul className=\"mt-balsa-xs grid gap-balsa-3xs\" role=\"list\">\n              {group.items.map((item) => (\n                <li key={item.id}>\n                  <button\n                    type=\"button\"\n                    aria-current={item.id === activeId ? \"page\" : undefined}\n                    className={mergeClasses(\n                      \"flex w-full items-center gap-balsa-md rounded-balsa-control px-balsa-md py-balsa-xs text-left text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-balsa-focus-ring\",\n                      item.id === activeId ? \"bg-balsa-muted font-medium\" : \"hover:bg-balsa-muted\",\n                    )}\n                    onClick={() => onNavigate?.(item.id)}\n                  >\n                    <Icon icon={item.icon || Circle} size=\"sm\" />\n                    {item.label}\n                  </button>\n                </li>\n              ))}\n            </ul>\n          </section>\n        ))}\n      </nav>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

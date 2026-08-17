@@ -7,6 +7,9 @@
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { readJson } from "./registry-lib.mjs";
+import {
+  detectProjectFramework,
+} from "./project-framework.mjs";
 
 const stylesheetCandidates = [
   "src/index.css",
@@ -61,7 +64,7 @@ async function hasAtAlias(projectRoot) {
  * that only make it incomplete (`warning`), so callers can decide whether to
  * stop or to install and explain.
  */
-export async function inspectProject(cwd) {
+export async function inspectProject(cwd, { framework } = {}) {
   const projectRoot = path.resolve(cwd);
   const problems = [];
   const add = (code, level, message, fix) => problems.push({ code, level, message, fix });
@@ -82,13 +85,18 @@ export async function inspectProject(cwd) {
     );
   }
 
+  const detection = await detectProjectFramework(projectRoot, { framework });
+  if (detection.code) {
+    add(detection.code, "error", detection.message, detection.fix);
+  }
+
   const dependencies = {
     ...(packageJson?.dependencies ?? {}),
     ...(packageJson?.devDependencies ?? {}),
     ...(packageJson?.peerDependencies ?? {}),
   };
 
-  if (packageJson && !dependencies.vue) {
+  if (packageJson && detection.framework === "vue" && !dependencies.vue) {
     add(
       "missing-vue",
       "error",
@@ -147,6 +155,8 @@ export async function inspectProject(cwd) {
   return {
     projectRoot,
     packageJson,
+    framework: detection.framework,
+    frameworkSource: detection.source,
     stylesheet,
     problems,
     errors: problems.filter((problem) => problem.level === "error"),

@@ -4,18 +4,27 @@
   "title": "Balsa agent catalog",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "releaseVersion", "framework", "generatedFrom", "items"],
+  "required": ["schemaVersion", "releaseVersion", "frameworks", "generatedFrom", "items"],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "releaseVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+" },
-    "framework": { "const": "vue" },
+    "frameworks": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "not": { "const": "shared" }
+      }
+    },
     "generatedFrom": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
     "items": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["name", "title", "category", "classification", "description", "status", "version", "registry", "registryDependencies", "npmDependencies", "tokens", "documentation", "example", "source", "framework"],
+        "required": ["name", "title", "category", "classification", "description", "status", "version", "registry", "registryDependencies", "npmDependencies", "tokens", "documentation", "example", "source", "framework", "specification"],
         "properties": {
           "name": { "type": "string" },
           "title": { "type": "string" },
@@ -25,14 +34,15 @@
           "description": { "type": "string" },
           "status": { "enum": ["experimental", "beta", "stable", "deprecated"] },
           "version": { "type": "string" },
-          "registry": { "type": "string", "pattern": "^@balsa/" },
+          "registry": { "type": "string", "pattern": "^@balsa/(?:[a-z][a-z0-9-]*/)?[a-z0-9][a-z0-9-]*$" },
           "registryDependencies": { "type": "array", "items": { "type": "string" } },
           "npmDependencies": { "type": "array", "items": { "type": "string" } },
           "tokens": { "type": "array", "items": { "type": "string" } },
           "documentation": { "type": "string" },
           "example": { "type": "string" },
           "source": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-          "framework": { "const": "vue" }
+          "framework": { "type": "string", "pattern": "^(?:shared|[a-z][a-z0-9-]*)$" },
+          "specification": { "type": "string", "minLength": 1 }
         }
       }
     }

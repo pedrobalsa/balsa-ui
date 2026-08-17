@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "name": "input",
+  "title": "Input",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "input"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Collect a short text, password, email, number, date, phone, monetary, or percentage value with an associated label.",
+  "useFor": [
+    "Short free-form values",
+    "Passwords",
+    "Email addresses",
+    "Numeric values",
+    "Native date entry",
+    "Masked phone numbers",
+    "Monetary amounts",
+    "Percentage values"
+  ],
+  "avoidFor": [
+    "Long-form text",
+    "Choosing from a fixed option list",
+    "Custom autocomplete behavior"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "loading",
+    "validated",
+    "unvalidated",
+    "masked"
+  ],
+  "composition": {
+    "model": "string | number",
+    "sizes": [
+      "sm",
+      "md"
+    ],
+    "masking": "Use a custom mask with # digit placeholders, type=phone for the built-in phone mask, type=monetary for localized currency display, or type=percentage for an editable numeric value with a persistent percent suffix. Monetary and percentage models remain numeric.",
+    "styling": "Consumer class and style attributes merge onto the native input while shared helpers preserve the Balsa field language.",
+    "feedback": "Hint and validation error are associated with aria-describedby."
+  },
+  "accessibility": [
+    "Always provide a unique id and visible label.",
+    "Invalid feedback exposes aria-invalid and role alert.",
+    "Loading disables the native control and exposes aria-busy.",
+    "Use novalidate on the owning form when submit-driven application code controls status feedback; native required validation otherwise runs before submit."
+  ],
+  "tokens": [
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-focus-ring",
+    "--balsa-color-success",
+    "--balsa-color-info",
+    "--balsa-color-destructive",
+    "--balsa-color-disabled",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Omitting the id or label.",
+    "Using placeholder text as the only label.",
+    "Using error color without a text message.",
+    "Expecting a submit handler to set status for an empty required field without disabling interactive validation on the owning form."
+  ],
+  "examples": [
+    {
+      "id": "phone",
+      "title": "Phone",
+      "description": "The phone type applies a readable digit mask while retaining a native text field.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Phone placeholder\" type=\"phone\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "monetary",
+      "title": "Monetary",
+      "description": "The monetary type formats the visible amount and emits a numeric model value.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Amount placeholder\" type=\"monetary\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "percentage",
+      "title": "Percentage",
+      "description": "The percentage type keeps decimal entry natural with a persistent percent suffix and a numeric 0–100 model.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Percentage placeholder\" type=\"percentage\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "compact-email",
+      "title": "Compact email",
+      "description": "Native input types and the small size can be combined.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Email placeholder\" type=\"email\" size=\"sm\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "required",
+      "title": "Required",
+      "description": "Required state is communicated by the shared field framing.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Field placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "invalid",
+      "title": "Invalid",
+      "description": "Unvalidated state applies destructive feedback to the complete field.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Field placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading",
+      "description": "Loading blocks editing and exposes progress semantics.",
+      "source": "<script setup lang=\"ts\">\nimport Input from \"@/components/ui/Input.vue\";\nimport { ref } from \"vue\";\n\nconst name = ref(\"\");\n</script>\n\n<template>\n  <Input id=\"display-name\" v-model=\"name\" label=\"Field placeholder\" hint=\"Helper text placeholder.\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Input.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "type",
+        "type": "InputType | undefined",
+        "values": [
+          "number",
+          "text",
+          "password",
+          "date",
+          "email",
+          "phone",
+          "monetary",
+          "percentage"
+        ],
+        "required": false,
+        "default": "\"text\""
+      },
+      {
+        "name": "size",
+        "type": "FieldSize | undefined",
+        "values": [
+          "md",
+          "sm"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "hint",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "status",
+        "type": "FieldStatus | undefined",
+        "values": [
+          "default",
+          "validated",
+          "unvalidated"
+        ],
+        "required": false,
+        "default": "\"default\""
+      },
+      {
+        "name": "statusMessage",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "min",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "step",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false
+      },
+      {
+        "name": "autocomplete",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "mask",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "currency",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"USD\""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"en-US\""
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | number | undefined",
+        "values": [
+          "string",
+          "number"
+        ],
+        "required": false,
+        "default": "\"\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string | number]"
+      }
+    ],
+    "slots": []
+  }
+}

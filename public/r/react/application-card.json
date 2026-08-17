@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "application-card",
+  "type": "registry:block",
+  "title": "ApplicationCard",
+  "description": "Structured application surface with a repeatable header, action, body, and footer rhythm that inherits Card material, geometry, borders, density, and elevation.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/card"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ApplicationCard.tsx",
+      "type": "registry:block",
+      "target": "src/components/compositions/ApplicationCard.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport type { CardSize, CardVariant, Rounded } from \"../ui/types\";\nimport { type Shadow, type ThemeInput } from \"../ui/theme\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { Card } from \"../ui/Card\";\n\ntype HeadingLevel = 2 | 3 | 4 | 5 | 6;\nexport type ApplicationCardColor = \"neutral\" | \"primary\" | \"secondary\" | \"accent\";\n\nconst headingTags = {\n  2: \"h2\",\n  3: \"h3\",\n  4: \"h4\",\n  5: \"h5\",\n  6: \"h6\",\n} as const;\n\nexport interface ApplicationCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\"> {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  headingLevel?: HeadingLevel;\n  variant?: CardVariant;\n  color?: ApplicationCardColor;\n  size?: CardSize;\n  rounded?: Rounded;\n  shadow?: Shadow | boolean;\n  theme?: ThemeInput;\n  header?: ReactNode;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function ApplicationCard({\n  title,\n  description,\n  headingLevel = 2,\n  variant,\n  color,\n  size,\n  rounded,\n  shadow = \"auto\",\n  theme,\n  header,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: ApplicationCardProps) {\n  void _dataBalsa;\n  const Heading = headingTags[headingLevel];\n\n  return (\n    <Card\n      {...domProps}\n      data-application-card=\"\"\n      variant={variant}\n      color={color}\n      padding=\"none\"\n      size={size}\n      rounded={rounded}\n      shadow={shadow}\n      theme={theme}\n      className={mergeClasses(\n        \"group/application-card flex min-h-0 flex-col overflow-hidden\",\n        className,\n      )}\n    >\n      {title || header || action ? (\n        <header className=\"flex items-start justify-between gap-balsa-lg px-balsa-xl pb-0 pt-balsa-xl group-data-[size=sm]/application-card:px-4 group-data-[size=sm]/application-card:pt-4 group-data-[size=lg]/application-card:px-6 group-data-[size=lg]/application-card:pt-6\">\n          {header ?? (\n            <div className=\"min-w-0\">\n              <Heading className=\"font-balsa-title text-base font-semibold leading-snug tracking-tight text-balsa-surface-foreground\">\n                {title}\n              </Heading>\n              {description ? (\n                <p className=\"mt-balsa-3xs text-sm leading-snug text-balsa-muted-foreground\">\n                  {description}\n                </p>\n              ) : null}\n            </div>\n          )}\n          {action ? <div className=\"shrink-0\">{action}</div> : null}\n        </header>\n      ) : null}\n\n      <div\n        data-application-card-body=\"\"\n        className=\"flex min-h-0 flex-1 flex-col p-balsa-xl pt-balsa-lg group-data-[size=sm]/application-card:p-4 group-data-[size=sm]/application-card:pt-3 group-data-[size=lg]/application-card:p-6 group-data-[size=lg]/application-card:pt-5\"\n      >\n        {children}\n      </div>\n\n      {footer ? (\n        <footer\n          data-application-card-footer=\"\"\n          className=\"border-balsa-border [border-top-style:var(--balsa-border-style)] [border-top-width:var(--balsa-border-width)] px-balsa-xl py-balsa-md text-xs text-balsa-muted-foreground group-data-[size=sm]/application-card:px-4 group-data-[size=sm]/application-card:py-2.5 group-data-[size=lg]/application-card:px-6 group-data-[size=lg]/application-card:py-4\"\n        >\n          {footer}\n        </footer>\n      ) : null}\n    </Card>\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

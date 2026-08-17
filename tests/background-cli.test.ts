@@ -16,7 +16,7 @@ import {
   validateBackgroundName,
 } from "../scripts/background-cli.mjs";
 import { encodeGradientInlineConfig } from "../src/background/gradient-studio";
-import { getGradientBackgroundPreset } from "../src/components/ui/gradient-background";
+import { getGradientBackgroundPreset } from "@/components/ui/gradient-background";
 
 const temporaryRoot = resolve(process.cwd(), ".tmp");
 mkdirSync(temporaryRoot, { recursive: true });

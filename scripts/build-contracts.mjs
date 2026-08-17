@@ -7,157 +7,30 @@
  * and writes it into the specification, so `balsa info` reports types, defaults
  * and enumerated unions that are true by construction.
  *
+ * Each consumer framework declares how its contracts are derived on the
+ * registry target table. Vue still writes `publicApi` into the item
+ * specification; a target that sets `outputDirectory` stores the same shape
+ * beside the spec so the Vue bytes do not churn.
+ *
  * Run with --check to fail instead of writing, which is how the release gate
  * proves the published contracts still match the source.
  */
-import { access, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { createChecker } from "vue-component-meta";
-import { loadRegistry, readJson, rootDir, sourcePath } from "./registry-lib.mjs";
+import { pathToFileURL } from "node:url";
+import {
+  consumerFrameworks,
+  contractDerivationForTarget,
+} from "../bin/registry-targets.mjs";
+import { itemSpecificationPath } from "./catalog.mjs";
+import { createTypescriptPropsExtractor } from "./extract-react-contract.mjs";
+import { createVueContractExtractor } from "./extract-vue-contract.mjs";
+import { itemPath, loadTargetRegistry, readJson, repoPath, rootDir } from "./registry-lib.mjs";
 
-/**
- * The website splits its TypeScript project; the exported public repository
- * uses one root config. Resolve whichever this checkout has.
- */
-export async function resolveTsconfig() {
-  for (const candidate of ["tsconfig.app.json", "tsconfig.json"]) {
-    const target = path.join(rootDir, candidate);
-    try {
-      await access(target);
-      return target;
-    } catch {
-      // Try the next candidate.
-    }
-  }
-  throw new Error("No tsconfig.app.json or tsconfig.json found.");
-}
-
-const checkOnly = process.argv.includes("--check");
-
-/** Vue's built-in attributes are not part of an item's contract. */
-function isAuthored(prop) {
-  return !prop.global;
-}
-
-function cleanType(type) {
-  return type.replace(/\s+/g, " ").trim();
-}
-
-/**
- * Structural types the compiler can expand but nobody needs expanded; `Date`
- * alone would contribute forty methods and bury the contract.
- */
-const opaqueTypes = new Set([
-  "Date", "RegExp", "Error", "Element", "HTMLElement", "Event", "File", "Blob",
-  "Function", "Promise", "Node", "URL", "FormData",
-]);
-
-/**
- * A named alias tells an agent nothing about which values are legal. When the
- * compiler can enumerate the union, publish the members -- but only when every
- * member is a literal. A partial list is worse than none, because it reads as
- * complete.
- */
-function enumeratedValues(schema) {
-  if (!schema || typeof schema !== "object") return undefined;
-  if (schema.kind !== "enum" || !Array.isArray(schema.schema)) return undefined;
-  const members = schema.schema.filter((value) => value !== "undefined");
-  if (!members.length || members.length > 40) return undefined;
-  if (!members.every((value) => typeof value === "string")) return undefined;
-  if (members.some((value) => /[{}()[\]]/.test(value))) return undefined;
-  return members.map((value) => value.replace(/^"|"$/g, ""));
-}
-
-/**
- * Expand an object-shaped prop to its fields. This is the difference between
- * "logo: BrandLogo" and knowing that a logo needs a title and an alt.
- */
-function describeShape(schema, depth = 0) {
-  if (!schema || typeof schema !== "object" || depth > 3) return undefined;
-  if (opaqueTypes.has(schema.type)) return undefined;
-
-  if (schema.kind === "object") {
-    const fields = Object.values(schema.schema ?? {})
-      .slice(0, 25)
-      .map((field) => {
-        const shape = field.schema?.kind === "array"
-          ? describeShape(field.schema, depth + 1)
-          : undefined;
-        return {
-          name: field.name,
-          type: cleanType(field.type),
-          required: Boolean(field.required),
-          ...(shape ? { shape } : {}),
-        };
-      });
-    return fields.length ? { type: cleanType(schema.type), fields } : undefined;
-  }
-
-  if (schema.kind === "array" && Array.isArray(schema.schema)) {
-    const items = schema.schema
-      .filter((member) => typeof member === "object")
-      .slice(0, 6)
-      .map((member) => describeShape(member, depth + 1))
-      .filter(Boolean);
-    if (!items.length) return undefined;
-    return items.length === 1
-      ? { type: cleanType(schema.type), items: items[0] }
-      : { type: cleanType(schema.type), items: { type: "item", variants: items } };
-  }
-
-  if (schema.kind === "enum" && Array.isArray(schema.schema)) {
-    const variants = schema.schema
-      .filter((member) => typeof member === "object")
-      .slice(0, 6)
-      .map((member) => describeShape(member, depth + 1))
-      .filter(Boolean);
-    if (!variants.length) return undefined;
-    return variants.length === 1
-      ? variants[0]
-      : { type: cleanType(schema.type), variants };
-  }
-
-  return undefined;
-}
-
-function describeProp(prop) {
-  const values = enumeratedValues(prop.schema);
-  const shape = values ? undefined : describeShape(prop.schema);
-  return {
-    name: prop.name,
-    type: cleanType(prop.type),
-    ...(values ? { values } : {}),
-    ...(shape ? { shape } : {}),
-    required: Boolean(prop.required),
-    ...(prop.default !== undefined && prop.default !== "undefined"
-      ? { default: cleanType(String(prop.default)) }
-      : {}),
-    ...(prop.description ? { description: prop.description.trim() } : {}),
-  };
-}
-
-/**
- * `v-model` is a prop and an event by convention rather than by declaration,
- * so it has to be recovered from the pair. Naming it explicitly is what stops
- * an agent guessing the model type.
- */
-function describeModels(props, events) {
-  const models = [];
-  for (const prop of props) {
-    const updateEvent = prop.name === "modelValue"
-      ? "update:modelValue"
-      : `update:${prop.name}`;
-    if (!events.some((event) => event.name === updateEvent)) continue;
-    models.push({
-      name: prop.name,
-      type: prop.type,
-      ...(prop.values ? { values: prop.values } : {}),
-      ...(prop.shape ? { shape: prop.shape } : {}),
-      event: updateEvent,
-    });
-  }
-  return models;
-}
+const extractorFactories = {
+  "vue-component-meta": async () => createVueContractExtractor(),
+  "typescript-props": async (target) => createTypescriptPropsExtractor(target),
+};
 
 /**
  * The public entry point is normally the file named after the item, but an item
@@ -165,86 +38,167 @@ function describeModels(props, events) {
  * public surface is ToastViewport, and Toast.vue renders one item inside it.
  * `meta.component` states that explicitly rather than leaving it to a guess.
  */
-function primaryComponentFile(item) {
+export function primaryComponentFile(item, entryExtensions) {
   if (item.meta?.component) return item.meta.component;
-  const vueFiles = (item.files ?? []).filter((file) => file.path.endsWith(".vue"));
-  if (!vueFiles.length) return undefined;
-  const expected = `${item.name.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join("")}.vue`;
+  const files = (item.files ?? []).filter((file) =>
+    entryExtensions.some((extension) => file.path.endsWith(extension)),
+  );
+  if (!files.length) return undefined;
+  const expected = item.name.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join("");
   return (
-    vueFiles.find((file) => path.basename(file.path) === expected)
-    ?? vueFiles[0]
+    files.find((file) =>
+      entryExtensions.some((extension) => path.basename(file.path) === `${expected}${extension}`),
+    )
+    ?? files[0]
   ).path;
 }
 
-const registry = await loadRegistry();
-const catalog = await readJson(path.join(rootDir, ".balsa", "catalog.json"));
-const checker = createChecker(await resolveTsconfig(), {
-  forceUseTs: true,
-  schema: { ignore: [] },
-});
-
-const stale = [];
-let written = 0;
-let skipped = 0;
-
-for (const catalogItem of catalog.items) {
-  const item = registry.items.find((candidate) => candidate.name === catalogItem.name);
-  const componentPath = item && primaryComponentFile(item);
-  if (!componentPath) {
-    skipped += 1;
-    continue;
+function contractDocumentPath(catalogItem, derivation) {
+  if (typeof derivation.outputDirectory === "string" && derivation.outputDirectory.length) {
+    return path.posix.join(derivation.outputDirectory, `${catalogItem.name}.json`);
   }
+  return itemSpecificationPath(catalogItem);
+}
 
-  const meta = checker.getComponentMeta(sourcePath(componentPath));
-  const props = meta.props.filter(isAuthored).map(describeProp);
-  const events = meta.events.map((event) => ({
-    name: event.name,
-    ...(event.type ? { type: cleanType(event.type) } : {}),
-  }));
-  const slots = meta.slots.map((slot) => ({
-    name: slot.name,
-    ...(slot.type ? { type: cleanType(slot.type) } : {}),
-  }));
-  const exposed = meta.exposed
-    .filter((entry) => !entry.name.startsWith("$"))
-    .map((entry) => ({ name: entry.name, type: cleanType(entry.type) }));
-  const models = describeModels(props, events);
-
-  const publicApi = {
-    source: componentPath,
-    ...(models.length ? { models } : {}),
-    props,
-    events,
-    slots,
-    ...(exposed.length ? { exposed } : {}),
-  };
-
-  const specPath = sourcePath(`specs/components/${catalogItem.name}.json`);
-  const spec = JSON.parse(await readFile(specPath, "utf8"));
-  const next = { ...spec, publicApi };
-  const serialized = `${JSON.stringify(next, null, 2)}\n`;
-
-  if (JSON.stringify(spec.publicApi) !== JSON.stringify(publicApi)) {
-    stale.push(catalogItem.name);
-    if (!checkOnly) {
-      await writeFile(specPath, serialized, "utf8");
-      written += 1;
-    }
+async function readContractDocument(relativePath) {
+  try {
+    return JSON.parse(await readFile(repoPath(relativePath), "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") return undefined;
+    throw error;
   }
 }
 
-if (checkOnly && stale.length) {
+async function createExtractor(target, derivation) {
+  const factory = extractorFactories[derivation.extractor];
+  if (!factory) {
+    throw new Error(
+      `Unknown contract extractor "${derivation.extractor}" for registry target: ${target}`,
+    );
+  }
+  return factory(target);
+}
+
+export async function deriveContracts({
+  checkOnly = false,
+  catalog,
+} = {}) {
+  const resolvedCatalog = catalog
+    ?? await readJson(path.join(rootDir, ".balsa", "catalog.json"));
+  const summaries = [];
+
+  for (const target of consumerFrameworks()) {
+    const derivation = contractDerivationForTarget(target);
+    if (!derivation) continue;
+
+    const registry = await loadTargetRegistry(target);
+    const extractor = await createExtractor(target, derivation);
+    const stale = [];
+    let written = 0;
+    let skipped = 0;
+    let derived = 0;
+
+    for (const catalogItem of resolvedCatalog.items) {
+      const item = registry?.items.find((candidate) => candidate.name === catalogItem.name);
+      const componentPath = item && primaryComponentFile(item, derivation.entryExtensions);
+      if (!componentPath) {
+        skipped += 1;
+        continue;
+      }
+
+      const publicApi = extractor.extract(
+        itemPath(componentPath, { target }),
+        componentPath,
+        item,
+      );
+      if (!publicApi || !publicApi.props?.length) {
+        skipped += 1;
+        continue;
+      }
+
+      derived += 1;
+      const relativePath = contractDocumentPath(catalogItem, derivation);
+      const existing = await readContractDocument(relativePath);
+      const next = derivation.outputDirectory
+        ? { publicApi }
+        : { ...existing, publicApi };
+      const serialized = `${JSON.stringify(next, null, 2)}\n`;
+
+      if (JSON.stringify(existing?.publicApi) !== JSON.stringify(publicApi)) {
+        stale.push(catalogItem.name);
+        if (!checkOnly) {
+          const absPath = repoPath(relativePath);
+          await mkdir(path.dirname(absPath), { recursive: true });
+          await writeFile(absPath, serialized, "utf8");
+          written += 1;
+        }
+      }
+    }
+
+    summaries.push({
+      target,
+      derived,
+      skipped,
+      written,
+      stale,
+      catalogCount: resolvedCatalog.items.length,
+      storesInSpecification: !derivation.outputDirectory,
+    });
+  }
+
+  return summaries;
+}
+
+function printCheckFailure(summary) {
   console.error(
-    `${stale.length} component contracts no longer match their source:\n`
-    + stale.map((name) => `- ${name}`).join("\n")
+    `${summary.stale.length} ${summary.target} component contracts no longer match their source:\n`
+    + summary.stale.map((name) => `- ${name}`).join("\n")
     + "\n\nRun npm run contracts:build and commit the regenerated specifications.",
   );
-  process.exitCode = 1;
-} else if (checkOnly) {
-  console.log(`All ${catalog.items.length - skipped} derived component contracts match their source.`);
-} else {
+}
+
+function printCheckSuccess(summary) {
+  if (summary.storesInSpecification) {
+    console.log(`All ${summary.derived} derived component contracts match their source.`);
+    return;
+  }
   console.log(
-    `Derived contracts for ${catalog.items.length - skipped} components`
-    + ` (${written} updated, ${skipped} items have no Vue entry point).`,
+    `All ${summary.derived} derived ${summary.target} component contracts match their source.`,
   );
+}
+
+function printBuildSuccess(summary) {
+  if (summary.storesInSpecification) {
+    console.log(
+      `Derived contracts for ${summary.derived} components`
+      + ` (${summary.written} updated, ${summary.skipped} items have no Vue entry point).`,
+    );
+    return;
+  }
+  console.log(
+    `Derived contracts for ${summary.derived} ${summary.target} components`
+    + ` (${summary.written} updated, ${summary.skipped} items have no ${summary.target} entry point).`,
+  );
+}
+
+export async function main(args = process.argv.slice(2)) {
+  const checkOnly = args.includes("--check");
+  const summaries = await deriveContracts({ checkOnly });
+  const failed = summaries.filter((summary) => checkOnly && summary.stale.length);
+
+  if (failed.length) {
+    for (const summary of failed) printCheckFailure(summary);
+    process.exitCode = 1;
+    return summaries;
+  }
+
+  for (const summary of summaries) {
+    if (checkOnly) printCheckSuccess(summary);
+    else printBuildSuccess(summary);
+  }
+  return summaries;
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  await main();
 }

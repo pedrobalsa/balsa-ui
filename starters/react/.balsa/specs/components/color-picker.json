@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "name": "color-picker",
+  "title": "ColorPicker",
+  "category": "component",
+  "classification": "balsa-addition",
+  "status": "beta",
+  "version": "0.1.1",
+  "purpose": "Choose a six-digit hex color through a labeled square field with configurable label position or palette trigger and an accessible custom multi-format editing popover.",
+  "useFor": [
+    "Palette colors",
+    "Brand color settings",
+    "Editable visual properties"
+  ],
+  "avoidFor": [
+    "Selecting a named semantic intent",
+    "Status-only color display",
+    "Color formats that require alpha"
+  ],
+  "variants": [
+    "outline",
+    "surface",
+    "soft",
+    "glass"
+  ],
+  "states": [
+    "default",
+    "focus",
+    "open",
+    "invalid-color-code",
+    "disabled"
+  ],
+  "composition": {
+    "model": "six-digit hex string",
+    "trigger": "Field type uses one filled square with an outside left-aligned, non-truncating label by default; labelPosition='inside' centers the concise label inside with contrast-safe black or white text. Field sizes are sm (32px), md (40px), and lg (56px); palette type uses one full-width filled rectangle with its required label visually hidden for grouped palettes.",
+    "editor": "A smoothly anchored top-layer popover with separate saturation/brightness and hue controls plus a compact format Select beside an editable HEX, RGB, or HSL color-code field; the public model remains normalized six-digit hex."
+  },
+  "accessibility": [
+    "Provide a stable id and label; palette type keeps the label available to assistive technology.",
+    "Field labels remain visible outside by default, while inside labels choose black or white foreground from the color's contrast ratio.",
+    "The trigger exposes its current hex value, expanded state, popup relationship, and optional description.",
+    "The saturation and brightness field supports arrow-key changes without changing hue at achromatic edges, and the hue slider retains native range semantics.",
+    "The color-code format Select has an accessible name, and invalid drafts remain editable until Blur restores the last valid code.",
+    "Escape closes and restores focus to the trigger; contextual actions can close before moving focus elsewhere.",
+    "The editable color-code field provides explicit invalid feedback so the selection is not communicated by color alone."
+  ],
+  "tokens": [
+    "--balsa-color-surface-elevated",
+    "--balsa-color-surface-elevated-foreground",
+    "--balsa-color-input",
+    "--balsa-color-input-foreground",
+    "--balsa-color-input-border",
+    "--balsa-color-muted-foreground",
+    "--balsa-color-border-strong",
+    "--balsa-color-focus-ring",
+    "--balsa-color-disabled",
+    "radius.control",
+    "radius.surface",
+    "shadow.panel"
+  ],
+  "commonMistakes": [
+    "Rendering a second inset square inside the trigger.",
+    "Opening the browser-native color dialog instead of the custom editor.",
+    "Hiding the selected hex value and relying only on color.",
+    "Passing rgb, alpha, or malformed values instead of a six-digit hex string."
+  ],
+  "examples": [
+    {
+      "id": "field",
+      "title": "Outside label",
+      "description": "The default concise label sits above the filled square.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#7c3aed\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" />\n</template>"
+    },
+    {
+      "id": "inside-label",
+      "title": "Inside label",
+      "description": "Use an inside tag when the color square itself is the compact label.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#7c3aed\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" label-position=\"inside\" />\n</template>"
+    },
+    {
+      "id": "large",
+      "title": "Large field",
+      "description": "A larger square gives a color setting more visual emphasis.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#7c3aed\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" size=\"lg\" />\n</template>"
+    },
+    {
+      "id": "palette",
+      "title": "Palette",
+      "description": "Palette type composes several color triggers into one compact row.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst colors = ref([\"#0f766e\", \"#7C3AED\", \"#EA580C\", \"#0284C7\"]);\n</script>\n\n<template>\n  <div class=\"flex h-12 max-w-xs items-stretch overflow-hidden rounded-balsa-control border border-balsa-border-strong bg-balsa-input\">\n  <ColorPicker id=\"palette-color-1\" v-model=\"colors[0]\" label=\"Color 1\" type=\"palette\" />\n  <ColorPicker id=\"palette-color-2\" v-model=\"colors[1]\" label=\"Color 2\" type=\"palette\" />\n  <ColorPicker id=\"palette-color-3\" v-model=\"colors[2]\" label=\"Color 3\" type=\"palette\" />\n  <ColorPicker id=\"palette-color-4\" v-model=\"colors[3]\" label=\"Color 4\" type=\"palette\" />\n</div>\n</template>"
+    },
+    {
+      "id": "disabled",
+      "title": "Disabled",
+      "description": "Disabled color controls remain legible while blocking the editor.",
+      "source": "<script setup lang=\"ts\">\nimport ColorPicker from \"@/components/ui/ColorPicker.vue\";\nimport { ref } from \"vue\";\n\nconst color = ref(\"#0f766e\");\n</script>\n\n<template>\n  <ColorPicker id=\"placeholder-color\" v-model=\"color\" label=\"Color 1\" disabled />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/ColorPicker.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "accessibleLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ColorPickerType | undefined",
+        "values": [
+          "field",
+          "palette"
+        ],
+        "required": false,
+        "default": "\"field\""
+      },
+      {
+        "name": "labelPosition",
+        "type": "ColorPickerLabelPosition | undefined",
+        "values": [
+          "inside",
+          "outside"
+        ],
+        "required": false,
+        "default": "\"outside\""
+      },
+      {
+        "name": "size",
+        "type": "ColorPickerSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FieldVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"#000000\""
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: string]"
+      }
+    ],
+    "slots": [
+      {
+        "name": "actions",
+        "type": "{ close: () => Promise<void>; }"
+      }
+    ]
+  }
+}

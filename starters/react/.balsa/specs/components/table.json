@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "name": "table",
+  "title": "Table",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "table"
+  },
+  "status": "beta",
+  "version": "0.2.0",
+  "purpose": "Present consumer-authored semantic tabular markup in a responsive Balsa surface with independently configurable header and row colors.",
+  "useFor": [
+    "Comparison data",
+    "Financial and metric rows",
+    "Semantic tabular content"
+  ],
+  "avoidFor": [
+    "Layout-only grids",
+    "Interactive data exploration requiring DataTable",
+    "Card collections"
+  ],
+  "states": [
+    "content",
+    "loading",
+    "empty"
+  ],
+  "accessibility": [
+    "Requires an accessible caption.",
+    "Consumer th elements retain explicit scope ownership.",
+    "Loading and empty states remain valid table rows."
+  ],
+  "variants": [
+    "surface",
+    "outline",
+    "soft",
+    "glass"
+  ],
+  "sizes": [
+    "compact",
+    "default",
+    "comfortable"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-border",
+    "--balsa-color-selected",
+    "--balsa-color-primary",
+    "--balsa-color-secondary",
+    "--balsa-color-accent",
+    "--balsa-color-info",
+    "--balsa-color-success",
+    "--balsa-color-warning",
+    "--balsa-color-destructive",
+    "radius.surface"
+  ],
+  "commonMistakes": [
+    "Using tables for page layout.",
+    "Omitting header scope.",
+    "Hiding the caption without providing the caption prop."
+  ],
+  "examples": [
+    {
+      "id": "semantic",
+      "title": "Semantic results",
+      "description": "Caption, scoped headers, and native row groups remain consumer-authored.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"default\" :column-count=\"3\" striped>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    },
+    {
+      "id": "grid",
+      "title": "Compact grid",
+      "description": "Compact density and gridlines support dense comparison.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"compact\" :column-count=\"3\" striped gridlines>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    },
+    {
+      "id": "loading",
+      "title": "Loading rows",
+      "description": "One valid spanning row announces pending table content.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"default\" :column-count=\"3\" striped loading>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    },
+    {
+      "id": "empty",
+      "title": "Empty results",
+      "description": "Empty copy remains within the native table structure.",
+      "source": "<script setup lang=\"ts\">\nimport Table from \"@/components/ui/Table.vue\";\n</script>\n\n<template>\n  <Table caption=\"Results placeholder\" variant=\"surface\" density=\"default\" :column-count=\"3\" striped empty>\n    <template #header><thead><tr><th scope=\"col\">Name placeholder</th><th scope=\"col\">Status placeholder</th><th scope=\"col\">Value placeholder</th></tr></thead></template>\n    <tbody><tr><th scope=\"row\">Row placeholder</th><td>Ready placeholder</td><td>42</td></tr></tbody>\n  </Table>\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Table.vue",
+    "props": [
+      {
+        "name": "caption",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "TableVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "density",
+        "type": "TableDensity | undefined",
+        "values": [
+          "default",
+          "compact",
+          "comfortable"
+        ],
+        "required": false
+      },
+      {
+        "name": "headerColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "rowColor",
+        "type": "TableColor | undefined",
+        "values": [
+          "primary",
+          "neutral",
+          "secondary",
+          "accent",
+          "destructive",
+          "success",
+          "warning",
+          "info"
+        ],
+        "required": false,
+        "default": "\"neutral\""
+      },
+      {
+        "name": "striped",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "hover",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "gridlines",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "stickyHeader",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "empty",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "emptyText",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"No rows to display.\""
+      },
+      {
+        "name": "columnCount",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "rounded",
+        "type": "SurfaceRounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "auto",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": [
+      {
+        "name": "header",
+        "type": "{}"
+      },
+      {
+        "name": "empty",
+        "type": "{}"
+      },
+      {
+        "name": "default",
+        "type": "{}"
+      },
+      {
+        "name": "footer",
+        "type": "{}"
+      }
+    ]
+  }
+}

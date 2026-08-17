@@ -1,0 +1,181 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Pagination.tsx",
+    "props": [
+      {
+        "name": "total",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "siblingCount",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "presentation",
+        "type": "PaginationPresentation | undefined",
+        "values": [
+          "pages",
+          "action-labels",
+          "icons"
+        ],
+        "required": false
+      },
+      {
+        "name": "showEdges",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "showLabels",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "previousLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "nextLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "firstLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "lastLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "pageLabel",
+        "type": "((page: number) => string) | undefined",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "PaginationSize | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "defaultValue",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "onValueChange",
+        "type": "((page: number) => void) | undefined",
+        "required": false
+      },
+      {
+        "name": "onChange",
+        "type": "((page: number) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Footer.tsx",
+    "props": [
+      {
+        "name": "legalLogo",
+        "type": "BrandLogo",
+        "shape": {
+          "type": "BrandLogo",
+          "variants": [
+            {
+              "type": "BrandImage",
+              "fields": [
+                {
+                  "name": "src",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "title",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "type": "BrandTitle",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "src",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "sections",
+        "type": "readonly FooterSection[]",
+        "shape": {
+          "type": "readonly FooterSection[]",
+          "items": {
+            "type": "FooterSection",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "links",
+                "type": "readonly NavigationLink[]",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "copyright",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "contactGroups",
+        "type": "readonly FooterContactGroup[] | undefined",
+        "shape": {
+          "type": "readonly FooterContactGroup[] | undefined",
+          "items": {
+            "type": "FooterContactGroup",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "items",
+                "type": "readonly FooterContactItem[]",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false
+      },
+      {
+        "name": "socialLinks",
+        "type": "readonly FooterSocialLink[] | undefined",
+        "shape": {
+          "type": "readonly FooterSocialLink[] | undefined",
+          "items": {
+            "type": "FooterSocialLink",
+            "fields": [
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "icon",
+                "type": "LucideIcon",
+                "required": true
+              }
+            ]
+          }
+        },
+        "required": false
+      },
+      {
+        "name": "leadTitle",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "navigationLabel",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "legalText",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "FooterVariant | undefined",
+        "values": [
+          "surface",
+          "inverse"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "onNavigate",
+        "type": "((item: NavigationLink, event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

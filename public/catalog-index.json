@@ -1,6 +1,8 @@
 {
-  "schemaVersion": 1,
-  "framework": "vue",
+  "schemaVersion": 2,
+  "frameworks": [
+    "vue"
+  ],
   "itemCount": 97,
   "items": [
     {
@@ -8,679 +10,873 @@
       "title": "Icon",
       "category": "component",
       "description": "Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/icon"
     },
     {
       "name": "analytics",
       "title": "Analytics",
       "category": "component",
       "description": "Provider-neutral interaction tracking for every data-balsa component, with consent gating, typed custom events, and adapters for GA4, Meta Pixel, LinkedIn Insight Tag, or application-owned destinations.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/analytics"
     },
     {
       "name": "button",
       "title": "Button",
       "category": "component",
       "description": "Typed action control with solid, soft, outline, and glass styles, rounded, pill, and FAB shapes, loading state, sizes, and Lucide icons.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/button"
     },
     {
       "name": "button-group",
       "title": "ButtonGroup",
       "category": "component",
       "description": "Connected mutually exclusive actions with semantic color, a Glassmorphism-aware surface-to-glass default, explicit surface, solid, outline, glass, and compact code treatments; rounded or pill outer shapes; four shared sizes; responsive labels; and accessible pressed state.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/button-group"
     },
     {
       "name": "input",
       "title": "Input",
       "category": "component",
       "description": "Accessible labeled native and masked input with outline, surface, soft, and glass materials; compact and default sizes; configurable geometry; password, phone, monetary, and percentage modes; validation feedback; and loading states.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/input"
     },
     {
       "name": "input-group",
       "title": "Input Group",
       "category": "component",
       "description": "One labelled native text input with typed start/end text or Lucide addons, action slots, inline or stacked layout, shared form sizing and geometry, and complete required, disabled, loading, validated, and unvalidated behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/input-group"
     },
     {
       "name": "input-otp",
       "title": "Input OTP",
       "category": "component",
       "description": "One accessible fixed-length native verification-code input with semantic-colored visual cells, numeric or alphanumeric filtering, paste and caret editing, optional masking and grouping, surface/outline/soft/solid/glass materials, completion events, and shared form states.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/input-otp"
     },
     {
       "name": "radio-group",
       "title": "Radio Group",
       "category": "component",
       "description": "Accessible native mutually exclusive choices with typed options, a default column layout, semantic selected colors, row and selected-card layouts, shared form validation, sizing, geometry, and loading behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/radio-group"
     },
     {
       "name": "slider",
       "title": "Slider",
       "category": "component",
       "description": "Single-value and independently draggable bounded-range native sliders with horizontal and vertical orientation, formatted output, three sizes, minimum thumb gaps, keyboard, pointer, touch, and form behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/slider"
     },
     {
       "name": "popup",
       "title": "Popup",
       "category": "component",
       "description": "Collision-aware interactive rich content anchored to a native button with portal or contained rendering, focus entry/restoration, dismissal, typed materials, sizing, and geometry.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/popup"
     },
     {
       "name": "hover-card",
       "title": "Hover Card",
       "category": "component",
       "description": "Delayed pointer-hover and keyboard-focus previews that preserve focus, bridge pointer movement, collision-flip, escape clipping, and inherit Balsa materials and geometry.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/hover-card"
     },
     {
       "name": "tooltip",
       "title": "Tooltip",
       "category": "component",
       "description": "Collision-aware non-interactive supplementary descriptions for pointer hover and keyboard focus, with typed timing, materials, geometry, portal or contained rendering, and theme inheritance.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/tooltip"
     },
     {
       "name": "dropdown-menu",
       "title": "Dropdown Menu",
       "category": "component",
       "description": "Button-triggered typed action menus with labels, separators, checkbox/radio state, destructive items, shortcuts, submenus, semantic color, configurable geometry, roving focus, typeahead, and collision-safe portals. Ships PropertySelect, the full-width caption-over-value property row built on the same trigger.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/dropdown-menu"
     },
     {
       "name": "context-menu",
       "title": "Context Menu",
       "category": "component",
       "description": "Pointer- and keyboard-positioned typed context actions with viewport collision handling and the complete shared Balsa menu semantics.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/context-menu"
     },
     {
       "name": "menubar",
       "title": "Menubar",
       "category": "component",
       "description": "Persistent application menus with horizontal roving focus, open-menu transfer, typed shared menu content, portals, and complete keyboard behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/menubar"
     },
     {
       "name": "command-menu",
       "title": "Command Menu",
       "category": "component",
       "description": "Inline dropdown or on-demand dialog grouped command filtering with combobox/listbox semantics, active-descendant navigation, hotkey opening, loading, empty states, and typed sizing.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/command-menu"
     },
     {
       "name": "drawer",
       "title": "Drawer",
       "category": "component",
       "description": "Native modal edge panel with four sides, three extents, scrollable slots, focus/scroll management, dismissal policy, handle drag, and contained previews.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/drawer"
     },
     {
       "name": "color-picker",
       "title": "ColorPicker",
       "category": "component",
       "description": "Accessible contrast-safe outline, surface, soft, or glass color field or grouped palette trigger with a custom saturation, hue, and editable HEX, RGB, or HSL color-code popover.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/color-picker"
     },
     {
       "name": "modal",
       "title": "Modal",
       "category": "component",
       "description": "Typed semantic-color surface, solid, outline, soft, or glass focused dialog or bottom sheet with accessible naming, focus containment and return, Escape handling, backdrop dismissal, and background scroll locking that preserves scrolling inside the dialog.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/modal"
     },
     {
       "name": "textarea",
       "title": "Textarea",
       "category": "component",
       "description": "Accessible multi-line input with outline, surface, soft, and glass materials; typed size and radius; rows; auto expansion; capped height; resize behavior; and validation feedback.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/textarea"
     },
     {
       "name": "breadcrumb",
       "title": "Breadcrumb",
       "category": "component",
       "description": "Typed compact hierarchy navigation with linked ancestors, a current-page state, selectable separators, and accessible ordered-list semantics.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/breadcrumb"
     },
     {
       "name": "link",
       "title": "Link",
       "category": "component",
       "description": "Typed sized navigation link with text, solid, and outline presentations, optional square geometry, and safe external-link behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/link"
     },
     {
       "name": "badge",
       "title": "Badge",
       "category": "component",
       "description": "Compact status, category, and metadata label with solid, soft, outline, and low-rim translucent glass styles, three sizes, and optional square geometry.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/badge"
     },
     {
       "name": "card",
       "title": "Card",
       "category": "component",
       "description": "Consistent semantic surface with six variants, typed action-intent color, configurable corners, size or padding, and shadow for grouping related content and actions.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/card"
     },
     {
       "name": "application-card",
       "title": "ApplicationCard",
       "category": "composition",
       "description": "Structured application surface with a repeatable header, action, body, and footer rhythm that inherits Card material, geometry, borders, density, and elevation.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/application-card"
     },
     {
       "name": "select",
       "title": "Select",
       "category": "component",
       "description": "Keyboard-accessible outline, surface, soft, or glass single or multiple selection with compact sizing, configurable corners, fixed-height gapped options, and an overflow-safe top-layer listbox.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/select"
     },
     {
       "name": "autocomplete",
       "title": "Autocomplete",
       "category": "component",
       "description": "Editable outline, surface, soft, or glass single- or multiple-value combobox with shared field sizing, configurable corners, removable selected suggestions, and an overflow-safe suggestion list.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/autocomplete"
     },
     {
       "name": "checkbox",
       "title": "Checkbox",
       "category": "component",
       "description": "Native binary form selection with outline, surface, soft, and glass unchecked-control treatments, associated label, hint, three sizes, and configurable corners.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/checkbox"
     },
     {
       "name": "switch",
       "title": "Switch",
       "category": "component",
       "description": "Native boolean setting control with switch semantics, typed materials, three sizes, configurable corners, form naming, required state, and associated guidance.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/switch"
     },
     {
       "name": "toggle",
       "title": "Toggle",
       "category": "component",
       "description": "Accessible pressed-state action with typed surface, solid, outline, glass, and outline-to-solid icon treatments; semantic action colors; four sizes; and configurable corners.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/toggle"
     },
     {
       "name": "toggle-group",
       "title": "ToggleGroup",
       "category": "component",
       "description": "Connected single or multiple pressed-state actions with typed options, orientation, disabled items, immutable models, and complete roving keyboard focus.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/toggle-group"
     },
     {
       "name": "collapsible",
       "title": "Collapsible",
       "category": "component",
       "description": "Single controlled underline-default disclosure with native semantics, fully retracted inert closed content, typed materials, natural-height motion, sizing, configurable corners, disabled state, and semantic headings.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/collapsible"
     },
     {
       "name": "accordion",
       "title": "Accordion",
       "category": "component",
       "description": "Connected options-driven disclosure collection with single or multiple models, semantic headings, disabled items, complete vertical keyboard navigation, and shared typed materials.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/accordion"
     },
     {
       "name": "kbd",
       "title": "Kbd",
       "category": "component",
       "description": "Semantic single-key and chord notation with individually rendered soft-default key caps, typed materials and sizes, configurable geometry, and accessible symbolic labels.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/kbd"
     },
     {
       "name": "avatar",
       "title": "Avatar",
       "category": "component",
       "description": "Resilient labelled identity image with deterministic or custom fallback, image lifecycle state, delayed fallback, typed shapes and four sizes.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/avatar"
     },
     {
       "name": "pagination",
       "title": "Pagination",
       "category": "component",
       "description": "Clamped result navigation with bounded siblings, semantic ellipses, action-label or icon-only controls, localization, sizing, geometry, and native accessibility.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/pagination"
     },
     {
       "name": "resizable",
       "title": "Resizable",
       "category": "component",
       "description": "Two-panel pointer and keyboard resize group with controlled percentage, horizontal or vertical orientation, safe limits, typed materials, handle sizes, and geometry.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/resizable"
     },
     {
       "name": "scroll-area",
       "title": "Scroll Area",
       "category": "component",
       "description": "Labelled native scroll viewport with typed axes, scrollbar visibility and width, optional edge fades, geometry, native events, and exposed scroll methods.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/scroll-area"
     },
     {
       "name": "preview",
       "title": "Preview",
       "category": "component",
       "description": "Isolated natural or exact logical viewport with fit scaling, synchronized design context, accessible iframe title, and chromeless fullscreen review.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/preview"
     },
     {
       "name": "carousel",
       "title": "Carousel",
       "category": "component",
       "description": "Typed accessible Balsa-owned drag and snap collection with surface, outline, soft, and glass variants; configurable arrow and indicator placement; orientation, alignment, looping, visible slide count, empty state, and pausable autoplay.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/carousel"
     },
     {
       "name": "sidebar",
       "title": "Sidebar",
       "category": "component",
       "description": "Typed grouped application navigation with active state, nested items, expanded/rail/offcanvas desktop modes, shortcut, slots, and Drawer-backed mobile behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/sidebar"
     },
     {
       "name": "attachment",
       "title": "Attachment",
       "category": "component",
       "description": "Labelled native file selection with drag/drop, immutable single or multiple models, type/size/count validation, loading/error states, metadata, and accessible removal.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/attachment"
     },
     {
       "name": "table",
       "title": "Table",
       "category": "component",
       "description": "Responsive slot-first semantic table with typed materials, density, independently configurable header and row colors, stripes, hover, gridlines, sticky header, geometry, and valid loading or empty rows.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/table"
     },
     {
       "name": "calendar",
       "title": "Calendar",
       "category": "component",
       "description": "Locale-aware single, multiple, and range date-only selection with disabled rules, one or two months, fixed weeks, outside days, and complete grid keyboard navigation.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/calendar"
     },
     {
       "name": "date-picker",
       "title": "DatePicker",
       "category": "component",
       "description": "Labelled locale-formatted single or range date field composing Calendar and collision-safe Popup with validation, disabled dates, clear action, dismissal, focus restoration, and Glassmorphism backdrop blur.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/date-picker"
     },
     {
       "name": "data-table",
       "title": "DataTable",
       "category": "component",
       "description": "Typed columns and rows with render slots, controlled sorting, bottom quick field and advanced filters, pagination, selection, visibility, independent header and row colors, density, loading, empty state, and responsive semantic markup.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/data-table"
     },
     {
       "name": "charts",
       "title": "Charts",
       "category": "component",
       "description": "Composable responsive Unovis line, area, grouped or stacked bar, donut, and doughnut charts with contrast-safe semantic series, polished interactions, explicit states, and complete semantic table alternatives.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/charts"
     },
     {
       "name": "separator",
       "title": "Separator",
       "category": "component",
       "description": "Decorative or semantic horizontal and vertical separation with typed line styles, thicknesses, orientation, and optional aligned horizontal label content.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/separator"
     },
     {
       "name": "skeleton",
       "title": "Skeleton",
       "category": "component",
       "description": "Screen-reader-hidden text, rectangle, and circle loading placeholders with typed materials, sizing, geometry, pulse or wave motion, and reduced-motion fallback.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/skeleton"
     },
     {
       "name": "spinner",
       "title": "Spinner",
       "category": "component",
       "description": "Accessible indeterminate loading status with five sizes, semantic color, three speeds, hidden or visible label placement, and reduced-motion fallback.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/spinner"
     },
     {
       "name": "progress",
       "title": "Progress",
       "category": "component",
       "description": "Labelled determinate or indeterminate task completion with safe value normalization, formatted value text, typed variants, semantic colors, sizing, geometry, and reduced-motion behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/progress"
     },
     {
       "name": "alert",
       "title": "Alert",
       "category": "component",
       "description": "Typed inline feedback and native top-layer alert-dialog presentation with five statuses, five materials, persistent dismissal policy, focus restoration, sizing, geometry, and theme inheritance.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/alert"
     },
     {
       "name": "toast",
       "title": "Toast",
       "category": "component",
       "description": "Declarative viewport-level notification stack with primary-by-default typed items, custom icons, bounded rendering, semantic live regions, timed and sticky lifetimes, pause/resume policies, actions, Escape dismissal, position-aware transitions, responsive placement, and teleported theme inheritance.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/toast"
     },
     {
       "name": "tabs",
       "title": "Tabs",
       "category": "component",
       "description": "Keyboard-accessible local and filter-panel switching with single-axis responsive overflow, inert unslotted panels, four materials, and segmented, underline, pill, or tile layouts.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/tabs"
     },
     {
       "name": "code-block",
       "title": "Code block",
       "category": "component",
       "description": "Theme-aware sized dark source and command presentation with configurable corners, text-style expansion controls, and accessible icon-only copy.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/code-block"
     },
     {
       "name": "dropdown",
       "title": "Dropdown",
       "category": "component",
       "description": "Compact anchored panel for a small group of related links or actions, with typed semantic color, surface, outline, soft, and glass materials, configurable width and geometry, and safe alignment.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/dropdown"
     },
     {
       "name": "navbar",
       "title": "Navbar",
       "category": "component",
       "description": "Responsive semantic-color application navigation with compact item-anchored desktop menus that match its material; surface, outline, soft, and glass materials; bar, floating, and minimal layouts; desktop actions; and static, fixed, or reveal-on-scroll behavior.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/navbar"
     },
     {
       "name": "footer",
       "title": "Footer",
       "category": "component",
       "description": "Responsive application footer with a linked brand, flexible grouped navigation, configurable legal content, contacts, and named social links.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/footer"
     },
     {
       "name": "gradient-background",
       "title": "GradientBackground",
       "category": "component",
       "description": "Deterministic procedural backgrounds with six pattern generators, ASCII and print-style post effects, typed presets, palette-aware colors, calm motion, lifecycle fallbacks, and still PNG capture.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/gradient-background"
     },
     {
       "name": "text-3d",
       "title": "Text3D",
       "category": "component",
       "description": "Palette-aware and theme-aware extruded display text with finite presets, materials, environments and fonts, optional drag, wheel zoom and rotation, lifecycle fallbacks, and still PNG capture.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/text-3d"
     },
     {
       "name": "analytics-chart-card",
       "title": "AnalyticsChartCard",
       "category": "composition",
       "description": "Trend visualization with period context and semantic delta.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/analytics-chart-card"
     },
     {
       "name": "metric-grid-card",
       "title": "MetricGridCard",
       "category": "composition",
       "description": "Aligned operational KPIs with labels, values, and supporting detail.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/metric-grid-card"
     },
     {
       "name": "resource-table-card",
       "title": "ResourceTableCard",
       "category": "composition",
       "description": "Resource index with status, metadata, row selection, and creation action.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/resource-table-card"
     },
     {
       "name": "settings-card",
       "title": "SettingsCard",
       "category": "composition",
       "description": "Related workspace settings with explicit reset and save actions.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/settings-card"
     },
     {
       "name": "notification-preferences-card",
       "title": "NotificationPreferencesCard",
       "category": "composition",
       "description": "Independently controlled notification channels with concise explanations.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/notification-preferences-card"
     },
     {
       "name": "member-access-card",
       "title": "MemberAccessCard",
       "category": "composition",
       "description": "People, identity, role, and access metadata in a scannable list.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/member-access-card"
     },
     {
       "name": "navigation-menu-card",
       "title": "NavigationMenuCard",
       "category": "composition",
       "description": "Sectioned local navigation with an explicit current destination.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/navigation-menu-card"
     },
     {
       "name": "error-state-card",
       "title": "ErrorStateCard",
       "category": "composition",
       "description": "Recoverable failure with request context and retry action.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/error-state-card"
     },
     {
       "name": "loading-state-card",
       "title": "LoadingStateCard",
       "category": "composition",
       "description": "Stable skeleton geometry with accessible busy semantics.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/loading-state-card"
     },
     {
       "name": "media-preview-card",
       "title": "MediaPreviewCard",
       "category": "composition",
       "description": "Asset preview, publication status, and replacement action.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/media-preview-card"
     },
     {
       "name": "payment-method-card",
       "title": "PaymentMethodCard",
       "category": "composition",
       "description": "Selectable saved payment methods and a focused continuation action.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/payment-method-card"
     },
     {
       "name": "subscription-card",
       "title": "SubscriptionCard",
       "category": "composition",
       "description": "Plan, renewal, included usage, and management action.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/subscription-card"
     },
     {
       "name": "order-summary-card",
       "title": "OrderSummaryCard",
       "category": "composition",
       "description": "Line items, calculated totals, and order confirmation.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/order-summary-card"
     },
     {
       "name": "onboarding-checklist-card",
       "title": "OnboardingChecklistCard",
       "category": "composition",
       "description": "Setup tasks with progress and complete/current/future state.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/onboarding-checklist-card"
     },
     {
       "name": "form-progress-card",
       "title": "FormProgressCard",
       "category": "composition",
       "description": "Linear multistep progress with current-step semantics.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/form-progress-card"
     },
     {
       "name": "activity-timeline-card",
       "title": "ActivityTimelineCard",
       "category": "composition",
       "description": "Chronological actor, action, target, and time event stream.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/activity-timeline-card"
     },
     {
       "name": "command-toolbar-card",
       "title": "CommandToolbarCard",
       "category": "composition",
       "description": "Stacked command launcher with aligned icons, descriptions, shortcuts, and full-row actions.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/command-toolbar-card"
     },
     {
       "name": "data-grid-card",
       "title": "DataGridCard",
       "category": "composition",
       "description": "Sortable, selectable, paginated table of records with real columns.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/data-grid-card"
     },
     {
       "name": "schedule-planner-card",
       "title": "SchedulePlannerCard",
       "category": "composition",
       "description": "Calendar paired with the bookable hours for the chosen day.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/schedule-planner-card"
     },
     {
       "name": "command-palette-card",
       "title": "CommandPaletteCard",
       "category": "composition",
       "description": "Grouped command palette that reaches projects, actions, and settings from one search.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/command-palette-card"
     },
     {
       "name": "asset-carousel-card",
       "title": "AssetCarouselCard",
       "category": "composition",
       "description": "Browsable run of captured assets with captions and review status.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/asset-carousel-card"
     },
     {
       "name": "split-workspace-card",
       "title": "SplitWorkspaceCard",
       "category": "composition",
       "description": "Resizable split of a file list against the diff it selects.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/split-workspace-card"
     },
     {
       "name": "release-notes-card",
       "title": "ReleaseNotesCard",
       "category": "composition",
       "description": "Scrollable release history with version, date, and change notes.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/release-notes-card"
     },
     {
       "name": "device-verification-card",
       "title": "DeviceVerificationCard",
       "category": "composition",
       "description": "Single-purpose one-time-code step with resend and explicit confirmation.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/device-verification-card"
     },
     {
       "name": "service-health-card",
       "title": "ServiceHealthCard",
       "category": "composition",
       "description": "Half-height status strip reporting state and latency per region.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/service-health-card"
     },
     {
       "name": "storage-usage-card",
       "title": "StorageUsageCard",
       "category": "composition",
       "description": "Half-height single measurement with the bar that puts it in context.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/storage-usage-card"
     },
     {
       "name": "inbox-thread-card",
       "title": "InboxThreadCard",
       "category": "composition",
       "description": "Message thread with author, timing, and an inline reply.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/inbox-thread-card"
     },
     {
       "name": "filter-panel-card",
       "title": "FilterPanelCard",
       "category": "composition",
       "description": "Grouped filters across checkboxes and a range, with reset and apply.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/filter-panel-card"
     },
     {
       "name": "incident-alert-card",
       "title": "IncidentAlertCard",
       "category": "composition",
       "description": "Half-height incident banner with acknowledge and open actions.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/incident-alert-card"
     },
     {
       "name": "plan-comparison-card",
       "title": "PlanComparisonCard",
       "category": "composition",
       "description": "Plan capabilities compared across tiers with a billing period switch.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/plan-comparison-card"
     },
     {
       "name": "profile-form-card",
       "title": "ProfileFormCard",
       "category": "composition",
       "description": "Labelled profile fields with picture, handle, time zone, and biography.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/profile-form-card"
     },
     {
       "name": "usage-breakdown-card",
       "title": "UsageBreakdownCard",
       "category": "composition",
       "description": "Stacked bars attributing billed usage to categories over time.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/usage-breakdown-card"
     },
     {
       "name": "environment-switcher-card",
       "title": "EnvironmentSwitcherCard",
       "category": "composition",
       "description": "Searchable environment picker with the current selection stated.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/environment-switcher-card"
     },
     {
       "name": "api-key-card",
       "title": "ApiKeyCard",
       "category": "composition",
       "description": "One-time secret with copy, provenance, and revocation.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/api-key-card"
     },
     {
       "name": "integration-list-card",
       "title": "IntegrationListCard",
       "category": "composition",
       "description": "Connected services, each with the single control that governs it.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/integration-list-card"
     },
     {
       "name": "runbook-steps-card",
       "title": "RunbookStepsCard",
       "category": "composition",
       "description": "Ordered procedure where only the step in hand is expanded.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/runbook-steps-card"
     },
     {
       "name": "image-compare-card",
       "title": "ImageCompareCard",
       "category": "composition",
       "description": "Before-and-after comparison where the reader sets the split.",
-      "status": "beta"
+      "status": "beta",
+      "framework": "vue",
+      "registry": "@balsa/image-compare-card"
     }
   ]
 }

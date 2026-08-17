@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "icon",
+  "type": "registry:ui",
+  "title": "Icon",
+  "description": "Tree-shaken Lucide icon primitive with finite sizing and stroke weight plus decorative or labelled accessibility semantics.",
+  "dependencies": [
+    "react",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ui/Icon.tsx",
+      "type": "registry:ui",
+      "target": "src/components/ui/Icon.tsx",
+      "content": "import type { LucideIcon } from \"lucide-react\";\n\nexport type IconComponent = LucideIcon;\nexport type IconSize = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\";\nexport type IconStrokeWidth = 1.5 | 2 | 2.5;\n\nconst sizes: Readonly<Record<IconSize, number>> = {\n  xs: 12,\n  sm: 16,\n  md: 20,\n  lg: 24,\n  xl: 32,\n};\n\nexport interface IconProps {\n  icon: IconComponent;\n  size?: IconSize;\n  strokeWidth?: IconStrokeWidth;\n  label?: string;\n  className?: string;\n}\n\nexport function Icon({\n  icon: Glyph,\n  size = \"md\",\n  strokeWidth = 2,\n  label,\n  className,\n}: IconProps) {\n  return (\n    <Glyph\n      data-balsa=\"icon\"\n      size={sizes[size]}\n      strokeWidth={strokeWidth}\n      absoluteStrokeWidth\n      color=\"currentColor\"\n      aria-hidden={label ? undefined : true}\n      aria-label={label}\n      role={label ? \"img\" : undefined}\n      focusable={false}\n      className={className}\n    />\n  );\n}\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

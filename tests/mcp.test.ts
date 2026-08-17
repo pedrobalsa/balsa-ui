@@ -116,6 +116,20 @@ describe("tools", () => {
     expect(content[0].text).toContain("### Props");
   });
 
+  it("accepts a qualified registry reference and an optional framework", async () => {
+    const qualified = await callTool("component_contract", { name: "@balsa/select" });
+    expect(qualified.isError).toBeUndefined();
+    expect(qualified.content[0].text).toContain("## Public API");
+
+    const scoped = await callTool("component_contract", { name: "select", framework: "vue" });
+    expect(scoped.isError).toBeUndefined();
+    expect(scoped.content[0].text).toContain("# Select");
+
+    const search = await callTool("search_components", { query: "select", framework: "vue", limit: 3 });
+    expect(search.isError).toBeUndefined();
+    expect(search.content[0].text).toContain("select");
+  });
+
   it("reports how far each design-system dimension reaches upstream", async () => {
     const { content } = await callTool("design_system", {});
     expect(content[0].text).toContain("spacing");

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loading-state-card",
+  "type": "registry:ui",
+  "title": "LoadingStateCard",
+  "description": "Stable skeleton geometry with accessible busy semantics.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/skeleton"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/LoadingStateCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/LoadingStateCard.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { Skeleton } from \"../ui/Skeleton\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface LoadingStateCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  rows?: number;\n}\n\nexport function LoadingStateCard({\n  title = \"Loading activity\",\n  description = \"Fetching the latest workspace events.\",\n  rows = 4,\n  headingLevel,\n  shadow,\n  theme,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: LoadingStateCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"loading-state\"\n      aria-busy=\"true\"\n      aria-live=\"polite\"\n    >\n      <span className=\"sr-only\">Loading</span>\n      <div className=\"grid flex-1 content-between gap-balsa-lg\">\n        {Array.from({ length: rows }, (_, index) => (\n          <div key={index} className=\"grid grid-cols-[2.5rem_minmax(0,1fr)_4rem] items-center gap-balsa-md\">\n            <Skeleton className=\"size-10 rounded-balsa-control\" />\n            <div className=\"grid gap-balsa-xs\">\n              <Skeleton className=\"h-3 w-2/3\" />\n              <Skeleton className=\"h-3 w-1/2\" />\n            </div>\n            <Skeleton className=\"h-3 w-full\" />\n          </div>\n        ))}\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}

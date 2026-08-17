@@ -12,9 +12,10 @@ import {
   registryUrl,
 } from "./registry-resolve.mjs";
 import {
+  itemPath,
   readJson,
+  repoPath,
   rootDir,
-  sourcePath,
   targetPath,
   writeJson,
 } from "./registry-lib.mjs";
@@ -75,7 +76,7 @@ function upgradeManifest(manifest) {
 
 async function balsaContractVersion(name) {
   try {
-    const spec = await readJson(sourcePath(`specs/components/${name}.json`));
+    const spec = await readJson(repoPath(`specs/components/${name}.json`));
     return spec.version;
   } catch {
     return undefined;
@@ -107,9 +108,10 @@ export async function installRegistryItems({
   force = false,
   agentContext = true,
   forceAgentSkill = false,
+  framework,
 }) {
-  const configuration = await loadProjectConfiguration(cwd);
-  const resolver = createResolver({ configuration });
+  const configuration = await loadProjectConfiguration(cwd, { framework });
+  const resolver = createResolver({ configuration, target: framework });
   let items = await resolver.resolve(names);
 
   // An upstream component styles itself from the standard shadcn variables and
@@ -172,7 +174,7 @@ export async function installRegistryItems({
       const contents = [];
       for (const file of item.files) {
         const destination = targetPath(cwd, file.target);
-        const content = file.content ?? await readFile(sourcePath(file.path), "utf8");
+        const content = file.content ?? await readFile(itemPath(file.path), "utf8");
         contents.push(content);
         try {
           const existing = await readFile(destination, "utf8");

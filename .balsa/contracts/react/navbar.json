@@ -1,0 +1,255 @@
+{
+  "publicApi": {
+    "source": "src/components/ui/Navbar.tsx",
+    "props": [
+      {
+        "name": "logo",
+        "type": "BrandLogo",
+        "shape": {
+          "type": "BrandLogo",
+          "variants": [
+            {
+              "type": "BrandImage",
+              "fields": [
+                {
+                  "name": "src",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "title",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "type": "BrandTitle",
+              "fields": [
+                {
+                  "name": "title",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "alt",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "src",
+                  "type": "undefined",
+                  "required": false
+                }
+              ]
+            }
+          ]
+        },
+        "required": true
+      },
+      {
+        "name": "items",
+        "type": "readonly NavigationGroup[]",
+        "shape": {
+          "type": "readonly NavigationGroup[]",
+          "items": {
+            "type": "NavigationGroup",
+            "fields": [
+              {
+                "name": "links",
+                "type": "readonly NavigationLink[] | undefined",
+                "required": false
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "link",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "shortDescription",
+                "type": "string | undefined",
+                "required": false
+              }
+            ]
+          }
+        },
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "NavbarVariant | undefined",
+        "values": [
+          "soft",
+          "outline",
+          "glass",
+          "surface"
+        ],
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "ActionColor | undefined",
+        "values": [
+          "neutral",
+          "primary",
+          "secondary",
+          "accent",
+          "destructive"
+        ],
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "NavbarType | undefined",
+        "values": [
+          "bar",
+          "floating",
+          "minimal"
+        ],
+        "required": false
+      },
+      {
+        "name": "behavior",
+        "type": "NavbarBehavior | undefined",
+        "values": [
+          "fixed",
+          "static",
+          "reveal"
+        ],
+        "required": false
+      },
+      {
+        "name": "floatingLayout",
+        "type": "NavbarFloatingLayout | undefined",
+        "values": [
+          "inset",
+          "container"
+        ],
+        "required": false
+      },
+      {
+        "name": "floatingMaxWidth",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "contentMaxWidth",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "itemsAlignment",
+        "type": "NavbarItemsAlignment | undefined",
+        "values": [
+          "right",
+          "left",
+          "center"
+        ],
+        "required": false
+      },
+      {
+        "name": "contentRegion",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "fixed",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ThemeShadow | undefined",
+        "values": [
+          "sm",
+          "md",
+          "lg",
+          "auto",
+          "none"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeInput | undefined",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false
+      },
+      {
+        "name": "onNavigate",
+        "type": "((item: NavigationLink, event: MouseEvent<HTMLAnchorElement, MouseEvent>) => void) | undefined",
+        "required": false
+      }
+    ],
+    "events": [],
+    "slots": []
+  }
+}

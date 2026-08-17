@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "name": "pagination",
+  "title": "Pagination",
+  "category": "component",
+  "classification": "balsa-alternative",
+  "upstream": {
+    "registry": "@shadcn",
+    "name": "pagination"
+  },
+  "status": "beta",
+  "version": "0.1.0",
+  "purpose": "Move through a finite result set with bounded pages, labelled adjacent actions, or icon-only adjacent actions.",
+  "useFor": [
+    "Search results",
+    "Tables",
+    "Long server-backed collections"
+  ],
+  "avoidFor": [
+    "Short collections",
+    "Continuous feeds",
+    "Progress through a form workflow"
+  ],
+  "states": [
+    "first page",
+    "middle page",
+    "last page",
+    "disabled"
+  ],
+  "accessibility": [
+    "Uses a labelled nav landmark and native buttons.",
+    "The active page exposes aria-current.",
+    "Boundary actions use native disabled semantics and every icon-only control has an accessible label."
+  ],
+  "variants": [
+    "bounded pages with semantic ellipses",
+    "action labels only",
+    "icons only"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "tokens": [
+    "--balsa-color-surface",
+    "--balsa-color-primary",
+    "--balsa-color-primary-foreground",
+    "--balsa-color-focus-ring",
+    "radius.control"
+  ],
+  "commonMistakes": [
+    "Using zero-based public page numbers.",
+    "Changing result density inside pagination without an explicit page-size control.",
+    "Removing accessible names from icon-only controls."
+  ],
+  "examples": [
+    {
+      "id": "default",
+      "title": "Bounded result pages",
+      "description": "Sibling pages and semantic ellipses keep a large result set compact.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"248\" :page-size=\"20\" :sibling-count=\"1\" label=\"Result pages placeholder\" />\n</template>"
+    },
+    {
+      "id": "compact",
+      "title": "Compact navigation",
+      "description": "Small icon-forward controls fit dense result surfaces.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"96\" :page-size=\"12\" :sibling-count=\"1\" label=\"Result pages placeholder\" presentation=\"icons\" size=\"sm\" />\n</template>"
+    },
+    {
+      "id": "action-labels",
+      "title": "Adjacent actions",
+      "description": "Previous and next labels provide document-style navigation without a page range.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"72\" :page-size=\"10\" :sibling-count=\"1\" label=\"Result pages placeholder\" presentation=\"action-labels\" />\n</template>"
+    },
+    {
+      "id": "without-edges",
+      "title": "Previous and next",
+      "description": "Edge controls can be omitted while bounded page context remains.",
+      "source": "<script setup lang=\"ts\">\nimport Pagination from \"@/components/ui/Pagination.vue\";\nimport { ref } from \"vue\";\n\nconst page = ref(4);\n</script>\n\n<template>\n  <Pagination v-model=\"page\" :total=\"72\" :page-size=\"10\" :sibling-count=\"1\" label=\"Result pages placeholder\" :show-edges=\"false\" />\n</template>"
+    }
+  ],
+  "publicApi": {
+    "source": "src/components/ui/Pagination.vue",
+    "models": [
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "event": "update:modelValue"
+      }
+    ],
+    "props": [
+      {
+        "name": "total",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "10"
+      },
+      {
+        "name": "siblingCount",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      },
+      {
+        "name": "presentation",
+        "type": "PaginationPresentation | undefined",
+        "values": [
+          "pages",
+          "action-labels",
+          "icons"
+        ],
+        "required": false,
+        "default": "\"pages\""
+      },
+      {
+        "name": "showEdges",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "showLabels",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "true"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "values": [
+          "false",
+          "true"
+        ],
+        "required": false,
+        "default": "false"
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Pagination\""
+      },
+      {
+        "name": "previousLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Previous page\""
+      },
+      {
+        "name": "nextLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Next page\""
+      },
+      {
+        "name": "firstLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"First page\""
+      },
+      {
+        "name": "lastLabel",
+        "type": "string | undefined",
+        "values": [
+          "string"
+        ],
+        "required": false,
+        "default": "\"Last page\""
+      },
+      {
+        "name": "pageLabel",
+        "type": "((page: number) => string) | undefined",
+        "required": false,
+        "default": "`Page ${page}`"
+      },
+      {
+        "name": "size",
+        "type": "PaginationSize | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg"
+        ],
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "Rounded | undefined",
+        "values": [
+          "md",
+          "sm",
+          "lg",
+          "xl",
+          "2xl",
+          "none",
+          "3xl",
+          "full"
+        ],
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "ThemeInput | undefined",
+        "shape": {
+          "type": "ThemeDefinition",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "extends",
+              "type": "\"modern-flat\" | \"brutalism\" | \"glassmorphism\" | ThemeDefinition",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "ThemeOptions | undefined",
+              "required": false
+            },
+            {
+              "name": "overrides",
+              "type": "ThemeOverrides | undefined",
+              "required": false
+            },
+            {
+              "name": "tokens",
+              "type": "ThemeTokens | undefined",
+              "required": false
+            },
+            {
+              "name": "defaults",
+              "type": "ThemeDefaults | undefined",
+              "required": false
+            }
+          ]
+        },
+        "required": false
+      },
+      {
+        "name": "modelValue",
+        "type": "number | undefined",
+        "values": [
+          "number"
+        ],
+        "required": false,
+        "default": "1"
+      }
+    ],
+    "events": [
+      {
+        "name": "update:modelValue",
+        "type": "[value: number]"
+      },
+      {
+        "name": "change",
+        "type": "[page: number]"
+      }
+    ],
+    "slots": []
+  }
+}

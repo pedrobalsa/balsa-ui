@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "api-key-card",
+  "type": "registry:ui",
+  "title": "ApiKeyCard",
+  "description": "One-time secret with copy, provenance, and revocation.",
+  "dependencies": [
+    "react",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "@balsa/react/application-card",
+    "@balsa/react/code-block",
+    "@balsa/react/badge",
+    "@balsa/react/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/compositions/ApiKeyCard.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/ApiKeyCard.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { Badge } from \"../ui/Badge\";\nimport { Button } from \"../ui/Button\";\nimport { CodeBlock } from \"../ui/CodeBlock\";\nimport { CompositionRoot } from \"./_CompositionRoot\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\n/**\n * A secret shown once, with the two facts that decide what to do about it: when\n * it was made, and when it stops working. Copying is the whole interaction, so\n * the block that holds it is the only thing that grows.\n */\nexport interface ApiKeyCardProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title?: string;\n  description?: string;\n  token?: string;\n  created?: string;\n  expires?: string;\n  onRevoke?: () => void;\n}\n\nexport function ApiKeyCard({\n  title = \"Deploy key\",\n  description = \"Shown once. Store it before leaving this page.\",\n  token = \"blsa_live_9f4c21ae7d6b48f0a35c8e12\",\n  created = \"Today, 09:14\",\n  expires = \"Feb 3, 2027\",\n  headingLevel,\n  shadow,\n  theme,\n  onRevoke,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: ApiKeyCardProps) {\n  void _dataBalsa;\n\n  return (\n    <CompositionRoot\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow}\n      theme={theme}\n      data-composition=\"api-key\"\n      action={<Badge variant=\"soft\">Write access</Badge>}\n      footer={<Button className=\"w-full\" variant=\"soft\" onClick={onRevoke}>Revoke this key</Button>}\n    >\n      <div className=\"flex flex-1 flex-col justify-between gap-balsa-lg\">\n        <CodeBlock code={token} language=\"text\" wrap />\n        <dl className=\"divide-y divide-balsa-border text-sm\">\n          <div className=\"flex justify-between py-balsa-xs\">\n            <dt className=\"text-balsa-muted-foreground\">Created</dt>\n            <dd>{created}</dd>\n          </div>\n          <div className=\"flex justify-between py-balsa-xs\">\n            <dt className=\"text-balsa-muted-foreground\">Expires</dt>\n            <dd>{expires}</dd>\n          </div>\n        </dl>\n      </div>\n    </CompositionRoot>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/_CompositionRoot.tsx",
+      "type": "registry:component",
+      "target": "src/components/compositions/_CompositionRoot.tsx",
+      "content": "import { type HTMLAttributes, type ReactNode } from \"react\";\nimport { mergeClasses } from \"../ui/classes\";\nimport { ApplicationCard } from \"./ApplicationCard\";\nimport type { CompositionSurfaceProps } from \"./composition\";\n\nexport interface CompositionRootProps extends Omit<HTMLAttributes<HTMLDivElement>, \"title\" | \"color\">, CompositionSurfaceProps {\n  \"data-balsa\"?: string;\n  title: string;\n  description?: string;\n  action?: ReactNode;\n  footer?: ReactNode;\n  children?: ReactNode;\n}\n\nexport function CompositionRoot({\n  title,\n  description,\n  headingLevel = 2,\n  shadow = \"auto\",\n  theme,\n  action,\n  footer,\n  children,\n  className,\n  \"data-balsa\": _dataBalsa,\n  ...domProps\n}: CompositionRootProps) {\n  void _dataBalsa;\n\n  return (\n    <ApplicationCard\n      {...domProps}\n      title={title}\n      description={description}\n      headingLevel={headingLevel}\n      shadow={shadow ?? \"auto\"}\n      theme={theme}\n      action={action}\n      footer={footer}\n      className={mergeClasses(\"min-w-0\", className)}\n    >\n      {children}\n    </ApplicationCard>\n  );\n}\n"
+    },
+    {
+      "path": "src/components/compositions/composition.ts",
+      "type": "registry:lib",
+      "target": "src/components/compositions/composition.ts",
+      "content": "import type { Shadow, ThemeInput } from \"../ui/theme\";\n\nexport interface CompositionSurfaceProps {\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n  shadow?: Shadow;\n  theme?: ThemeInput;\n}\n\nexport interface CompositionOption {\n  label: string;\n  value: string;\n  description?: string;\n}\n\nexport interface CompositionMetric {\n  label: string;\n  value: string;\n  detail?: string;\n}\n\nexport type CompositionPaletteColor = \"primary\" | \"secondary\" | \"accent\";\n"
+    }
+  ],
+  "meta": {
+    "framework": "react"
+  }
+}
