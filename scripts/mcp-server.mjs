@@ -238,7 +238,10 @@ export const tools = [
     },
     async handler(args) {
       const cwd = resolveProject(args);
-      const compared = await diffInstalled(cwd, { names: args.name ? [args.name] : [] });
+      const compared = await diffInstalled(cwd, {
+        names: args.name ? [args.name] : [],
+        includePatches: false,
+      });
       if (!compared.length) {
         return args.name ? "No installed item matched." : "Nothing is installed here.";
       }

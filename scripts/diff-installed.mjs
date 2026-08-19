@@ -28,35 +28,213 @@ import { createResolver, defaultNamespace, loadProjectConfiguration } from "./re
 import { readJson } from "./registry-lib.mjs";
 import { rewriteItemImports } from "./source-imports.mjs";
 
-/** The hash `add` recorded: every file's content, concatenated in order. */
-async function hashOnDisk(projectRoot, files) {
+const diffContextLines = 3;
+const maxDiffMatrixCells = 4_000_000;
+
+function portablePath(value) {
+  return value.replaceAll("\\", "/");
+}
+
+/** The files and hash `add` recorded, preserving its file order. */
+async function readOnDisk(projectRoot, files) {
   const contents = [];
+  const byPath = new Map();
+  const missing = [];
   for (const file of files) {
     try {
-      contents.push(await readFile(path.join(projectRoot, file), "utf8"));
+      const content = await readFile(path.join(projectRoot, file), "utf8");
+      contents.push(content);
+      byPath.set(portablePath(file), content);
     } catch (error) {
-      if (error.code === "ENOENT") return undefined;
+      if (error.code === "ENOENT") {
+        missing.push(portablePath(file));
+        continue;
+      }
       throw error;
     }
   }
-  return hashContent(contents);
+  return {
+    byPath,
+    missing,
+    hash: missing.length ? undefined : hashContent(contents),
+  };
 }
 
 /**
- * What `add` would write for this item today, hashed the same way.
+ * What `add` would write for this item today, with the hash calculated the same way.
  *
  * Balsa's own items are read from this package rather than the network, so the
  * comparison works offline for them and needs the registry only for upstream.
  */
-async function hashFreshInstall(item) {
+function freshInstall(item) {
   const contents = [];
+  const byPath = new Map();
   for (const file of item.files) {
-    contents.push(file.content ?? "");
+    const content = file.content ?? "";
+    contents.push(content);
+    byPath.set(portablePath(file.target), content);
   }
-  return hashContent(contents);
+  return { byPath, hash: hashContent(contents) };
 }
 
-export async function diffInstalled(projectRoot, { names, configuration } = {}) {
+function sourceLines(source) {
+  if (!source) return [];
+  const normalized = source.replaceAll("\r\n", "\n");
+  const lines = normalized.split("\n");
+  const endsWithNewline = normalized.endsWith("\n");
+  if (endsWithNewline) lines.pop();
+  return lines.map((text, index) => ({
+    text,
+    newline: index < lines.length - 1 || endsWithNewline,
+  }));
+}
+
+function sameLine(left, right) {
+  return left.text === right.text && left.newline === right.newline;
+}
+
+/**
+ * Line operations from the project's current source to current registry source.
+ *
+ * Component files are small enough for an LCS table, and keeping the algorithm
+ * here means the published CLI does not depend on Git or an optional diff binary.
+ */
+function lineOperations(localSource, registrySource) {
+  const local = sourceLines(localSource);
+  const registry = sourceLines(registrySource);
+  if (local.length * registry.length > maxDiffMatrixCells) {
+    return [
+      ...local.map((line) => ({ type: "-", line })),
+      ...registry.map((line) => ({ type: "+", line })),
+    ];
+  }
+  const lengths = Array.from(
+    { length: local.length + 1 },
+    () => new Uint32Array(registry.length + 1),
+  );
+
+  for (let localIndex = local.length - 1; localIndex >= 0; localIndex -= 1) {
+    for (let registryIndex = registry.length - 1; registryIndex >= 0; registryIndex -= 1) {
+      lengths[localIndex][registryIndex] = sameLine(local[localIndex], registry[registryIndex])
+        ? lengths[localIndex + 1][registryIndex + 1] + 1
+        : Math.max(
+          lengths[localIndex + 1][registryIndex],
+          lengths[localIndex][registryIndex + 1],
+        );
+    }
+  }
+
+  const operations = [];
+  let localIndex = 0;
+  let registryIndex = 0;
+  while (localIndex < local.length || registryIndex < registry.length) {
+    if (
+      localIndex < local.length
+      && registryIndex < registry.length
+      && sameLine(local[localIndex], registry[registryIndex])
+    ) {
+      operations.push({ type: " ", line: local[localIndex] });
+      localIndex += 1;
+      registryIndex += 1;
+    } else if (
+      localIndex < local.length
+      && (
+        registryIndex >= registry.length
+        || lengths[localIndex + 1][registryIndex] >= lengths[localIndex][registryIndex + 1]
+      )
+    ) {
+      operations.push({ type: "-", line: local[localIndex] });
+      localIndex += 1;
+    } else {
+      operations.push({ type: "+", line: registry[registryIndex] });
+      registryIndex += 1;
+    }
+  }
+  return operations;
+}
+
+function hunkRanges(operations) {
+  const changed = operations
+    .map((operation, index) => (operation.type === " " ? undefined : index))
+    .filter((index) => index !== undefined);
+  if (!changed.length) return [];
+
+  const ranges = [];
+  let first = changed[0];
+  let last = changed[0];
+  for (const index of changed.slice(1)) {
+    if (index - last > (diffContextLines * 2) + 1) {
+      ranges.push([
+        Math.max(0, first - diffContextLines),
+        Math.min(operations.length, last + diffContextLines + 1),
+      ]);
+      first = index;
+    }
+    last = index;
+  }
+  ranges.push([
+    Math.max(0, first - diffContextLines),
+    Math.min(operations.length, last + diffContextLines + 1),
+  ]);
+  return ranges;
+}
+
+export function createUnifiedPatch(target, localSource, registrySource) {
+  if (localSource === registrySource) return "";
+
+  const operations = lineOperations(localSource ?? "", registrySource ?? "");
+  const localBefore = new Uint32Array(operations.length + 1);
+  const registryBefore = new Uint32Array(operations.length + 1);
+  for (let index = 0; index < operations.length; index += 1) {
+    localBefore[index + 1] = localBefore[index] + (operations[index].type === "+" ? 0 : 1);
+    registryBefore[index + 1] = registryBefore[index] + (operations[index].type === "-" ? 0 : 1);
+  }
+
+  const lines = [
+    `--- ${localSource === undefined ? "/dev/null" : `local/${target}`}`,
+    `+++ ${registrySource === undefined ? "/dev/null" : `registry/${target}`}`,
+  ];
+  const ranges = hunkRanges(operations);
+  for (const [start, end] of ranges) {
+    const localCount = localBefore[end] - localBefore[start];
+    const registryCount = registryBefore[end] - registryBefore[start];
+    const localStart = localBefore[start] + (localCount ? 1 : 0);
+    const registryStart = registryBefore[start] + (registryCount ? 1 : 0);
+    lines.push(`@@ -${localStart},${localCount} +${registryStart},${registryCount} @@`);
+    for (const operation of operations.slice(start, end)) {
+      lines.push(`${operation.type}${operation.line.text}`);
+      if (!operation.line.newline) lines.push("\\ No newline at end of file");
+    }
+  }
+
+  // A line-ending-only change has no line operation after normalization, but it
+  // still changes the source hash and must not produce an empty explanation.
+  if (!ranges.length) {
+    lines.push("@@ line endings @@", "-local line endings", "+registry line endings");
+  }
+  return `${lines.join("\n")}\n`;
+}
+
+function compareFiles(localFiles, registryFiles) {
+  const targets = new Set([...localFiles.keys(), ...registryFiles.keys()]);
+  return [...targets]
+    .sort((left, right) => left.localeCompare(right))
+    .flatMap((target) => {
+      const local = localFiles.get(target);
+      const registry = registryFiles.get(target);
+      if (local === registry) return [];
+      return [{
+        path: target,
+        status: local === undefined ? "added" : registry === undefined ? "removed" : "modified",
+        patch: createUnifiedPatch(target, local, registry),
+      }];
+    });
+}
+
+export async function diffInstalled(
+  projectRoot,
+  { names, configuration, includePatches = true } = {},
+) {
   let manifest;
   try {
     manifest = upgradeManifest(await readJson(path.join(projectRoot, ".balsa", "installed.json")));
@@ -77,16 +255,13 @@ export async function diffInstalled(projectRoot, { names, configuration } = {}) 
     if (wanted && !wanted.has(reference)) continue;
 
     const files = entry.files ?? [];
-    const onDisk = await hashOnDisk(projectRoot, files);
-    if (onDisk === undefined) {
-      results.push({ reference, state: "missing", files: files.length });
-      continue;
-    }
-
+    const onDisk = await readOnDisk(projectRoot, files);
     const locallyChanged = Boolean(entry.installedSourceHash)
-      && onDisk !== entry.installedSourceHash;
+      && onDisk.hash !== undefined
+      && onDisk.hash !== entry.installedSourceHash;
 
     let upstreamChanged = false;
+    let currentRegistry;
     let unresolved;
     try {
       const resolved = await resolver.resolve([reference]);
@@ -95,8 +270,9 @@ export async function diffInstalled(projectRoot, { names, configuration } = {}) 
         const adapted = item.namespace === defaultNamespace
           ? item
           : applyAdapter(item, await loadAdapter(item.reference)).item;
-        const fresh = await hashFreshInstall(rewriteItemImports(adapted, resolvedConfiguration));
-        upstreamChanged = Boolean(entry.originalSourceHash) && fresh !== entry.originalSourceHash;
+        currentRegistry = freshInstall(rewriteItemImports(adapted, resolvedConfiguration));
+        upstreamChanged = Boolean(entry.originalSourceHash)
+          && currentRegistry.hash !== entry.originalSourceHash;
       } else {
         unresolved = "resolved to nothing";
       }
@@ -108,7 +284,9 @@ export async function diffInstalled(projectRoot, { names, configuration } = {}) 
         : "registry unreachable";
     }
 
-    const state = unresolved
+    const state = onDisk.missing.length
+      ? "missing"
+      : unresolved
       ? (locallyChanged ? "local" : "unknown")
       : locallyChanged && upstreamChanged
         ? "diverged"
@@ -118,7 +296,16 @@ export async function diffInstalled(projectRoot, { names, configuration } = {}) 
             ? "upstream"
             : "unchanged";
 
-    results.push({ reference, state, files: files.length, ...(unresolved ? { unresolved } : {}) });
+    const changes = includePatches && currentRegistry
+      ? compareFiles(onDisk.byPath, currentRegistry.byPath)
+      : [];
+    results.push({
+      reference,
+      state,
+      files: files.length,
+      changes,
+      ...(unresolved ? { unresolved } : {}),
+    });
   }
 
   return results.sort((left, right) => left.reference.localeCompare(right.reference));

@@ -1,6 +1,6 @@
 {
   "name": "balsa-ui",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Agent-native, open-code Vue 3 components with independent palettes, themes, and gradient backgrounds.",
   "license": "MIT",
   "type": "module",

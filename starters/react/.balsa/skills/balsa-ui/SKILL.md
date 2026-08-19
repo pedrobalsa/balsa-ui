@@ -86,7 +86,19 @@ Use `init --palette` only when the application wants Balsa's explicit Dark and L
 
 Repository contributors can use `npm run registry:install -- <name> --cwd <vue-project>`.
 
-Treat installed files as application source. Preserve local edits; never use `--force` unless the user explicitly chooses replacement after reviewing a diff. Consult `docs/installed-component-updates.md` for provenance rules.
+Before updating installed source, inspect one item or the complete installation:
+
+```sh
+npx balsa-ui@latest diff <name>
+npx balsa-ui@latest diff
+```
+
+`diff` is read-only. It compares the originally installed source, the application's editable
+copy, and what the registry would install now. It reports each item as unchanged, upstream,
+local, diverged, missing, or unknown and prints file-level patches from local source to the
+registry source for every difference. Treat installed files as application source. Preserve
+local edits; never use `--force` unless the user explicitly chooses replacement after
+reviewing these patches. Consult `docs/installed-component-updates.md` for provenance rules.
 
 ## Compose
 

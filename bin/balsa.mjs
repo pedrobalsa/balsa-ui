@@ -984,6 +984,10 @@ async function diffItems(argv) {
     console.log(`${state} — ${diffStateSummary[state]}`);
     for (const entry of entries) {
       console.log(`  ${entry.reference}${entry.unresolved ? ` (${entry.unresolved})` : ""}`);
+      for (const change of entry.changes) {
+        console.log(`\n  ${change.path} (${change.status}, local -> registry)`);
+        process.stdout.write(change.patch);
+      }
     }
     console.log("");
   }
@@ -1011,7 +1015,7 @@ async function updateItems(argv) {
     }
   }
 
-  const compared = await diffInstalled(cwd, { names });
+  const compared = await diffInstalled(cwd, { names, includePatches: false });
   if (!compared.length) {
     console.log(names.length ? "No installed item matched." : "Nothing is installed here.");
     return;

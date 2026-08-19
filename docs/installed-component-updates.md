@@ -11,6 +11,11 @@ and the application's editable copy before proposing a change:
 - **Diverged:** both copies changed from the installed source.
 - **Missing:** a recorded application file no longer exists.
 
+For every differing file it also prints a unified patch from the current local source to
+the registry source: removed lines are local and added lines are what an update would install.
+With `--json`, each item exposes the same information under `changes` with the file path,
+status, and patch.
+
 Inspect one item or the complete installation without writing source:
 
 ```sh

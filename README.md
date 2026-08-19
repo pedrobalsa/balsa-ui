@@ -146,8 +146,9 @@ balsa theme apply           balsa palette create        balsa background create
 balsa design-system show    balsa design-system apply   balsa help
 ```
 
-`diff` is read-only. `update` applies safe upstream changes and keeps locally edited or diverged
-source unless replacement is explicitly forced. `mcp` exposes the same read-only discovery,
+`diff` is read-only and prints file-level patches from local source to current registry source.
+`update` applies safe upstream changes and keeps locally edited or diverged source unless
+replacement is explicitly forced. `mcp` exposes the same read-only discovery,
 contract, project, design-system, and update-planning answers over stdio.
 
 ## Contributing

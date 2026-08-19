@@ -6,7 +6,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-c1db867797794bd4730024d78b27b091de089a341f034d13f17e8cfd2200ef0f",
       "installedSourceHash": "sha256-c1db867797794bd4730024d78b27b091de089a341f034d13f17e8cfd2200ef0f",
       "dependencies": [
@@ -30,7 +30,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-b348a979a53dce3e9d59685983078434048d73c7edf2d0513534dc123a1d8bf7",
       "installedSourceHash": "sha256-b348a979a53dce3e9d59685983078434048d73c7edf2d0513534dc123a1d8bf7",
       "dependencies": [
@@ -54,7 +54,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-895947fe5d3f6ee5a1efe216b09b7e141c23bdd31bbd982f92871edf8ec541be",
       "installedSourceHash": "sha256-895947fe5d3f6ee5a1efe216b09b7e141c23bdd31bbd982f92871edf8ec541be",
       "dependencies": [
@@ -75,7 +75,7 @@
       "namespace": "@balsa",
       "origin": "https://balsa-ui.com/r/balsa-palette.json",
       "installedVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
       "installedSourceHash": "sha256-069bc4e3c815a4e00729fef152031398458613018cc820f2a55572dfa841aa1d",
       "dependencies": [
@@ -94,7 +94,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-e990a7a7ed6581ae56f79944a71edd1ef0b83f007c40c18486822acf52e9d1d6",
       "installedSourceHash": "sha256-e990a7a7ed6581ae56f79944a71edd1ef0b83f007c40c18486822acf52e9d1d6",
       "dependencies": [
@@ -118,7 +118,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.1",
       "contractVersion": "0.1.1",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-c409d53fe601be9b6935de99c061699b29d656cc77829d288e82275aa3389efd",
       "installedSourceHash": "sha256-c409d53fe601be9b6935de99c061699b29d656cc77829d288e82275aa3389efd",
       "dependencies": [
@@ -153,7 +153,7 @@
       "namespace": "@balsa",
       "origin": "https://balsa-ui.com/r/balsa-theme.json",
       "installedVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-bae8618964ca7e45e55e74dd03aba06ea73613167c1f4f8eeeda35a54f35033a",
       "installedSourceHash": "sha256-bae8618964ca7e45e55e74dd03aba06ea73613167c1f4f8eeeda35a54f35033a",
       "dependencies": [
@@ -179,7 +179,7 @@
       "namespace": "@balsa",
       "origin": "https://balsa-ui.com/r/balsa-foundation.json",
       "installedVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-4e20f4ad5ea63bdce72e6785a52d2119053d2cfc7d6a691b8e5739a188309512",
       "installedSourceHash": "sha256-4e20f4ad5ea63bdce72e6785a52d2119053d2cfc7d6a691b8e5739a188309512",
       "dependencies": [
@@ -196,7 +196,7 @@
       "namespace": "@balsa",
       "installedVersion": "0.1.0",
       "contractVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-ef7e3dcd4d0fbbf0312209dac2a220f05ba08638308211f5e304607bbc594a7d",
       "installedSourceHash": "sha256-ef7e3dcd4d0fbbf0312209dac2a220f05ba08638308211f5e304607bbc594a7d",
       "dependencies": [
@@ -214,7 +214,7 @@
       "namespace": "@balsa",
       "origin": "https://balsa-ui.com/r/theme-core.json",
       "installedVersion": "0.1.0",
-      "designSystemVersion": "0.8.0",
+      "designSystemVersion": "0.8.1",
       "originalSourceHash": "sha256-c5a73abb4144b466786c0995cab45c7c4e3f292c6c5c332452dcaa8c478d207a",
       "installedSourceHash": "sha256-c5a73abb4144b466786c0995cab45c7c4e3f292c6c5c332452dcaa8c478d207a",
       "dependencies": [],

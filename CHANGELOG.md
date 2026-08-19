@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1
+
+- Released `balsa-ui@0.8.1` as an additive installed-source lifecycle patch. `balsa diff`
+  now prints unified file-level patches from the application's current source to the current
+  registry source and includes the same path, status, and patch data in JSON. Its existing
+  three-way classification and update safety policy are unchanged; no component contract
+  moved and no installed component requires migration.
+
 ## 0.8.0
 
 - Released `balsa-ui@0.8.0`, the release that makes React a supported consumer framework.

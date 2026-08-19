@@ -3,7 +3,11 @@ import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { diffInstalled, diffStateSummary } from "../scripts/diff-installed.mjs";
+import {
+  createUnifiedPatch,
+  diffInstalled,
+  diffStateSummary,
+} from "../scripts/diff-installed.mjs";
 import { hashContent } from "../scripts/install-registry.mjs";
 import { sourcePath } from "../scripts/registry-lib.mjs";
 
@@ -55,13 +59,32 @@ beforeEach(() => {
 afterEach(() => rmSync(root, { recursive: true, force: true }));
 
 describe("three-way diff", () => {
-  it("reports nothing when neither side has moved", async () => {
-    expect(await stateOf()).toBe("unchanged");
+  it("formats the current local source against what the registry would install", () => {
+    const patch = createUnifiedPatch(
+      component,
+      "first\nlocal\nlast\n",
+      "first\nregistry\nlast\n",
+    );
+
+    expect(patch).toContain(`--- local/${component}`);
+    expect(patch).toContain(`+++ registry/${component}`);
+    expect(patch).toContain("-local");
+    expect(patch).toContain("+registry");
   });
 
-  it("reports a local edit, which an update would overwrite", async () => {
+  it("reports nothing when neither side has moved", async () => {
+    const [result] = await diffInstalled(root);
+    expect(result?.state).toBe("unchanged");
+    expect(result?.changes).toEqual([]);
+  });
+
+  it("reports a local edit and returns the file-level patch an update would overwrite", async () => {
     writeFileSync(resolve(root, component), `${pristine}\n/* edited */\n`, "utf8");
-    expect(await stateOf()).toBe("local");
+    const [result] = await diffInstalled(root);
+    expect(result?.state).toBe("local");
+    expect(result?.changes).toHaveLength(1);
+    expect(result?.changes[0]).toMatchObject({ path: component, status: "modified" });
+    expect(result?.changes[0]?.patch).toContain("-/* edited */");
     expect(diffStateSummary.local).toContain("overwrite");
   });
 
@@ -85,7 +108,10 @@ describe("three-way diff", () => {
 
   it("reports a recorded file that is gone", async () => {
     rmSync(resolve(root, component));
-    expect(await stateOf()).toBe("missing");
+    const [result] = await diffInstalled(root);
+    expect(result?.state).toBe("missing");
+    expect(result?.changes[0]).toMatchObject({ path: component, status: "added" });
+    expect(result?.changes[0]?.patch).toContain("--- /dev/null");
   });
 
   it("reports nothing at all when no install exists", async () => {
@@ -96,6 +122,36 @@ describe("three-way diff", () => {
   it("narrows to the items asked for", async () => {
     expect(await diffInstalled(root, { names: ["icon"] })).toHaveLength(1);
     expect(await diffInstalled(root, { names: ["button"] })).toHaveLength(0);
+  });
+});
+
+describe("diff command", () => {
+  const runDiff = (args: readonly string[]) =>
+    spawnSync(process.execPath, ["bin/balsa.mjs", "diff", "--cwd", root, ...args], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    });
+
+  it("prints the local-to-registry source patch", () => {
+    writeFileSync(resolve(root, component), `${pristine}\n/* edited */\n`, "utf8");
+    const result = runDiff(["icon"]);
+
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain(`${component} (modified, local -> registry)`);
+    expect(result.stdout).toContain(`--- local/${component}`);
+    expect(result.stdout).toContain("-/* edited */");
+  });
+
+  it("returns patches as structured JSON", () => {
+    writeFileSync(resolve(root, component), `${pristine}\n/* edited */\n`, "utf8");
+    const result = runDiff(["icon", "--json"]);
+
+    expect(result.status, result.stderr).toBe(0);
+    expect(JSON.parse(result.stdout).items[0].changes[0]).toMatchObject({
+      path: component,
+      status: "modified",
+    });
+    expect(JSON.parse(result.stdout).items[0].changes[0].patch).toContain("-/* edited */");
   });
 });
 
